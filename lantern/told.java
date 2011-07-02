@@ -1,0 +1,43 @@
+package lantern;
+/*
+*  Copyright (C) 2010 Michael Ronald Adams.
+*  All rights reserved.
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
+* as published by the Free Software Foundation; either version 2
+* of the License, or (at your option) any later version.
+*
+*  This code is distributed in the hope that it will
+*  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*  General Public License for more details.
+*/
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.text.*;
+import java.io.*;
+import java.net.*;
+import java.applet.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+class told {
+
+	String name;
+	int console; // 0 for console 1 for board
+    int tab;
+    boolean sound;
+
+	told()
+	{
+		name="nobody";
+		console=0;
+		tab=0;
+		sound=true;
+	}
+}

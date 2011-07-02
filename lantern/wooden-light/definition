@@ -1,0 +1,6 @@
+classname = free.jin.board.BoardPattern
+
+id = wooden-light
+name = Light Wood
+boardPainter.classname = free.chess.SquareImagesBoardPainter
+imageUseMode = slice

@@ -1,0 +1,15 @@
+The pieces and Boards in this program come from Jin which is released undger GPL.  
+
+I do not know that the pieces and boards are all gpl and by making them avaiable offer no more rights than by www.jinchess.com making them available.
+
+The spatial set includes author and copyright info.
+
+Jin change log states: * Added all the non 3D piece sets from blitzin (bookup, dyche1, dyche2, dyche3),
+  with permission from Daniel Sleator (Darooha).
+
+
+To me the above means for the bookup and dyche piece sets ICC could ask that you not use them in your client, perhaps depending on how they are used, i.e. if they are primarily used for connections to the chessclub server or not.  While my client connects to fics, its primarily for chat, game play only half supported, and the primary intent is for this client to be  used on icc.  I do not at this time advertise it on FICS, but the option is for icc members who may want to log onto fics while on lantern and chat a bit.  I will investigate if jin uses the pieces above on both fics and icc as it does allow conncections to both.
+
+The rest of the pieces I do not know though the alpha pieces i understand are compatible with GPL.
+
+Mike Adams

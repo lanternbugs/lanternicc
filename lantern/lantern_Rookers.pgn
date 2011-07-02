@@ -1,0 +1,531 @@
+[Event "ICC 5 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.09"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "*"]
+[ICCResult "Game aborted by mutual agreement"]
+[WhiteElo "1216"]
+[BlackElo "1289"]
+[Opening "King's pawn game"]
+[ECO "C44"]
+[NIC "KP.10"]
+[Time "16:12:49"]
+[TimeControl "300+0"]
+
+1. e4 e5 2. Nf3 Nc6 {Game aborted by mutual agreement} *
+
+[Event "ICC 5 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.28"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "*"]
+[ICCResult "Game aborted by Black at move 1"]
+[WhiteElo "1216"]
+[BlackElo "1289"]
+[ECO "A00"]
+[Time "01:35:19"]
+[TimeControl "300+0"]
+
+{Game aborted by Black at move 1} *
+
+[Event "ICC w17 5 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.28"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "*"]
+[ICCResult "Game aborted by White at move 1"]
+[WhiteElo "1500"]
+[BlackElo "1157"]
+[ECO "A00"]
+[Time "01:40:44"]
+[TimeControl "300+0"]
+[Variant "Loser's chess"]
+
+{Game aborted by White at move 1} *
+
+[Event "ICC 5 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.28"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1289"]
+[BlackElo "1216"]
+[ECO "A00"]
+[Time "01:41:23"]
+[TimeControl "300+0"]
+
+{White resigns} 0-1
+
+[Event "ICC 5 0"]
+[Site "Internet Chess Club"]
+[Date "2010.12.31"]
+[Round "-"]
+[White "Onlyfree-engine"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "3105"]
+[BlackElo "1289"]
+[Opening "Queen's gambit accepted"]
+[ECO "D20"]
+[NIC "QG.03"]
+[Time "16:28:41"]
+[TimeControl "300+0"]
+
+1. d4 d5 2. c4 dxc4 3. e3 c6 4. Bxc4 e6 5. Nf3 Nf6 6. O-O Bd7 7. Nc3 Be7 8.
+e4 O-O 9. Qe2 Na6 10. Bxa6 bxa6 11. Qxa6 Qb6 12. Qxb6 axb6 13. Ne5 Bc8 14.
+Nxc6 Bd8 15. f3 {Black resigns} 1-0
+
+[Event "ICC tourney 375229 (3 0)"]
+[Site "Internet Chess Club"]
+[Date "2011.01.07"]
+[Round "1"]
+[White "Rookers"]
+[Black "morgy007"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1289"]
+[BlackElo "2010"]
+[Opening "Caro-Kann defense"]
+[ECO "B10"]
+[NIC "CK.01"]
+[Time "00:47:57"]
+[TimeControl "180+0"]
+
+1. e4 c6 2. Nf3 d5 3. exd5 cxd5 4. d4 Nf6 5. Nc3 g6 6. Bd3 Bg7 7. O-O O-O 8.
+Bg5 Nc6 9. g3 Bg4 10. Be2 Ne4 11. Kg2 Bxf3+ 12. Bxf3 Nxg5 13. h4 Nxf3 14.
+Kxf3 Nxd4+ 15. Kg2 e6 16. h5 Nf5 17. hxg6 hxg6 18. Rh1 Bxc3 19. bxc3 Qf6 20.
+Qg4 Rfc8 21. Rh2 Kf8 22. Qh3 Ke7 23. g4 Rxc3 24. gxf5 Rxh3 25. Rxh3 Qxf5 26.
+Rf3 Qe4 27. Kg3 {White resigns} 0-1
+
+[Event "ICC tourney 375229 (3 0)"]
+[Site "Internet Chess Club"]
+[Date "2011.01.07"]
+[Round "2"]
+[White "Stroggs"]
+[Black "Rookers"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1508"]
+[BlackElo "1315"]
+[Opening "Pirc: classical (two knights) system"]
+[ECO "A48"]
+[NIC "PU.10"]
+[Time "00:55:14"]
+[TimeControl "180+0"]
+
+1. d4 Nf6 2. Nf3 g6 3. Nc3 Bg7 4. e4 d6 5. Be3 Bg4 6. h3 Bxf3 7. Qxf3 O-O 8.
+e5 dxe5 9. dxe5 Ne8 10. Qxb7 Nd7 11. Rd1 Bxe5 12. Bb5 Bxc3+ 13. bxc3 Rb8 14.
+Rxd7 Rxb7 15. Rxd8 Rxb5 16. Bxa7 Rb1+ 17. Ke2 Rxh1 18. Bc5 Nd6 19. Rxf8+
+Kxf8 {White resigns} 0-1
+
+[Event "ICC tourney 375229 (3 0)"]
+[Site "Internet Chess Club"]
+[Date "2011.01.07"]
+[Round "5"]
+[White "RoscoeXXX"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black forfeits on time"]
+[WhiteElo "1301"]
+[BlackElo "1275"]
+[Opening "Ruy Lopez: exchange variation"]
+[ECO "C68"]
+[NIC "RL.08"]
+[Time "01:14:30"]
+[TimeControl "180+0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 Bg4 6. Nbd2 exd4 7. h3 Bh5
+8. O-O Nf6 9. c3 Bxf3 10. Nxf3 dxc3 11. Qe2 Bb4 12. bxc3 Bxc3 13. Rb1 b5 14.
+e5 Nd5 15. e6 fxe6 16. Bg5 Qd6 17. Rbd1 O-O 18. Qd3 Ba5 19. Bd2 Bxd2 20.
+Qxd2 Rad8 21. Qb2 Qf4 22. Rd4 Qf6 23. Qd2 {Black forfeits on time} 1-0
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:15:37"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{White resigns} 0-1
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:26:51"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{White resigns} 0-1
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:31:19"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Black resigns} 1-0
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:31:58"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{White resigns} 0-1
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:45:33"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Black resigns} 1-0
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "*"]
+[ICCResult "Game aborted because it's too short"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "01:58:53"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Game aborted because it's too short} *
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "02:17:51"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{White resigns} 0-1
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "02:24:22"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Black resigns} 1-0
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "*"]
+[ICCResult "Game aborted when Black disconnected"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "16:55:14"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Game aborted when Black disconnected} *
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "17:02:10"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Black resigns} 1-0
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "17:03:02"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{White resigns} 0-1
+
+[Event "ICC w24 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.08"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[ECO "A00"]
+[Time "17:03:39"]
+[TimeControl "600+0"]
+[Variant "Bughouse"]
+
+{Black resigns} 1-0
+
+[Event "ICC w17 10 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.09"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "0-1"]
+[ICCResult "White resigns"]
+[WhiteElo "1500"]
+[BlackElo "1157"]
+[ECO "A00"]
+[Time "16:04:43"]
+[TimeControl "600+0"]
+[Variant "Loser's chess"]
+
+{White resigns} 0-1
+
+[Event "ICC tourney 375683 (1 0)"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "3"]
+[White "Rookers"]
+[Black "MostWanted123"]
+[Result "0-1"]
+[ICCResult "White forfeits on time"]
+[WhiteElo "1169"]
+[BlackElo "1578"]
+[Opening "Sicilian: Najdorf, Byrne (English) attack"]
+[ECO "B90"]
+[NIC "SI.14"]
+[Time "04:09:12"]
+[TimeControl "60+0"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 7. Nf3 Be7 8.
+Be2 O-O 9. O-O b5 10. Nh4 Bb7 11. f4 Nxe4 12. Nxe4 Bxe4 13. Nf3 Nd7 14. fxe5
+Nxe5 15. Nxe5 dxe5 16. Qxd8 Rfxd8 17. Bf3 Bxf3 18. Rxf3 Rac8 19. Raf1 f6 20.
+g4 Bc5 21. Bxc5 Rxc5 22. c3 Rcd5 23. h4 Rd2 24. b4 Rxa2 25. g5 Rdd2
+{White forfeits on time}
+0-1
+
+[Event "ICC tourney 375683 (1 0)"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "4"]
+[White "kebabkongen"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black forfeits on time"]
+[WhiteElo "1435"]
+[BlackElo "1152"]
+[Opening "King's Indian: Larsen variation"]
+[ECO "E90"]
+[NIC "KI.21"]
+[Time "04:11:26"]
+[TimeControl "60+0"]
+
+1. d4 Nf6 2. Nf3 d6 3. c4 g6 4. Nc3 Bg7 5. e4 O-O 6. Be3 Ne8 7. Qd2 Bg4 8.
+Bh6 Bxf3 9. gxf3 e5 10. d5 Qf6 11. Bxg7 Kxg7 12. O-O-O Qxf3 13. Be2 Qf4 14.
+Qxf4 exf4 15. Rhg1 f6 16. h4 h5 17. Bxh5 Kh6 18. Bxg6 Rg8 19. h5 Ng7 20. Rh1
+Nd7 21. Ne2 Ne5 22. Bf5 Nxh5 23. Rxh5+ Kxh5 24. Rh1+ {Black forfeits on
+time} 1-0
+
+[Event "ICC w17 5 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "*"]
+[ICCResult "Game aborted by mutual agreement"]
+[WhiteElo "1157"]
+[BlackElo "1500"]
+[Opening "Barnes defense"]
+[ECO "B00"]
+[NIC "VO.17"]
+[Time "21:49:33"]
+[TimeControl "300+0"]
+[Variant "Loser's chess"]
+
+1. e4 f6 2. f3 Nc6 3. h3 Nd4 {Game aborted by mutual agreement} *
+
+[Event "ICC 1 0"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "-"]
+[White "cartilago"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1255"]
+[BlackElo "1072"]
+[Opening "Four knights: Scotch, 4...exd4"]
+[ECO "C44"]
+[NIC "KP.10"]
+[Time "22:10:47"]
+[TimeControl "60+0"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 Nf6 4. Nc3 exd4 5. Nxd4 d6 6. Nxc6 Bd7 7. Nxd8
+Kxd8 8. Bg5 h6 9. Bxf6+ gxf6 10. Nd5 c6 11. Nxf6 {Black resigns} 1-0
+
+[Event "ICC 3 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "1-0"]
+[ICCResult "Black forfeits on time"]
+[WhiteElo "1275"]
+[BlackElo "1270"]
+[Opening "Barnes defense"]
+[ECO "B00"]
+[NIC "VO.17"]
+[Time "22:20:09"]
+[TimeControl "180+0"]
+
+1. e4 f6 2. f3 c6 3. g3 c5 4. h3 a6 5. Ne2 a5 6. g4 a4 7. Nec3 a3 8. d3 c4
+9. dxc4 b6 10. e5 b5 11. cxb5 Ra7 12. b6 Ra8 13. Nb5 Bb7 14. N1xa3 Bc6 15.
+c3 Na6 16. Be2 Rb8 17. c4 Bb7 18. b3 {Black forfeits on time} 1-0
+
+[Event "ICC 3 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.14"]
+[Round "-"]
+[White "Michael"]
+[Black "Rookers"]
+[Result "1-0"]
+[ICCResult "Black resigns"]
+[WhiteElo "1133"]
+[BlackElo "1275"]
+[Opening "King's gambit accepted"]
+[ECO "C33"]
+[NIC "KG.03"]
+[Time "23:20:09"]
+[TimeControl "180+0"]
+
+1. e4 e5 2. f4 exf4 3. e5 f3 4. gxf3 f6 {Black resigns} 1-0
+
+[Event "ICC 3 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.15"]
+[Round "-"]
+[White "Mike"]
+[Black "Rookers"]
+[Result "0-1"]
+[ICCResult "White forfeits on time"]
+[WhiteElo "1243"]
+[BlackElo "1275"]
+[Opening "Scandinavian (center counter) defense"]
+[ECO "B01"]
+[NIC "VO.17"]
+[Time "14:39:18"]
+[TimeControl "180+0"]
+
+1. e4 d5 {White forfeits on time} 0-1
+
+[Event "ICC 3 0 u"]
+[Site "Internet Chess Club"]
+[Date "2011.01.15"]
+[Round "-"]
+[White "Rookers"]
+[Black "Mike"]
+[Result "*"]
+[ICCResult "Game aborted by mutual agreement"]
+[WhiteElo "1275"]
+[BlackElo "1243"]
+[Opening "King's pawn opening"]
+[ECO "B07"]
+[NIC "VO.17"]
+[Time "18:19:09"]
+[TimeControl "180+0"]
+
+1. e4 d6 2. f3 c6 3. g3 c5 4. g4 c4 5. Qe2 b6 6. e5
+{Game aborted by mutual agreement}
+*
+

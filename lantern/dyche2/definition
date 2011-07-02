@@ -1,0 +1,7 @@
+classname = free.jin.board.PieceSet
+
+id = dyche2
+name = Dyche Color
+piecePainter.classname = free.chess.ImagePiecePainter
+size.pref = 64
+size.list = 24 28 32 28 46 54 64 76

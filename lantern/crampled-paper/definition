@@ -1,0 +1,7 @@
+classname = free.jin.board.BoardPattern
+
+id = crampled-paper
+name = Crampled Paper
+boardPainter.classname = free.chess.SquareImagesBoardPainter
+imageUseMode = slice
+ext = png

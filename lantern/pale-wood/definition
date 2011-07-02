@@ -1,0 +1,6 @@
+classname = free.jin.board.BoardPattern
+
+id = pale-wood
+name = Pale Wood
+boardPainter.classname = free.chess.SquareImagesBoardPainter
+imageUseMode = scale

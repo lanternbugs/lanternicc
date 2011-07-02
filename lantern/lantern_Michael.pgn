@@ -1,0 +1,66 @@
+[Event "ICC 1 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.07"]
+[Round "-"]
+[White "Michael"]
+[Black "hgarjur"]
+[Result "0-1"]
+[ICCResult "White forfeits on time"]
+[WhiteElo "1250"]
+[BlackElo "2002"]
+[Opening "Sicilian defense"]
+[ECO "B40"]
+[NIC "SI.43"]
+[Time "23:19:30"]
+[TimeControl "60+0"]
+
+1. e4 c5 2. Nf3 e6 3. e5 a6 4. d4 d5 5. dxc5 Bxc5 6. c3 Ne7 7. Nbd2 Nbc6 8.
+Be2 O-O 9. O-O b5 10. Ne4 Bb6 11. Nc5 Bxc5 12. b4 Bb6 13. a3 Ng6 14. Be3
+Bxe3 15. fxe3 Ncxe5 16. Bd3 Nxd3 17. Qxd3 Bb7 18. Ng5 Rc8 19. h4 h6 20. h5
+Qxg5 21. hxg6 Qxg6 22. Rf3 Qxd3 23. Rg3 Rxc3 24. Rf1 d4 25. Kh1 dxe3 26. Rg1
+e2 27. Rf3 Qxf3 28. gxf3 Rxf3 29. Re1 Rf1+ 30. Kh2 Rxe1 31. Kh3 Rh1+ 32. Kg3
+e1=Q+ 33. Kf4 Qf2+ 34. Ke5 Re1+ 35. Kd6 Qd4+ 36. Kc7 Qd8+ 37. Kxb7 Rd1 38.
+Kxa6 Rd6+ 39. Kxb5 Qb6+ {White forfeits on time} 0-1
+
+[Event "ICC 1 0 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.07"]
+[Round "-"]
+[White "hgarjur"]
+[Black "Michael"]
+[Result "1-0"]
+[ICCResult "Black forfeits on time"]
+[WhiteElo "2002"]
+[BlackElo "1250"]
+[Opening "Vienna game"]
+[ECO "C25"]
+[NIC "VG.04"]
+[Time "23:21:57"]
+[TimeControl "60+0"]
+
+1. e4 e5 2. Nc3 d6 3. d3 Nc6 4. g3 Nd4 5. Bg2 f6 6. f4 exf4 7. gxf4 h5 8.
+Nf3 Bg4 9. h3 Bxf3 10. Bxf3 Nxf3+ 11. Qxf3 Ne7 12. Be3 Ng6 13. Rg1 Nh4 14.
+Qf2 g5 15. O-O-O Qe7 16. Rde1 O-O-O 17. e5 dxe5 18. fxe5 fxe5 19. Bxa7 Rd6
+20. Bc5 Qe6 21. Bxd6 Bxd6 22. Ne4 Bb4 23. c3 Bxc3 24. Nxc3 Qa6 25. d4 Kd7
+26. dxe5 Ra8 27. e6+ Ke7 28. Qf7+ {Black forfeits on time} 1-0
+
+[Event "ICC 2 1"]
+[Site "Internet Chess Club"]
+[Date "2010.12.07"]
+[Round "-"]
+[White "BulletC"]
+[Black "Michael"]
+[Result "1-0"]
+[ICCResult "Black checkmated"]
+[WhiteElo "1360"]
+[BlackElo "1218"]
+[Opening "Ruy Lopez: Caro variation"]
+[ECO "C70"]
+[NIC "RL.09"]
+[Time "23:25:24"]
+[TimeControl "120+1"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 d6 6. a4 Be7 7. axb5 axb5 8.
+Rxa8 Bg5 9. Nxg5 Qxg5 10. Rxc8+ Kd7 11. Rf8 g6 12. Qf3 Qh6 13. Qxf7+ Nge7
+14. Be6# {Black checkmated} 1-0
+

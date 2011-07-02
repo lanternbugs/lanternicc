@@ -1,0 +1,17 @@
+[Event "ICC w20 20 10 u"]
+[Site "Internet Chess Club"]
+[Date "2010.12.09"]
+[Round "-"]
+[White "Mike"]
+[Black "TrainingBot"]
+[Result "1-0"]
+[ICCResult "Black checkmated"]
+[WhiteElo "1216"]
+[BlackElo "1600"]
+[Time "16:28:17"]
+[TimeControl "1200+10"]
+[SetUp "1"]
+[FEN "3k4/Qbr1r1pp/3p1p2/B2qp3/5n2/6PB/5P1P/6K1 w - - 0 1"]
+
+1. Qb8+ Bc8 2. Qxc8# {Black checkmated} 1-0
+

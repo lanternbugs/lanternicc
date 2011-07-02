@@ -1,0 +1,8 @@
+classname = free.jin.board.PieceSet
+
+id = dyche3
+name = Dyche Standard
+piecePainter.classname = free.chess.ImagePiecePainter
+servers = icc
+size.pref = 64
+size.list = 24 28 32 28 46 54 64 76
