@@ -67,7 +67,7 @@ gameFrame(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, tab
           true);//iconifiable
 */
 setAlwaysOnTop(true);
-listColor = new Color(255, 255, 255);
+listColor = new Color(240, 240, 240);
 mygametable=mygametable1;
 
 queue=queue1;
@@ -77,13 +77,13 @@ initComponents();
 }// end constructor
 
 
-void initComponents(){
+void initComponents(){       
 
 
 //list = new JList(data); //data has type Object[]
 
 gametable = new JTable(mygametable.gamedata);
-gametable.setShowVerticalLines(false);
+//gametable.setShowVerticalLines(false);
 gametable.setShowHorizontalLines(false);
 
 

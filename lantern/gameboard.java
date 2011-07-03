@@ -2003,8 +2003,6 @@ JScrollPane listScroller;
 			//topClock.setBackground(sharedVariables.boardBackgroundColor);
 			//bottomClock.setBackground(sharedVariables.boardBackgroundColor);
 			buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
-			topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-			botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
 
 			setClockBackgrounds();
 
@@ -2820,12 +2818,17 @@ void setClockBackgrounds()
 					{
 					topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
 					botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+					topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+			                botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+
 
 					}
 					else
 					{
 					topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
 					botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+					topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+			                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
 
 					}
 				}
@@ -2834,12 +2837,16 @@ void setClockBackgrounds()
 					{
 					topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
 					botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+   					topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+			                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
 
 					}
 					else
 					{
 					topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
 					botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+  					topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+			                botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
 
 					}
 
@@ -2849,6 +2856,9 @@ void setClockBackgrounds()
 			{
 				topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
 				botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+				topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+                                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+
 
 			}
 
