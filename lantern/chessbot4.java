@@ -1820,7 +1820,24 @@ if( dg.getArg(0).equals("152"))
                         {
                        if(console.type==0)
                          {if(console.number >=0 && console.number <sharedVariables.maxConsoleTabs)
-                         writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);
+                        {
+                         
+                         String uniqueName="";
+                         int bb=sharedVariables.countryNames.indexOf(";" + dg.getArg(3) + ";");
+                         if(bb > -1)
+                         {
+                          int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
+                          if(bbb > -1)
+                          uniqueName=sharedVariables.countryNames.substring(bb+ dg.getArg(3).length() + 2, bbb);
+
+                         }
+                          if(uniqueName.equals(""))
+                          writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);
+                          else
+                           writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + " " + uniqueName + "\n",console.number);
+
+                        }
+
                         }
                              }    // end else
 

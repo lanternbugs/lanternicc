@@ -2315,6 +2315,7 @@ JMenuItem item3 = new JMenuItem("Unfollow ");
        });
 
      menu2.add(item3);
+     
 
 
 add(menu2);

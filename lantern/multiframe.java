@@ -344,6 +344,7 @@ loadScripts.loadScript(sharedVariables.notifyControllerScript, sharedVariables.n
 } catch(Exception scriptErrror){}
 setUpChannelNotify();
 setUpLanternNotify();
+parseCountries();
 Thread t = new Thread(client);
 t.start();
 
@@ -668,6 +669,35 @@ toolBar.setVisible(false);
 
 
 }
+
+
+
+
+public void parseCountries()
+{
+/*try {
+  scriptLoader loadScripts = new  scriptLoader();
+ ArrayList<String> country = new ArrayList();
+loadScripts.loadScript(country, "countries.txt");
+String output = "";
+for(int z=0; z<country.size(); z++)
+{
+  String line= country.get(z);
+  try {
+    int i=line.indexOf(";");
+    String line1=line.substring(0, i);
+    String line2=line.substring(i+1, line.length());
+    output+=line2 + ";" + line1 + ";";
+  }
+  catch(Exception dogeatdog){}
+}// end for
+FileWrite writer = new FileWrite();
+writer.write(output, "new-countries.txt");
+}
+catch(Exception dumb){}
+*/
+  }
+
 
 
 public void setUpLanternNotify()
