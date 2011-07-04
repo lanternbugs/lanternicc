@@ -83,8 +83,8 @@ void initComponents(){
 //list = new JList(data); //data has type Object[]
 
 gametable = new JTable(mygametable.gamedata);
-//gametable.setShowVerticalLines(false);
-gametable.setShowHorizontalLines(false);
+gametable.setShowVerticalLines(false);
+gametable.setShowHorizontalLines(true);
 
 
 gametable.setBackground(listColor);

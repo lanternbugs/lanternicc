@@ -263,7 +263,7 @@ Point webframePoint;
 channels()
 {
 myServer = "ICC";
-version = "v3.96";
+version = "v3.97";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
