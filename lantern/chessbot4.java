@@ -522,7 +522,7 @@ try {
 			String newdgs="";
 			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
-			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132)
+			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132 && a!= 152)
 			dgs2= dgs2 + "0";
 			else
 			{
@@ -1795,6 +1795,37 @@ catch(Exception badq){}
 	{
 		try {
 		int gamenum=0;
+
+if( dg.getArg(0).equals("152"))
+{
+ // dg.getArg(0).equals("58") || // ip doenst do anything found out its 152
+  String arg58="";
+        for(int a= 0; a < dg.argc; a++)
+        {
+                      arg58 = " " + dg.getArg(a);
+                    //  writeToConsole(a + " " +  arg58 + "\n");
+        }
+
+
+
+			newBoardData temp = new newBoardData();
+			temp.dg=152;
+			temp.arg1=dg.getArg(2);
+                        temp.arg2=dg.getArg(1);
+                        temp.arg3=dg.getArg(3);
+                        try {
+                        if(Integer.parseInt(dg.getArg(2)) > 0)
+                        gamequeue.add(temp);
+
+                        }
+                        catch(Exception country){}
+
+
+
+
+
+        return;
+}
 
 if(dg.getArg(0).equals("46"))
 {
@@ -4272,6 +4303,20 @@ void proccessGameInfo(newBoardData temp)
 								return;
 							myboards[gamenum].Backward(temp.arg1, temp.arg2);
 							repaintBoards(gamenum);
+					}
+
+
+					if(temp.dg == 152)// send move
+					{
+							//writeToConsole("in dg 24 send move");
+							int gamenum=getGameBoard(temp.arg1);
+							if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+							return;
+							if(myboards[gamenum]== null)
+							return;
+							myboards[gamenum].writeCountry(temp.arg1, temp.arg2, temp.arg3);
+							repaintBoards(gamenum);
+
 					}
 
 					if(temp.dg == 37)// send move

@@ -1666,6 +1666,26 @@ void illegalMove(String icsGameNumber)
 	}
 }
 
+
+void writeCountry(String icsGameNumber, String name, String country)
+{
+
+
+
+
+	int tempnumber=getGameNumber(icsGameNumber);
+	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
+	{
+if(sharedVariables.mygame[gameData.BoardIndex].realname1.equals(name))
+sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
+else
+sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
+        }
+ 		if(isVisible() == true)
+		repaint();
+}
+
+
 void newCircle(String icsGameNumber, String examiner, String from)
 {
 	int tempnumber=getGameNumber(icsGameNumber);
@@ -2137,8 +2157,8 @@ JScrollPane listScroller;
 		     if(sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
 		     {
 
-				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + whiteCount);
-		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + blackCount);
+				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + sharedVariables.mygame[gameData.LookingAt].country1 + whiteCount);
+		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + sharedVariables.mygame[gameData.LookingAt].country2 + blackCount);
 		     	topClockDisplay.setText(whiteTimeDisplay);
 		     	botClockDisplay.setText(blackTimeDisplay);
 
@@ -2146,8 +2166,8 @@ JScrollPane listScroller;
 		 	else
 		 	{
 
-				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + blackCount);
-		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + whiteCount);
+				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + sharedVariables.mygame[gameData.LookingAt].country2 + blackCount);
+		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + sharedVariables.mygame[gameData.LookingAt].country1 + whiteCount);
 		     	topClockDisplay.setText(blackTimeDisplay);
 		     	botClockDisplay.setText(whiteTimeDisplay);
 

@@ -83,6 +83,8 @@ String name1;
 String name2;
 String realname1;
 String realname2;
+String country1;
+String country2;
 String realelo1;
 String realelo2;
 String gameListing;
@@ -122,6 +124,8 @@ gamestate(boolean [] excludedPieces1)
 	name2="";
 	realname1="";
 	realname2="";
+	country1="";
+	country2="";
 	realelo1="";
 	realelo2="";
 	gameListing="";
