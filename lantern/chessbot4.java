@@ -2739,6 +2739,14 @@ if(botname.equals("Cooly") && sharedVariables.autoCooly == true)
 go=1;
 if(botname.equals("WildOne") && sharedVariables.autoWildOne == true)
 go=1;
+if(botname.equals("Olive") && sharedVariables.autoOlive == true)
+go=1;
+if(botname.equals("Ketchup") && sharedVariables.autoKetchup == true)
+go=1;
+if(botname.equals("Slomato") && sharedVariables.autoSlomato == true)
+go=1;
+if(botname.equals("LittlePer") && sharedVariables.autoLittlePer == true)
+go=1;
 
 
 if(i>-1 && go == 1)

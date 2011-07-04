@@ -1036,10 +1036,25 @@ JCheckBoxMenuItem autotomato = new JCheckBoxMenuItem("Auto Observe Tomato");
   tournieFollow.add(autotomato);
 JCheckBoxMenuItem autowildone = new JCheckBoxMenuItem("Auto Observe WildOne");
   tournieFollow.add(autowildone);
+JCheckBoxMenuItem autoslomato = new JCheckBoxMenuItem("Auto Observe Slomato");
+  tournieFollow.add(autoslomato);
+JCheckBoxMenuItem autoketchup = new JCheckBoxMenuItem("Auto Observe Ketchup");
+  tournieFollow.add(autoketchup);
+JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Auto Observe Olive");
+  tournieFollow.add(autoolive);
+JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("Auto Observe LittlePer");
+  tournieFollow.add(autolittleper);
+
+
+
   autoflash.addActionListener(this);
 autocooly.addActionListener(this);
 autotomato.addActionListener(this);
 autowildone.addActionListener(this);
+autoslomato.addActionListener(this);
+autoketchup.addActionListener(this);
+autoolive.addActionListener(this);
+autolittleper.addActionListener(this);
 
 
  observeOptions.add(tournieFollow);
@@ -3345,7 +3360,7 @@ if(event.getActionCommand().equals("Auto Observe WildOne"))
 	else
 	sharedVariables.autoWildOne = false;
 
-	reconnect2.setVisible(true);
+//	reconnect2.setVisible(true);
 }
 
 
@@ -3356,6 +3371,45 @@ if(event.getActionCommand().equals("Auto Observe Flash"))
 	else
 	sharedVariables.autoFlash = false;
 }
+
+if(event.getActionCommand().equals("Auto Observe Olive"))
+{
+	if(sharedVariables.autoOlive == false)
+	sharedVariables.autoOlive = true;
+	else
+	sharedVariables.autoOlive = false;
+}
+if(event.getActionCommand().equals("Auto Observe Ketchup"))
+{
+	if(sharedVariables.autoKetchup == false)
+	sharedVariables.autoKetchup = true;
+	else
+	sharedVariables.autoKetchup = false;
+
+//	reconnect2.setVisible(true);
+}
+
+
+if(event.getActionCommand().equals("Auto Observe LittlePer"))
+{
+	if(sharedVariables.autoLittlePer == false)
+	sharedVariables.autoLittlePer = true;
+	else
+	sharedVariables.autoLittlePer = false;
+}
+
+
+
+if(event.getActionCommand().equals("Auto Observe Slomoto"))
+{
+	if(sharedVariables.autoSlomato == false)
+	sharedVariables.autoSlomato = true;
+	else
+	sharedVariables.autoSlomato = false;
+}
+
+
+
 if(event.getActionCommand().equals("Random Piece Set Observe Only"))
 {
 	if(sharedVariables.randomArmy == false)

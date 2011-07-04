@@ -58,6 +58,10 @@ boolean autoTomato;
 boolean autoFlash;
 boolean autoCooly;
 boolean autoWildOne;
+boolean autoKetchup;
+boolean autoSlomato;
+boolean autoOlive;
+boolean autoLittlePer;
 boolean [] pointedToMain = new boolean[100];
 boolean [] excludedPieces;
 boolean highlightMoves;
@@ -263,7 +267,7 @@ Point webframePoint;
 channels()
 {
 myServer = "ICC";
-version = "v3.97";
+version = "v3.98";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -414,6 +418,11 @@ autoTomato = false;
 autoCooly = false;
 autoFlash = false;
 autoWildOne = false;
+autoKetchup = false;
+autoOlive = false;
+autoSlomato = false;
+autoLittlePer =false;
+
 toolbarVisible=false;
 showQsuggest=true;
 shoutsAlso=false;

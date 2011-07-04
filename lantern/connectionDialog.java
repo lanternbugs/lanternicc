@@ -36,7 +36,6 @@ channels sharedVariables;
 ConcurrentLinkedQueue<myoutput> queue;
 
 
-
 connectionDialog(JFrame frame, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, boolean mybool)
 {
 super(frame, mybool);
@@ -219,7 +218,14 @@ layout.setVerticalGroup(vGroup);
 void login()
 {
 
-	String user = userNameField.getText();
+	String user = userNameField.getText();  
+	if(user.startsWith("~"))
+	{
+         user=user.substring(1, user.length());
+          sharedVariables.myServer="FICS";
+           sharedVariables.doreconnect=true;
+
+        }
 	String password = passwordField.getText();
 	myoutput data1= new myoutput();
     data1.data=user + "\n";

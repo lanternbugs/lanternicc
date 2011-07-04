@@ -1638,7 +1638,9 @@ void doCommand(String mycommand)
 {
 	myoutput output = new myoutput();
 	output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
-	output.consoleNumber=sharedVariables.looking[consoleNumber];
+	if(!sharedVariables.myServer.equals("ICC"))
+         output.data= mycommand;
+        output.consoleNumber=sharedVariables.looking[consoleNumber];
     queue.add(output);
     giveFocus();
 
