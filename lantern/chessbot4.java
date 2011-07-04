@@ -1803,7 +1803,7 @@ if( dg.getArg(0).equals("152"))
         for(int a= 0; a < dg.argc; a++)
         {
                       arg58 = " " + dg.getArg(a);
-                    //  writeToConsole(a + " " +  arg58 + "\n");
+                      //writeToConsole(a + " " +  arg58 + "\n");
         }
 
 
@@ -1816,9 +1816,17 @@ if( dg.getArg(0).equals("152"))
                         try {
                         if(Integer.parseInt(dg.getArg(2)) > 0)
                         gamequeue.add(temp);
+                        else
+                        {
+                       if(console.type==0)
+                         {if(console.number >=0 && console.number <sharedVariables.maxConsoleTabs)
+                         writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);
+                        }
+                             }    // end else
 
                         }
-                        catch(Exception country){}
+                        catch(Exception country){
+                     }
 
 
 
