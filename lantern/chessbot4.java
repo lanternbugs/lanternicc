@@ -964,7 +964,10 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=1;// defaults to 0
 						if(consoleChar == 'p')
 						console.type=2;// logpgn
-						String myConNumber="";
+						if(consoleChar == 's')
+						console.type=3;// save pgn
+
+                                                String myConNumber="";
 
 						// we assume its c now. could be g for game, c is subframe console
 						try {myConNumber = consoleString.substring(1, consoleString.length()-1); // not sure what character i'm elinimating with -1 but not a number if not minus1
@@ -3241,7 +3244,7 @@ catch(Exception notifysound){}
 	String pgnlog = "";
 	for(int pgnnum=1; pgnnum < dg.argc; pgnnum++)
 	{
-		if(console.type != 2)
+		if(console.type != 2 && console.type != 3)//logpgn and savepgn
 		writeToConsole(dg.getArg(pgnnum));
 		else
 		{
@@ -3251,7 +3254,21 @@ catch(Exception notifysound){}
 			pgnlog=pgnlog + temp;
 		}
 	}
-if(console.type == 2)
+if(console.type  == 3)
+{
+				FileWriter fstream = new FileWriter(sharedVariables.defaultpgn, true);
+
+try {
+			   BufferedWriter out = new BufferedWriter(fstream);
+	    		out.write(pgnlog);
+	    		//Close the output stream
+	    		out.close();
+			}
+			catch(Exception e)
+			{  };
+
+}
+else if(console.type == 2)
 {
 				FileWriter fstream = new FileWriter("lantern_" + sharedVariables.myname + ".pgn", true);
 

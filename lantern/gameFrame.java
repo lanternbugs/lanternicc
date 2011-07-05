@@ -36,6 +36,7 @@ import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.table.*;
 import javax.swing.table.TableRowSorter;
+import javax.swing.filechooser.FileFilter;
 
 
 class gameFrame extends JFrame
@@ -259,6 +260,20 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				menu2.add(item3);
 
 
+				JMenuItem item4 = new JMenuItem("savpgn");
+				 item4.addActionListener(new ActionListener() {
+          		public void actionPerformed(ActionEvent e) {
+                                 savePgn(type1, type2, gameIndex);
+
+				}
+
+       });
+
+
+
+				menu2.add(item4);
+
+
 				add(menu2);
 				menu2.show(e.getComponent(),e.getX(),e.getY());
 
@@ -281,6 +296,79 @@ gametable.addMouseListener(mouseListenerEvents);
 /******************* end row sorter **********************/
 
 }// end init components
+
+
+void savePgn(String type1, String type2, String gameIndex)
+{                       String fileName = getFile();
+                        if(fileName.equals(""))
+                        return;
+ 			else
+                         sharedVariables.defaultpgn=fileName;
+                         	  String examineString = "";
+                                  	if(type1.equals("history"))
+				 	examineString = "`s" + "0" + "`" + "logpgn " + type2 + " " + gameIndex;
+				 	else if(type1.equals("liblist"))
+				 	examineString = "`s" + "0" + "`" + "logpgn " + type2 + " %" + gameIndex;
+				 	else if(type1.equals("search"))
+				 	examineString = "`s" + "0" + "`" + "logpgn " + gameIndex;
+				 	myoutput output = new myoutput();
+				 	output.data=examineString + "\n";
+
+				 	output.consoleNumber=0;
+      			 	       if(!examineString.equals(""))
+                                       queue.add(output);
+}
+
+
+String getFile()
+{
+
+		try {
+JFileChooser fc = new JFileChooser();
+fc.setCurrentDirectory(new File("."));
+fc.setFileFilter(new FileFilter() {
+        public boolean accept(File f) {
+          if(f.getName().toLowerCase().endsWith(".pgn"))
+          return true;
+
+            if( f.isDirectory())
+            return true;
+            return false;
+        }
+
+        public String getDescription() {
+
+
+return "Pgn";
+
+        }
+      });
+
+
+
+
+
+
+			int returnVal = fc.showDialog((JFrame) this, "Save");
+
+			 if (returnVal == JFileChooser.APPROVE_OPTION)
+			 {
+			  File scriptFile = fc.getSelectedFile();
+
+
+			  String myFilename=scriptFile.getAbsolutePath();
+			{
+                          
+                          if(!myFilename.toLowerCase().endsWith(".pgn"))
+                          return myFilename + ".pgn";
+                          return myFilename;
+                          }
+		  	}// end if
+		}// end try
+		catch(Exception d){}
+
+		return "";
+}// end method
 
 class overall extends JPanel
 {
