@@ -144,13 +144,13 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				if(type1.equals("history") || type1.equals("liblist") || type1.equals("search") || type1.equals("stored"))
 				 {
 				 	if(type1.equals("history"))
-				 	examineString = "Examine " + type2 + " " + gameIndex;
+				 	examineString = "Spos " + type2 + " " + gameIndex;
 				 	else if(type1.equals("liblist"))
-				 	examineString = "Examine " + type2 + " %" + gameIndex;
+				 	examineString = "Spos " + type2 + " %" + gameIndex;
 				 	else if(type1.equals("search"))
-				 	examineString = "Examine " + gameIndex;
+				 	examineString = "Spos " + gameIndex;
 				 	else if(type1.equals("stored"))
-				 	examineString = "Examine " + StoredOpponent + " " + type2;
+				 	examineString = "Spos " + StoredOpponent + " " + type2;
 
 				 	myoutput output = new myoutput();
 				 	output.data=examineString + "\n";
