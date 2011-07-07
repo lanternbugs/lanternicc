@@ -55,6 +55,7 @@ int whiteSecond;
 int blackSecond;
 int whiteTenth;
 int blackTenth;
+int clickCount;
 long whitenow;
 long blacknow;
 double wtime;
@@ -77,6 +78,7 @@ String myColor;
 String title;
 String tabtitle;
 String myFen;
+String engineFen;
 String initialPosition;
 boolean newBoard;
 String name1;
@@ -132,13 +134,14 @@ gamestate(boolean [] excludedPieces1)
 	title = "new board";
 	movetop=0;
 	  myFen="";
+	  engineFen="";
 	  initialPosition="*";
 	  initialize(board);
 	lastfrom=-1;
 	lastto=-1;
 	blank=50;
 	madeMove = 0;
-
+        clickCount=0;
 	wtime=0;
 	btime=0;
 
@@ -211,9 +214,69 @@ void readInitialPosition(String initial)
 
 initialPosition= new String(initial);
 readInitialPosition2(initialPosition, board);
+generateFen(board);
 }
 
+void generateFen(int board[])
+{
+int spaces = 0;
+for(int a=7; a>=0; a--)
+{
+for(int b=7; b>=0; b--)
+{
+  int n=a*8+b;
+if(board[n]==0)
+spaces++;
+else
+{
+if(spaces > 0)
+{
+ engineFen+="" + spaces;
+ spaces=0;
+}
+if(board[n]==12)
+engineFen+="k";
+if(board[n]==11)
+engineFen+="q";
+if(board[n]==10)
+engineFen+="r";
+if(board[n]==9)
+engineFen+="b";
+if(board[n]==8)
+engineFen+="n";
+if(board[n]==7)
+engineFen+="p";
+if(board[n]==6)
+engineFen+="K";
+if(board[n]==5)
+engineFen+="Q";
+if(board[n]==4)
+engineFen+="R";
+if(board[n]==3)
+engineFen+="B";
+if(board[n]==2)
+engineFen+="N";
+if(board[n]==1)
+engineFen+="P";
 
+
+
+}// end else
+} // end b loop
+
+if(spaces > 0)
+{
+ engineFen+="" + spaces;
+ spaces=0;
+}
+if(a>0)
+engineFen+="/";
+}// end a loop
+if(engineFen.equals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+engineFen+=" w KQkq - 0";
+else
+engineFen+=" w - - 0";
+} // end method
 
 void readFen2(String fen, int board[])
 {

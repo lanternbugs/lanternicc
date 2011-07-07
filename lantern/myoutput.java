@@ -26,6 +26,7 @@ class myoutput {
 	int trimconsole;
 	int clearboard;
 	int trimboard;
+	int startengine;
 	String tabTitle;
 	// these next two (game board and game looking) are ignored generally and not set or used
 	// but during a game if sent from the mouse release function after a move
@@ -47,5 +48,6 @@ myoutput(){
 	clearboard=-1;
 	trimconsole=-1;
 	trimboard=-1;
+	startengine=-1;
 	}
 }

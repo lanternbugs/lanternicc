@@ -365,8 +365,16 @@ void writeToGameConsole(StyledDocument doc, int i)
 		     {
 				 if(sharedVariables.gamelooking[a]==i && sharedVariables.pointedToMain[a] == false)
 
-			gameconsoles[a].setStyledDocument(doc);
-
+			{
+                          
+                          boolean go=true;
+                           if(sharedVariables.mygame[i].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+                           if(sharedVariables.mygame[i].clickCount %2 == 1)
+                           go=false;
+                           
+                           if(go==true)
+                          gameconsoles[a].setStyledDocument(doc);
+                          }
 			else
 			myboards[a].myconsolepanel.channelTabs[i].setBackground(sharedVariables.newInfoTabBackground);
 			}

@@ -190,6 +190,7 @@ Color nameBackgroundColor;
 
 StyledDocument [] mydocs;
 StyledDocument [] mygamedocs = new StyledDocument[100];
+StyledDocument engineDoc;
 JButton [] mybuttons;
 
 URL [] songs;
@@ -265,6 +266,7 @@ File wallpaperFile;
 preselectedBoards preselectBoards;
 
 Point webframePoint;
+JTextPane engineField = new JTextPane();
 
 channels()
 {
@@ -273,7 +275,7 @@ version = "v4.02";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
-
+try { engineDoc=engineField.getStyledDocument(); } catch(Exception enginestuff){}
 mydocs = new StyledDocument[maxConsoleTabs];
 String os = System.getProperty("os.name").toLowerCase();
 if (os.indexOf( "win" ) >= 0)

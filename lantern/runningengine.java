@@ -200,11 +200,16 @@ if(text.length() > 0 && !text.startsWith("#") && !text.startsWith("stat"))
 {
 
 try {
-StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
+//StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
+ StyledDocument doc = sharedVariables.engineDoc;
+
 doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
+  
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
 gameconsoles[a].setStyledDocument(doc);
 }
 
@@ -275,7 +280,17 @@ if(stage == 2 && text.contains("readyok"))
 
 
 	sendToEngine("setoption name UCI_AnalyseMode value true\n");
-	sendToEngine("position startpos\n");
+if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
+{
+
+    sendToEngine("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + "\n");
+	writeOut("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + "\n");
+
+}
+else
+{
+  sendToEngine("position startpos\n");
+}
 	sendToEngine("go infinite\n");
 
 // if they start analyzing in the middle of an examined game
@@ -284,10 +299,25 @@ if(sharedVariables.mygame[BoardIndex].engineTop > 0)
 {
 	sendToEngine("stop\n");
 	writeOut("stop\n");
-	sendToEngine("position startpos" + sharedVariables.mygame[BoardIndex].getUciMoves());
+
+if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
+{
+   if(!sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen.startsWith("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+   sendToEngine("ucinewgame\n");
+    sendToEngine("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + sharedVariables.mygame[BoardIndex].getUciMoves());
+	writeOut("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + sharedVariables.mygame[BoardIndex].getUciMoves());
+
+}
+else
+{
+    sendToEngine("position startpos" + sharedVariables.mygame[BoardIndex].getUciMoves());
 	writeOut("position startpos" + sharedVariables.mygame[BoardIndex].getUciMoves());
+}
+
+
 	sendToEngine("go infinite\n");
 	writeOut("go infinite\n");
+	writeOut("engine fen is " + sharedVariables.mygame[BoardIndex].engineFen + " and board index is " + BoardIndex + " \n");
 }
 
 
@@ -417,12 +447,20 @@ catch(Exception e){}
 void writeOut(String text)
 {
 try {
-StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
+
+// if(!sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen.equals(""))
+// text+="\n" + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen  + "\n";
+//StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
+ StyledDocument doc = sharedVariables.engineDoc;
 doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
 gameconsoles[a].setStyledDocument(doc);
+
+//gameconsoles[a].setStyledDocument(doc);
 }
 
 }

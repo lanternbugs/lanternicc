@@ -409,6 +409,11 @@ runningengine engine1;
 engine1= new runningengine(sharedVariables, gameData.BoardIndex, gameconsoles, gameData);
 Thread t = new Thread(engine1);
 t.start();
+sharedVariables.mygame[gameData.BoardIndex].clickCount=0;
+myoutput data = new myoutput();
+data.startengine=1;
+queue.add(data);
+
 
 }
 
@@ -1737,8 +1742,21 @@ void sendUciMoves()
 			//sharedVariables.engineQueue.add(outgoing);
 
 			//myoutput outgoing2 = new myoutput();
-			String moves ="position startpos";
+String moves;
+if(sharedVariables.mygame[gameData.BoardIndex].engineFen.length()>2)
+{
+
+  moves="";
+   if(!sharedVariables.mygame[gameData.BoardIndex].engineFen.startsWith("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+   moves="ucinewgame\n";
+   moves+="position fen " + sharedVariables.mygame[gameData.BoardIndex].engineFen + sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+
+}
+else
+{
+                        moves ="position startpos";
 			moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+}
 			outgoing.data+= moves;
 			//sharedVariables.engineQueue.add(outgoing2);
 

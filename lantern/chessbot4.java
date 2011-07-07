@@ -5121,6 +5121,11 @@ public void run()
 							clearConsole(tosend.clearboard, 1); // 0/1 console or board
 							tosend=queue.poll();
 					}
+					if(tosend.startengine > -1)
+					{
+							initializeEngine(); // 0/1 console or board
+							tosend=queue.poll();
+					}
 
 					else if(tosend.tab > -1)
 					{
@@ -5156,6 +5161,32 @@ public void run()
 
 }// end while
 }// end run
+
+void initializeEngine()
+{
+		for(int a=0; a< sharedVariables.openBoardCount; a++)
+		     if(myboards[a]!=null)
+		     if(myboards[a].isVisible())
+		     {
+				 if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.pointedToMain[a] == false)
+
+			{
+                          
+                          boolean go=true;
+                           if(sharedVariables.engineOn == true)
+                           if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
+                           go=true;
+
+                           if(go==true)
+                          {gameconsoles[a].setStyledDocument(sharedVariables.engineDoc);
+                          sharedVariables.mygame[a].clickCount++;
+
+                          }
+                          }
+                          }
+
+
+}
 
 	void clearConsole(int conNumber, int board)
 	{

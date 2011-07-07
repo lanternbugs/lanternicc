@@ -127,8 +127,20 @@ public void makehappen(int i)
  			sharedVariables.moveSliders[gameData.BoardIndex].setMaximum(sharedVariables.mygame[gameData.LookingAt].turn);
  			sharedVariables.moveSliders[gameData.BoardIndex].setValue(sharedVariables.mygame[gameData.LookingAt].turn);
  			sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
- 			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
- 			sharedVariables.pointedToMain[gameData.BoardIndex]=false;// this tells us if the tab is on a game but console is on main
+ 			
+                         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+                         {
+                           if(sharedVariables.mygame[gameData.LookingAt].clickCount %2 == 0)
+                           gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);
+                           else
+                            gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
+                            sharedVariables.mygame[gameData.LookingAt].clickCount++;
+                         }
+                         else
+                         gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
+
+
+                         sharedVariables.pointedToMain[gameData.BoardIndex]=false;// this tells us if the tab is on a game but console is on main
  			sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
 			adjustMoveList();
  								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type something
