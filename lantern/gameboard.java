@@ -45,21 +45,21 @@ import java.util.Random;
 
 
 
-class gameboard extends JFrame  implements ComponentListener, WindowListener
-
+//class gameboard extends JFrame  implements ComponentListener, WindowListener
+ class gameboard extends JInternalFrame  implements InternalFrameListener
 {
 
-
+/*
 void setSelected(boolean home)
 {
  return;
 }
 boolean isSelected()
 {
-  
+
  return false;
 }
-
+*/
 Image [] img;
 
 channels sharedVariables;
@@ -88,17 +88,94 @@ subframe [] consoleSubframes;
 gamestuff gameData;
 resourceClass graphics;
 docWriter myDocWriter;
+gameboardTop topGame;
+
+
+
+public boolean superIsVisible()
+{
+  return super.isVisible();
+}
+
+
+public void setSelected(boolean type)
+{
+ try {
+if(sharedVariables == null || topGame == null)
+{
+  super.setSelected(type);
+ return;
+}
+if(sharedVariables.useTopGames == true)
+return;
+else
+super.setSelected(type);
+ }
+ catch(Exception dui){  }
+}
+public void setTitle(String type)
+{
+ try {
+if(sharedVariables == null || topGame == null)
+{
+  super.setTitle(type);
+ return;
+}
+if(sharedVariables.useTopGames == true)
+topGame.setTitle(type);
+else
+super.setTitle(type);
+ }
+ catch(Exception dui){}
+}
+
+
+public void setLocation(Point P)
+{
+ try {
+if(sharedVariables == null || topGame == null)
+{
+  super.setLocation(P);
+  return;
+}
+if(sharedVariables.useTopGames == true)
+topGame.setLocation(P);
+else
+super.setLocation(P);
+ }
+ catch(Exception dui){}
+}
+
+
+public boolean isVisible()
+{
+try{
+if(sharedVariables == null || topGame == null)
+{
+  return super.isVisible();
+}
+if(sharedVariables.useTopGames == true)
+return topGame.isVisible();
+
+return super.isVisible();
+}
+catch(Exception dummy){}
+return super.isVisible();
+
+}
+
+
 
 gameboard(JTextPane consoles1[], subframe consoleSubframes1[], JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, int boardNumber, Image img1[], ConcurrentLinkedQueue<myoutput> queue1, channels sharedVariables1, resourceClass graphics1, docWriter myDocWriter1)
 {
 
 
-/* super("Game Board" + (boardNumber),
+ super("Game Board" + (boardNumber),
           true, //resizable
           true, //closable
           true, //maximizable
           true);//iconifiable
-  */
+
 try{
     // Create file
    // fstream = new FileWriter("\\multiframe\\out.txt");
@@ -136,83 +213,135 @@ if(sharedVariables.mygame[gameData.BoardIndex] == null)
 sharedVariables.mygame[gameData.BoardIndex] = new gamestate(sharedVariables.excludedPieces);
 readLock.unlock();
 //writeout("going to create overall\n");
+myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+topGame= new gameboardTop(sharedVariables, myconsolepanel, queue, gameData);
+
+
+if(sharedVariables.useTopGames == true)
+{
 overall = new overallpanel(true);
 
+topGame.add(overall);
+//topGame.setVisible(true);
+//topGame.setSize(300,300);
+//setVisible(true);
+}
+else
+{
+ overall = new overallpanel(true);
+
 add(overall);
-addComponentListener(this);
-addWindowListener(this);
-setAlwaysOnTop(true);
+//addComponentListener(this);
+//addWindowListener(this);
+
+addInternalFrameListener(this);
+}
+//setAlwaysOnTop(true);
 //out.close();
-   }catch (Exception e){//Catch exception if any
+   }
+   catch (Exception e){//Catch exception if any
 
     }
 
 
 }
 
-/*void writeout(String s)
-{
-try {
-	out.write(s);
-	out.flush();
-}
-catch(Exception e){}
-
-}*/
 
 
-public void componentHidden(ComponentEvent e) {
-
-    }
-
-    public void componentMoved(ComponentEvent e) {
-
-    }
-
-    public void componentResized(ComponentEvent e) {
-    adjust();
-    }
-
-    public void componentShown(ComponentEvent e) {
-
-			adjust();
-    }
-
-void adjust()
-{
 
 
-		int x = getWidth();
-		int y = getHeight();
-
-		int boardWidth = (int) x * 5 / 6;
-		int controlsWidth = (int) x / 6;
-
-		int topy = (int ) x * 5 / 6;
-		int bottomy = (int) x/6;
-
-		mypanel.setPreferredSize(new Dimension(boardWidth, topy));
-		mycontrolspanel.setPreferredSize(new Dimension(controlsWidth, topy));
-		mycontrolspanel.setPreferredSize(new Dimension(x, bottomy));
-		repaint();
-
-		/*JFrame frame = new JFrame();
-		frame.setTitle("x= " + x + " y= " + y);
-		frame.setVisible(true);
-		*/
-
-}
 
 // called when they want to resize the game console or make it hidden
  void recreate()
  {
-  getContentPane().removeAll();
+ if(sharedVariables.useTopGames == true)
+ {
+  topGame.getContentPane().removeAll();
+
+  overall = new overallpanel(false);
+  topGame.add(overall);
+  topGame.setVisible(true);
+ }
+else
+ { getContentPane().removeAll();
 
   overall = new overallpanel(false);
   this.add(overall);
-  this.setVisible(true);
+  super.setVisible(true);
  }
 
+ }
+
+ void switchFrame(final boolean top)
+ {
+ 
+  SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+
+
+ if(top == true)
+ {
+
+   setVisible(false);
+
+  getContentPane().removeAll();
+//   topGame.getContentPane().removeAll();
+
+  try {
+   // setSize(10,10);
+   // setLocation(500, 5000);
+  }
+  catch(Exception badff){}
+
+   overall= new overallpanel();
+  myconsolepanel.removeAll();
+   myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+topGame.myconsolepanel=myconsolepanel;
+
+  overall.overallSwitch();
+  topGame.add(overall);
+
+  topGame.setVisible(true);
+
+  repaint();
+  topGame.setVisible(false);
+  setVisible(false);
+  topGame.setVisible(true);
+}
+else
+ {
+
+
+   topGame.getContentPane().removeAll();
+
+   myconsolepanel.removeAll();
+
+    myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+topGame.myconsolepanel=myconsolepanel;
+
+
+  overall = new overallpanel();
+  overall.overallSwitch();
+  add(overall);
+ topGame.setVisible(false);
+ setVisible(true);
+ repaint();
+
+
+}
+
+
+                          } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+
+
+ }
 
 // class overall is  the overall  gameboard panel
 //  its strictly to provide a layout for the 3 panels that the gameboard uses
@@ -220,7 +349,9 @@ void adjust()
 // the controls like clock , lables  for names etc ratings. gameboardControlsPanel
 class overallpanel extends JPanel
 {
-
+         overallpanel()
+         {
+         }
 
 	overallpanel(boolean firstTime)
 {
@@ -229,8 +360,7 @@ class overallpanel extends JPanel
 	 mypanel= new gameboardPanel(img, sharedVariables, gameData, queue, graphics);
 
 
-	myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
-
+	// game board console panel moved up
 	mycontrolspanel= new gameboardControlsPanel();
 	}
 	else
@@ -259,6 +389,7 @@ class overallpanel extends JPanel
 
 
 	}
+
 if(sharedVariables.sideways==false)
 	setOverallVertical();
 else
@@ -267,11 +398,36 @@ else
 return;
 }
 
-void setOverallVertical()
+void	overallSwitch()
 {
 
-GroupLayout layout = new GroupLayout(getContentPane());
+if(sharedVariables.sideways==false)
+	setOverallVertical();
+else
+	setOverallHorizontal();
+
+return;
+}
+
+
+
+void setOverallVertical()
+{
+ GroupLayout layout;
+if(sharedVariables.useTopGames == true)
+{
+layout = new GroupLayout(topGame.getContentPane());
+// layout = new GroupLayout(getContentPane());
+        topGame.getContentPane().setLayout(layout);
+//   getContentPane().setLayout(layout);
+}
+else
+{
+layout = new GroupLayout(getContentPane());
+//layout = new GroupLayout(this);
         getContentPane().setLayout(layout);
+
+}
 
 	//Create a parallel group for the horizontal axis
 	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
@@ -338,9 +494,21 @@ v4.addGroup(v2);
 void setOverallHorizontal()
 {
 
-GroupLayout layout = new GroupLayout(getContentPane());
+ GroupLayout layout;
+if(sharedVariables.useTopGames == true)
+{
+layout = new GroupLayout(topGame.getContentPane());
+//layout = new GroupLayout(getContentPane());
+       topGame.getContentPane().setLayout(layout);
+  //getContentPane().setLayout(layout);
+}
+else
+{
+layout = new GroupLayout(getContentPane());
+//layout = new GroupLayout(this);
         getContentPane().setLayout(layout);
 
+}
 	//Create a parallel group for the horizontal axis
 	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
@@ -3028,15 +3196,28 @@ return col + row;
 
      void setBoardSize()
      {
-		sharedVariables.myBoardSizes[gameData.BoardIndex].point0=getLocation();
+       
+       if(sharedVariables.useTopGames == true)
+       {
+        //topGame.setBoardSize();
+        return;
+       }
+	
+        if(getWidth() < 50)
+        return;
+
+        	sharedVariables.myBoardSizes[gameData.BoardIndex].point0=getLocation();
 		//set_string = set_string + "" + point0.x + " " + point0.y + " ";
 		sharedVariables.myBoardSizes[gameData.BoardIndex].con0x=getWidth();
 		sharedVariables.myBoardSizes[gameData.BoardIndex].con0y=getHeight();
 		//set_string = set_string + "" + con0x + " " + con0y + " ";
 
 	 }
-  /*    public void internalFrameClosing(InternalFrameEvent e) {
+      public void internalFrameClosing(InternalFrameEvent e) {
 	// we want to serialize the window dimensions
+
+        if(sharedVariables.useTopGames == true)
+        return;
 
 	if(isVisible() && isMaximum() == false && isIcon() == false)
 	{
@@ -3071,6 +3252,8 @@ return col + row;
     }
 
     public void internalFrameDeiconified(InternalFrameEvent e) {
+        if(sharedVariables.useTopGames == true)
+        return;
 
 	if(isVisible() && isMaximum() == false && isIcon() == false)
 	{
@@ -3082,6 +3265,8 @@ return col + row;
 
     public void internalFrameActivated(final InternalFrameEvent e) {
      // System.out.println("fame activate");
+        if(sharedVariables.useTopGames == true)
+        return;
 
 
 	if(isVisible() && isMaximum() == false && isIcon() == false)
@@ -3094,12 +3279,15 @@ return col + row;
     }
 
     public void internalFrameDeactivated(InternalFrameEvent e) {
+        if(sharedVariables.useTopGames == true)
+        return;
+
 myconsolepanel.Input.setFocusable(false);
 
     }
-*/
 
-    public void windowClosing(WindowEvent e) {
+
+/*    public void windowClosing(WindowEvent e) {
  	// we want to serialize the window dimensions
 
 	if(isVisible() && isMaximum() == false && isIcon() == false)
@@ -3185,7 +3373,7 @@ myconsolepanel.Input.setFocusable(false);
   }
 
 
-
+ */
 
 
 

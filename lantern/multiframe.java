@@ -166,6 +166,9 @@ JCheckBoxMenuItem leftNameTimestamp;
 JCheckBoxMenuItem reconnectTimestamp;
 JCheckBoxMenuItem qtellTimestamp;
 JCheckBoxMenuItem checkLegality;
+JCheckBoxMenuItem useTopGame;
+
+
 
  JCheckBoxMenuItem aspect0;
  JCheckBoxMenuItem aspect1;
@@ -259,6 +262,7 @@ mymultiframe()
 	gamequeue = new ConcurrentLinkedQueue<newBoardData>();
 
 	sharedVariables = new channels();
+	sharedVariables.useTopGames = getOnTopSetting();
 queue = new ConcurrentLinkedQueue<myoutput>();
 
 	seekGraph = new seekGraphFrame(sharedVariables, queue);
@@ -355,6 +359,13 @@ consoleSubframes[0].makeHappen(0);
     	highlight.setSelected(false);
     else
     	highlight.setSelected(true);
+
+
+
+ if(sharedVariables.useTopGames == true)
+ useTopGame.setSelected(true);
+ else
+ useTopGame.setSelected(false);
 
  if(sharedVariables.showMaterialCount == false)
     	materialCount.setSelected(false);
@@ -634,10 +645,38 @@ try {
 		ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH / 6);
 		if(ch > cw + 100)
 		ch=cw+100;
-
+                if(sharedVariables.useTopGames == false)
+                {
 		myboards[0].setLocation(px, py);
 		myboards[0].setSize(cw, ch);
-		}
+                }
+                else
+                {
+                  
+                  final int px1 = px;
+                  final int py1 = py;
+                  final int cw1 = cw;
+                  final int ch1 = ch;
+                try {
+                SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                              if(myboards[0].topGame != null)
+                              {
+                 myboards[0].topGame.setLocation(px1, py1);
+		myboards[0].topGame.setSize(cw1, ch1);
+                              }
+                            } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+                }catch(Exception badf){}
+                }
+
+                }
 
 }catch(Exception dontknow){}// could not complete getting screen size and postioning windows
 }// end if not have any settings read
@@ -698,7 +737,19 @@ catch(Exception dumb){}
 */
   }
 
+boolean getOnTopSetting()
+{
 
+scriptLoader loadScripts = new  scriptLoader();
+ ArrayList<String> ontop = new ArrayList();
+loadScripts.loadScript(ontop, "lantern_board_on_top.txt");
+if(ontop.size() > 0)
+{String top= ontop.get(0);
+if(top.equals("true"))
+return true;
+}
+return false;
+}
 
 public void setUpLanternNotify()
 {
@@ -1011,6 +1062,10 @@ advancedOptions.add(compactNameList);
 
 autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
 advancedOptions.add(autobufferchat);
+
+useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
+advancedOptions.add(useTopGame);
+useTopGame.addActionListener(this);
 
 
   autopopup = new JCheckBoxMenuItem("Auto Name Popup");
@@ -2330,9 +2385,21 @@ try {
 	if(myboards[a]!=null)
 	if(myboards[a].isVisible())
 	{
-		myboards[a].setSize(width,height);
+if(sharedVariables.useTopGames == false)
+{		myboards[a].setSize(width,height);
 		myboards[a].setLocation(x + count * dif, y + count * dif);
 		myboards[a].setSelected(true);
+}
+else
+{
+ if(myboards[a].topGame != null)
+ {
+  		myboards[a].topGame.setSize(width,height);
+		myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
+
+
+ }
+}
 		 count++;
 	}
 
@@ -2348,6 +2415,112 @@ try {
 }
 catch(Exception d){}
 }
+
+
+
+
+if(event.getActionCommand().equals("Make Boards Always On Top"))
+{
+/* SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+	int x=160;
+	int y=120;
+	int width=400;
+	int height=300;
+	int dif=30;
+	int count=0;
+
+
+try {
+
+	for(int a=0; a<myboards.length; a++)
+	if(myboards[a]!=null)
+{
+
+            if(sharedVariables.useTopGames == true)
+            {
+               myboards[a].switchFrame(false);
+
+              myboards[a].setSize(width,height);
+            		myboards[a].setLocation(x + count * dif, y + count * dif);
+            		myboards[a].setSelected(true);
+
+             myboards[a].topGame.setAlwaysOnTop(false);
+            }
+            else
+            {
+             if(myboards[a].topGame != null)
+             {
+                          myboards[a].switchFrame(true);
+
+               		myboards[a].topGame.setSize(width,height);
+            		myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
+
+             myboards[a].topGame.setAlwaysOnTop(true);
+              myboards[a].setVisible(false);
+             }
+             }// end else
+		 count++;
+
+}// if not null
+else
+break;
+
+
+
+}
+catch(Exception d){}
+ if(sharedVariables.useTopGames == true)
+sharedVariables.useTopGames = false;
+else
+sharedVariables.useTopGames = true;
+                           } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+  SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                            for(int b=0; b< myboards.length; b++)
+                            if(myboards[b]!=null && sharedVariables.useTopGames == true)
+                            myboards[b].setVisible(false);
+                           } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+*/
+
+//lantern_board_on_top.txt
+
+boolean ontop = getOnTopSetting();
+
+FileWrite mywriter = new FileWrite();
+if(ontop == false)
+{
+    String mess = "Next time you start the program, boards will be on top windows.";
+  Popup mypopper = new Popup(this, true, mess);
+  mypopper.setVisible(true);
+  mywriter.write("true\r\n", "lantern_board_on_top.txt");
+}
+else
+{
+    String mess = "Next time you start the program, boards will NOT be on top windows.";
+   Popup mypopper = new Popup(this, true, mess);
+   mypopper.setVisible(true);
+    mywriter.write("false\r\n", "lantern_board_on_top.txt");
+}
+
+}
+
+
+
+
 
 
 if(event.getActionCommand().equals("Get a Game"))

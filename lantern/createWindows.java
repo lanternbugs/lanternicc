@@ -240,7 +240,15 @@ boardNumber=d;
 break;
 }
  if(myboards[boardNumber]!=null && boardNumber != sharedVariables.openBoardCount)
- 	myboards[boardNumber].setVisible(true);
+ {
+  if(sharedVariables.useTopGames == true)
+    {  if(myboards[boardNumber].topGame != null)
+    myboards[boardNumber].topGame.setVisible(true);
+  }
+
+  else
+   myboards[boardNumber].setVisible(true);
+ }
  else
  {	myboards[boardNumber] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, boardNumber, img, queue, sharedVariables, graphics, myDocWriter);
 
@@ -249,6 +257,8 @@ newboard=true;
 try {
 // patch routine to restore board to same size if its first  board
 
+ if(sharedVariables.useTopGames == false)
+ {
 
 if(sharedVariables.myBoardSizes[boardNumber].con0x != -1)
 {
@@ -257,7 +267,31 @@ myboards[boardNumber].setLocation(sharedVariables.myBoardSizes[boardNumber].poin
 }
 else
 myboards[boardNumber].setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
+ }// false
+else
+{
+ final int boardNumber1=boardNumber;
+ SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
 
+if(sharedVariables.myBoardSizes[boardNumber1].con0x != -1)
+{
+  myboards[boardNumber1].topGame.setSize(sharedVariables.myBoardSizes[boardNumber1].con0x, sharedVariables.myBoardSizes[boardNumber1].con0y);
+myboards[boardNumber1].topGame.setLocation(sharedVariables.myBoardSizes[boardNumber1].point0.x, sharedVariables.myBoardSizes[boardNumber1].point0.y);
+}
+else
+myboards[boardNumber1].topGame.setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
+                          } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+
+
+ }
 
 
 }// end try
@@ -268,9 +302,20 @@ catch(Exception bad1){}
 
 //aa.setLocation(50,50);
 if(boardNumber == sharedVariables.openBoardCount)
-{	myboards[boardNumber] .setVisible(true);
+{
+ 
+  if(sharedVariables.useTopGames == true)
+  { try { if(myboards[boardNumber].topGame != null)
+    myboards[boardNumber].topGame.setVisible(true);
+    } catch(Exception darn){}    
 
-   // sharedVariables.desktop.add(myboards[boardNumber] );
+  }
+  else
+   myboards[boardNumber].setVisible(true);
+
+
+  // if(sharedVariables.useTopGames == false)
+   sharedVariables.desktop.add(myboards[boardNumber] );
     // add desktop to consolesubframe so it can call its method of focus traversal between boards and consoles
     myboards[boardNumber].myconsolepanel.myself=(JDesktopPaneCustom) sharedVariables.desktop;
 }

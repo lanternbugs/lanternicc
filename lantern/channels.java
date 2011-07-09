@@ -98,6 +98,7 @@ boolean qtellTimestamp;
 boolean channelNumberLeft;
 boolean checkLegality;
 boolean compactNameList=false;
+boolean useTopGames=false;
 
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
@@ -115,6 +116,8 @@ ArrayList<told> toldNames = new ArrayList();
 ArrayList<told> toldTabNames = new ArrayList();
 
 ArrayList<String> [] comboNames;
+
+
 F9Management F9Manager;
 
 ImageIcon observeIcon;
@@ -271,7 +274,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.02";
+version = "v4.05";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

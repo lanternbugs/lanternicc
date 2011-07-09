@@ -4891,8 +4891,13 @@ if(sharedVariables.tabsOnly == true)
 		if(last == -1)
 			createGameFrame(last, visible);
 		else
-			myboards[last].setVisible(true);
-		if(last > -1)
+		{
+                 if(sharedVariables.useTopGames == true)
+                 myboards[last].topGame.setVisible(true);
+                 else
+                  myboards[last].setVisible(true);
+		}
+                if(last > -1)
 		return last;
 
 		return sharedVariables.openBoardCount-1;
@@ -4920,18 +4925,30 @@ if(sharedVariables.tabsOnly == true)
 	    //writeToConsole("about to execute new game board command");
 	    myboards[last] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, last, sharedVariables.img, queue, sharedVariables, graphics, myDocWriter);
 		//writeToConsole("success in making new game board");
-		myboards[last].setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
-		//writeToConsole("made new game board at spot myboards[" + last + "]");
+		if(sharedVariables.useTopGames == false)
+                myboards[last].setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
+		else
+                {
+                 if(myboards[last].topGame != null)
+                myboards[last].topGame.setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
+                }
+                //writeToConsole("made new game board at spot myboards[" + last + "]");
 		if(visible == false || sharedVariables.tabsOnly == false)
 		{
-			myboards[last] .setVisible(true);
+			if(sharedVariables.useTopGames == true)
+                       myboards[last] .topGame.setVisible(true);
+			else
+                        myboards[last] .setVisible(true);
 		}
 		else
 		{
-			myboards[last] .setVisible(false);
+			if(sharedVariables.useTopGames == true)
+                       myboards[last] .topGame.setVisible(false);
+			else
+                        myboards[last] .setVisible(false);
 		//writeToConsole("i made visible false");
 		}
-	   // sharedVariables.desktop.add(myboards[last] );
+	   sharedVariables.desktop.add(myboards[last] );  
 	     myboards[last].myconsolepanel.myself=(JDesktopPaneCustom) sharedVariables.desktop;
 
 		//writeToConsole("added to desktop");
@@ -5171,7 +5188,7 @@ void initializeEngine()
 				 if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.pointedToMain[a] == false)
 
 			{
-                          
+
                           boolean go=true;
                            if(sharedVariables.engineOn == true)
                            if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
