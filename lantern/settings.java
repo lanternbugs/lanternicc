@@ -2049,15 +2049,35 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 			if (temp.equals(lookupboard))
 			{
 				try {
-					int px = Integer.parseInt(tokens.nextToken());
-					int py = Integer.parseInt(tokens.nextToken());
-					int cw = Integer.parseInt(tokens.nextToken());
-					int ch = Integer.parseInt(tokens.nextToken());
+					final int px = Integer.parseInt(tokens.nextToken());
+					final int py = Integer.parseInt(tokens.nextToken());
+					final int cw = Integer.parseInt(tokens.nextToken());
+					final int ch = Integer.parseInt(tokens.nextToken());
 					if(boar == 0)
 					{
-					boards[boar].setLocation(px, py);
-					boards[boar].setSize(cw, ch);
-					}// if boar == 0
+                                          
+                                       final gameboard finalboard = boards[boar];
+                SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                              if(finalboard.topGame != null)
+                              {
+                 finalboard.topGame.setLocation(px, py);
+		finalboard.topGame.setSize(cw, ch);
+                              }
+                              else
+                              {
+                                	finalboard.setLocation(px, py);
+                                	finalboard.setSize(cw, ch);
+                              }
+
+                            } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+                       		}// if boar == 0
 					/** set sizes*/
 					sharedVariables.myBoardSizes[boar].con0x = cw;
 					sharedVariables.myBoardSizes[boar].con0y = ch;
