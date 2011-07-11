@@ -1590,9 +1590,24 @@ tabbing.addActionListener(this);
 rconsole.addActionListener(this);
 rconsole2.addActionListener(this);
 
+JMenu actionsmenu = new JMenu("Actions");
+ JMenuItem showhistory = new JMenuItem("Show My Recent Games");
+ actionsmenu.add(showhistory);
+ showhistory.addActionListener(this);
 
+ JMenuItem showlib = new JMenuItem("Show My Game Library");
+ actionsmenu.add(showlib);
+ showlib.addActionListener(this);
 
+ JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
+ actionsmenu.add(showstored);
+ showstored.addActionListener(this);
 
+JMenuItem showfinger = new JMenuItem("Show My Profile");
+ actionsmenu.add(showfinger);
+ showfinger.addActionListener(this);
+
+menu.add(actionsmenu);
 
 JMenu helpmenu = new JMenu("Help");
  JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
@@ -2860,6 +2875,55 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
  }//end if not null
 
 }// end if name list background
+
+ if(event.getActionCommand().equals("Show My Recent Games"))
+ {
+     String actionmess="History\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+  if(event.getActionCommand().equals("Show My Game Library"))
+ {
+      String actionmess="Liblist\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+  if(event.getActionCommand().equals("Show My Adjourned Games"))
+ {
+      String actionmess="Stored\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+  if(event.getActionCommand().equals("Show My Profile"))
+ {
+      String actionmess="Finger\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+     
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+ 
+
 
 
  if(event.getActionCommand().equals("Names List Font"))

@@ -223,6 +223,57 @@ catch(Exception d){}
 
 }
 
+void changeTellTabForward()
+{
+    int n = sharedVariables.tellconsole;
+    int next=n;
+    
+    for(int a=n + 1; a < sharedVariables.maxConsoleTabs; a++)
+    if(consoleSubframes[a]!=null)
+    if(consoleSubframes[a].isVisible() == true)
+    {next = a;
+    break;
+    }
+    if(next == n)
+    for(int a=0; a < n; a++)
+    if(consoleSubframes[a]!=null)
+    if(consoleSubframes[a].isVisible() == true)
+    {next = a;
+    break;
+    }
+    if(next !=n)
+    changeTellConsole(n, next);
 
 
+}
+void changeTellTabBackward()
+{
+    int n = sharedVariables.tellconsole;
+    int next=n;
+
+    for(int a=n- 1; a >= 0; a--)
+    if(consoleSubframes[a]!=null)
+    if(consoleSubframes[a].isVisible() == true)
+    {next = a;
+    break;
+    }
+    if(next == n)
+    for(int a=sharedVariables.maxConsoleTabs -1; a > n; a--)
+    if(consoleSubframes[a]!=null)
+    if(consoleSubframes[a].isVisible() == true)
+    {next = a;
+    break;
+    }
+    if(next !=n)
+    changeTellConsole(n, next);
+
+
+}
+void changeTellConsole(int current, int newer)
+{
+ sharedVariables.tellconsole = newer;
+ consoleSubframes[current].tellCheckbox.setSelected(false);
+ consoleSubframes[newer].tellCheckbox.setSelected(true);
+
+}
 }// end class

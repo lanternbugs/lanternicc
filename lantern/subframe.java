@@ -405,7 +405,16 @@ JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
 
 
 }
+ void changeTellTab(boolean forward)
+ {
+ JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+if(forward == true)
+myself.changeTellTabForward();
+else
+myself.changeTellTabBackward();
 
+   
+ }
 
 void switchWindows()
 {
@@ -1987,12 +1996,24 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
 
 		}
+                if( e.getModifiersEx() == 512)// alt
+                if(a == 84)// atl t
+                {
+                   changeTellTab(true); // true for forward
 
+                }
+                if( e.getModifiersEx() == 576)// shitft  + alt
+                if(a == 84) // shift alt t
+                {
+                   changeTellTab(false);// flase for backward
+                  
+                }
 
 
       if( e.getModifiersEx() == 512)// alt
       {
-		 if(a == 49  )
+		
+                 if(a == 49  )
 		 {
 
 			 //sharedVariables.looking[consoleNumber]=0;

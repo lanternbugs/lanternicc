@@ -818,7 +818,16 @@ if(thetell.length() == 2)
 else if(thetell.length() > 2)
 {
 	thetell=thetell.substring(0, thetell.length()-2);
-	thetell = thetell + "\n";
+	
+       /* if(thetell.indexOf("\n") > -1)
+        {
+        JFrame framer = new JFrame("" + thetell.indexOf("\n") + " and " + thetell.indexOf("\r") + " and " +  thetell.length());
+         framer.setSize(200,50);
+         framer.setVisible(true);
+
+        }
+        */
+        thetell = thetell + "\n";
 }
 else
 return;
