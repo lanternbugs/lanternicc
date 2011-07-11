@@ -1639,7 +1639,13 @@ actionsmenu.addSeparator();
  actionsmenu.add(showrelay);
  showrelay.addActionListener(this);
 
+   JMenuItem showweek = new JMenuItem("Show Game of the Week Index");
+ actionsmenu.add(showweek);
+ showweek.addActionListener(this);
 
+   JMenuItem showfm = new JMenuItem("Open ChessFM");
+ actionsmenu.add(showfm);
+ showfm.addActionListener(this);
 
 menu.add(actionsmenu);
 
@@ -3023,6 +3029,16 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
   openUrl("http://www.chessclub.com/activities/relays.html");
  }
 
+  if(event.getActionCommand().equals("Show Game of the Week Index"))
+ {
+
+  openUrl("http://www.chessclub.com/chessfm/index/gotw/index.html");
+ }
+  if(event.getActionCommand().equals("Open ChessFM"))
+ {
+
+  openUrl("http://www.chessclub.com/chessfm/");
+ }
 
 
  if(event.getActionCommand().equals("Names List Font"))
