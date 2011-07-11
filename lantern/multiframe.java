@@ -1603,9 +1603,43 @@ JMenu actionsmenu = new JMenu("Actions");
  actionsmenu.add(showstored);
  showstored.addActionListener(this);
 
-JMenuItem showfinger = new JMenuItem("Show My Profile");
+actionsmenu.addSeparator();
+JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
  actionsmenu.add(showfinger);
  showfinger.addActionListener(this);
+
+
+
+JMenuItem showexam = new JMenuItem("Enter Examination Mode");
+ actionsmenu.add(showexam);
+ showexam.addActionListener(this);
+
+JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
+ actionsmenu.add(showexamlast);
+ showexamlast.addActionListener(this);
+
+
+
+actionsmenu.addSeparator();
+
+ JMenuItem showobs= new JMenuItem("Observe High Rated Game");
+ actionsmenu.add(showobs);
+ showobs.addActionListener(this);
+
+ JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
+ actionsmenu.add(showobs5);
+ showobs5.addActionListener(this);
+
+ JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
+ actionsmenu.add(showobs15);
+ showobs15.addActionListener(this);
+
+ actionsmenu.addSeparator();
+  JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
+ actionsmenu.add(showrelay);
+ showrelay.addActionListener(this);
+
+
 
 menu.add(actionsmenu);
 
@@ -2911,18 +2945,83 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
 
  }
 
-  if(event.getActionCommand().equals("Show My Profile"))
+  if(event.getActionCommand().equals("Show My Profile and Ratings"))
  {
       String actionmess="Finger\n";
      if(sharedVariables.myServer.equals("ICC"))
      actionmess="`c0`" + actionmess;
-     
+
      myoutput data = new myoutput();
      data.data=actionmess;
     queue.add(data);
 
  }
- 
+
+  if(event.getActionCommand().equals("Enter Examination Mode"))
+ {
+      String actionmess="Examine\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+   if(event.getActionCommand().equals("Examine My Last Game"))
+ {
+      String actionmess="Examine -1\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+
+  if(event.getActionCommand().equals("Observe High Rated Game"))
+ {
+      String actionmess="Observe *\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+  if(event.getActionCommand().equals("Observe High Rated 5-Minute Game"))
+ {
+      String actionmess="Observe *f\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+
+  if(event.getActionCommand().equals("Observe High Rated 15-Minute Game"))
+ {
+      String actionmess="Observe *P\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+
+ }
+  if(event.getActionCommand().equals("Show Relay Schedule"))
+ {
+
+  openUrl("http://www.chessclub.com/activities/relays.html");
+ }
 
 
 
@@ -4818,7 +4917,81 @@ try {
 catch(Exception e){}
 }//end method
 */
+void openUrl(String myurl)
+{
 
+				try {
+
+				String os = System.getProperty("os.name").toLowerCase();
+
+					//Process p = Runtime.getRuntime().exec(cmdLine);
+				Runtime rt = Runtime.getRuntime();
+				if (os.indexOf( "win" ) >= 0)
+	            {
+				 String[] cmd = new String[4];
+	              cmd[0] = "cmd.exe";
+	              cmd[1] = "/C";
+	              cmd[2] = "start";
+	              cmd[3] = myurl;
+
+	              rt.exec(cmd);
+			  }
+			 else if (os.indexOf( "mac" ) >= 0)
+	           {
+
+	             Runtime runtime = Runtime.getRuntime();
+				   if(myurl.startsWith("www."))
+				   myurl="http://" + myurl;
+				   String[] args = { "osascript", "-e", "open location \"" + myurl + "\"" };
+				   try
+				   {
+				     Process process = runtime.exec(args);
+				   }
+				   catch (IOException e)
+				   {
+				     // do what you want with this
+				     // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
+				   }
+
+
+
+
+
+
+	             // rt.exec( "open " + myurl);
+          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
+            Method openURL = fileMgr.getDeclaredMethod("openURL",
+               new Class[] {String.class});
+            openURL.invoke(null, new Object[] {myurl});
+
+			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
+			*/
+			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
+			//  Process process = Runtime.getRuntime().exec(commandLine);
+
+
+	          }
+				else
+				{             //prioritized 'guess' of users' preference
+	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+	                  "netscape","opera","links","lynx"};
+
+	              StringBuffer cmd = new StringBuffer();
+	              for (int i=0; i<browsers.length; i++)
+	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
+
+	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
+	              //rt.exec("firefox http://www.google.com");
+	              //System.out.println(cmd.toString());
+
+
+				}// end else
+			}// end try
+			catch(Exception e)
+			{}
+
+
+}
 public void saveSettings() {
 
 
