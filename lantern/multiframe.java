@@ -705,6 +705,21 @@ toolBar.setVisible(true);
 else
 toolBar.setVisible(false);
 
+              try {
+                SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                             myboards[0].recreate();
+                                     } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+                }catch(Exception badf){}
+
+
 
 
 
@@ -4933,7 +4948,7 @@ while(flagger== true)
   String lookup =sharedVariables.countryNames.substring(index11 + 1, index22);
   sharedVariables.flagImageNames.add(lookup);
   lookup="flags-small/" + lookup + ".png";
-  
+
 		URL myurl = this.getClass().getResource( lookup);
 		sharedVariables.flagImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
 

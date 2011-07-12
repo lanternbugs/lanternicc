@@ -2247,7 +2247,8 @@ JButton abortButton;
 
 Color mycolor;
 int oldLooking = -1;
-
+String oldcountry1="";
+String oldcountry2="";
 JLabel flagTop = new JLabel("");
 JLabel flagBottom = new JLabel("");
 
@@ -2289,9 +2290,11 @@ JScrollPane listScroller;
 			actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
 			buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
  
- if(oldLooking != gameData.LookingAt)
+ if(oldLooking != gameData.LookingAt || oldcountry1 != sharedVariables.mygame[gameData.LookingAt].country1 || oldcountry2 != sharedVariables.mygame[gameData.LookingAt].country2)
 { redrawFlags();
  oldLooking = gameData.LookingAt;
+ oldcountry1 = sharedVariables.mygame[gameData.LookingAt].country1;
+ oldcountry2 = sharedVariables.mygame[gameData.LookingAt].country2;
  }
  if(sharedVariables.mygame[gameData.LookingAt].country1.equals("") && sharedVariables.mygame[gameData.LookingAt].country2.equals(""))
  {  
