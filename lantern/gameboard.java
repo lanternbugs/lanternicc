@@ -1927,11 +1927,14 @@ else
  {
     mycontrolspanel.flagTop.setIcon(flagIcon);
     mycontrolspanel.flagTop.setVisible(true);
+    mycontrolspanel.flagTop.setToolTipText(sharedVariables.flagImageNames.get(n));
  }// end if top == true
  else
  {
      mycontrolspanel.flagBottom.setIcon(flagIcon);
      mycontrolspanel.flagBottom.setVisible(true);
+    mycontrolspanel.flagBottom.setToolTipText(sharedVariables.flagImageNames.get(n));
+
 
  }// top not true
 }// end else there is a unique name
