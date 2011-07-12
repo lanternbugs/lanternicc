@@ -1855,12 +1855,12 @@ void writeCountry(String icsGameNumber, String name, String country)
 if(sharedVariables.mygame[gameData.BoardIndex].realname1.equals(name))
 {
   sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
-  createFlag(country, false);
+  mycontrolspanel.oldLooking=-1;
 }
 else
 {
   sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
-  createFlag(country, true);
+  mycontrolspanel.oldLooking=-1;
 }      }
  		if(isVisible() == true)
 		repaint();
