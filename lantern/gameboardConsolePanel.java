@@ -77,8 +77,11 @@ JDesktopPaneCustom myself;
 docWriter myDocWriter;
 int [] comboMemory;
 int blockInc=23;
-gameboardConsolePanel(JTextPane consoles1[], subframe consoleSubframes1[], channels sharedVariables1, gamestuff gameData1, JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1)
+
+gameboardTop topGame;
+gameboardConsolePanel(gameboardTop topGame1, JTextPane consoles1[], subframe consoleSubframes1[], channels sharedVariables1, gamestuff gameData1, JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1)
 {
+topGame=topGame1;
 
 sharedVariables=sharedVariables1;
 gameData = gameData1;
@@ -111,8 +114,8 @@ public void makehappen(int i)
             sharedVariables.Looking[gameData.BoardIndex]=i;
             setActiveTabForeground(i);
 
-          // mypanel.repaint();
-          // mycontrolspanel.repaint();
+         //  mypanel.repaint();
+         // mycontrolspanel.repaint();
 
 
 
@@ -120,8 +123,12 @@ public void makehappen(int i)
  			//if(sharedVariables.mygame[gameData.LookingAt].title.length() >0)
  			//setTitle(sharedVariables.mygame[gameData.LookingAt].title);
 
- 			if(isVisible() == true)
+
  			super.repaint();
+ 			if(sharedVariables.useTopGames == true)
+ 			 if(topGame != null);
+                         topGame.repaint();
+
  			try {prefixHandler.setSelectedIndex(comboMemory[i]); }catch(Exception dummy){}
  			sharedVariables.lastButton=gameData.BoardIndex;
  			sharedVariables.moveSliders[gameData.BoardIndex].setMaximum(sharedVariables.mygame[gameData.LookingAt].turn);

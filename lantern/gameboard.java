@@ -213,12 +213,12 @@ if(sharedVariables.mygame[gameData.BoardIndex] == null)
 sharedVariables.mygame[gameData.BoardIndex] = new gamestate(sharedVariables.excludedPieces);
 readLock.unlock();
 //writeout("going to create overall\n");
-myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+myconsolepanel = new gameboardConsolePanel(topGame, consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
 
 
 if(sharedVariables.useTopGames == true)
 { topGame= new gameboardTop(sharedVariables, myconsolepanel, queue, gameData);
-
+   myconsolepanel.topGame=topGame;
 overall = new overallpanel(true);
 
 topGame.add(overall);
@@ -297,7 +297,7 @@ else
 
    overall= new overallpanel();
   myconsolepanel.removeAll();
-   myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+   myconsolepanel = new gameboardConsolePanel(topGame, consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
 topGame.myconsolepanel=myconsolepanel;
 
   overall.overallSwitch();
@@ -318,7 +318,7 @@ else
 
    myconsolepanel.removeAll();
 
-    myconsolepanel = new gameboardConsolePanel(consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
+    myconsolepanel = new gameboardConsolePanel(topGame, consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
 topGame.myconsolepanel=myconsolepanel;
 
 
