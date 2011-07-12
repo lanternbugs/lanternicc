@@ -3023,8 +3023,9 @@ SequentialGroup v1 = layout.createSequentialGroup();
 num=175;
 int num2=25;
 int num3=30;
+int num4 = 45;
 	v1.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(flagTop, num2, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
 
 	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 	v1.addComponent(gameListingDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
@@ -3036,7 +3037,7 @@ int num3=30;
 	v1.addComponent(actionPanel, num3, GroupLayout.DEFAULT_SIZE,  num);
 
 	v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(flagBottom, num3, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
 
 	v1.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
 
