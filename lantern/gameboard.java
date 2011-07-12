@@ -651,8 +651,10 @@ void flipSent(String icsGameNumber, String flip)
 
 			if(sharedVariables.mygame[gameData.BoardIndex].iflipped == 0)
 			{
-				sharedVariables.mygame[gameData.BoardIndex].iflipped = 1;
-				sharedVariables.mygame[gameData.BoardIndex].doFlip();
+
+                                sharedVariables.mygame[gameData.BoardIndex].iflipped = 1;
+				redrawFlags();
+                                sharedVariables.mygame[gameData.BoardIndex].doFlip();
 				sharedVariables.mygame[gameData.BoardIndex].flipMoves();
 			}
 		}
@@ -661,7 +663,8 @@ void flipSent(String icsGameNumber, String flip)
 			if(sharedVariables.mygame[gameData.BoardIndex].iflipped == 1)
 			{
 				sharedVariables.mygame[gameData.BoardIndex].iflipped = 0;
-				sharedVariables.mygame[gameData.BoardIndex].doFlip();
+				redrawFlags();
+                                sharedVariables.mygame[gameData.BoardIndex].doFlip();
 				sharedVariables.mygame[gameData.BoardIndex].flipMoves();
 			}
 
@@ -1850,15 +1853,93 @@ void writeCountry(String icsGameNumber, String name, String country)
 	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
 	{
 if(sharedVariables.mygame[gameData.BoardIndex].realname1.equals(name))
-sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
+{
+  sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
+  createFlag(country, false);
+}
 else
-sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
-        }
+{
+  sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
+  createFlag(country, true);
+}      }
  		if(isVisible() == true)
 		repaint();
 }
+ void redrawFlags()
+ {
+   if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0)
+{
+  createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), false);
+  createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), true);
+}
+else
+{
+  createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), true);
+  createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), false);
+
+}
+ }
+
+void createFlag(String country, boolean top)
+{
+  
+  try {
+String uniqueName="";
+int bb=sharedVariables.countryNames.indexOf(";" + country + ";");
+if(bb > -1)
+{
+int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
+if(bbb > -1)
+uniqueName=sharedVariables.countryNames.substring(bb+ country.length() + 2, bbb);
+
+}
 
 
+if(uniqueName.equals(""))
+{
+     if(top == true)
+    mycontrolspanel.flagTop.setVisible(false);
+    else
+    mycontrolspanel.flagBottom.setVisible(false);
+ return;
+}
+else
+{
+  int n=-1;
+  for(int m=0; m < sharedVariables.flagImageNames.size(); m++)
+  if(sharedVariables.flagImageNames.get(m).equals(uniqueName))
+  {
+   n=m;
+   break;
+  }
+  if(n == -1)
+  {
+    
+    if(top == true)
+    mycontrolspanel.flagTop.setVisible(false);
+    else
+    mycontrolspanel.flagBottom.setVisible(false);
+
+   return;
+  }
+  Icon flagIcon = new ImageIcon(sharedVariables.flagImages.get(n));
+ if(top == true)
+ {
+    mycontrolspanel.flagTop.setIcon(flagIcon);
+    mycontrolspanel.flagTop.setVisible(true);
+ }// end if top == true
+ else
+ {
+     mycontrolspanel.flagBottom.setIcon(flagIcon);
+     mycontrolspanel.flagBottom.setVisible(true);
+
+ }// top not true
+}// end else there is a unique name
+
+ }// end try
+ catch(Exception dui){}
+
+}
 void newCircle(String icsGameNumber, String examiner, String from)
 {
 	int tempnumber=getGameNumber(icsGameNumber);
@@ -2165,7 +2246,10 @@ JButton drawButton;
 JButton abortButton;
 
 Color mycolor;
+int oldLooking = -1;
 
+JLabel flagTop = new JLabel("");
+JLabel flagBottom = new JLabel("");
 
 JScrollPane listScroller;
 
@@ -2204,6 +2288,18 @@ JScrollPane listScroller;
 			actionPanel.setBackground(sharedVariables.boardBackgroundColor);
 			actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
 			buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+ 
+ if(oldLooking != gameData.LookingAt)
+{ redrawFlags();
+ oldLooking = gameData.LookingAt;
+ }
+ if(sharedVariables.mygame[gameData.LookingAt].country1.equals("") && sharedVariables.mygame[gameData.LookingAt].country2.equals(""))
+ {  
+   
+   flagTop.setVisible(false);
+   flagBottom.setVisible(false);
+
+   }// end no game
 
 		    //sliderArrows.setBackground(sharedVariables.boardBackgroundColor);
 			//topClock.setBackground(sharedVariables.boardBackgroundColor);
@@ -2882,6 +2978,7 @@ int num= Short.MAX_VALUE;
 
 
 	h1.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+	h1.addComponent(flagTop, 0, GroupLayout.DEFAULT_SIZE, num);
 	h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 	h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 
@@ -2894,6 +2991,8 @@ ParallelGroup buttonGroup = layout.createParallelGroup(GroupLayout.Alignment.CEN
 	h1.addComponent(actionPanel, 0, GroupLayout.DEFAULT_SIZE,  num);
 
 	h1.addComponent(botNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+	h1.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, num);
+
 	h1.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 
 	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
@@ -2919,6 +3018,8 @@ num=175;
 int num2=25;
 int num3=30;
 	v1.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(flagTop, num2, GroupLayout.DEFAULT_SIZE, num);
+
 	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 	v1.addComponent(gameListingDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 
@@ -2929,6 +3030,8 @@ int num3=30;
 	v1.addComponent(actionPanel, num3, GroupLayout.DEFAULT_SIZE,  num);
 
 	v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(flagBottom, num3, GroupLayout.DEFAULT_SIZE, num);
+
 	v1.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
 
 

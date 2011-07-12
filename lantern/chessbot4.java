@@ -493,8 +493,9 @@ try {
 			if(sharedVariables.timestamp != null)
 			requestSocket = new Socket("127.0.0.1", 5499);// 127.0.0.1 or 207.99.83.228
 			else
-			requestSocket = new Socket("69.36.243.188", 23);// 127.0.0.1 or	FICS by IP
-			}
+			//requestSocket = new Socket("69.36.243.188", 23);// 127.0.0.1 or	FICS by IP
+			 requestSocket = new Socket("chessclub.com", 23);
+                        }
 
 			//System.out.println("Connected to chessclub.com on port 23");
 			//2. get Input and Output streams
@@ -1841,7 +1842,7 @@ if( dg.getArg(0).equals("152"))
                           int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
                           if(bbb > -1)
                           uniqueName=sharedVariables.countryNames.substring(bb+ dg.getArg(3).length() + 2, bbb);
-
+                          uniqueName=uniqueName.replace("_", " ");
                          }
                           if(uniqueName.equals(""))
                           writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);

@@ -39,6 +39,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 //import javax.jnlp.*;
 
 
@@ -714,19 +716,59 @@ toolBar.setVisible(false);
 
 public void parseCountries()
 {
-/*try {
+/*
+try {
   scriptLoader loadScripts = new  scriptLoader();
  ArrayList<String> country = new ArrayList();
-loadScripts.loadScript(country, "countries.txt");
+loadScripts.loadScript(country, "flags3.txt");
 String output = "";
+
+
 for(int z=0; z<country.size(); z++)
 {
   String line= country.get(z);
+      String first="";
+      String last="";
+      String text="";
+      String oldtext="";
+
   try {
-    int i=line.indexOf(";");
-    String line1=line.substring(0, i);
-    String line2=line.substring(i+1, line.length());
-    output+=line2 + ";" + line1 + ";";
+
+	line=line.replace("\t", " ");
+	if(line.contains("N/A"))
+	continue;
+        		StringTokenizer tokens = new StringTokenizer(line, " ");
+
+      boolean lastToken=false;
+
+      while(lastToken == false)
+      {
+      oldtext=text;
+    try {
+
+      text=tokens.nextToken();
+      if(text==null)
+      {
+       last=oldtext;
+       lastToken=true;
+      }// end if null
+      else
+      {
+       if(first.equals(""))
+       first=oldtext;
+       else
+       first=first + "_" + oldtext;
+      }
+
+      }// end try
+      catch(Exception dui){last=oldtext; lastToken=true;}
+      } // end while
+      output+=last.toUpperCase() + ";" + first + ";";
+    //int i=line.indexOf(";");
+   // String line1=line.substring(0, i);
+   // String line2=line.substring(i+1, line.length());
+  //  output+=line2 + ";" + line1 + ";";
+
   }
   catch(Exception dogeatdog){}
 }// end for
@@ -734,7 +776,7 @@ FileWrite writer = new FileWrite();
 writer.write(output, "new-countries.txt");
 }
 catch(Exception dumb){}
-*/
+      */
   }
 
 boolean getOnTopSetting()
@@ -4876,6 +4918,37 @@ if(graphics.resizable[a]==false)
         graphics.multiPieces[graphics.maxPieces-2][aa][10] = graphics.multiPieces[spatial][aa][10];
         graphics.multiPieces[graphics.maxPieces-2][aa][11] = graphics.multiPieces[spatial][aa][11];
   }
+
+
+boolean flagger=true;
+int index11=-1;
+int index22=-1;
+int place=0;
+while(flagger== true)
+{
+ index11=sharedVariables.countryNames.indexOf(";", index11+1);
+ index22=sharedVariables.countryNames.indexOf(";", index11+1);
+ if(index11 > -1 && index22 > -1 && index22 > index11)
+ {
+  String lookup =sharedVariables.countryNames.substring(index11 + 1, index22);
+  sharedVariables.flagImageNames.add(lookup);
+  lookup="flags-small/" + lookup + ".png";
+  
+		URL myurl = this.getClass().getResource( lookup);
+		sharedVariables.flagImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
+
+ }
+ else
+ break;
+
+ index11=index22;
+
+
+
+
+
+
+}
 }// end method
 
 
