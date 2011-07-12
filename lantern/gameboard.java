@@ -2977,16 +2977,20 @@ add(bottomClock);
 	//Create a parallel group for the horizontal axis
 	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+        SequentialGroup hflagtop = layout.createSequentialGroup();
+        SequentialGroup hflagbottom = layout.createSequentialGroup();
 
 
 int num= Short.MAX_VALUE;
+int flagnum=90;
 
 
-
-	h1.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	h1.addComponent(flagTop, 0, GroupLayout.DEFAULT_SIZE, num);
+	hflagtop.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+	hflagtop.addComponent(flagTop, 0, GroupLayout.DEFAULT_SIZE, flagnum);
+	h1.addGroup(hflagtop);
 	h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+
+        h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 
 	h1.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
 
@@ -2997,9 +3001,9 @@ ParallelGroup buttonGroup = layout.createParallelGroup(GroupLayout.Alignment.CEN
 	h1.addComponent(actionPanel, 0, GroupLayout.DEFAULT_SIZE,  num);
 
 	h1.addComponent(botNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	h1.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, num);
-
-	h1.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+	hflagbottom.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+	hflagbottom.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, flagnum);
+        h1.addGroup(hflagbottom);
 
 	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
 	//Create the horizontal group
@@ -3014,6 +3018,9 @@ ParallelGroup buttonGroup = layout.createParallelGroup(GroupLayout.Alignment.CEN
 
 	ParallelGroup v4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 
+		ParallelGroup vflagtop = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+		ParallelGroup vflagbottom = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+
 SequentialGroup v1 = layout.createSequentialGroup();
 
 
@@ -3024,8 +3031,9 @@ num=175;
 int num2=25;
 int num3=30;
 int num4 = 45;
-	v1.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
+	vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+	vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
+        v1.addGroup(vflagtop);
 
 	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 	v1.addComponent(gameListingDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
@@ -3037,9 +3045,10 @@ int num4 = 45;
 	v1.addComponent(actionPanel, num3, GroupLayout.DEFAULT_SIZE,  num);
 
 	v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
 
-	v1.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+	vflagbottom.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+	vflagbottom.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
+        v1.addGroup(vflagbottom);
 
 
 
