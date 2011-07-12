@@ -214,11 +214,11 @@ sharedVariables.mygame[gameData.BoardIndex] = new gamestate(sharedVariables.excl
 readLock.unlock();
 //writeout("going to create overall\n");
 myconsolepanel = new gameboardConsolePanel(topGame, consoles, consoleSubframes, sharedVariables, gameData, gameconsoles, gamequeue, queue,myDocWriter);
-
+ topGame= new gameboardTop(sharedVariables, myconsolepanel, queue, gameData);
+   myconsolepanel.topGame=topGame;
 
 if(sharedVariables.useTopGames == true)
-{ topGame= new gameboardTop(sharedVariables, myconsolepanel, queue, gameData);
-   myconsolepanel.topGame=topGame;
+{
 overall = new overallpanel(true);
 
 topGame.add(overall);
@@ -227,7 +227,7 @@ topGame.add(overall);
 //setVisible(true);
 }
 else
-{
+{ topGame.setVisible(false);
  overall = new overallpanel(true);
 
 add(overall);
