@@ -394,14 +394,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[doneqsuggestShow] ";
 
 	// sideways console on board
-	set_string = set_string + "[sidewaysConsole] ";
+
+/*	set_string = set_string + "[sidewaysConsole] ";
 	if(sharedVariables.sideways == true)
 		set_string = set_string + "1" + " ";
 	else
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[donesidewaysConsole] ";
-
+*/
 	// materialCount
 	set_string = set_string + "[materialCount] ";
 	if(sharedVariables.showMaterialCount == true)
@@ -1427,7 +1428,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
-				if (temp.equals("[sidewaysConsole]"))
+	/*			if (temp.equals("[sidewaysConsole]"))
 				{
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
@@ -1439,7 +1440,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
-
+        */
 
 				if (temp.equals("[materialCount]"))
 				{

@@ -710,7 +710,7 @@ toolBar.setVisible(false);
                         @Override
                         public void run() {
                             try {
-                             myboards[0].recreate();
+                            // myboards[0].recreate();
                                      } catch (Exception e1) {
                                 //ignore
                             }

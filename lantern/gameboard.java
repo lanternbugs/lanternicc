@@ -1785,7 +1785,7 @@ SwingUtilities.invokeLater(new Runnable() {
 try {// sound
 
 		if(sharedVariables.makeSounds == true)
-		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING)
+		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING)
 		{
 			if(sharedVariables.lastSoundTime + 1200 > System.currentTimeMillis() && sharedVariables.lastSoundCount> 1)
 			; // dont make a sound do nothing
