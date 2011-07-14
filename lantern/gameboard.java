@@ -130,22 +130,6 @@ super.setTitle(type);
 }
 
 
-public void setLocation(Point P)
-{
- try {
-if(sharedVariables == null || topGame == null)
-{
-  super.setLocation(P);
-  return;
-}
-if(sharedVariables.useTopGames == true)
-topGame.setLocation(P);
-else
-super.setLocation(P);
- }
- catch(Exception dui){}
-}
-
 
 public boolean isVisible()
 {

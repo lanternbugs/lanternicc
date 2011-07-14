@@ -2058,11 +2058,12 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					{
                                           
                                        final gameboard finalboard = boards[boar];
+                                       final boolean useTopGames = sharedVariables.useTopGames;
                 SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                              if(finalboard.topGame != null)
+                              if(finalboard.topGame != null && useTopGames == true)
                               {
                  finalboard.topGame.setLocation(px, py);
 		finalboard.topGame.setSize(cw, ch);
