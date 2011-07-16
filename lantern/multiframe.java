@@ -141,6 +141,9 @@ webframe mywebframe;
  int colortype;
  JCheckBoxMenuItem autonoidle;
  JCheckBoxMenuItem autobufferchat;
+  JCheckBoxMenuItem autoHistoryPopup;
+ JCheckBoxMenuItem makeObserveSounds;
+
  JCheckBoxMenuItem channelNumberLeft;
  JCheckBoxMenuItem tabbing;
  JCheckBoxMenuItem tellswitch;
@@ -494,6 +497,16 @@ if(sharedVariables.autopopup == true)
 	autopopup.setSelected(true);
 else
 	autopopup.setSelected(false);
+
+if(sharedVariables.autoHistoryPopup == true)
+	autoHistoryPopup.setSelected(true);
+else
+	autoHistoryPopup.setSelected(false);
+if(sharedVariables.makeObserveSounds == true)
+	makeObserveSounds.setSelected(true);
+else
+	makeObserveSounds.setSelected(false);
+
 
 if(sharedVariables.showConsoleMenu == true)
 	consolemenu.setSelected(true);
@@ -1055,11 +1068,16 @@ JMenu optionsmenu = new JMenu("Options");
  JMenu soundmenu = new JMenu("Sound");
  JCheckBoxMenuItem hearsound = new JCheckBoxMenuItem("Sounds");
 hearsound.setSelected(true);
+makeObserveSounds= new JCheckBoxMenuItem("Sounds for Observed Games");
+makeObserveSounds.addActionListener(this);
+
+
 notifysound=new JCheckBoxMenuItem("Sounds for Notifications");
 hearsound.addActionListener(this);
 notifysound.addActionListener(this);
 
 soundmenu.add(hearsound);
+soundmenu.add(makeObserveSounds);
 soundmenu.add(notifysound);
 
 optionsmenu.add(soundmenu);
@@ -1127,8 +1145,12 @@ useTopGame.addActionListener(this);
 
   autopopup = new JCheckBoxMenuItem("Auto Name Popup");
   advancedOptions.add(autopopup);
+   autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
+  advancedOptions.add(autoHistoryPopup);
+
   autobufferchat.addActionListener(this);
 autopopup.addActionListener(this);
+autoHistoryPopup.addActionListener(this);
 
 lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
 lineindent.addActionListener(this);
@@ -3776,7 +3798,19 @@ if(event.getActionCommand().equals("Auto Name Popup"))
 		autopopup.setSelected(false);
 	}
 }
-
+if(event.getActionCommand().equals("Auto History Popup"))
+{
+	if(sharedVariables.autopopup == false)
+	{
+		sharedVariables.autoHistoryPopup = true;
+		autoHistoryPopup.setSelected(true);
+	}
+	else
+	{
+		sharedVariables.autoHistoryPopup = false;
+		autoHistoryPopup.setSelected(false);
+	}
+}
 if(event.getActionCommand().equals("Auto Observe Tomato"))
 {
 	if(sharedVariables.autoTomato == false)
@@ -3892,6 +3926,20 @@ if(event.getActionCommand().equals("Sounds for Notifications"))
 	{
 		notifysound.setSelected(false);
 		sharedVariables.specificSounds[4] = false;
+	}
+}
+
+if(event.getActionCommand().equals("Sounds for Observed Games"))
+{
+	if(sharedVariables.makeObserveSounds == false)
+	{
+		makeObserveSounds.setSelected(true);
+		sharedVariables.makeObserveSounds = true;
+	}
+	else
+	{
+		makeObserveSounds.setSelected(false);
+		sharedVariables.makeObserveSounds = false;
 	}
 }
 if(event.getActionCommand().equals("Sounds"))

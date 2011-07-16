@@ -395,14 +395,14 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 
 	// sideways console on board
 
-/*	set_string = set_string + "[sidewaysConsole] ";
+	set_string = set_string + "[sidewaysConsole] ";
 	if(sharedVariables.sideways == true)
 		set_string = set_string + "1" + " ";
 	else
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[donesidewaysConsole] ";
-*/
+
 	// materialCount
 	set_string = set_string + "[materialCount] ";
 	if(sharedVariables.showMaterialCount == true)
@@ -432,6 +432,26 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[doneautopopup] ";
+
+
+	// autohistorypopup
+	set_string = set_string + "[autohistorypopup] ";
+	if(sharedVariables.autoHistoryPopup == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneautohistorypopup] ";
+
+	// observesounds
+	set_string = set_string + "[observesounds] ";
+	if(sharedVariables.makeObserveSounds == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneobservesounds] ";
+
 
 
  	// tilesrandom
@@ -1310,6 +1330,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				{
 				temp = tokens.nextToken();
 
+				if (temp.equals("[sidewaysConsole]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.sideways=true;
+					else
+						sharedVariables.sideways=false;
+					}
+					catch(Exception zzz){}
+				}
 			if (temp.startsWith("[Chan"))
 			{
 
@@ -1428,19 +1459,8 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
-	/*			if (temp.equals("[sidewaysConsole]"))
-				{
-				try {
-					int truth = Integer.parseInt(tokens.nextToken());
-					if(truth == 1)
-						sharedVariables.sideways=true;
-					else
-						sharedVariables.sideways=false;
-					}
-					catch(Exception zzz){}
-				}
 
-        */
+
 
 				if (temp.equals("[materialCount]"))
 				{
@@ -1530,7 +1550,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}
 
 
-					if (temp.equals("[autopopup]"))
+					if(temp.equals("[autopopup]"))
 				{
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
@@ -1542,6 +1562,29 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+					if(temp.equals("[autohistorypopup]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.autoHistoryPopup=true;
+					else
+						sharedVariables.autoHistoryPopup=false;
+					}
+					catch(Exception zzz){}
+				}
+
+					if(temp.equals("[observesounds]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.makeObserveSounds=true;
+					else
+						sharedVariables.makeObserveSounds=false;
+					}
+					catch(Exception zzz){}
+				}
 
 
 				if (temp.equals("[time-shout]"))
@@ -1987,6 +2030,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					{
 					frames[boar].setLocation(px, py);
 					frames[boar].setSize(cw, ch);
+
 					}// if boar == 0
 					/** set sizes*/
 					sharedVariables.myConsoleSizes[boar].con0x = cw;
@@ -2072,6 +2116,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
                               {
                                 	finalboard.setLocation(px, py);
                                 	finalboard.setSize(cw, ch);
+                                	finalboard.recreate();
                               }
 
                             } catch (Exception e1) {

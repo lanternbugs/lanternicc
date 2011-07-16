@@ -125,7 +125,7 @@ else // library search
 
 MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
-         if (e.getClickCount() == 2) {
+         if (e.getClickCount() == 2 && sharedVariables.autoHistoryPopup == false) {
 
              JTable target = (JTable)e.getSource();
       int row = target.getSelectedRow();
@@ -162,7 +162,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
           }// end click count two
-          else if (e.getButton() == MouseEvent.BUTTON3) // right click event
+          else if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2) // right click event
           {
              JTable target = (JTable)e.getSource();
      // int row = target.getSelectedRow();

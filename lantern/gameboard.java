@@ -238,11 +238,18 @@ addInternalFrameListener(this);
 // called when they want to resize the game console or make it hidden
  void recreate()
  {
- if(sharedVariables.useTopGames == true)
+  SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+
+
+if(sharedVariables.useTopGames == true)
  {
   topGame.getContentPane().removeAll();
 
   overall = new overallpanel(false);
+
   topGame.add(overall);
   topGame.setVisible(true);
  }
@@ -250,9 +257,14 @@ else
  { getContentPane().removeAll();
 
   overall = new overallpanel(false);
-  this.add(overall);
-  super.setVisible(true);
+  add(overall);
+  setVisible(true);
  }
+                           } catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
 
  }
 
@@ -1516,7 +1528,7 @@ void loadMoveList(String icsGameNumber, String moves)
 	StringTokenizer st = new StringTokenizer(moves);
 	     while (st.hasMoreTokens())
 	     {   String amove=st.nextToken();
-	         moveSent(icsGameNumber, amove, amove);
+	         moveSent(icsGameNumber, amove, amove, false);// arg false for no sound
 		  }
 
 }
@@ -1532,7 +1544,7 @@ void makePremove()
 	sharedVariables.mygame[gameData.BoardIndex].premove="";
 }
 
-void moveSent(String icsGameNumber, String amove, String algabraicMove)
+void moveSent(String icsGameNumber, String amove, String algabraicMove, boolean makeSound)
 {
 
 	int tempnumber=getGameNumber(icsGameNumber);
@@ -1768,8 +1780,8 @@ SwingUtilities.invokeLater(new Runnable() {
 
 try {// sound
 
-		if(sharedVariables.makeSounds == true)
-		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING)
+		if(sharedVariables.makeSounds == true && makeSound == true)
+		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING || (sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING && sharedVariables.makeObserveSounds == true))
 		{
 			if(sharedVariables.lastSoundTime + 1200 > System.currentTimeMillis() && sharedVariables.lastSoundCount> 1)
 			; // dont make a sound do nothing

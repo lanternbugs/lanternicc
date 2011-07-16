@@ -3533,6 +3533,7 @@ try {
                                 int sss=tempmove.indexOf(" ");
                                 temp.arg2=tempmove.substring(sss+1, tempmove.length());
                                 temp.arg3=tempmove.substring(0, sss);
+                                temp.arg4="false";// for no sound
 			//	writeToConsole("25 and " + dg.getArg(a) + "\n");
 				gamequeue.add(temp);
 			}
@@ -4396,7 +4397,10 @@ void proccessGameInfo(newBoardData temp)
 
 							lastMoveGame = gamenum;
 							//writeToConsole("in dg 24 send move and lastMoveGame is " + lastMoveGame);
-							myboards[gamenum].moveSent(temp.arg1, temp.arg2, temp.arg3);
+							if(temp.arg4.equals("false"))
+                                                        myboards[gamenum].moveSent(temp.arg1, temp.arg2, temp.arg3, false);
+                                                        else
+                                                        myboards[gamenum].moveSent(temp.arg1, temp.arg2, temp.arg3, true);
 
 							if(notmyownmove(gamenum) || sharedVariables.mygame[gamenum].state != sharedVariables.STATE_OVER)
 							updateGameTabs(gamenum);
