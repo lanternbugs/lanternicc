@@ -1103,6 +1103,27 @@ sharedVariables.mygame[gameData.BoardIndex].name2 = sharedVariables.mygame[gameD
 
 }
 
+void moveBoardDown()
+{
+
+ try {
+     Point P= getLocation();
+     setLocation(P.x, P.y - 75);
+
+ }
+ catch(Exception dui){}
+}
+
+void moveBoardUp()
+{
+ try {
+     Point P= getLocation();
+     setLocation(P.x, P.y + 75);
+
+ }
+ catch(Exception dui){}
+}
+
 
 
 void updateClock(String icsGameNumber, String colort, String time)
@@ -2599,8 +2620,42 @@ JMenuItem item3 = new JMenuItem("Unfollow ");
        });
 
      menu2.add(item3);
-     
 
+JMenuItem item4 = new JMenuItem("Finger  " + nameF);
+ item4.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+             sendCommand("Finger " + nameF + "\n");
+
+            }
+       });
+
+     menu2.add(item4);
+
+JMenuItem item5 = new JMenuItem("Move Board Up ");
+ item5.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            try {
+                moveBoardDown();
+            }
+            catch(Exception dui){}
+
+            }
+       });
+
+     menu2.add(item5);
+
+JMenuItem item6 = new JMenuItem("Move Board Down ");
+ item6.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            try {
+                moveBoardUp();
+            }
+            catch(Exception dui){}
+
+            }
+       });
+
+     menu2.add(item6);
 
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());
@@ -2665,6 +2720,41 @@ JMenuItem item3 = new JMenuItem("Unfollow ");
 
      menu2.add(item3);
 
+JMenuItem item4 = new JMenuItem("Finger  " + nameF);
+ item4.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+             sendCommand("Finger " + nameF + "\n");
+
+            }
+       });
+
+     menu2.add(item4);
+
+JMenuItem item5 = new JMenuItem("Move Board Up ");
+ item5.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            try {
+                moveBoardDown();
+            }
+            catch(Exception dui){}
+
+            }
+       });
+
+     menu2.add(item5);
+
+JMenuItem item6 = new JMenuItem("Move Board Down ");
+ item6.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            try {
+                moveBoardUp();
+            }
+            catch(Exception dui){}
+
+            }
+       });
+
+     menu2.add(item6);
 
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());

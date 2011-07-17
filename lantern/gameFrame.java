@@ -125,7 +125,7 @@ else // library search
 
 MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
-         if (e.getClickCount() == 2 && sharedVariables.autoHistoryPopup == false) {
+         if (e.getClickCount() == 2 && (sharedVariables.autoHistoryPopup == false || mygametable.type1.equals("stored"))) {
 
              JTable target = (JTable)e.getSource();
       int row = target.getSelectedRow();

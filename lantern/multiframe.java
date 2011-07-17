@@ -3800,7 +3800,7 @@ if(event.getActionCommand().equals("Auto Name Popup"))
 }
 if(event.getActionCommand().equals("Auto History Popup"))
 {
-	if(sharedVariables.autopopup == false)
+	if(sharedVariables.autoHistoryPopup == false)
 	{
 		sharedVariables.autoHistoryPopup = true;
 		autoHistoryPopup.setSelected(true);
