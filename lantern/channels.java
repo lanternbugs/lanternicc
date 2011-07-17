@@ -104,6 +104,7 @@ boolean channelNumberLeft;
 boolean checkLegality;
 boolean compactNameList=false;
 boolean useTopGames=false;
+boolean useLightBackground=false;
 
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
@@ -283,7 +284,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.13";
+version = "v4.14";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

@@ -151,7 +151,7 @@ webframe mywebframe;
  JCheckBoxMenuItem materialCount;
  JCheckBoxMenuItem showRatings;
  JCheckBoxMenuItem showFlags;
-
+JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
  JCheckBoxMenuItem boardconsole1;
  JCheckBoxMenuItem boardconsole2;
@@ -187,6 +187,7 @@ JCheckBoxMenuItem woodenboard2;
 JCheckBoxMenuItem woodenboard3;
 JCheckBoxMenuItem grayishboard;
 JCheckBoxMenuItem solidboard;
+JCheckBoxMenuItem oliveboard;
 
 JCheckBoxMenuItem board5;
 JCheckBoxMenuItem board6;
@@ -390,6 +391,10 @@ consoleSubframes[0].makeHappen(0);
     else
     	showFlags.setSelected(true);
 
+if(sharedVariables.useLightBackground == false)
+    	useLightBackground.setSelected(false);
+    else
+    	useLightBackground.setSelected(true);
 
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
@@ -1383,7 +1388,7 @@ grayishboard = new JCheckBoxMenuItem("Gray Marble");
 board5 = new JCheckBoxMenuItem("Red Marble");
 board6 = new JCheckBoxMenuItem("Crampled Paper");
 board7 = new JCheckBoxMenuItem("Winter");
-
+oliveboard = new JCheckBoxMenuItem("Olive Board");
 
 selectboards.add(solidboard);
 selectboards.add(woodenboard1);
@@ -1393,6 +1398,7 @@ selectboards.add(grayishboard);
 selectboards.add(board5);
 selectboards.add(board6);
 selectboards.add(board7);
+selectboards.add(oliveboard);
 
 myboardmenu.add(selectboards);
 solidboard.addActionListener(this);
@@ -1403,6 +1409,7 @@ grayishboard.addActionListener(this);
 board5.addActionListener(this);
 board6.addActionListener(this);
 board7.addActionListener(this);
+oliveboard.addActionListener(this);
 woodenboard2.setSelected(true);
 
 
@@ -1602,6 +1609,10 @@ materialCount.addActionListener(this);
  showFlags = new JCheckBoxMenuItem("Show Flags");
   myboardmenu.add(showFlags);
 showFlags.addActionListener(this);
+
+ useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
+ // myboardmenu.add(useLightBackground);   // disabled
+useLightBackground.addActionListener(this);
 
  showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
   myboardmenu.add(showRatings);
@@ -3264,6 +3275,13 @@ sharedVariables.boardType=7;
 setBoard(sharedVariables.boardType);
 
 }
+if(event.getActionCommand().equals("Olive Board"))
+{
+sharedVariables.boardType=8;
+setBoard(sharedVariables.boardType);
+
+}
+
 if(event.getActionCommand().equals("Dyche1"))
 {
 sharedVariables.pieceType=0;
@@ -3686,6 +3704,21 @@ if(event.getActionCommand().equals("Show Flags"))
 String swarning = "This setting will update on board as soon as the next game starts.";
 Popup pframe = new Popup((JFrame) this, true, swarning);
 pframe.setVisible(true);
+
+}
+
+if(event.getActionCommand().equals("Use Light Square as Board Background"))
+{
+	if(sharedVariables.useLightBackground == false)
+	{
+		useLightBackground.setSelected(true);
+		sharedVariables.useLightBackground = true;
+	}
+	else
+	{
+		useLightBackground.setSelected(false);
+		sharedVariables.useLightBackground = false;
+	}
 
 }
 
@@ -4295,6 +4328,12 @@ if(type == 7)
 board7.setSelected(true);
 else
 board7.setSelected(false);
+
+if(type == 7)
+oliveboard.setSelected(true);
+else
+oliveboard.setSelected(false);
+
 
  for(int a=0; a<sharedVariables.maxGameTabs; a++)
  if(myboards[a]!=null)

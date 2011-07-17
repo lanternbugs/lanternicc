@@ -2303,7 +2303,14 @@ JScrollPane listScroller;
 		}
 		catch(Exception e){}
 		}
-
+ int getBoardType()
+{
+ 
+ if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_OBSERVING && sharedVariables.randomBoardTiles == true)
+ return sharedVariables.mygame[gameData.LookingAt].randomObj.boardNum;
+ 
+ return sharedVariables.boardType;
+}
 		public void paintComponent(Graphics g)
 			{
 
@@ -2315,6 +2322,14 @@ JScrollPane listScroller;
 			Color highlightcolor;
 			highlightcolor = new Color(230,0,10);
 			setBackground(sharedVariables.boardBackgroundColor);
+			
+ /*		int Width = getWidth();
+		int Height = getHeight();
+  if(sharedVariables.useLightBackground == true)
+   g.drawImage(graphics.boards[sharedVariables.boardType][graphics.light], 0, 0,  Width, Height, this);
+   else
+   setBackground(sharedVariables.boardBackgroundColor);
+*/
 			actionPanel.setBackground(sharedVariables.boardBackgroundColor);
 			actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
 			buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
@@ -2327,7 +2342,7 @@ JScrollPane listScroller;
  }
  if(sharedVariables.mygame[gameData.LookingAt].country1.equals("") && sharedVariables.mygame[gameData.LookingAt].country2.equals(""))
  {  
-   
+
    flagTop.setVisible(false);
    flagBottom.setVisible(false);
 

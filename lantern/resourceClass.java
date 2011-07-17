@@ -45,7 +45,7 @@ resourceClass()
 {
 
 
-maxBoards=8;
+maxBoards=9;
 maxPieces=23;
 maxPiecePaths=20;
 
@@ -61,6 +61,8 @@ boardPaths[4]= "dark-marble";
 boardPaths[5]= "red-marble";
 boardPaths[6]= "crampled-paper";
 boardPaths[7]= "winter";
+boardPaths[8]= "olive";
+
 int num=0;
 //for(num=0; num < 8; num++)
 //boardPaths[num]="/" + boardPaths[num];
