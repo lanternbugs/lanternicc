@@ -812,8 +812,7 @@ try {
 
 }// end try
 catch(Exception e){}
-sharedVariables.mygame[gameData.BoardIndex].name1 = WN + " " + white_titles + " " + white_rating;
-sharedVariables.mygame[gameData.BoardIndex].name2 = BN + " " + black_titles + " " + black_rating;
+
 sharedVariables.mygame[gameData.BoardIndex].realname1 = WN;
 sharedVariables.mygame[gameData.BoardIndex].realname2 = BN;
 sharedVariables.mygame[gameData.BoardIndex].realelo1 = white_rating;
@@ -852,7 +851,17 @@ if(!sharedVariables.myname.equals(BN))
 
 
 }
+if(sharedVariables.showRatings == false && type.equals("1") && played == 1)
+{
+  sharedVariables.mygame[gameData.BoardIndex].name1 = WN + " " + white_titles;
+sharedVariables.mygame[gameData.BoardIndex].name2 = BN + " " + black_titles;
+ }
+else
+{
+ sharedVariables.mygame[gameData.BoardIndex].name1 = WN + " " + white_titles + " " + white_rating;
+sharedVariables.mygame[gameData.BoardIndex].name2 = BN + " " + black_titles + " " + black_rating;
 
+}
 	if(played == 1)
 	{
 		if(type.equals("1"))
@@ -1912,7 +1921,7 @@ uniqueName=sharedVariables.countryNames.substring(bb+ country.length() + 2, bbb)
 }
 
 
-if(uniqueName.equals(""))
+if(uniqueName.equals("") || sharedVariables.showFlags == false)
 {
      if(top == true)
     mycontrolspanel.flagTop.setVisible(false);

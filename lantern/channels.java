@@ -84,6 +84,9 @@ boolean autopopup;
 boolean autoHistoryPopup;
 boolean activitiesOpen;
 boolean showMaterialCount;
+boolean showRatings;
+boolean showFlags;
+
 boolean sideways;
 boolean showButtonTitle;
 boolean loadSizes;
@@ -280,7 +283,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.12";
+version = "v4.13";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -406,6 +409,9 @@ autopopup=true;
 autoHistoryPopup=true;
 activitiesOpen=false;
 showMaterialCount=true;
+showRatings=true;
+showFlags=true;
+
 sideways=false;
 showButtonTitle=true;
 showConsoleMenu=true;

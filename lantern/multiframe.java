@@ -149,6 +149,9 @@ webframe mywebframe;
  JCheckBoxMenuItem tellswitch;
  JCheckBoxMenuItem highlight;
  JCheckBoxMenuItem materialCount;
+ JCheckBoxMenuItem showRatings;
+ JCheckBoxMenuItem showFlags;
+
  JCheckBoxMenuItem boardconsole0;
  JCheckBoxMenuItem boardconsole1;
  JCheckBoxMenuItem boardconsole2;
@@ -376,6 +379,17 @@ consoleSubframes[0].makeHappen(0);
     	materialCount.setSelected(false);
     else
     	materialCount.setSelected(true);
+
+ if(sharedVariables.showRatings == false)
+    	showRatings.setSelected(false);
+    else
+    	showRatings.setSelected(true);
+
+ if(sharedVariables.showFlags == false)
+    	showFlags.setSelected(false);
+    else
+    	showFlags.setSelected(true);
+
 
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
@@ -1585,6 +1599,13 @@ JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
   myboardmenu.add(materialCount);
 materialCount.addActionListener(this);
 
+ showFlags = new JCheckBoxMenuItem("Show Flags");
+  myboardmenu.add(showFlags);
+showFlags.addActionListener(this);
+
+ showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
+  myboardmenu.add(showRatings);
+showRatings.addActionListener(this);
 
 
 JMenu aspect = new JMenu("Board Aspect Ratio");
@@ -3635,6 +3656,38 @@ if(event.getActionCommand().equals("Material Count"))
 	}
 }
 
+if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
+{
+	if(sharedVariables.showRatings == false)
+	{
+		showRatings.setSelected(true);
+		sharedVariables.showRatings = true;
+	}
+	else
+	{
+		showRatings.setSelected(false);
+		sharedVariables.showRatings = false;
+	}
+}
+
+if(event.getActionCommand().equals("Show Flags"))
+{
+	if(sharedVariables.showFlags == false)
+	{
+		showFlags.setSelected(true);
+		sharedVariables.showFlags = true;
+	}
+	else
+	{
+		showFlags.setSelected(false);
+		sharedVariables.showFlags = false;
+	}
+
+String swarning = "This setting will update on board as soon as the next game starts.";
+Popup pframe = new Popup((JFrame) this, true, swarning);
+pframe.setVisible(true);
+
+}
 
 
 if(event.getActionCommand().equals("Tabs Only"))
