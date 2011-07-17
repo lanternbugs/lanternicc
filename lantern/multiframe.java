@@ -188,6 +188,9 @@ JCheckBoxMenuItem woodenboard3;
 JCheckBoxMenuItem grayishboard;
 JCheckBoxMenuItem solidboard;
 JCheckBoxMenuItem oliveboard;
+JCheckBoxMenuItem cherryboard;
+JCheckBoxMenuItem purpleboard;
+
 
 JCheckBoxMenuItem board5;
 JCheckBoxMenuItem board6;
@@ -1389,6 +1392,10 @@ board5 = new JCheckBoxMenuItem("Red Marble");
 board6 = new JCheckBoxMenuItem("Crampled Paper");
 board7 = new JCheckBoxMenuItem("Winter");
 oliveboard = new JCheckBoxMenuItem("Olive Board");
+cherryboard = new JCheckBoxMenuItem("Cherry Board");
+purpleboard = new JCheckBoxMenuItem("Purple Board");
+
+
 
 selectboards.add(solidboard);
 selectboards.add(woodenboard1);
@@ -1399,6 +1406,9 @@ selectboards.add(board5);
 selectboards.add(board6);
 selectboards.add(board7);
 selectboards.add(oliveboard);
+selectboards.add(cherryboard);
+selectboards.add(purpleboard);
+
 
 myboardmenu.add(selectboards);
 solidboard.addActionListener(this);
@@ -1410,6 +1420,9 @@ board5.addActionListener(this);
 board6.addActionListener(this);
 board7.addActionListener(this);
 oliveboard.addActionListener(this);
+cherryboard.addActionListener(this);
+purpleboard.addActionListener(this);
+
 woodenboard2.setSelected(true);
 
 
@@ -3281,6 +3294,19 @@ sharedVariables.boardType=8;
 setBoard(sharedVariables.boardType);
 
 }
+if(event.getActionCommand().equals("Cherry Board"))
+{
+sharedVariables.boardType=9;
+setBoard(sharedVariables.boardType);
+
+}
+if(event.getActionCommand().equals("Purple Board"))
+{
+sharedVariables.boardType=10;
+setBoard(sharedVariables.boardType);
+
+}
+
 
 if(event.getActionCommand().equals("Dyche1"))
 {
@@ -4329,10 +4355,20 @@ board7.setSelected(true);
 else
 board7.setSelected(false);
 
-if(type == 7)
+if(type == 8)
 oliveboard.setSelected(true);
 else
 oliveboard.setSelected(false);
+
+if(type == 9)
+cherryboard.setSelected(true);
+else
+cherryboard.setSelected(false);
+
+if(type == 10)
+purpleboard.setSelected(true);
+else
+purpleboard.setSelected(false);
 
 
  for(int a=0; a<sharedVariables.maxGameTabs; a++)
