@@ -3092,11 +3092,11 @@ add(bottomClock);
 
 
 int num= Short.MAX_VALUE;
-int flagnum=90;
+int flagnum=105;
 
 
 	hflagtop.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	hflagtop.addComponent(flagTop, 0, GroupLayout.DEFAULT_SIZE, flagnum);
+	hflagtop.addComponent(flagTop, flagnum, GroupLayout.DEFAULT_SIZE, flagnum);
 	h1.addGroup(hflagtop);
 	h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 
