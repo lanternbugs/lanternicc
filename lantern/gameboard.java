@@ -148,7 +148,22 @@ return super.isVisible();
 
 }
 
-
+public void repaint()
+{
+try{
+if(sharedVariables == null || topGame == null)
+{
+  super.repaint();
+  return;
+}
+if(sharedVariables.useTopGames == true)
+topGame.repaint();
+else
+super.repaint();
+}
+catch(Exception dummy){}
+  
+}
 
 gameboard(JTextPane consoles1[], subframe consoleSubframes1[], JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, int boardNumber, Image img1[], ConcurrentLinkedQueue<myoutput> queue1, channels sharedVariables1, resourceClass graphics1, docWriter myDocWriter1)
 {

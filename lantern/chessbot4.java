@@ -806,6 +806,24 @@ class routing {
 
 void writeLevel1(routing console, String thetell)
 {
+int slashN1=thetell.indexOf("\n");
+int slashN2=-1;
+if(slashN1 > -1)
+{
+ slashN2=thetell.indexOf("\n", slashN1 + 1);
+ if(slashN2 > -1)
+ {
+   while(slashN2 > -1)
+   {
+    writeLevel1(console, thetell.substring(0, slashN1 + 1));
+    thetell=thetell.substring(slashN1 + 1, thetell.length());
+    slashN1=thetell.indexOf("\n");
+    slashN2=thetell.indexOf("\n", slashN1 + 1);
+   //  writeToSubConsole("double tell and slashN2  = " + slashN2 + "\n", 0);
+   }
+ }// end if
+}
+
 if(thetell.startsWith("bell set to"))
 {
 	bellSet=true;
@@ -814,11 +832,14 @@ if(thetell.startsWith("bell set to"))
 if(!thetell.startsWith("aics"))
 {
 
-if(thetell.length() == 2)
+if(thetell.length() <= 2)
   return;
 else if(thetell.length() > 2)
 {
-	thetell=thetell.substring(0, thetell.length()-2);
+	if(thetell.indexOf("\r") > -1)
+        thetell=thetell.substring(0, thetell.length()-1);
+        else
+        thetell=thetell.substring(0, thetell.length()-2);
 	
        /* if(thetell.indexOf("\n") > -1)
         {
