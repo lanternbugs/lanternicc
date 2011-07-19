@@ -284,7 +284,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.16";
+version = "v4.17";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -324,7 +324,7 @@ noidle=false;
 standAlone = true;
 chessclubIP = "207.99.83.228";
 notifyControllerFile = "lantern_notify_controler.ini";
-boardType=2;
+boardType=9;
 pieceType=14;
 NOT_FOUND_NUMBER = -100;
 
@@ -568,7 +568,7 @@ BackColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);
 boardForegroundColor = new Color(60,60,60);
 clockForegroundColor = new Color(60,60,60);
-boardBackgroundColor = new Color(234,255,255);
+boardBackgroundColor = new Color(204,204,204);
 onMoveBoardBackgroundColor = new Color(100, 203, 203);
 inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
