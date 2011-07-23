@@ -832,12 +832,14 @@ if(thetell.startsWith("bell set to"))
 if(!thetell.startsWith("aics"))
 {
 
-if(thetell.length() <= 2)
+if(thetell.length() <= 2 && !(thetell.equals("\r\n") || thetell.equals("\n")))
   return;
-else if(thetell.length() > 2)
+else if(thetell.length() > 2 || (thetell.equals("\r\n") || thetell.equals("\n")))
 {
 	if(thetell.indexOf("\r") > -1)
         thetell=thetell.substring(0, thetell.length()-1);
+        else if(thetell.equals("\n"))
+        ;
         else
         thetell=thetell.substring(0, thetell.length()-2);
 	
