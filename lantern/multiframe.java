@@ -1349,6 +1349,10 @@ JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
 myconsolesmenu.add(channelnotifymap);
 channelnotifymap.addActionListener(this);
 
+JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
+myconsolesmenu.add(channelnotifyonline);
+channelnotifyonline.addActionListener(this);
+
 
 
 JMenuItem toolbox = new JMenuItem("ToolBox");
@@ -2290,6 +2294,70 @@ mypopper.setVisible(true);
 
 
 }
+
+if(event.getActionCommand().equals("Channel Notify Online"))
+{
+
+
+ String mess="Map of people online and in channels on channel notify.\n\n";
+for(int z=0; z<sharedVariables.channelNotifyList.size(); z++)
+if(sharedVariables.channelNotifyList.get(z).nameList.size()>0)
+{
+
+String channel=sharedVariables.channelNotifyList.get(z).channel;
+
+for(int x=0; x < sharedVariables.channelNotifyList.get(z).nameList.size(); x++)
+{
+try {
+
+
+for(int yy =0 ; yy < sharedVariables.channelNamesList.size(); yy++)
+{ if(Integer.parseInt(sharedVariables.channelNamesList.get(yy).channel) == Integer.parseInt(channel))
+  {
+    int chan=yy;
+for(int y=0; y<sharedVariables.channelNamesList.get(chan).model2.size(); y++)
+{
+  String temp = (String) sharedVariables.channelNamesList.get(chan).model2.elementAt(y);
+  temp=temp.toLowerCase();
+  if(sharedVariables.channelNotifyList.get(z).nameList.get(x).toLowerCase().equals(temp))
+  mess+=sharedVariables.channelNotifyList.get(z).nameList.get(x) + " ";;
+} // end y for
+}// end if
+}// end yy loop
+}catch(Exception dui){}
+
+}// end for
+} // end outer for
+
+
+ mess+="\n\nMap of people on connect notify online and in a channel with you.\n\n";
+for(int z=0; z<sharedVariables.lanternNotifyList.size(); z++)
+{
+
+for(int x=0; x < sharedVariables.channelNamesList.size(); x++)
+for(int xx=0; xx < sharedVariables.channelNamesList.get(x).model2.size(); xx++)
+
+{
+try {
+ String temp = (String) sharedVariables.channelNamesList.get(x).model2.elementAt(xx);
+ temp=temp.toLowerCase();
+if( sharedVariables.lanternNotifyList.get(z).name.toLowerCase().equals(temp))
+ mess+=(String) sharedVariables.channelNamesList.get(x).model2.elementAt(xx) + " ";;
+}catch(Exception dui){}
+
+}// end for
+} // end outer for
+
+
+
+
+Popup mypopper = new Popup(this, false, mess);
+mypopper.setSize(600,500);
+mypopper.setVisible(true);
+
+
+}
+
 if(event.getActionCommand().equals("Channel Map"))
 {
 
