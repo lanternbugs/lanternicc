@@ -284,7 +284,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.17";
+version = "v4.18";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -698,6 +698,98 @@ void setupMenu()
 	rightClickMenu.add("Tell");
 
 }
+String getConnectNotifyOnline()
+{
+String mess2 = "People on connect notify online:\n   ";
+String mess = "";
+ArrayList<String> realnames = new ArrayList();
+
+for(int z=0; z<lanternNotifyList.size(); z++)
+{
+
+for(int x=0; x < channelNamesList.size(); x++)
+for(int xx=0; xx < channelNamesList.get(x).model2.size(); xx++)
+
+{
+try {
+ String temp = (String) channelNamesList.get(x).model2.elementAt(xx);
+
+if( lanternNotifyList.get(z).name.toLowerCase().equals(temp.toLowerCase()))
+{
+    String realName= temp;
+    boolean go=true;
+    for(int m=0; m < realnames.size(); m++)
+    if(realnames.get(m).equals(temp))
+    go=false;
+    if(go==true)
+    {
+    mess+=realName + " ";;
+    realnames.add(realName);
+    }
+ 
+}// end if match
+}catch(Exception dui){}
+
+}// end for
+} // end outer for
+if(!mess.equals(""))
+return mess2 + mess + "\n";
+
+return "";
+
+
+}// end get connect notify online
+
+
+String getChannelNotifyOnline()
+{
+ String mess="People on channel notify online:\n   ";
+ArrayList<String> realnames = new ArrayList();
+for(int z=0; z < channelNotifyList.size(); z++)
+if(channelNotifyList.get(z).nameList.size()>0)
+{
+
+String channel=channelNotifyList.get(z).channel;
+
+for(int x=0; x < channelNotifyList.get(z).nameList.size(); x++)
+{
+try {
+
+
+for(int yy =0 ; yy < channelNamesList.size(); yy++)
+{ if(Integer.parseInt(channelNamesList.get(yy).channel) == Integer.parseInt(channel))
+  {
+    int chan=yy;
+for(int y=0; y < channelNamesList.get(chan).model2.size(); y++)
+{
+  String temp = (String) channelNamesList.get(chan).model2.elementAt(y);
+if(channelNotifyList.get(z).nameList.get(x).toLowerCase().equals(temp.toLowerCase()))
+  {
+    String realName= temp;
+    boolean go=true;
+    for(int m=0; m < realnames.size(); m++)
+    if(realnames.get(m).equals(temp))
+    go=false;
+    if(go==true)
+    {
+    mess+=realName + " ";;
+    realnames.add(realName);
+    }
+
+  }// end if a match
+} // end y for
+}// end if
+}// end yy loop
+}catch(Exception dui){}
+
+}// end for
+} // end outer for
+
+
+return mess + "\n";
+
+} // end channel notify online
+
 
 boolean getNotifyControllerState(String watchName)
 {

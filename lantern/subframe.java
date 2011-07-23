@@ -1910,7 +1910,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
-     	
+
                 if( a == 71) // ctrl + g
                 {
   			String myurl =Input.getText();
@@ -1995,6 +1995,16 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 			}
 
 
+
+                    if( a == 68)
+                    {
+
+                      String mess2 = sharedVariables.getChannelNotifyOnline();
+                      mess2 += sharedVariables.getConnectNotifyOnline();
+                      writeToConsole(mess2, sharedVariables.responseColor, false);// false for not italic
+                      return;
+                    }
+
 		}
                 if( e.getModifiersEx() == 512)// alt
                 if(a == 84)// atl t
@@ -2006,13 +2016,13 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
                 if(a == 84) // shift alt t
                 {
                    changeTellTab(false);// flase for backward
-                  
+
                 }
 
 
       if( e.getModifiersEx() == 512)// alt
       {
-		
+
                  if(a == 49  )
 		 {
 
@@ -2207,7 +2217,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
          if(changeTo!= -1)
          makeHappen(changeTo);
        }
-      
+
       myoutput output = new myoutput();
       if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
       output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mes;// having a name means level 1 is on if on icc and this `phrase`mess will be used to direct output back to this console
@@ -2218,45 +2228,13 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
       queue.add(output);
       Input.setText("");
 
-	  			try {
-				StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
-	  			if(sharedVariables.password == 0)
-	  			{
+if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
+{
+ writeToConsole(mes, sharedVariables.typedColor , true); // true for italic
+}
 
 
-
-
-					if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
-					{
-						Style styleQ = doc.addStyle(null, null);
-
-						StyleConstants.setForeground(styleQ, sharedVariables.typedColor );
-						//StyleConstants.setUnderline(attrs, true);
-						SimpleAttributeSet attrs = new SimpleAttributeSet();
-
-						StyleConstants.setItalic(attrs, true);
-						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-					int SUBFRAME_CONSOLES=0;
-					int maxLinks =75;
-					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
-					//doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
-
-					}
-
-			}
-	  			else
-	  			{
-					if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
-						doc.insertString(doc.getEndPosition().getOffset(), "*******\n", null);
-					sharedVariables.password=0;
-				}
-
-					for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
-					if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
-					consoles[aa].setStyledDocument(doc);
-				}
-				catch(Exception E){ }
-        }
+        }// end enter
         if((a == 120 || a == 119)  && e.getModifiersEx() != 64)// f9
         {
                 String s=Input.getText();
@@ -2356,6 +2334,45 @@ else
 */
 recreate(sharedVariables.consolesTabLayout[consoleNumber]);
 }
+
+void writeToConsole(String mes, Color col, boolean italic)
+{
+	  			try {
+				StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+
+
+
+
+
+						Style styleQ = doc.addStyle(null, null);
+
+						StyleConstants.setForeground(styleQ, col);
+						//StyleConstants.setUnderline(attrs, true);
+						SimpleAttributeSet attrs = new SimpleAttributeSet();
+
+						if(italic == true)
+                                                StyleConstants.setItalic(attrs, true);
+
+                                        	StyleConstants.setForeground(attrs, col);
+					int SUBFRAME_CONSOLES=0;
+					int maxLinks =75;
+					myDocWriter.processLink(doc, mes, col, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
+					//doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+
+
+
+
+					for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+					if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
+					consoles[aa].setStyledDocument(doc);
+				}
+				catch(Exception E){ }
+ }// end write to console
+
+
+
+
 int ctrlEnterSwitch(int console)
 {
 
