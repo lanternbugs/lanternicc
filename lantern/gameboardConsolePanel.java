@@ -191,8 +191,34 @@ JMenuItem item22 = new JMenuItem("trim tab chat");
 
 
 
-JMenuItem item3 = new JMenuItem("cancel");
+/*JMenuItem item3 = new JMenuItem("cancel");
 menu2.add(item3);
+*/
+JMenuItem [] openItems = new JMenuItem[sharedVariables.openBoardCount];
+for(int z=0; z < sharedVariables.openBoardCount; z++)
+{
+
+if(sharedVariables.mygame[z]!=null)
+if(sharedVariables.mygame[z].myGameNumber > 0)
+{
+try {
+  openItems[z] = new JMenuItem("" + sharedVariables.mygame[z].myGameNumber);
+ final int num = z;
+ openItems[z].addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            makehappen(num);
+            }
+       });
+       menu2.add(openItems[z]);
+ }
+ catch(Exception dui){}
+}
+
+
+}
+
+
+
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());
 }

@@ -284,7 +284,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.18";
+version = "v4.19";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -726,7 +726,7 @@ if( lanternNotifyList.get(z).name.toLowerCase().equals(temp.toLowerCase()))
     mess+=realName + " ";;
     realnames.add(realName);
     }
- 
+
 }// end if match
 }catch(Exception dui){}
 
