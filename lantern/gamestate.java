@@ -70,6 +70,7 @@ int blackMaterialCount;
 int blank; // for an x in examine mode
 int madeMove;
 boolean [] excludedPieces;
+boolean imclosed;
 randomPieces randomObj;
 
 boolean becameExamined;
@@ -148,6 +149,7 @@ gamestate(boolean [] excludedPieces1)
 	newBoard = true;
 	whiteMaterialCount=blackMaterialCount=39;
 	myGameNumber = -100;
+	imclosed=false;
 	movelock=0;
 	whiteMinute=blackMinute=whiteSecond=blackSecond=whiteTenth=blackTenth=0;
 	state=-1;

@@ -224,6 +224,7 @@ int [][] console = new int[maxConsoleTabs][500];
 int [] style = new int[500];
 int [] looking = new int[maxConsoleTabs];
 int [] gamelooking = new int[100];
+int [] tabLooking = new int[100];
 int [] boardConsoleSizes = new int[4];
 int [] consolesTabLayout;
 int [] consolesNamesLayout;
@@ -284,7 +285,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.19";
+version = "v4.20";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -474,7 +475,7 @@ for(int a=0; a<maxUserButtons; a++)
 userButtonCommands[a]="";
 
 wallpaperFileName="";
-tabsOnly=false;
+tabsOnly=true;
 int lastButton=-1;
 songs = new URL[maxSongs];
 poweroutSounds= new URL[maxSongs];

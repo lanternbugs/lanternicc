@@ -105,14 +105,17 @@ initComponents();
 //  essentially it switches the game that is shown on the  board
 public void makehappen(int i)
 {
-
-           if(i>=sharedVariables.openBoardCount)
-            return;
-            if(channelTabs[i].isVisible()== false)
-            	channelTabs[i].setVisible(true);
+             int physicalTab=i;
+             i=sharedVariables.tabLooking[i];// translate to tab its on
+             if(i == -1)
+             return;
+           //if(i>=sharedVariables.openBoardCount)
+           // return;
+          // if(channelTabs[physicalTab].isVisible()== false)
+            //	channelTabs[physicalTab].setVisible(true);
             gameData.LookingAt=i;
             sharedVariables.Looking[gameData.BoardIndex]=i;
-            setActiveTabForeground(i);
+            setActiveTabForeground(physicalTab);
 
          //  mypanel.repaint();
          // mycontrolspanel.repaint();

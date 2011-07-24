@@ -789,17 +789,24 @@ for(int boarc=0; boarc< sharedVariables.maxConsoleTabs; boarc++)
 
 
 
-
-
+try {
+int boar2=0;
 for(int boar=0; boar< sharedVariables.openBoardCount; boar++)
 {
-	set_string = set_string + "[Gam" + boar +"] ";
-			set_string = set_string + "" + sharedVariables.myBoardSizes[boar].point0.x + " " + sharedVariables.myBoardSizes[boar].point0.y + " ";
-			set_string = set_string + "" + sharedVariables.myBoardSizes[boar].con0x + " " + sharedVariables.myBoardSizes[boar].con0y + " ";
+       if(myboards[boar]!=null)
+       if(sharedVariables.myBoardSizes[boar].con0x > 10)
+       {
+	set_string = set_string + "[Gam" + boar2 +"] ";
+			set_string = set_string + "" + sharedVariables.myBoardSizes[boar2].point0.x + " " + sharedVariables.myBoardSizes[boar2].point0.y + " ";
+			set_string = set_string + "" + sharedVariables.myBoardSizes[boar2].con0x + " " + sharedVariables.myBoardSizes[boar2].con0y + " ";
 			set_string = set_string + "[doneGam" + boar + "] ";
+
+       boar2++;
+       }
 }
 
-
+}// end try
+catch(Exception badboard){}
 	set_string = set_string + "[ActivitiesSizes] ";
 			set_string = set_string + "" + sharedVariables.myActivitiesSizes.point0.x + " " + sharedVariables.myActivitiesSizes.point0.y + " ";
 			set_string = set_string + "" + sharedVariables.myActivitiesSizes.con0x + " " + sharedVariables.myActivitiesSizes.con0y + " ";

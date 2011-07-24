@@ -110,7 +110,7 @@ catch(Exception e)
 	}
 	public void setText(String s, int num)
 	{
-
+                    num=sharedVariables.tabLooking[num];
 		try {
 
 			if(num < 5) // 0-4 tabs get icons

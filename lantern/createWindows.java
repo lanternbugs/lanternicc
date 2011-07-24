@@ -232,6 +232,68 @@ protected void createGameFrame() {
  boolean newboard = false;
 
  int boardNumber = sharedVariables.openBoardCount;
+ int t1;
+ int tab;
+/**************** quick check if we can just make a board visible *****************************/
+
+for(t1=0; t1<sharedVariables.maxGameTabs; t1++)
+{
+if(myboards[t1] == null)
+break;
+else if(myboards[t1].isVisible() == false && (sharedVariables.mygame[t1].myGameNumber != -100 || sharedVariables.mygame[t1].imclosed == false))
+{
+  myboards[t1].setVisible(true);
+  myboards[t1].myconsolepanel.makehappen(t1);
+  for(tab = 0; tab < sharedVariables.openBoardCount; tab++)
+  { myboards[t1].myconsolepanel.channelTabs[tab].setVisible(true);
+  myboards[t1].myconsolepanel.channelTabs[tab].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[tab]], tab);
+
+  }
+  return;
+}// end else
+}// end for
+
+/*************                                                   *****************************/
+
+
+/****************************  look for first closed board ***********************************/
+ for(t1=0; t1<sharedVariables.maxGameTabs; t1++)
+{
+if(myboards[t1] == null)
+break;
+else if(sharedVariables.mygame[t1].imclosed == true)
+{
+                                   sharedVariables.openBoardCount++;
+                                    int mylast = sharedVariables.openBoardCount-1;
+                                    sharedVariables.tabLooking[mylast] = t1;
+                                    myboards[t1].setVisible(true);
+
+                                    for(int cc=0; cc< sharedVariables.maxGameTabs; cc++)
+                                    if(myboards[cc]!=null)
+                                    myboards[cc].myconsolepanel.channelTabs[mylast].setVisible(true);
+                                    else
+                                    break;
+
+                                    sharedVariables.tabTitle[sharedVariables.tabLooking[mylast]] = "G" + mylast;
+                                    for(int draw=0; draw < sharedVariables.maxGameTabs; draw++)
+                                    if(myboards[draw]!=null)
+                                                myboards[draw].myconsolepanel.channelTabs[mylast].setText("" + sharedVariables.tabTitle[sharedVariables.tabLooking[mylast]], mylast);
+                                    else
+                                                break;
+                                     sharedVariables.mygame[t1].imclosed = false;
+
+
+ return;
+}// end elseif
+
+}// end for
+
+
+
+
+/******************************** end first closed board *************************************/
+
+ /*
  for(int d =sharedVariables.openBoardCount-1; d >=0; d--)
  if(myboards[d]!=null)
  if(!myboards[d].isVisible())
@@ -239,7 +301,7 @@ protected void createGameFrame() {
 boardNumber=d;
 break;
 }
- if(myboards[boardNumber]!=null && boardNumber != sharedVariables.openBoardCount)
+ if(myboards[boardNumber]!=null)    //  && boardNumber != sharedVariables.openBoardCount
  {
   if(sharedVariables.useTopGames == true)
     {  if(myboards[boardNumber].topGame != null)
@@ -248,12 +310,108 @@ break;
 
   else
    myboards[boardNumber].setVisible(true);
+
+                               boolean closed = true;
+
+                                   closed = false;
+
+                                   if(closed == true)
+                                   {
+                                    sharedVariables.openBoardCount++;
+                                    sharedVariables.tabLooking[sharedVariables.openBoardCount - 1] = boardNumber;
+                                    for(int cc=0; cc< sharedVariables.openBoardCount; cc++)
+                                    if(myboards[cc]!=null)
+                                    if(myboards[cc].isVisible() == true)
+                                    myboards[cc].myconsolepanel.channelTabs[sharedVariables.openBoardCount-1].setVisible(true);
+                                    int mylast = sharedVariables.openBoardCount-1;
+                                    sharedVariables.tabTitle[sharedVariables.tabLooking[mylast]] = "G" + mylast;
+                                    for(int draw=0; draw < sharedVariables.maxGameTabs; draw++)
+                                    if(myboards[draw]!=null)
+                                                myboards[draw].myconsolepanel.channelTabs[mylast].setText("" + sharedVariables.tabTitle[sharedVariables.tabLooking[mylast]], mylast);
+                                    else
+                                                break;
+
+                                   }
+                                   else
+                                   {
+                                        JFrame haha = new JFrame("haha");
+                                        haha.setSize(200,200);
+                                        haha.setVisible(true);
+
+                                   }
+
+ //  sharedVariables.tabLooking[sharedVariables.openBoardCount]=boardNumber;
+
  }
  else
- {	myboards[boardNumber] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, boardNumber, img, queue, sharedVariables, graphics, myDocWriter);
+ {
+ 
+ 
+ */
+ 
+    boardNumber=sharedVariables.openBoardCount;
+   final int boardNumber1=boardNumber;
 
-newboard=true;
-}
+
+                            try {
+
+
+
+   sharedVariables.tabLooking[boardNumber1]=boardNumber1;
+   myboards[boardNumber1] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, boardNumber1, img, queue, sharedVariables, graphics, myDocWriter);
+
+
+
+  int numb=boardNumber1+1;
+  sharedVariables.tabTitle[sharedVariables.tabLooking[boardNumber1]] = "G" + numb;
+  for(tab = 0; tab < sharedVariables.maxGameTabs; tab++)
+  { if(myboards[tab]!=null)
+  {
+    myboards[tab].myconsolepanel.channelTabs[boardNumber1].setVisible(true);
+
+  myboards[tab].myconsolepanel.channelTabs[boardNumber1].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[boardNumber1]], boardNumber1);
+  }// end if not null
+  else
+  break;
+  }     // end for
+  for(tab = 0; tab < sharedVariables.openBoardCount; tab++)
+  {
+ myboards[boardNumber].myconsolepanel.channelTabs[tab].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[tab]], tab);
+  }
+
+
+
+  if(sharedVariables.useTopGames == true)
+  { if(myboards[boardNumber1].topGame != null)
+    myboards[boardNumber1].topGame.setVisible(true);
+  }
+  else
+   myboards[boardNumber1].setVisible(true);
+
+
+   sharedVariables.desktop.add(myboards[boardNumber1] );
+    // add desktop to consolesubframe so it can call its method of focus traversal between boards and consoles
+    myboards[boardNumber1].myconsolepanel.myself=(JDesktopPaneCustom) sharedVariables.desktop;
+try {
+        if(boardNumber1 != 0)
+        myboards[boardNumber1] .setSelected(true);
+    } catch (Exception e) {}
+		myboards[boardNumber1] .initializeGeneralTimer();
+
+
+}// end try
+catch (Exception e1) {
+                                //ignore
+                           }
+
+
+
+
+
+ newboard=true;
+//}
+
+
 try {
 // patch routine to restore board to same size if its first  board
 
@@ -270,7 +428,7 @@ myboards[boardNumber].setSize(sharedVariables.defaultBoardWide,sharedVariables.d
  }// false
 else
 {
- final int boardNumber1=boardNumber;
+ //final int boardNumber1=boardNumber;
  SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -300,31 +458,11 @@ catch(Exception bad1){}
 
 
 
-//aa.setLocation(50,50);
-if(boardNumber == sharedVariables.openBoardCount)
-{
- 
-  if(sharedVariables.useTopGames == true)
-  { try { if(myboards[boardNumber].topGame != null)
-    myboards[boardNumber].topGame.setVisible(true);
-    } catch(Exception darn){}    
-
-  }
-  else
-   myboards[boardNumber].setVisible(true);
 
 
-  // if(sharedVariables.useTopGames == false)
-   sharedVariables.desktop.add(myboards[boardNumber] );
-    // add desktop to consolesubframe so it can call its method of focus traversal between boards and consoles
-    myboards[boardNumber].myconsolepanel.myself=(JDesktopPaneCustom) sharedVariables.desktop;
-}
 
-try {
-        if(boardNumber != 0)
-        myboards[boardNumber] .setSelected(true);
-    } catch (Exception e) {}
-		myboards[boardNumber] .initializeGeneralTimer();
+
+
 
 if(boardNumber == sharedVariables.openBoardCount)
 sharedVariables.openBoardCount++;

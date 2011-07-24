@@ -564,15 +564,22 @@ try {
 
 void updateGameTabs(String title, int num)
 {
+  int physicalTab=0;
+  for(int c=0; c<sharedVariables.maxGameTabs; c++)
+  if(sharedVariables.tabLooking[c]==num)
+  {
+   physicalTab=c;
+   break;
+
+  }
 
 	for(int a=0; a < sharedVariables.maxBoardTabs; a++)
 	{
 		if(myboards[a]!=null)
-		if(myboards[a].isVisible() == true )
+	//	if(myboards[a].isVisible() == true )
 		if(myboards[a].myconsolepanel!=null)
-		if(myboards[a].myconsolepanel.channelTabs[num]!=null)// adding these extra checks for safety. in case this is called before the board fully creates
-		{myboards[a].myconsolepanel.channelTabs[num].setText(title, num);
-		myboards[a].myconsolepanel.channelTabs[num].setVisible(true);
+	 {myboards[a].myconsolepanel.channelTabs[physicalTab].setText(title, num);
+		myboards[a].myconsolepanel.channelTabs[physicalTab].setVisible(true);
 		}
 	}
 	sharedVariables.mygame[num].tabtitle= title;
@@ -4778,18 +4785,25 @@ else
 
 	void updateGameTabs(int i)
 {
+   int physicalTab=0;
+  for(int c=0; c<sharedVariables.maxGameTabs; c++)
+  if(sharedVariables.tabLooking[c]==i)
+  {
+   physicalTab=c;
+   break;
+
+  }
 
 		try {
 			for(int a=0; a< sharedVariables.openBoardCount; a++)
 			     if(myboards[a]!=null)
 			     if(myboards[a].isVisible())
 				if(myboards[a].myconsolepanel!=null)// we do these extra checks in case of a racing condition. like 20 games and 20 boards open at once and they dont fully create when this hits
-				if(myboards[a].myconsolepanel.channelTabs[i]!=null)
 			     {
 					 if(sharedVariables.gamelooking[a]==i)
 				 	;
 				 else
-				myboards[a].myconsolepanel.channelTabs[i].setBackground(sharedVariables.newInfoTabBackground);
+				myboards[a].myconsolepanel.channelTabs[physicalTab].setBackground(sharedVariables.newInfoTabBackground);
 				}
 
 		}
@@ -4797,17 +4811,27 @@ else
 }
 void updateGameTabs(String title, int num)
 {
+ int physicalTab=0;
+  for(int c=0; c<sharedVariables.maxGameTabs; c++)
+  if(sharedVariables.tabLooking[c]==num)
+  {
+   physicalTab=c;
+   break;
 
+  }
+// hack last game should now always be open board count -1
+//num=sharedVariables.openBoardCount -1;
 	for(int a=0; a < sharedVariables.maxBoardTabs; a++)
 	{
 		try {
 			if(myboards[a]!=null)
 		if(myboards[a].isVisible() == true )
 		if(myboards[a].myconsolepanel!=null)// we do these extra checks in case of a racing condition. like 20 games and 20 boards open at once and they dont fully create when this hits
-		if(myboards[a].myconsolepanel.channelTabs[num]!=null)
-		{
-			myboards[a].myconsolepanel.channelTabs[num].setText(title, num);
-			myboards[a].myconsolepanel.channelTabs[num].setVisible(true);
+                {
+
+
+                	myboards[a].myconsolepanel.channelTabs[physicalTab].setText(sharedVariables.tabTitle[num], num);
+			myboards[a].myconsolepanel.channelTabs[physicalTab].setVisible(true);
 
 		}// end if
 		}// end try
@@ -4816,6 +4840,30 @@ void updateGameTabs(String title, int num)
 	sharedVariables.mygame[num].tabtitle= title;
 
 }
+
+void updateNewGameTab()
+{
+
+// hack last game should now always be open board count -1
+//num=sharedVariables.openBoardCount -1;
+	for(int a=0; a < sharedVariables.maxBoardTabs; a++)
+	{
+		try {
+			if(myboards[a]!=null)
+		if(myboards[a].isVisible() == true )
+		if(myboards[a].myconsolepanel!=null)// we do these extra checks in case of a racing condition. like 20 games and 20 boards open at once and they dont fully create when this hits
+                {
+
+                	myboards[a].myconsolepanel.channelTabs[sharedVariables.openBoardCount -1].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[sharedVariables.openBoardCount -1]], sharedVariables.openBoardCount - 1);
+			myboards[a].myconsolepanel.channelTabs[sharedVariables.openBoardCount -1].setVisible(true);
+
+		}// end if
+		}// end try
+		catch(Exception racer){}
+	}
+
+}
+
 
 boolean notPlaying()
 {
@@ -4881,7 +4929,21 @@ if(sharedVariables.tabsOnly == true)
 				{
 				writeToConsole("Reusing board.");
 				// make board go to front with tabs only.
+                                 boolean closed = true;
+                                 for(int m=0; m<sharedVariables.openBoardCount; m++)
+                                   if(sharedVariables.tabLooking[m]==a)
+                                   closed = false;
+                                   
+                                   if(closed == true)
+                                   {
+                                    sharedVariables.openBoardCount++;
+                                    sharedVariables.tabLooking[sharedVariables.openBoardCount - 1] = a;
+                                    for(int cc=0; cc< sharedVariables.openBoardCount; cc++)
+                                    if(myboards[cc]!=null)
+                                    if(myboards[cc].isVisible() == true)
+                                    myboards[cc].myconsolepanel.channelTabs[sharedVariables.openBoardCount-1].setVisible(true);
 
+                                   }
 					if(!notPlaying()) // we havent started this new board whatever we are doing but if we are playing on a board we dont select the new board.  the simul functions will take care of it if simulizing
 					for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 						if(myboards[bb]!=null)
@@ -4944,7 +5006,9 @@ if(sharedVariables.tabsOnly == true)
 
 		protected void createGameFrame(int last, boolean visible) {
 
-	    int reuse = last;
+	    
+            boolean usingClosed=false;
+            int reuse = last;
 	    if(last == -1)
 	    last = sharedVariables.openBoardCount;
 
@@ -4960,8 +5024,27 @@ if(sharedVariables.tabsOnly == true)
 
 		}
 	    //writeToConsole("about to execute new game board command");
+	if(last!= sharedVariables.openBoardCount)
+       {  
+         boolean go=true;
+        for(int m=0; m<sharedVariables.openBoardCount; m++)
+        if(sharedVariables.tabLooking[m]==last)
+        go=false;
+        
+        if(go== true)
+        {
+          
+         usingClosed = true;
+         sharedVariables.tabLooking[sharedVariables.openBoardCount]=last;
+
+        }
+       }
+      else
+        sharedVariables.tabLooking[sharedVariables.openBoardCount]=last;
+
 	    myboards[last] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, last, sharedVariables.img, queue, sharedVariables, graphics, myDocWriter);
-		//writeToConsole("success in making new game board");
+
+        	//writeToConsole("success in making new game board");
 		if(sharedVariables.useTopGames == false)
                 myboards[last].setSize(sharedVariables.defaultBoardWide,sharedVariables.defaultBoardHigh);
 		else
@@ -4985,7 +5068,7 @@ if(sharedVariables.tabsOnly == true)
                         myboards[last] .setVisible(false);
 		//writeToConsole("i made visible false");
 		}
-	   sharedVariables.desktop.add(myboards[last] );  
+	   sharedVariables.desktop.add(myboards[last] );
 	     myboards[last].myconsolepanel.myself=(JDesktopPaneCustom) sharedVariables.desktop;
 
 		//writeToConsole("added to desktop");
@@ -5003,7 +5086,7 @@ if(sharedVariables.tabsOnly == true)
 		{
 			for(int a=0; a<sharedVariables.openBoardCount; a++)
 			{try {
-				if(myboards[a] != null && (a != last))
+				if(myboards[a] != null)
 				if(myboards[a].isVisible() == true)
 			myboards[a].myconsolepanel.channelTabs[sharedVariables.openBoardCount].setVisible(true);
 			}
@@ -5020,14 +5103,21 @@ if(sharedVariables.tabsOnly == true)
 
 		}
 			if(reuse == -1)
-			 sharedVariables.openBoardCount++;
-			else
 			{
+                          sharedVariables.openBoardCount++;
+
+                        }
+                        else
+			{
+                          
+                          if(usingClosed == true)
+                           sharedVariables.openBoardCount++;
+
 				// make this tab visible on all boards
 			for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 			   if(myboards[bb]!=null)
 					if(myboards[bb].isVisible() == true)
-						myboards[bb].myconsolepanel.channelTabs[last].setVisible(true);
+						myboards[bb].myconsolepanel.channelTabs[sharedVariables.openBoardCount - 1].setVisible(true);
 
 			}
 		//	writeToConsole("open board count is now " + sharedVariables.openBoardCount + " and last is " + last + " and reuse is " + reuse);
@@ -5595,7 +5685,9 @@ try {
 
 
 	void closeGameTab(int tabNumber)
-	{
+	{ 
+          int physicalTab=tabNumber;
+          tabNumber=sharedVariables.tabLooking[tabNumber];
 		try {
 
 			myoutput data = new myoutput();
@@ -5632,9 +5724,9 @@ try {
 		}
 		catch(Exception reseting){}
 
-sharedVariables.tabTitle[tabNumber] = "G" + (tabNumber+1);
+//sharedVariables.tabTitle[tabNumber] = "G" + (tabNumber+1);
 
-		updateGameTabs(sharedVariables.tabTitle[tabNumber], tabNumber);
+		//updateGameTabs(sharedVariables.tabTitle[tabNumber], tabNumber);
 
 try {
 	ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
@@ -5642,42 +5734,97 @@ try {
 
 readLock.lock();
 		sharedVariables.mygame[tabNumber] = new gamestate(sharedVariables.excludedPieces);
+		
+                if(physicalTab != 0)
+                sharedVariables.mygame[tabNumber].imclosed = true;
+
 readLock.unlock();
 
 // now reduce openBoardCount and make tab not visible if its far left tab and greater than 0
 
-
-		for(int a = 0; a< sharedVariables.openBoardCount; a++)
+                boolean firstPass = true;
+		for(int a = 0; a< sharedVariables.maxGameTabs; a++)
 		{
 			if(myboards[a]!=null)
 			{
-				if(tabNumber > 0)
+				if(physicalTab > 0)
 				{
-					myboards[a].myconsolepanel.channelTabs[tabNumber].setVisible(false);
+				        if(sharedVariables.openBoardCount - 1 !=0)
+                                	myboards[a].myconsolepanel.channelTabs[sharedVariables.openBoardCount - 1].setVisible(false);
 
 					if(myboards[a].isVisible() == true)
 						if(myboards[a].gameData.LookingAt == tabNumber)
-							myboards[a].myconsolepanel.makehappen(tabNumber-1);
+							myboards[a].myconsolepanel.makehappen(physicalTab-1);
+
+						// adjust boards down
+                                                for(int t=physicalTab; t<sharedVariables.openBoardCount -1; t++)
+                                               {
+                                                 if(firstPass ==  true)
+                                                {
+                                                  sharedVariables.tabLooking[t]=sharedVariables.tabLooking[t+1];
+                                                  int mylast = sharedVariables.openBoardCount-1;
+                                                //sharedVariables.tabTitle[sharedVariables.tabLooking[sharedVariables.openBoardCount-1]] = "G" + mylast;
+                                                myboards[a].myconsolepanel.channelTabs[mylast].setText("" + sharedVariables.tabTitle[sharedVariables.tabLooking[mylast]], mylast);
+
+                                                }
+
+                                                if(myboards[a].myconsolepanel.channelTabs[t]!=null)
+                                                {
+                                                  myboards[a].myconsolepanel.channelTabs[t].setText("" + sharedVariables.tabTitle[sharedVariables.tabLooking[t]], t); //sharedVariables.mygame[sharedVariables.tabLooking[t]].myGameNumber
+                                                }// end if not null
+                                               }
+                                               firstPass=false;
 				}
 				else
+ 				{		// adjust boards down
+ 				        if(sharedVariables.openBoardCount - 1 !=0)
+ 					myboards[a].myconsolepanel.channelTabs[sharedVariables.openBoardCount - 1].setVisible(false);
+                                        else
+                                        {
+                                                  sharedVariables.tabTitle[tabNumber] = "G";
+                                                updateGameTabs(sharedVariables.tabTitle[tabNumber], tabNumber);
+
+
+                                        }
+                                              for(int t=physicalTab; t<sharedVariables.openBoardCount -1; t++)
+                                               {
+                                                if(firstPass == true)
+                                                {
+                                                  sharedVariables.tabLooking[t]=sharedVariables.tabLooking[t+1];
+                                                //  sharedVariables.tabTitle[tabNumber] = "G";
+                                                //updateGameTabs(sharedVariables.tabTitle[tabNumber], physicalTab);
+
+                                                }
+
+                                                if(myboards[a].myconsolepanel.channelTabs[t]!=null)
+                                                {
+                                                  myboards[a].myconsolepanel.channelTabs[t].setText("" + sharedVariables.tabTitle[sharedVariables.tabLooking[t]], t);
+                                                }// end if not null
+                                               }
+                                               firstPass=false;
 					if(myboards[a].isVisible() == true)
-						if(myboards[a].gameData.LookingAt == tabNumber)
-							myboards[a].myconsolepanel.makehappen(tabNumber);// we call make happen on tab 0 so it adjusts the title
+						if(myboards[a].gameData.LookingAt == sharedVariables.tabLooking[physicalTab])
+							myboards[a].myconsolepanel.makehappen(physicalTab);// we call make happen on tab 0 so it adjusts the title
+                                  }// end else
+
+			}   // end if not null
+                        else
+                        break;
+
+		}  // end for
+		//if(sharedVariables.openBoardCount > 1)
+                sharedVariables.openBoardCount--;
+                sharedVariables.tabLooking[sharedVariables.openBoardCount]=-1;
 
 
-			}
-
-
-		}
 
 
 
 
 
+}
 
-
-
-}catch(Exception z){}
+catch(Exception z){}
 	}catch(Exception d){}
 
 	}

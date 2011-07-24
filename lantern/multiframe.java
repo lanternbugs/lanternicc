@@ -4738,12 +4738,22 @@ JSettingsDialog(JFrame frame, boolean mybool, channels sharedVariables1)
 	setLocation(400,300);
 	setSize(200, 200);
 
-	for(int b=0; b<sharedVariables.openBoardCount; b++)
+	for(int b=0; b<sharedVariables.maxGameTabs; b++)
 	if(myboards[b]!=null)
-	if(myboards[b].isVisible())
-	if(myboards[b].isMaximum()==false)
-	myboards[b].setBoardSize();
-
+	{
+          if(myboards[b].isVisible())
+	  {
+            if(myboards[b].isMaximum()==false)
+	    {
+              myboards[b].setBoardSize();
+              }
+          }
+       }
+       else
+       {
+        sharedVariables.openBoardCount=b;
+        break;
+       }
 
 
 		for(int b=0; b<sharedVariables.maxConsoleTabs; b++)
