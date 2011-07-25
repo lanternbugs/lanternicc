@@ -4949,7 +4949,9 @@ if(sharedVariables.tabsOnly == true)
 						if(myboards[bb]!=null)
 							if(myboards[bb].isVisible() == true)
 								myboards[bb].myconsolepanel.makehappen(a);
-				return a;
+				sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPieces);
+
+                                return a;
 				}
 				else
 				if(myboards[a].isVisible() == true)

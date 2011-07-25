@@ -243,6 +243,7 @@ break;
 else if(myboards[t1].isVisible() == false && (sharedVariables.mygame[t1].myGameNumber != -100 || sharedVariables.mygame[t1].imclosed == false))
 {
   myboards[t1].setVisible(true);
+  sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
   myboards[t1].myconsolepanel.makehappen(t1);
   for(tab = 0; tab < sharedVariables.openBoardCount; tab++)
   { myboards[t1].myconsolepanel.channelTabs[tab].setVisible(true);
@@ -267,6 +268,7 @@ else if(sharedVariables.mygame[t1].imclosed == true)
                                     int mylast = sharedVariables.openBoardCount-1;
                                     sharedVariables.tabLooking[mylast] = t1;
                                     myboards[t1].setVisible(true);
+                                      sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
 
                                     for(int cc=0; cc< sharedVariables.maxGameTabs; cc++)
                                     if(myboards[cc]!=null)
