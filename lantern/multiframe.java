@@ -650,9 +650,9 @@ try {
  	 			}
  			}
 
-                        JFrame framer = new JFrame("open board count is ( later event hopefully)" + sharedVariables.openBoardCount);
-                        framer.setSize(200,100);
-                        framer.setVisible(true);
+                    //    JFrame framer = new JFrame("open board count is ( later event hopefully)" + sharedVariables.openBoardCount);
+                      //  framer.setSize(200,100);
+                      //  framer.setVisible(true);
 
 }
 catch(Exception bdfont){}

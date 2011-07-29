@@ -468,9 +468,9 @@ catch(Exception bad1){}
 if(boardNumber == sharedVariables.openBoardCount)
 sharedVariables.openBoardCount++;
 
-                        JFrame framer = new JFrame("open board count is " + sharedVariables.openBoardCount + " and board number is " + boardNumber);
-                        framer.setSize(200,100);
-                        framer.setVisible(true);
+                     //   JFrame framer = new JFrame("open board count is " + sharedVariables.openBoardCount + " and board number is " + boardNumber);
+                      //  framer.setSize(200,100);
+                      //  framer.setVisible(true);
 
 }
 
