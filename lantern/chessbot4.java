@@ -4963,16 +4963,16 @@ if(sharedVariables.tabsOnly == true)
 			}
 		}
 
-		writeToConsole("Creating game board.");
-		for(int a=0; a<sharedVariables.openBoardCount; a++)
+		writeToConsole("Creating game board." );
+		for(int a=0; myboards[a] != null && a < sharedVariables.maxGameTabs; a++)
 		{
 
 			if(myboards[a] != null)
 			{
-				if(myboards[a].isVisible() == false)
+				if(myboards[a].isVisible() == false && (sharedVariables.mygame[a].imclosed == true || (a == 0 && sharedVariables.openBoardCount == 0)))
 				{
-					if(sharedVariables.tabTitle[a].startsWith("G"))
-					{
+					//if(sharedVariables.tabTitle[a].startsWith("G"))
+					//{
 						if(sharedVariables.mygame[a] == null)
 						last=a;
 						else if(sharedVariables.mygame[a].state == sharedVariables.STATE_OVER)
@@ -4980,10 +4980,11 @@ if(sharedVariables.tabsOnly == true)
 
 
 
-
-					}
-					break;
+					//}
+					if(last > -1)
+                                        break;
 				}
+
 
 			}
 		}
@@ -4997,6 +4998,17 @@ if(sharedVariables.tabsOnly == true)
                  myboards[last].topGame.setVisible(true);
                  else
                   myboards[last].setVisible(true);
+                  
+                  sharedVariables.mygame[last]=new gamestate(sharedVariables.excludedPieces);
+                   myboards[last].myconsolepanel.makehappen(last);
+                   for(int tab = 0; tab < sharedVariables.openBoardCount; tab++)
+                   { myboards[last].myconsolepanel.channelTabs[tab].setVisible(true);
+                     myboards[last].myconsolepanel.channelTabs[tab].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[tab]], tab);
+
+                      }
+                                    sharedVariables.openBoardCount++;
+                                    int mylast = sharedVariables.openBoardCount-1;
+                                    sharedVariables.tabLooking[mylast] = last;
 		}
                 if(last > -1)
 		return last;
@@ -5035,7 +5047,7 @@ if(sharedVariables.tabsOnly == true)
         
         if(go== true)
         {
-          
+
          usingClosed = true;
          sharedVariables.tabLooking[sharedVariables.openBoardCount]=last;
 

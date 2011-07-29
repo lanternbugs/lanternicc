@@ -148,21 +148,21 @@ return super.isVisible();
 
 }
 
-public void repaint()
+public void repaintCustom()
 {
 try{
 if(sharedVariables == null || topGame == null)
 {
-  super.repaint();
+  repaint();
   return;
 }
 if(sharedVariables.useTopGames == true)
 topGame.repaint();
 else
-super.repaint();
+repaint();
 }
 catch(Exception dummy){}
-  
+
 }
 
 gameboard(JTextPane consoles1[], subframe consoleSubframes1[], JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, int boardNumber, Image img1[], ConcurrentLinkedQueue<myoutput> queue1, channels sharedVariables1, resourceClass graphics1, docWriter myDocWriter1)
@@ -316,7 +316,7 @@ topGame.myconsolepanel=myconsolepanel;
 
   topGame.setVisible(true);
 
-  repaint();
+  repaintCustom();
   topGame.setVisible(false);
   setVisible(false);
   topGame.setVisible(true);
@@ -338,7 +338,7 @@ topGame.myconsolepanel=myconsolepanel;
   add(overall);
  topGame.setVisible(false);
  setVisible(true);
- repaint();
+ repaintCustom();
 
 
 }
@@ -792,7 +792,7 @@ void newGameRelation(String icsGameNumber, String relation)
 			sharedVariables.mygame[gameData.BoardIndex].title=icsGameNumber + " Examining " + sharedVariables.mygame[gameData.BoardIndex].realname1  + " vs " + sharedVariables.mygame[gameData.BoardIndex].realname2;
 			sharedVariables.tabTitle[gameData.BoardIndex] = "E";
 			sharedVariables.tabChanged = gameData.BoardIndex;
-			repaint();
+			repaintCustom();
 
 		}
 		if(relation.equals("O"))
@@ -1879,7 +1879,7 @@ void illegalMove(String icsGameNumber)
 		if(sharedVariables.makeSounds == true)
 		s= new Sound(sharedVariables.songs[3]);
 		if(isVisible() == true)
-		repaint();
+		repaintCustom();
 	}
 }
 
@@ -1904,7 +1904,7 @@ else
   mycontrolspanel.oldLooking=-1;
 }      }
  		if(isVisible() == true)
-		repaint();
+		repaintCustom();
 }
  void redrawFlags()
  {
@@ -2000,7 +2000,7 @@ void newCircle(String icsGameNumber, String examiner, String from)
 
 		sharedVariables.mygame[gameData.BoardIndex].addCircle(63 - (xfrom + yfrom * 8));
 		if(isVisible() == true)
-		repaint();
+		repaintCustom();
 	}
 }
 
@@ -2024,7 +2024,7 @@ void newArrow(String icsGameNumber, String examiner, String from, String to)
 
 		sharedVariables.mygame[gameData.BoardIndex].addArrow(63 - (xfrom + yfrom * 8), 63 - (xto + yto * 8));
 		if(isVisible() == true)
-		repaint();
+		repaintCustom();
 	}
 }
 
@@ -2132,7 +2132,7 @@ catch(Exception dumb){}
 
 		sharedVariables.mygame[gameData.BoardIndex].replay();
 		if(isVisible() == true)
-		repaint();
+		repaintCustom();
 	}
 }
 void parseCrazyHoldings(String icsGameNumber, String whiteHoldings, String blackHoldings)

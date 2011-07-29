@@ -285,7 +285,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.21";
+version = "v4.22";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

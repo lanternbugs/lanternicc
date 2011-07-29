@@ -243,20 +243,21 @@ break;
 else if(myboards[t1].isVisible() == false && (sharedVariables.mygame[t1].myGameNumber != -100 || sharedVariables.mygame[t1].imclosed == false))
 {
   myboards[t1].setVisible(true);
-  sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
+  //sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
   myboards[t1].myconsolepanel.makehappen(t1);
   for(tab = 0; tab < sharedVariables.openBoardCount; tab++)
   { myboards[t1].myconsolepanel.channelTabs[tab].setVisible(true);
   myboards[t1].myconsolepanel.channelTabs[tab].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[tab]], tab);
 
   }
+
   return;
 }// end else
 }// end for
 
 /*************                                                   *****************************/
 
-
+ 
 /****************************  look for first closed board ***********************************/
  for(t1=0; t1<sharedVariables.maxGameTabs; t1++)
 {
