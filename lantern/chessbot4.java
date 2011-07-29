@@ -442,20 +442,11 @@ if(myboards[i] != null)
 
 
 }
-for(int i=sharedVariables.openBoardCount-1; i>=0; i--)
-if(myboards[i] != null)
-{
-
-   //myoutput data = new myoutput(); // we set it up to close all these tabs now. we end the game first so no resign or unob etc is sent in closetab method
-    closeGameTab(i);
-   // queue.add(data);
-}
+closeAllGameTabs();
 }// end try
 catch(Exception badgameclose)
 {// do nothing
-}
-
-// set noidle time
+}// set noidle time
 try {
 	idleTime = System.currentTimeMillis();
 }catch(Exception timedOut){}
@@ -561,7 +552,24 @@ try {
 		}
 }
 
+void closeAllGameTabs()
+{
+try {
+for(int i=sharedVariables.openBoardCount-1; i>=0; i--)
+if(myboards[i] != null)
+{
 
+   //myoutput data = new myoutput(); // we set it up to close all these tabs now. we end the game first so no resign or unob etc is sent in closetab method
+    closeGameTab(i);
+   // queue.add(data);
+}
+}// end try
+catch(Exception badgameclose)
+{// do nothing
+}
+
+
+}
 void updateGameTabs(String title, int num)
 {
   int physicalTab=0;
@@ -5253,7 +5261,10 @@ public void run()
 
 					if(tosend.closetab > -1)
 					{
-						closeGameTab(tosend.closetab);
+                                                if(isABoardVisible() == false)
+                                                closeAllGameTabs();
+                                                else
+                                                closeGameTab(tosend.closetab);
 						tosend=queue.poll();
 					}
 
@@ -5319,6 +5330,15 @@ public void run()
 
 }// end while
 }// end run
+
+
+boolean isABoardVisible()
+{
+ for(int a = 0; a< sharedVariables.maxGameTabs && myboards[a]!=null; a++)
+ if(myboards[a].isVisible())
+ return true;
+ return false;
+}
 
 void initializeEngine()
 {
