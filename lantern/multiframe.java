@@ -610,11 +610,19 @@ SwingUtilities.invokeLater(new Runnable() {
 	for(int bam=0; bam<sharedVariables.openConsoleCount; bam++)
 		consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
 
-setInputFont();
+
 
 if(sharedVariables.channelColor[0]!=null)
 	sharedVariables.typedColor=sharedVariables.channelColor[0];
+ 
+ 
+ 
+ /****************** we do these next few in gui thread **********************************/
 
+ SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
 
 	if(sharedVariables.boardConsoleType != 2)
 	redrawBoard(sharedVariables.boardConsoleType);
@@ -630,6 +638,7 @@ if(sharedVariables.channelColor[0]!=null)
 	}
 }catch(Exception badsetting){}
 
+setInputFont();
 try {
 
 					// now game boards
@@ -641,8 +650,24 @@ try {
  	 			}
  			}
 
+                        JFrame framer = new JFrame("open board count is ( later event hopefully)" + sharedVariables.openBoardCount);
+                        framer.setSize(200,100);
+                        framer.setVisible(true);
+
 }
 catch(Exception bdfont){}
+
+
+                             } catch (Exception e1) {
+
+                            }
+                        }
+                    });
+
+
+
+
+
 // applet
 //Image myIconImage = getImage(getDocumentBase(), "lantern.png");
 //setIconImage(myIconImage);
@@ -4001,7 +4026,7 @@ if(event.getActionCommand().equals("Auto Observe LittlePer"))
 
 
 
-if(event.getActionCommand().equals("Auto Observe Slomoto"))
+if(event.getActionCommand().equals("Auto Observe Slomato"))
 {
 	if(sharedVariables.autoSlomato == false)
 	sharedVariables.autoSlomato = true;

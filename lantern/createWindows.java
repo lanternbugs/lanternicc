@@ -257,7 +257,7 @@ else if(myboards[t1].isVisible() == false && (sharedVariables.mygame[t1].myGameN
 
 /*************                                                   *****************************/
 
- 
+
 /****************************  look for first closed board ***********************************/
  for(t1=0; t1<sharedVariables.maxGameTabs; t1++)
 {
@@ -465,10 +465,13 @@ catch(Exception bad1){}
 
 
 
-
-
 if(boardNumber == sharedVariables.openBoardCount)
 sharedVariables.openBoardCount++;
+
+                        JFrame framer = new JFrame("open board count is " + sharedVariables.openBoardCount + " and board number is " + boardNumber);
+                        framer.setSize(200,100);
+                        framer.setVisible(true);
+
 }
 
 protected void createListFrame(listClass eventsList, listClass seeksList, listClass computerSeeksList, listClass notifyList, JFrame homeFrame)
