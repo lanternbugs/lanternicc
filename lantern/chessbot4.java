@@ -5769,7 +5769,7 @@ try {
 readLock.lock();
 		sharedVariables.mygame[tabNumber] = new gamestate(sharedVariables.excludedPieces);
 		
-                if(physicalTab != 0)
+                //if(physicalTab != 0)
                 sharedVariables.mygame[tabNumber].imclosed = true;
 
 readLock.unlock();

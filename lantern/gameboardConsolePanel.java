@@ -558,6 +558,19 @@ Input.addKeyListener(new KeyListener() {
 
 
        int aa=e.getKeyCode();
+        if( e.getModifiersEx() == 512)
+       {
+         if(aa == 39  ) //  right arrow
+          {
+           makehappen(getNextGame(true));
+           return;
+          }
+         if(aa == 37) // left arrow
+         {
+           makehappen(getNextGame(false));
+           return;
+         }
+       }
                    if( aa == 71 &&  e.getModifiersEx() == 128) // ctrl + g
                 {
   			String myurl =Input.getText();
@@ -881,6 +894,38 @@ newframe.setVisible(true);
 
     }
 
+   int getNextGame(boolean right)
+    {
+     try {
+     int i = 0;
+     for(int a=0; a<sharedVariables.openBoardCount; a++)
+     if(sharedVariables.tabLooking[a] == gameData.LookingAt)
+     {
+      i=a;
+      break;
+     }
+
+
+     if(right == true)
+     {
+      if(i+1 < sharedVariables.openBoardCount && sharedVariables.tabLooking[i+1] >=0)
+      return i+1;
+
+      return 0;
+     }
+     else
+     {
+        if(i-1 >= 0 && sharedVariables.tabLooking[i-1] >=0)
+        return i-1;
+
+        return sharedVariables.openBoardCount -1;
+
+     }
+
+
+     }
+     catch(Exception dui){return gameData.LookingAt;}
+    }
 
 
 
