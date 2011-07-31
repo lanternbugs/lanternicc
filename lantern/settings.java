@@ -502,6 +502,14 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donearmyrandom] ";
 
+	// basketball
+	set_string = set_string + "[basketball] ";
+	if(sharedVariables.basketballFlag == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donebasketball] ";
 
 
 
@@ -1624,6 +1632,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+ 					if (temp.equals("[basketball]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.basketballFlag=true;
+					else
+						sharedVariables.basketballFlag=false;
+					}
+					catch(Exception zzz){}
+				}
 
 					if(temp.equals("[autopopup]"))
 				{

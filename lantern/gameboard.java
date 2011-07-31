@@ -1956,11 +1956,23 @@ if(uniqueName.equals("") || sharedVariables.showFlags == false)
 else
 {
   int n=-1;
+  if(uniqueName.equals("icc") && sharedVariables.basketballFlag == true)
+  {
+   for(int m=0; m < sharedVariables.flagImageNames.size(); m++)
+  if(sharedVariables.flagImageNames.get(m).equals("icc1"))
+  {
+   n=m;
+   break;
+  }
+  }
+  else
+  {
   for(int m=0; m < sharedVariables.flagImageNames.size(); m++)
   if(sharedVariables.flagImageNames.get(m).equals(uniqueName))
   {
    n=m;
    break;
+  }
   }
   if(n == -1)
   {

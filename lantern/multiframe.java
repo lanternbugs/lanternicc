@@ -230,6 +230,8 @@ JCheckBoxMenuItem rotateaways;
 JCheckBoxMenuItem notifysound;
 JCheckBoxMenuItem qsuggestPopup;
 JCheckBoxMenuItem autopopup;
+JCheckBoxMenuItem basketballFlag;
+
 
 JCheckBoxMenuItem pgnlogging;
 JCheckBoxMenuItem compactNameList;
@@ -519,6 +521,12 @@ if(sharedVariables.autopopup == true)
 	autopopup.setSelected(true);
 else
 	autopopup.setSelected(false);
+
+if(sharedVariables.basketballFlag == true)
+	basketballFlag.setSelected(true);
+else
+	basketballFlag.setSelected(false);
+
 
 if(sharedVariables.autoHistoryPopup == true)
 	autoHistoryPopup.setSelected(true);
@@ -1198,6 +1206,10 @@ useTopGame.addActionListener(this);
   autobufferchat.addActionListener(this);
 autopopup.addActionListener(this);
 autoHistoryPopup.addActionListener(this);
+
+basketballFlag = new JCheckBoxMenuItem("Use Basketball Logo ICC Flag");
+advancedOptions.add(basketballFlag);
+basketballFlag.addActionListener(this);
 
 lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
 lineindent.addActionListener(this);
@@ -3937,7 +3949,19 @@ if(event.getActionCommand().equals("Timestamp Channels"))
 	}
 }
 
-
+if(event.getActionCommand().equals("Use Basketball Logo ICC Flag"))
+{
+	if(sharedVariables.basketballFlag == false)
+	{
+		sharedVariables.basketballFlag = true;
+		basketballFlag.setSelected(true);
+	}
+	else
+	{
+		sharedVariables.basketballFlag = false;
+		basketballFlag.setSelected(false);
+	}
+}
 if(event.getActionCommand().equals("Auto Name Popup"))
 {
 	if(sharedVariables.autopopup == false)
