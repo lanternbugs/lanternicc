@@ -4820,6 +4820,7 @@ public void windowActivated(WindowEvent e)
 {
  myoutput data = new myoutput();
  data.data="\n";
+ data.reconnectTry=1;
  queue.add(data);
 
 

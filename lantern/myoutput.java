@@ -33,11 +33,13 @@ class myoutput {
 	// they are set to see if you are in a simul and switch you to the low time board
 	int gameboard;
 	int gamelooking;
+	 int reconnectTry;
 
 myoutput(){
 
 	data = "";
 	consoleNumber = -1;
+	reconnectTry=-1;
 	game=0; // set to 1 if message comes from gameboard
 	tab=-1;
 	tabTitle="";

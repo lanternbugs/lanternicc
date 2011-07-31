@@ -1923,15 +1923,24 @@ else
 
 void createFlag(String country, boolean top)
 {
-  
+
   try {
+    
+
 String uniqueName="";
 int bb=sharedVariables.countryNames.indexOf(";" + country + ";");
+
+
+
 if(bb > -1)
 {
 int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
-if(bbb > -1)
+
+
+if(bbb > -1 && !country.equals("icc"))
 uniqueName=sharedVariables.countryNames.substring(bb+ country.length() + 2, bbb);
+if(country.equals("icc"))
+uniqueName = "icc";
 
 }
 

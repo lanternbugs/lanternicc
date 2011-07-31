@@ -2045,7 +2045,7 @@ if(dg.getArg(0).equals("27"))
 	 	*/
 	 	if(dg.getArg(0).equals("62"))// told, add person to list with their console type and number for directing pqtells
 	 	{
-			if(console.type == 0)
+			if(console.type == 0 || console.type == 1)
 			{
 
 			String toldName = dg.getArg(1);
@@ -2055,8 +2055,11 @@ if(dg.getArg(0).equals("27"))
 				if(sharedVariables.toldNames.get(a).name.equals(toldName))
 				{
 					found=true;
-					sharedVariables.toldNames.get(a).tab=console.number;
-					//writeToConsole("updated told\n");
+					if(console.type == 0 )
+                                        sharedVariables.toldNames.get(a).tab=console.number;
+					else
+                                        sharedVariables.toldNames.get(a).tab=0;
+                                        //writeToConsole("updated told\n");
 					break;
 
 				}
@@ -5267,6 +5270,11 @@ public void run()
                                                 closeGameTab(tosend.closetab);
 						tosend=queue.poll();
 					}
+					if(tosend.reconnectTry > -1)
+					{
+                                               // detectDisconnect();
+						tosend=queue.poll();
+					}
 
 					if(tosend.clearconsole > -1)
 					{
@@ -5331,7 +5339,23 @@ public void run()
 }// end while
 }// end run
 
+void detectDisconnect()
+{
+										try {
+										byte b = (byte) '\n';
+										// i think we need to set a socket timeout
+										// so write will fail, or it hangs
+										requestSocket.setSoTimeout(1500);
+									//	outStream.write(b); // we just send enter
 
+											}
+										catch(Exception ee)
+										{writeToConsole("appear disconnected\n");
+										} // write failed try to reconnect
+
+
+
+}
 boolean isABoardVisible()
 {
  for(int a = 0; a< sharedVariables.maxGameTabs && myboards[a]!=null; a++)
