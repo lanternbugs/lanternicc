@@ -4818,6 +4818,9 @@ public void windowIconified(WindowEvent e)
 
 public void windowActivated(WindowEvent e)
 {
+ myoutput data = new myoutput();
+ data.data="\n";
+ queue.add(data);
 
 
 
