@@ -674,7 +674,29 @@ newframe.setVisible(true);
 				doToolBarCommand(0);
 				return;
 			}
+                        if(aa == 79) // 'o' ctrl + 0 -- debug info
+                        {
+                         String mess = "Open Board Count is: " + sharedVariables.openBoardCount + " ";
+                         int index = 0;
+                         for(index = 0; index < sharedVariables.openBoardCount; index++)
+                         {
+                           try {
+                               mess = mess + "Tab " + index + " Pointing to " + sharedVariables.tabLooking[index] + " ";
+                           }
+                           catch(Exception dui){
 
+                           mess+=" Exception finding tab were pointing to on index " + index + " ";  }// end catch
+
+                           } // end for
+                           
+                           mess+="\n";
+                           writeTypedText(mess);
+                           return;
+
+
+                        
+
+                        }
 
 		}
 
@@ -748,63 +770,8 @@ newframe.setVisible(true);
 }// end if not "/"
       Input.setText("");
 
-
-	  			try {
-				StyledDocument doc;
-
-				if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
-					doc=sharedVariables.mygamedocs[gameData.LookingAt];
-				else
-					doc=sharedVariables.mydocs[0]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
-
-	  			//doc.insertString(doc.getEndPosition().getOffset(), mes, null);
-
-
-
-					/*	if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
-						{
-							for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
-							if(sharedVariables.gamelooking[gameData.BoardIndex]==sharedVariables.gamelooking[a])
-					*/
-					if(sharedVariables.pointedToMain[gameData.LookingAt] ==false)
-							{
-
-
-						SimpleAttributeSet attrs = new SimpleAttributeSet();
-						StyleConstants.setItalic(attrs, true);
-						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-					int GAME_CONSOLES=1;// game
-					int maxLinks =75;
-					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, GAME_CONSOLES, attrs, null);
-
-
-								//gameconsoles[a].setStyledDocument(doc);
-
-
-						//	}
-						}
-						else
-						{
-							//we need to update every subframe console nad game console pointed to main
-
-
-							//writeToConsole(doc, 0); // we need to move this function for general use out of chessbot 4 and out of this file to one place for general use
-							//for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
-							/*if(sharedVariables.pointedToMain[a] ==true)
-								//gameconsoles[a].setStyledDocument(doc);
-							{*/
-
-						SimpleAttributeSet attrs = new SimpleAttributeSet();
-						StyleConstants.setItalic(attrs, true);
-						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-					int SUBFRAME_CONSOLES=0;// game
-					int maxLinks =75;
-					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, SUBFRAME_CONSOLES, attrs, null);
-
-
-							//}
-						}
-
+         writeTypedText(mes);
+                     try {
 					// we make this game number primary
 					myoutput output;
 					if(sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber != -1 && sharedVariables.myServer.equals("ICC"))// primary doesnt work on fics when playing so for now we dont send it there MA 5-31-10
@@ -1216,7 +1183,69 @@ else
 
     } // end initialize components
 
+ void writeTypedText(String mes)
+ {
+   
+ 	  			try {
+				StyledDocument doc;
 
+				if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
+					doc=sharedVariables.mygamedocs[gameData.LookingAt];
+				else
+					doc=sharedVariables.mydocs[0]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
+
+	  			//doc.insertString(doc.getEndPosition().getOffset(), mes, null);
+
+
+
+					/*	if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
+						{
+							for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
+							if(sharedVariables.gamelooking[gameData.BoardIndex]==sharedVariables.gamelooking[a])
+					*/
+					if(sharedVariables.pointedToMain[gameData.LookingAt] ==false)
+							{
+
+
+						SimpleAttributeSet attrs = new SimpleAttributeSet();
+						StyleConstants.setItalic(attrs, true);
+						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+					int GAME_CONSOLES=1;// game
+					int maxLinks =75;
+					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, GAME_CONSOLES, attrs, null);
+
+
+								//gameconsoles[a].setStyledDocument(doc);
+
+
+						//	}
+						}
+						else
+						{
+							//we need to update every subframe console nad game console pointed to main
+
+
+							//writeToConsole(doc, 0); // we need to move this function for general use out of chessbot 4 and out of this file to one place for general use
+							//for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
+							/*if(sharedVariables.pointedToMain[a] ==true)
+								//gameconsoles[a].setStyledDocument(doc);
+							{*/
+
+						SimpleAttributeSet attrs = new SimpleAttributeSet();
+						StyleConstants.setItalic(attrs, true);
+						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+					int SUBFRAME_CONSOLES=0;// game
+					int maxLinks =75;
+					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+
+
+							//}
+						}
+	}
+        catch(Exception dui){}
+
+
+ }
 void setVerticalLayout()
 {
 	/****************************** Layout of game console area is handled ****************/
