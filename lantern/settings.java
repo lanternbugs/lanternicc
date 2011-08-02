@@ -904,7 +904,7 @@ catch(Exception badboard){}
 	for(int tnum = 1; tnum<sharedVariables.maxConsoleTabs; tnum++)
 	{
 	set_string = set_string + "[Chan" + tnum + "] ";
-		for(int cnum=0; cnum<500; cnum++)
+		for(int cnum=0; cnum< sharedVariables.maxChannels; cnum++)
 		{
 			try{
 
@@ -915,6 +915,25 @@ catch(Exception badboard){}
 	set_string = set_string + "[doneChan" + tnum + "] ";
 
 	}// done tnum for
+
+
+
+	for(int tnum = 0; tnum<sharedVariables.maxConsoleTabs; tnum++)
+	{
+	set_string = set_string + "[QChan" + tnum + "] ";
+		for(int cnum=0; cnum< sharedVariables.maxChannels; cnum++)
+		{
+			try{
+
+			if(sharedVariables.qtellController[tnum][cnum]> 0)
+			     set_string = set_string + cnum + " " + sharedVariables.qtellController[tnum][cnum] + " ";
+			}catch(Exception badchannel){}
+		}// done cnum for
+	set_string = set_string + "[doneQChan" + tnum + "] ";
+
+	}// done tnum for
+
+
 
 
 // does channel in tab go to main also?
@@ -1414,6 +1433,58 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 			}catch(Exception badchan){}
 
 			}// end if chan
+
+
+
+
+
+
+			if (temp.startsWith("[QChan"))
+			{
+
+				try {
+				int tnum =Integer.parseInt( "" + temp.charAt(6));// this will break if console numbers become two digits or if they mess with ini file it would fail try
+				int twoDigit=tnum;
+
+				try {
+					twoDigit=Integer.parseInt( "" + temp.charAt(6) + temp.charAt(7));
+					tnum=twoDigit;
+				}catch(Exception digit){}
+
+				String temp2="";
+				String temp3 = "";
+
+				while(!temp.equals(""))
+				{
+					temp2 = tokens.nextToken();
+					if(temp2.startsWith("[doneQChan"))
+					break;
+ 					temp3 = tokens.nextToken();
+					if(temp3.startsWith("[doneQChan"))
+					break;
+
+					try {
+						int cnum = Integer.parseInt(temp2);
+						int cnum2 = Integer.parseInt(temp3);
+                                                sharedVariables.qtellController[tnum][cnum]=cnum2;
+					}catch(Exception badNumber){}
+
+
+				}// end while
+			}catch(Exception badchan){}
+
+			}// end if chan
+
+
+
+
+
+
+
+
+
+
+
 
 
 

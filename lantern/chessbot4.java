@@ -2232,7 +2232,7 @@ if(goTab==true && sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == tr
 	cindex2[0]=1;// its going to main and tab. we set this so we can pass cindex2 to docwriter letting it know all tabs things go to for new info updates
 
 for(int b=1; b<sharedVariables.maxConsoleTabs; b++)
-if(cindex2[b]==1)
+if(cindex2[b]==1 && sharedVariables.qtellController[b][num1]!= 2)
 {
 
 if(chatTime2.length() > 0 && myStyles !=null && sharedVariables.tabStuff[b].timestampColor!=null)
@@ -2246,7 +2246,7 @@ myStyles.colors[0]=sharedVariables.chatTimestampColor;
 
 }
 
-if(goTab==false || sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true)
+if((goTab==false || sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true) && sharedVariables.qtellController[0][num1]!= 2)
 {
 if(chatTime2.length() > 0 && myStyles !=null && sharedVariables.tabStuff[0].timestampColor!=null)
 myStyles.colors[0]=sharedVariables.tabStuff[0].timestampColor;
@@ -2726,9 +2726,10 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 thetell=thetell.replaceAll("\\\\n", mySpaces);
 
 Color channelnumbercolor = sharedVariables.qtellChannelNumberColor;
+
 try
 {
-	int num1= Integer.parseInt(dg.getArg(1));
+	int num1 = Integer.parseInt(dg.getArg(1));
 if(sharedVariables.channelOn[num1]==1)
 	channelnumbercolor=sharedVariables.channelColor[num1];
 
@@ -2767,7 +2768,7 @@ if(goTab == true && sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == 
 	cindex[0]=1;
 
 for(int b=1; b<sharedVariables.maxConsoleTabs; b++)
-if(cindex[b]==1)
+if(cindex[b]==1 && sharedVariables.qtellController[b][num1]!= 1)// == 1 is channel text not qtells
 {
 
 
@@ -2801,7 +2802,7 @@ if(chatTime2.length() > 0 && myStyles !=null )
 myStyles.colors[0]=sharedVariables.chatTimestampColor;
 
 }
-if(goTab == false || sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true)// it went to tab but it should also go to main
+if((goTab == false || sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true)  && sharedVariables.qtellController[0][num1]!= 1)// it went to tab but it should also go to main
 {
 
 if(sharedVariables.tabStuff[0].qtellcolor == null)

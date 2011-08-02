@@ -432,7 +432,13 @@ myself.switchConsoleWindows();
 
 }
 
+void customizeTabQtells(int num)
+{
+JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+customizeChannelQtellsDialog frame = new customizeChannelQtellsDialog((JFrame) myself.myframe, false,  sharedVariables, num);
+frame.setVisible(true);
 
+}
 
 void customizeTab(int num)
 {
@@ -928,6 +934,17 @@ if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n)
 item7.setSelected(true);
 if(sharedVariables.tellconsole == consoleNumber)
 menu2.add(item7);
+
+JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
+ itemQ.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+           customizeTabQtells(n);
+            }
+       });
+
+     menu2.add(itemQ);
+
+
 menu2.add(submenu);
 
 add(menu2);

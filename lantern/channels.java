@@ -212,6 +212,7 @@ URL [] poweroutSounds;
 int chatBufferSize=100000;
 int chatBufferExtra=1000;
 int showTenths;
+int maxChannels = 500;
 int chatFrame;
 int visibleConsoles=0;
 int maxSongs=100;
@@ -220,9 +221,10 @@ int consoleLayout;
 long autoexamspeed;
 long lastSoundTime;// used to not send multiple sounds in say one second when forwarding through games
 int lastSoundCount;
-int [] channelOn= new int[500];
-int [][] console = new int[maxConsoleTabs][500];
-int [] style = new int[500];
+int [] channelOn= new int[maxChannels];
+int [][] console = new int[maxConsoleTabs][maxChannels];
+int [][] qtellController  = new int[maxConsoleTabs][maxChannels];
+int [] style = new int[maxChannels];
 int [] looking = new int[maxConsoleTabs];
 int [] gamelooking = new int[100];
 int [] tabLooking = new int[100];
@@ -286,7 +288,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.26";
+version = "v4.28";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -595,9 +597,10 @@ nameBackgroundColor = new Color(255,255,204);
 //darkcolor = new Color(193,153,153);
 // current white/ blue board
 for(int b=0; b<maxConsoleTabs; b++)
-for(int a=0; a<500; a++)
-console[b][a]=0;
-
+for(int a=0; a<maxChannels; a++)
+{console[b][a]=0;
+ qtellController[b][a]=0;
+ }
 for(int a=0; a<500; a++)
 	{
 		channelOn[a]=0;

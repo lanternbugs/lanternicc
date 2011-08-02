@@ -498,6 +498,8 @@ if(italic1 > -1 && italic2 > -1 && !attrs.containsAttribute(StyleConstants.Chara
 italic1 = myStrings[a].indexOf("`", dd);
 if(italic1 > -1 && italic1 < myStrings[a].length()-2)
 italic2 = myStrings[a].indexOf("`", italic1  + 1);
+else 
+italic2=-1;
 if(italic1 > -1 && italic2 > -1)
 {
 doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
