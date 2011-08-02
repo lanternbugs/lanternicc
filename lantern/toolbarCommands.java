@@ -54,6 +54,16 @@ class toolbarCommands
 
      String mes = sharedVariables.userButtonCommands[button] + "\n";
       mes=mes.replace("%opp", sharedVariables.myopponent);
+     if(game == true)
+     {
+       try {
+       mes=mes.replace("%white", sharedVariables.mygame[con].realname1);
+       mes=mes.replace("%black", sharedVariables.mygame[con].realname2);
+       }
+       catch(Exception dui2){}
+
+     }
+
       if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
       {
       if(game == false)
