@@ -121,6 +121,7 @@ ArrayList<nameListClass> channelNamesList = new ArrayList();
 ArrayList<String> lanternAways = new ArrayList();
 ArrayList<told> toldNames = new ArrayList();
 ArrayList<told> toldTabNames = new ArrayList();
+ArrayList<told> pingNames = new ArrayList();
 
 ArrayList<String> [] comboNames;
 ArrayList<Image> flagImages = new ArrayList();

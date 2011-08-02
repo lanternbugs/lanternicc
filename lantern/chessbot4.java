@@ -818,6 +818,61 @@ class routing {
 	}
 
 }
+void getPingTab(String name, routing console)// information returned in routing
+{
+			for(int a=0; a<sharedVariables.pingNames.size(); a++)
+				if(sharedVariables.pingNames.get(a).name.equals(name))
+				{
+
+
+                                        console.number = sharedVariables.pingNames.get(a).tab;
+                                        console.type = sharedVariables.pingNames.get(a).console;
+                                        console.found = 1;
+                                        //	writeToConsole("trying to move ping " + name + " to tab " + console.number +  " and console " + console.type + "\n");
+					break;
+
+				}
+
+
+}
+void setPingTab(String name, routing console)
+{
+
+			if(console.type == 0 || console.type == 1)
+			{
+
+			String toldName = name;
+
+			boolean found = false;
+			for(int a=0; a<sharedVariables.pingNames.size(); a++)
+				if(sharedVariables.pingNames.get(a).name.equals(toldName))
+				{
+					found=true;
+
+                                        sharedVariables.pingNames.get(a).tab=console.number;
+                                        sharedVariables.pingNames.get(a).console=console.type;
+			//	writeToConsole("found " + name + " to tab " + sharedVariables.pingNames.get(a).tab +  " and console " + sharedVariables.pingNames.get(a).console + "\n");
+                                        //writeToConsole("updated told\n");
+					break;
+
+				}
+
+			if(found == false)
+			{
+				told newTold = new told();
+				newTold.name=toldName;
+                                newTold.tab=console.number;
+                                newTold.console=console.type;
+				sharedVariables.pingNames.add(newTold);
+			//	writeToConsole("added " + name + " to tab " + newTold.tab +  " and console " + newTold.console + "\n");
+
+			}
+
+			}// console.type==0;
+
+
+}
+
 
 void writeLevel1(routing console, String thetell)
 {
@@ -838,6 +893,25 @@ if(slashN1 > -1)
    }
  }// end if
 }
+try {
+
+// Mike is averaging
+int firstSpace = -1;
+firstSpace=thetell.indexOf(" is averaging");
+if(firstSpace > -1 && thetell.indexOf("latency") > -1)
+setPingTab(thetell.substring(0, firstSpace), console);
+
+if(thetell.startsWith("Ping time to"))
+{
+ firstSpace=thetell.indexOf("to");
+ firstSpace += 3;  // bring us to first letter of name
+int secondSpace = thetell.indexOf(" ", firstSpace) - 1; // testbot: minus 1 for :
+getPingTab(thetell.substring(firstSpace, secondSpace), console);
+}
+
+}
+catch(Exception pingwrong){}
+
 
 if(thetell.startsWith("bell set to"))
 {
