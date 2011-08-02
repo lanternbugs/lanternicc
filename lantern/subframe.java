@@ -932,7 +932,7 @@ item7.addActionListener(new ActionListener() {
 
 if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n)
 item7.setSelected(true);
-if(sharedVariables.tellconsole == consoleNumber)
+//if(sharedVariables.tellconsole == consoleNumber)
 menu2.add(item7);
 
 JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
