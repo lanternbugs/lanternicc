@@ -612,7 +612,20 @@ myNameList.setModel(listclasstype.model);
 }// end try
 catch(Exception nochan){}
 }// end method
+void changeTellTab(int n)
+{
+if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n) // i am curerntly directing tells to this tab
+{
+sharedVariables.tellsToTab = false;
+}
+else
+{
+sharedVariables.tellsToTab = true;
+sharedVariables.tellTab = n;
+}
 
+
+}
 void makeHappen(int con)
 {
      channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabBackground);
@@ -917,16 +930,8 @@ else
 JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
 item7.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
-				if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n) // i am curerntly directing tells to this tab
-				{
-					sharedVariables.tellsToTab = false;
-
-				}
-				else
-				{	sharedVariables.tellsToTab = true;
-
-					sharedVariables.tellTab = n;
-				}
+            
+            changeTellTab(n);
             }
        });
 
@@ -1938,7 +1943,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
 			openUrl("http://www.google.com/search?q=" + myurl);
                 }
-             if( a == 72)
+             if( a == 72) // bring history to front not needed now that its a top window
              {
               if(sharedVariables.myGameList != null)
               if(sharedVariables.myGameList.isVisible())
@@ -1948,7 +1953,14 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
               }
              }
 
+              if( a == 77)// ctrl + M
+              {
+                
 
+               sharedVariables.tellsToTab = true;
+               sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
+               return;
+              }
              	if( a == 90)// ctrl + z
 	 		{
 
