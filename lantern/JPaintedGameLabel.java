@@ -113,7 +113,7 @@ catch(Exception e)
                     num=sharedVariables.tabLooking[num];
 		try {
 
-			if(num < 5) // 0-4 tabs get icons
+			if(num < 0) // 0-4 tabs get icons // now < 0 not < 5 so disabled the setting or using of icons on game tabs now
 			{
 			if(s.startsWith("O"))
 		setIcon(sharedVariables.observeIcon);

@@ -694,7 +694,7 @@ newframe.setVisible(true);
                            return;
 
 
-                        
+
 
                         }
 
@@ -1257,15 +1257,15 @@ void setVerticalLayout()
 
 	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 
-		SequentialGroup [] middlehor = new SequentialGroup[3];
+		SequentialGroup [] middlehor = new SequentialGroup[5];
                int bb=0;
                 int cc=0;
 
-                 for(cc=0; cc<3; cc++)
+                 for(cc=0; cc<5; cc++)
                 middlehor[cc] = layout.createSequentialGroup();
 
-                  ParallelGroup [] middles = new ParallelGroup[3];
-                for(bb=0; bb<3; bb++)
+                  ParallelGroup [] middles = new ParallelGroup[5];
+                for(bb=0; bb<5; bb++)
                 middles[bb] = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 
 
@@ -1281,33 +1281,55 @@ void setVerticalLayout()
 			middlehor[0].addComponent(mainConsoleTab, 40,40,40);
 
 
-			for(int a=0; a<5; a++)
+			for(int a=0; a<4; a++)
 			{
 
 				try {
-					middlehor[0].addComponent(channelTabs[a], 75,75,75);
+					middlehor[0].addComponent(channelTabs[a], 45,45,45);
 						middlehor[0].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
 			}catch(Exception e) {}
 			}
-			for(int a=5; a<18; a++)
+			for(int a=4; a<10; a++)
 			{
 
 				try {
-					middlehor[1].addComponent(channelTabs[a], 35,35,35);
+					middlehor[1].addComponent(channelTabs[a], 42,42,42);
 						middlehor[1].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
 			}catch(Exception e) {}
 			}
-			for(int a=18; a<30; a++)
+			for(int a=10; a<16; a++)
 			{
 
 				try {
-					middlehor[2].addComponent(channelTabs[a], 35,35,35);
+					middlehor[2].addComponent(channelTabs[a], 42,42,42);
 						middlehor[2].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
 			}catch(Exception e) {}
 			}
+			for(int a=16; a<23; a++)
+			{
+
+				try {
+					middlehor[3].addComponent(channelTabs[a], 30,30,30);
+						middlehor[3].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+			}catch(Exception e) {}
+			}
+			for(int a=23; a<30; a++)
+			{
+
+				try {
+					middlehor[4].addComponent(channelTabs[a], 30,30,30);
+						middlehor[4].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+			}catch(Exception e) {}
+			}
+
+
+
+
                   middles[0].addGroup(middlehor[0]);
                   middles[1].addGroup(middlehor[1]);
                   middles[2].addGroup(middlehor[2]);
+                  middles[3].addGroup(middlehor[3]);
+                  middles[4].addGroup(middlehor[4]);
 
 
 
@@ -1318,6 +1340,8 @@ void setVerticalLayout()
 	h1.addGroup(middles[0]);
 	h1.addGroup(middles[1]);
 	h1.addGroup(middles[2]);
+	h1.addGroup(middles[3]);
+	h1.addGroup(middles[4]);
 
         h1.addGroup(h2);
 
@@ -1336,12 +1360,12 @@ void setVerticalLayout()
 	ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 
 
-		ParallelGroup [] vmiddlehor = new ParallelGroup[3];
+		ParallelGroup [] vmiddlehor = new ParallelGroup[5];
 
-                 for(cc=0; cc<3; cc++)
+                 for(cc=0; cc<5; cc++)
                 vmiddlehor[cc] = layout.createParallelGroup();
-  		SequentialGroup [] vmiddles = new SequentialGroup[3];
-                for(bb=0; bb<3; bb++)
+  		SequentialGroup [] vmiddles = new SequentialGroup[5];
+                for(bb=0; bb<5; bb++)
                 vmiddles[bb] = layout.createSequentialGroup();
 
 
@@ -1353,7 +1377,7 @@ void setVerticalLayout()
 			vmiddlehor[0].addComponent(mainConsoleTab);
 
 
-			for(int a=0; a<5; a++)
+			for(int a=0; a<4; a++)
 			{
 
 				try {
@@ -1361,7 +1385,7 @@ void setVerticalLayout()
 
 			}catch(Exception e) {}
 			}
-			for(int a=5; a<18; a++)
+			for(int a=4; a<10; a++)
 			{
 
 				try {
@@ -1369,7 +1393,7 @@ void setVerticalLayout()
 
 			}catch(Exception e) {}
 			}
-			for(int a=18; a<30; a++)
+			for(int a=10; a<16; a++)
 			{
 
 				try {
@@ -1377,11 +1401,33 @@ void setVerticalLayout()
 
 			}catch(Exception e) {}
 			}
+			for(int a=16; a<23; a++)
+			{
+
+				try {
+					vmiddlehor[3].addComponent(channelTabs[a]);
+
+			}catch(Exception e) {}
+			}
+			for(int a=23; a<30; a++)
+			{
+
+				try {
+					vmiddlehor[4].addComponent(channelTabs[a]);
+
+			}catch(Exception e) {}
+			}
+
+
                   vmiddles[0].addGroup(vmiddlehor[0]);
                   	vmiddles[0].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
                   vmiddles[1].addGroup(vmiddlehor[1]);
                   	vmiddles[1].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
                    vmiddles[2].addGroup(vmiddlehor[2]);
+                   	vmiddles[2].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+                   vmiddles[3].addGroup(vmiddlehor[3]);
+                  	vmiddles[3].addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+                   vmiddles[4].addGroup(vmiddlehor[4]);
 
 
 			v1.addComponent(prefixHandler,30,30,30);
@@ -1393,6 +1439,8 @@ void setVerticalLayout()
          v4.addGroup(vmiddles[0]);
          v4.addGroup(vmiddles[1]);
          v4.addGroup(vmiddles[2]);
+          v4.addGroup(vmiddles[3]);
+         v4.addGroup(vmiddles[4]);
 
   	v4.addGroup(bulk);
 	v4.addGroup(v1);

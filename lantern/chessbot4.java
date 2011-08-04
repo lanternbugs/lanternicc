@@ -5281,16 +5281,16 @@ void newGameTab(int num)
 				sharedVariables.tabTitle[num]="E" + sharedVariables.mygame[num].myGameNumber;
 
 
-		if(sharedVariables.tabTitle[num].length()>2)
+		if(sharedVariables.tabTitle[num].length()>3)
 		{
-		if(sharedVariables.openBoardCount > 5)
-		{
-			String p = sharedVariables.tabTitle[num].substring(0, 2);
-			sharedVariables.tabTitle[num]=p;
-		}
 		if(sharedVariables.openBoardCount > 10)
 		{
-			String p = sharedVariables.tabTitle[num].substring(0, 1);
+			String p = sharedVariables.tabTitle[num].substring(0, 3);
+			sharedVariables.tabTitle[num]=p;
+		}
+		if(sharedVariables.openBoardCount > 15)
+		{
+			String p = sharedVariables.tabTitle[num].substring(0, 2);
 			sharedVariables.tabTitle[num]=p;
 	    }
 		}// if lenght >2
