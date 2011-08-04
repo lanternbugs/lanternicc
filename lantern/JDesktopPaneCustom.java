@@ -77,7 +77,7 @@ if(consoleSubframes[a].isVisible())
 if(consoleSubframes[a].overall.Input.hasFocus())
 return a;
 
-for(int b=0; b< sharedVariables.openBoardCount; b++)
+for(int b=0; b< sharedVariables.maxGameTabs; b++)
 if(myboards[b]!=null)
 if(myboards[b].isVisible())
 //if(myboards[b].isSelected())
@@ -107,7 +107,7 @@ if(num > 999)
 int selection;;
 if(type == 1)
 {
-	selection=findNextBoard(num + 1, sharedVariables.openBoardCount);
+	selection=findNextBoard(num + 1, sharedVariables.maxGameTabs);
 	if(selection > -1)
 	{myboards[selection].setSelected(true);
 	return;
@@ -131,7 +131,7 @@ else
 	{consoleSubframes[selection].setSelected(true);
 	return;
 	}
-	selection=findNextBoard(0, sharedVariables.openBoardCount);
+	selection=findNextBoard(0, sharedVariables.maxGameTabs);
 	if(selection > -1)
 	{myboards[selection].setSelected(true);
 	return;
