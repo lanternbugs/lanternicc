@@ -573,7 +573,7 @@ Input.addKeyListener(new KeyListener() {
          
          if(aa == 88)
          {   myoutput data = new myoutput();
-            data.closetab=gameData.LookingAt;
+            data.closetab=getPhysicalTab(gameData.LookingAt);
             queue.add(data);
             return;
           }
@@ -1808,6 +1808,16 @@ void giveFocus()
                             }
                         }
                     });
+
+}
+int getPhysicalTab(int look)
+{
+ for(int a=0; a<sharedVariables.openBoardCount; a++)
+ if(sharedVariables.tabLooking[a]==look)
+ return a;
+ 
+ return look;
+
 
 }
 

@@ -2128,7 +2128,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
            if(games > -1)
         {
             myoutput data = new myoutput();
-            data.closetab=myboards[games].gameData.LookingAt;
+            data.closetab=myboards[games].myconsolepanel.getPhysicalTab(myboards[games].gameData.LookingAt);
 
             data.focusConsole=consoleNumber;
 
