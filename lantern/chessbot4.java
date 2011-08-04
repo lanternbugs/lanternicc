@@ -5343,7 +5343,9 @@ public void run()
                                                 closeAllGameTabs();
                                                 else
                                                 closeGameTab(tosend.closetab);
-						tosend=queue.poll();
+						if(tosend.focusConsole > -1)
+						consoleSubframes[tosend.focusConsole].giveFocus();
+                                                tosend=queue.poll();
 					}
 					if(tosend.reconnectTry > -1)
 					{

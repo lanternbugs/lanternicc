@@ -2092,7 +2092,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
         }
            return;
          }
-        if(a == 89) // Y bring board to front ( first board)
+        if(a == 66) // B bring board to front ( first board)
          {
              int games = -1;
            for(int d=0; d<sharedVariables.maxGameTabs; d++)
@@ -2112,6 +2112,34 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
         }
            return;
          }
+        if(a == 88) // x close active game tab ( first board)
+         {
+             int games = -1;
+           for(int d=0; d<sharedVariables.maxGameTabs; d++)
+           {
+            if(myboards[d]==null)
+            break;
+            if(myboards[d].isVisible())
+            {
+             games =d;
+             break;
+            }
+           }
+           if(games > -1)
+        {
+            myoutput data = new myoutput();
+            data.closetab=myboards[games].gameData.LookingAt;
+
+            data.focusConsole=consoleNumber;
+
+            queue.add(data);
+
+
+        }
+           return;
+         }
+
+
        }   // end this alt section
 
 

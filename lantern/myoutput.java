@@ -27,6 +27,7 @@ class myoutput {
 	int clearboard;
 	int trimboard;
 	int startengine;
+	int focusConsole;
 	String tabTitle;
 	// these next two (game board and game looking) are ignored generally and not set or used
 	// but during a game if sent from the mouse release function after a move
@@ -39,6 +40,7 @@ myoutput(){
 
 	data = "";
 	consoleNumber = -1;
+	focusConsole = -1;
 	reconnectTry=-1;
 	game=0; // set to 1 if message comes from gameboard
 	tab=-1;
