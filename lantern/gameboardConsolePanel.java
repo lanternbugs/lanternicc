@@ -570,6 +570,13 @@ Input.addKeyListener(new KeyListener() {
            makehappen(getNextGame(false));
            return;
          }
+         
+         if(aa == 88)
+         {   myoutput data = new myoutput();
+            data.closetab=gameData.LookingAt;
+            queue.add(data);
+            return;
+          }
        }
                    if( aa == 71 &&  e.getModifiersEx() == 128) // ctrl + g
                 {
