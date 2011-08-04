@@ -4961,7 +4961,7 @@ void repaintTabs()
  			  }
 
  // now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
+ 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
  			 {
 				 if(myboards[i]!= null)
 	              {
@@ -4990,7 +4990,7 @@ try {
  			  }
 
  // now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
+ 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
  			 {
 				 if(myboards[i]!= null)
 	              {
