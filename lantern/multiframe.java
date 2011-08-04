@@ -942,8 +942,12 @@ public void createMenu()
 
 JMenuBar menu = new JMenuBar();
  JMenu mywindows = new JMenu("File");
+ mywindows.setMnemonic(KeyEvent.VK_F);
+
   JMenuItem  reconnect1 = new JMenuItem("Reconnect to ICC");
   mywindows.add(reconnect1);
+  reconnect1.setMnemonic(KeyEvent.VK_R);
+
   JMenuItem  reconnect3 = new JMenuItem("Reconnect to Queen");
   mywindows.add(reconnect3);
 
@@ -1351,6 +1355,8 @@ optionsmenu.add(chattimestamp);
 
 
 JMenu myconsolesmenu = new JMenu("Windows");
+myconsolesmenu.setMnemonic(KeyEvent.VK_W);
+
 // JMenuItem nconsole = new JMenuItem("New Console");
 // myconsolesmenu.add(nconsole);
  JMenuItem nboard = new JMenuItem("New Board");
@@ -1367,28 +1373,37 @@ nboard.addActionListener(this);
 
   JMenuItem rconsole2 = new JMenuItem("Customize Tab");
   myconsolesmenu.add(rconsole2);
+  rconsole2.setMnemonic(KeyEvent.VK_C);
  JMenuItem  webopener = new JMenuItem("Open Web");
     myconsolesmenu.add(webopener);
 
  JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     myconsolesmenu.add(seekingGraph);
+    seekingGraph.setMnemonic(KeyEvent.VK_S);
 
 JMenuItem eventlist = new JMenuItem("Activities Window");
  myconsolesmenu.add(eventlist);
+ eventlist.setMnemonic(KeyEvent.VK_A);
 
 toolbarvisible= new JCheckBoxMenuItem("Toolbar");
 myconsolesmenu.add(toolbarvisible);
+toolbarvisible.setMnemonic(KeyEvent.VK_T);
+
 
 JMenuItem channelmap = new JMenuItem("Channel Map");
 myconsolesmenu.add(channelmap);
 channelmap.addActionListener(this);
+channelmap.setMnemonic(KeyEvent.VK_M);
+
 
 JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
 myconsolesmenu.add(channelnotifymap);
+channelnotifymap.setMnemonic(KeyEvent.VK_N);
 channelnotifymap.addActionListener(this);
 
 JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
 myconsolesmenu.add(channelnotifyonline);
+channelnotifyonline.setMnemonic(KeyEvent.VK_O);
 channelnotifyonline.addActionListener(this);
 
 
