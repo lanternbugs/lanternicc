@@ -626,8 +626,7 @@ if(sharedVariables.channelColor[0]!=null)
  
  
  /****************** we do these next few in gui thread **********************************/
-
- SwingUtilities.invokeLater(new Runnable() {
+  SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -650,7 +649,7 @@ setInputFont();
 try {
 
 					// now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
+ 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
  			 {
  				 if(myboards[i] != null)
  	 			{
@@ -671,7 +670,6 @@ catch(Exception bdfont){}
                             }
                         }
                     });
-
 
 
 
@@ -722,7 +720,7 @@ try {
                 }
                 else
                 {
-                  
+
                   final int px1 = px;
                   final int py1 = py;
                   final int cw1 = cw;
@@ -793,6 +791,9 @@ toolBar.setVisible(false);
 
 
 }
+
+
+
 
 
 
