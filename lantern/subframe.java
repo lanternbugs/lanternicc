@@ -72,11 +72,12 @@ class subframe extends JInternalFrame  implements  ComponentListener, InternalFr
 	JList myNameList;
 	JScrollPane listScroller;
 	JCheckBoxMenuItem listChoice;
+	gameboard [] myboards;
 	int blockInc=23;
 	//subframe [] consoleSubframes;
 docWriter myDocWriter;
 //subframe(JFrame frame, boolean mybool)
-subframe(channels sharedVariables1, JTextPane consoles1[], ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1)
+subframe(channels sharedVariables1, JTextPane consoles1[], ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1, gameboard [] myboards1)
 {
 
 //super(frame, mybool);
@@ -91,6 +92,7 @@ consoles=consoles1;
 myDocWriter=myDocWriter1;
 sharedVariables=sharedVariables1;
 queue=queue1;
+myboards=myboards1;
 consoleTitle="Main Console" + (sharedVariables1.openConsoleCount) + " : ";
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 consoleNumber = sharedVariables.openConsoleCount;
@@ -2047,6 +2049,72 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
                    changeTellTab(false);// flase for backward
 
                 }
+         if( e.getModifiersEx() == 512)
+       {
+         if(a == 82  ) //  right on board R
+          {
+
+           int games = -1;
+           for(int d=0; d<sharedVariables.maxGameTabs; d++)
+           {
+            if(myboards[d]==null)
+            break;
+            if(myboards[d].isVisible())
+            {
+             games =d;
+             break;
+            }
+           }
+           if(games > -1)
+           {
+             myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(true));
+             giveFocus();
+           }
+           return;
+          }
+         if(a == 76) // left on board L
+         {
+             int games = -1;
+           for(int d=0; d<sharedVariables.maxGameTabs; d++)
+           {
+            if(myboards[d]==null)
+            break;
+            if(myboards[d].isVisible())
+            {
+             games =d;
+             break;
+            }
+           }
+           if(games > -1)
+        {
+          myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(false));
+          giveFocus();
+        }
+           return;
+         }
+        if(a == 89) // Y bring board to front ( first board)
+         {
+             int games = -1;
+           for(int d=0; d<sharedVariables.maxGameTabs; d++)
+           {
+            if(myboards[d]==null)
+            break;
+            if(myboards[d].isVisible())
+            {
+             games =d;
+             break;
+            }
+           }
+           if(games > -1)
+        {
+          myboards[games].setSelected(true);
+          giveFocus();
+        }
+           return;
+         }
+       }   // end this alt section
+
+
 
 
       if( e.getModifiersEx() == 512)// alt

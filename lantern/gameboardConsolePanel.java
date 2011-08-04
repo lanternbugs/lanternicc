@@ -861,39 +861,6 @@ newframe.setVisible(true);
 
     }
 
-   int getNextGame(boolean right)
-    {
-     try {
-     int i = 0;
-     for(int a=0; a<sharedVariables.openBoardCount; a++)
-     if(sharedVariables.tabLooking[a] == gameData.LookingAt)
-     {
-      i=a;
-      break;
-     }
-
-
-     if(right == true)
-     {
-      if(i+1 < sharedVariables.openBoardCount && sharedVariables.tabLooking[i+1] >=0)
-      return i+1;
-
-      return 0;
-     }
-     else
-     {
-        if(i-1 >= 0 && sharedVariables.tabLooking[i-1] >=0)
-        return i-1;
-
-        return sharedVariables.openBoardCount -1;
-
-     }
-
-
-     }
-     catch(Exception dui){return gameData.LookingAt;}
-    }
-
 
 
  	void writeToConsole(StyledDocument doc, int i)
@@ -1182,6 +1149,42 @@ else
 
 
     } // end initialize components
+
+
+  int getNextGame(boolean right)
+    {
+     try {
+     int i = 0;
+     for(int a=0; a<sharedVariables.openBoardCount; a++)
+     if(sharedVariables.tabLooking[a] == gameData.LookingAt)
+     {
+      i=a;
+      break;
+     }
+
+
+     if(right == true)
+     {
+      if(i+1 < sharedVariables.openBoardCount && sharedVariables.tabLooking[i+1] >=0)
+      return i+1;
+
+      return 0;
+     }
+     else
+     {
+        if(i-1 >= 0 && sharedVariables.tabLooking[i-1] >=0)
+        return i-1;
+
+        return sharedVariables.openBoardCount -1;
+
+     }
+
+
+     }
+     catch(Exception dui){return gameData.LookingAt;}
+    }
+
+
 
  void writeTypedText(String mes)
  {

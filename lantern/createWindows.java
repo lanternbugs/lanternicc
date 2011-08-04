@@ -80,7 +80,7 @@ protected void createConsoleFrame() {
 
 
 
-   	consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter);
+   	consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
 
 	consoleSubframes[sharedVariables.openConsoleCount].setVisible(true);
 
@@ -99,7 +99,7 @@ protected void createConsoleFrame() {
     {
 		for(int z=sharedVariables.openConsoleCount; z < sharedVariables.maxConsoleTabs; z++)
 		{
-			consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter);
+			consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
 
 
 			sharedVariables.desktop.add(consoleSubframes[sharedVariables.openConsoleCount]);
@@ -189,7 +189,7 @@ protected void restoreConsoleFrame() {
 
 
 	consoleSubframes[sharedVariables.openConsoleCount].madeTextPane=1;
-   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter);
+   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
 
 
 try {
