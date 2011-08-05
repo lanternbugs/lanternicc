@@ -431,6 +431,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneshowflags] ";
 
+	// showPallette
+	set_string = set_string + "[showPallette] ";
+	if(sharedVariables.showPallette == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneshowPallette] ";
+
 
 	// uselightbackground
 	set_string = set_string + "[uselightbackground] ";
@@ -1599,6 +1608,18 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 						sharedVariables.showRatings=true;
 					else
 						sharedVariables.showRatings=false;
+					}
+					catch(Exception zzz){}
+				}
+
+				if (temp.equals("[showPallette]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.showPallette=true;
+					else
+						sharedVariables.showPallette=false;
 					}
 					catch(Exception zzz){}
 				}

@@ -151,6 +151,7 @@ webframe mywebframe;
  JCheckBoxMenuItem materialCount;
  JCheckBoxMenuItem showRatings;
  JCheckBoxMenuItem showFlags;
+ JCheckBoxMenuItem showPallette;
 JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
  JCheckBoxMenuItem boardconsole1;
@@ -395,6 +396,13 @@ consoleSubframes[0].makeHappen(0);
     	showFlags.setSelected(false);
     else
     	showFlags.setSelected(true);
+
+ if(sharedVariables.showPallette == false)
+    	showPallette.setSelected(false);
+    else
+    	showPallette.setSelected(true);
+
+
 
 if(sharedVariables.useLightBackground == false)
     	useLightBackground.setSelected(false);
@@ -1669,24 +1677,33 @@ JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
 
  tabbing = new JCheckBoxMenuItem("Tabs Only");
   myboardmenu.add(tabbing);
+  JMenu theHideMenu = new JMenu("Things to Hide or Show");
 
    highlight = new JCheckBoxMenuItem("Highlight Moves");
-  myboardmenu.add(highlight);
+  theHideMenu.add(highlight);
   materialCount = new JCheckBoxMenuItem("Material Count");
-  myboardmenu.add(materialCount);
+  theHideMenu.add(materialCount);
 materialCount.addActionListener(this);
 
+  showPallette = new JCheckBoxMenuItem("Show Examine Mode Pallette");
+  theHideMenu.add(showPallette);
+showPallette.addActionListener(this);
+
+
  showFlags = new JCheckBoxMenuItem("Show Flags");
-  myboardmenu.add(showFlags);
+  theHideMenu.add(showFlags);
 showFlags.addActionListener(this);
+
+showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
+  theHideMenu.add(showRatings);
+showRatings.addActionListener(this);
+
+myboardmenu.add(theHideMenu);
 
  useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
  // myboardmenu.add(useLightBackground);   // disabled
 useLightBackground.addActionListener(this);
 
- showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
-  myboardmenu.add(showRatings);
-showRatings.addActionListener(this);
 
 
 JMenu aspect = new JMenu("Board Aspect Ratio");
@@ -3781,6 +3798,30 @@ if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 		showRatings.setSelected(false);
 		sharedVariables.showRatings = false;
 	}
+}
+
+if(event.getActionCommand().equals("Show Examine Mode Pallette"))
+{
+	if(sharedVariables.showPallette == false)
+	{
+		showPallette.setSelected(true);
+		sharedVariables.showPallette = true;
+	}
+	else
+	{
+		showPallette.setSelected(false);
+		sharedVariables.showPallette = false;
+	}
+	
+	for(int bn=0; bn < sharedVariables.maxGameTabs; bn++)
+	if(myboards[bn]!=null)
+	{
+              myboards[bn].mypanel.repaint();
+        }
+        else
+        break;
+
+
 }
 
 if(event.getActionCommand().equals("Show Flags"))

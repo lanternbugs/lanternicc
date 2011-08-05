@@ -168,7 +168,8 @@ void setValues()
 		examineOriginX=0;
 		examineOriginY=0;
 
-		if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true)
+		if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true && (sharedVariables.showPallette == true || sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_EXAMINING ||
+                                           sharedVariables.mygame[gameData.LookingAt].wild == 24 || sharedVariables.mygame[gameData.LookingAt].wild == 23))
 		{
 			while((double) trueWidth - (8 * squarex) < (double) (squarex * 1.3))// we are not good if it hits here so we fix it in loop
 			{
@@ -495,7 +496,8 @@ the slider is on. otherwise it draws the curernt in play board*/
 
 // draw examine pallete if needed
 // if you import this code up to you if you want it drawing an examine mode pallete
-if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true)
+if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true && 
+                                    (sharedVariables.showPallette == true || sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.LookingAt].wild == 24 || sharedVariables.mygame[gameData.LookingAt].wild == 23))
 {
 	int piece=0;
 

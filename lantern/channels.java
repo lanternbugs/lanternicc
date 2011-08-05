@@ -86,6 +86,7 @@ boolean activitiesOpen;
 boolean showMaterialCount;
 boolean showRatings;
 boolean showFlags;
+boolean showPallette;
 
 boolean sideways;
 boolean showButtonTitle;
@@ -417,6 +418,7 @@ activitiesOpen=false;
 showMaterialCount=true;
 showRatings=true;
 showFlags=true;
+showPallette=true;
 
 sideways=false;
 showButtonTitle=true;
