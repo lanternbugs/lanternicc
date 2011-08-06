@@ -414,7 +414,7 @@ void readInitialPosition2(String initial, int board[])
 
 
 	}// end loop
-
+        setMaterialCount();
 	if(iflipped == 1)
 	{
 		flipSent(board);

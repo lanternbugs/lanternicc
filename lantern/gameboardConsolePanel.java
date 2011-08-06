@@ -1499,7 +1499,7 @@ ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 
 
 			try {
-				middle.addComponent(channelTabs[a]);
+				middle.addComponent(channelTabs[a], 25, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE);
 			middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
 		}catch(Exception e) {}
 

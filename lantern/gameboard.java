@@ -2511,15 +2511,24 @@ JScrollPane listScroller;
 			}
 			String whiteCount="";
 			String blackCount="";
-			try {
+		
+                
+                         // material count doesnt currently go here
+                	try {
 				if(sharedVariables.showMaterialCount==true && !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
-			{
+			        if(sharedVariables.mygame[gameData.LookingAt].wild != 0 &&  sharedVariables.mygame[gameData.LookingAt].wild != 20)
+                        {
 				whiteCount=" (" + sharedVariables.mygame[gameData.LookingAt].whiteMaterialCount+")";
 				blackCount=" (" + sharedVariables.mygame[gameData.LookingAt].blackMaterialCount+")";
 			}
 				}
 				catch(Exception darn){}
-		     if(sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
+
+
+
+
+
+                     if(sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
 		     {
 
 				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + sharedVariables.mygame[gameData.LookingAt].country1 + whiteCount);
@@ -2539,8 +2548,11 @@ JScrollPane listScroller;
 
 
 			}
-
-		     gameListingDisplay.setText(sharedVariables.mygame[gameData.LookingAt].gameListing);
+                      String listing = sharedVariables.mygame[gameData.LookingAt].gameListing;
+                      if(sharedVariables.showMaterialCount==true && !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
+                      if(sharedVariables.mygame[gameData.LookingAt].wild == 0 ||  sharedVariables.mygame[gameData.LookingAt].wild == 20)
+                      listing += " " + sharedVariables.mygame[gameData.LookingAt].whiteMaterialCount + " - " + sharedVariables.mygame[gameData.LookingAt].blackMaterialCount;
+		     gameListingDisplay.setText(listing);
 			 setLastMove();
 
 			if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING)// make draw abort resign buttons visible
@@ -3175,8 +3187,8 @@ SequentialGroup v1 = layout.createSequentialGroup();
 
 num=175;
 int num2=25;
-int num3=30;
-int num4 = 45;
+int num3=60;
+int num4 = 60;
 	vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
 	vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
         v1.addGroup(vflagtop);
