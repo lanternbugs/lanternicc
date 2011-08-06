@@ -3195,7 +3195,7 @@ SequentialGroup v1 = layout.createSequentialGroup();
 
 
 num=175;
-int num2=25;
+int num2=20;
 int num3=60;
 int num4 = 60;
 int num5 = 45;
