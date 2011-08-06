@@ -107,14 +107,26 @@ public void makehappen(int i)
 {
              int physicalTab=i;
              i=sharedVariables.tabLooking[i];// translate to tab its on
+             int lastTabNumber=-1; // for erasing tabi'monbrackground from last tab make it active tab color since it was just active
+             for(int twi=0; twi < sharedVariables.maxGameTabs; twi++)
+             if(sharedVariables.tabLooking[twi] == gameData.LookingAt)
+             {
+              lastTabNumber=twi;
+              break;
+             }
+
              if(i == -1)
              return;
+             
+
            //if(i>=sharedVariables.openBoardCount)
            // return;
           // if(channelTabs[physicalTab].isVisible()== false)
             //	channelTabs[physicalTab].setVisible(true);
             gameData.LookingAt=i;
             sharedVariables.Looking[gameData.BoardIndex]=i;
+            if(lastTabNumber > -1)
+            channelTabs[lastTabNumber].setBackground(sharedVariables.tabBackground);
             setActiveTabForeground(physicalTab);
 
          //  mypanel.repaint();
@@ -264,7 +276,7 @@ void setActiveTabForeground(int i)
 	for(int a=0; a<sharedVariables.maxGameTabs; a++)
 	if(a==i) // active tab
 	{	channelTabs[a].setForeground(sharedVariables.activeTabForeground);
-		channelTabs[a].setBackground(sharedVariables.tabBackground);
+		channelTabs[a].setBackground(sharedVariables.tabImOnBackground);
 	}
 	else // every other  tab
 		channelTabs[a].setForeground(sharedVariables.passiveTabForeground);
