@@ -3005,6 +3005,7 @@ if(sharedVariables.moveSliders[gameData.BoardIndex] == null)
 sharedVariables.moveSliders[gameData.BoardIndex] = new JSlider(0,0);
 sharedVariables.moveSliders[gameData.BoardIndex] .setPreferredSize( new Dimension( 25, 75 ) );  // was 75 25 for horizontal oritntation
 sharedVariables.moveSliders[gameData.BoardIndex] .setOrientation(JSlider.VERTICAL);
+sharedVariables.moveSliders[gameData.BoardIndex] .setInverted(true);
 sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {}
          public void mouseReleased(MouseEvent e) {
