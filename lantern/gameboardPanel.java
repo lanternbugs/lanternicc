@@ -164,6 +164,12 @@ void setValues()
 		}
                 int eightHigh = squarey * 8 + 10;
                 boardy = (height - eightHigh) / 2;
+                if(boardy<0)
+                boardy=0;
+                int eightWide = squarex * 9 + 5;
+                boardx = (width - eightWide) / 2;
+                if(boardx < 5)
+                boardx = 5;
 		examineSquareX=0;
 		examineSquareY=0;
 		examineOriginX=0;
