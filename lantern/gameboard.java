@@ -3529,23 +3529,10 @@ return col + row;
 
     public void componentResized(ComponentEvent e) {
     
-    int x = getWidth();
-    int y = getHeight();
-    int oldx = sharedVariables.myBoardSizes[gameData.BoardIndex].con0x;
-    int oldy = sharedVariables.myBoardSizes[gameData.BoardIndex].con0y;
-    int amount = 10;
-    boolean go = false;
-    if(x - oldx > amount)
-    go= true;
-    if(oldx - x > amount)
-    go=true;
-    if(y - oldy > amount)
-    go = true;
-    if(oldy - y > amount)
-    go=true;
-    if(go==true && isVisible() == true)
-    recreate();
 
+    if(isVisible() == true)
+    recreate();
+    if(!isMaximum())
     setBoardSize();
       //        JFrame framer = new JFrame("hi");
        //   framer.setSize(200,100);
