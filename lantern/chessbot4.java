@@ -5006,8 +5006,19 @@ if(sharedVariables.tabsOnly == true)
 			if(myboards[a] != null)
 				if(myboards[a].isVisible() == true)
 		 			visibleBoardExists = true;
-
-		for(int a=0; a<sharedVariables.maxGameTabs; a++)
+             /*   int y1=1;
+                if(visibleBoardExists == false)
+                y1=0;
+                int y2=1;
+                if(sharedVariables.tabsOnly == false)
+                y2=0;
+               */ 
+               /*
+                JFrame fame = new JFrame("visible exists = " + y1 + " and tabs only = " + y2);
+                fame.setSize(200,100);
+                fame.setVisible(true);
+	*/
+        	for(int a=0; a<sharedVariables.maxGameTabs; a++)
 		{
 
 			if(myboards[a] != null)
@@ -5020,7 +5031,7 @@ if(sharedVariables.tabsOnly == true)
                                  for(int m=0; m<sharedVariables.openBoardCount; m++)
                                    if(sharedVariables.tabLooking[m]==a)
                                    closed = false;
-                                   
+
                                    if(closed == true)
                                    {
                                     sharedVariables.openBoardCount++;

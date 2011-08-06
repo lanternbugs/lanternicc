@@ -383,7 +383,7 @@ class overallpanel extends JPanel
 			setBackground(sharedVariables.boardBackgroundColor);
    }// end try
    catch(Exception dui){}
-   }//end paint components              
+   }//end paint components
 
          overallpanel()
          {
@@ -3543,7 +3543,7 @@ return col + row;
     go = true;
     if(oldy - y > amount)
     go=true;
-    if(go==true)
+    if(go==true && isVisible() == true)
     recreate();
 
     setBoardSize();
