@@ -3199,19 +3199,20 @@ int num2=20;
 int num3=60;
 int num4 = 60;
 int num5 = 45;
+int num6 = 24;
 	vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
 	vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
         v1.addGroup(vflagtop);
 
 	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(gameListingDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(gameListingDisplay, num6, GroupLayout.DEFAULT_SIZE, num);
+
 //        v1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
 
 	vMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
 
 	vMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], num2, GroupLayout.DEFAULT_SIZE,  num);
 	v1.addGroup(vMoveGroup);
-
         v1.addComponent(buttonPanel, num5, GroupLayout.DEFAULT_SIZE, num);
 	v1.addComponent(actionPanel, num5, GroupLayout.DEFAULT_SIZE,  num);
 
