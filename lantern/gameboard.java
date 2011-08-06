@@ -46,7 +46,7 @@ import java.util.Random;
 
 
 //class gameboard extends JFrame  implements ComponentListener, WindowListener
- class gameboard extends JInternalFrame  implements InternalFrameListener
+ class gameboard extends JInternalFrame  implements InternalFrameListener, ComponentListener
 {
 
 /*
@@ -89,6 +89,7 @@ gamestuff gameData;
 resourceClass graphics;
 docWriter myDocWriter;
 gameboardTop topGame;
+int oldDif=0;
 
 
 
@@ -230,7 +231,7 @@ else
  overall = new overallpanel(true);
 
 add(overall);
-//addComponentListener(this);
+addComponentListener(this);
 //addWindowListener(this);
 
 addInternalFrameListener(this);
@@ -353,13 +354,37 @@ topGame.myconsolepanel=myconsolepanel;
 
 
  }
+ int getBoardWidth()
+ {
+   
+  return getWidth();
+ }
+ int getBoardHeight()
+ {
+  return getHeight();
 
+ }
 // class overall is  the overall  gameboard panel
 //  its strictly to provide a layout for the 3 panels that the gameboard uses
 // the 64  square board area, gameboardPanel, the console  and tabs, gameboardConsolePanel, and
 // the controls like clock , lables  for names etc ratings. gameboardControlsPanel
 class overallpanel extends JPanel
 {
+ 
+ 		public void paintComponent(Graphics g)
+			{
+
+			try
+			{
+
+                       super.paintComponent(g);
+
+
+			setBackground(sharedVariables.boardBackgroundColor);
+   }// end try
+   catch(Exception dui){}
+   }//end paint components              
+
          overallpanel()
          {
          }
@@ -439,7 +464,21 @@ layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
 }
+int width = getBoardWidth();
+int height = getBoardHeight();
+int controlLength = 235;
+int dif = width - controlLength;
+//  JFrame framer = new JFrame(" width is " + width + " heigth is " + height + " dif is " + dif + " and controlLength is " + controlLength);
+//  framer.setSize(200,100);
+//  framer.setVisible(true);
 
+if(dif > height)
+{
+  dif = (int) (dif - height) / 2;
+
+  controlLength+=dif;
+
+}
 	//Create a parallel group for the horizontal axis
 	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
@@ -453,7 +492,7 @@ layout = new GroupLayout(getContentPane());
 
 	h2.addComponent(mypanel);
 
-	h2.addComponent(mycontrolspanel, 235,  235, 235);
+	h2.addComponent(mycontrolspanel, controlLength,  controlLength, controlLength);
 
 	h3.addComponent(myconsolepanel);
 
@@ -1820,7 +1859,13 @@ SwingUtilities.invokeLater(new Runnable() {
 }catch(Exception dumb){}
 }catch(Exception dd){}
 		if(isVisible() == true)
-		mypanel.repaint();
+		{
+                  if(sharedVariables.useTopGames == true)
+                  mypanel.repaint();
+                  else
+                  repaint();
+
+                  }
 
 
 try {// sound
@@ -2353,6 +2398,7 @@ JScrollPane listScroller;
 			try
 			{
 
+                       super.paintComponent(g);
 
 
 			Color highlightcolor;
@@ -2369,6 +2415,9 @@ JScrollPane listScroller;
 			actionPanel.setBackground(sharedVariables.boardBackgroundColor);
 			actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
 			buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+			flagTop.setBackground(sharedVariables.boardBackgroundColor);
+ 			flagBottom.setBackground(sharedVariables.boardBackgroundColor);
+
  
  if(oldLooking != gameData.LookingAt || oldcountry1 != sharedVariables.mygame[gameData.LookingAt].country1 || oldcountry2 != sharedVariables.mygame[gameData.LookingAt].country2)
 { redrawFlags();
@@ -2404,7 +2453,6 @@ JScrollPane listScroller;
 
 			sharedVariables.moveSliders[gameData.BoardIndex].setBackground(sharedVariables.boardBackgroundColor);
 
-			super.paintComponent(g);
 			//g.drawString("in here",  50,  50);
 			Graphics2D g2 = (Graphics2D) g;
 			int width = getWidth();
@@ -3470,6 +3518,43 @@ return col + row;
 
 
 
+  /* component listener */
+  public void componentHidden(ComponentEvent e) {
+
+    }
+
+    public void componentMoved(ComponentEvent e) {
+
+    }
+
+    public void componentResized(ComponentEvent e) {
+    
+    int x = getWidth();
+    int y = getHeight();
+    int oldx = sharedVariables.myBoardSizes[gameData.BoardIndex].con0x;
+    int oldy = sharedVariables.myBoardSizes[gameData.BoardIndex].con0y;
+    int amount = 10;
+    boolean go = false;
+    if(x - oldx > amount)
+    go= true;
+    if(oldx - x > amount)
+    go=true;
+    if(y - oldy > amount)
+    go = true;
+    if(oldy - y > amount)
+    go=true;
+    if(go==true)
+    recreate();
+
+    setBoardSize();
+      //        JFrame framer = new JFrame("hi");
+       //   framer.setSize(200,100);
+        //  framer.setVisible(true);
+
+    }
+
+    public void componentShown(ComponentEvent e) {
+    }
 
 
 
