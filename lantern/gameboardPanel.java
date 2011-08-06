@@ -162,7 +162,8 @@ void setValues()
 			else
 			squarey=squarex;
 		}
-
+                int eightHigh = squarey * 8 + 10;
+                boardy = (height - eightHigh) / 2;
 		examineSquareX=0;
 		examineSquareY=0;
 		examineOriginX=0;
