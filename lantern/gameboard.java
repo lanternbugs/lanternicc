@@ -3003,8 +3003,8 @@ if(sharedVariables.moveSliders[gameData.BoardIndex] == null)
 {
 
 sharedVariables.moveSliders[gameData.BoardIndex] = new JSlider(0,0);
-sharedVariables.moveSliders[gameData.BoardIndex] .setPreferredSize( new Dimension( 75, 25 ) );
-
+sharedVariables.moveSliders[gameData.BoardIndex] .setPreferredSize( new Dimension( 25, 75 ) );  // was 75 25 for horizontal oritntation
+sharedVariables.moveSliders[gameData.BoardIndex] .setOrientation(JSlider.VERTICAL);
 sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {}
          public void mouseReleased(MouseEvent e) {
@@ -3069,6 +3069,9 @@ actionPanelFlow = new JPanel();
 actionPanel= new JPanel();
 actionPanel.add(actionPanelFlow);
 
+//JPanel moveListPanel = new JPanel();
+//moveListPanel.add(listScroller);
+//moveListPanel.add(sharedVariables.moveSliders[gameData.BoardIndex]);
 
 
   GroupLayout buttonLayout = new GroupLayout(actionPanelFlow);
@@ -3137,6 +3140,9 @@ add(bottomClock);
 	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
         SequentialGroup hflagtop = layout.createSequentialGroup();
         SequentialGroup hflagbottom = layout.createSequentialGroup();
+        ParallelGroup vMoveGroup = layout.createParallelGroup();
+
+        SequentialGroup hMoveGroup = layout.createSequentialGroup();
 
 
 int num= Short.MAX_VALUE;
@@ -3149,10 +3155,12 @@ int flagnum=105;
 	h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
 
         h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+ //       h1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
+	hMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
 
-	h1.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
+	hMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], 25, GroupLayout.DEFAULT_SIZE,num);
 
-	h1.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], 0, GroupLayout.DEFAULT_SIZE,num);
+        h1.addGroup(hMoveGroup);
 ParallelGroup buttonGroup = layout.createParallelGroup(GroupLayout.Alignment.CENTER, true);
 	buttonGroup.addComponent(buttonPanel, 0, GroupLayout.DEFAULT_SIZE, num);
 	h1.addGroup(GroupLayout.Alignment.CENTER, buttonGroup);
@@ -3189,18 +3197,22 @@ num=175;
 int num2=25;
 int num3=60;
 int num4 = 60;
+int num5 = 45;
 	vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
 	vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
         v1.addGroup(vflagtop);
 
 	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 	v1.addComponent(gameListingDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
+//        v1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
 
-	v1.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
+	vMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
 
-	v1.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], num2, GroupLayout.DEFAULT_SIZE,  num);
-	v1.addComponent(buttonPanel, num3, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(actionPanel, num3, GroupLayout.DEFAULT_SIZE,  num);
+	vMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], num2, GroupLayout.DEFAULT_SIZE,  num);
+	v1.addGroup(vMoveGroup);
+
+        v1.addComponent(buttonPanel, num5, GroupLayout.DEFAULT_SIZE, num);
+	v1.addComponent(actionPanel, num5, GroupLayout.DEFAULT_SIZE,  num);
 
 	v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 
