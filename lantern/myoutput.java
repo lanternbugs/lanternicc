@@ -35,12 +35,14 @@ class myoutput {
 	int gameboard;
 	int gamelooking;
 	 int reconnectTry;
+	 int soundBoard;
 
 myoutput(){
 
 	data = "";
 	consoleNumber = -1;
 	focusConsole = -1;
+	soundBoard = -1;
 	reconnectTry=-1;
 	game=0; // set to 1 if message comes from gameboard
 	tab=-1;

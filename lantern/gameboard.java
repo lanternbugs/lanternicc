@@ -1826,7 +1826,7 @@ SwingUtilities.invokeLater(new Runnable() {
 try {// sound
 
 		if(sharedVariables.makeSounds == true && makeSound == true)
-		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING || (sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING && sharedVariables.makeObserveSounds == true))
+		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING || (sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING && sharedVariables.makeObserveSounds == true && sharedVariables.soundGame == gameData.BoardIndex))
 		{
 			if(sharedVariables.lastSoundTime + 1200 > System.currentTimeMillis() && sharedVariables.lastSoundCount> 1)
 			; // dont make a sound do nothing
@@ -3544,7 +3544,13 @@ return col + row;
      // System.out.println("fame activate");
         if(sharedVariables.useTopGames == true)
         return;
+          if(isVisible() == true)// let this be the sound board. whatever tab its on is the game with sound
+          {
+           myoutput output = new myoutput();
+           output.soundBoard=gameData.BoardIndex;
+           queue.add(output);
 
+          }
 
 	if(isVisible() && isMaximum() == false && isIcon() == false)
 	{

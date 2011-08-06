@@ -3919,6 +3919,7 @@ public void run()
 	try {
 		newBoardData temp=null;
 		temp=listqueue.poll();
+		
 		if(temp==null)
 		Thread.sleep(5);
 		else
@@ -5331,11 +5332,23 @@ public void run()
 	try{
 					myoutput tosend = new myoutput();
 					tosend=queue.poll();
+                                                 try {    // allways runs
+                                                 int mysounds=myboards[sharedVariables.soundBoard].gameData.LookingAt;
+                                                if(mysounds != sharedVariables.soundGame)
+                                                sharedVariables.soundGame=mysounds;
+                                                }
+                                                catch(Exception nolook){}
+
 					if(tosend != null)
 					{
 					while(tosend != null)
 					{
 
+					if(tosend.soundBoard > -1)
+					{
+                                                sharedVariables.soundBoard=tosend.soundBoard;
+                                                tosend=queue.poll();
+					}
 
 					if(tosend.closetab > -1)
 					{

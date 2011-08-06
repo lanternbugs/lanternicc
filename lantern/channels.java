@@ -219,6 +219,8 @@ int chatFrame;
 int visibleConsoles=0;
 int maxSongs=100;
 int maxConsoleTabs=12;
+int soundBoard=0;
+int soundGame=0;
 int consoleLayout;
 long autoexamspeed;
 long lastSoundTime;// used to not send multiple sounds in say one second when forwarding through games
@@ -290,7 +292,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.31";
+version = "v4.32";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
