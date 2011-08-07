@@ -13,6 +13,7 @@ package lantern;
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 *  General Public License for more details.
 */
+import layout.*;
 
 import java.awt.*;
 import java.awt.Window.*;
@@ -47,6 +48,18 @@ import java.util.StringTokenizer;
 //public class multiframe  extends JApplet
 public class multiframe
 {
+  public static void createFrame ()
+    {
+        Frame frame = new Frame();
+        frame.setBounds (100, 100, 300, 300);
+        frame.show();
+
+        double size[][] =
+            {{0.25, 0.25, 0.25, 0.25},
+             {50, TableLayout.FILL, 40, 40, 40}};
+
+        frame.setLayout (new TableLayout(size));
+    }
 
 public static void main(String[] args)
 {
