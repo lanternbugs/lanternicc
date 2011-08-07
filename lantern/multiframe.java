@@ -13,6 +13,8 @@ package lantern;
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 *  General Public License for more details.
 */
+
+//http://java.sun.com/products/jfc/tsc/articles/tablelayout/
 import layout.*;
 
 import java.awt.*;
