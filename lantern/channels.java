@@ -88,6 +88,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 
+  boolean andreysLayout = true; // Andrey's layout variable  
 boolean sideways;
 boolean showButtonTitle;
 boolean loadSizes;
