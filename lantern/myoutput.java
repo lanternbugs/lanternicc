@@ -28,6 +28,9 @@ class myoutput {
 	int trimboard;
 	int startengine;
 	int focusConsole;
+	int gameFocusConsole;
+	int gameConsoleSide;
+	int gameConsoleSize;
 	String tabTitle;
 	// these next two (game board and game looking) are ignored generally and not set or used
 	// but during a game if sent from the mouse release function after a move
@@ -40,6 +43,9 @@ class myoutput {
 myoutput(){
 
 	data = "";
+	gameFocusConsole=-1;
+	gameConsoleSide = -1;
+	gameConsoleSize = -1;
 	consoleNumber = -1;
 	focusConsole = -1;
 	soundBoard = -1;

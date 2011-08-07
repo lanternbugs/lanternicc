@@ -570,7 +570,7 @@ Input.addKeyListener(new KeyListener() {
 
 
        int aa=e.getKeyCode();
-        if( e.getModifiersEx() == 512)
+        if( e.getModifiersEx() == 512 || (sharedVariables.operatingSystem.equals("mac") && e.getModifiersEx() == 128)) // alt
        {
          if(aa == 39  ) //  right arrow
           {
@@ -582,7 +582,28 @@ Input.addKeyListener(new KeyListener() {
            makehappen(getNextGame(false));
            return;
          }
-         
+
+        if(aa == 83)// s
+        {
+         myoutput output = new myoutput();
+         output.gameConsoleSide =1; // function later togles it
+         output.gameFocusConsole = gameData.BoardIndex;
+          queue.add(output);
+         return;
+
+        }
+        if(aa == 67)// c
+        {
+         myoutput output = new myoutput();
+         output.gameConsoleSize =(sharedVariables.boardConsoleType + 1 )%4;
+         if(output.gameConsoleSize == 0)
+         output.gameConsoleSize = 1;
+         output.gameFocusConsole = gameData.BoardIndex;
+         queue.add(output);
+         return;
+
+        }
+
          if(aa == 88)
          {   myoutput data = new myoutput();
             data.closetab=getPhysicalTab(gameData.LookingAt);

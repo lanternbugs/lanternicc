@@ -82,6 +82,7 @@ import java.util.StringTokenizer;
 	connectionDialog myConnection;
 	Datagram1 masterDatagram = new Datagram1();
 	boolean bellSet;
+	boolean channelLogin;
 
 ConcurrentLinkedQueue<myoutput> queue;
 ConcurrentLinkedQueue<newBoardData> gamequeue;
@@ -111,7 +112,7 @@ icc_num= 0;
 fullyConnected=-1;// set to 0 on prompt set to 1 message after prompt
 theMainFrame=theMainFrame1;
 myConnection= myConnection1;
-
+channelLogin = false;
 queue=queue1;
 consoles = new JTextPane[100];
 gameconsoles=gameconsoles1;
@@ -366,7 +367,7 @@ catch(Exception e)
 
 			if(sharedVariables.reconnectTimestamp == true)
 				writeDateStamps();
-
+                        channelLogin=false;
 			startedParsing = false;
 			fullyConnected = -1;
 			if(sharedVariables.myServer.equals("ICC"))
@@ -2023,7 +2024,12 @@ if(dg.getArg(0).equals("27"))
 
 
 			listqueue.add(temp);
-			return;
+			if(channelLogin == false)
+                        {
+                          loginChannelNotify();
+                          channelLogin = true;
+                        }
+                	return;
 
 
 
@@ -4180,6 +4186,16 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 		//System.out.println("process tell failed\n");
 	}
 	}
+
+       void loginChannelNotify()
+       {
+         
+         String mess2 = sharedVariables.getChannelNotifyOnline();
+         mess2 += sharedVariables.getConnectNotifyOnline();
+         writeToSubConsole(mess2, 0);
+
+       }
+
 	void sendMessage(String msg)
 	{
 			try{
@@ -5012,7 +5028,7 @@ if(sharedVariables.tabsOnly == true)
                 int y2=1;
                 if(sharedVariables.tabsOnly == false)
                 y2=0;
-               */ 
+               */
                /*
                 JFrame fame = new JFrame("visible exists = " + y1 + " and tabs only = " + y2);
                 fame.setSize(200,100);
@@ -5359,6 +5375,26 @@ public void run()
 					{
                                                 sharedVariables.soundBoard=tosend.soundBoard;
                                                 tosend=queue.poll();
+					}
+					if(tosend.gameConsoleSide > -1)
+					{
+                                                  theMainFrame.sideConsole();
+   						if(tosend.gameFocusConsole > -1)
+						myboards[tosend.gameFocusConsole].giveFocus();
+                                              tosend=queue.poll();
+					}
+					if(tosend.gameConsoleSize > -1)
+					{
+                                                if(tosend.gameConsoleSize == 1)
+                                                   theMainFrame.compactConsole();
+                                                if(tosend.gameConsoleSize == 2)
+                                                   theMainFrame.normalConsole();
+                                                if(tosend.gameConsoleSize == 3)
+                                                   theMainFrame.largerConsole();
+
+ 						if(tosend.gameFocusConsole > -1)
+						myboards[tosend.gameFocusConsole].giveFocus();
+                                                 tosend=queue.poll();
 					}
 
 					if(tosend.closetab > -1)

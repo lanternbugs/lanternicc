@@ -2896,32 +2896,19 @@ if(event.getActionCommand().equals("Hide Board Console"))
 }
 if(event.getActionCommand().equals("Compact Board Console"))
 {
-	sharedVariables.boardConsoleType=1;
-	redrawBoard(sharedVariables.boardConsoleType);
+compactConsole();
 }
 if(event.getActionCommand().equals("Normal Board Console"))
 {
-	sharedVariables.boardConsoleType=2;
-	redrawBoard(sharedVariables.boardConsoleType);
+normalConsole();
 }
 if(event.getActionCommand().equals("Larger Board Console"))
 {
-	sharedVariables.boardConsoleType=3;
-	redrawBoard(sharedVariables.boardConsoleType);
+largerConsole();
 }
 if(event.getActionCommand().equals("Console On Side"))
 {
-	if(sharedVariables.sideways == true)
-	{
-		sharedVariables.sideways=false;
-		sidewaysconsole.setSelected(false);
-	}
-	else
-	{
-		sharedVariables.sideways=true;
-		sidewaysconsole.setSelected(true);
-	}
-	redrawBoard(sharedVariables.boardConsoleType);
+sideConsole();
 }
 
 
@@ -4791,6 +4778,75 @@ else
 	JSettingsDialog frame = new JSettingsDialog((JFrame) this, false, sharedVariables);
 }
 }
+
+
+
+/********************* Console Events *******************************************************************************/
+
+void compactConsole()
+{
+	sharedVariables.boardConsoleType=1;
+	redrawBoard(sharedVariables.boardConsoleType);
+}
+void normalConsole()
+{
+	sharedVariables.boardConsoleType=2;
+	redrawBoard(sharedVariables.boardConsoleType);
+}
+void largerConsole()
+{
+	sharedVariables.boardConsoleType=3;
+	redrawBoard(sharedVariables.boardConsoleType);
+}
+void sideConsole()
+{
+	if(sharedVariables.sideways == true)
+	{
+		sharedVariables.sideways=false;
+		sidewaysconsole.setSelected(false);
+	}
+	else
+	{
+		sharedVariables.sideways=true;
+		sidewaysconsole.setSelected(true);
+	}
+	redrawBoard(sharedVariables.boardConsoleType);
+}
+
+
+/********************************************************** end console events ******************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class JSettingsDialog extends JFrame
 {
