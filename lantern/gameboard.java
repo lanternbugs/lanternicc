@@ -2256,7 +2256,7 @@ JScrollPane listScroller;
  
  if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_OBSERVING && sharedVariables.randomBoardTiles == true)
  return sharedVariables.mygame[gameData.LookingAt].randomObj.boardNum;
- 
+
  return sharedVariables.boardType;
 }
 		public void paintComponent(Graphics g)
@@ -2271,21 +2271,24 @@ JScrollPane listScroller;
 			Color highlightcolor;
 			highlightcolor = new Color(230,0,10);
 			setBackground(sharedVariables.boardBackgroundColor);
-			
+
  /*		int Width = getWidth();
 		int Height = getHeight();
   if(sharedVariables.useLightBackground == true)
    g.drawImage(graphics.boards[sharedVariables.boardType][graphics.light], 0, 0,  Width, Height, this);
    else
    setBackground(sharedVariables.boardBackgroundColor);
-*/
-			actionPanel.setBackground(sharedVariables.boardBackgroundColor);
-			actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
-			buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
-			flagTop.setBackground(sharedVariables.boardBackgroundColor);
+*/                      if(sharedVariables.andreysLayout == false)
+		{
+                  actionPanel.setBackground(sharedVariables.boardBackgroundColor);
+		actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+		buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+		}
+
+                	flagTop.setBackground(sharedVariables.boardBackgroundColor);
  			flagBottom.setBackground(sharedVariables.boardBackgroundColor);
 
- 
+
  if(oldLooking != gameData.LookingAt || oldcountry1 != sharedVariables.mygame[gameData.LookingAt].country1 || oldcountry2 != sharedVariables.mygame[gameData.LookingAt].country2)
 { redrawFlags();
  oldLooking = gameData.LookingAt;
@@ -2293,7 +2296,7 @@ JScrollPane listScroller;
  oldcountry2 = sharedVariables.mygame[gameData.LookingAt].country2;
  }
  if(sharedVariables.mygame[gameData.LookingAt].country1.equals("") && sharedVariables.mygame[gameData.LookingAt].country2.equals(""))
- {  
+ {
 
    flagTop.setVisible(false);
    flagBottom.setVisible(false);
@@ -2303,7 +2306,9 @@ JScrollPane listScroller;
 		    //sliderArrows.setBackground(sharedVariables.boardBackgroundColor);
 			//topClock.setBackground(sharedVariables.boardBackgroundColor);
 			//bottomClock.setBackground(sharedVariables.boardBackgroundColor);
-			buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
+
+		        if(sharedVariables.andreysLayout == false)
+                	buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
 
 			setClockBackgrounds();
 
@@ -2477,7 +2482,7 @@ JScrollPane listScroller;
 				drawButton.setVisible(true);
 				abortButton.setVisible(true);
 
-
+ 				if(sharedVariables.andreysLayout == false)
                                 actionPanel.setVisible(true);
 			}
 			else
@@ -2487,7 +2492,8 @@ JScrollPane listScroller;
 				drawButton.setVisible(false);
 				abortButton.setVisible(false);
 
-				actionPanel.setVisible(false);
+				if(sharedVariables.andreysLayout == false)
+                                actionPanel.setVisible(false);
 			}
 			//sharedVariables.moveSliders[gameData.BoardIndex].setLocation(3, slidery);
 			//g2.drawString("at " + sharedVariables.moveSliders[gameData.BoardIndex].getValue() + " of " + sharedVariables.moveSliders[gameData.BoardIndex].getMaximum(), 5,15);
@@ -2495,6 +2501,8 @@ JScrollPane listScroller;
 }
 catch(Exception e)
 {}
+
+
 }
 gameboardControlsPanel()
 {
