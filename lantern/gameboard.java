@@ -1003,6 +1003,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         sharedVariables.mygame[gameData.BoardIndex].becameExamined=true;
       // game we were observing is over so set this to stop clock
 
+
+      if (sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_PLAYING &&
+          sharedVariables.pgnLogging == true)
+        logpgn();
+
+
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_PLAYING)
         // we do this when playing ( state =1) so in a simul this game
