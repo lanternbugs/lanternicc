@@ -3815,6 +3815,27 @@ int getGameNumber(String icsGameNumber)
 
 	}
 
+
+       public void setComboMemory(int state, int gameNumber)
+       {
+          // String[] prefixStrings = { ">", "Kibitz", "Whisper", "Tell Opponent" };
+          for(int a=0; a < sharedVariables.maxGameTabs; a++)
+          if(myboards[a]!=null)
+          {
+           if(state == sharedVariables.STATE_PLAYING)
+            myboards[a].myconsolepanel.comboMemory[gameNumber]=3;
+           if(state == sharedVariables.STATE_EXAMINING)
+            myboards[a].myconsolepanel.comboMemory[gameNumber]=1;
+            if(state == sharedVariables.STATE_OBSERVING)
+            myboards[a].myconsolepanel.comboMemory[gameNumber]=2;
+
+
+          }
+          else
+          break;
+         
+       }
+
 	public void repaintBoards(int num)
 	{
 
@@ -4455,9 +4476,33 @@ void proccessGameInfo(newBoardData temp)
 
 					selectBoard();
 
+                                        if(sharedVariables.autoChat == true)
+                                        setComboMemory(sharedVariables.mygame[gamenum].state, gamenum);
+                                         if(sharedVariables.tabsOnly == true)
+                                         {
 
-					myboards[gamenum].myconsolepanel.makehappen(gamenum); // i need this to happen on new board
-				}// end try
+					for(int ccc=0; ccc<sharedVariables.maxGameTabs; ccc++)
+                                        if(myboards[ccc]!=null)
+                                        {
+                                        boolean go=true;
+                                        // we wont switch if they are playing and this game is not playing
+                                        if(sharedVariables.mygame[myboards[ccc].gameData.LookingAt].state == sharedVariables.STATE_PLAYING &&
+                                            sharedVariables.mygame[gamenum].state != sharedVariables.STATE_PLAYING)
+                                            go=false;
+
+                                            if(go== true)
+                                          myboards[ccc].myconsolepanel.makehappen(gamenum); // i need this to happen on new board
+			                }
+                                        else
+			                break;
+			                
+			                
+                                         }// end if tabs only
+                                         else
+                                         myboards[gamenum].myconsolepanel.makehappen(gamenum); // new board opened we make that board happen
+
+
+                        	}// end try
 				catch(Exception foc){}
 
 					giveFocus(whohasit);

@@ -167,6 +167,7 @@ webframe mywebframe;
  JCheckBoxMenuItem showRatings;
  JCheckBoxMenuItem showFlags;
  JCheckBoxMenuItem showPallette;
+  JCheckBoxMenuItem autoChat;
 JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
  JCheckBoxMenuItem boardconsole1;
@@ -416,6 +417,11 @@ consoleSubframes[0].makeHappen(0);
     	showPallette.setSelected(false);
     else
     	showPallette.setSelected(true);
+
+ if(sharedVariables.autoChat == false)
+    	autoChat.setSelected(false);
+    else
+    	autoChat.setSelected(true);
 
 
 
@@ -1742,6 +1748,10 @@ pgnlogging = new JCheckBoxMenuItem("Log Pgn");
 myboardmenu.add(pgnlogging);
 pgnlogging.addActionListener(this);
 pgnlogging.setSelected(true);
+
+autoChat = new JCheckBoxMenuItem("AutoChat");
+myboardmenu.add(autoChat);
+autoChat.addActionListener(this);
 
 
 myboardmenu.add(aspect);
@@ -3801,6 +3811,21 @@ if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 		sharedVariables.showRatings = false;
 	}
 }
+
+if(event.getActionCommand().equals("AutoChat"))
+{
+	if(sharedVariables.autoChat == false)
+	{
+		autoChat.setSelected(true);
+		sharedVariables.autoChat = true;
+	}
+	else
+	{
+		autoChat.setSelected(false);
+		sharedVariables.autoChat = false;
+	}
+}
+
 
 if(event.getActionCommand().equals("Show Examine Mode Pallette"))
 {

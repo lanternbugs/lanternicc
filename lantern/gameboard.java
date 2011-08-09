@@ -2426,8 +2426,8 @@ JScrollPane listScroller;
 			}
 			String whiteCount="";
 			String blackCount="";
-		
-                
+
+
                          // material count doesnt currently go here
                 	try {
 				if(sharedVariables.showMaterialCount==true && !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
@@ -2477,7 +2477,8 @@ JScrollPane listScroller;
 				drawButton.setVisible(true);
 				abortButton.setVisible(true);
 
-				actionPanel.setVisible(true);
+
+                                actionPanel.setVisible(true);
 			}
 			else
 			{
@@ -2889,6 +2890,11 @@ buttonPanel.add(forward);
 buttonPanel.add(forwardEnd);
 */
 buttonPanelFlow = new JPanel();
+
+
+if(sharedVariables.andreysLayout == false)
+ {
+
 buttonPanel.add(buttonPanelFlow);
 
    GroupLayout buttonLayout = new GroupLayout(buttonPanelFlow);
@@ -2912,6 +2918,10 @@ SequentialGroup h1 = buttonLayout.createSequentialGroup();
 		v1.addComponent(forwardEnd);
 
 	buttonLayout.setVerticalGroup(v1);
+ }// if not andreys layout
+
+
+
 
 gameListingDisplay = new JLabel(" ");
 if(sharedVariables.moveSliders[gameData.BoardIndex] == null)
@@ -2973,16 +2983,59 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
  };
 sharedVariables.gametable[gameData.BoardIndex].addMouseListener(mouseListenerEvents);
 
+actionPanel= new JPanel();
+if(sharedVariables.andreysLayout == true)
+makeAndreysLayout();
+else
 makeLayout();
 
 setFont();
 
 //handleLayout();
 }
+
+
+
+
+void makeAndreysLayout()
+{
+setLayout(new GridLayout(8,2)); // rows collums
+// our 4 move buttons
+add(backwardEnd);
+add(backward);
+add(forward);
+add(forwardEnd);
+
+// these are visible when playing
+add( abortButton);
+add(drawButton);
+add(resignButton);
+// end action buttons
+
+add(topClockDisplay); // a Jlabel, clock at top of board
+add(flagTop);  // a JLabel flag at top of board
+
+add(topNameDisplay);  // a JLabel, name at top of board
+
+add(gameListingDisplay); // a JLabel "3 0 Blitz " for example
+add(sharedVariables.moveSliders[gameData.BoardIndex]);// the move slider
+
+
+
+add(botNameDisplay); // a JLabel name at bottm
+add(botClockDisplay);// a JLabel bottom clock
+add(flagBottom); // JLable the flag at bottom
+add(listScroller);     // the move list
+
+}
+
+
+
+
 void makeLayout()
 {
 actionPanelFlow = new JPanel();
-actionPanel= new JPanel();
+
 actionPanel.add(actionPanelFlow);
 
 //JPanel moveListPanel = new JPanel();
