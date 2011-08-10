@@ -219,10 +219,10 @@ t.start();
 					else
 					got = getIccData();
 					if(got==0)
-					Thread.sleep(1);
+					Thread.sleep(8);
 					if(got==1)
 					{
-
+                                         Thread.sleep(1);
 					int istell=isitatell();
 					if(istell==1)
 					{
@@ -287,17 +287,19 @@ t.start();
 
 				}
 				catch(Exception classNot){
-					try {Thread.sleep(500);}catch(Exception d){}
+					try {Thread.sleep(50);}catch(Exception d){}
 				}
 			}while(keepgoing==1);
 		}
 		catch(Exception e){
-			//System.out.println("You are trying to connect to an unknown host!");
+		try {Thread.sleep(50);}catch(Exception d){}
 		}
 				finally{
 			//4: Closing connection
 			try{
-
+                               JFrame framer = new JFrame("HI");
+                               framer.setVisible(true);
+                               framer.setSize(100,100);
 				requestSocket.close();
 			}
 			catch(IOException ioException){
