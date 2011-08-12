@@ -1763,2023 +1763,1775 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         } catch(Exception tomanysounds) {}
 
     }// end if my game
-
-
   }// end method
 
+  
+  void illegalMove(String icsGameNumber) {
+    int tempnumber=getGameNumber(icsGameNumber);
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+
+      ReentrantReadWriteLock rwl2 = new ReentrantReadWriteLock();
+      Lock readLock2 = rwl2.readLock();
+
+      readLock2.lock();
+
+      sharedVariables.mygame[gameData.BoardIndex].premove="";
+      sharedVariables.mygame[gameData.BoardIndex].madeMove=0;
+      readLock2.unlock();
+
+      sharedVariables.mygame[gameData.BoardIndex].replay();
+
+      Sound s;
+
+      if (sharedVariables.makeSounds == true)
+        s = new Sound(sharedVariables.songs[3]);
+      if (isVisible() == true)
+        repaintCustom();
+    }
+  }
 
 
+  void writeCountry(String icsGameNumber, String name, String country) {
 
+    int tempnumber=getGameNumber(icsGameNumber);
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
+      if (sharedVariables.mygame[gameData.BoardIndex].realname1.equals(name)) {
+        sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
+        mycontrolspanel.oldLooking=-1;
+      } else {
+        sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
+        mycontrolspanel.oldLooking=-1;
+      }
+    }
+    if (isVisible() == true)
+      repaintCustom();
+  }
+  
+  void redrawFlags() {
+    if (sharedVariables.mygame[gameData.LookingAt].iflipped == 0) {
+      createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), false);
+      createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), true);
+    } else {
+      createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), true);
+      createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), false);
+    }
+  }
 
-void illegalMove(String icsGameNumber)
-{
-	int tempnumber=getGameNumber(icsGameNumber);
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
+  void createFlag(String country, boolean top) {
 
-	ReentrantReadWriteLock rwl2 = new ReentrantReadWriteLock();
-	Lock readLock2 = rwl2.readLock();
-
-	readLock2.lock();
-
-
-
-
-		sharedVariables.mygame[gameData.BoardIndex].premove="";
-	    sharedVariables.mygame[gameData.BoardIndex].madeMove=0;
-	readLock2.unlock();
-
-
-
-		sharedVariables.mygame[gameData.BoardIndex].replay();
-
-		Sound s;
-
-		if(sharedVariables.makeSounds == true)
-		s= new Sound(sharedVariables.songs[3]);
-		if(isVisible() == true)
-		repaintCustom();
-	}
-}
-
-
-void writeCountry(String icsGameNumber, String name, String country)
-{
-
-
-
-
-	int tempnumber=getGameNumber(icsGameNumber);
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
-if(sharedVariables.mygame[gameData.BoardIndex].realname1.equals(name))
-{
-  sharedVariables.mygame[gameData.BoardIndex].country1 = " " + country + " ";
-  mycontrolspanel.oldLooking=-1;
-}
-else
-{
-  sharedVariables.mygame[gameData.BoardIndex].country2 = " " + country + " ";
-  mycontrolspanel.oldLooking=-1;
-}      }
- 		if(isVisible() == true)
-		repaintCustom();
-}
- void redrawFlags()
- {
-   if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0)
-{
-  createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), false);
-  createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), true);
-}
-else
-{
-  createFlag(sharedVariables.mygame[gameData.LookingAt].country1.trim(), true);
-  createFlag(sharedVariables.mygame[gameData.LookingAt].country2.trim(), false);
-
-}
- }
-
-void createFlag(String country, boolean top)
-{
-
-  try {
+    try {
     
+      String uniqueName="";
+      int bb=sharedVariables.countryNames.indexOf(";" + country + ";");
 
-String uniqueName="";
-int bb=sharedVariables.countryNames.indexOf(";" + country + ";");
+      if(bb > -1) {
+        int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
 
+        if (bbb > -1 && !country.equals("icc"))
+          uniqueName =
+            sharedVariables.countryNames.substring(bb+ country.length() + 2, bbb);
+        if (country.equals("icc"))
+          uniqueName = "icc";
+      }
 
-
-if(bb > -1)
-{
-int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
-
-
-if(bbb > -1 && !country.equals("icc"))
-uniqueName=sharedVariables.countryNames.substring(bb+ country.length() + 2, bbb);
-if(country.equals("icc"))
-uniqueName = "icc";
-
-}
-
-
-if(uniqueName.equals("") || sharedVariables.showFlags == false)
-{
-     if(top == true)
-    mycontrolspanel.flagTop.setVisible(false);
-    else
-    mycontrolspanel.flagBottom.setVisible(false);
- return;
-}
-else
-{
-  int n=-1;
-  if(uniqueName.equals("icc") && sharedVariables.basketballFlag == true)
-  {
-   for(int m=0; m < sharedVariables.flagImageNames.size(); m++)
-  if(sharedVariables.flagImageNames.get(m).equals("icc1"))
-  {
-   n=m;
-   break;
-  }
-  }
-  else
-  {
-  for(int m=0; m < sharedVariables.flagImageNames.size(); m++)
-  if(sharedVariables.flagImageNames.get(m).equals(uniqueName))
-  {
-   n=m;
-   break;
-  }
-  }
-  if(n == -1)
-  {
+      if (uniqueName.equals("") || sharedVariables.showFlags == false) {
+        if (top == true)
+          mycontrolspanel.flagTop.setVisible(false);
+        else
+          mycontrolspanel.flagBottom.setVisible(false);
+        return;
+      } else {
+        int n=-1;
+        if (uniqueName.equals("icc") && sharedVariables.basketballFlag == true) {
+          for (int m=0; m < sharedVariables.flagImageNames.size(); m++)
+            if (sharedVariables.flagImageNames.get(m).equals("icc1")) {
+              n=m;
+              break;
+            }
+        } else {
+          for (int m=0; m < sharedVariables.flagImageNames.size(); m++)
+            if (sharedVariables.flagImageNames.get(m).equals(uniqueName)) {
+              n=m;
+              break;
+            }
+        }
+        if (n == -1) {
     
-    if(top == true)
-    mycontrolspanel.flagTop.setVisible(false);
-    else
-    mycontrolspanel.flagBottom.setVisible(false);
+          if (top == true)
+            mycontrolspanel.flagTop.setVisible(false);
+          else
+            mycontrolspanel.flagBottom.setVisible(false);
 
-   return;
+          return;
+        }
+        Icon flagIcon = new ImageIcon(sharedVariables.flagImages.get(n));
+        if (top == true) {
+          mycontrolspanel.flagTop.setIcon(flagIcon);
+          mycontrolspanel.flagTop.setVisible(true);
+          mycontrolspanel.flagTop.setToolTipText
+            (sharedVariables.flagImageNames.get(n));
+        }// end if top == true
+        else {
+          mycontrolspanel.flagBottom.setIcon(flagIcon);
+          mycontrolspanel.flagBottom.setVisible(true);
+          mycontrolspanel.flagBottom.setToolTipText
+            (sharedVariables.flagImageNames.get(n));
+
+        }// top not true
+      }// end else there is a unique name
+
+    }// end try
+    catch(Exception dui) {}
   }
-  Icon flagIcon = new ImageIcon(sharedVariables.flagImages.get(n));
- if(top == true)
- {
-    mycontrolspanel.flagTop.setIcon(flagIcon);
-    mycontrolspanel.flagTop.setVisible(true);
-    mycontrolspanel.flagTop.setToolTipText(sharedVariables.flagImageNames.get(n));
- }// end if top == true
- else
- {
-     mycontrolspanel.flagBottom.setIcon(flagIcon);
-     mycontrolspanel.flagBottom.setVisible(true);
-    mycontrolspanel.flagBottom.setToolTipText(sharedVariables.flagImageNames.get(n));
-
-
- }// top not true
-}// end else there is a unique name
-
- }// end try
- catch(Exception dui){}
-
-}
-void newCircle(String icsGameNumber, String examiner, String from)
-{
-	int tempnumber=getGameNumber(icsGameNumber);
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
-		int xfrom=getxmove(from, 0);
-		int yfrom=getymove(from, 0);
-		if(sharedVariables.mygame[gameData.BoardIndex].iflipped == 1)
-		{
-			yfrom = 7-yfrom;
-		}
-
-
-
-		sharedVariables.mygame[gameData.BoardIndex].addCircle(63 - (xfrom + yfrom * 8));
-		if(isVisible() == true)
-		repaintCustom();
-	}
-}
-
-
-void newArrow(String icsGameNumber, String examiner, String from, String to)
-{
-	int tempnumber=getGameNumber(icsGameNumber);
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
-		int xfrom=getxmove(from, 0);
-		int yfrom=getymove(from, 0);
-		int xto=getxmove(to, 0);
-		int yto=getymove(to, 0);
-		if(sharedVariables.mygame[gameData.BoardIndex].iflipped == 1)
-		{
-			yfrom = 7-yfrom;
-			yto=7-yto;
-		}
-
-
-
-		sharedVariables.mygame[gameData.BoardIndex].addArrow(63 - (xfrom + yfrom * 8), 63 - (xto + yto * 8));
-		if(isVisible() == true)
-		repaintCustom();
-	}
-}
-
-void sendUciMoves()
-{
-			myoutput outgoing = new myoutput();
-			outgoing.data= "stop\n";
-			//sharedVariables.engineQueue.add(outgoing);
-
-			//myoutput outgoing2 = new myoutput();
-String moves;
-if(sharedVariables.mygame[gameData.BoardIndex].engineFen.length()>2)
-{
-
-  moves="";
-   if(!sharedVariables.mygame[gameData.BoardIndex].engineFen.startsWith("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
-   moves="ucinewgame\n";
-   moves+="position fen " + sharedVariables.mygame[gameData.BoardIndex].engineFen + sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
-
-}
-else
-{
-                        moves ="position startpos";
-			moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
-}
-			outgoing.data+= moves;
-			//sharedVariables.engineQueue.add(outgoing2);
-
-			//myoutput outgoing3 = new myoutput();
-			outgoing.data+= "go infinite\n";
-			sharedVariables.engineQueue.add(outgoing);
-
-
-
-}
-
-void Backward(String icsGameNumber, String count)
-{
-	int tempnumber=getGameNumber(icsGameNumber);
-	final int num=getGameNumber(count);
-
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
-		sharedVariables.mygame[gameData.BoardIndex].movetop-=num;
-		sharedVariables.mygame[gameData.BoardIndex].turn=sharedVariables.mygame[gameData.BoardIndex].turn-num;
-		for(int a=0; a<sharedVariables.maxGameTabs; a++)
-		{
-		if(sharedVariables.Looking[a]==gameData.BoardIndex && sharedVariables.Looking[a]!=-1 && sharedVariables.moveSliders[a]!=null)
-		{
-		sharedVariables.moveSliders[a].setMaximum(sharedVariables.mygame[gameData.BoardIndex].turn );
-
-			sharedVariables.moveSliders[a].setValue(sharedVariables.moveSliders[a].getMaximum());
-		}// end if
-		}// end for
-
-		// remove from move list.  we dont have to call all boards because all boards share same data object
-
-				if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING)
-				{	sharedVariables.mygame[gameData.BoardIndex].engineTop -=num;
-					if(sharedVariables.mygame[gameData.BoardIndex].engineTop < 0)
-						sharedVariables.mygame[gameData.BoardIndex].engineTop = 0;
-
-				}
-
-		if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
-		{
-					if(sharedVariables.uci == false)
-					{
-					for(int z=0; z < num; z++)
-					{
-						myoutput outgoing = new myoutput();
-						outgoing.data = "undo\n";
-						sharedVariables.engineQueue.add(outgoing);
-					}
-					// reduce engineTop ( the number of moves we have for this game stored for the engine)
-					}// end uci false
-					else
-					sendUciMoves();
-
-
-				}
-
-
-if(sharedVariables.mygame[gameData.BoardIndex].movetop < 0)
-		sharedVariables.mygame[gameData.BoardIndex].movetop=0;
-
-try {
-
-
-SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-
-                             		sharedVariables.mygametable[gameData.BoardIndex].removeMoves(sharedVariables.mygame[gameData.BoardIndex].movetop + num, num);
-
-
-                            } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-}//end try
-catch(Exception dumb){}
-
-		sharedVariables.mygame[gameData.BoardIndex].replay();
-		if(isVisible() == true)
-		repaintCustom();
-	}
-}
-void parseCrazyHoldings(String icsGameNumber, String whiteHoldings, String blackHoldings)
-{
-	int tempnumber=getGameNumber(icsGameNumber);
-
-
-	if(tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)
-	{
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[1]=getCrazyPieceCount(whiteHoldings, 'P');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[2]=getCrazyPieceCount(whiteHoldings, 'N');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[3]=getCrazyPieceCount(whiteHoldings, 'B');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[4]=getCrazyPieceCount(whiteHoldings, 'R');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[5]=getCrazyPieceCount(whiteHoldings, 'Q');
-
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[7]=getCrazyPieceCount(blackHoldings, 'P');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[8]=getCrazyPieceCount(blackHoldings, 'N');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[9]=getCrazyPieceCount(blackHoldings, 'B');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[10]=getCrazyPieceCount(blackHoldings, 'R');
-		sharedVariables.mygame[gameData.BoardIndex].crazypieces[11]=getCrazyPieceCount(blackHoldings, 'Q');
-
-	}
-
-
-}
-
-int getCrazyPieceCount(String holdings, char mychar)
-{
-	int n=0;
-
-	for(int z=0; z<holdings.length(); z++)
-		if(holdings.charAt(z)==mychar)
-			n++;
-
-	return n;
-}
-int getxmove(String amove, int toggle)
-{
-			int x=0;
-			//crazyhouse moves
-			if(toggle == 0 && amove.charAt(1) == '@')
-			{
-
-			if(amove.charAt(0 + toggle) == 'P')
-				x=-1;
-			if(amove.charAt(0 + toggle) == 'N')
-				x=-2;
-			if(amove.charAt(0 + toggle) == 'B')
-				x=-3;
-			if(amove.charAt(0 + toggle) == 'R')
-				x=-4;
-			if(amove.charAt(0 + toggle) == 'Q')
-				x=-5;
-			if(sharedVariables.mygame[gameData.BoardIndex].turn%2==1)
-				x=x-6;
-			if(amove.charAt(0 + toggle) == 'x' || amove.charAt(0 + toggle) == 'X')
-				x=sharedVariables.mygame[gameData.BoardIndex].blank;
-			return x;
-			}
-
-
-			if(amove.charAt(0 + toggle) == 'a')
-			x=7;
-			if(amove.charAt(0 + toggle) == 'b')
-			x=6;
-			if(amove.charAt(0 + toggle) == 'c')
-			x=5;
-			if(amove.charAt(0 + toggle) == 'd')
-			x=4;
-			if(amove.charAt(0 + toggle) == 'e')
-			x=3;
-			if(amove.charAt(0 + toggle) == 'f')
-			x=2;
-			if(amove.charAt(0 + toggle) == 'g')
-			x=1;
-			if(amove.charAt(0 + toggle) == 'h')
-			x=0;
-
-			if(sharedVariables.mygame[gameData.BoardIndex].iflipped == 1)
-			return 7-x;
-
-			return x;
-
-}
-
-
-int getymove(String amove, int toggle)
-{
-			if(amove.charAt(1 + toggle) == '1')
-			return 0;
-			if(amove.charAt(1 + toggle) == '2')
-			return 1;
-			if(amove.charAt(1 + toggle) == '3')
-			return 2;
-			if(amove.charAt(1 + toggle) == '4')
-			return 3;
-			if(amove.charAt(1 + toggle) == '5')
-			return 4;
-			if(amove.charAt(1 + toggle) == '6')
-			return 5;
-			if(amove.charAt(1 + toggle) == '7')
-			return 6;
-			if(amove.charAt(1 + toggle) == '8')
-			return 7;
-
-			return 0;
-
-}
-
-void setautoexamon()
-{
-	sharedVariables.autoexam = 1;
-	//if(autotimer != null)
-	//timer.cancel();
-	autotimer = new Timer (  ) ;
-		//autotimer.scheduleAtFixedRate( new AutoExamTask (  ) , sharedVariables.autoexamspeed ,sharedVariables.autoexamspeed) ;
-		autotimer.schedule( new AutoExamTask (  ) ,sharedVariables.autoexamspeed) ;
-
-	myspeed=sharedVariables.autoexamspeed;
-}
-
-void setautoexamoff()
-{
-	sharedVariables.autoexam=0;
-}
-
-
-
-
-
-
-class gameboardControlsPanel extends JPanel  {
-
-JLabel topClockDisplay;
-JLabel botClockDisplay;
-//JPanel topClock;
-//JPanel bottomClock;
-JPanel actionPanel;
-JPanel actionPanelFlow;
-JPanel buttonPanelFlow;
-//JPanel sliderArrows;
-JLabel topNameDisplay;
-JLabel botNameDisplay;
-JLabel gameListingDisplay;
-
-JLabel lastMove;
-JButton forward;
-JButton backward;
-JButton backwardEnd;
-JButton forwardEnd;
-JPanel buttonPanel;
-
-JButton resignButton;
-JButton drawButton;
-JButton abortButton;
-
-Color mycolor;
-int oldLooking = -1;
-String oldcountry1="";
-String oldcountry2="";
-JLabel flagTop = new JLabel("");
-JLabel flagBottom = new JLabel("");
-
-JScrollPane listScroller;
-
-
-
-		public void setFont()
-		{
-		try {
-			topClockDisplay.setFont(sharedVariables.myGameClockFont);
-			botClockDisplay.setFont(sharedVariables.myGameClockFont);
-
-			topNameDisplay.setFont(sharedVariables.myGameFont);
-			botNameDisplay.setFont(sharedVariables.myGameFont);
-			gameListingDisplay.setFont(sharedVariables.myGameFont);
-
-			lastMove.setFont(sharedVariables.myGameFont);
-			//forward.setFont(sharedVariables.myGameFont);
-			//backward.setFont(sharedVariables.myGameFont);
-			//backwardEnd.setFont(sharedVariables.myGameFont);
-			//forwardEnd.setFont(sharedVariables.myGameFont);
-		}
-		catch(Exception e){}
-		}
- int getBoardType()
-{
+  
+  void newCircle(String icsGameNumber, String examiner, String from) {
+    int tempnumber=getGameNumber(icsGameNumber);
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
+      int xfrom=getxmove(from, 0);
+      int yfrom=getymove(from, 0);
+      if (sharedVariables.mygame[gameData.BoardIndex].iflipped == 1) {
+        yfrom = 7-yfrom;
+      }
+
+      sharedVariables.mygame[gameData.BoardIndex].addCircle
+        (63 - (xfrom + yfrom * 8));
+      if(isVisible() == true)
+        repaintCustom();
+    }
+  }
+
+
+  void newArrow(String icsGameNumber, String examiner, String from, String to) {
+    int tempnumber=getGameNumber(icsGameNumber);
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
+      int xfrom=getxmove(from, 0);
+      int yfrom=getymove(from, 0);
+      int xto=getxmove(to, 0);
+      int yto=getymove(to, 0);
+      if (sharedVariables.mygame[gameData.BoardIndex].iflipped == 1) {
+        yfrom = 7-yfrom;
+        yto=7-yto;
+      }
+
+      sharedVariables.mygame[gameData.BoardIndex].addArrow
+        (63 - (xfrom + yfrom * 8), 63 - (xto + yto * 8));
+      if (isVisible() == true)
+        repaintCustom();
+    }
+  }
+
+  void sendUciMoves() {
+    myoutput outgoing = new myoutput();
+    outgoing.data= "stop\n";
+    //sharedVariables.engineQueue.add(outgoing);
+
+    //myoutput outgoing2 = new myoutput();
+    String moves;
+    if (sharedVariables.mygame[gameData.BoardIndex].engineFen.length()>2) {
+
+      moves="";
+      if (!sharedVariables.mygame[gameData.BoardIndex].engineFen.startsWith
+          ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+        moves="ucinewgame\n";
+      moves+="position fen " +
+        sharedVariables.mygame[gameData.BoardIndex].engineFen +
+        sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+      
+    } else {
+      moves ="position startpos";
+      moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+    }
+    outgoing.data+= moves;
+    //sharedVariables.engineQueue.add(outgoing2);
+
+    //myoutput outgoing3 = new myoutput();
+    outgoing.data+= "go infinite\n";
+    sharedVariables.engineQueue.add(outgoing);
+  }
+
+  void Backward(String icsGameNumber, String count) {
+    int tempnumber=getGameNumber(icsGameNumber);
+    final int num=getGameNumber(count);
+
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
+      sharedVariables.mygame[gameData.BoardIndex].movetop-=num;
+      sharedVariables.mygame[gameData.BoardIndex].turn =
+        sharedVariables.mygame[gameData.BoardIndex].turn-num;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++) {
+        if (sharedVariables.Looking[a]==gameData.BoardIndex &&
+            sharedVariables.Looking[a]!=-1 && sharedVariables.moveSliders[a]!=null) {
+          sharedVariables.moveSliders[a].setMaximum
+            (sharedVariables.mygame[gameData.BoardIndex].turn);
+
+          sharedVariables.moveSliders[a].setValue
+            (sharedVariables.moveSliders[a].getMaximum());
+        }// end if
+      }// end for
+
+      // remove from move list.  we dont have to call all boards
+      // because all boards share same data object
+
+      if (sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING) {
+	sharedVariables.mygame[gameData.BoardIndex].engineTop -=num;
+        if (sharedVariables.mygame[gameData.BoardIndex].engineTop < 0)
+          sharedVariables.mygame[gameData.BoardIndex].engineTop = 0;
+
+      }
+
+      if (sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true) {
+        if (sharedVariables.uci == false) {
+          for (int z=0; z < num; z++) {
+            myoutput outgoing = new myoutput();
+            outgoing.data = "undo\n";
+            sharedVariables.engineQueue.add(outgoing);
+          }
+          // reduce engineTop ( the number of moves we have for this
+          // game stored for the engine)
+        }// end uci false
+        else
+          sendUciMoves();
+      }
+
+      if (sharedVariables.mygame[gameData.BoardIndex].movetop < 0)
+        sharedVariables.mygame[gameData.BoardIndex].movetop=0;
+
+      try {
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+
+                sharedVariables.mygametable[gameData.BoardIndex].removeMoves
+                  (sharedVariables.mygame[gameData.BoardIndex].movetop + num, num);
+
+              } catch (Exception e1) {
+                //ignore
+              }
+            }
+          });
+      }//end try
+      catch(Exception dumb) {}
+
+      sharedVariables.mygame[gameData.BoardIndex].replay();
+      if (isVisible() == true)
+        repaintCustom();
+    }
+  }
+  
+  void parseCrazyHoldings(String icsGameNumber, String whiteHoldings,
+                          String blackHoldings) {
+    int tempnumber=getGameNumber(icsGameNumber);
+
+    if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[1] =
+        getCrazyPieceCount(whiteHoldings, 'P');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[2] =
+        getCrazyPieceCount(whiteHoldings, 'N');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[3] =
+        getCrazyPieceCount(whiteHoldings, 'B');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[4] =
+        getCrazyPieceCount(whiteHoldings, 'R');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[5] =
+        getCrazyPieceCount(whiteHoldings, 'Q');
+
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[7] =
+        getCrazyPieceCount(blackHoldings, 'P');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[8] =
+        getCrazyPieceCount(blackHoldings, 'N');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[9] =
+        getCrazyPieceCount(blackHoldings, 'B');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[10] =
+        getCrazyPieceCount(blackHoldings, 'R');
+      sharedVariables.mygame[gameData.BoardIndex].crazypieces[11] =
+        getCrazyPieceCount(blackHoldings, 'Q');
+
+    }
+  }
+
+  int getCrazyPieceCount(String holdings, char mychar) {
+    int n=0;
+
+    for (int z=0; z<holdings.length(); z++)
+      if (holdings.charAt(z)==mychar)
+        n++;
+
+    return n;
+  }
+  
+  int getxmove(String amove, int toggle) {
+    int x=0;
+    //crazyhouse moves
+    if (toggle == 0 && amove.charAt(1) == '@') {
+
+      if (amove.charAt(0 + toggle) == 'P')
+        x=-1;
+      if (amove.charAt(0 + toggle) == 'N')
+        x=-2;
+      if (amove.charAt(0 + toggle) == 'B')
+        x=-3;
+      if (amove.charAt(0 + toggle) == 'R')
+        x=-4;
+      if (amove.charAt(0 + toggle) == 'Q')
+        x=-5;
+      if (sharedVariables.mygame[gameData.BoardIndex].turn%2==1)
+        x=x-6;
+      if (amove.charAt(0 + toggle) == 'x' || amove.charAt(0 + toggle) == 'X')
+        x=sharedVariables.mygame[gameData.BoardIndex].blank;
+      return x;
+    }
+
+
+    if (amove.charAt(0 + toggle) == 'a')
+      x=7;
+    if (amove.charAt(0 + toggle) == 'b')
+      x=6;
+    if (amove.charAt(0 + toggle) == 'c')
+      x=5;
+    if (amove.charAt(0 + toggle) == 'd')
+      x=4;
+    if (amove.charAt(0 + toggle) == 'e')
+      x=3;
+    if (amove.charAt(0 + toggle) == 'f')
+      x=2;
+    if (amove.charAt(0 + toggle) == 'g')
+      x=1;
+    if (amove.charAt(0 + toggle) == 'h')
+      x=0;
+
+    if (sharedVariables.mygame[gameData.BoardIndex].iflipped == 1)
+      return 7-x;
+
+    return x;
+
+  }
+
+
+  int getymove(String amove, int toggle) {
+    if (amove.charAt(1 + toggle) == '1')
+      return 0;
+    if (amove.charAt(1 + toggle) == '2')
+      return 1;
+    if (amove.charAt(1 + toggle) == '3')
+      return 2;
+    if (amove.charAt(1 + toggle) == '4')
+      return 3;
+    if (amove.charAt(1 + toggle) == '5')
+      return 4;
+    if (amove.charAt(1 + toggle) == '6')
+      return 5;
+    if (amove.charAt(1 + toggle) == '7')
+      return 6;
+    if (amove.charAt(1 + toggle) == '8')
+      return 7;
+
+    return 0;
+  }
+
+  void setautoexamon() {
+    sharedVariables.autoexam = 1;
+    //if(autotimer != null)
+    //timer.cancel();
+    autotimer = new Timer (  ) ;
+    //autotimer.scheduleAtFixedRate( new AutoExamTask ( ) ,
+    //sharedVariables.autoexamspeed ,sharedVariables.autoexamspeed) ;
+    autotimer.schedule( new AutoExamTask (  ) ,sharedVariables.autoexamspeed) ;
+
+    myspeed=sharedVariables.autoexamspeed;
+  }
+
+  void setautoexamoff() {
+    sharedVariables.autoexam=0;
+  }
+
+  
+  class gameboardControlsPanel extends JPanel  {
+
+    JLabel topClockDisplay;
+    JLabel botClockDisplay;
+    //JPanel topClock;
+    //JPanel bottomClock;
+    JPanel actionPanel;
+    JPanel actionPanelFlow;
+    JPanel buttonPanelFlow;
+    //JPanel sliderArrows;
+    JLabel topNameDisplay;
+    JLabel botNameDisplay;
+    JLabel gameListingDisplay;
+
+    JLabel lastMove;
+    JButton forward;
+    JButton backward;
+    JButton backwardEnd;
+    JButton forwardEnd;
+    JPanel buttonPanel;
+
+    JButton resignButton;
+    JButton drawButton;
+    JButton abortButton;
+
+    Color mycolor;
+    int oldLooking = -1;
+    String oldcountry1="";
+    String oldcountry2="";
+    JLabel flagTop = new JLabel("");
+    JLabel flagBottom = new JLabel("");
+
+    JScrollPane listScroller;
+
+    public void setFont() {
+      try {
+        topClockDisplay.setFont(sharedVariables.myGameClockFont);
+        botClockDisplay.setFont(sharedVariables.myGameClockFont);
+
+        topNameDisplay.setFont(sharedVariables.myGameFont);
+        botNameDisplay.setFont(sharedVariables.myGameFont);
+        gameListingDisplay.setFont(sharedVariables.myGameFont);
+
+        lastMove.setFont(sharedVariables.myGameFont);
+        //forward.setFont(sharedVariables.myGameFont);
+        //backward.setFont(sharedVariables.myGameFont);
+        //backwardEnd.setFont(sharedVariables.myGameFont);
+        //forwardEnd.setFont(sharedVariables.myGameFont);
+      }	catch(Exception e) {}
+    }
+    
+    int getBoardType() {
  
- if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_OBSERVING && sharedVariables.randomBoardTiles == true)
- return sharedVariables.mygame[gameData.LookingAt].randomObj.boardNum;
-
- return sharedVariables.boardType;
-}
-		public void paintComponent(Graphics g)
-			{
-
-			try
-			{
-
-                       super.paintComponent(g);
-
-
-			Color highlightcolor;
-			highlightcolor = new Color(230,0,10);
-			setBackground(sharedVariables.boardBackgroundColor);
-
- /*		int Width = getWidth();
-		int Height = getHeight();
-  if(sharedVariables.useLightBackground == true)
-   g.drawImage(graphics.boards[sharedVariables.boardType][graphics.light], 0, 0,  Width, Height, this);
-   else
-   setBackground(sharedVariables.boardBackgroundColor);
-*/                      if(sharedVariables.andreysLayout == false)
-		{
-                  actionPanel.setBackground(sharedVariables.boardBackgroundColor);
-		actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
-		buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
-		}
-
-                	flagTop.setBackground(sharedVariables.boardBackgroundColor);
- 			flagBottom.setBackground(sharedVariables.boardBackgroundColor);
-
-
- if(oldLooking != gameData.LookingAt || oldcountry1 != sharedVariables.mygame[gameData.LookingAt].country1 || oldcountry2 != sharedVariables.mygame[gameData.LookingAt].country2)
-{ redrawFlags();
- oldLooking = gameData.LookingAt;
- oldcountry1 = sharedVariables.mygame[gameData.LookingAt].country1;
- oldcountry2 = sharedVariables.mygame[gameData.LookingAt].country2;
- }
- if(sharedVariables.mygame[gameData.LookingAt].country1.equals("") && sharedVariables.mygame[gameData.LookingAt].country2.equals(""))
- {
-
-   flagTop.setVisible(false);
-   flagBottom.setVisible(false);
-
-   }// end no game
-
-		    //sliderArrows.setBackground(sharedVariables.boardBackgroundColor);
-			//topClock.setBackground(sharedVariables.boardBackgroundColor);
-			//bottomClock.setBackground(sharedVariables.boardBackgroundColor);
-
-		        if(sharedVariables.andreysLayout == false)
-                	buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
-
-			setClockBackgrounds();
-
-			topNameDisplay.setForeground(sharedVariables.boardForegroundColor);
-			botNameDisplay.setForeground(sharedVariables.boardForegroundColor);
-			gameListingDisplay.setForeground(sharedVariables.boardForegroundColor);
-
-			//lastMove.setForeground(sharedVariables.boardForegroundColor);
-			/*forward.setForeground(sharedVariables.boardForegroundColor);
-			backward.setForeground(sharedVariables.boardForegroundColor);
-			backwardEnd.setForeground(sharedVariables.boardForegroundColor);
-			forwardEnd.setForeground(sharedVariables.boardForegroundColor);
-			*/
-
-			sharedVariables.moveSliders[gameData.BoardIndex].setBackground(sharedVariables.boardBackgroundColor);
-
-			//g.drawString("in here",  50,  50);
-			Graphics2D g2 = (Graphics2D) g;
-			int width = getWidth();
-			int height = getHeight();
-			if(width<10)
-			width=10;
-			if(height <10)
-			height=10;
-			//g.drawString("width " + width + " height " + height,  75,  50);
-			//g.drawString("movingpiece " + movingpiece + " piecemoving " + piecemoving + " mx " + mx + " my " + my, 20, (int) height * 9/10);
-
-			double width1 = (double) width;
-			double height1= (double) height;
-			int timex = (int) (width * 1/20);
-			int otimey = (int) (height * 1/8);
-			int ptimey = (int) (height * 7/8);
-
-			int name2y = (int) (height * 1/4);
-			int name1y= (int) (height * 3/4);
-			int gameListingy= (int) (height * 3/8);
-
-
-			int slidery=(int) height / 2;
-			if(timex < 1)
-			timex=1;
-			if(otimey<1)
-			otimey=1;
-			if(ptimey<1)
-			ptimey=1;
-
-			int c=0;
-			//g.drawString("" + blackClock,  timex,  otimey);
-			//g.drawString("" + whiteClock,  timex,  ptimey);
-			int wsecI = sharedVariables.mygame[gameData.LookingAt].whiteSecond;
-			int bsecI = sharedVariables.mygame[gameData.LookingAt].blackSecond;
-			int wminI = sharedVariables.mygame[gameData.LookingAt].whiteMinute;
-			int bminI = sharedVariables.mygame[gameData.LookingAt].blackMinute;
-
-			String	wsec="" + Math.abs(wsecI);
-			String	wmin="" + Math.abs(wminI);
-
-			String	bsec="" + Math.abs(bsecI);
-			String  bmin="" + Math.abs(bminI);
-
-
-			String whiteTimeDisplay = "";
-			String blackTimeDisplay = "";
-
-			if(sharedVariables.showTenths == 1)
-			{
-				boolean goTenth=false;
-				if(sharedVariables.mygame[gameData.LookingAt].whiteMinute==0 && wsecI < 15 && sharedVariables.mygame[gameData.LookingAt].whiteSecond > -1)
-					wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
-				if(sharedVariables.mygame[gameData.LookingAt].blackMinute==0 && bsecI < 15 && sharedVariables.mygame[gameData.LookingAt].blackSecond > -1)
-					bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
-
-
-
-
-			}
-			else if(sharedVariables.showTenths == 2)// always
-			{
-				wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
-				bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
-
-			}
-
-			if(sharedVariables.mygame[gameData.LookingAt].whiteSecond >=0 && sharedVariables.mygame[gameData.LookingAt].whiteMinute >= 0 && sharedVariables.mygame[gameData.LookingAt].wtime>=0 )
-			{
-			if(sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 && sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
-			whiteTimeDisplay =  " " + wmin + ":0" + wsec;
-			else
-			whiteTimeDisplay = " " + wmin + ":" + wsec;
-			}
-			else
-			{
-			if(sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 && sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
-			whiteTimeDisplay = "-" + wmin + ":0" + wsec;
-			else
-			whiteTimeDisplay = "-" + wmin + ":" + wsec;
-			}
-
-
-
-
-
-			if(sharedVariables.mygame[gameData.LookingAt].blackSecond >=0 && sharedVariables.mygame[gameData.LookingAt].blackMinute >= 0 && sharedVariables.mygame[gameData.LookingAt].btime >=0)
-			{
-
-			if(sharedVariables.mygame[gameData.LookingAt].blackSecond<10 && sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
-			blackTimeDisplay = " " + bmin+ ":0" + bsec;
-			else
-			blackTimeDisplay = " " + bmin + ":" + bsec;
-
-			}
-			else
-			{
-
-			if(sharedVariables.mygame[gameData.LookingAt].blackSecond<10 && sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
-			blackTimeDisplay = "-" + bmin+ ":0" + bsec;
-			else
-			blackTimeDisplay = "-" + bmin + ":" + bsec;
-
-			}
-			String whiteCount="";
-			String blackCount="";
-
-
-                         // material count doesnt currently go here
-                	try {
-				if(sharedVariables.showMaterialCount==true && !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
-			        if(sharedVariables.mygame[gameData.LookingAt].wild != 0 &&  sharedVariables.mygame[gameData.LookingAt].wild != 20)
-                        {
-				whiteCount=" (" + sharedVariables.mygame[gameData.LookingAt].whiteMaterialCount+")";
-				blackCount=" (" + sharedVariables.mygame[gameData.LookingAt].blackMaterialCount+")";
-			}
-				}
-				catch(Exception darn){}
-
-
-
-
-
-                     if(sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
-		     {
-
-				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + sharedVariables.mygame[gameData.LookingAt].country1 + whiteCount);
-		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + sharedVariables.mygame[gameData.LookingAt].country2 + blackCount);
-		     	topClockDisplay.setText(whiteTimeDisplay);
-		     	botClockDisplay.setText(blackTimeDisplay);
-
-		 	}
-		 	else
-		 	{
-
-				topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 + sharedVariables.mygame[gameData.LookingAt].country2 + blackCount);
-		     	botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 + sharedVariables.mygame[gameData.LookingAt].country1 + whiteCount);
-		     	topClockDisplay.setText(blackTimeDisplay);
-		     	botClockDisplay.setText(whiteTimeDisplay);
-
-
-
-			}
-                      String listing = sharedVariables.mygame[gameData.LookingAt].gameListing;
-                      if(sharedVariables.showMaterialCount==true && !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
-                      if(sharedVariables.mygame[gameData.LookingAt].wild == 0 ||  sharedVariables.mygame[gameData.LookingAt].wild == 20)
-                      listing += " " + sharedVariables.mygame[gameData.LookingAt].whiteMaterialCount + " - " + sharedVariables.mygame[gameData.LookingAt].blackMaterialCount;
-		     gameListingDisplay.setText(listing);
-			 setLastMove();
-
-			if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING)// make draw abort resign buttons visible
-			{
-
-				resignButton.setVisible(true);
-				drawButton.setVisible(true);
-				abortButton.setVisible(true);
-
- 				if(sharedVariables.andreysLayout == false)
-                                actionPanel.setVisible(true);
-			}
-			else
-			{
-
-				resignButton.setVisible(false);
-				drawButton.setVisible(false);
-				abortButton.setVisible(false);
-
-				if(sharedVariables.andreysLayout == false)
-                                actionPanel.setVisible(false);
-			}
-			//sharedVariables.moveSliders[gameData.BoardIndex].setLocation(3, slidery);
-			//g2.drawString("at " + sharedVariables.moveSliders[gameData.BoardIndex].getValue() + " of " + sharedVariables.moveSliders[gameData.BoardIndex].getMaximum(), 5,15);
-
-}
-catch(Exception e)
-{}
-
-
-}
-gameboardControlsPanel()
-{
-
-topClockDisplay = new JLabel("0");
-botClockDisplay = new JLabel("0");
-topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-
-
-
-
-topClockDisplay.setOpaque(true);
-botClockDisplay.setOpaque(true);
-
-
-resignButton = new JButton("Resign");
-abortButton = new JButton("Abort");
-drawButton = new JButton("Draw");
-
-resignButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-			 try
-			 	{
-				sendAction("Resign");
-		}// end try
-			catch(Exception e)
-			{}
-		}
-});
-abortButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-			 try
-			 	{
-				sendAction("Abort");
-		}// end try
-			catch(Exception e)
-			{}
-		}
-});
-drawButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-			 try
-			 	{
-				sendAction("Draw");
-		}// end try
-			catch(Exception e)
-			{}
-		}
-});
-
-topNameDisplay = new JLabel(" ");
-botNameDisplay = new JLabel(" ");
-
-
-
-
-topNameDisplay.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-             if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
-			 	makerightclickhappen(e);
-
+      if (sharedVariables.mygame[gameData.LookingAt].state ==
+          sharedVariables.STATE_OBSERVING &&
+          sharedVariables.randomBoardTiles == true)
+        return sharedVariables.mygame[gameData.LookingAt].randomObj.boardNum;
+
+      return sharedVariables.boardType;
+    }
+
+    public void paintComponent(Graphics g) {
+
+      try {
+
+        super.paintComponent(g);
+
+        Color highlightcolor;
+        highlightcolor = new Color(230,0,10);
+        setBackground(sharedVariables.boardBackgroundColor);
+
+        /*
+        int Width = getWidth();
+        int Height = getHeight();
+        if (sharedVariables.useLightBackground == true)
+          g.drawImage(graphics.boards[sharedVariables.boardType][graphics.light],
+                      0, 0,  Width, Height, this);
+        else
+          setBackground(sharedVariables.boardBackgroundColor);
+        */
+        if (sharedVariables.andreysLayout == false) {
+          actionPanel.setBackground(sharedVariables.boardBackgroundColor);
+          actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+          buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+        }
+
+        flagTop.setBackground(sharedVariables.boardBackgroundColor);
+        flagBottom.setBackground(sharedVariables.boardBackgroundColor);
+
+
+        if (oldLooking != gameData.LookingAt ||
+            oldcountry1 != sharedVariables.mygame[gameData.LookingAt].country1 ||
+            oldcountry2 != sharedVariables.mygame[gameData.LookingAt].country2) {
+          redrawFlags();
+          oldLooking = gameData.LookingAt;
+          oldcountry1 = sharedVariables.mygame[gameData.LookingAt].country1;
+          oldcountry2 = sharedVariables.mygame[gameData.LookingAt].country2;
+        }
+        if (sharedVariables.mygame[gameData.LookingAt].country1.equals("") &&
+            sharedVariables.mygame[gameData.LookingAt].country2.equals("")) {
+
+          flagTop.setVisible(false);
+          flagBottom.setVisible(false);
+
+        }// end no game
+
+        //sliderArrows.setBackground(sharedVariables.boardBackgroundColor);
+        //topClock.setBackground(sharedVariables.boardBackgroundColor);
+        //bottomClock.setBackground(sharedVariables.boardBackgroundColor);
+
+        if (sharedVariables.andreysLayout == false)
+          buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
+
+        setClockBackgrounds();
+
+        topNameDisplay.setForeground(sharedVariables.boardForegroundColor);
+        botNameDisplay.setForeground(sharedVariables.boardForegroundColor);
+        gameListingDisplay.setForeground(sharedVariables.boardForegroundColor);
+
+        //lastMove.setForeground(sharedVariables.boardForegroundColor);
+        /*
+        forward.setForeground(sharedVariables.boardForegroundColor);
+        backward.setForeground(sharedVariables.boardForegroundColor);
+        backwardEnd.setForeground(sharedVariables.boardForegroundColor);
+        forwardEnd.setForeground(sharedVariables.boardForegroundColor);
+        */
+
+        sharedVariables.moveSliders[gameData.BoardIndex].setBackground
+          (sharedVariables.boardBackgroundColor);
+
+        //g.drawString("in here",  50,  50);
+        Graphics2D g2 = (Graphics2D) g;
+        int width = getWidth();
+        int height = getHeight();
+        if (width<10)
+          width=10;
+        if (height<10)
+          height=10;
+        //g.drawString("width " + width + " height " + height,  75,  50);
+        //g.drawString("movingpiece " + movingpiece + " piecemoving "
+        //+ piecemoving + " mx " + mx + " my " + my, 20, (int) height
+        //* 9/10);
+
+        double width1 = (double) width;
+        double height1= (double) height;
+        int timex = (int) (width * 1/20);
+        int otimey = (int) (height * 1/8);
+        int ptimey = (int) (height * 7/8);
+
+        int name2y = (int) (height * 1/4);
+        int name1y= (int) (height * 3/4);
+        int gameListingy= (int) (height * 3/8);
+
+
+        int slidery=(int) height / 2;
+        if (timex < 1)
+          timex=1;
+        if (otimey<1)
+          otimey=1;
+        if (ptimey<1)
+          ptimey=1;
+
+        int c=0;
+        //g.drawString("" + blackClock,  timex,  otimey);
+        //g.drawString("" + whiteClock,  timex,  ptimey);
+        int wsecI = sharedVariables.mygame[gameData.LookingAt].whiteSecond;
+        int bsecI = sharedVariables.mygame[gameData.LookingAt].blackSecond;
+        int wminI = sharedVariables.mygame[gameData.LookingAt].whiteMinute;
+        int bminI = sharedVariables.mygame[gameData.LookingAt].blackMinute;
+
+        String	wsec="" + Math.abs(wsecI);
+        String	wmin="" + Math.abs(wminI);
+
+        String	bsec="" + Math.abs(bsecI);
+        String  bmin="" + Math.abs(bminI);
+
+        String whiteTimeDisplay = "";
+        String blackTimeDisplay = "";
+
+        if (sharedVariables.showTenths == 1) {
+          boolean goTenth=false;
+          if (sharedVariables.mygame[gameData.LookingAt].whiteMinute==0 &&
+              wsecI < 15 &&
+              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -1)
+            wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
+          if (sharedVariables.mygame[gameData.LookingAt].blackMinute==0 &&
+              bsecI < 15 &&
+              sharedVariables.mygame[gameData.LookingAt].blackSecond > -1)
+            bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
+
+        } else if(sharedVariables.showTenths == 2) {// always
+          wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
+          bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
+        }
+
+        if (sharedVariables.mygame[gameData.LookingAt].whiteSecond >=0 &&
+            sharedVariables.mygame[gameData.LookingAt].whiteMinute >= 0 &&
+            sharedVariables.mygame[gameData.LookingAt].wtime>=0 ) {
+          if (sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 &&
+              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
+            whiteTimeDisplay =  " " + wmin + ":0" + wsec;
+          else
+            whiteTimeDisplay = " " + wmin + ":" + wsec;
+        } else {
+          if (sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 &&
+              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
+            whiteTimeDisplay = "-" + wmin + ":0" + wsec;
+          else
+            whiteTimeDisplay = "-" + wmin + ":" + wsec;
+        }
+
+        if (sharedVariables.mygame[gameData.LookingAt].blackSecond >=0 &&
+            sharedVariables.mygame[gameData.LookingAt].blackMinute >= 0 &&
+            sharedVariables.mygame[gameData.LookingAt].btime >=0) {
+
+          if (sharedVariables.mygame[gameData.LookingAt].blackSecond<10 &&
+              sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
+            blackTimeDisplay = " " + bmin+ ":0" + bsec;
+          else
+            blackTimeDisplay = " " + bmin + ":" + bsec;
+          
+        } else {
+
+          if (sharedVariables.mygame[gameData.LookingAt].blackSecond<10 &&
+              sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
+            blackTimeDisplay = "-" + bmin+ ":0" + bsec;
+          else
+            blackTimeDisplay = "-" + bmin + ":" + bsec;
+
+        }
+        String whiteCount="";
+        String blackCount="";
+
+
+        // material count doesnt currently go here
+        try {
+          if (sharedVariables.showMaterialCount==true &&
+              !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
+            if (sharedVariables.mygame[gameData.LookingAt].wild != 0 &&
+                sharedVariables.mygame[gameData.LookingAt].wild != 20) {
+              whiteCount=" (" + sharedVariables.mygame
+                [gameData.LookingAt].whiteMaterialCount+")";
+              blackCount=" (" + sharedVariables.mygame
+                [gameData.LookingAt].blackMaterialCount+")";
             }
+        } catch(Exception darn) {}
 
-         public void mouseReleased(MouseEvent e) {
+        if (sharedVariables.mygame[gameData.LookingAt].iflipped == 1) {
 
-            }
+          topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 +
+                                 sharedVariables.mygame[gameData.LookingAt].country1 +
+                                 whiteCount);
+          botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 +
+                                 sharedVariables.mygame[gameData.LookingAt].country2 +
+                                 blackCount);
+          topClockDisplay.setText(whiteTimeDisplay);
+          botClockDisplay.setText(blackTimeDisplay);
+
+        } else {
+
+          topNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name2 +
+                                 sharedVariables.mygame[gameData.LookingAt].country2 +
+                                 blackCount);
+          botNameDisplay.setText(sharedVariables.mygame[gameData.LookingAt].name1 +
+                                 sharedVariables.mygame[gameData.LookingAt].country1 +
+                                 whiteCount);
+          topClockDisplay.setText(blackTimeDisplay);
+          botClockDisplay.setText(whiteTimeDisplay);
+        }
+        String listing = sharedVariables.mygame[gameData.LookingAt].gameListing;
+        if (sharedVariables.showMaterialCount==true &&
+            !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
+          if (sharedVariables.mygame[gameData.LookingAt].wild == 0 ||
+              sharedVariables.mygame[gameData.LookingAt].wild == 20)
+            listing += " " + sharedVariables.mygame
+              [gameData.LookingAt].whiteMaterialCount + " - " +
+              sharedVariables.mygame[gameData.LookingAt].blackMaterialCount;
+        gameListingDisplay.setText(listing);
+        setLastMove();
+
+        if (sharedVariables.mygame[gameData.LookingAt].state ==
+            sharedVariables.STATE_PLAYING) {// make draw abort resign buttons visible
+
+          resignButton.setVisible(true);
+          drawButton.setVisible(true);
+          abortButton.setVisible(true);
+
+          if (sharedVariables.andreysLayout == false)
+            actionPanel.setVisible(true);
+        } else {
+
+          resignButton.setVisible(false);
+          drawButton.setVisible(false);
+          abortButton.setVisible(false);
+
+          if (sharedVariables.andreysLayout == false)
+            actionPanel.setVisible(false);
+        }
+        //sharedVariables.moveSliders[gameData.BoardIndex].setLocation(3, slidery);
+
+        //g2.drawString("at " + sharedVariables.moveSliders
+        //              [gameData.BoardIndex].getValue() + " of " +
+        //              sharedVariables.moveSliders[gameData.BoardIndex].getMaximum(),
+        //              5,15);
+
+      } catch(Exception e) {}
+    }
+    
+    gameboardControlsPanel() {
+
+      topClockDisplay = new JLabel("0");
+      botClockDisplay = new JLabel("0");
+      topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+      botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+
+      topClockDisplay.setOpaque(true);
+      botClockDisplay.setOpaque(true);
+
+      resignButton = new JButton("Resign");
+      abortButton = new JButton("Abort");
+      drawButton = new JButton("Draw");
+
+      resignButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            try {
+              sendAction("Resign");
+            }// end try
+            catch(Exception e) {}
+          }
+        });
+      abortButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            try {
+              sendAction("Abort");
+            }// end try
+            catch(Exception e) {}
+          }
+        });
+      drawButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            try {
+              sendAction("Draw");
+            }// end try
+            catch(Exception e) {}
+          }
+        });
+
+      topNameDisplay = new JLabel(" ");
+      botNameDisplay = new JLabel(" ");
+
+      topNameDisplay.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
+              makerightclickhappen(e);
+
+          }
+
+          public void mouseReleased(MouseEvent e) {
+
+          }
 
 
-public void mouseEntered (MouseEvent me) {}
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {}
-public void makerightclickhappen(MouseEvent e)
-{
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}
+          public void makerightclickhappen(MouseEvent e) {
 
-String name = topNameDisplay.getText();
-int n = name.indexOf(" ");
-if(n > -1)
-name = name.substring(0, n);
+            String name = topNameDisplay.getText();
+            int n = name.indexOf(" ");
+            if (n > -1)
+              name = name.substring(0, n);
 
-final String nameF=name;
+            final String nameF=name;
 
-JPopupMenu menu2=new JPopupMenu("Popup2");
-JMenuItem item11 = new JMenuItem("Observe " + nameF);
- item11.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Observe " + nameF + "\n");
-            }
-       });
+            JPopupMenu menu2=new JPopupMenu("Popup2");
+            JMenuItem item11 = new JMenuItem("Observe " + nameF);
+            item11.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Observe " + nameF + "\n");
+                }
+              });
 
-       menu2.add(item11);
-JMenuItem item2 = new JMenuItem("Follow " + nameF);
- item2.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Follow " + nameF + "\n");
+            menu2.add(item11);
+            
+            JMenuItem item2 = new JMenuItem("Follow " + nameF);
+            item2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Follow " + nameF + "\n");
+                }
+              });
 
-            }
-       });
-
-     menu2.add(item2);
+            menu2.add(item2);
      
-JMenuItem item3 = new JMenuItem("Unfollow ");
- item3.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Unfollow\n");
+            JMenuItem item3 = new JMenuItem("Unfollow ");
+            item3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Unfollow\n");
+                }
+              });
 
-            }
-       });
+            menu2.add(item3);
 
-     menu2.add(item3);
+            JMenuItem item4 = new JMenuItem("Finger  " + nameF);
+            item4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Finger " + nameF + "\n");
+                }
+              });
 
-JMenuItem item4 = new JMenuItem("Finger  " + nameF);
- item4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             sendCommand("Finger " + nameF + "\n");
+            menu2.add(item4);
 
-            }
-       });
+            JMenuItem item5 = new JMenuItem("Move Board Up ");
+            item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  try {
+                    moveBoardDown();
+                  } catch(Exception dui) {}
+                }
+              });
 
-     menu2.add(item4);
+            menu2.add(item5);
 
-JMenuItem item5 = new JMenuItem("Move Board Up ");
- item5.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            try {
-                moveBoardDown();
-            }
-            catch(Exception dui){}
+            JMenuItem item6 = new JMenuItem("Move Board Down ");
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  try {
+                    moveBoardUp();
+                  } catch(Exception dui) {}
+                }
+              });
 
-            }
-       });
+            menu2.add(item6);
 
-     menu2.add(item5);
-
-JMenuItem item6 = new JMenuItem("Move Board Down ");
- item6.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            try {
-                moveBoardUp();
-            }
-            catch(Exception dui){}
-
-            }
-       });
-
-     menu2.add(item6);
-
-add(menu2);
-menu2.show(e.getComponent(),e.getX(),e.getY());
-}
+            add(menu2);
+            menu2.show(e.getComponent(),e.getX(),e.getY());
+          }
+        });
 
 
+      botNameDisplay.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
+              makerightclickhappen(e);
+          }
 
-});
+          public void mouseReleased(MouseEvent e) {
 
-
-botNameDisplay.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-             if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
-			 	makerightclickhappen(e);
-
-            }
-
-         public void mouseReleased(MouseEvent e) {
-
-            }
+          }
 
 
-public void mouseEntered (MouseEvent me) {}
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {}
-public void makerightclickhappen(MouseEvent e)
-{
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}
+          public void makerightclickhappen(MouseEvent e) {
 
-String name = botNameDisplay.getText();
-int n = name.indexOf(" ");
-if(n > -1)
-name = name.substring(0, n);
+            String name = botNameDisplay.getText();
+            int n = name.indexOf(" ");
+            if(n > -1)
+              name = name.substring(0, n);
 
-final String nameF=name;
+            final String nameF=name;
 
-JPopupMenu menu2=new JPopupMenu("Popup2");
-JMenuItem item11 = new JMenuItem("Observe " + nameF);
- item11.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Observe " + nameF + "\n");
-            }
-       });
+            JPopupMenu menu2=new JPopupMenu("Popup2");
+            JMenuItem item11 = new JMenuItem("Observe " + nameF);
+            item11.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Observe " + nameF + "\n");
+                }
+              });
 
-       menu2.add(item11);
-JMenuItem item2 = new JMenuItem("Follow " + nameF);
- item2.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Follow " + nameF + "\n");
+            menu2.add(item11);
+            
+            JMenuItem item2 = new JMenuItem("Follow " + nameF);
+            item2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Follow " + nameF + "\n");
+                }
+              });
 
-            }
-       });
-
-     menu2.add(item2);
+            menu2.add(item2);
      
-JMenuItem item3 = new JMenuItem("Unfollow ");
- item3.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sendCommand("Unfollow\n");
+            JMenuItem item3 = new JMenuItem("Unfollow ");
+            item3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Unfollow\n");
+                }
+              });
 
+            menu2.add(item3);
+
+            JMenuItem item4 = new JMenuItem("Finger  " + nameF);
+            item4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Finger " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item4);
+
+            JMenuItem item5 = new JMenuItem("Move Board Up ");
+            item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  try {
+                    moveBoardDown();
+                  } catch(Exception dui) {}
+                }
+              });
+
+            menu2.add(item5);
+
+            JMenuItem item6 = new JMenuItem("Move Board Down ");
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  try {
+                    moveBoardUp();
+                  } catch(Exception dui) {}
+                }
+              });
+
+            menu2.add(item6);
+
+            add(menu2);
+            menu2.show(e.getComponent(),e.getX(),e.getY());
+          }
+        });
+
+      lastMove = new JLabel("");
+      forward = new JButton(">");
+      forwardEnd = new JButton(">>");
+      backwardEnd = new JButton("<<");
+      backward = new JButton("<");
+      buttonPanel = new JPanel();
+      buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
+
+      forward.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+
+            if (sharedVariables.mygame[gameData.LookingAt].state ==
+                sharedVariables.STATE_EXAMINING) {
+              sendCommand("multi forward\n");
+              giveFocus();
+
+            } else {
+              int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+              int max = sharedVariables.moveSliders[gameData.BoardIndex].getMaximum();
+              if (loc < max) {
+                loc++;
+                sharedVariables.moveSliders[gameData.BoardIndex].setValue(loc);
+                adjustMoveList();
+                mypanel.repaint();
+              }
+              giveFocus();
             }
-       });
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
+      backward.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
 
-     menu2.add(item3);
+            if (sharedVariables.mygame[gameData.LookingAt].state ==
+                sharedVariables.STATE_EXAMINING) {
+              sendCommand("multi backward\n");
+              giveFocus();
 
-JMenuItem item4 = new JMenuItem("Finger  " + nameF);
- item4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             sendCommand("Finger " + nameF + "\n");
+            } else {
+              int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
 
+              if (loc > 0) {
+                loc--;
+                sharedVariables.moveSliders[gameData.BoardIndex].setValue(loc);
+                adjustMoveList();
+                mypanel.repaint();
+              }
+              giveFocus();
             }
-       });
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
+      forwardEnd.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (sharedVariables.mygame[gameData.LookingAt].state ==
+                sharedVariables.STATE_EXAMINING) {
+              sendCommand("multi forward 999\n");
 
-     menu2.add(item4);
+            } else {
 
-JMenuItem item5 = new JMenuItem("Move Board Up ");
- item5.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            try {
-                moveBoardDown();
+              int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+              int max = sharedVariables.moveSliders[gameData.BoardIndex].getMaximum();
+              if (loc < max) {
+
+                sharedVariables.moveSliders[gameData.BoardIndex].setValue(max);
+                adjustMoveList();
+
+                mypanel.repaint();
+              }
             }
-            catch(Exception dui){}
 
+            giveFocus();
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
+      backwardEnd.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+
+            if (sharedVariables.mygame[gameData.LookingAt].state ==
+                sharedVariables.STATE_EXAMINING) {
+              sendCommand("multi backward 999\n");
+            } else {
+              int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+
+              if (loc > 0) {
+
+                sharedVariables.moveSliders[gameData.BoardIndex].setValue(0);
+                adjustMoveList();
+                mypanel.repaint();
+
+              }
             }
-       });
+            giveFocus();
 
-     menu2.add(item5);
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
 
-JMenuItem item6 = new JMenuItem("Move Board Down ");
- item6.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            try {
-                moveBoardUp();
-            }
-            catch(Exception dui){}
+      //buttonPanel.setLayout(new GridLayout(1,4));
+      /*buttonPanel.add(backwardEnd);
+        buttonPanel.add(backward);
+        buttonPanel.add(forward);
+        buttonPanel.add(forwardEnd);
+      */
+      buttonPanelFlow = new JPanel();
 
-            }
-       });
+      if (sharedVariables.andreysLayout == false) {
 
-     menu2.add(item6);
+        buttonPanel.add(buttonPanelFlow);
 
-add(menu2);
-menu2.show(e.getComponent(),e.getX(),e.getY());
-}
+        GroupLayout buttonLayout = new GroupLayout(buttonPanelFlow);
+        //GroupLayout layout = new GroupLayout(this);
+        buttonPanelFlow.setLayout(buttonLayout);
+        ParallelGroup hGroup = buttonLayout.createParallelGroup();
 
-
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-lastMove = new JLabel("");
-forward = new JButton(">");
-forwardEnd = new JButton(">>");
-backwardEnd = new JButton("<<");
-backward = new JButton("<");
-buttonPanel = new JPanel();
-buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
-
-forward.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-        {
-			sendCommand("multi forward\n");
-			giveFocus();
-
-		}
-         else
-         {
-			 int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-          	int max = sharedVariables.moveSliders[gameData.BoardIndex].getMaximum();
-          	if(loc < max)
-          	{
-			  loc++;
-			  sharedVariables.moveSliders[gameData.BoardIndex].setValue(loc);
-			  adjustMoveList();
-			  mypanel.repaint();
-		  	}
-		  	giveFocus();
-		 }
-         }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-backward.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-        {
-			sendCommand("multi backward\n");
-			giveFocus();
-
-		}
-         else
-         {
-         	int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-
-          	if(loc > 0)
-          	{
-			  loc--;
-			  sharedVariables.moveSliders[gameData.BoardIndex].setValue(loc);
-			  adjustMoveList();
-			  mypanel.repaint();
-		  	}
-		  	giveFocus();
-		 }
-
-
-         }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-forwardEnd.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-        {
-			sendCommand("multi forward 999\n");
-
-		}
-         else
-         {
-
-         	int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-          	int max = sharedVariables.moveSliders[gameData.BoardIndex].getMaximum();
-          	if(loc < max)
-          	{
-
-			  sharedVariables.moveSliders[gameData.BoardIndex].setValue(max);
-			  adjustMoveList();
-
-			  mypanel.repaint();
-		  	}
-		 }
-
-			giveFocus();
-         }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-backwardEnd.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-        {
-			sendCommand("multi backward 999\n");
-		}
-         else
-         {
-         	int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-
-         	 if(loc > 0)
-         	 {
-
-			  sharedVariables.moveSliders[gameData.BoardIndex].setValue(0);
-			  adjustMoveList();
-			  mypanel.repaint();
-
-		 	 }
-		  }
-		  giveFocus();
-
-         }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-//buttonPanel.setLayout(new GridLayout(1,4));
-/*buttonPanel.add(backwardEnd);
-buttonPanel.add(backward);
-buttonPanel.add(forward);
-buttonPanel.add(forwardEnd);
-*/
-buttonPanelFlow = new JPanel();
-
-
-if(sharedVariables.andreysLayout == false)
- {
-
-buttonPanel.add(buttonPanelFlow);
-
-   GroupLayout buttonLayout = new GroupLayout(buttonPanelFlow);
-   //GroupLayout layout = new GroupLayout(this);
-  buttonPanelFlow.setLayout(buttonLayout);
-ParallelGroup hGroup = buttonLayout.createParallelGroup();
-
-SequentialGroup h1 = buttonLayout.createSequentialGroup();
+        SequentialGroup h1 = buttonLayout.createSequentialGroup();
 	h1.addComponent( backwardEnd, 20, GroupLayout.DEFAULT_SIZE,60);
-		h1.addComponent(backward, 20, GroupLayout.DEFAULT_SIZE,60);
+        h1.addComponent(backward, 20, GroupLayout.DEFAULT_SIZE,60);
   	h1.addComponent(forward,  20, GroupLayout.DEFAULT_SIZE,60);
- 		h1.addComponent(forwardEnd,  20, GroupLayout.DEFAULT_SIZE,60);
+        h1.addComponent(forwardEnd,  20, GroupLayout.DEFAULT_SIZE,60);
 
 	hGroup.addGroup(GroupLayout.Alignment.LEADING, h1);// was trailing
 	//Create the horizontal group
 	buttonLayout.setHorizontalGroup(hGroup);
-	ParallelGroup v1 = buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-		v1.addComponent(backwardEnd);
-		v1.addComponent(backward);
-		v1.addComponent(forward);
-		v1.addComponent(forwardEnd);
+	ParallelGroup v1 =
+          buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
+        // was leading
+        v1.addComponent(backwardEnd);
+        v1.addComponent(backward);
+        v1.addComponent(forward);
+        v1.addComponent(forwardEnd);
 
 	buttonLayout.setVerticalGroup(v1);
- }// if not andreys layout
+      }// if not andreys layout
 
+      gameListingDisplay = new JLabel(" ");
+      if (sharedVariables.moveSliders[gameData.BoardIndex] == null) {
 
-
-
-gameListingDisplay = new JLabel(" ");
-if(sharedVariables.moveSliders[gameData.BoardIndex] == null)
-{
-
-sharedVariables.moveSliders[gameData.BoardIndex] = new JSlider(0,0);
-sharedVariables.moveSliders[gameData.BoardIndex] .setPreferredSize( new Dimension( 25, 75 ) );  // was 75 25 for horizontal oritntation
-sharedVariables.moveSliders[gameData.BoardIndex] .setOrientation(JSlider.VERTICAL);
-sharedVariables.moveSliders[gameData.BoardIndex] .setInverted(true);
-sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {}
-         public void mouseReleased(MouseEvent e) {
-			 mypanel.repaint();
-				adjustMoveList();
-			 }
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-}
-if(sharedVariables.mygametable[gameData.BoardIndex] == null)
-{
+        sharedVariables.moveSliders[gameData.BoardIndex] = new JSlider(0,0);
+        sharedVariables.moveSliders[gameData.BoardIndex] .setPreferredSize
+          ( new Dimension( 25, 75 ) );  // was 75 25 for horizontal oritntation
+        sharedVariables.moveSliders[gameData.BoardIndex] .setOrientation
+          (JSlider.VERTICAL);
+        sharedVariables.moveSliders[gameData.BoardIndex] .setInverted(true);
+        sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener
+          (new MouseAdapter() {
+              public void mousePressed(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                mypanel.repaint();
+                adjustMoveList();
+              }
+              public void mouseEntered (MouseEvent me) {}
+              public void mouseExited (MouseEvent me) {}
+              public void mouseClicked (MouseEvent me) {}  });
+      }
+      if (sharedVariables.mygametable[gameData.BoardIndex] == null) {
 	sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
-sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns();
-sharedVariables.gametable[gameData.BoardIndex] = new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
-}
-//gametable.setBackground(listColor);
-listScroller = new JScrollPane(sharedVariables.gametable[gameData.BoardIndex]);
-MouseListener mouseListenerEvents = new MouseAdapter() {
-     public void mouseClicked(MouseEvent e) {
+        sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns();
+        sharedVariables.gametable[gameData.BoardIndex] =
+          new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
+      }
+      //gametable.setBackground(listColor);
+      listScroller = new JScrollPane(sharedVariables.gametable[gameData.BoardIndex]);
+      MouseListener mouseListenerEvents = new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+
+            JTable target = (JTable)e.getSource();
+            int row = target.getSelectedRow();
+            int column = target.getSelectedColumn();
+            int index = row * 2 + 1;
+            if (column == 2)
+              index++;
+            if (column == 0)
+              index--;
+            if (index>=0) {
+              ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+              Lock readLock = rwl.readLock();
+
+              readLock.lock();
+
+              sharedVariables.moveSliders[gameData.BoardIndex].setValue(index);
+
+              readLock.unlock();
+              
+              mypanel.repaint();
+            }
+          }
+        };
+      sharedVariables.gametable[gameData.BoardIndex].addMouseListener
+        (mouseListenerEvents);
+
+      actionPanel= new JPanel();
+      if (sharedVariables.andreysLayout == true)
+        makeAndreysLayout();
+      else
+        makeLayout();
+
+      setFont();
+
+      //handleLayout();
+    }
+
+    void makeAndreysLayout() {
+      setLayout(new GridLayout(8,2)); // rows collums
+      // our 4 move buttons
+      add(backwardEnd);
+      add(backward);
+      add(forward);
+      add(forwardEnd);
+
+      // these are visible when playing
+      add( abortButton);
+      add(drawButton);
+      add(resignButton);
+      // end action buttons
+
+      add(topClockDisplay); // a Jlabel, clock at top of board
+      add(flagTop);  // a JLabel flag at top of board
+
+      add(topNameDisplay);  // a JLabel, name at top of board
+
+      add(gameListingDisplay); // a JLabel "3 0 Blitz " for example
+      add(sharedVariables.moveSliders[gameData.BoardIndex]);// the move slider
+
+      add(botNameDisplay); // a JLabel name at bottm
+      add(botClockDisplay);// a JLabel bottom clock
+      add(flagBottom); // JLable the flag at bottom
+      add(listScroller);     // the move list
+
+    }
+
+    void makeLayout() {
+      actionPanelFlow = new JPanel();
+
+      actionPanel.add(actionPanelFlow);
+
+      //JPanel moveListPanel = new JPanel();
+      //moveListPanel.add(listScroller);
+      //moveListPanel.add(sharedVariables.moveSliders[gameData.BoardIndex]);
+
+
+      GroupLayout buttonLayout = new GroupLayout(actionPanelFlow);
+      //GroupLayout layout = new GroupLayout(this);
+      actionPanelFlow.setLayout(buttonLayout);
+      ParallelGroup hbGroup = buttonLayout.createParallelGroup();
+
+      SequentialGroup h1b = buttonLayout.createSequentialGroup();
+      h1b.addComponent( abortButton, 20, GroupLayout.DEFAULT_SIZE,80);
+      h1b.addComponent(drawButton, 20, GroupLayout.DEFAULT_SIZE,80);
+      h1b.addComponent(resignButton, 20, GroupLayout.DEFAULT_SIZE,80);
+
+      hbGroup.addGroup(GroupLayout.Alignment.LEADING, h1b);// was trailing
+      //Create the horizontal group
+      buttonLayout.setHorizontalGroup(hbGroup);
+      ParallelGroup vb1 =
+        buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
+      // was leading
+      vb1.addComponent(abortButton);
+      vb1.addComponent(drawButton);
+      vb1.addComponent(resignButton);
+
+      buttonLayout.setVerticalGroup(vb1);
+
+      /*topClock = new JPanel();
+        topClock.setLayout(new GridLayout(2,1));
+        bottomClock = new JPanel();
+        bottomClock.setLayout(new GridLayout(2,1));
+
+        sliderArrows = new JPanel();
+        sliderArrows.setLayout(new GridLayout(3,1));
+        sliderArrows.add(sharedVariables.moveSliders[gameData.BoardIndex]);
+        sliderArrows.add(buttonPanel);
+        sliderArrows.add(actionPanel);
+      */
+      //bottomClock.add(botNameDisplay);
+      //bottomClock.add(botClockDisplay);
+      //topClock.add(topClockDisplay);
+      //topClock.add(topNameDisplay);
+
+      //setLayout(new GridLayout(5,1));
+
+      /*add(topClock);
+        add(gameListingDisplay);
 
-             JTable target = (JTable)e.getSource();
-      int row = target.getSelectedRow();
-     int column = target.getSelectedColumn();
-	 int index = row * 2 + 1;
-	 if(column == 2)
-	 	index++;
-	 if(column == 0)
-	 	index--;
-	 if(index>=0)
-	 {
-		ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-		Lock readLock = rwl.readLock();
+        add(listScroller);
 
+        add(sliderArrows);
 
+        add(bottomClock);
+      */
 
+      GroupLayout layout = new GroupLayout(this);
+      setLayout(layout);
 
-			readLock.lock();
+      //Create a parallel group for the horizontal axis
+      ParallelGroup hGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+      ParallelGroup h1 =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+      SequentialGroup hflagtop = layout.createSequentialGroup();
+      SequentialGroup hflagbottom = layout.createSequentialGroup();
+      ParallelGroup vMoveGroup = layout.createParallelGroup();
 
-			sharedVariables.moveSliders[gameData.BoardIndex].setValue(index);
+      SequentialGroup hMoveGroup = layout.createSequentialGroup();
 
-		readLock.unlock();
 
+      int num= Short.MAX_VALUE;
+      int flagnum=105;
 
-		mypanel.repaint();
-	 }
-
-
-     }
- };
-sharedVariables.gametable[gameData.BoardIndex].addMouseListener(mouseListenerEvents);
-
-actionPanel= new JPanel();
-if(sharedVariables.andreysLayout == true)
-makeAndreysLayout();
-else
-makeLayout();
-
-setFont();
-
-//handleLayout();
-}
-
-
-
-
-void makeAndreysLayout()
-{
-setLayout(new GridLayout(8,2)); // rows collums
-// our 4 move buttons
-add(backwardEnd);
-add(backward);
-add(forward);
-add(forwardEnd);
-
-// these are visible when playing
-add( abortButton);
-add(drawButton);
-add(resignButton);
-// end action buttons
-
-add(topClockDisplay); // a Jlabel, clock at top of board
-add(flagTop);  // a JLabel flag at top of board
-
-add(topNameDisplay);  // a JLabel, name at top of board
-
-add(gameListingDisplay); // a JLabel "3 0 Blitz " for example
-add(sharedVariables.moveSliders[gameData.BoardIndex]);// the move slider
-
-
-
-add(botNameDisplay); // a JLabel name at bottm
-add(botClockDisplay);// a JLabel bottom clock
-add(flagBottom); // JLable the flag at bottom
-add(listScroller);     // the move list
-
-}
-
-
-
-
-void makeLayout()
-{
-actionPanelFlow = new JPanel();
-
-actionPanel.add(actionPanelFlow);
-
-//JPanel moveListPanel = new JPanel();
-//moveListPanel.add(listScroller);
-//moveListPanel.add(sharedVariables.moveSliders[gameData.BoardIndex]);
-
-
-  GroupLayout buttonLayout = new GroupLayout(actionPanelFlow);
-   //GroupLayout layout = new GroupLayout(this);
-  actionPanelFlow.setLayout(buttonLayout);
-ParallelGroup hbGroup = buttonLayout.createParallelGroup();
-
-SequentialGroup h1b = buttonLayout.createSequentialGroup();
-	h1b.addComponent( abortButton, 20, GroupLayout.DEFAULT_SIZE,80);
-	h1b.addComponent(drawButton, 20, GroupLayout.DEFAULT_SIZE,80);
-	h1b.addComponent(resignButton, 20, GroupLayout.DEFAULT_SIZE,80);
-
-	hbGroup.addGroup(GroupLayout.Alignment.LEADING, h1b);// was trailing
-	//Create the horizontal group
-	buttonLayout.setHorizontalGroup(hbGroup);
-	ParallelGroup vb1 = buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-		vb1.addComponent(abortButton);
-		vb1.addComponent(drawButton);
-		vb1.addComponent(resignButton);
-
-	buttonLayout.setVerticalGroup(vb1);
-
-/*topClock = new JPanel();
-topClock.setLayout(new GridLayout(2,1));
-bottomClock = new JPanel();
-bottomClock.setLayout(new GridLayout(2,1));
-
-sliderArrows = new JPanel();
-sliderArrows.setLayout(new GridLayout(3,1));
-sliderArrows.add(sharedVariables.moveSliders[gameData.BoardIndex]);
-sliderArrows.add(buttonPanel);
-sliderArrows.add(actionPanel);
-*/
-//bottomClock.add(botNameDisplay);
-//bottomClock.add(botClockDisplay);
-//topClock.add(topClockDisplay);
-//topClock.add(topNameDisplay);
-
-
-
-//setLayout(new GridLayout(5,1));
-
-
-/*add(topClock);
-add(gameListingDisplay);
-
-
-add(listScroller);
-
-add(sliderArrows);
-
-add(bottomClock);
-*/
-
-
-
-
-
-
-
-        GroupLayout layout = new GroupLayout(this);
-         setLayout(layout);
-
-	//Create a parallel group for the horizontal axis
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-        SequentialGroup hflagtop = layout.createSequentialGroup();
-        SequentialGroup hflagbottom = layout.createSequentialGroup();
-        ParallelGroup vMoveGroup = layout.createParallelGroup();
-
-        SequentialGroup hMoveGroup = layout.createSequentialGroup();
-
-
-int num= Short.MAX_VALUE;
-int flagnum=105;
-
-
-	hflagtop.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	hflagtop.addComponent(flagTop, flagnum, GroupLayout.DEFAULT_SIZE, flagnum);
-	h1.addGroup(hflagtop);
-	h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-
-        h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
- //       h1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
-	hMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
-
-	hMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], 25, GroupLayout.DEFAULT_SIZE,num);
-
-        h1.addGroup(hMoveGroup);
-ParallelGroup buttonGroup = layout.createParallelGroup(GroupLayout.Alignment.CENTER, true);
-	buttonGroup.addComponent(buttonPanel, 0, GroupLayout.DEFAULT_SIZE, num);
-	h1.addGroup(GroupLayout.Alignment.CENTER, buttonGroup);
-	h1.addComponent(actionPanel, 0, GroupLayout.DEFAULT_SIZE,  num);
-
-	h1.addComponent(botNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	hflagbottom.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
-	hflagbottom.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, flagnum);
-        h1.addGroup(hflagbottom);
-
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-
-
-
-	//Create a parallel group for the vertical axis
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
-
-	ParallelGroup v4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-
-		ParallelGroup vflagtop = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-		ParallelGroup vflagbottom = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-
-SequentialGroup v1 = layout.createSequentialGroup();
-
-
-
-
-
-num=175;
-int num2=20;
-int num3=60;
-int num4 = 60;
-int num5 = 45;
-int num6 = 24;
-	vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
-	vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
-        v1.addGroup(vflagtop);
-
-	v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(gameListingDisplay, num6, GroupLayout.DEFAULT_SIZE, num);
-
-//        v1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
-
-	vMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
-
-	vMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex], num2, GroupLayout.DEFAULT_SIZE,  num);
-	v1.addGroup(vMoveGroup);
-        v1.addComponent(buttonPanel, num5, GroupLayout.DEFAULT_SIZE, num);
-	v1.addComponent(actionPanel, num5, GroupLayout.DEFAULT_SIZE,  num);
-
-	v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
-
-	vflagbottom.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
-	vflagbottom.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
-        v1.addGroup(vflagbottom);
-
-
-
-
-v4.addGroup(v1);
-
-
-	vGroup.addGroup(v4);
-
-	layout.setVerticalGroup(vGroup);
-
-}
-
-
-
-
-
-
-
-void sendAction(String action)
-{
-	String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
-	if(sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].state == sharedVariables.STATE_OVER)
-		primary = "";
-
-	sendCommand(primary + action + "\n");
-}
-
-
-
-void adjustMoveList()
-{
-final int aaa = gameData.BoardIndex;
-SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-
-                             	int index = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-                             	int row =(int) index/2;
-                             	int column=0;
-                             	if(index%2 == 1)
-                             		row++;
-                             	if(index%2 == 1)
-                             		column = 1;
-                             	else
-                             		column = 2;
-                             	if(index == 0)
-                             		column=0;
-                             	sharedVariables.gametable[aaa].scrollRectToVisible(sharedVariables.gametable[aaa].getCellRect(row, column, true));
-
-
-                            } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-
-			//readLock.lock();
-
-
-		//readLock.unlock();
-
-}// end method adjust move list
-void sendCommand(String command)
-{
-	myoutput output = new myoutput();
-	output.data=command;
-	output.consoleNumber=0;
-	output.game=1;
-    queue.add(output);
-
-}
-
-void setClockBackgrounds()
-{
-			// set clock background depending on turn
-		int go=0;
-		if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING)
-			go=1;
-		if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-			go=1;
-		if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
-			go=1;
-
-
-
-			if(go == 1)
-			{
-					if(sharedVariables.mygame[gameData.LookingAt].iflipped==0)
-				{
-					if(sharedVariables.mygame[gameData.LookingAt].movetop%2==0)
-					{
-					topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-					botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-					topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-			                botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-
-
-					}
-					else
-					{
-					topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-					botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-					topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-			                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-
-					}
-				}
-				else// i flipped
-				{	if(sharedVariables.mygame[gameData.LookingAt].movetop%2==0)
-					{
-					topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-					botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-   					topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-			                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-
-					}
-					else
-					{
-					topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-					botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-  					topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-			                botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-
-					}
-
-				}// end else iflipped condition
-			}// end if playing
-			else
-			{
-				topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-				botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-				topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-                                botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-
-
-			}
-
-}// end method
-/*************** set last move code *********************************/
-void setLastMove()
-{
-	if(sharedVariables.mygame[gameData.LookingAt].movetop < 1)
-	{
-		lastMove.setText(" ");
-		return;
-	}
-
-	try {
+      hflagtop.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      hflagtop.addComponent(flagTop, flagnum, GroupLayout.DEFAULT_SIZE, flagnum);
+      h1.addGroup(hflagtop);
+      h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+
+      h1.addComponent(gameListingDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      //h1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
+      hMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
+
+      hMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex],
+                              25, GroupLayout.DEFAULT_SIZE,num);
+
+      h1.addGroup(hMoveGroup);
+      ParallelGroup buttonGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.CENTER, true);
+      buttonGroup.addComponent(buttonPanel, 0, GroupLayout.DEFAULT_SIZE, num);
+      h1.addGroup(GroupLayout.Alignment.CENTER, buttonGroup);
+      h1.addComponent(actionPanel, 0, GroupLayout.DEFAULT_SIZE,  num);
+
+      h1.addComponent(botNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      hflagbottom.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      hflagbottom.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, flagnum);
+      h1.addGroup(hflagbottom);
+
+      hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+      //Create the horizontal group
+      layout.setHorizontalGroup(hGroup);
+
+      //Create a parallel group for the vertical axis
+      ParallelGroup vGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+      // was leading
+
+      ParallelGroup v4 =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+
+      ParallelGroup vflagtop =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+      ParallelGroup vflagbottom =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+
+      SequentialGroup v1 = layout.createSequentialGroup();
+
+      num=175;
+      int num2=20;
+      int num3=60;
+      int num4 = 60;
+      int num5 = 45;
+      int num6 = 24;
+      vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+      vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
+      v1.addGroup(vflagtop);
+
+      v1.addComponent(topNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
+      v1.addComponent(gameListingDisplay, num6, GroupLayout.DEFAULT_SIZE, num);
+
+      //v1.addComponent(moveListPanel, 0, GroupLayout.DEFAULT_SIZE, num);
+
+      vMoveGroup.addComponent(listScroller, 0, GroupLayout.DEFAULT_SIZE, num);
+
+      vMoveGroup.addComponent(sharedVariables.moveSliders[gameData.BoardIndex],
+                              num2, GroupLayout.DEFAULT_SIZE,  num);
+      v1.addGroup(vMoveGroup);
+      v1.addComponent(buttonPanel, num5, GroupLayout.DEFAULT_SIZE, num);
+      v1.addComponent(actionPanel, num5, GroupLayout.DEFAULT_SIZE,  num);
+
+      v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
+
+      vflagbottom.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+      vflagbottom.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
+      v1.addGroup(vflagbottom);
+
+      v4.addGroup(v1);
+
+      vGroup.addGroup(v4);
+
+      layout.setVerticalGroup(vGroup);
+    }
+
+    
+    void sendAction(String action) {
+      String primary  = "primary " + sharedVariables.mygame
+        [sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
+      if (sharedVariables.mygame
+          [sharedVariables.gamelooking[gameData.BoardIndex]].state ==
+          sharedVariables.STATE_OVER)
+        primary = "";
+
+      sendCommand(primary + action + "\n");
+    }
+
+
+    void adjustMoveList() {
+      final int aaa = gameData.BoardIndex;
+      SwingUtilities.invokeLater(new Runnable() {
+          @Override
+            public void run() {
+            try {
+
+              int index = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+              int row =(int) index/2;
+              int column=0;
+              if (index%2 == 1)
+                row++;
+              if (index%2 == 1)
+                column = 1;
+              else
+                column = 2;
+              if (index == 0)
+                column=0;
+              sharedVariables.gametable[aaa].scrollRectToVisible
+                (sharedVariables.gametable[aaa].getCellRect(row, column, true));
+
+            } catch (Exception e1) {
+              //ignore
+            }
+          }
+        });
+
+      //readLock.lock();
+
+
+      //readLock.unlock();
+      
+    }// end method adjust move list
+    
+    void sendCommand(String command) {
+      myoutput output = new myoutput();
+      output.data=command;
+      output.consoleNumber=0;
+      output.game=1;
+      queue.add(output);
+    }
+
+    void setClockBackgrounds() {// set clock background depending on turn
+      int go=0;
+      if (sharedVariables.mygame[gameData.LookingAt].state ==
+          sharedVariables.STATE_PLAYING)
+        go=1;
+      if (sharedVariables.mygame[gameData.LookingAt].state ==
+          sharedVariables.STATE_EXAMINING)
+        go=1;
+      if (sharedVariables.mygame[gameData.LookingAt].state ==
+          sharedVariables.STATE_OBSERVING)
+        go=1;
+
+      if (go == 1) {
+        if (sharedVariables.mygame[gameData.LookingAt].iflipped==0) {
+          if (sharedVariables.mygame[gameData.LookingAt].movetop%2==0) {
+            topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+            botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+            topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+            botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+
+          } else {
+            topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+            botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+            topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+            botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+          }
+        } else {// i flipped
+          if (sharedVariables.mygame[gameData.LookingAt].movetop%2==0) {
+            topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+            botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+            topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+            botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+
+          } else {
+            topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+            botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
+            topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+            botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+
+          }
+        }// end else iflipped condition
+      }// end if playing
+      else {
+        topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+        botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
+        topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+        botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+      }
+
+    }// end method
+    
+    /*************** set last move code *********************************/
+    void setLastMove() {
+      if (sharedVariables.mygame[gameData.LookingAt].movetop < 1) {
+        lastMove.setText(" ");
+        return;
+      }
+      
+      try {
 
 	int moveNumber = sharedVariables.mygame[gameData.LookingAt].movetop;
-	if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() < sharedVariables.moveSliders[gameData.BoardIndex].getMaximum())
-			moveNumber=sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+	if (sharedVariables.moveSliders[gameData.BoardIndex].getValue() <
+            sharedVariables.moveSliders[gameData.BoardIndex].getMaximum())
+          moveNumber=sharedVariables.moveSliders[gameData.BoardIndex].getValue();
 
-	int from = sharedVariables.mygame[gameData.LookingAt].moveListFrom[moveNumber-1];
+	int from =
+          sharedVariables.mygame[gameData.LookingAt].moveListFrom[moveNumber-1];
 	int to = sharedVariables.mygame[gameData.LookingAt].moveListTo[moveNumber-1];
 	String text = "";
-	if(moveNumber %2 == 1)// whites move
-	{
-		text += "" + (int) (moveNumber/2 + 1) + ") ";
-	}
-	else // blacks move
-	{
-			text += ".." + (int) (moveNumber/2 ) + ") ";
-
+	if (moveNumber %2 == 1) {// whites move
+          text += "" + (int) (moveNumber/2 + 1) + ") ";
+	} else {// blacks move
+          text += ".." + (int) (moveNumber/2 ) + ") ";
 	}
 	text+=getMoveInNotation(from);
 	text+=getMoveInNotation(to);
 	lastMove.setText(text);
 
-}catch(Exception z) { lastMove.setText("???");}
+      } catch(Exception z) { lastMove.setText("???");}
 
-}// end method setLastMove
+    }// end method setLastMove
 
-String getMoveInNotation(int from)// works for from and to
-{
+    String getMoveInNotation(int from) {// works for from and to
 
-try{
-	if(from == -1)
-	 return "P@";
-	if(from == -2)
-	 return "N@";
-	if(from == -3)
-	 return "B@";
-	if(from == -4)
-	 return "R@";
-	if(from == -5)
-	 return "Q@";
-	if(from == -7)
-	 return "p@";
-	if(from == -8)
-	 return "n@";
-	if(from == -9)
-	 return "b@";
-	if(from == -10)
-	 return "r@";
-	if(from == -11)
-	 return "q@";
-if(sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
-from = 63-from;
+      try {
+	if (from == -1)
+          return "P@";
+	if (from == -2)
+          return "N@";
+	if (from == -3)
+          return "B@";
+	if (from == -4)
+          return "R@";
+	if (from == -5)
+          return "Q@";
+	if (from == -7)
+          return "p@";
+	if (from == -8)
+          return "n@";
+	if (from == -9)
+          return "b@";
+	if (from == -10)
+          return "r@";
+	if (from == -11)
+          return "q@";
+        if (sharedVariables.mygame[gameData.LookingAt].iflipped == 1)
+          from = 63-from;
 
-String col = "";
-int row = (int) (from / 8);
-row++;
+        String col = "";
+        int row = (int) (from / 8);
+        row++;
 
-if(from%8 == 7)
-col = "a";
-if(from%8 == 6)
-col = "b";
-if(from%8 == 5)
-col = "c";
-if(from%8 == 4)
-col = "d";
-if(from%8 == 3)
-col = "e";
-if(from%8 == 2)
-col = "f";
-if(from%8 == 1)
-col = "g";
-if(from%8 == 0)
-col = "h";
+        if (from%8 == 7)
+          col = "a";
+        if (from%8 == 6)
+          col = "b";
+        if (from%8 == 5)
+          col = "c";
+        if (from%8 == 4)
+          col = "d";
+        if (from%8 == 3)
+          col = "e";
+        if (from%8 == 2)
+          col = "f";
+        if (from%8 == 1)
+          col = "g";
+        if (from%8 == 0)
+          col = "h";
 
-return col + row;
+        return col + row;
 
-} catch(Exception d){}
+      } catch(Exception d) {}
 
-	return "??";
-}
+      return "??";
+    }
 
-/*************************** end set last move code ******************/
-
-
-
-
-}// end controls panel class
-
-
-
-
-
-
-
-
-
-
-
+    /*************************** end set last move code ******************/
+  }// end controls panel class
 
 
   /* component listener */
   public void componentHidden(ComponentEvent e) {
 
-    }
+  }
 
-    public void componentMoved(ComponentEvent e) {
+  public void componentMoved(ComponentEvent e) {
 
-    }
+  }
 
-    public void componentResized(ComponentEvent e) {
-    
+  public void componentResized(ComponentEvent e) {
+  
+    if (isVisible() == true)
+      recreate();
+    if (!isMaximum())
+      setBoardSize();
+    //JFrame framer = new JFrame("hi");
+    //framer.setSize(200,100);
+    //framer.setVisible(true);
 
-    if(isVisible() == true)
-    recreate();
-    if(!isMaximum())
-    setBoardSize();
-      //        JFrame framer = new JFrame("hi");
-       //   framer.setSize(200,100);
-        //  framer.setVisible(true);
+  }
 
-    }
+  public void componentShown(ComponentEvent e) {
 
-    public void componentShown(ComponentEvent e) {
-    }
-
-
+  }
 
 
+  /************** jinternal frame listener ******************************/
 
-
-
-
-
-
-
-
-
-/************** jinternal frame listener ******************************/
-
-     void setBoardSize()
-     {
+  void setBoardSize() {
        
-       if(sharedVariables.useTopGames == true)
-       {
-        //topGame.setBoardSize();
-        return;
-       }
+    if (sharedVariables.useTopGames == true) {
+      //topGame.setBoardSize();
+      return;
+    }
 	
-        if(getWidth() < 50)
-        return;
+    if (getWidth() < 50)
+      return;
 
-        	sharedVariables.myBoardSizes[gameData.BoardIndex].point0=getLocation();
-		//set_string = set_string + "" + point0.x + " " + point0.y + " ";
-		sharedVariables.myBoardSizes[gameData.BoardIndex].con0x=getWidth();
-		sharedVariables.myBoardSizes[gameData.BoardIndex].con0y=getHeight();
-		//set_string = set_string + "" + con0x + " " + con0y + " ";
+    sharedVariables.myBoardSizes[gameData.BoardIndex].point0=getLocation();
+    //set_string = set_string + "" + point0.x + " " + point0.y + " ";
+    sharedVariables.myBoardSizes[gameData.BoardIndex].con0x=getWidth();
+    sharedVariables.myBoardSizes[gameData.BoardIndex].con0y=getHeight();
+    //set_string = set_string + "" + con0x + " " + con0y + " ";
+  }
+  
+  public void internalFrameClosing(InternalFrameEvent e) {
+    // we want to serialize the window dimensions
 
-	 }
-      public void internalFrameClosing(InternalFrameEvent e) {
-	// we want to serialize the window dimensions
+    if (sharedVariables.useTopGames == true)
+      return;
 
-        if(sharedVariables.useTopGames == true)
-        return;
-
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-
-
-
-		if(myconsolepanel.Input.hasFocus() && myconsolepanel.myself!=null)
-			myconsolepanel.myself.switchConsoleWindows();
-
-		setVisible(false);
-		if(sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_PLAYING)
-		{
-            myoutput data = new myoutput();
-            data.closetab=getPhysicalTab(gameData.LookingAt);
-            queue.add(data);
-
-		}
+    if (isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
     }
 
-    public void internalFrameClosed(InternalFrameEvent e) {
+    if (myconsolepanel.Input.hasFocus() && myconsolepanel.myself!=null)
+      myconsolepanel.myself.switchConsoleWindows();
+
+    setVisible(false);
+    if (sharedVariables.mygame[gameData.LookingAt].state !=
+        sharedVariables.STATE_PLAYING) {
+      myoutput data = new myoutput();
+      data.closetab=getPhysicalTab(gameData.LookingAt);
+      queue.add(data);
 
     }
+  }
 
-    public void internalFrameOpened(InternalFrameEvent e) {
+  public void internalFrameClosed(InternalFrameEvent e) {
 
+  }
+
+  public void internalFrameOpened(InternalFrameEvent e) {
+
+  }
+
+  public void internalFrameIconified(InternalFrameEvent e) {
+
+  }
+
+  public void internalFrameDeiconified(InternalFrameEvent e) {
+    if (sharedVariables.useTopGames == true)
+      return;
+
+    if (isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
+    }
+  }
+
+  public void internalFrameActivated(final InternalFrameEvent e) {
+    // System.out.println("fame activate");
+    if (sharedVariables.useTopGames == true)
+      return;
+    if (isVisible() == true) {
+      // let this be the sound board. whatever tab its on is the game with sound
+      myoutput output = new myoutput();
+      output.soundBoard=gameData.BoardIndex;
+      queue.add(output);
     }
 
-    public void internalFrameIconified(InternalFrameEvent e) {
+    if (isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
+    }
+    giveFocus();
+  }
 
+  public void internalFrameDeactivated(InternalFrameEvent e) {
+    if (sharedVariables.useTopGames == true)
+      return;
+
+    myconsolepanel.Input.setFocusable(false);
+
+  }
+
+
+  /*
+  public void windowClosing(WindowEvent e) {
+    // we want to serialize the window dimensions
+
+    if (isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
     }
 
-    public void internalFrameDeiconified(InternalFrameEvent e) {
-        if(sharedVariables.useTopGames == true)
-        return;
+    if (myconsolepanel.Input.hasFocus() && myconsolepanel.myself!=null)
+      myconsolepanel.myself.switchConsoleWindows();
 
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
+    setVisible(false);
+    if (sharedVariables.mygame[gameData.LookingAt].state !=
+        sharedVariables.STATE_PLAYING) {
+      myoutput data = new myoutput();
+      data.closetab=gameData.LookingAt;
+      queue.add(data);
+    }
+  }
 
+  public void windowClosed(WindowEvent e) {
 
-	   }
+  }
 
-    public void internalFrameActivated(final InternalFrameEvent e) {
-     // System.out.println("fame activate");
-        if(sharedVariables.useTopGames == true)
-        return;
-          if(isVisible() == true)// let this be the sound board. whatever tab its on is the game with sound
-          {
-           myoutput output = new myoutput();
-           output.soundBoard=gameData.BoardIndex;
-           queue.add(output);
+  public void windowOpened(WindowEvent e) {
 
+  }
+
+  public void windowIconified(WindowEvent e) {
+
+  }
+
+  public void windowDeiconified(WindowEvent e) {
+    if(isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
+    }
+  }
+
+  public void windowActivated(WindowEvent e) {
+    if (isVisible() && isMaximum() == false && isIcon() == false) {
+      setBoardSize();
+    }
+    giveFocus();
+  }
+
+  public void windowDeactivated(WindowEvent e) {
+    myconsolepanel.Input.setFocusable(false);
+  }
+
+  public void windowGainedFocus(WindowEvent e) {
+
+  }
+
+  public void windowLostFocus(WindowEvent e) {
+
+  }
+
+  public void windowStateChanged(WindowEvent e) {
+
+  }
+
+  boolean isMaximum() {
+    return false;
+  }
+
+  boolean isIcon() {
+    return false;
+  }
+
+  void setMaximum(boolean home) {
+    return;
+  }
+  */
+
+  void giveFocus() {
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
+            //JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
+            //SearchModel.SEARCHTEXT);
+
+            myconsolepanel.Input.setFocusable(true);
+            myconsolepanel.Input.setRequestFocusEnabled(true);
+            //Input.requestFocus();
+            myconsolepanel.Input.requestFocusInWindow();
+
+          } catch (Exception e1) {
+            //ignore
           }
-
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-    giveFocus();
-
-
-    }
-
-    public void internalFrameDeactivated(InternalFrameEvent e) {
-        if(sharedVariables.useTopGames == true)
-        return;
-
-myconsolepanel.Input.setFocusable(false);
-
-    }
-
-
-/*    public void windowClosing(WindowEvent e) {
- 	// we want to serialize the window dimensions
-
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-
-
-
-		if(myconsolepanel.Input.hasFocus() && myconsolepanel.myself!=null)
-			myconsolepanel.myself.switchConsoleWindows();
-
-		setVisible(false);
-		if(sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_PLAYING)
-		{
-            myoutput data = new myoutput();
-            data.closetab=gameData.LookingAt;
-            queue.add(data);
-
-		}
-    }
-
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    public void windowDeiconified(WindowEvent e) {
-    	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-
-    }
-
-    public void windowActivated(WindowEvent e) {
-  	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-    giveFocus();
-
-    }
-
-    public void windowDeactivated(WindowEvent e) {
-   myconsolepanel.Input.setFocusable(false);
-    }
-
-    public void windowGainedFocus(WindowEvent e) {
-
-    }
-
-    public void windowLostFocus(WindowEvent e) {
-
-    }
-
-    public void windowStateChanged(WindowEvent e) {
-
-    }
-
-
-
-  boolean isMaximum()
-  {
-   return false;
+        }
+      });
   }
 
-  boolean isIcon()
-  {
-   return false;
-  }
-
-  void setMaximum(boolean home)
-{
-  return;
-  }
-
-
- */
-
-
-
-
-
-
-
-
-
-void giveFocus()
-{
- SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                              //  JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
-                                //SearchModel.SEARCHTEXT);
-
-
-                           myconsolepanel.Input.setFocusable(true);
-                               myconsolepanel.Input.setRequestFocusEnabled(true);
-                                //Input.requestFocus();
-                           myconsolepanel.Input.requestFocusInWindow();
-
-                            } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-
-}
-
-int getPhysicalTab(int look)
-{
- for(int a=0; a<sharedVariables.openBoardCount; a++)
- if(sharedVariables.tabLooking[a]==look)
- return a;
+  int getPhysicalTab(int look) {
+    for (int a=0; a<sharedVariables.openBoardCount; a++)
+      if (sharedVariables.tabLooking[a]==look)
+        return a;
  
- return look;
+    return look;
+  }
 
+  /****************************************************************************************/
 
-}
-
-/****************************************************************************************/
-
- }// end class
+}// end class
 
 class randomPieces {
 
- int blackPieceNum;
- int whitePieceNum;
- int boardNum;
- channels SharedVariables;
- boolean [] excludedPieces;
- randomPieces(boolean [] excludedPieces1)
- {
-   excludedPieces=excludedPieces1;
-  blackPieceNum=0;
-  whitePieceNum=0;
-  boardNum=0;
+  int blackPieceNum;
+  int whitePieceNum;
+  int boardNum;
+  channels SharedVariables;
+  boolean [] excludedPieces;
+  randomPieces(boolean [] excludedPieces1) {
+    excludedPieces=excludedPieces1;
+    blackPieceNum=0;
+    whitePieceNum=0;
+    boardNum=0;
+  }
 
+ void randomizeGraphics() {
+   resourceClass temp = new resourceClass();
+   Random randomGenerator = new Random();
+   whitePieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice()), -1);
+   blackPieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice() - 1),
+                             whitePieceNum);
+
+   boardNum = randomGenerator.nextInt(temp.maxBoards-1);
  }
-
- void randomizeGraphics()
- {
-  resourceClass temp = new resourceClass();
-  Random randomGenerator = new Random();
-  whitePieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice()), -1);
-  blackPieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice() - 1), whitePieceNum);
-
-  boardNum = randomGenerator.nextInt(temp.maxBoards-1);
-
-
-
- }
- int getMaxPieceChoice()
- {
+  
+ int getMaxPieceChoice() {
    int x=0;
-   for(int y=0; y<excludedPieces.length; y++)
-   if(excludedPieces[y]==false)
-   x++;
+   for (int y=0; y<excludedPieces.length; y++)
+     if (excludedPieces[y]==false)
+       x++;
 
-   if(x > 2)
-   return x;
+   if (x > 2)
+     return x;
 
-  return 2;
+   return 2;
  }
 
- int getChoice(int num, int otherset)
- {
-  int i=0;
-  for(int y=0; y<excludedPieces.length; y++)
-  {
-   if(excludedPieces[y] == false && y != otherset)
-   {
-    if(i==num)
-    return y;
+ int getChoice(int num, int otherset) {
+   int i=0;
+   for (int y=0; y<excludedPieces.length; y++) {
+     if (excludedPieces[y] == false && y != otherset) {
+       if (i==num)
+         return y;
     
-    i++;
-   }    // end if
-  }     // end for
- return 0;
+       i++;
+     }    // end if
+   }     // end for
+   return 0;
  }     // end function
 
 
