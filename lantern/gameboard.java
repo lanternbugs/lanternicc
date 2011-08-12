@@ -43,7 +43,7 @@ import javax.swing.event.ChangeEvent.*;
 import java.util.concurrent.locks.*;
 import java.util.Random;
 
-
+import layout.TableLayout;
 
 //class gameboard extends JFrame implements ComponentListener,
 //WindowListener
@@ -2884,31 +2884,39 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
 
     void makeAndreysLayout() {
-      setLayout(new GridLayout(8,2)); // rows collums
+      int andreySpace = 10;
+      double[][] andreySize = {{160, 60, 20},
+                               {20,  40, andreySpace, 20, TableLayout.FILL,
+                                30, 30, andreySpace, 40, 20}};
+      setLayout(new TableLayout(andreySize));
       // our 4 move buttons
-      add(backwardEnd);
-      add(backward);
-      add(forward);
-      add(forwardEnd);
+      JPanel andreyNavig = new JPanel();
+      add(andreyNavig, "0, 5, 1, 5");
+      andreyNavig.add(backwardEnd);
+      andreyNavig.add(backward);
+      andreyNavig.add(forward);
+      andreyNavig.add(forwardEnd);
 
       // these are visible when playing
-      add( abortButton);
-      add(drawButton);
-      add(resignButton);
+      JPanel andreyAct = new JPanel();
+      add(andreyAct, "0, 6, 1, 6");
+      andreyAct.add(abortButton);
+      andreyAct.add(drawButton);
+      andreyAct.add(resignButton);
       // end action buttons
 
-      add(topClockDisplay); // a Jlabel, clock at top of board
-      add(flagTop);  // a JLabel flag at top of board
+      add(topClockDisplay, "0, 1"); // a Jlabel, clock at top of board
+      add(flagTop, "1, 0, 2, 1");  // a JLabel flag at top of board
 
-      add(topNameDisplay);  // a JLabel, name at top of board
+      add(topNameDisplay, "0, 0");  // a JLabel, name at top of board
 
-      add(gameListingDisplay); // a JLabel "3 0 Blitz " for example
-      add(sharedVariables.moveSliders[gameData.BoardIndex]);// the move slider
+      add(gameListingDisplay, "0, 3, 2, 3"); // a JLabel "3 0 Blitz " for example
+      add(sharedVariables.moveSliders[gameData.BoardIndex], "2, 4");// the move slider
 
-      add(botNameDisplay); // a JLabel name at bottm
-      add(botClockDisplay);// a JLabel bottom clock
-      add(flagBottom); // JLable the flag at bottom
-      add(listScroller);     // the move list
+      add(botNameDisplay, "0, 9"); // a JLabel name at bottm
+      add(botClockDisplay, "0, 8");// a JLabel bottom clock
+      add(flagBottom, "1, 8, 2, 9"); // JLable the flag at bottom
+      add(listScroller, "0, 4, 1, 4");     // the move list
 
     }
 
