@@ -359,6 +359,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           myconsolepanel.setVerticalLayout();
         else
           myconsolepanel.setHorizontalLayout();
+          
+
+          if(sharedVariables.andreysLayout == true)
+          {
+            mycontrolspanel.removeAll();
+            mycontrolspanel.makeAndreysLayout();
+          }
       }
       if (sharedVariables.boardConsoleType == 0) {
         // make console components invisible
@@ -2888,6 +2895,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       double[][] andreySize = {{160, 60, 20},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
+     
+    // JFrame framer = new JFrame("" + getBoardWidth() + " height " + getBoardHeight());
+    // framer.setVisible(true);
+    // framer.setSize(200,100);
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
       JPanel andreyNavig = new JPanel();
