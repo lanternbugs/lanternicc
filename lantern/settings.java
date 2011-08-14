@@ -646,7 +646,7 @@ for(int excl = 0; excl < sharedVariables.excludedPieces.length; excl++)
 	else
 		set_string = set_string + "0" + " ";
 	// closing
-		set_string = set_string + "[numberchannelleft] ";
+		set_string = set_string + "[donenumberchannelleft] ";
 
 
 	// last move highlight

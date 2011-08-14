@@ -1681,7 +1681,7 @@ void doCommand(String mycommand)
 
 void doToolBarCommand(int n)
 {
-					toolbarCommands commander = new toolbarCommands();
+					toolbarCommands commander = new toolbarCommands(myboards);
 				commander.dispatchCommand(n, sharedVariables.looking[consoleNumber], false, sharedVariables,  queue);
 				String mes = sharedVariables.userButtonCommands[n] + "\n";
 				StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
@@ -1935,6 +1935,51 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
 
+
+            if(a == 61) // - 45 = 61
+            {
+              int games = getActiveGame();
+          if(games > -1)
+           {
+           int loc = sharedVariables.moveSliders[games].getValue();
+              int max = sharedVariables.moveSliders[games].getMaximum();
+              if (loc < max) {
+                loc++;
+                sharedVariables.moveSliders[games].setValue(loc);
+                myboards[games].mycontrolspanel.adjustMoveList();
+                myboards[games].repaint();
+              }
+              giveFocus();
+
+              }
+
+              return;
+
+
+            }
+
+
+            if(a == 45) // - 45 = 61
+            {
+              int games = getActiveGame();
+           if(games > -1)
+           {
+             int loc = sharedVariables.moveSliders[games].getValue();
+
+              if (loc > 0) {
+                loc--;
+                sharedVariables.moveSliders[games].setValue(loc);
+                myboards[games].mycontrolspanel.adjustMoveList();
+                myboards[games].repaint();
+              }
+              giveFocus();
+
+              }
+
+              return;
+            }
+
+
                 if( a == 71) // ctrl + g
                 {
   			String myurl =Input.getText();
@@ -1957,7 +2002,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
               if( a == 77)// ctrl + M
               {
-                
+
 
                sharedVariables.tellsToTab = true;
                sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
@@ -2054,18 +2099,8 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
          if(a == 82  ) //  right on board R
           {
 
-           int games = -1;
-           for(int d=0; d<sharedVariables.maxGameTabs; d++)
-           {
-            if(myboards[d]==null)
-            break;
-            if(myboards[d].isVisible())
-            {
-             games =d;
-             break;
-            }
-           }
-           if(games > -1)
+           int games = getActiveGame();
+            if(games > -1)
            {
              myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(true));
              giveFocus();
@@ -2074,17 +2109,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
           }
          if(a == 76) // left on board L
          {
-             int games = -1;
-           for(int d=0; d<sharedVariables.maxGameTabs; d++)
-           {
-            if(myboards[d]==null)
-            break;
-            if(myboards[d].isVisible())
-            {
-             games =d;
-             break;
-            }
-           }
+             int games = getActiveGame();
            if(games > -1)
         {
           myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(false));
@@ -2459,7 +2484,21 @@ else
 */
 recreate(sharedVariables.consolesTabLayout[consoleNumber]);
 }
-
+int getActiveGame()
+{
+           int games = -1;
+           for(int d=0; d<sharedVariables.maxGameTabs; d++)
+           {
+            if(myboards[d]==null)
+            break;
+            if(myboards[d].isVisible())
+            {
+             games =d;
+             break;
+            }
+           }
+return games;
+}
 void writeToConsole(String mes, Color col, boolean italic)
 {
 	  			try {

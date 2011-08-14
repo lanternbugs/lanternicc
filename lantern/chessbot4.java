@@ -518,7 +518,7 @@ try {
 			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
 			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132 && a!= 152)
-			dgs2= dgs2 + "0";
+                        dgs2= dgs2 + "0";
 			else
 			{
 				  /*if(a==64)
@@ -3662,6 +3662,13 @@ try {
 				gamequeue.add(temp);
 			}
 			 readLock.unlock();
+
+			newBoardData temp2 = new newBoardData();
+			temp2.dg=2501;
+			temp2.arg1=dg.getArg(1);
+			gamequeue.add(temp2);
+
+
 		}
 		if(dg.getArg(0).equals("24"))// 24 DG_SEND_MOVES
 		{
@@ -4564,7 +4571,31 @@ void proccessGameInfo(newBoardData temp)
 							repaintBoards(gamenum);
 
 					}
+ 					if(temp.dg == 2501)// move list done
+ 					{
 
+                                                       int gamenum=getGameBoard(temp.arg1);
+							if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+							return;
+							if(myboards[gamenum]== null)
+							return;
+
+
+							for(int z=0; z< sharedVariables.maxGameTabs; z++)
+							{
+                                                          if(myboards[z]!=null)
+                                                          if(myboards[z].isVisible())
+                                                          if(myboards[z].gameData.LookingAt == gamenum)
+                                                          {
+							
+
+                                                            myboards[z].myconsolepanel.makehappen(gamenum);
+                                                          }
+
+                                                          }
+
+                                          
+                                        }
 
 					if(temp.dg == 24)// send move
 					{

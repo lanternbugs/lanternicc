@@ -95,6 +95,9 @@ void addToEvents(String entry, String number, String join, String watch, String 
 
 	if(watch.equals(""))
 	watch = "!!!";
+ 
+ //        if(entry.contains("[VIDEO]") && info.equals(""))
+ //        return;
 
 	if(info.equals(""))
 	info = "!!!";

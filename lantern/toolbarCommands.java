@@ -42,6 +42,19 @@ import java.util.Collections;
 
 class toolbarCommands
 {
+ 
+ gameboard [] myboards;
+
+ toolbarCommands(gameboard [] myboards1)
+ {
+  myboards=myboards1;
+
+ }
+  toolbarCommands()
+ {
+
+
+ }
 
  void dispatchCommand(int button, int con, boolean game, channels sharedVariables,  ConcurrentLinkedQueue<myoutput> queue)
  {
@@ -61,6 +74,32 @@ class toolbarCommands
        mes=mes.replace("%black", sharedVariables.mygame[con].realname2);
        }
        catch(Exception dui2){}
+
+     }
+     else if(myboards!=null && (mes.contains("%white") || mes.contains("%black")))
+     {
+      int place = -1;
+      
+      for(int z =0; z < sharedVariables.maxGameTabs; z++)
+      if(myboards[z]!=null)
+      {
+      if(myboards[z].isVisible())
+      {
+           place=z;
+           break;
+      }// is visible
+      }
+      else
+      break;
+
+      if(place > -1)
+      {
+        try {
+       mes=mes.replace("%white", sharedVariables.mygame[place].realname1);
+       mes=mes.replace("%black", sharedVariables.mygame[place].realname2);
+       }
+       catch(Exception dui2){}
+     }// end if place
 
      }
 

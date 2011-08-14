@@ -403,10 +403,31 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 output.consoleNumber=0;
       			 queue.add(output);
 		 	 }*/
-             eventDialog aDialog;
+             
+             boolean go=false;
+             if(listing.contains("[VIDEO]"))
+             {
+                if(!info.equals(""))
+                if(info.startsWith("http://"))
+                {
+                
+                if(!join.equals(""))
+                if(join.toLowerCase().contains(" webcast"))
+                {
+                 go=true;
+                 openUrl(info);
+                }
+                }
+             }
+
+             if(go == false)
+             {
+               eventDialog aDialog;
 			 aDialog= new  eventDialog(homeFrame, false, listing, join, info, watch);
 			 aDialog.setSize(350,200);
 			 aDialog.setVisible(true);
+             }// if go==false
+
 
           }
      }
@@ -828,6 +849,13 @@ if(join.indexOf(" & ")!=-1)
 	buttonjoin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
+                                if(join1.startsWith("http"))
+                                {
+                                 openUrl(join1);
+                                 return;
+                                }
+
+
 				 myoutput output = new myoutput();
 				 output.data=join1 + "\n";
 
@@ -850,7 +878,14 @@ if(join.indexOf(" & ")!=-1)
 	buttoninfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
-				 myoutput output = new myoutput();
+				
+                                
+                                if(info.startsWith("http"))
+                                {
+                                 openUrl(info);
+                                 return;
+                                }
+                                 myoutput output = new myoutput();
 				 output.data=info + "\n";
 
 				 output.consoleNumber=0;
@@ -942,7 +977,81 @@ if(join.indexOf(" & ")!=-1)
 */
 
 /****************************************************************************************/
+void openUrl(String myurl)
+{
 
+				try {
+
+				String os = System.getProperty("os.name").toLowerCase();
+
+					//Process p = Runtime.getRuntime().exec(cmdLine);
+				Runtime rt = Runtime.getRuntime();
+				if (os.indexOf( "win" ) >= 0)
+	            {
+				 String[] cmd = new String[4];
+	              cmd[0] = "cmd.exe";
+	              cmd[1] = "/C";
+	              cmd[2] = "start";
+	              cmd[3] = myurl;
+
+	              rt.exec(cmd);
+			  }
+			 else if (os.indexOf( "mac" ) >= 0)
+	           {
+
+	             Runtime runtime = Runtime.getRuntime();
+				   if(myurl.startsWith("www."))
+				   myurl="http://" + myurl;
+				   String[] args = { "osascript", "-e", "open location \"" + myurl + "\"" };
+				   try
+				   {
+				     Process process = runtime.exec(args);
+				   }
+				   catch (IOException e)
+				   {
+				     // do what you want with this
+				     // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
+				   }
+
+
+
+
+
+
+	             // rt.exec( "open " + myurl);
+          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
+            Method openURL = fileMgr.getDeclaredMethod("openURL",
+               new Class[] {String.class});
+            openURL.invoke(null, new Object[] {myurl});
+
+			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
+			*/
+			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
+			//  Process process = Runtime.getRuntime().exec(commandLine);
+
+
+	          }
+				else
+				{             //prioritized 'guess' of users' preference
+	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+	                  "netscape","opera","links","lynx"};
+
+	              StringBuffer cmd = new StringBuffer();
+	              for (int i=0; i<browsers.length; i++)
+	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
+
+	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
+	              //rt.exec("firefox http://www.google.com");
+	              //System.out.println(cmd.toString());
+
+
+				}// end else
+			}// end try
+			catch(Exception e)
+			{}
+
+
+}
 
 
 }//end class

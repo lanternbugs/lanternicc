@@ -2917,6 +2917,9 @@ if(event.getActionCommand().equals("3:2"))
 if(event.getActionCommand().equals("Hide Board Console"))
 {
 	sharedVariables.boardConsoleType=0;
+		sharedVariables.sideways=false;
+		sidewaysconsole.setSelected(false);
+	
 	redrawBoard(sharedVariables.boardConsoleType);
 }
 if(event.getActionCommand().equals("Compact Board Console"))
@@ -5040,7 +5043,7 @@ void makeToolBar()
     sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event)
 				{
-					toolbarCommands commander = new toolbarCommands();
+					toolbarCommands commander = new toolbarCommands(myboards);
 				commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
 
 
