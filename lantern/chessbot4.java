@@ -4579,22 +4579,24 @@ void proccessGameInfo(newBoardData temp)
 							return;
 							if(myboards[gamenum]== null)
 							return;
-
-
+                                                        focusOwner whohasit= new focusOwner();
+                                                         boolean didIt=false;
 							for(int z=0; z< sharedVariables.maxGameTabs; z++)
 							{
                                                           if(myboards[z]!=null)
                                                           if(myboards[z].isVisible())
                                                           if(myboards[z].gameData.LookingAt == gamenum)
                                                           {
-							
+
 
                                                             myboards[z].myconsolepanel.makehappen(gamenum);
+                                                            didIt=true;
                                                           }
 
                                                           }
+                                                if(didIt == true)
+                                                  giveFocus(whohasit);
 
-                                          
                                         }
 
 					if(temp.dg == 24)// send move
