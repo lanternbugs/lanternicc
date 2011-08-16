@@ -138,7 +138,10 @@ item2.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             consoles[consoleNumber].copy();
             overall.Input.paste();
-            giveFocus();}
+            giveFocus();
+
+
+            }
       });
       menu.add(item2);
 /*JMenuItem item3 = new JMenuItem("Hyperlink");
@@ -1887,7 +1890,11 @@ void giveFocus()
                                overall.Input.setRequestFocusEnabled(true);
                                 //Input.requestFocus();
                            overall.Input.requestFocusInWindow();
-                            } catch (Exception e1) {
+                           if(sharedVariables.operatingSystem.equals("mac"))
+                           { overall.Input.setCaretPosition(overall.Input.getDocument().getLength() - 1); }
+
+                            } 
+                            catch (Exception e1) {
                                 //ignore
                             }
                         }

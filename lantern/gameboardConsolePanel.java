@@ -1836,6 +1836,10 @@ void giveFocus()
                                Input.setRequestFocusEnabled(true);
                                 //Input.requestFocus();
                            Input.requestFocusInWindow();
+                           if(sharedVariables.operatingSystem.equals("mac"))
+                           { Input.setCaretPosition(Input.getDocument().getLength() - 1); }
+
+                            
                             } catch (Exception e1) {
                                 //ignore
                             }

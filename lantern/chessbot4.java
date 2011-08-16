@@ -2508,7 +2508,7 @@ if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true &&
 {
 	focusOwner whohasit = new focusOwner();
 	consoleSubframes[sharedVariables.tellconsole].makeHappen(sharedVariables.tellTab);
-	if(!sharedVariables.operatingSystem.equals("mac"))
+	
 	giveFocus(whohasit);
 }
 }catch(Exception donthave){}
@@ -6175,11 +6175,15 @@ void giveFocus(focusOwner mine)
 	if(mine.console == true)
 	{
 		consoleSubframes[mine.number].giveFocus();
+
 	}// end if console == true
 	if(mine.board == true)
 	{
 		myboards[mine.number].myconsolepanel.giveFocus();
-	}// end if board == true
+ 
+
+        }// end if board == true
+
 
 	}
 	catch(Exception e){}
