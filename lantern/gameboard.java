@@ -2892,7 +2892,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
     void makeAndreysLayout() {
       int andreySpace = 5;
-      double[][] andreySize = {{120, TableLayout.FILL, 80},
+      double[][] andreySize = {{150, TableLayout.FILL, 80},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
@@ -2922,7 +2922,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       add(topNameDisplay, "0, 0, 2, 0");  // a JLabel, name at top of board
 
       add(gameListingDisplay, "0, 3, 2, 3"); // a JLabel "3 0 Blitz " for example
-      add(sharedVariables.moveSliders[gameData.BoardIndex], "1, 4, l, f");// the move slider
+      add(sharedVariables.moveSliders[gameData.BoardIndex], "2, 4, r, f");// the move slider
 
       add(botNameDisplay, "0, 9, 2, 9"); // a JLabel name at bottm
       add(botClockDisplay, "0, 8, 1, 8");// a JLabel bottom clock
