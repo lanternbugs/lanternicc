@@ -45,6 +45,7 @@ class autoExamDialog extends JDialog implements ChangeListener, ActionListener {
 
     aes = sVars.autoexamspeed;
 
+
     model = new SpinnerNumberModel(aes*.001, .25, 60, .25);
     JSpinner speed = new JSpinner(model);
     speed.addChangeListener(this);
@@ -67,18 +68,24 @@ class autoExamDialog extends JDialog implements ChangeListener, ActionListener {
     buttons.add(ok);
     buttons.add(cancel);
     
-    double[][] size = {{20, 40, TableLayout.FILL},
-                       {20, 20, 20, TableLayout.FILL}};
+    int border = 10;
+
+    int space = 5;
+
+    int ht = 20;
+
+    double[][] size = {{border, 20, 40, space, TableLayout.FILL, border},
+                       {border, ht, ht, ht, TableLayout.FILL, border}};
 
     setLayout(new TableLayout(size));
 
     JLabel label = new JLabel("Select AutoExam speed in seconds");
-    add(label, "0, 0, 2, 0");
-    add(speed, "0, 1, 1, 1");
-    add(new JLabel("seconds"), "2, 1");
-    add(showf, "0, 2");
-    add(new JLabel("Show 'forward 1' message."), "1, 2, 2, 2");
-    add(buttons, "0, 3, 2, 3");
+    add(label, "1, 1, 4, 1");
+    add(speed, "1, 2, 2, 2");
+    add(new JLabel("seconds"), "4, 2");
+    add(showf, "1, 3");
+    add(new JLabel("Show 'forward 1' message."), "2, 3, 4, 3");
+    add(buttons, "1, 4, 4, 4");
   }
 
   public void stateChanged(ChangeEvent e) {

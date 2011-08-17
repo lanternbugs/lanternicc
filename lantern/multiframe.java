@@ -2473,9 +2473,9 @@ if(event.getActionCommand().equals("Stop AutoExam"))
 if(event.getActionCommand().equals("Set AutoExam Speed"))
 {
 
-autoExamDialog frame = new autoExamDialog((JFrame) this, true, sharedVariables);
-	frame.setSize(550,120);
-	frame.setVisible(true);
+  autoExamDialog frame = new autoExamDialog((JFrame) this, false, sharedVariables);
+  frame.pack();
+  frame.setVisible(true);
 
 
 }
