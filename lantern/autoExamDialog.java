@@ -14,23 +14,28 @@ package lantern;
 *  General Public License for more details.
 */
 
-import java.awt.*;
-import java.awt.Window.*;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import layout.TableLayout;
 
-class autoExamDialog extends JDialog implements ChangeListener {
+class autoExamDialog extends JDialog implements ChangeListener, ActionListener {
 
   channels sVars;
   SpinnerNumberModel model;
   JCheckBox showf;
+  long aes;
+  boolean aen;
 
   autoExamDialog(JFrame frame, boolean mybool, channels sVars) {
     super(frame, mybool);
@@ -38,18 +43,32 @@ class autoExamDialog extends JDialog implements ChangeListener {
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    double aes = sVars.autoexamspeed*.001;
+    aes = sVars.autoexamspeed;
 
-    model = new SpinnerNumberModel(aes, .25, 60, .25);
+    model = new SpinnerNumberModel(aes*.001, .25, 60, .25);
     JSpinner speed = new JSpinner(model);
     speed.addChangeListener(this);
 
     showf = new JCheckBox();
-    showf.setSelected((sVars.autoexamnoshow==0));
-    showf.addChangeListener(this);
+    aen = (sVars.autoexamnoshow==0);
+    showf.setSelected(aen);
+    showf.setActionCommand("showf");
+    showf.addActionListener(this);
 
+    JButton ok = new JButton("OK");
+    ok.setActionCommand("OK");
+    ok.addActionListener(this);
+
+    JButton cancel = new JButton("Cancel");
+    cancel.setActionCommand("Cancel");
+    cancel.addActionListener(this);
+
+    JPanel buttons = new JPanel();
+    buttons.add(ok);
+    buttons.add(cancel);
+    
     double[][] size = {{20, 40, TableLayout.FILL},
-                       {20, 20, TableLayout.FILL}};
+                       {20, 20, 20, TableLayout.FILL}};
 
     setLayout(new TableLayout(size));
 
@@ -59,11 +78,23 @@ class autoExamDialog extends JDialog implements ChangeListener {
     add(new JLabel("seconds"), "2, 1");
     add(showf, "0, 2");
     add(new JLabel("Show 'forward 1' message."), "1, 2, 2, 2");
+    add(buttons, "0, 3, 2, 3");
   }
 
   public void stateChanged(ChangeEvent e) {
     sVars.autoexamspeed = (long) (model.getNumber().doubleValue()*1000);
-    sVars.autoexamnoshow = (showf.isSelected() ? 0 : 1);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    String action = e.getActionCommand();
+    if (action.equals("OK")) dispose();
+    if (action.equals("Cancel")) {
+      sVars.autoexamspeed = aes;
+      sVars.autoexamnoshow = (aen ? 0 : 1);
+      dispose();
+    }
+    if (action.equals("showf"))
+      sVars.autoexamnoshow = (showf.isSelected() ? 0 : 1);
   }
 }
 
