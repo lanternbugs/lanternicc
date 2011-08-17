@@ -19,62 +19,111 @@ import java.awt.Window.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.JDialog;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
+import layout.TableLayout;
 
-class autoExamDialog extends JDialog {
-  JTextField field;
-  channels sharedVariables;
-  autoExamDialog(JFrame frame, boolean mybool, channels sharedVariables1) {
+class autoExamDialog extends JDialog implements ChangeListener {
+
+  channels sVars;
+  SpinnerNumberModel model;
+  JCheckBox showf;
+
+  autoExamDialog(JFrame frame, boolean mybool, channels sVars) {
     super(frame, mybool);
-    sharedVariables=sharedVariables1;
+    this.sVars = sVars;
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    JPanel pane = new JPanel();
-    add(pane);
-    field = new JTextField(20);
-    pane.add(field);
+    double aes = sVars.autoexamspeed*.001;
 
-    JButton button = new JButton("Set speed");
+    model = new SpinnerNumberModel(aes, .25, 60, .25);
+    JSpinner speed = new JSpinner(model);
+    speed.addChangeListener(this);
 
-    JLabel label = new JLabel("Enter AutoExam speed in seconds, now " +
-                              sharedVariables.autoexamspeed/1000 + "s");
-    JCheckBox abox = new JCheckBox();
-    if (sharedVariables.autoexamnoshow==1)
-      abox.setSelected(true);
-    else
-      abox.setSelected(false);
-    button.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-          String mytext= field.getText();
-          mytext=mytext.trim();
-          try {
+    showf = new JCheckBox();
+    showf.setSelected((sVars.autoexamnoshow==0));
+    showf.addChangeListener(this);
 
-            Integer num= new Integer(mytext);
-            int num1=num.intValue();
-            if (num1 > 0 && num1 < 500)
-              sharedVariables.autoexamspeed=num1 * 1000;
-          } catch(Exception e) {
+    double[][] size = {{20, 40, TableLayout.FILL},
+                       {20, 20, TableLayout.FILL}};
 
-          } finally {
-            dispose();
-          }
-        }
-      });
+    setLayout(new TableLayout(size));
 
-    abox.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-          sharedVariables.autoexamnoshow=(sharedVariables.autoexamnoshow+1)%2;
-        }
-      });
+    JLabel label = new JLabel("Select AutoExam speed in seconds");
+    add(label, "0, 0, 2, 0");
+    add(speed, "0, 1, 1, 1");
+    add(new JLabel("seconds"), "2, 1");
+    add(showf, "0, 2");
+    add(new JLabel("Show 'forward 1' message."), "1, 2, 2, 2");
+  }
 
-    JLabel label2 =
-      new JLabel("Check box to not show Forward 1 message when autoexamining.");
+  public void stateChanged(ChangeEvent e) {
+    sVars.autoexamspeed = (long) (model.getNumber().doubleValue()*1000);
+    sVars.autoexamnoshow = (showf.isSelected() ? 0 : 1);
+  }
+}
 
-    pane.add(button);
-    pane.add(label);
-    pane.add(abox);
-    pane.add(label2);
-  }// end constructor
-}// end class
+// class autoExamDialog extends JDialog {
+  
+//   JTextField field;
+//   channels sharedVariables;
+  
+//   autoExamDialog(JFrame frame, boolean mybool, channels sharedVariables1) {
+    
+//     super(frame, mybool);
+//     sharedVariables=sharedVariables1;
+
+//     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+//     JPanel pane = new JPanel();
+//     add(pane);
+//     field = new JTextField(20);
+//     pane.add(field);
+
+//     JButton button = new JButton("Set speed");
+
+//     JLabel label = new JLabel("Enter AutoExam speed in seconds, now " +
+//                               sharedVariables.autoexamspeed/1000 + "s");
+//     JCheckBox abox = new JCheckBox();
+//     if (sharedVariables.autoexamnoshow==1)
+//       abox.setSelected(true);
+//     else
+//       abox.setSelected(false);
+//     button.addActionListener(new ActionListener() {
+//         public void actionPerformed(ActionEvent event) {
+//           String mytext= field.getText();
+//           mytext=mytext.trim();
+//           try {
+
+//             Integer num= new Integer(mytext);
+//             int num1=num.intValue();
+//             if (num1 > 0 && num1 < 500)
+//               sharedVariables.autoexamspeed=num1 * 1000;
+//           } catch(Exception e) {
+
+//           } finally {
+//             dispose();
+//           }
+//         }
+//       });
+
+//     abox.addActionListener(new ActionListener() {
+//         public void actionPerformed(ActionEvent event) {
+//           sharedVariables.autoexamnoshow=(sharedVariables.autoexamnoshow+1)%2;
+//         }
+//       });
+
+//     JLabel label2 =
+//       new JLabel("Check box to not show Forward 1 message when autoexamining.");
+
+//     pane.add(button);
+//     pane.add(label);
+//     pane.add(abox);
+//     pane.add(label2);
+//   }// end constructor
+// }// end class
 
