@@ -325,6 +325,14 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   int getBoardHeight() {
     return getHeight();
   }
+    int getControlHeight()
+    {
+     if(sharedVariables.sideways == true)
+     return getBoardHeight();
+     
+     return getBoardHeight() - getConsoleHeight();
+    }
+
       int getControlLength()
     {
       int width = getBoardWidth();
@@ -2962,6 +2970,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     void makeAndreysLayout() {
 
       /* int myOverallWidth = getControlLength();  //width of this panel
+      int myOverallHeight = getControlHeight();
       setAndreyFontSize(n);  pass in int n with font size ( effects game board font now not clock
 
      if(myOverallWidth < 250) // default minimum width is 235
@@ -2975,9 +2984,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
-     //JFrame framer = new JFrame("" + getBoardWidth() + " height " + getBoardHeight() + "  control length " + getControlLength());
+     //JFrame framer = new JFrame("" + getBoardWidth() + " height " + getBoardHeight() + "  control length " + getControlLength() + " control height " + getControlHeight());
      //framer.setVisible(true);
-     //framer.setSize(200,100);
+     //framer.setSize(300,100);
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
       andreyNavig = new JPanel();
