@@ -58,7 +58,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   }
   */
   Image [] img;
-
+  int controlLength = 235;
   channels sharedVariables;
   overallpanel overall;
 
@@ -325,16 +325,59 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   int getBoardHeight() {
     return getHeight();
   }
-  
+      int getControlLength()
+    {
+      int width = getBoardWidth();
+      int height = getBoardHeight();
+      if (sharedVariables.sideways==false)
+      height = height - getConsoleHeight();
+
+      controlLength = 235;
+     int dif = 0;
+     if (sharedVariables.sideways==false)
+      dif = width - controlLength;
+     else
+      dif = width - controlLength - getConsoleWidth();
+      //JFrame framer = new JFrame(" width is " + width + " heigth is " +
+      //                           height + " dif is " + dif +
+      //                           " and controlLength is " + controlLength);
+      //framer.setSize(200,100);
+      //framer.setVisible(true);
+
+      if (dif > height && sharedVariables.andreysLayout == false)
+      {  dif = (int) (dif - height) / 2;
+         controlLength+=dif;
+        }
+   else if (dif > height && sharedVariables.andreysLayout == true){
+        dif = (int) (dif - height);
+        controlLength+=dif;
+        }
+
+      return controlLength;
+    }
+    
+    int getConsoleWidth()
+    {
+      
+     return (int)(sharedVariables.boardConsoleSizes
+              [sharedVariables.boardConsoleType] * 1.8);
+    }
+
+    int getConsoleHeight()
+    {
+     return sharedVariables.boardConsoleSizes[sharedVariables.boardConsoleType];
+
+    }
+
   // class overall is  the overall  gameboard panel
   //  its strictly to provide a layout for the 3 panels that the
   // gameboard uses the 64 square board area, gameboardPanel, the
   // console and tabs, gameboardConsolePanel, and the controls like
   // clock , lables for names etc ratings. gameboardControlsPanel
   class overallpanel extends JPanel {
- 
+
     public void paintComponent(Graphics g) {
-      
+
       try {
 
         super.paintComponent(g);
@@ -359,7 +402,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           myconsolepanel.setVerticalLayout();
         else
           myconsolepanel.setHorizontalLayout();
-          
+
 
           if(sharedVariables.andreysLayout == true)
           {
@@ -410,21 +453,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         //layout = new GroupLayout(this);
         getContentPane().setLayout(layout);
       }
-      int width = getBoardWidth();
-      int height = getBoardHeight();
-      int controlLength = 235;
-      int dif = width - controlLength;
-      //JFrame framer = new JFrame(" width is " + width + " heigth is " +
-      //                           height + " dif is " + dif +
-      //                           " and controlLength is " + controlLength);
-      //framer.setSize(200,100);
-      //framer.setVisible(true);
+      controlLength=getControlLength();
 
-      if (dif > height) {
-        dif = (int) (dif - height) / 2;
-
-        controlLength+=dif;
-      }
       //Create a parallel group for the horizontal axis
       ParallelGroup hGroup =
         layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
@@ -462,8 +492,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       SequentialGroup v2 = layout.createSequentialGroup();
 
       v1.addComponent(mypanel, 0, 300, Short.MAX_VALUE);
-      int consolePanelDefault =
-        sharedVariables.boardConsoleSizes[sharedVariables.boardConsoleType];
+      int consolePanelDefault = getConsoleHeight();
+
       v1.addComponent(myconsolepanel, consolePanelDefault,
                       consolePanelDefault, consolePanelDefault);
       v2.addComponent(mycontrolspanel, 0, 300, Short.MAX_VALUE);
@@ -494,6 +524,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         //layout = new GroupLayout(this);
         getContentPane().setLayout(layout);
       }
+          controlLength=getControlLength();
+
+
       //Create a parallel group for the horizontal axis
       ParallelGroup hGroup =
         layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
@@ -503,15 +536,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       SequentialGroup h2 = layout.createSequentialGroup();
       SequentialGroup h3 = layout.createSequentialGroup();
 
-      int consolePanelDefault=
-        (int)(sharedVariables.boardConsoleSizes
-              [sharedVariables.boardConsoleType] * 1.8);
+      int consolePanelDefault=getConsoleWidth();
 
       h2.addComponent(myconsolepanel, consolePanelDefault,
                       consolePanelDefault, consolePanelDefault);
 
       h2.addComponent(mypanel);
-      h2.addComponent(mycontrolspanel, 235,  235, 235);
+      h2.addComponent(mycontrolspanel, controlLength,  controlLength, controlLength);
 
       h1.addGroup(h2);
 
@@ -2891,14 +2922,17 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
 
     void makeAndreysLayout() {
+  
+  // int myOverallWidth = getControlLength();  width of this panel
+
       int andreySpace = 5;
       double[][] andreySize = {{150, TableLayout.FILL, 80},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
-    // JFrame framer = new JFrame("" + getBoardWidth() + " height " + getBoardHeight());
-    // framer.setVisible(true);
-    // framer.setSize(200,100);
+     //JFrame framer = new JFrame("" + getBoardWidth() + " height " + getBoardHeight() + "  control length " + getControlLength());
+     //framer.setVisible(true);
+     //framer.setSize(200,100);
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
       JPanel andreyNavig = new JPanel();
