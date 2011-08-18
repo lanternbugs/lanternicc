@@ -2194,6 +2194,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     JPanel actionPanel;
     JPanel actionPanelFlow;
     JPanel buttonPanelFlow;
+    JPanel andreyNavig;
+    JPanel andreyAct;
+
     //JPanel sliderArrows;
     JLabel topNameDisplay;
     JLabel botNameDisplay;
@@ -2270,7 +2273,14 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
           buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
         }
+        if(sharedVariables.andreysLayout == true)
+        {
+         if(andreyNavig!=null)
+         andreyNavig.setBackground(sharedVariables.boardBackgroundColor);
+         if(andreyAct != null)
+         andreyAct.setBackground(sharedVariables.boardBackgroundColor);
 
+        }
         flagTop.setBackground(sharedVariables.boardBackgroundColor);
         flagBottom.setBackground(sharedVariables.boardBackgroundColor);
 
@@ -2935,7 +2945,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
      //framer.setSize(200,100);
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
-      JPanel andreyNavig = new JPanel();
+      andreyNavig = new JPanel();
       add(andreyNavig, "0, 5, 2, 5");
       andreyNavig.add(backwardEnd);
       andreyNavig.add(backward);
@@ -2943,7 +2953,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       andreyNavig.add(forwardEnd);
 
       // these are visible when playing
-      JPanel andreyAct = new JPanel();
+      andreyAct = new JPanel();
       add(andreyAct, "0, 6, 2, 6");
       andreyAct.add(abortButton);
       andreyAct.add(drawButton);
