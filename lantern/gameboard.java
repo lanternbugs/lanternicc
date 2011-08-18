@@ -2196,7 +2196,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     JPanel buttonPanelFlow;
     JPanel andreyNavig;
     JPanel andreyAct;
-
+    float andreysFontSize=16;
     //JPanel sliderArrows;
     JLabel topNameDisplay;
     JLabel botNameDisplay;
@@ -2222,23 +2222,51 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
     JScrollPane listScroller;
 
+    public void setAndreyFontSize(float n)
+    {
+     sharedVariables.andreysFonts = true;
+     andreysFontSize=n;
+     setFont();
+    }
+
+    public float getAndreyFontSize()
+    {
+
+     return andreysFontSize;
+    }
+
+
     public void setFont() {
       try {
         topClockDisplay.setFont(sharedVariables.myGameClockFont);
         botClockDisplay.setFont(sharedVariables.myGameClockFont);
-
+        if(sharedVariables.andreysFonts == false)
+        {
         topNameDisplay.setFont(sharedVariables.myGameFont);
         botNameDisplay.setFont(sharedVariables.myGameFont);
         gameListingDisplay.setFont(sharedVariables.myGameFont);
 
         lastMove.setFont(sharedVariables.myGameFont);
+        }
+       else // andreys fonts on
+        {
+
+         Font newFont =sharedVariables.myGameFont.deriveFont(andreysFontSize);
+        topNameDisplay.setFont(newFont);
+        botNameDisplay.setFont(newFont);
+        gameListingDisplay.setFont(newFont);
+
+        lastMove.setFont(newFont);
+
+
+        }
         //forward.setFont(sharedVariables.myGameFont);
         //backward.setFont(sharedVariables.myGameFont);
         //backwardEnd.setFont(sharedVariables.myGameFont);
         //forwardEnd.setFont(sharedVariables.myGameFont);
       }	catch(Exception e) {}
     }
-    
+
     int getBoardType() {
  
       if (sharedVariables.mygame[gameData.LookingAt].state ==
@@ -2932,8 +2960,15 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
 
     void makeAndreysLayout() {
-  
-  // int myOverallWidth = getControlLength();  width of this panel
+
+      /* int myOverallWidth = getControlLength();  //width of this panel
+      setAndreyFontSize(n);  pass in int n with font size ( effects game board font now not clock
+
+     if(myOverallWidth < 250) // default minimum width is 235
+      setAndreyFontSize(12);
+     else
+      setAndreyFontSize(28);
+      */
 
       int andreySpace = 5;
       double[][] andreySize = {{150, TableLayout.FILL, 80},
