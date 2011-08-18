@@ -2424,7 +2424,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           if (sharedVariables.showMaterialCount==true &&
               !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
             if (sharedVariables.mygame[gameData.LookingAt].wild != 0 &&
-                sharedVariables.mygame[gameData.LookingAt].wild != 20) {
+                sharedVariables.mygame[gameData.LookingAt].wild != 20 && sharedVariables.andreysLayout == false) {
               whiteCount=" (" + sharedVariables.mygame
                 [gameData.LookingAt].whiteMaterialCount+")";
               blackCount=" (" + sharedVariables.mygame
@@ -2458,7 +2458,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         if (sharedVariables.showMaterialCount==true &&
             !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
           if (sharedVariables.mygame[gameData.LookingAt].wild == 0 ||
-              sharedVariables.mygame[gameData.LookingAt].wild == 20)
+              sharedVariables.mygame[gameData.LookingAt].wild == 20 || sharedVariables.andreysLayout == true)
             listing += " " + sharedVariables.mygame
               [gameData.LookingAt].whiteMaterialCount + " - " +
               sharedVariables.mygame[gameData.LookingAt].blackMaterialCount;
