@@ -502,10 +502,21 @@ else
 italic2=-1;
 if(italic1 > -1 && italic2 > -1)
 {
+
+
+
+
 doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
+
+if(sharedVariables.italicsBehavior == 2)
+	StyleConstants.setForeground(attrs, myStyles.colors[a].brighter());
+if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, true);
 doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(italic1, italic2+1), attrs);
+if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, false);
+if(sharedVariables.italicsBehavior == 2)
+	StyleConstants.setForeground(attrs, myStyles.colors[a]);
 
        dd=italic2 + 1;
 /*JFrame fram = new JFrame("italic1 " + italic1 +  " and italic2 " + italic2 + " " + myStrings[a]);

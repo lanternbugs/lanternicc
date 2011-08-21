@@ -915,7 +915,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       mypanel.repaint();
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
     timer = new Timer (  ) ;
-    timer.scheduleAtFixedRate( new ToDoTask (  ) , 150 ,150) ;
+    timer.scheduleAtFixedRate( new ToDoTask (  ) , 150 ,150) ; 
     resetMoveList();
 
     if (sharedVariables.mygame[gameData.BoardIndex].wild == 24 &&

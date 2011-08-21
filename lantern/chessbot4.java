@@ -2521,6 +2521,7 @@ try
 	for(int z=0; z< sharedVariables.openBoardCount; z++)
 	{
 		if(myboards[z]!=null)
+		if(sharedVariables.boardConsoleType != 0)// dont send tell to board if console disabled, would have later caused it to print twice in main
 		if(sharedVariables.mygame[z].realname1.equals(dg.getArg(1)) || sharedVariables.mygame[z].realname2.equals(dg.getArg(1)))
 		{
 
@@ -3881,7 +3882,8 @@ int getGameNumber(String icsGameNumber)
 			try {
 		if(myboards[a]!=null)
 		if(myboards[a].isVisible() == true)
-		myboards[a].repaint();
+		if(myboards[a].gameData.LookingAt==num)
+                myboards[a].repaint();
 		}
 		catch(Exception e){}
 		}
@@ -5171,7 +5173,9 @@ if(sharedVariables.tabsOnly == true)
 					for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 						if(myboards[bb]!=null)
 							if(myboards[bb].isVisible() == true)
-								myboards[bb].myconsolepanel.makehappen(a);
+							{	myboards[bb].myconsolepanel.makehappen(a);
+							        break;
+				                        }			        
 				sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPieces);
 
                                 return a;
@@ -5370,7 +5374,9 @@ if(sharedVariables.tabsOnly == true)
 				for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 			   		if(myboards[bb]!=null)
 						if(myboards[bb].isVisible() == true)
-							myboards[bb].myconsolepanel.makehappen(last);
+						{	myboards[bb].myconsolepanel.makehappen(last);
+						        break;
+                                                 }			        
 			}
 			else// tabs only false
 				myboards[last].myconsolepanel.makehappen(last);

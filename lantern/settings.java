@@ -648,6 +648,13 @@ for(int excl = 0; excl < sharedVariables.excludedPieces.length; excl++)
 	// closing
 		set_string = set_string + "[donenumberchannelleft] ";
 
+ 	// italics behavior what ` ` does
+	set_string = set_string + "[italicsbehavior] ";
+		set_string = set_string + sharedVariables.italicsBehavior + " ";
+
+	// closing
+		set_string = set_string + "[doneitalicsbehavior] ";
+
 
 	// last move highlight
 	set_string = set_string + "[lastMoveHighlight] ";
@@ -1880,6 +1887,16 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+                                  if (temp.equals("[italicsbehavior]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+
+						sharedVariables.italicsBehavior=truth;
+
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[lastMoveHighlight]"))
 				{

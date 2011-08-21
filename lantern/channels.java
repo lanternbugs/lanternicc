@@ -283,6 +283,7 @@ int activitiesTabNumber=0;
 int defaultBoardWide;
 int defaultBoardHigh;
 int nameListSize=90;
+int italicsBehavior=1; // for what ` ` does
 
 channelTabInfo [] tabStuff = new channelTabInfo[maxConsoleTabs];
 ConcurrentLinkedQueue<myoutput> engineQueue;
@@ -297,7 +298,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.41";
+version = "v4.42";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

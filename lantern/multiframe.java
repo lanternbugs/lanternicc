@@ -237,6 +237,7 @@ JCheckBoxMenuItem pieces21;
 JCheckBoxMenuItem pieces22;
 JCheckBoxMenuItem pieces23;
 
+JCheckBoxMenuItem [] italicsBehavior = new JCheckBoxMenuItem[3];
 
 
 JCheckBoxMenuItem randomArmy;
@@ -493,6 +494,10 @@ if(sharedVariables.indent == true)
 		lineindent.setSelected(true);
 	else
 		lineindent.setSelected(false);
+
+checkItalicsBehavior(sharedVariables.italicsBehavior);
+
+
 if(sharedVariables.randomArmy == true)
 		randomArmy.setSelected(true);
 	else
@@ -1248,6 +1253,24 @@ basketballFlag.addActionListener(this);
 lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
 lineindent.addActionListener(this);
 advancedOptions.add(lineindent);
+
+
+
+JMenu italicsBehaviorMenu = new JMenu("` ` Behavior");
+italicsBehavior[0] = new JCheckBoxMenuItem("` ` Do Nothing");
+italicsBehavior[0].addActionListener(this);
+italicsBehaviorMenu.add(italicsBehavior[0]);
+
+italicsBehavior[1] = new JCheckBoxMenuItem("` ` Italics");
+italicsBehavior[1].addActionListener(this);
+italicsBehaviorMenu.add(italicsBehavior[1]);
+
+italicsBehavior[2] = new JCheckBoxMenuItem("` ` Brighter Color");
+italicsBehavior[2].addActionListener(this);
+italicsBehaviorMenu.add(italicsBehavior[2]);
+
+advancedOptions.add(italicsBehaviorMenu);
+
 
 /**************************** end advanced ***********************/
 optionsmenu.add(advancedOptions);
@@ -3579,6 +3602,29 @@ setPieces(sharedVariables.pieceType);
 
 }
 
+if(event.getActionCommand().equals("` ` Do Nothing"))
+{
+ sharedVariables.italicsBehavior = 0;
+ checkItalicsBehavior(0);
+
+}
+
+if(event.getActionCommand().equals("` ` Italics"))
+{
+ sharedVariables.italicsBehavior = 1;
+ checkItalicsBehavior(1);
+
+}
+
+if(event.getActionCommand().equals("` ` Brighter Color"))
+{
+ sharedVariables.italicsBehavior = 2;
+ checkItalicsBehavior(2);
+
+}
+
+
+
 if(event.getActionCommand().equals("Light Square Color"))
 {
 
@@ -4574,6 +4620,26 @@ void resetConsoleLayout()
 			if(consoleSubframes[a]!=null)
 			consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
 }
+
+
+void checkItalicsBehavior(int n)
+{
+ if(n == 0)
+italicsBehavior[0].setSelected(true);
+else
+italicsBehavior[0].setSelected(false);
+
+ if(n == 1)
+italicsBehavior[1].setSelected(true);
+else
+italicsBehavior[1].setSelected(false);
+
+ if(n == 2)
+italicsBehavior[2].setSelected(true);
+else
+italicsBehavior[2].setSelected(false);
+}
+
 void redrawBoard(int type)
 {
 if(type == 0)
