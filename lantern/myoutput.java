@@ -39,10 +39,12 @@ class myoutput {
 	int gamelooking;
 	 int reconnectTry;
 	 int soundBoard;
+	 int boardClosing;
 
 myoutput(){
 
 	data = "";
+	boardClosing=-1;
 	gameFocusConsole=-1;
 	gameConsoleSide = -1;
 	gameConsoleSize = -1;

@@ -232,7 +232,7 @@ t.start();
 
 					}// end if got=1, got data
 
-
+                                        updateBoardMenuText();
 
 					if(sharedVariables.doreconnect==true) // this would forcibly be set by user in menu if he chose reconnect to fics or icc
 					{
@@ -309,7 +309,34 @@ t.start();
 	}
 
 
+void updateBoardMenuText()
+{
+  for(int a=0; a < sharedVariables.maxGameTabs; a++)
+  {
+     if(myboards[a] == null)
+     break;
+     
+     if(myboards[a].isVisible())
+     {
 
+       int d=a+1;
+       String text = "Board " + d + ":";
+       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+       text += " " + "E" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_PLAYING)
+       text += " " + "P" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
+       text += " " + "O" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+       if(sharedVariables.openBoards[a].getText().equals(text))
+       continue;
+       else
+       sharedVariables.openBoards[a].setText(text);
+
+     }
+
+  }// end for
+
+}
 
 void updateBoard()
 {
@@ -436,7 +463,7 @@ bellSet=false;
 // set all games to was
 try {
 sharedVariables.graphData = new seekGraphData();
-for(int i=0; i< sharedVariables.openBoardCount; i++)
+/*for(int i=0; i< sharedVariables.openBoardCount; i++)
 if(myboards[i] != null)
 {
 	myboards[i].gameEnded("" + sharedVariables.mygame[i].myGameNumber);
@@ -445,6 +472,7 @@ if(myboards[i] != null)
 
 
 }
+*/
 closeAllGameTabs();
 }// end try
 catch(Exception badgameclose)
@@ -4500,7 +4528,8 @@ void proccessGameInfo(newBoardData temp)
                                             go=false;
 
                                             if(go== true)
-                                          myboards[ccc].myconsolepanel.makehappen(gamenum); // i need this to happen on new board
+                                          { myboards[ccc].myconsolepanel.makehappen(gamenum);
+                                          break;} // i need this to happen on new board
 			                }
                                         else
 			                break;
@@ -5192,7 +5221,7 @@ if(sharedVariables.tabsOnly == true)
                  myboards[last].topGame.setVisible(true);
                  else
                   myboards[last].setVisible(true);
-                  
+                  mycreator.updateBoardsMenu(last);
                   sharedVariables.mygame[last]=new gamestate(sharedVariables.excludedPieces);
                    myboards[last].myconsolepanel.makehappen(last);
                    for(int tab = 0; tab < sharedVariables.openBoardCount; tab++)
@@ -5267,6 +5296,7 @@ if(sharedVariables.tabsOnly == true)
                        myboards[last] .topGame.setVisible(true);
 			else
                         myboards[last] .setVisible(true);
+                        mycreator.updateBoardsMenu(last);
 		}
 		else
 		{
@@ -5486,7 +5516,13 @@ public void run()
 						if(tosend.focusConsole > -1)
 						consoleSubframes[tosend.focusConsole].giveFocus();
                                                 tosend=queue.poll();
-					}
+ 					}
+
+                                        if(tosend.boardClosing > -1) // board actualyl closed not just tab
+                                        {
+                                          mycreator.updateBoardsMenuClosing(tosend.boardClosing);
+                                          tosend=queue.poll();
+                                        }
 					if(tosend.reconnectTry > -1)
 					{
                                                // detectDisconnect();
@@ -6103,6 +6139,7 @@ catch(Exception z){}
 	}catch(Exception d){}
 
 	}
+
 
 
 class focusOwner {

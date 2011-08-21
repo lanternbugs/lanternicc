@@ -47,6 +47,8 @@ Image [] img;
 Image wallpaperImage;
 tableClass [] mygametable;
 JTable [] gametable;
+JMenu myWindows;
+JMenuItem [] openBoards;
 
 boolean randomArmy=false;
 boolean randomBoardTiles=false;
@@ -88,7 +90,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 
-  boolean andreysLayout = true; // Andrey's layout variable
+  boolean andreysLayout = false; // Andrey's layout variable
   boolean andreysFonts = false;
 boolean sideways;
 boolean showButtonTitle;
@@ -295,7 +297,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.40";
+version = "v4.41";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -604,6 +606,9 @@ nameBackgroundColor = new Color(255,255,204);
 //lightcolor= new Color(255, 204, 204);
 //darkcolor = new Color(193,153,153);
 // current white/ blue board
+
+openBoards = new JMenuItem[maxGameTabs];
+
 for(int b=0; b<maxConsoleTabs; b++)
 for(int a=0; a<maxChannels; a++)
 {console[b][a]=0;

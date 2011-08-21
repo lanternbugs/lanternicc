@@ -37,6 +37,9 @@ import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 
 class createWindows {
@@ -54,7 +57,8 @@ resourceClass graphics;
 listFrame myfirstlist;
 docWriter myDocWriter;
 chatframe [] consoleChatframes;
-createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1)
+mymultiframe masterFrame;
+createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1, mymultiframe masterFrame1)
 {
 consoleSubframes=consoleSubframes1;
 sharedVariables=sharedVariables1;
@@ -62,6 +66,7 @@ myboards=myboards1;
 consoles=consoles1;
 gameconsoles=gameconsoles1;
 queue=queue1;
+masterFrame=masterFrame1;
 gamequeue1=gamequeue;
 img=img1;
 mywebframe=mywebframe1;
@@ -243,6 +248,7 @@ break;
 else if(myboards[t1].isVisible() == false && (sharedVariables.mygame[t1].myGameNumber != -100 || sharedVariables.mygame[t1].imclosed == false))
 {
   myboards[t1].setVisible(true);
+  updateBoardsMenu(t1);
   //sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
   myboards[t1].myconsolepanel.makehappen(t1);
   for(tab = 0; tab < sharedVariables.openBoardCount; tab++)
@@ -269,6 +275,7 @@ else if(sharedVariables.mygame[t1].imclosed == true)
                                     int mylast = sharedVariables.openBoardCount-1;
                                     sharedVariables.tabLooking[mylast] = t1;
                                     myboards[t1].setVisible(true);
+                                    updateBoardsMenu(t1);
                                       sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
 
                                     for(int cc=0; cc< sharedVariables.maxGameTabs; cc++)
@@ -387,10 +394,12 @@ break;
   if(sharedVariables.useTopGames == true)
   { if(myboards[boardNumber1].topGame != null)
     myboards[boardNumber1].topGame.setVisible(true);
+    updateBoardsMenu(boardNumber1);
   }
   else
-   myboards[boardNumber1].setVisible(true);
-
+ {  myboards[boardNumber1].setVisible(true);
+    updateBoardsMenu(boardNumber1);
+ }
 
    sharedVariables.desktop.add(myboards[boardNumber1] );
     // add desktop to consolesubframe so it can call its method of focus traversal between boards and consoles
@@ -514,5 +523,32 @@ myfirstlist.notifylistScroller.setVisible(true);
 
 }
 catch(Exception z){}
+}
+
+void updateBoardsMenuClosing(int num)
+{
+  
+//  JFrame framer = new JFrame(" num is " + num);
+//  framer.setSize(300, 100);
+//  framer.setVisible(true);
+
+  if(sharedVariables.myWindows == null)// shouldnt happen
+  return;
+  sharedVariables.myWindows.remove(sharedVariables.openBoards[num]);
+  sharedVariables.openBoards[num]=null;
+
+
+
+}
+void updateBoardsMenu(int num)
+{
+  
+  if(sharedVariables.myWindows == null)// happens for first board before menu is created
+  return;
+  int d=num+1;
+  sharedVariables.openBoards[num]= new JMenuItem("Board " + d + ":");
+  sharedVariables.myWindows.add(sharedVariables.openBoards[num]);
+  sharedVariables.openBoards[num].addActionListener(masterFrame);
+
 }
 } // end class

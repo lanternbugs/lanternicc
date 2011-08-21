@@ -345,7 +345,7 @@ myGameList.setSize(600,425);
 
 /*************** end list code******************/
 docWriter myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles, gameconsoles, myboards, consoleChatframes);
-mycreator = new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles, queue, img, gamequeue, mywebframe, graphics, myfirstlist, myDocWriter, consoleChatframes);
+mycreator = new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles, queue, img, gamequeue, mywebframe, graphics, myfirstlist, myDocWriter, consoleChatframes, this);
 mycreator.createConsoleFrame(); //Create first window
 mycreator.createGameFrame();
 //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
@@ -817,7 +817,7 @@ toolBar.setVisible(false);
 
 
 
-
+mycreator.updateBoardsMenu(0);  // first board
 
 }
 
@@ -970,25 +970,25 @@ public void createMenu()
 {
 
 JMenuBar menu = new JMenuBar();
- JMenu mywindows = new JMenu("File");
- mywindows.setMnemonic(KeyEvent.VK_F);
+ JMenu myfiles = new JMenu("File");
+ myfiles.setMnemonic(KeyEvent.VK_F);
 
   JMenuItem  reconnect1 = new JMenuItem("Reconnect to ICC");
-  mywindows.add(reconnect1);
+  myfiles.add(reconnect1);
   reconnect1.setMnemonic(KeyEvent.VK_R);
 
   JMenuItem  reconnect3 = new JMenuItem("Reconnect to Queen");
-  mywindows.add(reconnect3);
+  myfiles.add(reconnect3);
 
   reconnect2 = new JMenuItem("Reconnect to FICS");// off now
-  mywindows.add(reconnect2);
+  myfiles.add(reconnect2);
   reconnect2.setVisible(false);
   JMenuItem  wallpaper1 = new JMenuItem("Set Wallpaper");
-  mywindows.add(wallpaper1);
+  myfiles.add(wallpaper1);
     JMenuItem  settings2 = new JMenuItem("Save Settings");
-    mywindows.add(settings2);
+    myfiles.add(settings2);
 
- menu.add(mywindows);
+ menu.add(myfiles);
 
 
 JMenu mywindowscolors = new JMenu("Colors");
@@ -1066,7 +1066,7 @@ channelTitles.addActionListener(this);
   */
 //duplicate
 // JMenuItem mainback = new JMenuItem("Main Background");
-//  mywindows.add(mainback);
+//  myfiles.add(mainback);
 
 JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
 
@@ -1383,68 +1383,70 @@ optionsmenu.add(chattimestamp);
 
 
 
-JMenu myconsolesmenu = new JMenu("Windows");
-myconsolesmenu.setMnemonic(KeyEvent.VK_W);
+sharedVariables.myWindows = new JMenu("Windows");
+sharedVariables.myWindows.setMnemonic(KeyEvent.VK_W);
 
 // JMenuItem nconsole = new JMenuItem("New Console");
-// myconsolesmenu.add(nconsole);
+// sharedVariables.myWindows.add(nconsole);
  JMenuItem nboard = new JMenuItem("New Board");
- myconsolesmenu.add(nboard);
+ sharedVariables.myWindows.add(nboard);
 nboard.addActionListener(this);
 
 
  JMenuItem rconsole = new JMenuItem("New Chat Console");
- myconsolesmenu.add(rconsole);
+ sharedVariables.myWindows.add(rconsole);
 
   JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
-  myconsolesmenu.add(detachedconsole);
+  sharedVariables.myWindows.add(detachedconsole);
 
 
   JMenuItem rconsole2 = new JMenuItem("Customize Tab");
-  myconsolesmenu.add(rconsole2);
+  sharedVariables.myWindows.add(rconsole2);
   rconsole2.setMnemonic(KeyEvent.VK_C);
  JMenuItem  webopener = new JMenuItem("Open Web");
-    myconsolesmenu.add(webopener);
+    sharedVariables.myWindows.add(webopener);
 
  JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
-    myconsolesmenu.add(seekingGraph);
+    sharedVariables.myWindows.add(seekingGraph);
     seekingGraph.setMnemonic(KeyEvent.VK_S);
 
 JMenuItem eventlist = new JMenuItem("Activities Window");
- myconsolesmenu.add(eventlist);
+ sharedVariables.myWindows.add(eventlist);
  eventlist.setMnemonic(KeyEvent.VK_A);
 
 toolbarvisible= new JCheckBoxMenuItem("Toolbar");
-myconsolesmenu.add(toolbarvisible);
+sharedVariables.myWindows.add(toolbarvisible);
 toolbarvisible.setMnemonic(KeyEvent.VK_T);
 
 
 JMenuItem channelmap = new JMenuItem("Channel Map");
-myconsolesmenu.add(channelmap);
+sharedVariables.myWindows.add(channelmap);
 channelmap.addActionListener(this);
 channelmap.setMnemonic(KeyEvent.VK_M);
 
 
 JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
-myconsolesmenu.add(channelnotifymap);
+sharedVariables.myWindows.add(channelnotifymap);
 channelnotifymap.setMnemonic(KeyEvent.VK_N);
 channelnotifymap.addActionListener(this);
 
 JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
-myconsolesmenu.add(channelnotifyonline);
+sharedVariables.myWindows.add(channelnotifyonline);
 channelnotifyonline.setMnemonic(KeyEvent.VK_O);
 channelnotifyonline.addActionListener(this);
 
 
 
 JMenuItem toolbox = new JMenuItem("ToolBox");
-myconsolesmenu.add(toolbox);
+sharedVariables.myWindows.add(toolbox);
 
 JMenuItem cascading = new JMenuItem("Cascade");
-myconsolesmenu.add(cascading);
+sharedVariables.myWindows.add(cascading);
 cascading.addActionListener(this);
 
- menu.add(myconsolesmenu);
+sharedVariables.myWindows.addSeparator();
+
+ menu.add(sharedVariables.myWindows);
  seekingGraph.addActionListener(this);
  detachedconsole.addActionListener(this);
 webopener.addActionListener(this);
@@ -3292,6 +3294,21 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
 		}
 
 }
+for(int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++)
+{
+ if(myboards[openBoardMenu] == null)
+ break;
+ if(sharedVariables.openBoards[openBoardMenu]!=null)
+if(event.getActionCommand().equals(sharedVariables.openBoards[openBoardMenu].getText()))
+{
+ try {
+ myboards[openBoardMenu].setSelected(true);
+ break;
+ }
+ catch(Exception duiii){}
+}// end if
+
+}   // end for
 
 if(event.getActionCommand().equals("Chat Timestamp Color"))
 {

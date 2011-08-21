@@ -108,6 +108,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   
   public void setTitle(String type) {
     try {
+    int d = gameData.BoardIndex + 1;
+    type = "G" + d + ": " + type;
+
       if (sharedVariables == null || topGame == null) {
         super.setTitle(type);
         return;
@@ -3437,6 +3440,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       queue.add(data);
 
     }
+    
+      myoutput data2 = new myoutput();
+      data2.boardClosing= gameData.BoardIndex;
+      queue.add(data2);
+
   }
 
   public void internalFrameClosed(InternalFrameEvent e) {
