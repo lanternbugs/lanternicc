@@ -59,7 +59,7 @@ ConcurrentLinkedQueue<myoutput> queue;
 	int madeTextPane;
 	JPaintedGameLabel [] channelTabs;
 	JPaintedLabel mainConsoleTab;
-
+        int mainConsoleIndex=0;// points main console tab to main to start
 	JLabel tellLabel;
 	JCheckBox tellCheckbox;
         boolean wheelIsScrolling=false;
@@ -167,7 +167,43 @@ public void makehappen(int i)
 			adjustMoveList();
  								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type something
  }
+public void makerightclickmainhappen(MouseEvent e)
+{
+JPopupMenu menu2=new JPopupMenu("Popup2");
+JMenuItem item1 = new JMenuItem("main");
+ item1.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+           mainConsoleIndex=0;
 
+gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+sharedVariables.pointedToMain[gameData.BoardIndex]=true; // when you type our response text. what you type will go to main. LookingAt stays on game only console text is effected by sharedVariables.pointedToMain[gameData.BoardIndex]
+
+            }
+       });
+       menu2.add(item1);
+JMenuItem [] items = new JMenuItem[sharedVariables.maxConsoleTabs];
+
+for(int b=1; b< sharedVariables.maxConsoleTabs; b++)
+{
+  final int a=b;
+items[a] = new JMenuItem("" + a);
+ items[a].addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+           mainConsoleIndex=a;
+
+gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+sharedVariables.pointedToMain[gameData.BoardIndex]=true; // when you type our response text. what you type will go to main. LookingAt stays on game only console text is effected by sharedVariables.pointedToMain[gameData.BoardIndex]
+
+            }
+       });
+       menu2.add(items[a]);
+
+}// end for
+
+add(menu2);
+menu2.show(e.getComponent(),e.getX(),e.getY());
+
+} // end method
 public void makerightclickhappen(MouseEvent e, final int n)
 {
 JPopupMenu menu2=new JPopupMenu("Popup2");
@@ -296,7 +332,7 @@ void dispatchCommand(String myurl)
 			if(sharedVariables.pointedToMain[gameData.LookingAt] == false)
 			    output.data="`g" + gameData.LookingAt + "`" + mycommand;
 			else
-				output.data="`c0" + "`" + mycommand;
+				output.data="`c" + mainConsoleIndex + "`" + mycommand;
 
   	}
       else
@@ -379,9 +415,15 @@ comboMemory[sharedVariables.Looking[gameData.BoardIndex]]=cb.getSelectedIndex();
 // each listener does any work when a tab is clicked in makehappen() method
 mainConsoleTab.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
-					gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[0]);
-					sharedVariables.pointedToMain[gameData.BoardIndex]=true; // when you type our response text. what you type will go to main. LookingAt stays on game only console text is effected by sharedVariables.pointedToMain[gameData.BoardIndex]
+					
+ 			 if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
+ 			 makerightclickmainhappen(e);
+ 			 else
+ 			 {
 
+                                        gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+					sharedVariables.pointedToMain[gameData.BoardIndex]=true; // when you type our response text. what you type will go to main. LookingAt stays on game only console text is effected by sharedVariables.pointedToMain[gameData.BoardIndex]
+                          }// end else
 			 }
          public void mouseReleased(MouseEvent e) {}
          public void mouseEntered (MouseEvent me) {}
@@ -742,7 +784,96 @@ newframe.setVisible(true);
 
 
 
+      if( e.getModifiersEx() == 512 && sharedVariables.pointedToMain[gameData.BoardIndex] == true)// alt
+      {
 
+                 if(aa == 49  )
+		 {
+
+			  mainConsoleIndex=0;
+			  gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			  return;
+		 }
+		 if(aa == 50)
+		 {
+
+
+			mainConsoleIndex=1;
+			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			return;
+		}
+		 if(aa == 51  )
+		 {
+
+			 mainConsoleIndex=2;
+			 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			 return;
+		 }
+		 if(aa == 52)
+		 {
+
+
+			mainConsoleIndex=3;
+			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			return;
+		 }
+		 if(aa == 53  )
+		 {
+
+			 mainConsoleIndex=4;
+			 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			 return;
+		 }
+		 if(aa == 54)
+		 {
+
+		mainConsoleIndex=5;
+		gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+		return;
+		 }
+		 if(aa == 55  )
+		 {
+			mainConsoleIndex=6;
+			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			return;
+
+		 }
+		 if(aa == 56)
+		 {
+			 mainConsoleIndex=7;
+			 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			 return;
+
+		 }
+		 if(aa == 57  )
+		 {
+			mainConsoleIndex=8;
+			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			return;
+		}
+		if(aa == 48)
+		{
+			mainConsoleIndex=9;
+			gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			return;
+		}
+
+		 if(aa == 45  )
+		 {
+
+			 mainConsoleIndex=10;
+			 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+			 return;
+		}
+		if(aa == 61)
+		{
+
+		mainConsoleIndex=11;
+		gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
+		return;
+		}
+
+                }// if alt and pointed to main
 
 
 
@@ -842,7 +973,7 @@ newframe.setVisible(true);
 							 if(sharedVariables.pointedToMain[gameData.LookingAt] == false)
 						 		output.data="`g" + gameData.LookingAt + "`" + mes;
 						 	 else
-						 		output.data="`c0" + "`" + mes;
+						 		output.data="`c" + mainConsoleIndex + "`" + mes;
 					   	 }
 						      output.consoleNumber=0;
 						      output.game=1;
@@ -1235,7 +1366,7 @@ else
 				if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
 					doc=sharedVariables.mygamedocs[gameData.LookingAt];
 				else
-					doc=sharedVariables.mydocs[0]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
+					doc=sharedVariables.mydocs[mainConsoleIndex]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
 
 	  			//doc.insertString(doc.getEndPosition().getOffset(), mes, null);
 
@@ -1279,7 +1410,7 @@ else
 						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
 					int SUBFRAME_CONSOLES=0;// game
 					int maxLinks =75;
-					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, /*gameData.LookingAt*/ mainConsoleIndex, maxLinks, SUBFRAME_CONSOLES, attrs, null);
 
 
 							//}
