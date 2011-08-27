@@ -186,7 +186,14 @@ JMenuItem [] items = new JMenuItem[sharedVariables.maxConsoleTabs];
 for(int b=1; b< sharedVariables.maxConsoleTabs; b++)
 {
   final int a=b;
-items[a] = new JMenuItem("" + a);
+  String title = "" + a;
+if(!sharedVariables.consoleTabCustomTitles[b].equals(""))
+title = sharedVariables.consoleTabCustomTitles[b];
+else if(!sharedVariables.consoleTabTitles[b].equals(""))
+title = sharedVariables.consoleTabTitles[b];
+
+
+items[a] = new JMenuItem(title);
  items[a].addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
            mainConsoleIndex=a;
