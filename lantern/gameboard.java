@@ -3601,7 +3601,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 }// end class
 
 class randomPieces {
-
+  Random randomGenerator = new Random();
   int blackPieceNum;
   int whitePieceNum;
   int boardNum;
@@ -3618,10 +3618,11 @@ class randomPieces {
 
  void randomizeGraphics() {
    resourceClass temp = new resourceClass();
-   Random randomGenerator = new Random();
-   whitePieceNum = getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1);
+
+   int maxDepth=5;
+   whitePieceNum = getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1, maxDepth);
    blackPieceNum = getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
-                             whitePieceNum);
+                             whitePieceNum, maxDepth);
 
    boardNum = randomGenerator.nextInt(temp.maxBoards-1);
  }
@@ -3651,7 +3652,7 @@ class randomPieces {
  }
 
 
- int getChoiceWhite(int num, int otherset) {
+ int getChoiceWhite(int num, int otherset, int depth) {
    int i=0;
    int y;
    for (y=0; y<excludedPiecesWhite.length; y++) {
@@ -3661,6 +3662,8 @@ class randomPieces {
 
        if (i != num)
        i++;
+       if(i==num && depth > 0)
+       return getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1, depth-1);
 
    }     // end for
 
@@ -3675,7 +3678,7 @@ class randomPieces {
    return 0;
  }     // end function
 
-  int getChoiceBlack(int num, int otherset) {
+  int getChoiceBlack(int num, int otherset, int depth) {
    int i=0;
    int y;
 
@@ -3686,6 +3689,9 @@ class randomPieces {
 
        if (i != num)
        i++;
+       if(i== num && depth > 0)
+       return getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
+                             otherset, depth-1);
 
    }     // end for
 
