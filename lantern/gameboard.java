@@ -3657,14 +3657,14 @@ class randomPieces {
    int y;
    for (y=0; y<excludedPiecesWhite.length; y++) {
      if (excludedPiecesWhite[y] == false && y != otherset)
-       if (i==num)
+     {  if (i==num)
          return y;
 
        if (i != num)
        i++;
        if(i==num && depth > 0)
        return getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1, depth-1);
-
+   }
    }     // end for
 
    for (y=0; y<excludedPiecesWhite.length; y++) {
@@ -3684,7 +3684,7 @@ class randomPieces {
 
    for (y=0; y<excludedPiecesBlack.length; y++) {
      if (excludedPiecesBlack[y] == false && y != otherset)
-       if (i==num)
+    {   if (i==num)
          return y;
 
        if (i != num)
@@ -3692,7 +3692,7 @@ class randomPieces {
        if(i== num && depth > 0)
        return getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
                              otherset, depth-1);
-
+   }
    }     // end for
 
    for (y=0; y<excludedPiecesBlack.length; y++) {
