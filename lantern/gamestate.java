@@ -69,7 +69,10 @@ int whiteMaterialCount;
 int blackMaterialCount;
 int blank; // for an x in examine mode
 int madeMove;
-boolean [] excludedPieces;
+boolean [] excludedPiecesWhite;
+boolean [] excludedPiecesBlack;
+
+
 boolean imclosed;
 randomPieces randomObj;
 
@@ -112,12 +115,13 @@ class Shapes {
 		from=to=type=0;
 	}
 }
-gamestate(boolean [] excludedPieces1)
+gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2)
 {
 
-       excludedPieces=excludedPieces1;
+       excludedPiecesWhite=excludedPieces1;
+       excludedPiecesBlack=excludedPieces2;
 	myShapes = new ArrayList();
-	randomObj = new randomPieces(excludedPieces);
+	randomObj = new randomPieces(excludedPiecesWhite, excludedPiecesBlack);
 	randomObj.randomizeGraphics();
 	ficsSet=0;
 	wild=0;

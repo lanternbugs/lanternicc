@@ -1345,9 +1345,15 @@ autolittleper.addActionListener(this);
 randomArmy.addActionListener(this);
 randomGraphics.add(randomArmy);
 
-JMenuItem configureRand = new JMenuItem("Configure Random Pieces");
+JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
 configureRand.addActionListener(this);
 randomGraphics.add(configureRand);
+
+JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
+configureRandBlack.addActionListener(this);
+randomGraphics.add(configureRandBlack);
+
+
 
  randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
 randomTiles.addActionListener(this);
@@ -4223,11 +4229,17 @@ if(event.getActionCommand().equals("Random Piece Set Observe Only"))
         randomArmy.setSelected(false);
         }
 }
-if(event.getActionCommand().equals("Configure Random Pieces"))
+if(event.getActionCommand().equals("Configure Random Pieces For White"))
 {
- customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables);
+ customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesWhite, true);
  goConfigure.setVisible(true);
 }
+if(event.getActionCommand().equals("Configure Random Pieces For Black"))
+{
+ customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesBlack, false);
+ goConfigure.setVisible(true);
+}
+
 
 if(event.getActionCommand().equals("Random Square Tiles Observe Only"))
 {

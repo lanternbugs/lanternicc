@@ -578,11 +578,11 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[donetime-channel] ";
 
 // ecluded pieces
-for(int excl = 0; excl < sharedVariables.excludedPieces.length; excl++)
+for(int excl = 0; excl < sharedVariables.excludedPiecesWhite.length; excl++)
 {
- if(sharedVariables.excludedPieces[excl]==true)
+ if(sharedVariables.excludedPiecesWhite[excl]==true)
  {
-   
+
 // channel timestamp
 	set_string = set_string + "[excluded] ";
 
@@ -597,6 +597,25 @@ for(int excl = 0; excl < sharedVariables.excludedPieces.length; excl++)
 
 }// end for
 
+// ecluded pieces
+for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
+{
+ if(sharedVariables.excludedPiecesBlack[excl]==true)
+ {
+
+// channel timestamp
+	set_string = set_string + "[bexcluded] ";
+
+		set_string = set_string + excl + " ";
+
+	// closing
+		set_string = set_string + "[donebexcluded] ";
+
+
+
+ }// end if
+
+}// end for
 
 
 
@@ -1706,7 +1725,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				{
 				try {
 					int truth2 = Integer.parseInt(tokens.nextToken());
-                                         sharedVariables.excludedPieces[truth2]=true;
+                                         sharedVariables.excludedPiecesWhite[truth2]=true;
+
+                                }
+                                catch(Exception exclusion){}
+
+                                }// end excluded
+				if (temp.equals("[bexcluded]"))
+				{
+				try {
+					int truth2 = Integer.parseInt(tokens.nextToken());
+                                         sharedVariables.excludedPiecesBlack[truth2]=true;
 
                                 }
                                 catch(Exception exclusion){}

@@ -195,7 +195,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       readLock.lock();
       if(sharedVariables.mygame[gameData.BoardIndex] == null)
         sharedVariables.mygame[gameData.BoardIndex] =
-          new gamestate(sharedVariables.excludedPieces);
+          new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
       readLock.unlock();
       //writeout("going to create overall\n");
       myconsolepanel =
@@ -680,7 +680,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     Lock readLock = rwl.readLock();
     readLock.lock();
     sharedVariables.mygame[gameData.BoardIndex] =
-      new gamestate(sharedVariables.excludedPieces);
+      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
     readLock.unlock();
 
     sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
@@ -789,7 +789,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     Lock readLock = rwl.readLock();
     readLock.lock();
     sharedVariables.mygame[gameData.BoardIndex] =
-      new gamestate(sharedVariables.excludedPieces);
+      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
     readLock.unlock();
 
     sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
@@ -915,7 +915,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       mypanel.repaint();
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
     timer = new Timer (  ) ;
-    timer.scheduleAtFixedRate( new ToDoTask (  ) , 150 ,150) ; 
+    timer.scheduleAtFixedRate( new ToDoTask (  ) , 150 ,150) ;
     resetMoveList();
 
     if (sharedVariables.mygame[gameData.BoardIndex].wild == 24 &&
@@ -3606,9 +3606,11 @@ class randomPieces {
   int whitePieceNum;
   int boardNum;
   channels SharedVariables;
-  boolean [] excludedPieces;
-  randomPieces(boolean [] excludedPieces1) {
-    excludedPieces=excludedPieces1;
+  boolean [] excludedPiecesWhite;
+   boolean [] excludedPiecesBlack;
+  randomPieces(boolean [] excludedPieces1, boolean [] excludedPieces2) {
+    excludedPiecesWhite=excludedPieces1;
+    excludedPiecesBlack=excludedPieces2;
     blackPieceNum=0;
     whitePieceNum=0;
     boardNum=0;
@@ -3617,17 +3619,17 @@ class randomPieces {
  void randomizeGraphics() {
    resourceClass temp = new resourceClass();
    Random randomGenerator = new Random();
-   whitePieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice()), -1);
-   blackPieceNum = getChoice(randomGenerator.nextInt(getMaxPieceChoice() - 1),
+   whitePieceNum = getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1);
+   blackPieceNum = getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
                              whitePieceNum);
 
    boardNum = randomGenerator.nextInt(temp.maxBoards-1);
  }
-  
- int getMaxPieceChoice() {
+
+ int getMaxPieceChoiceWhite() {
    int x=0;
-   for (int y=0; y<excludedPieces.length; y++)
-     if (excludedPieces[y]==false)
+   for (int y=0; y<excludedPiecesWhite.length; y++)
+     if (excludedPiecesWhite[y]==false)
        x++;
 
    if (x > 2)
@@ -3636,18 +3638,70 @@ class randomPieces {
    return 2;
  }
 
- int getChoice(int num, int otherset) {
+ int getMaxPieceChoiceBlack() {
+   int x=0;
+   for (int y=0; y<excludedPiecesBlack.length; y++)
+     if (excludedPiecesBlack[y]==false)
+       x++;
+
+   if (x > 2)
+     return x;
+
+   return 2;
+ }
+
+
+ int getChoiceWhite(int num, int otherset) {
    int i=0;
-   for (int y=0; y<excludedPieces.length; y++) {
-     if (excludedPieces[y] == false && y != otherset) {
+   int y;
+   for (y=0; y<excludedPiecesWhite.length; y++) {
+     if (excludedPiecesWhite[y] == false && y != otherset)
        if (i==num)
          return y;
-    
+
+       if (i != num)
        i++;
-     }    // end if
+
    }     // end for
+
+   for (y=0; y<excludedPiecesWhite.length; y++) {
+     if (excludedPiecesWhite[y] == false && y != otherset)
+         return y;
+
+
+
+   }     // end for
+
    return 0;
  }     // end function
+
+  int getChoiceBlack(int num, int otherset) {
+   int i=0;
+   int y;
+
+   for (y=0; y<excludedPiecesBlack.length; y++) {
+     if (excludedPiecesBlack[y] == false && y != otherset)
+       if (i==num)
+         return y;
+
+       if (i != num)
+       i++;
+
+   }     // end for
+
+   for (y=0; y<excludedPiecesBlack.length; y++) {
+     if (excludedPiecesBlack[y] == false && y != otherset)
+         return y;
+
+
+
+   }     // end for
+
+   return 0;
+ }     // end function
+
+
+
 
 
 } // end grpahics sub class

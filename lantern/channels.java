@@ -65,7 +65,8 @@ boolean autoSlomato;
 boolean autoOlive;
 boolean autoLittlePer;
 boolean [] pointedToMain = new boolean[100];
-boolean [] excludedPieces;
+boolean [] excludedPiecesBlack;
+boolean [] excludedPiecesWhite;
 boolean highlightMoves;
 boolean makeSounds;
 boolean makeObserveSounds;
@@ -298,7 +299,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.43";
+version = "v4.44";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -329,10 +330,14 @@ sposIcon = new ImageIcon("images/sposition.gif", "Sposition");
 catch(Exception d){}
 myseek = new seekData();
 resourceClass dummyUse = new resourceClass();
-excludedPieces = new boolean[dummyUse.maxPieces - 1];
-for(int excl = 0; excl < dummyUse.maxPieces - 1; excl++)
-excludedPieces[excl]=false;
+excludedPiecesWhite = new boolean[dummyUse.maxPieces - 1];
+excludedPiecesBlack = new boolean[dummyUse.maxPieces - 1];
 
+for(int excl = 0; excl < dummyUse.maxPieces - 1; excl++)
+{
+  excludedPiecesWhite[excl]=false;
+  excludedPiecesBlack[excl]=false;
+}
 
 noidle=false;
 standAlone = true;

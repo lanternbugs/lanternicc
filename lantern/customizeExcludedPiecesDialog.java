@@ -24,19 +24,26 @@ import javax.swing.GroupLayout.*;
 
 class customizeExcludedPiecesDialog extends JDialog
 {
+resourceClass graphics;
+boolean [] excludedPieces;
 JTextField field;
+JImagePanel myImagePanel=new JImagePanel();
 JButton okButton;
 JButton cancelButton;
 resourceClass dummyUse = new resourceClass();
 JCheckBox [] mypieces;
+int Pieces = 0;
 JPanel checkPanel = new JPanel();
 channels sharedVariables;
 int notIndex;
-customizeExcludedPiecesDialog(JFrame frame, boolean mybool, channels sharedVariables1)
+boolean amWhite;
+customizeExcludedPiecesDialog(JFrame frame, boolean mybool, channels sharedVariables1, 	resourceClass graphics1, boolean [] excludedPieces1, boolean amWhite1)
 {
 super(frame, mybool);
 sharedVariables=sharedVariables1;
-
+graphics=graphics1;
+excludedPieces =excludedPieces1;
+amWhite=amWhite1;
 String excluded=getExcluded();
 if(excluded== null)
 excluded = "";
@@ -46,14 +53,32 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 checkPanel.setLayout(new GridLayout(11, 2));
 mypieces = new JCheckBox[dummyUse.maxPieces - 1];
+
+
+
 for(int z=0; z< dummyUse.maxPieces - 1; z++)
 {
   mypieces[z] = new JCheckBox(dummyUse.piecePaths[z]);
-  if(sharedVariables.excludedPieces[z]==false)
+  if(excludedPieces[z]==false)
   mypieces[z].setSelected(true);
   checkPanel.add(mypieces[z]);
+  final int num=z;
+  mypieces[z].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event)
+				{
+                                  //String mytext= field.getText();
+				 try
+			 	{
+                                         Pieces=num;
+                                         myImagePanel.repaint();
+                                  }
+                                  catch(Exception dummy){}
 
-}
+    }// end method
+    }// end class
+    );
+
+} // end for
 
 okButton = new JButton("Ok");
 cancelButton = new JButton("Cancel");
@@ -70,9 +95,9 @@ okButton.addActionListener(new ActionListener() {
 			 	{
 			         for(int z=0; z<dummyUse.maxPieces-1; z++)
 			         if(mypieces[z].isSelected()==true)
-			         sharedVariables.excludedPieces[z]=false;
+			         excludedPieces[z]=false;
 			         else
-			         sharedVariables.excludedPieces[z]=true;
+			         excludedPieces[z]=true;
 
 				dispose();
 				}
@@ -119,7 +144,8 @@ field2.setText(getText());
 
 
 
-	hGroup.addComponent(myscroller);
+	hGroup.addComponent(myImagePanel);
+        hGroup.addComponent(myscroller);
         hGroup.addComponent(checkPanel);
 	h4.addComponent(okButton);
 	h4.addComponent(cancelButton);
@@ -147,7 +173,7 @@ SequentialGroup v4 = layout.createSequentialGroup();
 	v3.addComponent(cancelButton);
 
 
-
+        v4.addComponent(myImagePanel, 50, 50, 50);
           v4.addGroup(v3);
 
 
@@ -167,7 +193,7 @@ String getExcluded()
 String mess=" ";
 
 for(int z=0; z < dummyUse.maxPieces - 1; z++)
-if(sharedVariables.excludedPieces[z] == true)
+if(excludedPieces[z] == true)
 {
 
 mess+= " " + z;
@@ -178,7 +204,37 @@ return mess;
 String getText()
 {
 String mess="";
-mess = "Check the pieces you wish for random pieces on observe to choose from and uncheck those you dont. Hit ok to save your changes.";
+if(amWhite == true)
+mess = "Check the pieces you wish for random pieces on observe to choose from for white and uncheck those you dont. Hit ok to save your changes.";
+else
+mess = "Check the pieces you wish for random pieces on observe to choose from for black and uncheck those you dont. Hit ok to save your changes.";
+
+
  return mess;
 }
+
+class JImagePanel extends JPanel
+{
+	public void paintComponent(Graphics g)
+		{
+
+		try {
+
+		super.paintComponent(g);
+
+		setBackground(sharedVariables.boardBackgroundColor);
+
+		Graphics2D g2 = (Graphics2D) g;
+		int boardx=5;
+		int boardy=5; // upper left
+		int square=50;
+		int dif=2;
+                for(int a=0; a<6; a++)
+                g.drawImage(graphics.pieces[Pieces][a], boardx +  a * square + dif , boardy + dif, square - dif, square-4, this);
+
+  }
+  catch(Exception dui){}
+
+}
+}// end image class
 }// end class

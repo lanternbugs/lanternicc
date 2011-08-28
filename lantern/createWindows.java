@@ -276,7 +276,7 @@ else if(sharedVariables.mygame[t1].imclosed == true)
                                     sharedVariables.tabLooking[mylast] = t1;
                                     myboards[t1].setVisible(true);
                                     updateBoardsMenu(t1);
-                                      sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPieces);
+                                      sharedVariables.mygame[t1]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
 
                                     for(int cc=0; cc< sharedVariables.maxGameTabs; cc++)
                                     if(myboards[cc]!=null)
