@@ -1263,6 +1263,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                             topSize.width, topSize.height);
     mycontrolspanel.repaint(botPoint.x, botPoint.y,
                             botSize.width, botSize.height);
+                            
+   if(sharedVariables.mygame[gameData.LookingAt].wild==24)// paint bug partners clock on gameboardpanel
+   mypanel.repaint((int) mypanel.getWidth()/ 2, 0, (int)mypanel.getWidth()/ 2, sharedVariables.myGameFont.getSize() + 5);
   }
 
   class ToDoTask extends TimerTask {
@@ -2288,6 +2291,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       return sharedVariables.boardType;
     }
 
+
     public void paintComponent(Graphics g) {
 
       try {
@@ -2399,71 +2403,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         int c=0;
         //g.drawString("" + blackClock,  timex,  otimey);
         //g.drawString("" + whiteClock,  timex,  ptimey);
-        int wsecI = sharedVariables.mygame[gameData.LookingAt].whiteSecond;
-        int bsecI = sharedVariables.mygame[gameData.LookingAt].blackSecond;
-        int wminI = sharedVariables.mygame[gameData.LookingAt].whiteMinute;
-        int bminI = sharedVariables.mygame[gameData.LookingAt].blackMinute;
-
-        String	wsec="" + Math.abs(wsecI);
-        String	wmin="" + Math.abs(wminI);
-
-        String	bsec="" + Math.abs(bsecI);
-        String  bmin="" + Math.abs(bminI);
-
-        String whiteTimeDisplay = "";
-        String blackTimeDisplay = "";
-
-        if (sharedVariables.showTenths == 1) {
-          boolean goTenth=false;
-          if (sharedVariables.mygame[gameData.LookingAt].whiteMinute==0 &&
-              wsecI < 15 &&
-              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -1)
-            wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
-          if (sharedVariables.mygame[gameData.LookingAt].blackMinute==0 &&
-              bsecI < 15 &&
-              sharedVariables.mygame[gameData.LookingAt].blackSecond > -1)
-            bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
-
-        } else if(sharedVariables.showTenths == 2) {// always
-          wsec=wsec + "." + sharedVariables.mygame[gameData.LookingAt].whiteTenth;
-          bsec=bsec + "." + sharedVariables.mygame[gameData.LookingAt].blackTenth;
-        }
-
-        if (sharedVariables.mygame[gameData.LookingAt].whiteSecond >=0 &&
-            sharedVariables.mygame[gameData.LookingAt].whiteMinute >= 0 &&
-            sharedVariables.mygame[gameData.LookingAt].wtime>=0 ) {
-          if (sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 &&
-              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
-            whiteTimeDisplay =  " " + wmin + ":0" + wsec;
-          else
-            whiteTimeDisplay = " " + wmin + ":" + wsec;
-        } else {
-          if (sharedVariables.mygame[gameData.LookingAt].whiteSecond < 10 &&
-              sharedVariables.mygame[gameData.LookingAt].whiteSecond > -10)
-            whiteTimeDisplay = "-" + wmin + ":0" + wsec;
-          else
-            whiteTimeDisplay = "-" + wmin + ":" + wsec;
-        }
-
-        if (sharedVariables.mygame[gameData.LookingAt].blackSecond >=0 &&
-            sharedVariables.mygame[gameData.LookingAt].blackMinute >= 0 &&
-            sharedVariables.mygame[gameData.LookingAt].btime >=0) {
-
-          if (sharedVariables.mygame[gameData.LookingAt].blackSecond<10 &&
-              sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
-            blackTimeDisplay = " " + bmin+ ":0" + bsec;
-          else
-            blackTimeDisplay = " " + bmin + ":" + bsec;
-          
-        } else {
-
-          if (sharedVariables.mygame[gameData.LookingAt].blackSecond<10 &&
-              sharedVariables.mygame[gameData.LookingAt].blackSecond > -10)
-            blackTimeDisplay = "-" + bmin+ ":0" + bsec;
-          else
-            blackTimeDisplay = "-" + bmin + ":" + bsec;
-
-        }
+       TimeDisplayClass timeGetter = new TimeDisplayClass(sharedVariables);
+        String whiteTimeDisplay = timeGetter.getWhiteTimeDisplay(gameData.LookingAt);
+        String blackTimeDisplay = timeGetter.getBlackTimeDisplay(gameData.LookingAt);
+         timeGetter=null;
         String whiteCount="";
         String blackCount="";
 
@@ -2480,6 +2423,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                 [gameData.LookingAt].blackMaterialCount+")";
             }
         } catch(Exception darn) {}
+
 
         if (sharedVariables.mygame[gameData.LookingAt].iflipped == 1) {
 
@@ -2541,7 +2485,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
       } catch(Exception e) {}
     }
-    
+
     gameboardControlsPanel() {
 
       topClockDisplay = new JLabel("0");
@@ -3702,4 +3646,107 @@ class randomPieces {
 
 
 } // end grpahics sub class
+class TimeDisplayClass
+{
+channels sharedVariables;
+TimeDisplayClass(channels sharedVariables1)
+{
+ sharedVariables=sharedVariables1;
+}
 
+
+   String getWhiteTimeDisplay(int Looking)
+   {
+   String text="";
+        int wsecI = sharedVariables.mygame[Looking].whiteSecond;
+        int wminI = sharedVariables.mygame[Looking].whiteMinute;
+
+        String	wsec="" + Math.abs(wsecI);
+        String	wmin="" + Math.abs(wminI);
+
+
+           if (sharedVariables.showTenths == 1) {
+          boolean goTenth=false;
+          if (sharedVariables.mygame[Looking].whiteMinute==0 &&
+              wsecI < 15 &&
+              sharedVariables.mygame[Looking].whiteSecond > -1)
+            wsec=wsec + "." + sharedVariables.mygame[Looking].whiteTenth;
+
+
+        } else if(sharedVariables.showTenths == 2) {// always
+          wsec=wsec + "." + sharedVariables.mygame[Looking].whiteTenth;
+
+        }
+
+        if (sharedVariables.mygame[Looking].whiteSecond >=0 &&
+            sharedVariables.mygame[Looking].whiteMinute >= 0 &&
+            sharedVariables.mygame[Looking].wtime>=0 ) {
+          if (sharedVariables.mygame[Looking].whiteSecond < 10 &&
+              sharedVariables.mygame[Looking].whiteSecond > -10)
+            text =  " " + wmin + ":0" + wsec;
+          else
+            text = " " + wmin + ":" + wsec;
+        } else {
+          if (sharedVariables.mygame[Looking].whiteSecond < 10 &&
+              sharedVariables.mygame[Looking].whiteSecond > -10)
+            text = "-" + wmin + ":0" + wsec;
+          else
+            text = "-" + wmin + ":" + wsec;
+        }
+
+
+
+
+
+   return text;
+   }
+String getBlackTimeDisplay(int Looking)
+ {
+
+String text="";
+        int bsecI = sharedVariables.mygame[Looking].blackSecond;
+       int bminI = sharedVariables.mygame[Looking].blackMinute;
+         String	bsec="" + Math.abs(bsecI);
+        String  bmin="" + Math.abs(bminI);
+
+
+            if (sharedVariables.showTenths == 1) {
+          boolean goTenth=false;
+
+          if (sharedVariables.mygame[Looking].blackMinute==0 &&
+              bsecI < 15 &&
+              sharedVariables.mygame[Looking].blackSecond > -1)
+            bsec=bsec + "." + sharedVariables.mygame[Looking].blackTenth;
+
+        } else if(sharedVariables.showTenths == 2) {// always
+
+          bsec=bsec + "." + sharedVariables.mygame[Looking].blackTenth;
+        }
+
+
+
+           if (sharedVariables.mygame[Looking].blackSecond >=0 &&
+            sharedVariables.mygame[Looking].blackMinute >= 0 &&
+            sharedVariables.mygame[Looking].btime >=0) {
+
+          if (sharedVariables.mygame[Looking].blackSecond<10 &&
+              sharedVariables.mygame[Looking].blackSecond > -10)
+            text = " " + bmin+ ":0" + bsec;
+          else
+            text = " " + bmin + ":" + bsec;
+
+        } else {
+
+          if (sharedVariables.mygame[Looking].blackSecond<10 &&
+              sharedVariables.mygame[Looking].blackSecond > -10)
+            text = "-" + bmin+ ":0" + bsec;
+          else
+            text = "-" + bmin + ":" + bsec;
+
+        }
+
+        return text;
+        }           // end method get black time
+
+
+}

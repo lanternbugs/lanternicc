@@ -612,7 +612,13 @@ paintShapes(g, boardx, boardy, squarex, squarey);
  {
 	g2.setColor(sharedVariables.boardForegroundColor);
 	g2.setFont(sharedVariables.myGameFont);
-	g2.drawString("" + sharedVariables.mygame[bugging].realname1  + " vs. " + sharedVariables.mygame[bugging].realname2, bugboardx + 10, sharedVariables.myGameFont.getSize() + 2);
+         TimeDisplayClass timeGetter = new TimeDisplayClass(sharedVariables);
+        sharedVariables.mygame[bugging].whiteTimeDisplay = timeGetter.getWhiteTimeDisplay(bugging);
+        sharedVariables.mygame[bugging].blackTimeDisplay = timeGetter.getBlackTimeDisplay(bugging);
+         timeGetter=null;
+
+	g2.drawString("" + sharedVariables.mygame[bugging].realname1  + " vs. " + sharedVariables.mygame[bugging].realname2 + " " + sharedVariables.mygame[bugging].whiteTimeDisplay + " " + sharedVariables.mygame[bugging].blackTimeDisplay
+        , bugboardx + 10, sharedVariables.myGameFont.getSize() + 2);
 
 
  }// end if bugging > -1

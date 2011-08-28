@@ -77,7 +77,8 @@ boolean imclosed;
 randomPieces randomObj;
 
 boolean becameExamined;
-
+String whiteTimeDisplay;
+String blackTimeDisplay;
 String myColor;
 String title;
 String tabtitle;
@@ -135,6 +136,8 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2)
 	country2="";
 	realelo1="";
 	realelo2="";
+	whiteTimeDisplay="";
+	blackTimeDisplay="";
 	gameListing="";
 	title = "new board";
 	movetop=0;
