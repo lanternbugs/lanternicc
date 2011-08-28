@@ -93,6 +93,7 @@ class gameboardPanel extends JPanel implements MouseMotionListener, MouseListene
 	channels sharedVariables;
 	ConcurrentLinkedQueue<myoutput> queue;
 	resourceClass graphics;
+	int bugging = -1;
 
 gameboardPanel(Image img1[], channels sharedVariables1, gamestuff gameData1, ConcurrentLinkedQueue<myoutput> queue1, resourceClass graphics1)
 {
@@ -115,8 +116,12 @@ addMouseListener(this);
 		int examineSquareY;
 		int examineOriginX;
 		int examineOriginY;
-		int boardx;
+		int bugExamineOriginY;
+		int bugExamineOriginX;
+                int boardx;
 		int boardy;
+		int bugboardx;
+		int bugboardy;
 
 	    int squarex;
 	    int squarey;
@@ -130,23 +135,36 @@ void setValues()
 {
 
 		        width = getWidth();
+		        if(bugging > -1)
+		        width = (int) width / 2;
+
 				int trueWidth=width;
 				height = getHeight();
-
-		if(width > height * 5/4 && sharedVariables.aspect == 1)
+                                if(bugging > -1)
+                                boardy -= sharedVariables.myGameFont.getSize() + 5;
+		if(bugging == -1)
+		{
+                if(width > height * 5/4 && sharedVariables.aspect == 1)
 		width = (int) height * 5/4;
 		if(width > height * 4/3 && sharedVariables.aspect == 2)
 		width = (int) height * 4/3;
 		if(width > height * 3/2 && sharedVariables.aspect == 3)
 		width = (int) height * 3/2;
-
-				if(width < 150)
+                }
+				if(width < 150 && bugging == -1)
 				width = 150;
+				else if(bugging > -1 && width < 75)
+				width = 75;
+
 				if(height < 150)
 				height = 150;
-				boardx = 5;
-		        boardy = 0;
 
+				boardx = 5;
+		                boardy = 0;
+		                if(bugging > -1)
+		                boardy =sharedVariables.myGameFont.getSize() + 5;
+                                bugboardx=width + 5;
+                                bugboardy=boardy;
 				squarex = 5;
 				squarey=5;
 				double width1 = (double) width - boardx;
@@ -155,7 +173,7 @@ void setValues()
 				squarey = (int) (height1 * 1/8);
 
 
-		if(sharedVariables.aspect == 0) // 1:1
+		if(sharedVariables.aspect == 0 || bugging > -1 ) // 1:1 and playingBug is the partners game
 		{
 			if(squarex > squarey)// preserve square aspect ratio // above this preserves just piece
 			squarex=squarey;
@@ -166,6 +184,13 @@ void setValues()
                 boardy = (height - eightHigh) / 2;
                 if(boardy<0)
                 boardy=0;
+                if(bugging > -1)
+                {
+                 if(boardy < sharedVariables.myGameFont.getSize() + 5)
+                 boardy = sharedVariables.myGameFont.getSize() + 5;
+                 bugboardy=boardy;
+
+                }
                 int eightWide = squarex * 9 + 5;
                 boardx = (width - eightWide) / 2;
                 if(boardx < 5)
@@ -193,6 +218,8 @@ void setValues()
 
 			examineOriginX= (int) (8 * squarex) + boardx + (int) (squarex * .2); // origin is upper left corner. where we start drawing this piece pallette
 			examineOriginY= boardy;
+			bugExamineOriginX=examineOriginX + width;
+			bugExamineOriginY=examineOriginY;
 			//g.drawString("sqx " + squarex + "sqy " + squarey + "esqx " + examineSquareX + "esqy "+ examineSquareY + "eOx " + examineOriginX + "eOy " + examineOriginY, 0, height - 20);
 		}
 
@@ -317,7 +344,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 		try {
 
 		super.paintComponent(g);
-
+                 bugging = amPlayingBug();
 		setBackground(sharedVariables.boardBackgroundColor);
 		int [] slidingBoard = new int[64];
 		int sliding = 0;
@@ -421,6 +448,25 @@ the slider is on. otherwise it draws the curernt in play board*/
 					g.drawImage(graphics.boards[getBoardType()][graphics.dark], boardx +  b * squarex,  boardy + aa * squarey, squarex, squarey, this);
 
 				}
+
+                                if(bugging > -1)
+                                {
+
+				if(getBoardType() == 0)
+					g2.fill(new Rectangle2D.Double((double)bugboardx +  b * squarex, (double) bugboardy + aa * squarey, (double) squarex, (double)squarey));
+				else
+				{
+					if((b+1)%2==c)
+					g.drawImage(graphics.boards[getBoardType()][graphics.light], bugboardx +  b * squarex,  bugboardy + aa * squarey,  squarex, squarey, this);
+					else
+					g.drawImage(graphics.boards[getBoardType()][graphics.dark], bugboardx +  b * squarex,  bugboardy + aa * squarey, squarex, squarey, this);
+
+				}
+
+
+                                }// drawing partners board squares if bugging
+
+
 				int gameslot = 63 - (a * 8 + b);
 				if(sliding == 0)
 				{
@@ -441,6 +487,25 @@ the slider is on. otherwise it draws the curernt in play board*/
 				}// end for
 
 			    }// end highlight moves
+
+				if(sharedVariables.highlightMoves == true && bugging > -1)// hightlight bug partners move
+				if(gameslot == sharedVariables.mygame[bugging].lastfrom || gameslot == sharedVariables.mygame[bugging].lastto)
+				{ g2.setColor(sharedVariables.highlightcolor);
+
+
+    				// horizontal
+				for(int thick = 0; thick<lineThick; thick++) // we draw multiple times at different offsents to create say 3 thick
+				{
+					g2.draw(new Line2D.Double((double)bugboardx +  b * squarex  , (double) bugboardy + aa * squarey + thick , (double)bugboardx +  b * squarex + squarex - 1 ,(double) bugboardy + aa * squarey + (thick ) ));
+					g2.draw(new Line2D.Double((double)bugboardx +  b * squarex, (double) bugboardy + aa * squarey + squarey - 1 - thick , (double)bugboardx +  b * squarex + squarex -1 ,(double) bugboardy + aa * squarey+squarey - 1 - (thick )));
+					// vertical
+					g2.draw(new Line2D.Double((double)bugboardx +  b * squarex + thick , (double) bugboardy + aa * squarey , (double)bugboardx +  b * squarex + (thick) ,(double) bugboardy + aa * squarey + squarey -1));
+					g2.draw(new Line2D.Double((double)bugboardx +  b * squarex + squarex -1 - thick, (double) bugboardy + aa * squarey , (double)bugboardx +  b * squarex + squarex - 1 - (thick),(double) bugboardy + aa * squarey + squarey - 1 - (thick )));
+				}// end for
+
+			    }// end highlight moves
+
+
 
 				// draw premove highlight
 				if(!sharedVariables.mygame[gameData.LookingAt].premove.equals("") && sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING)// state 1 i.e. playing
@@ -486,6 +551,24 @@ the slider is on. otherwise it draws the curernt in play board*/
 			}
 			catch(Exception e)
 			{ }
+			
+                         if(bugging > -1)
+                         {
+				piece=sharedVariables.mygame[bugging].board[gameslot];
+				try
+      			{
+		 		 if(piece > 0 )
+				//g.drawImage(img[piece-1], boardx +  b * squarex + 2 , boardy + aa * squarey + 2 , squarex - 4, squarey-4, this);
+				// above assumes x goes from the squares x + 2 to the squares x -2 or width is x-4 same with y
+				// we now use an additional value for decreasing x and y of piece ( one or other) based on if we truncated the x or y width or height to match the opposing parameter ( with or height)
+				if(piece > 6)
+                                    drawMyPiece(g, bugboardx, bugboardy, difx, dify, b, aa, piece, blackChoice);
+                               else
+                                    drawMyPiece(g, bugboardx, bugboardy, difx, dify, b, aa, piece, choice);
+                                    }
+                                    catch(Exception bugy){}
+
+                         }// end if bugging > -1 i'm playing bughosue and drawing partners pieces
 
 		}
 		}
@@ -503,54 +586,16 @@ the slider is on. otherwise it draws the curernt in play board*/
 
 // draw examine pallete if needed
 // if you import this code up to you if you want it drawing an examine mode pallete
-if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true && 
+if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true &&
                                     (sharedVariables.showPallette == true || sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.LookingAt].wild == 24 || sharedVariables.mygame[gameData.LookingAt].wild == 23))
 {
 	int piece=0;
 
+         drawPiecePallete(piece, examineOriginX, examineOriginY, gameData.LookingAt, g, g2);
 
-	for( int a =0; a<13; a++)
-	{
+         if(bugging > -1)
+         drawPiecePallete(piece, bugExamineOriginX, bugExamineOriginY, bugging, g, g2);
 
-		piece = getExaminePieceNumber(a);
-		// alternate colors
-		if(a%2==0)
-		g2.setColor(sharedVariables.lightcolor);
-			else
-		g2.setColor(sharedVariables.darkcolor);
-		if(getBoardType() == 0)
-		g2.fill(new Rectangle2D.Double((double)examineOriginX , (double)examineOriginY + a * examineSquareY , (double)examineSquareX  , (double)examineSquareY));
-		else
-		{
-			if(a%2==0)
-				g.drawImage(graphics.boards[getBoardType()][graphics.light], examineOriginX , examineOriginY + a * examineSquareY , examineSquareX  , examineSquareY, this);
-			else
-				g.drawImage(graphics.boards[getBoardType()][graphics.dark], examineOriginX , examineOriginY + a * examineSquareY , examineSquareX  , examineSquareY, this);
-		}
-		if(piece > 0)
-		{
-			if(sharedVariables.mygame[gameData.LookingAt].wild==23 || sharedVariables.mygame[gameData.LookingAt].wild==24)
-			{
-				if(sharedVariables.mygame[gameData.LookingAt].crazypieces[piece] > 0)
-				{
-					g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], examineOriginX+2 , examineOriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
-				}
-			}
-			else
-				g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], examineOriginX+2 , examineOriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
-
-			if(sharedVariables.mygame[gameData.LookingAt].wild==23 || sharedVariables.mygame[gameData.LookingAt].wild==24)
-			{
-				if(sharedVariables.mygame[gameData.LookingAt].crazypieces[piece] > 1)
-				{
-					g2.setColor(new Color(0,0,0));
-					g2.setFont(sharedVariables.crazyFont);
-					g2.drawString("" + sharedVariables.mygame[gameData.LookingAt].crazypieces[piece], (int)(examineOriginX), (int)examineOriginY + a * examineSquareY + 16);
-
-				}
-			}
-		}
-	}
 			if(movingexaminepiece == 1 )
 			{
 
@@ -563,7 +608,14 @@ if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true &&
 
 if(sliding == 0)
 paintShapes(g, boardx, boardy, squarex, squarey);
+ if(bugging > -1)
+ {
+	g2.setColor(sharedVariables.boardForegroundColor);
+	g2.setFont(sharedVariables.myGameFont);
+	g2.drawString("" + sharedVariables.mygame[bugging].realname1  + " vs. " + sharedVariables.mygame[bugging].realname2, bugboardx + 10, sharedVariables.myGameFont.getSize() + 2);
 
+
+ }// end if bugging > -1
 }
 catch(Exception e)
 {}
@@ -581,6 +633,54 @@ int findPieceMatch(int pieceCol) // would feed it say 1 and 7 for white and blac
 					    break;
 	return choice;
 }
+void drawPiecePallete(int piece, int OriginX, int OriginY, int Looking, Graphics g, Graphics2D g2)
+{
+
+	for( int a =0; a<13; a++)
+	{
+
+		piece = getExaminePieceNumber(a);
+		// alternate colors
+		if(a%2==0)
+		g2.setColor(sharedVariables.lightcolor);
+			else
+		g2.setColor(sharedVariables.darkcolor);
+		if(getBoardType() == 0)
+		g2.fill(new Rectangle2D.Double((double)OriginX , (double)OriginY + a * examineSquareY , (double)examineSquareX  , (double)examineSquareY));
+		else
+		{
+			if(a%2==0)
+				g.drawImage(graphics.boards[getBoardType()][graphics.light], OriginX , OriginY + a * examineSquareY , examineSquareX  , examineSquareY, this);
+			else
+				g.drawImage(graphics.boards[getBoardType()][graphics.dark], OriginX , OriginY + a * examineSquareY , examineSquareX  , examineSquareY, this);
+		}
+		if(piece > 0)
+		{
+			if(sharedVariables.mygame[Looking].wild==23 || sharedVariables.mygame[Looking].wild==24)
+			{
+				if(sharedVariables.mygame[Looking].crazypieces[piece] > 0)
+				{
+					g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
+				}
+			}
+			else
+				g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
+
+			if(sharedVariables.mygame[Looking].wild==23 || sharedVariables.mygame[Looking].wild==24)
+			{
+				if(sharedVariables.mygame[Looking].crazypieces[piece] > 1)
+				{
+					g2.setColor(new Color(0,0,0));
+					g2.setFont(sharedVariables.crazyFont);
+					g2.drawString("" + sharedVariables.mygame[Looking].crazypieces[piece], (int)(OriginX), (int)OriginY + a * examineSquareY + 16);
+
+				}
+			}
+		}
+	}// end for
+
+ }// end method
+
 void drawMySlidingPiece(Graphics g, int squarex, int squarey, int difx, int dify, int mx, int my, int piece, int choice)
 {
 			if(difx == 0 && dify == 0 && graphics.resizable[sharedVariables.pieceType] == false && graphics.multiPieces[sharedVariables.pieceType][choice][piece-1]!=null)
@@ -1094,7 +1194,22 @@ void repaintPiece()
 		}
 
 
-
+int amPlayingBug()
+{
+  
+ if(sharedVariables.mygame[gameData.LookingAt].wild != 24)
+ return -1;
+ if(sharedVariables.mygame[gameData.LookingAt].state != sharedVariables.STATE_PLAYING)
+ return -1;
+ 
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+ if(sharedVariables.mygame[a]== null)
+ return -1;
+ else if((sharedVariables.mygame[a].realname1.equals(sharedVariables.myPartner) ||  sharedVariables.mygame[a].realname2.equals(sharedVariables.myPartner)) && sharedVariables.mygame[a].state == sharedVariables.STATE_OBSERVING)
+ return a;
+ 
+ return -1;
+}
 
 boolean checkLegality(int from, int to)
 {

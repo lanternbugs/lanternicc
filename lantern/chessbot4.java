@@ -2522,7 +2522,8 @@ try
 	{
 		if(myboards[z]!=null)
 		if(sharedVariables.boardConsoleType != 0)// dont send tell to board if console disabled, would have later caused it to print twice in main
-		if(sharedVariables.mygame[z].realname1.equals(dg.getArg(1)) || sharedVariables.mygame[z].realname2.equals(dg.getArg(1)))
+		if(sharedVariables.mygame[z].realname1.equals(dg.getArg(1)) || sharedVariables.mygame[z].realname2.equals(dg.getArg(1)) || 
+                (dg.getArg(4).equals("2") && sharedVariables.mygame[z].wild == 24))
 		{
 
 
@@ -3884,6 +3885,8 @@ int getGameNumber(String icsGameNumber)
 		if(myboards[a].isVisible() == true)
 		if(myboards[a].gameData.LookingAt==num)
                 myboards[a].repaint();
+                else if(sharedVariables.mygame[a].state  == sharedVariables.STATE_PLAYING && sharedVariables.mygame[a].wild == 24)// crude check to always update a playing bug board in case the partners board updates.
+                myboards[a].repaint();
 		}
 		catch(Exception e){}
 		}
@@ -4517,26 +4520,30 @@ void proccessGameInfo(newBoardData temp)
 
                                         if(sharedVariables.autoChat == true)
                                         setComboMemory(sharedVariables.mygame[gamenum].state, gamenum);
-                                         if(sharedVariables.tabsOnly == true)
+                                        if(sharedVariables.tabsOnly == true)
                                          {
-
+                                           boolean go=true;
+                                           int first =-1;
 					for(int ccc=0; ccc<sharedVariables.maxGameTabs; ccc++)
                                         if(myboards[ccc]!=null)
                                         {
-                                        boolean go=true;
+
                                         // we wont switch if they are playing and this game is not playing
                                         if(sharedVariables.mygame[myboards[ccc].gameData.LookingAt].state == sharedVariables.STATE_PLAYING &&
                                             sharedVariables.mygame[gamenum].state != sharedVariables.STATE_PLAYING)
                                             go=false;
+                                          if(go == true && first == -1)
+                                          first =ccc;
 
-                                            if(go== true)
-                                          { myboards[ccc].myconsolepanel.makehappen(gamenum);
-                                          break;} // i need this to happen on new board
 			                }
                                         else
 			                break;
-			                
-			                
+
+
+			                  if(go== true && first > -1)
+                                          { myboards[first].myconsolepanel.makehappen(gamenum);
+                                          } // i need this to happen on new board
+
                                          }// end if tabs only
                                          else
                                          myboards[gamenum].myconsolepanel.makehappen(gamenum); // new board opened we make that board happen
@@ -5169,14 +5176,15 @@ if(sharedVariables.tabsOnly == true)
                                     myboards[cc].myconsolepanel.channelTabs[sharedVariables.openBoardCount-1].setVisible(true);
 
                                    }
-					if(!notPlaying()) // we havent started this new board whatever we are doing but if we are playing on a board we dont select the new board.  the simul functions will take care of it if simulizing
+					/*if(!notPlaying()) // we havent started this new board whatever we are doing but if we are playing on a board we dont select the new board.  the simul functions will take care of it if simulizing
 					for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 						if(myboards[bb]!=null)
 							if(myboards[bb].isVisible() == true)
 							{	myboards[bb].myconsolepanel.makehappen(a);
 							        break;
-				                        }			        
-				sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+				                        }
+                                */
+                                sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
 
                                 return a;
 				}
@@ -5227,7 +5235,7 @@ if(sharedVariables.tabsOnly == true)
                   myboards[last].setVisible(true);
                   mycreator.updateBoardsMenu(last);
                   sharedVariables.mygame[last]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
-                   myboards[last].myconsolepanel.makehappen(last);
+                   //myboards[last].myconsolepanel.makehappen(last);
                    for(int tab = 0; tab < sharedVariables.openBoardCount; tab++)
                    { myboards[last].myconsolepanel.channelTabs[tab].setVisible(true);
                      myboards[last].myconsolepanel.channelTabs[tab].setText(sharedVariables.tabTitle[sharedVariables.tabLooking[tab]], tab);
@@ -5369,18 +5377,20 @@ if(sharedVariables.tabsOnly == true)
 			catch(Exception e){}
 
 		myboards[last].initializeGeneralTimer();
-			if(sharedVariables.tabsOnly == true)// we want board tab to go to front
+		/*	if(sharedVariables.tabsOnly == true)// we want board tab to go to front
 			{
 				for(int bb=0; bb <= sharedVariables.openBoardCount; bb++)
 			   		if(myboards[bb]!=null)
 						if(myboards[bb].isVisible() == true)
 						{	myboards[bb].myconsolepanel.makehappen(last);
 						        break;
-                                                 }			        
+                                                 }
 			}
 			else// tabs only false
 				myboards[last].myconsolepanel.makehappen(last);
-		}
+		
+                */
+                }
 
 
 void updateTab()
