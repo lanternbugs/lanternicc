@@ -225,12 +225,16 @@ class JImagePanel extends JPanel
 		setBackground(sharedVariables.boardBackgroundColor);
 
 		Graphics2D g2 = (Graphics2D) g;
-		int boardx=5;
+		int Plus =0;
+		if(amWhite == false)
+		Plus=6;
+
+                int boardx=5;
 		int boardy=5; // upper left
 		int square=50;
 		int dif=2;
                 for(int a=0; a<6; a++)
-                g.drawImage(graphics.pieces[Pieces][a], boardx +  a * square + dif , boardy + dif, square - dif, square-4, this);
+                g.drawImage(graphics.pieces[Pieces][a+Plus], boardx +  a * square + dif , boardy + dif, square - dif, square-4, this);
 
   }
   catch(Exception dui){}
