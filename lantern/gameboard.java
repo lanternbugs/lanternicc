@@ -3660,20 +3660,14 @@ class randomPieces {
      {  if (i==num)
          return y;
 
-       if (i != num)
+
        i++;
-       if(i==num && depth > 0)
-       return getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1, depth-1);
    }
    }     // end for
 
-   for (y=0; y<excludedPiecesWhite.length; y++) {
-     if (excludedPiecesWhite[y] == false && y != otherset)
-         return y;
-
-
-
-   }     // end for
+         if(i==num && depth > 0)
+       return getChoiceWhite(randomGenerator.nextInt(getMaxPieceChoiceWhite()), -1, depth-1);
+     // end for
 
    return 0;
  }     // end function
@@ -3687,21 +3681,18 @@ class randomPieces {
     {   if (i==num)
          return y;
 
-       if (i != num)
+
        i++;
-       if(i== num && depth > 0)
-       return getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
-                             otherset, depth-1);
    }
    }     // end for
 
-   for (y=0; y<excludedPiecesBlack.length; y++) {
-     if (excludedPiecesBlack[y] == false && y != otherset)
-         return y;
+            if( depth > 0)
+       return getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
+                      otherset, depth-1);
 
 
 
-   }     // end for
+
 
    return 0;
  }     // end function
