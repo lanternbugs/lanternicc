@@ -3805,7 +3805,14 @@ try {
 			temp.dg=16;
 
 			temp.arg1=dg.getArg(1);
-			gamequeue.add(temp);
+			if(sharedVariables.gameend == true)
+			{
+
+                          // Form: (gamenumber become-examined game_result_code score_string2 description-string ECO)
+                          //  score_string2, "0-1", "1-0", "1/2-1/2", "*", or "aborted"
+                            sendGameEnd(dg.getArg(1), dg.getArg(4));
+                          }
+ 			gamequeue.add(temp);
 
 		}
 		if(dg.getArg(0).equals("56"))// 13 DG_GAME_RESULT // 16 game i'm observingt result// update clocks
@@ -3854,6 +3861,44 @@ int getGameNumber(String icsGameNumber)
 
 	}
 
+public void sendGameEnd(String number, String result)
+{                         // Form: (gamenumber become-examined game_result_code score_string2 description-string ECO)
+                          //  score_string2, "0-1", "1-0", "1/2-1/2", "*", or "aborted"
+
+int gamenum=getGameBoard(number);
+if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+           return;
+if(myboards[gamenum]== null)
+           return;
+
+ if(sharedVariables.mygame[gamenum].state == sharedVariables.STATE_PLAYING && sharedVariables.mygame[gamenum].sentGameEnd == false)
+ {
+   
+   String myname = sharedVariables.myname;
+   if(result.equals("0-1"))
+   {
+    if(sharedVariables.mygame[gamenum].realname1.equals(myname))
+      sendMessage("gameendloss\n");
+    if(sharedVariables.mygame[gamenum].realname2.equals(myname))
+      sendMessage("gameendwin\n");
+
+   }
+   if(result.equals("1-0"))
+   {
+    if(sharedVariables.mygame[gamenum].realname1.equals(myname))
+      sendMessage("gameendwin\n");
+    if(sharedVariables.mygame[gamenum].realname2.equals(myname))
+      sendMessage("gameendloss\n");
+
+   }
+   if(result.equals("1/2-1/2"))
+   sendMessage("gameenddraw\n");
+
+  sharedVariables.mygame[gamenum].sentGameEnd = true;
+
+ }
+
+ }
 
        public void setComboMemory(int state, int gameNumber)
        {

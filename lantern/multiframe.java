@@ -158,7 +158,7 @@ webframe mywebframe;
  JCheckBoxMenuItem autobufferchat;
   JCheckBoxMenuItem autoHistoryPopup;
  JCheckBoxMenuItem makeObserveSounds;
-
+ JCheckBoxMenuItem gameend;
  JCheckBoxMenuItem channelNumberLeft;
  JCheckBoxMenuItem tabbing;
  JCheckBoxMenuItem tellswitch;
@@ -392,6 +392,10 @@ consoleSubframes[0].makeHappen(0);
     else
     	highlight.setSelected(true);
 
+    if(sharedVariables.gameend == false)
+    	gameend.setSelected(false);
+    else
+    	gameend.setSelected(true);
 
 
  if(sharedVariables.useTopGames == true)
@@ -1278,12 +1282,18 @@ optionsmenu.add(advancedOptions);
 
 JMenu featuresMenu = new JMenu("Features");
 
+ gameend = new JCheckBoxMenuItem("Send Game End Messages");
+  featuresMenu.add(gameend);
+ gameend.addActionListener(this);
+
  tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
+tellswitch.addActionListener(this);
   featuresMenu.add(tellswitch);
+
 autonoidle = new JCheckBoxMenuItem("No Idle");
 featuresMenu.add(autonoidle);
-tellswitch.addActionListener(this);
 autonoidle.addActionListener(this);
+
  rotateaways = new JCheckBoxMenuItem("Rotate Away Message");
   featuresMenu.add(rotateaways);
 iloggedon = new JCheckBoxMenuItem("Send iloggedon");
@@ -2464,6 +2474,27 @@ mypopper.setVisible(true);
 
 
 }
+if(event.getActionCommand().equals("Send Game End Messages"))
+{
+if(sharedVariables.gameend == false) // activate
+{
+gameend.setSelected(true);
+sharedVariables.gameend=true;
+String mes1 = "Lantern will send to the server the commands: gameendwin, gameendloss, gameenddraw.  These will produce 'command not found: gameendwin' for example untill you alias them to do 'says' which speak to last opponent.\n\n";
+String mes2 = "type for example: +alias gameendloss say darnit lost again\n\n";
+String mes3 = "Create 3 gameend alias's, one for each type, gameendwin, gameenddraw, gameendloss.  format is type in main console +alias   then the alias name, then the command which should start with 'say' to speak to your opponent\n";
+Popup mypopper = new Popup(this, false, mes1 + mes2 + mes3);
+mypopper.setSize(600,500);
+mypopper.setVisible(true);
+
+}
+else// deactivate
+{
+gameend.setSelected(false);
+sharedVariables.gameend=false;
+}
+
+}   // end gameend menu item
 
 if(event.getActionCommand().equals("Rotate Away Message"))
 {

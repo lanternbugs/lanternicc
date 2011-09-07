@@ -52,7 +52,7 @@ JMenuItem [] openBoards;
 
 boolean randomArmy=false;
 boolean randomBoardTiles=false;
-
+boolean gameend=false;
 boolean indent;
 boolean doreconnect;
 boolean uci;
@@ -299,7 +299,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.45";
+version = "v4.46";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

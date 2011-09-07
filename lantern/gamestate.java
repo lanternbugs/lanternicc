@@ -77,6 +77,7 @@ boolean imclosed;
 randomPieces randomObj;
 
 boolean becameExamined;
+boolean sentGameEnd;
 String whiteTimeDisplay;
 String blackTimeDisplay;
 String myColor;
@@ -145,6 +146,7 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2)
 	  engineFen="";
 	  initialPosition="*";
 	  initialize(board);
+         sentGameEnd=false;
 	lastfrom=-1;
 	lastto=-1;
 	blank=50;

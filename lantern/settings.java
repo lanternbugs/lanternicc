@@ -439,6 +439,16 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneshowflags] ";
 
+	// showFlags
+	set_string = set_string + "[gameendmess] ";
+	if(sharedVariables.gameend == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donegameendmess] ";
+
+
 	// showPallette
 	set_string = set_string + "[showPallette] ";
 	if(sharedVariables.showPallette == true)
@@ -1672,6 +1682,18 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}
 
 
+
+				if (temp.equals("[gameendmess]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.gameend=true;
+					else
+						sharedVariables.gameend=false;
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[showflags]"))
 				{
