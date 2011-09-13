@@ -354,7 +354,15 @@ void dispatchCommand(String myurl)
 	catch(Exception E){ }
 
 }
+void removeSelectionHighlight()
+{
+//	consoles[consoleNumber].getHighlighter().removeHighlights(consoles[consoleNumber]);//remove highlight if they click
+try {
 
+gameconsoles[gameData.BoardIndex].getHighlighter().removeAllHighlights();
+}
+catch(Exception d){}
+}
 
 private void initComponents()
 {
@@ -424,6 +432,7 @@ comboMemory[sharedVariables.Looking[gameData.BoardIndex]]=cb.getSelectedIndex();
 mainConsoleTab.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
 					
+
  			 if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
  			 makerightclickmainhappen(e);
  			 else
@@ -496,6 +505,8 @@ gameconsoles[gameData.BoardIndex].setEditable(false); // cant edit or type in a 
 gameconsoles[gameData.BoardIndex].addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
 
+if(e.getClickCount() == 1 && e.getButton() != MouseEvent.BUTTON3)
+removeSelectionHighlight();
 
             if (e.getButton() == MouseEvent.BUTTON3){
 
