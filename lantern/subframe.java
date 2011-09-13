@@ -633,6 +633,7 @@ sharedVariables.tellTab = n;
 }
 void makeHappen(int con)
 {
+     myHighlighter.removeAllHighlights();
      channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabBackground);
      sharedVariables.looking[consoleNumber]=con;
      consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
@@ -1893,7 +1894,7 @@ void giveFocus()
                            if(sharedVariables.operatingSystem.equals("mac"))
                            { overall.Input.setCaretPosition(overall.Input.getDocument().getLength() - 1); }
 
-                            } 
+                            }
                             catch (Exception e1) {
                                 //ignore
                             }
@@ -1903,7 +1904,6 @@ void giveFocus()
 }
 
 /****************************************************************************************/
-
 
 
 
@@ -1942,7 +1942,12 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
 
+            if(a == 70)// F
+            {
 
+             textSearcher ts = new textSearcher();
+             ts.find(Input.getText(), consoles[consoleNumber]);
+            }
             if(a == 61) // - 45 = 61
             {
               int games = getActiveGame();

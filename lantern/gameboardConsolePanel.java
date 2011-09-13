@@ -105,6 +105,7 @@ initComponents();
 //  essentially it switches the game that is shown on the  board
 public void makehappen(int i)
 {
+            gameconsoles[gameData.BoardIndex].getHighlighter().removeAllHighlights();
              int physicalTab=i;
              i=sharedVariables.tabLooking[i];// translate to tab its on
              int lastTabNumber=-1; // for erasing tabi'monbrackground from last tab make it active tab color since it was just active
@@ -713,6 +714,14 @@ newframe.setVisible(true);
 
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
+            if(aa == 70)// F
+            {
+
+             textSearcher ts = new textSearcher();
+             ts.find(Input.getText(), gameconsoles[gameData.BoardIndex]);
+            }
+
+
 			if(aa == 49)
 			{
 				doToolBarCommand(1);
