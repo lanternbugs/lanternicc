@@ -627,6 +627,9 @@ else
 {
 sharedVariables.tellsToTab = true;
 sharedVariables.tellTab = n;
+ myoutput data = new myoutput();
+ data.repaintTabBorders=1;
+ queue.add(data);
 }
 
 
@@ -774,10 +777,10 @@ prefixHandler.addActionListener(new ActionListener(){
 		channelTabs = new JPaintedLabel[sharedVariables.maxConsoleTabs];
 		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
 		{if(a==0)
-		channelTabs[a]=new JPaintedLabel("M" + a, sharedVariables);
+		channelTabs[a]=new JPaintedLabel("M" + a, sharedVariables, a);
 	    else
 		{
-			channelTabs[a]=new JPaintedLabel(sharedVariables.consoleTabTitles[a], sharedVariables);
+			channelTabs[a]=new JPaintedLabel(sharedVariables.consoleTabTitles[a], sharedVariables, a);
 
 			if(!sharedVariables.consoleTabCustomTitles[a].equals(""))
 			channelTabs[a].setFullText(sharedVariables.consoleTabCustomTitles[a]);
@@ -2018,6 +2021,10 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
                sharedVariables.tellsToTab = true;
                sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
+                myoutput data = new myoutput();
+                 data.repaintTabBorders=1;
+                  queue.add(data);
+
                return;
               }
              	if( a == 90)// ctrl + z

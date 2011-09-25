@@ -1112,6 +1112,12 @@ JMenuItem tabborder1 = new JMenuItem("Tab Border");
 tabborder1.addActionListener(this);
 tabsColorsMenu.add(tabborder1);
 
+JMenuItem tabborder2 = new JMenuItem("Tell Tab Border");
+tabborder2.addActionListener(this);
+tabsColorsMenu.add(tabborder2);
+
+
+
 JMenuItem tabfontchange = new JMenuItem("Change Tab Font");
   tabsColorsMenu.add(tabfontchange);
 tabfontchange.addActionListener(this);
@@ -3799,22 +3805,20 @@ JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Tab Border Color", sharedVariables.tabBorderColor);
  if(newColor != null)
  sharedVariables.tabBorderColor=newColor;
- for(int a=0; a<sharedVariables.openBoardCount; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].myconsolepanel.channelTabs[a].repaint();
+repaintTabBorders();
+}
+if(event.getActionCommand().equals("Tell Tab Border"))// active tab
+{
 
-
-// now update consoles
- for(int a=0; a<sharedVariables.openConsoleCount; a++)
- if(consoleSubframes[a]!=null)
- if(consoleSubframes[a].isVisible() == true)
- for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
- {
- consoleSubframes[a].channelTabs[aa].repaint();
+JDialog frame = new JDialog();
+Color newColor = JColorChooser.showDialog(frame, "Tell Tab Border Color", sharedVariables.tellTabBorderColor);
+ if(newColor != null)
+ sharedVariables.tellTabBorderColor=newColor;
+repaintTabBorders();
 }
 
-}
+
+
 
 if(event.getActionCommand().equals("Input Command Color"))//Input Command Color
 {
@@ -4664,7 +4668,26 @@ void resetConsoleLayout()
 			consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
 }
 
+void repaintTabBorders()
+{
+ for(int a=0; a<sharedVariables.openBoardCount; a++)
+ if(myboards[a]!=null)
+ if(myboards[a].isVisible() == true)
+ myboards[a].myconsolepanel.channelTabs[a].repaint();
 
+
+// now update consoles
+ for(int a=0; a<sharedVariables.openConsoleCount; a++)
+ if(consoleSubframes[a]!=null)
+ if(consoleSubframes[a].isVisible() == true)
+ for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+ {
+ consoleSubframes[a].channelTabs[aa].repaint();
+}
+  
+
+
+}
 void checkItalicsBehavior(int n)
 {
  if(n == 0)

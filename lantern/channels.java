@@ -194,6 +194,7 @@ Color tabBackground2;// the background if tab is unvisted on one window but not 
 Color newInfoTabBackground;
 Color tabImOnBackground;
 Color tabBorderColor;
+Color tellTabBorderColor;
 Color boardBackgroundColor;
 Color boardForegroundColor;
 Color clockForegroundColor;
@@ -299,7 +300,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.47";
+version = "v4.48";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -525,6 +526,7 @@ tellTab=0;
 tellsToTab=false;
 updateTellConsole=0;
 tabBorderColor = new Color(235,0,0);
+tellTabBorderColor = new Color(0, 235, 0);
 gameNotifyConsole=0;
 consolesTabLayout = new int[maxConsoleTabs];
 consolesNamesLayout = new int[maxConsoleTabs];

@@ -5590,6 +5590,11 @@ public void run()
 						tosend=queue.poll();
 					}
 
+					if(tosend.repaintTabBorders > -1)
+					{
+						theMainFrame.repaintTabBorders();
+						tosend=queue.poll();
+					}
 					if(tosend.clearconsole > -1)
 					{
 						clearConsole(tosend.clearconsole, 0);

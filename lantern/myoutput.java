@@ -40,11 +40,13 @@ class myoutput {
 	 int reconnectTry;
 	 int soundBoard;
 	 int boardClosing;
+	 int repaintTabBorders;
 
 myoutput(){
 
 	data = "";
 	boardClosing=-1;
+	repaintTabBorders=-1;
 	gameFocusConsole=-1;
 	gameConsoleSide = -1;
 	gameConsoleSize = -1;

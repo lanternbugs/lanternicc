@@ -254,6 +254,10 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	set_string = set_string + "tabBorderColor ";
 	set_string = set_string + sharedVariables.tabBorderColor.getRGB() + " ";
 
+        // tellTabBorderColor  color
+	set_string = set_string + "tellTabBorderColor ";
+	set_string = set_string + sharedVariables.tellTabBorderColor.getRGB() + " ";
+
        // chatTimestampColor  color
 	set_string = set_string + "chatTimestampColor ";
 	set_string = set_string + sharedVariables.chatTimestampColor.getRGB() + " ";
@@ -1277,6 +1281,12 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					if(temp.equals("tabBorderColor"))
 					{
 						sharedVariables.tabBorderColor=new Color(Integer.parseInt(temp2));
+
+					}
+
+					if(temp.equals("tellTabBorderColor"))
+					{
+						sharedVariables.tellTabBorderColor=new Color(Integer.parseInt(temp2));
 
 					}
 					if(temp.equals("chatTimestampColor"))

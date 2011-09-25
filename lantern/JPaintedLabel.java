@@ -63,7 +63,10 @@ public class JPaintedLabel extends JLabel
 		else
 		super.setFont(sharedVariables.myFont);
 
-	    g2.setColor(sharedVariables.tabBorderColor);
+	    if(tabNumber == sharedVariables.tellTab && sharedVariables.tellsToTab == true)
+            g2.setColor(sharedVariables.tellTabBorderColor);
+            else
+            g2.setColor(sharedVariables.tabBorderColor);
 	    // paint 4 lines
 	    g2.draw(new Line2D.Double(0, 0, (double) width, 0)); // across
 	    g2.draw(new Line2D.Double(0, (double)height-1, (double) width-1, (double) height-1)); // across bottom
@@ -80,7 +83,7 @@ catch(Exception e)
 		super();
 
 	}
-	JPaintedLabel(String title, channels sharedVariables1)
+	JPaintedLabel(String title, channels sharedVariables1, int tabNumber1) // tabNumber -1 for game, 0-maxConsoleTabs-1 for console
 	{
 		super(title, (int) CENTER_ALIGNMENT);
 		mybackground = new Color(0,0,0);
@@ -88,7 +91,21 @@ catch(Exception e)
 		fontInUse=0;
 		fontType=1;
 		setFullText(title);
+		tabNumber=tabNumber1;
 	}
+		JPaintedLabel(String title, channels sharedVariables1)
+	{
+		super(title, (int) CENTER_ALIGNMENT);
+		mybackground = new Color(0,0,0);
+		sharedVariables=sharedVariables1;
+		fontInUse=0;
+		fontType=1;
+		setFullText(title);
+		tabNumber=-1;
+	}
+
+
+
 	public void setForeground(Color c)
 	{
 		try { super.setForeground(c);}
@@ -143,4 +160,5 @@ catch(Exception e)
 
 	int fontInUse;
 	int fontType;
+	int tabNumber;
 }
