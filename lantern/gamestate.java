@@ -284,7 +284,8 @@ if(a>0)
 engineFen+="/";
 }// end a loop
 if(engineFen.equals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
-engineFen+=" w KQkq - 0";
+//engineFen+=" w KQkq - 0";
+engineFen = "";
 else
 engineFen+=" w - - 0";
 } // end method

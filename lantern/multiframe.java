@@ -2207,8 +2207,6 @@ if(event.getActionCommand().equals("Load Winboard Engine"))
 {
 	boolean go = false;
 	if(sharedVariables.engineOn == false)
-	for(int a=0; a<sharedVariables.openBoardCount; a++)
-	if(sharedVariables.mygame[a].state==sharedVariables.STATE_EXAMINING)
 	{
 		go=true;
 		try {
@@ -2220,15 +2218,15 @@ if(event.getActionCommand().equals("Load Winboard Engine"))
 			 if (returnVal == JFileChooser.APPROVE_OPTION) {
 			 sharedVariables.engineFile = fc.getSelectedFile();
 			 	sharedVariables.uci=false;
-			 	myboards[a].startEngine();
 
+                        startTheEngine();
 		    }
 
 
 
 		}
 		catch(Exception e){}
-		break;
+
 	}
 
 	if(go== false && sharedVariables.engineOn == false)
@@ -2356,26 +2354,15 @@ if(event.getActionCommand().equals("Stop Engine"))
 if(event.getActionCommand().equals("Restart Engine"))
 {
 	if(sharedVariables.engineOn == false)
-	for(int a=0; a<sharedVariables.openBoardCount; a++)
-	if(sharedVariables.mygame[a].state==sharedVariables.STATE_EXAMINING)
-	{
-		try {
+	startTheEngine();
 
-			 	myboards[a].startEngine();
-
-		    }
-		catch(Exception e){}
-		break;
-	}
 }
 if(event.getActionCommand().equals("Load UCI Engine"))
 {
 	boolean go = false;
 	if(sharedVariables.engineOn == false)
-	for(int a=0; a<sharedVariables.openBoardCount; a++)
-	if(sharedVariables.mygame[a].state==sharedVariables.STATE_EXAMINING)
 	{
-	go=true;
+        go=true;
 	try {
 			JFileChooser fc = new JFileChooser();
 			fc.setCurrentDirectory(new File("."));;
@@ -2385,7 +2372,7 @@ if(event.getActionCommand().equals("Load UCI Engine"))
 			 if (returnVal == JFileChooser.APPROVE_OPTION) {
 			 sharedVariables.engineFile = fc.getSelectedFile();
 			 	sharedVariables.uci=true;
-			 	myboards[a].startEngine();
+                          startTheEngine();
 
 		    }
 
@@ -2393,7 +2380,7 @@ if(event.getActionCommand().equals("Load UCI Engine"))
 
 		}
 		catch(Exception e){}
-		break;
+
 	}
 
 	if(go== false && sharedVariables.engineOn == false)
@@ -4604,7 +4591,14 @@ try {
 
 void makeEngineWarning()
 {
-String swarning = "You must be in examine mode to load an engine.";
+String swarning = "You must be in examine or observe mode to load an engine.";
+Popup pframe = new Popup((JFrame) this, true, swarning);
+pframe.setVisible(true);
+
+}
+void makeEngineWarning2()
+{
+String swarning = "You must not be playing to load an engine.";
 Popup pframe = new Popup((JFrame) this, true, swarning);
 pframe.setVisible(true);
 
@@ -4703,6 +4697,41 @@ void resetConsoleLayout()
 		for(int a=0; a< sharedVariables.maxConsoleTabs; a++)
 			if(consoleSubframes[a]!=null)
 			consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
+}
+void startTheEngine()
+{        boolean go = false;
+
+         for(int aa=0; aa< sharedVariables.openBoardCount; aa++)
+         if(sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING)
+         {
+           sharedVariables.engineOn = false;
+           makeEngineWarning2();
+           return; 
+
+         }
+
+        for(int a=0; a< sharedVariables.openBoardCount; a++)
+	if(myboards[a].isSelected())
+	{
+	if(sharedVariables.mygame[myboards[a].gameData.LookingAt] != null)
+        if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_EXAMINING ||  sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
+        {	try {
+
+                              go=true;
+                              sharedVariables.engineBoard = myboards[a].gameData.LookingAt;
+			 	myboards[myboards[a].gameData.LookingAt].startEngine();
+
+
+		    }
+		catch(Exception e){}
+		break;
+        }
+        }
+if(go== false)
+{
+  sharedVariables.engineOn = false;
+  makeEngineWarning();
+}// if go false
 }
 
 void repaintTabBorders()

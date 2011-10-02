@@ -208,7 +208,7 @@ for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
   
- if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
  if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
 gameconsoles[a].setStyledDocument(doc);
 }
@@ -266,6 +266,7 @@ text=in.readLine();
 if(stage == 0)
 {
 	sendToEngine("uci\n");
+	sendToEngine("setoption UCI_ShowCurrLine 1\n");
 	stage++;
 }
 
@@ -347,7 +348,15 @@ finalStuff=tosend.data;
 
 		break;
 	}
+if(finalStuff.length() > 0)
+{
+	try {
+		writeOut("final stuff lenght > 0 and sending " + finalStuff);
 
+	}
+	catch(Exception badright){}
+	sendToEngine(finalStuff);
+}
 tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
 
 
@@ -393,15 +402,7 @@ writeOut("last sent is " + lastsent);
 */
 
 }// end if tosent not null first time
-if(finalStuff.length() > 0)
-{
-	try {
-		writeOut("final stuff lenght > 0 and sending " + finalStuff);
 
-	}
-	catch(Exception badright){}
-	sendToEngine(finalStuff);
-}
 
 }
 catch(Exception e) {}
@@ -456,7 +457,7 @@ doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
- if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
  if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
 gameconsoles[a].setStyledDocument(doc);
 

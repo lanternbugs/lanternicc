@@ -151,7 +151,7 @@ public void makehappen(int i)
  			sharedVariables.moveSliders[gameData.BoardIndex].setValue(sharedVariables.mygame[gameData.LookingAt].turn);
  			sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
  			
-                         if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+                         if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true)
                          {
                            if(sharedVariables.mygame[gameData.LookingAt].clickCount %2 == 0)
                            gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);

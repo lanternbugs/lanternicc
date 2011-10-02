@@ -5685,11 +5685,11 @@ boolean isABoardVisible()
 
 void initializeEngine()
 {
-		for(int a=0; a< sharedVariables.openBoardCount; a++)
+		int a = sharedVariables.engineBoard;
 		     if(myboards[a]!=null)
 		     if(myboards[a].isVisible())
 		     {
-				 if(sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING && sharedVariables.pointedToMain[a] == false)
+				 if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING ) && sharedVariables.pointedToMain[a] == false)
 
 			{
 
@@ -6092,6 +6092,8 @@ try {
 		{	data.data = "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
 			data.consoleNumber = 0;
 			data.game=1;
+			if(myboards[tabNumber]!=null)
+				myboards[tabNumber].gameEnded("" + sharedVariables.mygame[tabNumber].myGameNumber);
 			queue.add(data);
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
 		}

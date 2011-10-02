@@ -850,8 +850,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
     if (played == 1) {
       if(type.equals("1"))
-        sharedVariables.mygame[gameData.BoardIndex].state =
+      {  sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_PLAYING;
+          stopTheEngine();
+      }
+
       else
         sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_EXAMINING;
@@ -988,20 +991,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           timer.cancel() ; //Terminate the thread
       } catch(Exception bad) {}
       sharedVariables.mygame[gameData.BoardIndex].piecePallette=false;
-      if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING &&
-          sharedVariables.engineOn == true) {
+      if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING) &&
+          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
 
-        myoutput outgoing = new myoutput();
-        outgoing.data = "exit\n";
-
-        sharedVariables.engineQueue.add(outgoing);
-
-        myoutput outgoing2 = new myoutput();
-        outgoing2.data = "quit\n";
-
-        sharedVariables.engineQueue.add(outgoing2);
-        sharedVariables.engineOn=false;
+          stopTheEngine();
       }
 
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
@@ -1014,6 +1009,21 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         sharedVariables.STATE_OVER;
     }
   }
+
+void stopTheEngine()
+{
+        myoutput outgoing = new myoutput();
+        outgoing.data = "exit\n";
+
+        sharedVariables.engineQueue.add(outgoing);
+
+        myoutput outgoing2 = new myoutput();
+        outgoing2.data = "quit\n";
+
+        sharedVariables.engineQueue.add(outgoing2);
+        sharedVariables.engineOn=false;
+}
+
 
   void resetMoveList() {
 
@@ -1692,8 +1702,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       //setTitle(newtitle);
 
       // send to engine if we are anlyzing
-      if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING) {
+    if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING)) {
 	//sendToEngine("time 1000000");
         //sendToEngine("otime 1000000");
         myoutput outgoing = new myoutput();
@@ -1712,7 +1723,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
         sharedVariables.mygame[gameData.BoardIndex].makeEngineMove(outgoing.data);
         //engine move hanldes incrementing top
-        if(sharedVariables.engineOn == true) {
+         if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING)&&
+          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
           // we allways make the engine moves for later but dont send
           // unless of course the engine is on
             if (sharedVariables.uci == false)
@@ -2024,15 +2038,18 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       // because all boards share same data object
 
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING) {
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING) {
 	sharedVariables.mygame[gameData.BoardIndex].engineTop -=num;
         if (sharedVariables.mygame[gameData.BoardIndex].engineTop < 0)
           sharedVariables.mygame[gameData.BoardIndex].engineTop = 0;
 
       }
 
-      if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true) {
+       if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING) &&
+          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
         if (sharedVariables.uci == false) {
           for (int z=0; z < num; z++) {
             myoutput outgoing = new myoutput();
