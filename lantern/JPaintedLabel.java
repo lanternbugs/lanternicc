@@ -49,7 +49,10 @@ public class JPaintedLabel extends JLabel
 
 	protected void paintBorder(Graphics g){
 		try {
-			super.paintComponent(g);
+           if(tabNumber == sharedVariables.tellTab && sharedVariables.tellsToTab == true)
+                        super.setBackground(mybackground.brighter());
+           else
+                        super.setBackground(mybackground);
 			int width = getWidth();
 
 		int height = getHeight();
