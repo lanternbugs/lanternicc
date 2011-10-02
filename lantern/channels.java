@@ -91,7 +91,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 
-  boolean andreysLayout = false; // Andrey's layout variable
+  boolean andreysLayout = true; // Andrey's layout variable
   boolean andreysFonts = false;
 boolean sideways;
 boolean showButtonTitle;
@@ -300,7 +300,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.48";
+version = "v4.49";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
