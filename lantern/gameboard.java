@@ -2312,8 +2312,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           setBackground(sharedVariables.boardBackgroundColor);
         */
         if (sharedVariables.andreysLayout == false) {
+          if(actionPanel != null)
           actionPanel.setBackground(sharedVariables.boardBackgroundColor);
+          if(actionPanelFlow != null)
           actionPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
+          if(buttonPanelFlow != null)
           buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
         }
         if(sharedVariables.andreysLayout == true)
@@ -2709,8 +2712,6 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       forwardEnd = new JButton(">>");
       backwardEnd = new JButton("<<");
       backward = new JButton("<");
-      buttonPanel = new JPanel();
-      buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
 
       forward.addMouseListener(new MouseAdapter() {
           public void mousePressed(MouseEvent e) {
@@ -2816,36 +2817,6 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         buttonPanel.add(forward);
         buttonPanel.add(forwardEnd);
       */
-      buttonPanelFlow = new JPanel();
-
-      if (sharedVariables.andreysLayout == false) {
-
-        buttonPanel.add(buttonPanelFlow);
-
-        GroupLayout buttonLayout = new GroupLayout(buttonPanelFlow);
-        //GroupLayout layout = new GroupLayout(this);
-        buttonPanelFlow.setLayout(buttonLayout);
-        ParallelGroup hGroup = buttonLayout.createParallelGroup();
-
-        SequentialGroup h1 = buttonLayout.createSequentialGroup();
-	h1.addComponent( backwardEnd, 20, GroupLayout.DEFAULT_SIZE,60);
-        h1.addComponent(backward, 20, GroupLayout.DEFAULT_SIZE,60);
-  	h1.addComponent(forward,  20, GroupLayout.DEFAULT_SIZE,60);
-        h1.addComponent(forwardEnd,  20, GroupLayout.DEFAULT_SIZE,60);
-
-	hGroup.addGroup(GroupLayout.Alignment.LEADING, h1);// was trailing
-	//Create the horizontal group
-	buttonLayout.setHorizontalGroup(hGroup);
-	ParallelGroup v1 =
-          buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
-        // was leading
-        v1.addComponent(backwardEnd);
-        v1.addComponent(backward);
-        v1.addComponent(forward);
-        v1.addComponent(forwardEnd);
-
-	buttonLayout.setVerticalGroup(v1);
-      }// if not andreys layout
 
       gameListingDisplay = new JLabel(" ");
       if (sharedVariables.moveSliders[gameData.BoardIndex] == null) {
@@ -2967,7 +2938,39 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
 
     void makeLayout() {
-      actionPanelFlow = new JPanel();
+        buttonPanel = new JPanel();
+      buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
+     buttonPanelFlow = new JPanel();
+
+      if (sharedVariables.andreysLayout == false) {
+
+        buttonPanel.add(buttonPanelFlow);
+
+        GroupLayout buttonLayout = new GroupLayout(buttonPanelFlow);
+        //GroupLayout layout = new GroupLayout(this);
+        buttonPanelFlow.setLayout(buttonLayout);
+        ParallelGroup hGroup = buttonLayout.createParallelGroup();
+
+        SequentialGroup h1 = buttonLayout.createSequentialGroup();
+	h1.addComponent( backwardEnd, 20, GroupLayout.DEFAULT_SIZE,60);
+        h1.addComponent(backward, 20, GroupLayout.DEFAULT_SIZE,60);
+  	h1.addComponent(forward,  20, GroupLayout.DEFAULT_SIZE,60);
+        h1.addComponent(forwardEnd,  20, GroupLayout.DEFAULT_SIZE,60);
+
+	hGroup.addGroup(GroupLayout.Alignment.LEADING, h1);// was trailing
+	//Create the horizontal group
+	buttonLayout.setHorizontalGroup(hGroup);
+	ParallelGroup v1 =
+          buttonLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
+        // was leading
+        v1.addComponent(backwardEnd);
+        v1.addComponent(backward);
+        v1.addComponent(forward);
+        v1.addComponent(forwardEnd);
+
+	buttonLayout.setVerticalGroup(v1);
+      }// if not andreys layout
+     actionPanelFlow = new JPanel();
 
       actionPanel.add(actionPanelFlow);
 

@@ -397,6 +397,16 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneqsuggestShow] ";
 
+	// Andreys layout
+
+	set_string = set_string + "[AndreysLayout] ";
+	if(sharedVariables.andreysLayout == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneAndreysLayout] ";
+
 	// sideways console on board
 
 	set_string = set_string + "[sidewaysConsole] ";
@@ -1464,6 +1474,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 						sharedVariables.sideways=true;
 					else
 						sharedVariables.sideways=false;
+					}
+					catch(Exception zzz){}
+				}
+				if (temp.equals("[AndreysLayout]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.andreysLayout=true;
+					else
+						sharedVariables.andreysLayout=false;
 					}
 					catch(Exception zzz){}
 				}

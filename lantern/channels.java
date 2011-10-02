@@ -91,7 +91,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 
-  boolean andreysLayout = true; // Andrey's layout variable
+  boolean andreysLayout = false; // Andrey's layout variable
   boolean andreysFonts = false;
 boolean sideways;
 boolean showButtonTitle;

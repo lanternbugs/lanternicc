@@ -161,6 +161,9 @@ webframe mywebframe;
  JCheckBoxMenuItem gameend;
  JCheckBoxMenuItem channelNumberLeft;
  JCheckBoxMenuItem tabbing;
+  JCheckBoxMenuItem BoardDesign1;
+  JCheckBoxMenuItem BoardDesign2;
+  
  JCheckBoxMenuItem tellswitch;
  JCheckBoxMenuItem highlight;
  JCheckBoxMenuItem materialCount;
@@ -1505,13 +1508,19 @@ JMenu myboardmenu = new JMenu("Game");
  myboardmenu.add(nseek);
  nseek.addActionListener(this);
 
-JMenuItem openpgn = new JMenuItem("Open Pgn");
- myboardmenu.add(openpgn);
- openpgn.addActionListener(this);
+JMenu boardDesign = new JMenu("Board Design");
+BoardDesign1 = new JCheckBoxMenuItem("Default");
+BoardDesign2 = new JCheckBoxMenuItem("Modern");
+boardDesign.add(BoardDesign1);
+boardDesign.add(BoardDesign2);
+BoardDesign1.addActionListener(this);
+BoardDesign2.addActionListener(this);
+myboardmenu.add(boardDesign);
 
-checkLegality=new JCheckBoxMenuItem("Check Move Legality");
-checkLegality.addActionListener(this);
-myboardmenu.add(checkLegality);
+ tabbing = new JCheckBoxMenuItem("Tabs Only");
+  myboardmenu.add(tabbing);
+tabbing.addActionListener(this);
+
 
 
   JMenu selectboards = new JMenu("Boards");
@@ -1743,8 +1752,6 @@ JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
 
 
 
- tabbing = new JCheckBoxMenuItem("Tabs Only");
-  myboardmenu.add(tabbing);
   JMenu theHideMenu = new JMenu("Things to Hide or Show");
 
    highlight = new JCheckBoxMenuItem("Highlight Moves");
@@ -1772,6 +1779,13 @@ myboardmenu.add(theHideMenu);
  // myboardmenu.add(useLightBackground);   // disabled
 useLightBackground.addActionListener(this);
 
+JMenuItem openpgn = new JMenuItem("Open Pgn");
+ myboardmenu.add(openpgn);
+ openpgn.addActionListener(this);
+
+checkLegality=new JCheckBoxMenuItem("Check Move Legality");
+checkLegality.addActionListener(this);
+myboardmenu.add(checkLegality);
 
 
 JMenu aspect = new JMenu("Board Aspect Ratio");
@@ -1853,8 +1867,6 @@ highlight.setSelected(true);
 
 menu.add(myboardmenu);
 
-
-tabbing.addActionListener(this);
 
 //nconsole.addActionListener(this);
 rconsole.addActionListener(this);
@@ -3991,6 +4003,31 @@ if(event.getActionCommand().equals("Use Light Square as Board Background"))
 	}
 
 }
+
+
+
+
+
+if(event.getActionCommand().equals("Default"))
+{
+
+		BoardDesign1.setSelected(true);
+		BoardDesign2.setSelected(false);
+                sharedVariables.andreysLayout = false;
+                redrawBoard(sharedVariables.boardConsoleType);
+}
+if(event.getActionCommand().equals("Modern"))
+{
+
+		BoardDesign1.setSelected(false);
+		BoardDesign2.setSelected(true);
+                sharedVariables.andreysLayout = true;
+                redrawBoard(sharedVariables.boardConsoleType);
+}
+
+
+
+
 
 
 if(event.getActionCommand().equals("Tabs Only"))
