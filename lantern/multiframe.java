@@ -4718,6 +4718,16 @@ void startTheEngine()
         {	try {
 
                               go=true;
+                              myoutput tosend = new myoutput();
+
+
+                              try {
+                              tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
+                              while(tosend!=null)
+                              tosend=sharedVariables.engineQueue.poll();
+                              }
+                              catch(Exception duiii){}
+
                               sharedVariables.engineBoard = myboards[a].gameData.LookingAt;
 			 	myboards[myboards[a].gameData.LookingAt].startEngine();
 
