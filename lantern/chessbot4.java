@@ -100,6 +100,7 @@ listClass computerSeeksList;
 listClass notifyList;
 tableClass gameList;
 JFrame masterFrame;
+int blockConsoleNumber=81;
 
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1)
 	{
@@ -1125,7 +1126,10 @@ int processLevel1(String myinput, int depth, routing console)
 						// we assume its c now. could be g for game, c is subframe console
 						try {myConNumber = consoleString.substring(1, consoleString.length()-1); // not sure what character i'm elinimating with -1 but not a number if not minus1
 						console.number= Integer.parseInt(myConNumber);
-						console.found=1;}
+						console.found=1;
+                                                if(console.number == blockConsoleNumber)
+                                                return 0;// response to block say message
+                                                }
 						catch(Exception badnumber){//writeToConsole("exception and mycon number is " + myConNumber);
 						}
 						// writeToConsole("type is " + console.type + " and number is " + console.number + "\n");
@@ -1955,7 +1959,7 @@ if(sharedVariables.mygame[a]!=null)
 if(sharedVariables.mygame[a].state == sharedVariables.STATE_PLAYING)
 return false;
 
-
+sendMessage("`c" + blockConsoleNumber + "`say [automatic Lantern Interface Message] " + sharedVariables.myname + " does not receive opponents says when not playing.\n");
 return true;
 }
 
