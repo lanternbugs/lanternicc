@@ -2407,6 +2407,7 @@ if(dg.getArg(0).equals("31"))// tell
 	String tellType= ": "; // was " tells you: "
 	if(dg.getArg(4).equals("0"))
 	{	tellType = " says: ";
+                 if(sharedVariables.blockSays == true)
                  if(blockThisSay())
                  return;
         }
