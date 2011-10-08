@@ -138,6 +138,9 @@ item2.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             consoles[consoleNumber].copy();
             overall.Input.paste();
+            if(sharedVariables.operatingSystem.equals("mac"))
+            giveFocusTell();
+            else
             giveFocus();
 
 
@@ -1657,6 +1660,9 @@ menu3.addSeparator();
            public void actionPerformed(ActionEvent e) {
            consoles[consoleNumber].copy();
            overall.Input.paste();
+           if(sharedVariables.operatingSystem.equals("mac"))
+           giveFocusTell();
+           else
            giveFocus();
 
              }
@@ -1895,7 +1901,10 @@ void giveFocus()
                                 //Input.requestFocus();
                            overall.Input.requestFocusInWindow();
                            if(sharedVariables.operatingSystem.equals("mac"))
-                           { overall.Input.setCaretPosition(overall.Input.getDocument().getLength() - 1); }
+                           {
+                            // overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
+                          ;
+                           }
 
                             }
                             catch (Exception e1) {
@@ -1905,7 +1914,38 @@ void giveFocus()
                     });
 
 }
+void giveFocusTell()
+{
+ SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                              //  JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
+                                //SearchModel.SEARCHTEXT);
 
+                             overall.Input.setFocusable(true);
+                               overall.Input.setRequestFocusEnabled(true);
+                                //Input.requestFocus();
+                           overall.Input.requestFocusInWindow();
+                           if(sharedVariables.operatingSystem.equals("mac"))
+                           {
+                             
+                             String current = overall.Input.getText();
+                             if(!current.equals(""))
+                             if(current.charAt(current.length() -1) != ' ')
+                             overall.Input.setText(current + " " );
+                             if(!current.equals(""))
+                             overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
+                           }
+
+                            }
+                            catch (Exception e1) {
+                                //ignore
+                            }
+                        }
+                    });
+
+}
 /****************************************************************************************/
 
 

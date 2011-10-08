@@ -75,13 +75,47 @@ catch(Exception e) {}
 
 
 Process engine;
+void sendWildVariant()
+{
+/*
+wildcastle	Shuffle chess where king can castle from d file
+nocastle	Shuffle chess with no castling at all
+fischerandom	Fischer Random
+bughouse	Bughouse, ICC/FICS rules
+crazyhouse	Crazyhouse, ICC/FICS rules
+losers	Win by losing all pieces or getting mated (ICC)
+suicide	Win by losing all pieces including king, or by having fewer pieces when one player has no legal moves (FICS)
+giveaway	Win by losing all pieces including king, or by having no legal moves (ICC)
+twokings	Weird ICC wild 9
+kriegspiel	Kriegspiel (engines not supported)
+atomic	Atomic
+3check	Win by giving check 3 times
+*/
 
+
+if(sharedVariables.mygame[BoardIndex].wild == 28)
+sendToEngine("variant shatranj\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 27)
+sendToEngine("variant atomic\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 26)
+sendToEngine("variant giveaway\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 25)
+sendToEngine("variant 3check\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 23)
+sendToEngine("variant crazyhouse\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 22)
+sendToEngine("variant fischerandom\n");
+else if(sharedVariables.mygame[BoardIndex].wild == 17)
+sendToEngine("variant losers\n");
+
+}
 void intializeNewEngineGame()
 {
 	sendToEngine("new\n");
 	sendToEngine("level 0 1 1\n");
 	sendToEngine("post\n");
 sendToEngine("hard\n");
+sendWildVariant();
 	sendToEngine("force\n");
 	sendToEngine("analyze\n");
 

@@ -2537,9 +2537,11 @@ try {
 if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true && him == false)
 {
 	focusOwner whohasit = new focusOwner();
+	int xxx=getCurrentConsole();
 	consoleSubframes[sharedVariables.tellconsole].makeHappen(sharedVariables.tellTab);
-	
-	giveFocus(whohasit);
+
+	if(xxx != sharedVariables.tellconsole || !sharedVariables.operatingSystem.equals("mac"))
+        giveFocus(whohasit);
 }
 }catch(Exception donthave){}
 Sound ptell;
@@ -6272,20 +6274,30 @@ void returnFocus(focusOwner mine)
 	}
 	catch(Exception e){}
 }
+int getCurrentConsole()
+{
+ for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
+ if(consoleSubframes[a].isSelected())
+ return a;
 
+ return -1;
+}
 void giveFocus(focusOwner mine)
 {
 
 	try {
 	if(mine.console == true)
 	{
-		consoleSubframes[mine.number].giveFocus();
+		if(sharedVariables.operatingSystem.equals("mac"))
+                consoleSubframes[mine.number].giveFocusTell();
+                else
+                consoleSubframes[mine.number].giveFocus();
 
 	}// end if console == true
 	if(mine.board == true)
 	{
 		myboards[mine.number].myconsolepanel.giveFocus();
- 
+
 
         }// end if board == true
 
