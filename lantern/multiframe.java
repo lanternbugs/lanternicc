@@ -171,6 +171,7 @@ webframe mywebframe;
  JCheckBoxMenuItem showFlags;
  JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
+   JCheckBoxMenuItem blockSays;
 JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
  JCheckBoxMenuItem boardconsole1;
@@ -431,6 +432,10 @@ consoleSubframes[0].makeHappen(0);
     else
     	autoChat.setSelected(true);
 
+ if(sharedVariables.blockSays == false)
+    	blockSays.setSelected(false);
+    else
+    	blockSays.setSelected(true);
 
 
 if(sharedVariables.useLightBackground == false)
@@ -1813,6 +1818,10 @@ pgnlogging.setSelected(true);
 autoChat = new JCheckBoxMenuItem("AutoChat");
 myboardmenu.add(autoChat);
 autoChat.addActionListener(this);
+
+blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
+myboardmenu.add(blockSays);
+blockSays.addActionListener(this);
 
 
 myboardmenu.add(aspect);
@@ -3929,6 +3938,20 @@ if(event.getActionCommand().equals("AutoChat"))
 	{
 		autoChat.setSelected(false);
 		sharedVariables.autoChat = false;
+	}
+}
+
+if(event.getActionCommand().equals("Block Opponents Says When Not Playing"))
+{
+	if(sharedVariables.blockSays == false)
+	{
+		blockSays.setSelected(true);
+		sharedVariables.blockSays = true;
+	}
+	else
+	{
+		blockSays.setSelected(false);
+		sharedVariables.blockSays = false;
 	}
 }
 

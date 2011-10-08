@@ -113,7 +113,7 @@ boolean useTopGames=false;
 boolean useLightBackground=false;
 boolean basketballFlag=false;
 boolean autoChat = true;
-
+boolean blockSays = false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();
@@ -300,7 +300,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.50";
+version = "v4.51";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];

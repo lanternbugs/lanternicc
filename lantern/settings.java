@@ -435,6 +435,17 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneautochat] ";
 
+
+	// blocksays
+	set_string = set_string + "[blocksays] ";
+	if(sharedVariables.blockSays == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneblocksays] ";
+
+
 	// showratings
 	set_string = set_string + "[showratings] ";
 	if(sharedVariables.showRatings == true)
@@ -1687,6 +1698,18 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
+				if (temp.equals("[blocksays]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.blockSays=true;
+					else
+						sharedVariables.blockSays=false;
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[showratings]"))
 				{

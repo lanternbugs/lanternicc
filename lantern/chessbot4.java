@@ -1947,10 +1947,23 @@ catch(Exception badq){}
 
 
 }
-	void processDatagram(Datagram1 dg, routing console)
-	{
-		try {
-		int gamenum=0;
+
+boolean blockThisSay()
+{
+for(int a=0; a < sharedVariables.maxGameTabs; a++)
+if(sharedVariables.mygame[a]!=null)
+if(sharedVariables.mygame[a].state == sharedVariables.STATE_PLAYING)
+return false;
+
+
+return true;
+}
+
+
+void processDatagram(Datagram1 dg, routing console)
+{
+try {
+int gamenum=0;
 
 if( dg.getArg(0).equals("152"))
 {
@@ -2393,8 +2406,11 @@ if(dg.getArg(0).equals("31"))// tell
 	// arg 4 The type is 0 for "say", 1 for "tell", 2 for "ptell"
 	String tellType= ": "; // was " tells you: "
 	if(dg.getArg(4).equals("0"))
-		tellType = " says: ";
-	if(dg.getArg(4).equals("2"))
+	{	tellType = " says: ";
+                 if(blockThisSay())
+                 return;
+        }
+        if(dg.getArg(4).equals("2"))
 		tellType= " ptells: ";
 	if(dg.getArg(4).equals("4"))
 		tellType= " atells: ";
