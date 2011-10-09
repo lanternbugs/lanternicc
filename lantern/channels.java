@@ -222,7 +222,7 @@ URL [] poweroutSounds;
 int chatBufferSize=100000;
 int chatBufferExtra=1000;
 int showTenths;
-int maxChannels = 401;
+int maxChannels = 500;
 int chatFrame;
 int visibleConsoles=0;
 int maxSongs=100;
