@@ -164,6 +164,19 @@ theNotifyList = new JList(notifyList.model);
 theNotifyList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 theNotifyList.setLayoutOrientation(JList.VERTICAL);
 theNotifyList.setVisibleRowCount(-1);
+theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+       Component c = super.getListCellRendererComponent(
+            list,value,index,isSelected,cellHasFocus);
+       if( value.toString().contains("Playing"))
+        c.setForeground(Color.red);
+        else
+        c.setForeground(Color.black);
+        
+        return c;
+    }
+});
 
 /********* now channel list *****************/
 
