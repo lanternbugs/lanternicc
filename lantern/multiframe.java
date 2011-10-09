@@ -805,7 +805,7 @@ try {
 }catch(Exception makingConsoles){}
 
 
-try {if(sharedVariables.activitiesOpen == true)
+try {if(sharedVariables.activitiesOpen == true && sharedVariables.activitiesNeverOpen != true)
 openActivities();
 }catch(Exception badopen){}
 

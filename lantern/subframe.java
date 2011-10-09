@@ -2155,6 +2155,25 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
                 }
          if( e.getModifiersEx() == 512)
        {
+      
+      if(a == 192) // '`'
+      {
+       if(sharedVariables.activitiesNeverOpen == true)
+       {
+         sharedVariables.activitiesNeverOpen = false;
+         String mess2 = "Activities window enabled to open at login if you leave it open on close and save settings. Do 'save settings' to save this change.\n";
+         writeToConsole(mess2, sharedVariables.responseColor, false);
+       }
+       else
+       {
+          sharedVariables.activitiesNeverOpen = true;
+         String mess2 = "Activities window disabled to open at login if you leave it open on close and save settings. Do 'save settings' to save this change.\n";
+         writeToConsole(mess2, sharedVariables.responseColor, false);
+
+         
+       }
+       return;
+      }
          if(a == 82  ) //  right on board R
           {
 

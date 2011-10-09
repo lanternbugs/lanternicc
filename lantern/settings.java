@@ -743,6 +743,17 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 
 
 // activities opening
+	set_string = set_string + "[activitiesNeverOpen] ";
+	if(sharedVariables.activitiesNeverOpen == true)
+	set_string = set_string + "1" + " ";
+	else
+	set_string = set_string + "0" + " ";
+
+	// closing activities
+	set_string = set_string + "[doneactivitiesNeverOpen] ";
+
+
+// activities opening
 	set_string = set_string + "[activitiesOpen] ";
 	if(sharedVariables.activitiesOpen == true)
 	set_string = set_string + "1" + " ";
@@ -2060,6 +2071,16 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+				if (temp.equals("[activitiesNeverOpen]"))
+				{
+				try {
+					if(tokens.nextToken().equals("0"))
+					sharedVariables.activitiesNeverOpen =  false;
+					else
+					sharedVariables.activitiesNeverOpen = true;
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[activitiesOpen]"))
 				{

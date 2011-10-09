@@ -86,6 +86,7 @@ boolean showQsuggest;
 boolean autopopup;
 boolean autoHistoryPopup;
 boolean activitiesOpen;
+boolean activitiesNeverOpen=false;
 boolean showMaterialCount;
 boolean showRatings;
 boolean showFlags;
