@@ -48,7 +48,7 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	//JLabel greeting = new JLabel("Enter channel # and colorize/apply style");
 
 	//field = new JTextField(4);
-        final SpinnerNumberModel num = new SpinnerNumberModel(0,0,399,1);
+        final SpinnerNumberModel num = new SpinnerNumberModel(0,0,sharedVariables.maxChannels-1,1);
         field = new JSpinner(num);
 //	pane.add(field);
 

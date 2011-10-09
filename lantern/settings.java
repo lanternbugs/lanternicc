@@ -328,7 +328,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 
 	// channels
 
-	for(int a = 0;  a<500; a++)
+	for(int a = 0;  a< sharedVariables.maxChannels; a++)
 	if(sharedVariables.channelOn[a] == 1)
 	{
 		set_string = set_string + "cn" + a + " ";
@@ -339,7 +339,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 
 // channels
 
-	for(int a = 0;  a<500; a++)
+	for(int a = 0;  a<sharedVariables.maxChannels; a++)
 	if(sharedVariables.channelOn[a] == 1)
 	{
 		set_string = set_string + "cstyle" + a + " ";

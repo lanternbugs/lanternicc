@@ -222,7 +222,7 @@ URL [] poweroutSounds;
 int chatBufferSize=100000;
 int chatBufferExtra=1000;
 int showTenths;
-int maxChannels = 500;
+int maxChannels = 401;
 int chatFrame;
 int visibleConsoles=0;
 int maxSongs=100;
@@ -301,7 +301,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.52";
+version = "v4.53";
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -623,7 +623,7 @@ for(int a=0; a<maxChannels; a++)
 {console[b][a]=0;
  qtellController[b][a]=0;
  }
-for(int a=0; a<500; a++)
+for(int a=0; a<maxChannels; a++)
 	{
 		channelOn[a]=0;
 		style[a]=0;
@@ -695,6 +695,10 @@ for(int a=0; a<500; a++)
 
  	channelOn[300]=1;
 	channelColor[300]= new Color(255,0,0);
+
+ 	channelOn[400]=1;
+	channelColor[400]= new Color(255,0,0);
+
 
 	myname="";
 	myPartner="";
