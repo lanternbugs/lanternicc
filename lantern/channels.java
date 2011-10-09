@@ -692,6 +692,9 @@ for(int a=0; a<500; a++)
 	channelOn[250]=1;
 	channelColor[250]= new Color(187,75,61);
 
+ 	channelOn[300]=1;
+	channelColor[300]= new Color(255,0,0);
+
 	myname="";
 	myPartner="";
 	autoexamspeed=6000;

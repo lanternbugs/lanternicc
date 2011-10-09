@@ -170,7 +170,7 @@ theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
        Component c = super.getListCellRendererComponent(
             list,value,index,isSelected,cellHasFocus);
        if( value.toString().contains("Playing"))
-        c.setForeground(Color.red);
+        c.setForeground(sharedVariables.channelColor[300]);
         else
         c.setForeground(Color.black);
         
