@@ -633,12 +633,12 @@ Input.addKeyListener(new KeyListener() {
        int aa=e.getKeyCode();
         if( e.getModifiersEx() == 512 || (sharedVariables.operatingSystem.equals("mac") && e.getModifiersEx() == 128)) // alt
        {
-         if(aa == 39  ) //  right arrow
+         if(aa == 39  || aa == 82) //  right arrow
           {
            makehappen(getNextGame(true));
            return;
           }
-         if(aa == 37) // left arrow
+         if(aa == 37 || aa == 76) // left arrow
          {
            makehappen(getNextGame(false));
            return;
