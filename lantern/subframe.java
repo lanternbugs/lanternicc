@@ -2142,11 +2142,49 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
 		}
                 if( e.getModifiersEx() == 512)// alt
+{
+      if( e.getModifiersEx() == 512)
+       {
+         if(a == 82  ) // shift + right arrow
+         {    int con = sharedVariables.looking[consoleNumber] + 1;
+         if(con == sharedVariables.maxConsoleTabs)
+         con=0;
+         if(sharedVariables.consolesTabLayout[consoleNumber]== 3)
+        {
+			 tabChooser.setSelectedIndex(con);
+			 makeHappen(con);
+	 	  }
+           else
+         	makeHappen(con);
+
+
+         }
+         if(a == 76  ) // shift + left arrow
+         {    int con = sharedVariables.looking[consoleNumber] - 1;
+         if(con == -1)
+         con=sharedVariables.maxConsoleTabs-1;
+         if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
+         {
+			 tabChooser.setSelectedIndex(con);
+			 makeHappen(con);
+	 	  }
+         else
+         	makeHappen(con);
+
+         }
+
+
+  }
+
+
                 if(a == 84)// atl t
                 {
                    changeTellTab(true); // true for forward
 
                 }
+
+}
+
                 if( e.getModifiersEx() == 576)// shitft  + alt
                 if(a == 84) // shift alt t
                 {

@@ -5503,7 +5503,7 @@ void newGameTab(int num)
 				sharedVariables.tabTitle[num]="E" + sharedVariables.mygame[num].myGameNumber;
 
 
-		if(sharedVariables.tabTitle[num].length()>3)
+/*		if(sharedVariables.tabTitle[num].length()>3)
 		{
 		if(sharedVariables.openBoardCount > 10)
 		{
@@ -5516,7 +5516,7 @@ void newGameTab(int num)
 			sharedVariables.tabTitle[num]=p;
 	    }
 		}// if lenght >2
-
+*/
 updateGameTabs(sharedVariables.tabTitle[num], num);
 }
 catch(Exception e)
