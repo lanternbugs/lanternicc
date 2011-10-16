@@ -363,7 +363,7 @@ addWindowListener(this);
 getContentPane().add(sharedVariables.desktop, "Center");
 
  getSettings();
- boolean hasSettings=mysettings.readNow(myboards, consoleSubframes,  sharedVariables, consoles, gameconsoles); // read  for any saved settings  dont know what get settings  is doing MA 5-30-10
+ sharedVariables.hasSettings=mysettings.readNow(myboards, consoleSubframes,  sharedVariables, consoles, gameconsoles); // read  for any saved settings  dont know what get settings  is doing MA 5-30-10
 mineScores.readNow(sharedVariables);
 
 client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection);
@@ -743,7 +743,7 @@ try {
 }
 catch(Exception donthaveit){}
 
-if(hasSettings == false) // this hasSettings is returned by readNow which reads settings. if false. they have no settings file and i try to position windows. MA 9-19-10
+if(sharedVariables.hasSettings == false) // this hasSettings is returned by readNow which reads settings. if false. they have no settings file and i try to position windows. MA 9-19-10
 {
 try {
 		if(sharedVariables.screenW > 100 && sharedVariables.screenH > 100)

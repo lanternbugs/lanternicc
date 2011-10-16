@@ -49,7 +49,7 @@ tableClass [] mygametable;
 JTable [] gametable;
 JMenu myWindows;
 JMenuItem [] openBoards;
-
+boolean hasSettings=false;
 boolean randomArmy=false;
 boolean randomBoardTiles=false;
 boolean gameend=false;
@@ -162,7 +162,7 @@ String notifyControllerFile;
 String defaultpgn;
 //String countryNames = "AF;AFGHANISTAN;AX;ÅLAND ISLANDS;AL;ALBANIA;DZ;ALGERIA;AS;AMERICAN SAMOA;AD;ANDORRA;AO;ANGOLA;AI;ANGUILLA;AQ;ANTARCTICA;AG;ANTIGUA AND BARBUDA;AR;ARGENTINA;AM;ARMENIA;AW;ARUBA;AU;AUSTRALIA;AT;AUSTRIA;AZ;AZERBAIJAN;BS;BAHAMAS;BH;BAHRAIN;BD;BANGLADESH;BB;BARBADOS;BY;BELARUS;BE;BELGIUM;BZ;BELIZE;BJ;BENIN;BM;BERMUDA;BT;BHUTAN;BO;BOLIVIA, PLURINATIONAL STATE OF;BQ;BONAIRE, SINT EUSTATIUS AND SABA;BA;BOSNIA AND HERZEGOVINA;BW;BOTSWANA;BV;BOUVET ISLAND;BR;BRAZIL;IO;BRITISH INDIAN OCEAN TERRITORY;BN;BRUNEI DARUSSALAM;BG;BULGARIA;BF;BURKINA FASO;BI;BURUNDI;KH;CAMBODIA;CM;CAMEROON;CA;CANADA;CV;CAPE VERDE;KY;CAYMAN ISLANDS;CF;CENTRAL AFRICAN REPUBLIC;TD;CHAD;CL;CHILE;CN;CHINA;CX;CHRISTMAS ISLAND;CC;COCOS (KEELING) ISLANDS;CO;COLOMBIA;KM;COMOROS;CG;CONGO;CD;CONGO, THE DEMOCRATIC REPUBLIC OF THE;CK;COOK ISLANDS;CR;COSTA RICA;CI;CÔTE D'IVOIRE;HR;CROATIA;CU;CUBA;CW;CURAÇAO;CY;CYPRUS;CZ;CZECH REPUBLIC;DK;DENMARK;DJ;DJIBOUTI;DM;DOMINICA;DO;DOMINICAN REPUBLIC;EC;ECUADOR;EG;EGYPT;SV;EL SALVADOR;GQ;EQUATORIAL GUINEA;ER;ERITREA;EE;ESTONIA;ET;ETHIOPIA;FK;FALKLAND ISLANDS (MALVINAS);FO;FAROE ISLANDS;FJ;FIJI;FI;FINLAND;FR;FRANCE;GF;FRENCH GUIANA;PF;FRENCH POLYNESIA;TF;FRENCH SOUTHERN TERRITORIES;GA;GABON;GM;GAMBIA;GE;GEORGIA;DE;GERMANY;GH;GHANA;GI;GIBRALTAR;GR;GREECE;GL;GREENLAND;GD;GRENADA;GP;GUADELOUPE;GU;GUAM;GT;GUATEMALA;GG;GUERNSEY;GN;GUINEA;GW;GUINEA-BISSAU;GY;GUYANA;HT;HAITI;HM;HEARD ISLAND AND MCDONALD ISLANDS;VA;HOLY SEE (VATICAN CITY STATE);HN;HONDURAS;HK;HONG KONG;HU;HUNGARY;IS;ICELAND;IN;INDIA;ID;INDONESIA;IR;IRAN, ISLAMIC REPUBLIC OF;IQ;IRAQ;IE;IRELAND;IM;ISLE OF MAN;IL;ISRAEL;IT;ITALY;JM;JAMAICA;JP;JAPAN;JE;JERSEY;JO;JORDAN;KZ;KAZAKHSTAN;KE;KENYA;KI;KIRIBATI;KP;KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF;KR;KOREA, REPUBLIC OF;KW;KUWAIT;KG;KYRGYZSTAN;LA;LAO PEOPLE'S DEMOCRATIC REPUBLIC;LV;LATVIA;LB;LEBANON;LS;LESOTHO;LR;LIBERIA;LY;LIBYAN ARAB JAMAHIRIYA;LI;LIECHTENSTEIN;LT;LITHUANIA;LU;LUXEMBOURG;MO;MACAO;MK;MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF;MG;MADAGASCAR;MW;MALAWI;MY;MALAYSIA;MV;MALDIVES;ML;MALI;MT;MALTA;MH;MARSHALL ISLANDS;MQ;MARTINIQUE;MR;MAURITANIA;MU;MAURITIUS;YT;MAYOTTE;MX;MEXICO;FM;MICRONESIA, FEDERATED STATES OF;MD;MOLDOVA, REPUBLIC OF;MC;MONACO;MN;MONGOLIA;ME;MONTENEGRO;MS;MONTSERRAT;MA;MOROCCO;MZ;MOZAMBIQUE;MM;MYANMAR;NA;NAMIBIA;NR;NAURU;NP;NEPAL;NL;NETHERLANDS;NC;NEW CALEDONIA;NZ;NEW ZEALAND;NI;NICARAGUA;NE;NIGER;NG;NIGERIA;NU;NIUE;NF;NORFOLK ISLAND;MP;NORTHERN MARIANA ISLANDS;NO;NORWAY;OM;OMAN;PK;PAKISTAN;PW;PALAU;PS;PALESTINIAN TERRITORY, OCCUPIED;PA;PANAMA;PG;PAPUA NEW GUINEA;PY;PARAGUAY;PE;PERU;PH;PHILIPPINES;PN;PITCAIRN;PL;POLAND;PT;PORTUGAL;PR;PUERTO RICO;QA;QATAR;RE;RÉUNION;RO;ROMANIA;RU;RUSSIAN FEDERATION;RW;RWANDA;BL;SAINT BARTHÉLEMY;SH;SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA;KN;SAINT KITTS AND NEVIS;LC;SAINT LUCIA;MF;SAINT MARTIN (FRENCH PART);PM;SAINT PIERRE AND MIQUELON;VC;SAINT VINCENT AND THE GRENADINES;WS;SAMOA;SM;SAN MARINO;ST;SAO TOME AND PRINCIPE;SA;SAUDI ARABIA;SN;SENEGAL;RS;SERBIA;SC;SEYCHELLES;SL;SIERRA LEONE;SG;SINGAPORE;SX;SINT MAARTEN (DUTCH PART);SK;SLOVAKIA;SI;SLOVENIA;SB;SOLOMON ISLANDS;SO;SOMALIA;ZA;SOUTH AFRICA;GS;SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS;ES;SPAIN;LK;SRI LANKA;SD;SUDAN;SR;SURINAME;SJ;SVALBARD AND JAN MAYEN;SZ;SWAZILAND;SE;SWEDEN;CH;SWITZERLAND;SY;SYRIAN ARAB REPUBLIC;TW;TAIWAN, PROVINCE OF CHINA;TJ;TAJIKISTAN;TZ;TANZANIA, UNITED REPUBLIC OF;TH;THAILAND;TL;TIMOR-LESTE;TG;TOGO;TK;TOKELAU;TO;TONGA;TT;TRINIDAD AND TOBAGO;TN;TUNISIA;TR;TURKEY;TM;TURKMENISTAN;TC;TURKS AND CAICOS ISLANDS;TV;TUVALU;UG;UGANDA;UA;UKRAINE;AE;UNITED ARAB EMIRATES;GB;UNITED KINGDOM;US;UNITED STATES;UM;UNITED STATES MINOR OUTLYING ISLANDS;UY;URUGUAY;UZ;UZBEKISTAN;VU;VANUATU;VE;VENEZUELA, BOLIVARIAN REPUBLIC OF;VN;VIET NAM;VG;VIRGIN ISLANDS, BRITISH;VI;VIRGIN ISLANDS, U.S.;WF;WALLIS AND FUTUNA;EH;WESTERN SAHARA;YE;YEMEN;ZM;ZAMBIA;ZW;ZIMBABWE;";
 String countryNames = "AF;Afghanistan;AL;Albania;DZ;Algeria;AS;American_Samoa;AD;Andorra;AO;Angola;AI;Anguilla;AG;Antigua_and_Barbuda;AR;Argentina;AM;Armenia;AW;Aruba;AU;Australia;AT;Austria;AZ;Azerbaijan;BS;Bahamas;BH;Bahrain;BD;Bangladesh;BB;Barbados;BY;Belarus;BE;Belgium;BZ;Belize;BJ;Benin;BM;Bermuda;BT;Bhutan;BO;Bolivia;BW;Botswana;BR;Brazil;BG;Bulgaria;BF;Burkina_Faso;BI;Burundi;KH;Cambodia;CM;Cameroon;CA;Canada;CV;Cape_Verde;KY;Cayman_Islands;CF;Central_African_Republic;TD;Chad;CL;Chile;CN;China;CX;Christmas_Island;CO;Colombia;KM;Comoros;CK;Cook_Islands;CR;Costa_Rica;HR;Croatia;CU;Cuba;CY;Cyprus;DK;Denmark;DJ;Djibouti;DM;Dominica;DO;Dominican_Republic;EC;Ecuador;EG;Egypt;SV;El_Salvador;GQ;Equatorial_Guinea;ER;Eritrea;EE;Estonia;ET;Ethiopia;FK;Falkland_Islands;FO;Faroe_Islands;FJ;Fiji;FI;Finland;FR;France;GA;Gabon;GM;Gambia;GE;Georgia;DE;Germany;GH;Ghana;GI;Gibraltar;GB;United_Kingdom;GR;Greece;GL;Greenland;GD;Grenada;GT;Guatemala;GN;Guinea;GW;Guinea_Bissau;GY;Guyana;HT;Haiti;HN;Honduras;HK;Hong_Kong;HU;Hungary;icc;icc;icc;icc1;IS;Iceland;IN;India;ID;Indonesia;IR;Iran;IQ;Iraq;IE;Ireland;IL;Israel;IT;Italy;JM;Jamaica;JP;Japan;JO;Jordan;KZ;Kazakhstan;KE;Kenya;KI;Kiribati;KR;South_Korea;KW;Kuwait;KG;Kyrgyzstan;LA;Laos;LV;Latvia;LB;Lebanon;LS;Lesotho;LR;Liberia;LY;Libya;LI;Liechtenstein;LT;Lithuania;LU;Luxembourg;MK;Macedonia;MG;Madagascar;MW;Malawi;MY;Malaysia;MV;Maldives;ML;Mali;MT;Malta;MH;Marshall_Islands;MR;Mauritania;MU;Mauritius;MX;Mexico;FM;Micronesia;MD;Moldova;MC;Monaco;MN;Mongolia;MS;Montserrat;MA;Morocco;MZ;Mozambique;MM;Myanmar;NA;Namibia;NR;Nauru;NP;Nepal;NL;Netherlands;AN;Netherlands_Antilles;NZ;New_Zealand;NI;Nicaragua;NE;Niger;NG;Nigeria;NU;Niue;NF;Norfolk_Island;NO;Norway;OM;Oman;PK;Pakistan;PW;Palau;PA;Panama;PG;Papua_New_Guinea;PY;Paraguay;PE;Peru;PH;Philippines;PL;Poland;PR;Puerto_Rico;PT;Portugal;PR;Puerto_Rico;QA;Qatar;RO;Romania;RS;Serbia_and_Montenegro;RU;Russian_Federation;RW;Rwanda;LC;Saint_Lucia;WS;Samoa;SM;San_Marino;SA;Saudi_Arabia;SN;Senegal;SC;Seychelles;SL;Sierra_Leone;SG;Singapore;SK;Slovakia;SI;Slovenia;SO;Somalia;ZA;South_Africa;ES;Spain;LK;Sri_Lanka;SD;Sudan;SR;Suriname;SZ;Swaziland;SE;Sweden;CH;Switzerland;SY;Syria;TW;Taiwan;TJ;Tajikistan;TZ;Tanzania;TH;Thailand;TG;Togo;TO;Tonga;TT;Trinidad_and_Tobago;TN;Tunisia;TR;Turkey;TM;Turkmenistan;TC;Turks_and_Caicos_Islands;TV;Tuvalu;UG;Uganda;UA;Ukraine;UK;United_Kingdom;US;United_States_of_America;UY;Uruguay;UZ;Uzbekistan;VU;Vanuatu;VE;Venezuela;VI;US_Virgin_Islands;VN;Vietnam;YE;Yemen;ZA;South_Africa;ZM;Zambia;ZW;Zimbabwe;";
-
+String newUserMessage;
 Process timestamp;
 Process engine;
 
@@ -302,6 +302,8 @@ channels()
 {
 myServer = "ICC";
 version = "v4.54";
+newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
+
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -345,7 +347,7 @@ noidle=false;
 standAlone = true;
 chessclubIP = "207.99.83.228";
 notifyControllerFile = "lantern_notify_controler.ini";
-boardType=9;
+boardType=2;
 pieceType=14;
 NOT_FOUND_NUMBER = -100;
 
@@ -585,7 +587,7 @@ myTabFont = new Font("TimesRoman", Font.PLAIN, 16);
 crazyFont = new Font("TimesRoman", Font.PLAIN, 20);
 ForColor = new Color(204,204, 255);
 typedColor = new Color(235, 235, 255);
-MainBackColor = new Color(171,171,171);
+MainBackColor = new Color(204,255,255);
 BackColor = new Color(0,0,0);
 //boardForegroundColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);
@@ -608,7 +610,7 @@ defaultChannelColor = new Color(180, 128, 95);
 kibcolor = new Color(240, 10, 10);
 qtellChannelNumberColor=new Color(204,204,255);
 channelTitlesColor = new Color(204, 255, 204);
-tellNameColor=new Color(0,153,153);
+tellNameColor=new Color(255,255,0);
 nameForegroundColor = new Color(51, 51, 0);
 nameBackgroundColor = new Color(255,255,204);
 // my original tan board

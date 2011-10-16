@@ -1149,7 +1149,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 	{
 				String fontStyle;
 				String fontSize;
-				boolean hasSettings = false;
+				sharedVariables.hasSettings = false;
 				int zz;
 				String mystring="";
 				String entry = "";
@@ -1160,7 +1160,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 
 			if (tokens.nextToken().equals("[color]"))
 			{
-				hasSettings=true;
+				sharedVariables.hasSettings=true;
 				String temp = "j";
 				String temp2="";
 
@@ -2682,7 +2682,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 		catch(Exception e)
 		{ }
 
-		return hasSettings;
+		return sharedVariables.hasSettings;
 	}
 
 class FileWrite
