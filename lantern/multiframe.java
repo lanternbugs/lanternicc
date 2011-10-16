@@ -113,6 +113,9 @@ String swarning="This is a beta version of Mike's new Interface.  Game play is p
 
 //Popup pframe = new Popup((JFrame) frame, true, swarning);
 //pframe.setVisible(true);
+try {if(frame.sharedVariables.activitiesOpen == true && frame.sharedVariables.activitiesNeverOpen != true )
+frame.openActivities();
+}catch(Exception badopen){}
 
 try {
 
@@ -805,9 +808,6 @@ try {
 }catch(Exception makingConsoles){}
 
 
-try {if(sharedVariables.activitiesOpen == true && sharedVariables.activitiesNeverOpen != true )
-openActivities();
-}catch(Exception badopen){}
 
 makeToolBar();
 getContentPane().add(toolBar,  BorderLayout.NORTH);

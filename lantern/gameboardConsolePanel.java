@@ -77,12 +77,14 @@ JDesktopPaneCustom myself;
 docWriter myDocWriter;
 int [] comboMemory;
 int blockInc=23;
-
+gameboardControlsPanel mycontrolspanel;
 gameboardTop topGame;
-gameboardConsolePanel(gameboardTop topGame1, JTextPane consoles1[], subframe consoleSubframes1[], channels sharedVariables1, gamestuff gameData1, JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1)
+gameboardPanel mypanel;
+gameboardConsolePanel(gameboardTop topGame1, JTextPane consoles1[], subframe consoleSubframes1[], channels sharedVariables1, gamestuff gameData1, JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1, gameboardControlsPanel mycontrolspanel1, gameboardPanel mypanel1)
 {
 topGame=topGame1;
-
+mypanel=mypanel1;
+mycontrolspanel=mycontrolspanel1;
 sharedVariables=sharedVariables1;
 gameData = gameData1;
 gameconsoles=gameconsoles1;
@@ -725,6 +727,49 @@ newframe.setVisible(true);
 
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
+            if(aa == 61) // - 45 = 61
+            {
+              int games = gameData.LookingAt;
+          if(games > -1)
+           {
+           int loc = sharedVariables.moveSliders[games].getValue();
+              int max = sharedVariables.moveSliders[games].getMaximum();
+              if (loc < max) {
+                loc++;
+                sharedVariables.moveSliders[games].setValue(loc);
+                mycontrolspanel.adjustMoveList();
+                mypanel.repaint();
+              }
+              giveFocus();
+
+              }
+
+              return;
+
+
+            }
+
+
+            if(aa == 45) // - 45 = 61
+            {
+            int games = gameData.LookingAt;
+           if(games > -1)
+           {
+             int loc = sharedVariables.moveSliders[games].getValue();
+
+              if (loc > 0) {
+                loc--;
+                sharedVariables.moveSliders[games].setValue(loc);
+                 mycontrolspanel.adjustMoveList();
+                mypanel.repaint();
+              }
+              giveFocus();
+
+              }
+
+              return;
+            }
+
             if(aa == 70)// F
             {
 
