@@ -2075,6 +2075,9 @@ if(dg.getArg(0).equals("27"))
                         {
                           loginChannelNotify();
                           channelLogin = true;
+                          if(sharedVariables.hasSettings == false)
+                          writeToConsole(sharedVariables.newUserMessage);
+
                         }
                 	return;
 
@@ -2106,7 +2109,6 @@ if(dg.getArg(0).equals("27"))
 
 		 sharedVariables.myname=dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
-
 
 		 try { myConnection.dispose(); } catch(Exception done){};
 	 	}
