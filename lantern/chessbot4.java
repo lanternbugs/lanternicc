@@ -220,10 +220,10 @@ t.start();
 					else
 					got = getIccData();
 					if(got==0)
-					Thread.sleep(8);
+                                        Thread.sleep(8);
 					if(got==1)
 					{
-                                         Thread.sleep(1);
+                                        Thread.sleep(1);
 					int istell=isitatell();
 					if(istell==1)
 					{
