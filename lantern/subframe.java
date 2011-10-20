@@ -620,6 +620,9 @@ myNameList.setModel(listclasstype.model);
 }// end try
 catch(Exception nochan){}
 }// end method
+
+
+
 void changeTellTab(int n)
 {
 if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n) // i am curerntly directing tells to this tab
@@ -942,7 +945,7 @@ else
 JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
 item7.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
-            
+
             changeTellTab(n);
             }
        });
@@ -966,6 +969,7 @@ menu2.add(submenu);
 
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());
+
 }
 
 

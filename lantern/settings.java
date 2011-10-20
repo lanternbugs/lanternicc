@@ -1475,7 +1475,9 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 
 
-				}// end while
+
+
+                                }// end while
 			}// end if color
 
 
@@ -1510,6 +1512,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+
 			if (temp.startsWith("[Chan"))
 			{
 
@@ -1784,6 +1787,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
 					if (temp.equals("[rotateaways]"))
 				{
 				try {
@@ -1979,6 +1983,8 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}
 
 
+
+
 					if (temp.equals("[autobufferchat]"))
 				{
 				try {
@@ -2003,6 +2009,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
                                   if (temp.equals("[italicsbehavior]"))
 				{
 				try {
@@ -2014,7 +2021,11 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
-				if (temp.equals("[lastMoveHighlight]"))
+
+
+
+
+                        	if (temp.equals("[lastMoveHighlight]"))
 				{
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
@@ -2050,6 +2061,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+
 
 				if (temp.equals("[subconsoletype]"))
 				{
@@ -2092,7 +2104,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
-				if (temp.equals("[indent]"))
+                		if (temp.equals("[indent]"))
 				{
 				try {
 					if(tokens.nextToken().equals("0"))
@@ -2156,6 +2168,9 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
+
+
 				if (temp.equals("[tellstotab]"))
 				{
 				try {
@@ -2167,6 +2182,8 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
+
 				if (temp.equals("[pgnlogging]"))
 				{
 				try {
@@ -2177,6 +2194,13 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+
+
+
+
+
+
+
 				for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 				{
 					if (temp.equals("[typed" + zz + "]"))
@@ -2204,6 +2228,8 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 						catch(Exception zzz){}
 					}
 				}// end for
+
+
 
 				if(temp.equals("[wallpaper]"))
 				{
@@ -2261,7 +2287,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 
 
 
-/************************* user buttons ******************************************/
+// ************************* user buttons ******************************************
 
 
 				for(zz=0; zz< sharedVariables.maxUserButtons; zz++)
@@ -2296,7 +2322,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}// end for
 
 
-/**********************************************************************************/
+// **********************************************************************************
 
 
 
@@ -2382,7 +2408,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					frames[boar].setSize(cw, ch);
 
 					}// if boar == 0
-					/** set sizes*/
+					// set sizes
 					sharedVariables.myConsoleSizes[boar].con0x = cw;
 					sharedVariables.myConsoleSizes[boar].con0y = ch;
 					sharedVariables.myConsoleSizes[boar].point0.x = px;
@@ -2414,25 +2440,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 
 
 
-/*
-
-
-
-				if (temp.equals("[Con0]"))
-				{
-				try {
-					int px = Integer.parseInt(tokens.nextToken());
-					int py = Integer.parseInt(tokens.nextToken());
-					int cw = Integer.parseInt(tokens.nextToken());
-					int ch = Integer.parseInt(tokens.nextToken());
-					frames[0].setLocation(px, py);
-					frames[0].setSize(cw, ch);
-					}
-				catch(Exception zzz)
-				{ }
-			}
-
-*/			if(temp.startsWith("[Gam"))
+			if(temp.startsWith("[Gam"))
 			{
 				int boar=0;
 
@@ -2450,7 +2458,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					final int ch = Integer.parseInt(tokens.nextToken());
 					if(boar == 0)
 					{
-                                          
+
                                        final gameboard finalboard = boards[boar];
                                        final boolean useTopGames = sharedVariables.useTopGames;
                 SwingUtilities.invokeLater(new Runnable() {
@@ -2475,7 +2483,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
                         }
                     });
                        		}// if boar == 0
-					/** set sizes*/
+					// set sizes
 					sharedVariables.myBoardSizes[boar].con0x = cw;
 					sharedVariables.myBoardSizes[boar].con0y = ch;
 					sharedVariables.myBoardSizes[boar].point0.x = px;
@@ -2500,7 +2508,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					int cw = Integer.parseInt(tokens.nextToken());
 					int ch = Integer.parseInt(tokens.nextToken());
 
-					/** set sizes*/
+					// set sizes
 					sharedVariables.myActivitiesSizes.con0x = cw;
 					sharedVariables.myActivitiesSizes.con0y = ch;
 					sharedVariables.myActivitiesSizes.point0.x = px;
@@ -2676,11 +2684,16 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}// end if
 			}
 
-		}// end while
+
+
+
+                }// end while
 
 		}// end try
 		catch(Exception e)
-		{ }
+		{  System.err.println("settings exception: "
+                        + e.getMessage());
+}
 
 		return sharedVariables.hasSettings;
 	}

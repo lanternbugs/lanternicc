@@ -300,7 +300,8 @@ void writeToGameConsole(StyledDocument doc, int i)
 							consoleSubframes[a].channelTabs[i].setBackground(sharedVariables.tabBackground2);
 						else
 							consoleSubframes[a].channelTabs[i].setBackground(sharedVariables.newInfoTabBackground);
-					}// end seen
+					
+                                        }// end seen
 
 					seen = false; // must reset and check again for each console
 
