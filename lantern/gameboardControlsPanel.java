@@ -1027,9 +1027,9 @@ import layout.TableLayout;
 
 
       //readLock.unlock();
-      
+
     }// end method adjust move list
-    
+
     void sendCommand(String command) {
       myoutput output = new myoutput();
       output.data=command;
@@ -1051,34 +1051,76 @@ import layout.TableLayout;
         go=1;
 
       if (go == 1) {
+        
+        Color boardForegroundColor = sharedVariables.boardForegroundColor;
+        Color clockForegroundColor = sharedVariables.clockForegroundColor;
+   if(sharedVariables.mygame[gameData.LookingAt].lowTime == true) {
+
+        if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0) { // white at top
+         if(sharedVariables.mygame[gameData.LookingAt].wtime < sharedVariables.mygame[gameData.LookingAt].btime) {
+          topClockDisplay.setBackground(sharedVariables.clockHigh);
+           botClockDisplay.setBackground(sharedVariables.clockLow);
+         } else {
+          topClockDisplay.setBackground(sharedVariables.clockLow);
+           botClockDisplay.setBackground(sharedVariables.clockHigh);
+         }
+      } else {
+         if(sharedVariables.mygame[gameData.LookingAt].wtime < sharedVariables.mygame[gameData.LookingAt].btime) {
+           topClockDisplay.setBackground(sharedVariables.clockLow);
+           botClockDisplay.setBackground(sharedVariables.clockHigh);
+         } else {
+           topClockDisplay.setBackground(sharedVariables.clockHigh);
+           botClockDisplay.setBackground(sharedVariables.clockLow);
+         }
+      }
+
+        boardForegroundColor = sharedVariables.timeForeground;
+        clockForegroundColor = sharedVariables.onmoveTimeForeground;
+      }
+
+
+
         if (sharedVariables.mygame[gameData.LookingAt].iflipped==0) {
           if (sharedVariables.mygame[gameData.LookingAt].movetop%2==0) {
+                   if(sharedVariables.mygame[gameData.LookingAt].lowTime == false) {
             topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
             botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-            topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-            botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+           
+           }
+            topClockDisplay.setForeground(boardForegroundColor);
+            botClockDisplay.setForeground(clockForegroundColor);
 
           } else {
+                  if(sharedVariables.mygame[gameData.LookingAt].lowTime == false) {
             topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
             botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-            topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-            botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+                  }
+            topClockDisplay.setForeground(clockForegroundColor);
+            botClockDisplay.setForeground(boardForegroundColor);
           }
         } else {// i flipped
           if (sharedVariables.mygame[gameData.LookingAt].movetop%2==0) {
+                  if(sharedVariables.mygame[gameData.LookingAt].lowTime == false)
+                  {
             topClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
             botClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
-            topClockDisplay.setForeground(sharedVariables.clockForegroundColor);
-            botClockDisplay.setForeground(sharedVariables.boardForegroundColor);
+                  }
+            topClockDisplay.setForeground(clockForegroundColor);
+            botClockDisplay.setForeground(boardForegroundColor);
 
           } else {
+                  if(sharedVariables.mygame[gameData.LookingAt].lowTime == false) {
+
             topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
             botClockDisplay.setBackground(sharedVariables.onMoveBoardBackgroundColor);
-            topClockDisplay.setForeground(sharedVariables.boardForegroundColor);
-            botClockDisplay.setForeground(sharedVariables.clockForegroundColor);
+                  }
+
+            topClockDisplay.setForeground(boardForegroundColor);
+            botClockDisplay.setForeground(clockForegroundColor);
 
           }
         }// end else iflipped condition
+
       }// end if playing
       else {
         topClockDisplay.setBackground(sharedVariables.boardBackgroundColor);
@@ -1088,14 +1130,14 @@ import layout.TableLayout;
       }
 
     }// end method
-    
+
     /*************** set last move code *********************************/
     void setLastMove() {
       if (sharedVariables.mygame[gameData.LookingAt].movetop < 1) {
         lastMove.setText(" ");
         return;
       }
-      
+
       try {
 
 	int moveNumber = sharedVariables.mygame[gameData.LookingAt].movetop;

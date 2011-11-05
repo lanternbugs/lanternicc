@@ -174,6 +174,7 @@ webframe mywebframe;
  JCheckBoxMenuItem showFlags;
  JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
+  JCheckBoxMenuItem lowTimeColors;
    JCheckBoxMenuItem blockSays;
 JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
@@ -434,6 +435,10 @@ consoleSubframes[0].makeHappen(0);
     	autoChat.setSelected(false);
     else
     	autoChat.setSelected(true);
+ if(sharedVariables.lowTimeColors == false)
+    	lowTimeColors.setSelected(false);
+    else
+    	lowTimeColors.setSelected(true);
 
  if(sharedVariables.blockSays == false)
     	blockSays.setSelected(false);
@@ -1818,6 +1823,11 @@ pgnlogging.setSelected(true);
 autoChat = new JCheckBoxMenuItem("AutoChat");
 myboardmenu.add(autoChat);
 autoChat.addActionListener(this);
+
+lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
+myboardmenu.add(lowTimeColors);
+lowTimeColors.addActionListener(this);
+
 
 blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
 myboardmenu.add(blockSays);
@@ -3927,6 +3937,20 @@ if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 	}
 }
 
+if(event.getActionCommand().equals("Low Time Clock Colors ( Bullet Only)"))
+{
+	if(sharedVariables.lowTimeColors == false)
+	{
+		lowTimeColors.setSelected(true);
+		sharedVariables.lowTimeColors = true;
+	}
+	else
+	{
+		lowTimeColors.setSelected(false);
+		sharedVariables.lowTimeColors = false;
+	}
+  
+}
 if(event.getActionCommand().equals("AutoChat"))
 {
 	if(sharedVariables.autoChat == false)

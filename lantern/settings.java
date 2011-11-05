@@ -426,6 +426,16 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donematerialCount] ";
 
+
+	// lowTimeColors
+	set_string = set_string + "[lowTimeColors] ";
+	if(sharedVariables.lowTimeColors == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donelowTimeColors] ";
+
 	// autochat
 	set_string = set_string + "[autochat] ";
 	if(sharedVariables.autoChat == true)
@@ -1699,6 +1709,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				}
 
 
+				if (temp.equals("[lowTimeColors]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.lowTimeColors=true;
+					else
+						sharedVariables.lowTimeColors=false;
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[autochat]"))
 				{

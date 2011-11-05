@@ -732,7 +732,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       sharedVariables.mygame[gameData.BoardIndex].name2 = BN;
       // + " " + black_titles + " " + black_rating;
       timer = new Timer (  ) ;
-      timer.scheduleAtFixedRate( new ToDoTask (  ) , 100 ,100) ;
+      timer.scheduleAtFixedRate( new ToDoTask (  ) , 300 ,300) ;
       if (gameType.equals("2"))
         sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_OBSERVING; // observed
@@ -794,6 +794,19 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     sharedVariables.mygame[gameData.BoardIndex] =
       new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
     readLock.unlock();
+    boolean lowTime=false;
+    
+    try {
+    double timeCheck=Double.parseDouble(white_initial) + 2/3 * Double.parseDouble(white_inc);
+
+    if(timeCheck < 2.9 && sharedVariables.lowTimeColors == true)
+    lowTime=true;
+    else
+   lowTime=false;
+    }
+    catch(Exception lowtime){
+    }
+
 
     sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
       getGameNumber(icsGameNumber);
@@ -802,7 +815,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     // set some game data
     try {
       sharedVariables.mygame[gameData.BoardIndex].wild =
-        Integer.parseInt(wildNumber); 
+        Integer.parseInt(wildNumber);
     }// end try
     catch(Exception e) {}
 
@@ -855,6 +868,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       if(type.equals("1"))
       {  sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_PLAYING;
+          sharedVariables.mygame[gameData.BoardIndex].lowTime=lowTime;
           stopTheEngine();
       }
 
@@ -920,10 +934,15 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     if (isVisible() == true)
       mypanel.repaint();
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
+  try {
     timer = new Timer (  ) ;
-    timer.scheduleAtFixedRate( new ToDoTask (  ) , 150 ,150) ;
+    timer.scheduleAtFixedRate( new ToDoTask (  ) , 300 ,300) ;
     resetMoveList();
-
+  }
+       catch(Exception duty){ 
+ System.err.println("timer initialization exception: "
+                        + duty.getMessage());
+       }
     if (sharedVariables.mygame[gameData.BoardIndex].wild == 24 &&
         sharedVariables.mygame[gameData.BoardIndex].state ==
        sharedVariables.STATE_PLAYING) {
@@ -1266,17 +1285,19 @@ void stopTheEngine()
     sec =  (int) ( s - ((double) min * 60));
     return sec;
   }
-  
+
   void repaintClocks() {
-    Point topPoint = mycontrolspanel.topClockDisplay.getLocation();
+   /* Point topPoint = mycontrolspanel.topClockDisplay.getLocation();
     Point botPoint = mycontrolspanel.botClockDisplay.getLocation();
     Dimension topSize=mycontrolspanel.topClockDisplay.getSize();
     Dimension botSize=mycontrolspanel.botClockDisplay.getSize();
+
     mycontrolspanel.repaint(topPoint.x, topPoint.y,
                             topSize.width, topSize.height);
     mycontrolspanel.repaint(botPoint.x, botPoint.y,
                             botSize.width, botSize.height);
-                            
+   */
+     mycontrolspanel.repaint();
    if(sharedVariables.mygame[gameData.LookingAt].wild==24)// paint bug partners clock on gameboardpanel
    mypanel.repaint((int) mypanel.getWidth()/ 2, 0, (int)mypanel.getWidth()/ 2, sharedVariables.myGameFont.getSize() + 5);
   }
@@ -1402,10 +1423,9 @@ void stopTheEngine()
             sharedVariables.mygame[gameData.BoardIndex].blackTenth != newtenth) {
           if (sharedVariables.mygame[gameData.BoardIndex].state !=
               sharedVariables.STATE_EXAMINING) {
-            ReentrantReadWriteLock rwlz = new ReentrantReadWriteLock();
-            Lock readLock = rwlz.readLock();
+
             try {
-              readLock.lock();
+
 
               sharedVariables.mygame[gameData.BoardIndex].blackMinute=newminute;
 
@@ -1414,7 +1434,7 @@ void stopTheEngine()
             } catch(Exception duyi) {}
             finally {
 
-              readLock.unlock();
+
             }
 
           }

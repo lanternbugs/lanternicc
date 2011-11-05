@@ -72,7 +72,7 @@ int madeMove;
 boolean [] excludedPiecesWhite;
 boolean [] excludedPiecesBlack;
 
-
+boolean lowTime=false;
 boolean imclosed;
 randomPieces randomObj;
 
