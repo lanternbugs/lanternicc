@@ -2076,8 +2076,10 @@ if(dg.getArg(0).equals("27"))
                           loginChannelNotify();
                           channelLogin = true;
                           if(sharedVariables.hasSettings == false)
-                          writeToConsole(sharedVariables.newUserMessage);
-
+                          {
+                            writeToConsole(sharedVariables.newUserMessage);
+                            setUpNewUserTabs();
+                          }
                         }
                 	return;
 
@@ -6501,5 +6503,311 @@ return new Color(red,green,blue);
 */
 }// end method getTransparentColor
 
+void setUpNewUserTabs()
+{
+
+if(sharedVariables.channelNamesList.size() < sharedVariables.maxConsoleTabs) {
+  // condition that there are enough channels to be one per tab
+for(int li=0; li<sharedVariables.channelNamesList.size(); li++)
+sharedVariables.console[li + 1][Integer.parseInt(sharedVariables.channelNamesList.get(li).channel)]= 1;
+} else {
+
+
+int tabNumber=0;
+boolean go=false;
+int li=0;
+// *************** Stage 1
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("1")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][1]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("2")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][2]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("100")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][100]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("300")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][300]= 1;
+}
+}
+
+// *************** Stage 2
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("3")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][3]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("4")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][4]= 1;
+}
+
+}// end for
+
+
+// *********************** Stage 3
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("43")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][43]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("44")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][44]= 1;
+}
+
+}// end for
+
+// ********************** stage 4
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("24")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][24]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("25")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][25]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("26")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][26]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("27")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][27]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("28")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][28]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("117")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][117]= 1;
+}
+}// end for
+
+// ********************* Stage 5
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("34")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][34]= 1;
+}
+
+
+}// end for
+
+// ******************* Stage 6
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("97")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][97]= 1;
+}
+
+
+}// end for
+
+// ************** Stage 7
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("103")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][103]= 1;
+}
+
+
+}// end for
+// ******************** Stage 8
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("71")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][71]= 1;
+}
+}// end for
+
+
+
+//******************** Stage 9
+// *********************** tomato
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("46")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][46]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("49")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][49]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("221")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][221]= 1;
+sharedVariables.mainAlso[221] = true;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("222")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][222]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("223")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][223]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("224")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][224]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("225")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][225]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("228")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][228]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("230")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][230]= 1;
+}
+
+}// end for
+
+// ************** Stage 10
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("272")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][272]= 1;
+}
+
+
+}// end for
+// ******************** Stage 11
+go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("280")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][280]= 1;
+}
+}// end for
+
+
+} // end else
+
+
+setConsoleTabTitles asetter = new setConsoleTabTitles();
+
+for(int z=1; z<sharedVariables.openConsoleCount; z++)
+if(sharedVariables.console[z][221]== 1)
+asetter.createConsoleTabTitle(sharedVariables, z, consoleSubframes, "Tomato");
+else
+asetter.createConsoleTabTitle(sharedVariables, z, consoleSubframes, "");// last argument tab name
+
+}// end  method set up new user tabs
 
 }// end chessbot

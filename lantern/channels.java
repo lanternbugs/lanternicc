@@ -115,6 +115,7 @@ boolean useLightBackground=false;
 boolean basketballFlag=false;
 boolean autoChat = true;
 boolean blockSays = false;
+boolean lowTimeColors = false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();
@@ -199,6 +200,11 @@ Color tellTabBorderColor;
 Color boardBackgroundColor;
 Color boardForegroundColor;
 Color clockForegroundColor;
+Color clockLow;
+Color clockHigh;
+Color timeForeground;
+Color onmoveTimeForeground;
+
 Color onMoveBoardBackgroundColor;
 Color responseColor;
 Color defaultChannelColor;
@@ -301,7 +307,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.54";
+version = "v4.56";
 newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
@@ -348,7 +354,7 @@ standAlone = true;
 chessclubIP = "207.99.83.228";
 notifyControllerFile = "lantern_notify_controler.ini";
 boardType=2;
-pieceType=14;
+pieceType=1;
 NOT_FOUND_NUMBER = -100;
 
 STATE_EXAMINING = 2;
@@ -593,7 +599,12 @@ BackColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);
 boardForegroundColor = new Color(60,60,60);
 clockForegroundColor = new Color(60,60,60);
-boardBackgroundColor = new Color(204,204,204);
+boardBackgroundColor = new Color(255, 255, 255);
+clockLow = new Color(255,0,0);
+clockHigh = new Color(0,255,0);
+onmoveTimeForeground = new Color(255,255,255);
+timeForeground = new Color(0,0,0);
+
 onMoveBoardBackgroundColor = new Color(100, 203, 203);
 inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
