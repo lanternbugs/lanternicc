@@ -2614,7 +2614,7 @@ if(event.getActionCommand().equals("Save Settings"))
 
 mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
 	mineScores.saveNow(sharedVariables);
-
+sharedVariables.hasSettings = true;
 		sharedVariables.activitiesOpen = false;// it gets set to true on close and here, needs to be false so its checked on close
 
 }
