@@ -42,6 +42,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.event.ChangeEvent.*;
 import java.util.concurrent.locks.*;
 import java.util.Random;
+import java.util.Calendar;
 
 import layout.TableLayout;
 
@@ -803,6 +804,14 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     lowTime=true;
     else
    lowTime=false;
+   
+   setObservedPgnFile(timeCheck, Integer.parseInt(wildNumber));// called automaticly but only logs if observed and pgnObservedLogging on
+   sharedVariables.mygame[gameData.BoardIndex].time = Integer.parseInt(white_initial);
+   sharedVariables.mygame[gameData.BoardIndex].inc = Integer.parseInt(white_inc);
+   sharedVariables.mygame[gameData.BoardIndex].whiteRating = white_rating;
+   sharedVariables.mygame[gameData.BoardIndex].blackRating = black_rating;
+
+
     }
     catch(Exception lowtime){
     }
@@ -970,6 +979,112 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     output.consoleNumber=0;
     queue.add(output);
   }
+  void setObservedPgnFile(double time, int wild)
+  {
+   if(wild == 20)
+   return; // we dont log these, string remains "" and will be ignored.
+   if(wild > 0)
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_owild.pgn";
+   else if(time < 3)
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_obullet.pgn";
+   else if(time < 15)
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_oblitz.pgn";
+   else
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_ostandard.pgn";
+  } // end method set observed pgn file
+void logObservedPgn(String iccresult, String iccresultstring)
+{
+try {
+if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals(""))
+return;
+if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals("lantern_owild.pgn"))
+return;
+
+String game = "\r\n";
+/*
+[Event "ICC 5 0"]
+[Site "Internet Chess Club"]
+[Date "2011.10.09"]
+[Round "-"]
+[White "Mike"]
+[Black "Prophet-Daniel"]
+[Result "1-0"]
+[ICCResult "Black forfeits on time"]
+[WhiteElo "1046"]
+[BlackElo "943"]
+[Opening "Sicilian"]
+[ECO "B54"]
+[NIC "SI.01"]
+[Time "03:46:21"]
+[TimeControl "300+0"]
+*/
+String date = "*";
+String theTime="*";
+try {
+
+Calendar Now=Calendar.getInstance();
+String hour= "" + Now.get(Now.HOUR_OF_DAY);// was HOUR for 12 hour time
+if(hour.equals("0"))
+hour = "12";
+
+String minute="" + Now.get(Now.MINUTE);
+if(minute.length()==1)
+minute="0"+ minute;
+
+String second="" + Now.get( Now.SECOND);
+if(second.length()==1)
+second="0"+ second;
+
+theTime=hour + ":" + minute + ":" + second;
+
+}
+catch(Exception dumtime){}
+
+try {
+
+Calendar Now=Calendar.getInstance();
+// year.month.day
+String year = "" + Now.get(Now.YEAR);
+int m = Now.get(Now.MONTH) + 1;
+String month = "" + m;
+String day = "" + Now.get(Now.DAY_OF_MONTH);
+date = year + "." + month + "." + day;
+}
+catch(Exception dumdate){}
+
+
+
+game += "[Event \"ICC " +  sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+game += "[Site \"Internet Chess Club\"]\r\n";
+game += "[Date \"" + date +  "\"]\r\n";
+game += "[Round \"-\"]\r\n";
+game += "[White \"" + sharedVariables.mygame[gameData.BoardIndex].realname1 + "\"]\r\n";
+game += "[Black \"" + sharedVariables.mygame[gameData.BoardIndex].realname2 + "\"]\r\n";
+game += "[Result \"" + iccresult + "\"]\r\n";
+game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
+game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
+game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+game += "[Opening \"*\"]\r\n";
+game += "[ECO \"*\"]\r\n";
+game += "[NIC \"*\"]\r\n";
+game += "[Time \"" + theTime + "\"]\r\n";
+int minutes = sharedVariables.mygame[gameData.BoardIndex].time  * 60;
+game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+game += "\r\n";
+// now moves
+game += sharedVariables.mygametable[gameData.BoardIndex].getMoves() + "\r\n";
+game += "{" + iccresultstring + "}\r\n";
+game += iccresult + "\r\n";
+FileWrite writer = new FileWrite();
+writer.writeAppend(game, sharedVariables.mygame[gameData.BoardIndex].observedPgnFile);
+
+
+
+
+}// end try
+catch(Exception logging){}
+
+}// end method log observed pgn
 
   void gameEnded(String icsGameNumber) {
 

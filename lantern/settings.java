@@ -861,6 +861,18 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing pgn logging
 	set_string = set_string + "[donepgnlogging] ";
 
+	// pgn observed loggingopening
+	set_string = set_string + "[pgnobservedlogging] ";
+	if(sharedVariables.pgnObservedLogging == true)
+	set_string = set_string + "1" + " ";
+	else
+	set_string = set_string + "0" + " ";
+
+	// closing pgn logging
+	set_string = set_string + "[donepgnobservedlogging] ";
+
+
+
 	for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	{
 		set_string = set_string + "[typed" + zz + "] ";
@@ -2203,6 +2215,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
+				if (temp.equals("[pgnobservedlogging]"))
+				{
+				try {
+					if(tokens.nextToken().equals("0"))
+					sharedVariables.pgnObservedLogging =  false;
+					else
+					sharedVariables.pgnObservedLogging = true;
+					}
+					catch(Exception zzz){}
+				}
 
 
 				if (temp.equals("[pgnlogging]"))

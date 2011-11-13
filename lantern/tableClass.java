@@ -137,6 +137,32 @@ void addMove(int moveNum, String move)
 		//gamedata.insertRow((int) (moveNum/2) -1, newRow);
 	}
 }
+String getMoves()
+{
+String theMoves = "";
+try {
+  Vector temp = gamedata.getDataVector();
+for(int a=0; a < temp.size(); a++)
+{
+int row = a;
+
+String rowString =  temp.get(row).toString();
+rowString = rowString.replaceFirst(",", ".");
+rowString = rowString.replace("[", "");
+rowString = rowString.replace("]", "");
+rowString = rowString.replace(",", "");
+rowString += " ";
+
+
+theMoves += rowString;
+if(row % 7 == 0 && row < temp.size() - 1 && row != 0)
+theMoves +="\r\n";
+
+}// end for
+} catch(Exception dui){}
+
+return theMoves;
+}// end get moves
 
 void removeMoves(int movetop, int num)
 {

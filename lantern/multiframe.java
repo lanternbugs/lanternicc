@@ -260,6 +260,7 @@ JCheckBoxMenuItem basketballFlag;
 
 
 JCheckBoxMenuItem pgnlogging;
+JCheckBoxMenuItem pgnObservedLogging;
 JCheckBoxMenuItem compactNameList;
   JMenuItem preset0;
   JMenuItem preset1;
@@ -453,6 +454,12 @@ if(sharedVariables.useLightBackground == false)
 
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
+
+	if(sharedVariables.pgnObservedLogging == true)
+		pgnObservedLogging.setSelected(true);
+	else
+		pgnObservedLogging.setSelected(false);
+
 	if(sharedVariables.pgnLogging == true)
 		pgnlogging.setSelected(true);
 	else
@@ -1820,6 +1827,11 @@ myboardmenu.add(pgnlogging);
 pgnlogging.addActionListener(this);
 pgnlogging.setSelected(true);
 
+pgnObservedLogging = new JCheckBoxMenuItem("Log Observed Games To Pgn");
+myboardmenu.add(pgnObservedLogging);
+pgnObservedLogging.addActionListener(this);
+pgnObservedLogging.setSelected(true);
+
 autoChat = new JCheckBoxMenuItem("AutoChat");
 myboardmenu.add(autoChat);
 autoChat.addActionListener(this);
@@ -2941,6 +2953,24 @@ if(event.getActionCommand().equals("Log Pgn"))
 	 {
 		 sharedVariables.pgnLogging = true;
 		 pgnlogging.setSelected(true);
+ 	}
+
+
+}
+if(event.getActionCommand().equals("Log Observed Games To Pgn"))
+{
+	if(sharedVariables.pgnObservedLogging == true)
+	 {
+		 sharedVariables.pgnObservedLogging = false;
+	 	pgnObservedLogging.setSelected(false);
+	}
+	 else
+	 {
+		 sharedVariables.pgnObservedLogging = true;
+		 pgnObservedLogging.setSelected(true);
+		 String s = "Lantern will log bullet, blitz and standard games you observe to lantern_obullet.pgn, lantern_oblitz.pgn, and lantern_ostandard.pgn.\n\n  Not currently configured to log wild games.";
+		 Popup temp = new Popup(this, false, s); 
+		 temp.setVisible(true);
  	}
 
 
