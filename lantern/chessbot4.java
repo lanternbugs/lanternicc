@@ -6092,7 +6092,16 @@ try {
 	{ 
           int physicalTab=tabNumber;
           tabNumber=sharedVariables.tabLooking[tabNumber];
-		try {
+          
+          try {
+        StyledDocument doc=sharedVariables.mygamedocs[physicalTab];// 0 for main console
+	doc.remove(0, doc.getLength());
+	myDocWriter.writeToGameConsole(doc, physicalTab);
+          } catch(Exception cleartext){
+          }
+          
+          
+        	try {
 
 			myoutput data = new myoutput();
 			String prefixcommand="`g" + tabNumber + "`";
