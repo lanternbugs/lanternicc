@@ -3824,7 +3824,14 @@ try {
 		// below seems to make me stop observing when game is examined but has result like follow astrobot
 		if(dg.getArg(0).equals("16"))// 13 DG_GAME_RESULT // 16 game i'm observingt result
 		{
-
+                         if(sharedVariables.pgnObservedLogging == true) {
+			newBoardData temp = new newBoardData();
+			temp.dg=16000;  // log
+ 			temp.arg1=dg.getArg(1); // game  number
+ 			temp.arg2=dg.getArg(4); // 1-0
+ 			temp.arg3=dg.getArg(5); // white checkmated
+ 			gamequeue.add(temp);
+                         }
 			newBoardData temp = new newBoardData();
 			if(dg.getArg(2).equals("1"))
 			temp.dg=1600;  // becomes examined
@@ -4949,6 +4956,18 @@ else
 							repaintBoards(gamenum);
 				    }
 
+
+
+					if(temp.dg == 16000)//log game i made up the number 16000 to let the datagram parser  handle it
+					{
+							int gamenum=getGameBoard(temp.arg1);
+							if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+								return;
+							if(myboards[gamenum]== null)
+								return;
+							myboards[gamenum].logObservedPgn(temp.arg2, temp.arg3); // pass game number
+
+				    }
 
 
 
@@ -6092,7 +6111,16 @@ try {
 	{ 
           int physicalTab=tabNumber;
           tabNumber=sharedVariables.tabLooking[tabNumber];
-		try {
+          
+          try {
+        StyledDocument doc=sharedVariables.mygamedocs[physicalTab];// 0 for main console
+	doc.remove(0, doc.getLength());
+	myDocWriter.writeToGameConsole(doc, physicalTab);
+          } catch(Exception cleartext){
+          }
+          
+          
+        	try {
 
 			myoutput data = new myoutput();
 			String prefixcommand="`g" + tabNumber + "`";

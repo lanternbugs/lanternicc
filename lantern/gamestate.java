@@ -96,10 +96,15 @@ String country2;
 String realelo1;
 String realelo2;
 String gameListing;
+String observedPgnFile = "";
 String premove;
 int premovefrom;
 int premoveto;
 int ficsSet;
+String whiteRating="";
+String blackRating="";
+int time=0;
+int inc=0;
 
 
 boolean piecePallette;
