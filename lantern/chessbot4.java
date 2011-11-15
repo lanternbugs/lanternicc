@@ -3343,7 +3343,7 @@ if(sharedVariables.tellTimestamp == true)
 chatTime2=getATimestamp();
 
 
-	String theNotifyTell = chatTime2 +  "Notification: " + dg.getArg(1) + " has arrived.\n";
+	String theNotifyTell = chatTime2 + dg.getArg(1) + " has arrived.\n";
 	StyledDocument doc;
 // we use main console now for notifications -- 0
 
@@ -3385,7 +3385,7 @@ String chatTime2 = "";
 if(sharedVariables.tellTimestamp == true)
 chatTime2=getATimestamp();
 
-String theNotifyTell = chatTime2 + "Notification: " + dg.getArg(1) + " has departed.\n";
+String theNotifyTell = chatTime2 + dg.getArg(1) + " has departed.\n";
 	StyledDocument doc;
 // we use main console now for notifications -- 0
 	doc=sharedVariables.mydocs[0];
