@@ -3338,7 +3338,12 @@ catch(Exception qsug){}
 	{
 boolean supressLogins=sharedVariables.getNotifyControllerState(dg.getArg(1));
 
-	String theNotifyTell = "Notification: " + dg.getArg(1) + " has arrived.\n";
+String chatTime2 = "";
+if(sharedVariables.tellTimestamp == true)
+chatTime2=getATimestamp();
+
+
+	String theNotifyTell = chatTime2 +  "Notification: " + dg.getArg(1) + " has arrived.\n";
 	StyledDocument doc;
 // we use main console now for notifications -- 0
 
@@ -3376,7 +3381,11 @@ catch(Exception notifysound){}
  if(dg.getArg(0).equals("65"))
 {
 	boolean supressLogins=sharedVariables.getNotifyControllerState(dg.getArg(1));
-String theNotifyTell = "Notification: " + dg.getArg(1) + " has departed.\n";
+String chatTime2 = "";
+if(sharedVariables.tellTimestamp == true)
+chatTime2=getATimestamp();
+
+String theNotifyTell = chatTime2 + "Notification: " + dg.getArg(1) + " has departed.\n";
 	StyledDocument doc;
 // we use main console now for notifications -- 0
 	doc=sharedVariables.mydocs[0];
