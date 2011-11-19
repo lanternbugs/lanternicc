@@ -160,20 +160,29 @@ if(!sharedVariables.consoleTabCustomTitles[conNumber].equals(""))
 nameField.setText(sharedVariables.consoleTabCustomTitles[conNumber]);
 
 	JPanel warningpanel = new JPanel();
+	warningpanel.setBackground(newCol);
 	warningpanel.setLayout(new GridLayout(2,1));
 
 
-	JLabel label = new JLabel("Type a space seperated list of channels for this tab. i.e. 2 3 50   50m is a shortcut to keep that channel on main also.");
-	JLabel labelOptions = new JLabel("Options below for if all these channels should continue to print to main.");
+	JLabel label = new JLabel("<html>Type a space seperated list of channels for this tab. i.e. 2 3 50<br>50m can be used as a shortcut to keep that channel on main also.<br>Options below for if all these channels should continue to print to main.</html>");
+       float mysizefont = 16;
+       label.setFont(label.getFont().deriveFont(mysizefont));
+       // JLabel labelm = new JLabel("50m can be used as a shortcut to keep that channel on main also.");
+//	JLabel labelOptions = new JLabel("Options below for if all these channels should continue to print to main.");
 	warningpanel.add(label);
-	warningpanel.add(labelOptions);
-	pane.add(warningpanel);
-
-
-	pane.add(field);
-	// we set fields text below after dialog set up because if we find all main or all also we need to check checkboxes
+	JPanel fieldpane = new JPanel();
+	fieldpane.setBackground(newCol);
+        fieldpane.add(field);
 	JButton button = new JButton("Customize Tab");
+	fieldpane.add(button);
+        pane.add(warningpanel, BorderLayout.NORTH);
+        pane.add(fieldpane);
+
+
+	// we set fields text below after dialog set up because if we find all main or all also we need to check checkboxes
+
 	gamenotify = new JCheckBox();
+	gamenotify.setBackground(newCol);
 	JLabel gamenotifyLabel = new JLabel("Check for gnotify to this tab");
 	if(sharedVariables.gameNotifyConsole == conNumber)
 		gamenotify.setSelected(true);
@@ -403,27 +412,31 @@ button3.addActionListener(new ActionListener() {
 
 mybox = new JCheckBox();
 mybox.setSelected(false);
+mybox.setBackground(newCol);
 JLabel myboxLabel = new JLabel("Show these channels on main tab as well?");
 
 shouts = new JCheckBox();
 shouts.setSelected(false);
+shouts.setBackground(newCol);
 if(sharedVariables.shoutRouter.shoutsConsole == conNumber)
 shouts.setSelected(true);
 
 shoutsAlso=new JCheckBox();
 shoutsAlso.setSelected(false);
+shoutsAlso.setBackground(newCol);
 if(sharedVariables.shoutsAlso == true)
 shoutsAlso.setSelected(true);
 JLabel shoutsAlsoLabel = new JLabel("Any shouts moved go to main also.");
 
 JLabel myshoutLabel = new JLabel("Direct Shouts to this tab?");
 sshouts = new JCheckBox();
+sshouts.setBackground(newCol);
 if(sharedVariables.shoutRouter.sshoutsConsole == conNumber)
 sshouts.setSelected(true);
 
 JLabel mynamesLabel = new JLabel("Remove any tell names?");
 names = new JCheckBox();
-
+names.setBackground(newCol);
 
 sshouts.setSelected(false);
 if(sharedVariables.shoutRouter.sshoutsConsole == conNumber)
@@ -432,11 +445,13 @@ sshouts.setSelected(true);
 JLabel mysshoutLabel = new JLabel("Direct S-Shouts to this tab?");
 deleteLabel = new JLabel("Don't delete these channels from other tabs?");
 deleteCheckBox = new JCheckBox();
+deleteCheckBox.setBackground(newCol);
 
 	String channelList = getChannels(conNumber);
 	field.setText(channelList);
 
 JPanel checkboxpanel = new JPanel();
+checkboxpanel.setBackground(newCol);
 checkboxpanel.setLayout(new GridLayout(9,2));
 checkboxpanel.add(button3);
 checkboxpanel.add(button2);
@@ -459,10 +474,11 @@ checkboxpanel.add(gamenotifyLabel);
 
 checkboxpanel.add(gamenotify);
 
-pane.add(button);
+
 pane.add(checkboxpanel);
 
  JPanel naming = new JPanel();
+ naming.setBackground(newCol);
  naming.add(nameLabel);
  naming.add(name);
  naming.add(nameField);

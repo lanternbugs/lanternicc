@@ -101,7 +101,7 @@ listClass notifyList;
 tableClass gameList;
 JFrame masterFrame;
 int blockConsoleNumber=81;
-
+newListAdder client3;
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1)
 	{
 
@@ -129,7 +129,7 @@ consoleChatframes=consoleChatframes1;
 gamequeue=gamequeue1;
 dummyResponse=false;
 newBoardCreator client = new newBoardCreator();
-newListAdder client3 = new newListAdder();
+client3 = new newListAdder();
 eventsList = eventsList1;
 seeksList = seeksList1;
 computerSeeksList = computerSeeksList1;
@@ -144,8 +144,8 @@ Thread t = new Thread(client);
 t.start();
 sendToIcs client2 = new sendToIcs();
 
-Thread t3 = new Thread(client3);
-t3.start();
+//Thread t3 = new Thread(client3);
+//t3.start();
 
 
 lastMoveGame=-1;
@@ -2048,7 +2048,7 @@ if(dg.getArg(0).equals("46"))
 			temp.arg3="1";
                  // writeToSubConsole("S" + temp.arg1 + " " + temp.arg2 + " " +  temp.arg3 + "\n", sharedVariables.openConsoleCount-1);
 
-			listqueue.add(temp);
+			client3.processListData(temp);
 
         }
 
@@ -2070,7 +2070,7 @@ if(dg.getArg(0).equals("27"))
 			temp.arg3=dg.getArg(3);
 
 
-			listqueue.add(temp);
+			client3.processListData(temp);
 			if(channelLogin == false)
                         {
                           loginChannelNotify();
@@ -4063,20 +4063,25 @@ catch(Exception notifysound){}
 }// end method
 
 
-class newListAdder implements Runnable
+class newListAdder 
 {
-public void run()
+newListAdder()
 	{
-		int aa=1;
-	while(aa==1)
-	{
-		/*	if(sharedVariables.tabChanged != -1)
+          
+        
+        
+        }
+	
+        
+void processListData(newBoardData temp)
+{
+
+        	/*	if(sharedVariables.tabChanged != -1)
 	    updateTab();*/
 
 	try {
-		newBoardData temp=null;
-		temp=listqueue.poll();
-		
+
+
 		if(temp==null)
 		Thread.sleep(5);
 		else
@@ -4178,7 +4183,7 @@ catch(Exception badchan){}
 	}// end try
 	catch(Exception done){}
 
-	} // end while
+
 }// end run
 void notifyJoin(String channel, String name)
 {
@@ -4270,6 +4275,7 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 	{
 	StyledDocument doc = sharedVariables.mydocs[z];
 	doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
+
 	}
 }
 	}
@@ -5597,19 +5603,25 @@ public void run()
 					while(tosend != null)
 					{
 
-					if(tosend.soundBoard > -1)
+
+                                        if(tosend.soundBoard > -1)
 					{
                                                 sharedVariables.soundBoard=tosend.soundBoard;
                                                 tosend=queue.poll();
 					}
-					if(tosend.gameConsoleSide > -1)
+					else if(tosend.printing == true)
+					{
+                                        processLink(tosend.mywriter.doc, tosend.mywriter.thetell, tosend.mywriter.col, tosend.mywriter.index, tosend.mywriter.attempt, tosend.mywriter.game, tosend.mywriter.attrs, tosend.mywriter.myStyles);
+                                        tosend = queue.poll();
+                                        }
+                                        else if(tosend.gameConsoleSide > -1)
 					{
                                                   theMainFrame.sideConsole();
    						if(tosend.gameFocusConsole > -1)
 						myboards[tosend.gameFocusConsole].giveFocus();
                                               tosend=queue.poll();
 					}
-					if(tosend.gameConsoleSize > -1)
+					else if(tosend.gameConsoleSize > -1)
 					{
                                                 if(tosend.gameConsoleSize == 1)
                                                    theMainFrame.compactConsole();
@@ -5623,7 +5635,7 @@ public void run()
                                                  tosend=queue.poll();
 					}
 
-					if(tosend.closetab > -1)
+					else if(tosend.closetab > -1)
 					{
                                                 if(isABoardVisible() == false)
                                                 closeAllGameTabs();
@@ -5634,45 +5646,45 @@ public void run()
                                                 tosend=queue.poll();
  					}
 
-                                        if(tosend.boardClosing > -1) // board actualyl closed not just tab
+                                        else if(tosend.boardClosing > -1) // board actualyl closed not just tab
                                         {
                                           mycreator.updateBoardsMenuClosing(tosend.boardClosing);
                                           tosend=queue.poll();
                                         }
-					if(tosend.reconnectTry > -1)
+					else if(tosend.reconnectTry > -1)
 					{
                                                // detectDisconnect();
 						tosend=queue.poll();
 					}
 
-					if(tosend.repaintTabBorders > -1)
+					else if(tosend.repaintTabBorders > -1)
 					{
 						theMainFrame.repaintTabBorders();
 						tosend=queue.poll();
 					}
-					if(tosend.clearconsole > -1)
+					else if(tosend.clearconsole > -1)
 					{
 						clearConsole(tosend.clearconsole, 0);
 						tosend=queue.poll();
 					}
-					if(tosend.trimconsole > -1)
+					else if(tosend.trimconsole > -1)
 					{
 						trimConsole(tosend.trimconsole, 0);
 						tosend=queue.poll();
 					}
-					if(tosend.trimboard > -1)
+					else if(tosend.trimboard > -1)
 					{
 							trimConsole(tosend.trimboard, 1); // 0/1 console or board
 							tosend=queue.poll();
 					}
 
 
-					if(tosend.clearboard > -1)
+					else if(tosend.clearboard > -1)
 					{
 							clearConsole(tosend.clearboard, 1); // 0/1 console or board
 							tosend=queue.poll();
 					}
-					if(tosend.startengine > -1)
+					else if(tosend.startengine > -1)
 					{
 							initializeEngine(); // 0/1 console or board
 							tosend=queue.poll();

@@ -308,7 +308,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.58";
+version = "v4.59";
 newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
@@ -551,15 +551,15 @@ consolesNamesLayout[a]=1;
 
 	passiveTabForeground=new Color(0,0,0);
 	activeTabForeground=new Color(30,30,200);
-    tabBackground=new Color(204,255,255);// was 204 204 204 a gray
+    tabBackground=new Color(255,255,255);//204,255,255);// was 204 204 204 a gray
     tabBackground2=new Color(204,255,255);
    highlightcolor = new Color(230,0,10);
 premovehighlightcolor = new Color(10,0,230);
 
     //newInfoTabBackground=new Color(150,145,130);
     //newInfoTabBackground=tabBackground.brighter();
-	newInfoTabBackground=new Color(200,145,130);
-	tabImOnBackground = new Color(255, 255, 0);
+	newInfoTabBackground=new Color(0, 204, 255);//200,145,130);
+	tabImOnBackground = new Color(51, 133, 255); //255, 255, 0);
 //myFont = new Font("Comic Sans MS", Font.PLAIN, 18);
 
 if(operatingSystem.equals("unix"))
