@@ -486,7 +486,7 @@ pane.add(checkboxpanel);
 //pane.add(myboxLabel);
 //pane.add(mybox);
 
-setSize(650,430);
+setSize(650,550);
 setVisible(true);
 
 }// end constructor
