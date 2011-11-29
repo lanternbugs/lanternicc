@@ -15,6 +15,21 @@ package lantern;
 */
 /* the program uses concurrently linked queus to send data to other parts of the program. for example gameboardpanel will add the move , like to String data,  and another class, my telnet class will poll the queue and if there is data , then send it to icc.  for use in another program this class can preety much be modified to send whatever data you want to send through the queue. for example if you just have a game board, maybe you just want to send two ints, from and two. Its even possible to not use the queueu at all if you just wanted, for example if just using gameboard, to update a variable shared by the class waiting for the move, i..e moveMade=1 and update a from and to for that class and it simply waits for moveMade to = 1. but this is thread safe the queue.
 */
+import java.awt.*;
+import java.util.ArrayList;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JDialog;
+import java.io.*;
+import java.net.*;
+import java.lang.Thread.*;
+import java.applet.*;
+import javax.swing.GroupLayout.*;
+import javax.swing.colorchooser.*;
+import javax.swing.event.*;
+import java.lang.Integer;
+import javax.swing.text.*;
+
 class myoutput {
 
 	String data;
@@ -41,10 +56,12 @@ class myoutput {
 	 int soundBoard;
 	 int boardClosing;
 	 int repaintTabBorders;
-
+         boolean printing;
+         writer mywriter;
 myoutput(){
 
 	data = "";
+	printing = false;
 	boardClosing=-1;
 	repaintTabBorders=-1;
 	gameFocusConsole=-1;
@@ -66,4 +83,30 @@ myoutput(){
 	trimboard=-1;
 	startengine=-1;
 	}
+
+class writer {
+StyledDocument doc;
+String thetell;
+Color col;
+int index;
+int attempt;
+int game;
+SimpleAttributeSet attrs;
+messageStyles myStyles;
+
 }
+void processLink(StyledDocument doc, String thetell, Color col, int index, int attempt, int game, SimpleAttributeSet attrs, messageStyles myStyles)
+{
+  mywriter = new writer();
+  mywriter.doc=doc;
+  mywriter.thetell = thetell;
+  mywriter.col = col;
+  mywriter.index = index;
+  mywriter.attempt = attempt;
+  mywriter.game = game;
+  mywriter.attrs = attrs;
+  mywriter.myStyles = myStyles;
+  printing=true;
+}// end process link
+
+}// end class output

@@ -2608,15 +2608,17 @@ void writeToConsole(String mes, Color col, boolean italic)
                                         	StyleConstants.setForeground(attrs, col);
 					int SUBFRAME_CONSOLES=0;
 					int maxLinks =75;
-					myDocWriter.processLink(doc, mes, col, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
-					//doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+					myoutput printOut = new myoutput();
+                                        printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
+					queue.add(printOut);
+                                        //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
 
 
 
 
-					for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
-					if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
-					consoles[aa].setStyledDocument(doc);
+				//	for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+				//	if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
+				//	consoles[aa].setStyledDocument(doc);
 				}
 				catch(Exception E){ }
  }// end write to console
