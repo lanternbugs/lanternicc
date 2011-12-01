@@ -19,11 +19,83 @@ import java.awt.Window.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.JDialog;
-/*
-class userButtonsDialog extends JDialog implements ActionListener {
 
+import layout.TableLayout;
+/**/
+class userButtonsDialog extends JDialog implements ActionListener {
+  
+  channels sVars;
+  JTextField[] mypanes;
+
+  userButtonsDialog(JFrame myframe, channels sVars) {
+    super(myframe, "Customize User Buttons", false);
+    this.sVars = sVars;
+
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    mypanes = new JTextField[10];
+    
+    JButton ok = new JButton("OK");
+    ok.setActionCommand("OK");
+    ok.addActionListener(this);
+    
+    JButton cancel = new JButton("Cancel");
+    cancel.setActionCommand("Cancel");
+    cancel.addActionListener(this);
+
+    JPanel buttons = new JPanel();
+    buttons.add(ok);
+    buttons.add(cancel);
+
+    int ht = 20;
+    int border = 10;
+    int space = 5;
+
+    double[][] size = {{border, 10, TableLayout.FILL, border},
+                       {border, 30, space, ht, space, ht, space, ht, space,
+                        ht, space, ht, space, ht, space, ht, space, ht, space,
+                        ht, space, ht, TableLayout.FILL, border}};
+
+    setLayout(new TableLayout(size));
+
+    JLabel mytext =
+      new JLabel("<html>Enter custom commands and use Ctrl-# to activate.</html>");
+    add(mytext, "1, 1, 2, 1");
+
+    for (int i=0; i<10; i++) {
+      int j = 2*(i==0 ? 10 : i) + 1;
+      mypanes[i] = new JTextField(20);
+      mypanes[i].setText(sVars.userButtonCommands[i]);
+      add(new JLabel(""+i), "1, "+j);
+      add(mypanes[i], "2, "+j);
+    }
+
+    add(buttons, "1, 22, 2, 22");
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    String action = e.getActionCommand();
+    if (action.equals("Cancel")) dispose();
+    if (action.equals("OK")) {
+      for (int i=0; i<10; i++) {
+        String bcommand = mypanes[i].getText();
+        sVars.userButtonCommands[i] = bcommand;
+        String buttontitle = "" + i;
+        if (!bcommand.equals("") && sVars.showButtonTitle) {
+          buttontitle += " - ";
+          if (bcommand.length() > 11)
+            buttontitle += bcommand.substring(0, 11);
+          else
+            buttontitle += bcommand;
+        }
+        sVars.mybuttons[i].setText(buttontitle);
+      }
+      dispose();
+    }
+  }
 }
-*/
+
+/*/
 class userButtonsDialog extends JDialog {
   JTextField [] mypanes;
   JLabel [] mylabels;
@@ -88,3 +160,4 @@ class userButtonsDialog extends JDialog {
       );
   }// end constructor
 }
+/**/
