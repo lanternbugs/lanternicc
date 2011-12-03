@@ -14,11 +14,14 @@ package lantern;
 *  General Public License for more details.
 */
 
-import java.awt.*;
-import java.awt.Window.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
+import javax.swing.JTextField;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 import layout.TableLayout;
 /**/
