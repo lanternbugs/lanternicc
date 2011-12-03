@@ -39,7 +39,7 @@ class userButtonsDialog extends JDialog implements ActionListener {
     mypanes = new JTextField[10];
     
     JButton ok = new JButton("OK");
-    ok.setActionCommand("OK");
+    ok.setActionCommand("Submit");
     ok.addActionListener(this);
     
     JButton cancel = new JButton("Cancel");
@@ -69,6 +69,8 @@ class userButtonsDialog extends JDialog implements ActionListener {
       int j = 2*(i==0 ? 10 : i) + 1;
       mypanes[i] = new JTextField(20);
       mypanes[i].setText(sVars.userButtonCommands[i]);
+      mypanes[i].setActionCommand("Submit");
+      mypanes[i].addActionListener(this);
       add(new JLabel(""+i), "1, "+j);
       add(mypanes[i], "2, "+j);
     }
@@ -79,7 +81,7 @@ class userButtonsDialog extends JDialog implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
     if (action.equals("Cancel")) dispose();
-    if (action.equals("OK")) {
+    if (action.equals("Submit")) {
       for (int i=0; i<10; i++) {
         String bcommand = mypanes[i].getText();
         sVars.userButtonCommands[i] = bcommand;

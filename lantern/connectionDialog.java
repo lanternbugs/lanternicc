@@ -14,16 +14,116 @@ package lantern;
 *  General Public License for more details.
 */
 
-import java.awt.*;
-import java.awt.Window.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
-import java.util.ArrayList;;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.swing.GroupLayout.*;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.util.Queue;
 
+import layout.TableLayout;
 
+class connectionDialog extends JDialog implements ActionListener {
+
+  JTextField nameField;
+  JPasswordField pwdField;
+  JLabel nameLabel;
+  JLabel pwdLabel;
+  JButton ok;
+  JButton cancel;
+  channels sVars;
+  Queue<myoutput> queue;
+
+  connectionDialog(JFrame frame, channels sVars,
+                   Queue<myoutput> queue, boolean mybool) {
+    super(frame, "Connect to ICC", mybool);
+
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    this.queue = queue;
+    this.sVars = sVars;
+
+    nameField = new JTextField(20);
+    if (!sVars.myname.equals(""))
+      nameField.setText(sVars.myname);
+    //nameField.setActionCommand("Submit");
+    //nameField.addActionListener(this);
+    
+    // want to allow submit with a blank password in case "g" or
+    // "guest" is entered
+
+    pwdField = new JPasswordField(20);
+    pwdField.setActionCommand("Submit");
+    pwdField.addActionListener(this);
+
+    nameLabel = new JLabel("User Name");
+    pwdLabel = new JLabel("Password");
+
+    ok = new JButton("OK");
+    ok.setActionCommand("Submit");
+    ok.addActionListener(this);
+    // the submit button could be disabled while the password is
+    // blank, unless the user is trying to log in as a guest
+      
+    cancel = new JButton("Cancel");
+    cancel.setActionCommand("Cancel");
+    cancel.addActionListener(this);
+
+    JPanel buttons = new JPanel();
+    buttons.add(ok);
+    buttons.add(cancel);
+
+    int ht = 20;
+    int border = 10;
+    int space = 5;
+
+    double[][] size = {{border, 60, TableLayout.FILL, border},
+                       {border, ht, space, ht, TableLayout.FILL, border}};
+
+    setLayout(new TableLayout(size));
+
+    add(nameLabel, "1, 1");
+    add(nameField, "2, 1");
+    add(pwdLabel, "1, 3");
+    add(pwdField, "2, 3");
+    add(buttons, "1, 4, 2, 4");
+
+    setSize(250, 150);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    String action = e.getActionCommand();
+    if (action.equals("Submit")) login();
+    if (action.equals("Cancel")) dispose();
+  }
+
+  void login() {
+    String user = nameField.getText();
+    
+    if (user.startsWith("~")) {
+      user = user.substring(1);
+      sVars.myServer = "FICS";
+      sVars.doreconnect = true;
+    }
+
+    String pwd = pwdField.getText();
+    
+    myoutput data1 = new myoutput();
+    data1.data = user + "\n";
+    
+    myoutput data2 = new myoutput();
+    data2.data = pwd + "\n";
+
+    queue.add(data1);
+    queue.add(data2);
+    dispose();
+  }
+}
+/*
 class connectionDialog extends JDialog {
   
   JTextField userNameField;
@@ -78,7 +178,7 @@ class connectionDialog extends JDialog {
 
           }
 
-          /** Handle the key-released event from the text field. */
+          /** Handle the key-released event from the text field. * /
           public void keyReleased(KeyEvent e) {;
 
           }
@@ -101,7 +201,7 @@ class connectionDialog extends JDialog {
 
           }
 
-          /** Handle the key-released event from the text field. */
+          /** Handle the key-released event from the text field. * /
           public void keyReleased(KeyEvent e) {;
             
           }
@@ -122,7 +222,7 @@ class connectionDialog extends JDialog {
 
           }
 
-          /** Handle the key-released event from the text field. */
+          /** Handle the key-released event from the text field. * /
           public void keyReleased(KeyEvent e) {;
 
           }
@@ -185,7 +285,6 @@ class connectionDialog extends JDialog {
 
   }// end sub class
 
-  
   void login() {
 
     String user = userNameField.getText();  
@@ -204,7 +303,6 @@ class connectionDialog extends JDialog {
     dispose();
 
   }// end login method
-
 
   void giveFocus() {
     SwingUtilities.invokeLater(new Runnable() {
@@ -246,3 +344,4 @@ class connectionDialog extends JDialog {
   }
 
 }// end class
+/**/
