@@ -175,6 +175,7 @@ webframe mywebframe;
  JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
   JCheckBoxMenuItem lowTimeColors;
+ JCheckBoxMenuItem newObserveGameSwitch;
    JCheckBoxMenuItem blockSays;
 JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole0;
@@ -440,6 +441,10 @@ consoleSubframes[0].makeHappen(0);
     	lowTimeColors.setSelected(false);
     else
     	lowTimeColors.setSelected(true);
+ if(sharedVariables.newObserveGameSwitch == false)
+    	newObserveGameSwitch.setSelected(false);
+    else
+    	newObserveGameSwitch.setSelected(true);
 
  if(sharedVariables.blockSays == false)
     	blockSays.setSelected(false);
@@ -1226,7 +1231,7 @@ JMenuItem enginestop = new JMenuItem("Stop Engine");
 enginestop.addActionListener(this);
 
 optionsmenu.addSeparator();
-JMenuItem customizetools = new JMenuItem("Customize Toolbar");
+JMenuItem customizetools = new JMenuItem("Customize User Buttons");
 customizetools.addActionListener(this);
 optionsmenu.add(customizetools);
 
@@ -1851,6 +1856,10 @@ lowTimeColors.addActionListener(this);
 checkLegality=new JCheckBoxMenuItem("Check Move Legality");
 checkLegality.addActionListener(this);
 AdvancedGameMenu.add(checkLegality);
+
+newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
+AdvancedGameMenu.add(newObserveGameSwitch);
+newObserveGameSwitch.addActionListener(this);
 
 JMenu aspect = new JMenu("Board Aspect Ratio");
 aspect0 = new JCheckBoxMenuItem("1:1");
@@ -2668,7 +2677,7 @@ mybox.setSize(500,450);
 mybox.setLocation(200,250);
 mybox.setVisible(true);
 }
-if(event.getActionCommand().equals("Customize Toolbar"))
+if(event.getActionCommand().equals("Customize User Buttons"))
 {
 userButtonsDialog mydialog = new userButtonsDialog((JFrame) this, sharedVariables);
 mydialog.setSize(400,400);
@@ -3996,7 +4005,21 @@ if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 		sharedVariables.showRatings = false;
 	}
 }
+if(event.getActionCommand().equals("Switch To New Game Tab On Observe"))
+{
+	if(sharedVariables.newObserveGameSwitch == false)
+	{
+		newObserveGameSwitch.setSelected(true);
+		sharedVariables.newObserveGameSwitch = true;
+	}
+	else
+	{
+		newObserveGameSwitch.setSelected(false);
+		sharedVariables.newObserveGameSwitch = false;
+	}
 
+  
+}
 if(event.getActionCommand().equals("Low Time Clock Colors ( Bullet Only)"))
 {
 	if(sharedVariables.lowTimeColors == false)
@@ -5381,9 +5404,11 @@ void makeToolBar()
 
 				}});
 
+   if(a != 0)
    toolBar.add(sharedVariables.mybuttons[a]);
 
   }
+   toolBar.add(sharedVariables.mybuttons[0]);
 }
 void sendToEngine(String output)
 {

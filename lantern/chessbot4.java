@@ -4626,6 +4626,10 @@ void proccessGameInfo(newBoardData temp)
                                         if(sharedVariables.mygame[myboards[ccc].gameData.LookingAt].state == sharedVariables.STATE_PLAYING &&
                                             sharedVariables.mygame[gamenum].state != sharedVariables.STATE_PLAYING)
                                             go=false;
+                                        // we wont switch if they dont want to switch for observed games
+                                        if(sharedVariables.newObserveGameSwitch == false && sharedVariables.mygame[gamenum].state != sharedVariables.STATE_PLAYING)
+                                            go=false;
+
                                           if(go == true && first == -1)
                                           first =ccc;
 

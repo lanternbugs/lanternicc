@@ -427,6 +427,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[donematerialCount] ";
 
 
+	// newObserveGameSwitch
+	set_string = set_string + "[newObserveGameSwitch] ";
+	if(sharedVariables.newObserveGameSwitch == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donenewObserveGameSwitch] ";
+
 	// lowTimeColors
 	set_string = set_string + "[lowTimeColors] ";
 	if(sharedVariables.lowTimeColors == true)
@@ -1720,6 +1729,18 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+
+  				if (temp.equals("[newObserveGameSwitch]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.newObserveGameSwitch=true;
+					else
+						sharedVariables.newObserveGameSwitch=false;
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[lowTimeColors]"))
 				{
