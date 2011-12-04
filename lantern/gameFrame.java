@@ -182,7 +182,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
      row = sorter.convertRowIndexToModel(row);
       /*int index = gametable.rowAtPoint(e.getPoint());*/
 			final String gameIndex = (String)gametable.getModel().getValueAt(row,0);
-
+                        final String historyOpponent = (String)gametable.getModel().getValueAt(row,4);
              if(!gameIndex.equals("-1"))
              {
 				 String examineString="";
@@ -272,6 +272,44 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 				menu2.add(item4);
+
+
+
+				JMenuItem item5 = new JMenuItem("Finger " + historyOpponent);
+				 item5.addActionListener(new ActionListener() {
+          		public void actionPerformed(ActionEvent e) {
+
+				 	myoutput output = new myoutput();
+				 	output.data="Finger " + historyOpponent + "\n";
+
+				 	output.consoleNumber=0;
+      			 	queue.add(output);
+
+				}
+
+       });
+
+
+                                if(type1.equals("history"))
+				menu2.add(item5);
+
+ 				JMenuItem item6 = new JMenuItem("History " + historyOpponent);
+				 item6.addActionListener(new ActionListener() {
+          		public void actionPerformed(ActionEvent e) {
+
+				 	myoutput output = new myoutput();
+				 	output.data="History " + historyOpponent + "\n";
+
+				 	output.consoleNumber=0;
+      			 	queue.add(output);
+
+				}
+
+       });
+
+
+                                if(type1.equals("history"))
+				menu2.add(item6);
 
 
 				add(menu2);

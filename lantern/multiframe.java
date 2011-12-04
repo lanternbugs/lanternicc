@@ -1308,9 +1308,6 @@ optionsmenu.add(advancedOptions);
 
 JMenu featuresMenu = new JMenu("Features");
 
- gameend = new JCheckBoxMenuItem("Send Game End Messages");
-  featuresMenu.add(gameend);
- gameend.addActionListener(this);
 
  tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
 tellswitch.addActionListener(this);
@@ -1328,17 +1325,6 @@ iloggedon.addActionListener(this);
 rotateaways.addActionListener(this);
 
 
- JMenu examReplay = new JMenu("Examine Game Replay");
- JMenuItem autostart = new JMenuItem("Start AutoExam");
- examReplay.add(autostart);
- JMenuItem autostop = new JMenuItem("Stop AutoExam");
- examReplay.add(autostop);
- JMenuItem autoset = new JMenuItem("Set AutoExam Speed");
-  examReplay.add(autoset);
- autostart.addActionListener(this);
-autoset.addActionListener(this);
-autostop.addActionListener(this);
- featuresMenu.add(examReplay);
 optionsmenu.add(featuresMenu);
 
 
@@ -1796,14 +1782,75 @@ myboardmenu.add(theHideMenu);
  // myboardmenu.add(useLightBackground);   // disabled
 useLightBackground.addActionListener(this);
 
+
+
+
+
+
+
+
+
+
+
+
+/* examine game replay */
+JMenu examReplay = new JMenu("Examine Game Replay");
+ JMenuItem autostart = new JMenuItem("Start AutoExam");
+ examReplay.add(autostart);
+ JMenuItem autostop = new JMenuItem("Stop AutoExam");
+ examReplay.add(autostop);
+ JMenuItem autoset = new JMenuItem("Set AutoExam Speed");
+  examReplay.add(autoset);
+ 
+ JMenuItem whatexaminereplay = new JMenuItem("What's Examine Game Replay Quick Help");
+ examReplay.add(whatexaminereplay);
+ whatexaminereplay.addActionListener(this);
+
+ autostart.addActionListener(this);
+autoset.addActionListener(this);
+autostop.addActionListener(this);
+ myboardmenu.add(examReplay);
+
+/* Pgn      */
+JMenu PgnMenu = new JMenu("PGN");
+pgnlogging = new JCheckBoxMenuItem("Log Pgn");
+PgnMenu.add(pgnlogging);
+pgnlogging.addActionListener(this);
+pgnlogging.setSelected(true);
+
+pgnObservedLogging = new JCheckBoxMenuItem("Log Observed Games To Pgn");
+PgnMenu.add(pgnObservedLogging);
+pgnObservedLogging.addActionListener(this);
+pgnObservedLogging.setSelected(true);
+
 JMenuItem openpgn = new JMenuItem("Open Pgn");
- myboardmenu.add(openpgn);
+ PgnMenu.add(openpgn);
  openpgn.addActionListener(this);
+
+myboardmenu.add(PgnMenu);
+/* communications */
+JMenu Communications = new JMenu("Communications");
+
+blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
+Communications.add(blockSays);
+blockSays.addActionListener(this);
+ gameend = new JCheckBoxMenuItem("Send Game End Messages");
+  Communications.add(gameend);
+ gameend.addActionListener(this);
+ autoChat = new JCheckBoxMenuItem("AutoChat");
+Communications.add(autoChat);
+autoChat.addActionListener(this);
+
+ myboardmenu.add(Communications);
+/* Advanced */
+JMenu AdvancedGameMenu = new JMenu("Advanced");
+lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
+AdvancedGameMenu.add(lowTimeColors);
+lowTimeColors.addActionListener(this);
 
 checkLegality=new JCheckBoxMenuItem("Check Move Legality");
 checkLegality.addActionListener(this);
-myboardmenu.add(checkLegality);
-
+AdvancedGameMenu.add(checkLegality);
 
 JMenu aspect = new JMenu("Board Aspect Ratio");
 aspect0 = new JCheckBoxMenuItem("1:1");
@@ -1821,38 +1868,12 @@ aspect2.setSelected(false);
 aspect3 = new JCheckBoxMenuItem("3:2");
 aspect.add(aspect3);
 aspect3.setSelected(false);
-
-pgnlogging = new JCheckBoxMenuItem("Log Pgn");
-myboardmenu.add(pgnlogging);
-pgnlogging.addActionListener(this);
-pgnlogging.setSelected(true);
-
-pgnObservedLogging = new JCheckBoxMenuItem("Log Observed Games To Pgn");
-myboardmenu.add(pgnObservedLogging);
-pgnObservedLogging.addActionListener(this);
-pgnObservedLogging.setSelected(true);
-
-autoChat = new JCheckBoxMenuItem("AutoChat");
-myboardmenu.add(autoChat);
-autoChat.addActionListener(this);
-
-lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
-myboardmenu.add(lowTimeColors);
-lowTimeColors.addActionListener(this);
-
-
-blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
-myboardmenu.add(blockSays);
-blockSays.addActionListener(this);
-
-
-myboardmenu.add(aspect);
 aspect0.addActionListener(this);
 aspect1.addActionListener(this);
 aspect2.addActionListener(this);
 aspect3.addActionListener(this);
-
-
+AdvancedGameMenu.add(aspect);
+myboardmenu.add(AdvancedGameMenu);
 /*************** menu for board console *****************/
 JMenu consoleaspect = new JMenu("Board Console");
 
@@ -2560,6 +2581,15 @@ sharedVariables.rotateAways=false;
 }// if rotate aways true
 
 }
+if(event.getActionCommand().equals("What's Examine Game Replay Quick Help"))
+{
+String mes = "If Examining a game from a history (including your own), library or search list, you can have Lantern issue the command forward 1, at a set interval with delay set by the user between moves.\n\nFor example go to the Actions menu and choose Examine My Last game, then to to Start Examine Game Replay.";
+Popup mypopper = new Popup(this, false, mes);
+mypopper.setSize(300,350);
+mypopper.setVisible(true);
+
+}
+
 
 if(event.getActionCommand().equals("Stop AutoExam"))
 {
