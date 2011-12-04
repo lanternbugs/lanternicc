@@ -2454,7 +2454,10 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
          if(changeTo!= -1)
          makeHappen(changeTo);
        }
-
+if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
+{
+ writeToConsole(mes, sharedVariables.typedColor , true); // true for italic
+}
       myoutput output = new myoutput();
       if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
       output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mes;// having a name means level 1 is on if on icc and this `phrase`mess will be used to direct output back to this console
@@ -2465,10 +2468,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
       queue.add(output);
       Input.setText("");
 
-if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
-{
- writeToConsole(mes, sharedVariables.typedColor , true); // true for italic
-}
+
 
 
         }// end enter
