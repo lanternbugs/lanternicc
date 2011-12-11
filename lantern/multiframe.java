@@ -1460,7 +1460,7 @@ nboard.addActionListener(this);
   sharedVariables.myWindows.add(rconsole2);
   rconsole2.setMnemonic(KeyEvent.VK_C);
  JMenuItem  webopener = new JMenuItem("Open Web");
-    sharedVariables.myWindows.add(webopener);
+  //  sharedVariables.myWindows.add(webopener);
 
  JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     sharedVariables.myWindows.add(seekingGraph);
@@ -2231,12 +2231,12 @@ else
 
 if(event.getActionCommand().equals("Lantern Manual"))
 {
-	mycreator.createWebFrame("http://www.adammr.com/lanternhelp/lantern-help.html");
+	mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.html");
 }
 
 if(event.getActionCommand().equals("Change Log"))
 {
-	mycreator.createWebFrame("http://www.adammr.com/changelog.htm");
+	mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
 }
 
 
@@ -4721,7 +4721,7 @@ try {
 
 void makeEngineWarning()
 {
-String swarning = "You must be in examine or observe mode to load an engine.";
+String swarning = "You must be in examine or observe mode to load an engine and you need to click on the board and game tab that is in this mode as well first.";
 Popup pframe = new Popup((JFrame) this, true, swarning);
 pframe.setVisible(true);
 

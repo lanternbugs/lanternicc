@@ -369,7 +369,7 @@ void writeToGameConsole(StyledDocument doc, int i)
 			{
                           
                           boolean go=true;
-                           if(sharedVariables.mygame[i].state == sharedVariables.STATE_EXAMINING && sharedVariables.engineOn == true)
+                           if((sharedVariables.mygame[i].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[i].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
                            if(sharedVariables.mygame[i].clickCount %2 == 1)
                            go=false;
                            

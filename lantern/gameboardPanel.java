@@ -293,6 +293,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 		int offsetX = (int) squarex / 10;
 		int offsetY = (int ) squarey/10;
 
+
 		for(int a = 0; a < sharedVariables.mygame[gameData.LookingAt].myShapes.size(); a++)
 		{
 				if(sharedVariables.mygame[gameData.LookingAt].myShapes.get(a).type == sharedVariables.mygame[gameData.LookingAt].myShapes.get(a).Arrow)
@@ -324,14 +325,21 @@ the slider is on. otherwise it draws the curernt in play board*/
 				else  if(sharedVariables.mygame[gameData.LookingAt].myShapes.get(a).type == sharedVariables.mygame[gameData.LookingAt].myShapes.get(a).Circle)
 				{
 					int from = sharedVariables.mygame[gameData.LookingAt].myShapes.get(a).from;
-					int xfrom =(int) ((from%8) *squarex + squarex/5 + boardx ) ;
-					int yfrom=(int) (from/8 * squarey + squarey/5 + boardy);
+					int xfrom =(int) ((from%8) *squarex + squarex/10 + boardx ) ;
+					int yfrom=(int) (from/8 * squarey + squarey/10 + boardy);
 
 					g.setColor(new Color(0,0,255));
-
+                                         offsetX = (int) squarex / 16;
+                                         if(offsetX < 2)
+                                         offsetX = 2;
 					for(int b =0; b < offsetX; b++)
-					g.drawArc(xfrom, yfrom, squarex *2/3 + b, squarey *2/ 3 + b, 0 , 360);
+				//	g.drawArc(xfrom, yfrom, squarex *2/3 + b, squarey *2/ 3 + b, 0 , 360);
+			{
+                          g.drawOval(xfrom + b - (offsetX/2), yfrom, squarex * 4/5, squarey * 4/5 );
+                          g.drawOval(xfrom, yfrom + b - (offsetX/2), squarex * 4/5, squarey * 4/5 );
+				//g.drawOval(xfrom, yfrom, squarex *2/3, squarey *2/ 3 );
 
+                         }// end for b=0
 				}
 
 		}
