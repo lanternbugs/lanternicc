@@ -90,6 +90,14 @@ frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 frame.setTitle("Lantern Chess");
 frame.setVisible(true);
+
+// uncomment below line to test name and pass saving
+//passTest tester = new passTest();
+
+
+
+
+
 //frame.setDefaultLookAndFeelDecorated(false);
 
 SwingUtilities.invokeLater(new Runnable() {
