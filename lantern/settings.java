@@ -427,6 +427,27 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[donematerialCount] ";
 
 
+
+	// saveNamePass
+	set_string = set_string + "[saveNamePass] ";
+	if(sharedVariables.saveNamePass == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donesaveNamePass] ";
+	// drawCoordinates
+	set_string = set_string + "[drawCoordinates] ";
+	if(sharedVariables.drawCoordinates == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donedrawCoordinates] ";
+
+
+
+
 	// newObserveGameSwitch
 	set_string = set_string + "[newObserveGameSwitch] ";
 	if(sharedVariables.newObserveGameSwitch == true)
@@ -1728,6 +1749,40 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+
+
+ 
+ 
+
+				if (temp.equals("[drawCoordinates]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.drawCoordinates=true;
+					else
+						sharedVariables.drawCoordinates=false;
+					}
+					catch(Exception zzz){}
+				}
+
+				if (temp.equals("[saveNamePass]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.saveNamePass=true;
+					else
+						sharedVariables.saveNamePass=false;
+					}
+					catch(Exception zzz){}
+				}
+
+
+
+
+
+
 
 
   				if (temp.equals("[newObserveGameSwitch]"))

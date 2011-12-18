@@ -122,7 +122,8 @@ addMouseListener(this);
 		int boardy;
 		int bugboardx;
 		int bugboardy;
-
+                int coordinateX;
+                int coordinateY;
 	    int squarex;
 	    int squarey;
 		int width;
@@ -223,7 +224,17 @@ void setValues()
 			//g.drawString("sqx " + squarex + "sqy " + squarey + "esqx " + examineSquareX + "esqy "+ examineSquareY + "eOx " + examineOriginX + "eOy " + examineOriginY, 0, height - 20);
 		}
 
+      if(sharedVariables.drawCoordinates == true)
+      {
+        coordinateX = (int)( (double) squarex * .05);
+        coordinateY = (int) ( (double) squarey * .05);
+       squarex -=coordinateX;
+       squarey -=coordinateY;
+       coordinateX*=8;
+       coordinateY*=8;
+       boardx+=coordinateX;
 
+      }
 
 }
 
@@ -286,6 +297,49 @@ click on teh 64 squar4es it returns 0-63*/
 
 /* draws our board.  can draw two possible boards. if the slider is below the maximum, scrolled back, it gets the slider board at the spot
 the slider is on. otherwise it draws the curernt in play board*/
+
+	public void drawCoordinates(Graphics g, int boardx, int boardy, int squarex, int squarey)
+        {
+		Graphics2D g2 = (Graphics2D) g;
+
+              int fontX = boardx-coordinateX;
+              int fontY = boardy * squarey * 8 + coordinateY;
+              String [] boardFiles = {"A", "B", "C", "D", "E", "F", "G", "H"};
+              String [] boardRows = {"1", "2", "3", "4", "5", "6", "7", "8"};
+ 	      g2.setColor(sharedVariables.boardForegroundColor);
+              int fsize =(int) ((double) coordinateX * .8);
+	      Font coordinateFont = new Font("Times New Roman", Font.BOLD, fsize);
+              g2.setFont(coordinateFont);
+
+              if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0)
+              {
+
+                 for(int a=0; a< 8; a++)
+                 {
+                  g2.drawString(boardRows[7-a], boardx-coordinateX, boardy + a * squarey + (int) ((double) squarey/2));
+                  g2.drawString(boardFiles[a], boardx + squarex * a + (int) ((double) squarex/2), boardy + squarey*8 +(int) ((double)coordinateY * .85));
+
+                 }
+
+
+              }
+                else
+                {
+
+                 for(int a=0; a< 8; a++)
+                 {
+                  g2.drawString(boardRows[a], boardx-coordinateX, boardy + a * squarey + (int) ((double) squarey/2));
+                  g2.drawString(boardFiles[7-a], boardx + squarex * a + (int) ((double) squarex/2), boardy + squarey*8 + (int) ((double)coordinateY * .85));
+
+                 }
+
+
+              }
+
+          
+        }
+
+
 	public void paintShapes(Graphics g, int boardx, int boardy, int squarex, int squarey)
 	{
 		// will execute this function if sliding != 1
@@ -630,6 +684,9 @@ paintShapes(g, boardx, boardy, squarex, squarey);
 
 
  }// end if bugging > -1
+ 
+ if(sharedVariables.drawCoordinates == true)
+ drawCoordinates(g, boardx, boardy, squarex, squarey);
 }
 catch(Exception e)
 {}

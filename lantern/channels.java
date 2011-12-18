@@ -119,6 +119,7 @@ boolean blockSays = false;
 boolean lowTimeColors = false;
 boolean newObserveGameSwitch = true;
 boolean saveNamePass = false;
+boolean drawCoordinates = false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();

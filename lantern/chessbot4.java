@@ -5638,7 +5638,12 @@ public void run()
 						myboards[tosend.gameFocusConsole].giveFocus();
                                                  tosend=queue.poll();
 					}
+                                        else if(tosend.repaint64 > -1)
+                                        {
+                                         theMainFrame.repaintboards();
+                                          tosend=queue.poll();
 
+                                        }
 					else if(tosend.closetab > -1)
 					{
                                                 if(isABoardVisible() == false)

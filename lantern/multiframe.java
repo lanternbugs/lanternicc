@@ -178,6 +178,7 @@ webframe mywebframe;
  JCheckBoxMenuItem tellswitch;
  JCheckBoxMenuItem highlight;
  JCheckBoxMenuItem materialCount;
+ JCheckBoxMenuItem drawCoordinates;
  JCheckBoxMenuItem showRatings;
  JCheckBoxMenuItem showFlags;
  JCheckBoxMenuItem showPallette;
@@ -425,6 +426,11 @@ consoleSubframes[0].makeHappen(0);
     	materialCount.setSelected(false);
     else
     	materialCount.setSelected(true);
+
+ if(sharedVariables.drawCoordinates == false)
+    	drawCoordinates.setSelected(false);
+    else
+    	drawCoordinates.setSelected(true);
 
  if(sharedVariables.showRatings == false)
     	showRatings.setSelected(false);
@@ -1775,6 +1781,12 @@ JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
   materialCount = new JCheckBoxMenuItem("Material Count");
   theHideMenu.add(materialCount);
 materialCount.addActionListener(this);
+
+  drawCoordinates = new JCheckBoxMenuItem("Draw Coordinates");
+  theHideMenu.add(drawCoordinates);
+drawCoordinates.addActionListener(this);
+
+
 
   showPallette = new JCheckBoxMenuItem("Show Examine Mode Pallette");
   theHideMenu.add(showPallette);
@@ -3999,6 +4011,26 @@ if(event.getActionCommand().equals("Material Count"))
 		sharedVariables.showMaterialCount = false;
 	}
 }
+if(event.getActionCommand().equals("Draw Coordinates"))
+{
+	if(sharedVariables.drawCoordinates == false)
+	{
+		drawCoordinates.setSelected(true);
+		sharedVariables.drawCoordinates = true;
+	}
+	else
+	{
+		drawCoordinates.setSelected(false);
+		sharedVariables.drawCoordinates = false;
+	}
+myoutput output = new myoutput();
+output.repaint64=1;
+queue.add(output);
+
+
+}
+
+
 
 if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 {
@@ -5883,7 +5915,29 @@ public void saveSettings() {
  public void getSettings() {
 
           }
+
+
+
+
+void repaintboards()
+{
+try {
+for(int coo=0; coo<sharedVariables.openBoardCount; coo++)
+if(myboards[coo]!=null)
+if(myboards[coo].isVisible())
+{
+
+myboards[coo].mypanel.repaint(0,0, 5000,5000);
+
+} 
+if(myboards[0]!=null)
+if(myboards[0].isVisible())
+myboards[0].repaint();                          }
+catch(Exception dui){}
+
+}// end method repaint boards
+
+
+
+
 } // end multi frame class
-
-
-
