@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
 import java.util.Queue;
 
 import layout.TableLayout;
@@ -31,12 +32,17 @@ class connectionDialog extends JDialog implements ActionListener {
 
   JTextField nameField;
   JPasswordField pwdField;
+  JCheckBox saveNP;
   JLabel nameLabel;
   JLabel pwdLabel;
+  JLabel saveLabel;
   JButton ok;
   JButton cancel;
   channels sVars;
+  credentials creds;
   Queue<myoutput> queue;
+
+  boolean snp;
 
   connectionDialog(JFrame frame, channels sVars,
                    Queue<myoutput> queue, boolean mybool) {
@@ -46,10 +52,14 @@ class connectionDialog extends JDialog implements ActionListener {
 
     this.queue = queue;
     this.sVars = sVars;
+    creds = new credentials();
+
+    saveNP = new JCheckBox("Save password", sVars.saveNamePass);
 
     nameField = new JTextField(20);
     if (!sVars.myname.equals(""))
       nameField.setText(sVars.myname);
+
     //nameField.setActionCommand("Submit");
     //nameField.addActionListener(this);
     
@@ -60,6 +70,11 @@ class connectionDialog extends JDialog implements ActionListener {
     pwdField.setActionCommand("Submit");
     pwdField.addActionListener(this);
 
+    if (sVars.saveNamePass) {
+      nameField.setText(creds.getName());
+      pwdField.setText(creds.getPass());
+    }
+    
     nameLabel = new JLabel("User Name");
     pwdLabel = new JLabel("Password");
 
@@ -81,7 +96,7 @@ class connectionDialog extends JDialog implements ActionListener {
     int border = 10;
     int space = 5;
 
-    double[][] size = {{border, 60, TableLayout.FILL, border},
+    double[][] size = {{border, 60, TableLayout.FILL, 100, border},
                        {border, ht, space, ht, TableLayout.FILL, border}};
 
     setLayout(new TableLayout(size));
@@ -90,9 +105,10 @@ class connectionDialog extends JDialog implements ActionListener {
     add(nameField, "2, 1");
     add(pwdLabel, "1, 3");
     add(pwdField, "2, 3");
-    add(buttons, "1, 4, 2, 4");
+    add(saveNP, "3, 3");
+    add(buttons, "1, 4, 3, 4");
 
-    setSize(250, 150);
+    setSize(300, 150);
   }
 
   public void actionPerformed(ActionEvent e) {
@@ -120,6 +136,12 @@ class connectionDialog extends JDialog implements ActionListener {
 
     queue.add(data1);
     queue.add(data2);
+
+    sVars.saveNamePass = saveNP.isSelected();
+    if (sVars.saveNamePass)
+      creds.saveNamePass(user, pwd);
+    else creds.resetNamePass();
+    
     dispose();
   }
 }
