@@ -96,7 +96,7 @@ class connectionDialog extends JDialog implements ActionListener {
     int border = 10;
     int space = 5;
 
-    double[][] size = {{border, 60, TableLayout.FILL, 100, border},
+    double[][] size = {{border, 70, TableLayout.FILL, 120, border},
                        {border, ht, space, ht, TableLayout.FILL, border}};
 
     setLayout(new TableLayout(size));
@@ -108,7 +108,7 @@ class connectionDialog extends JDialog implements ActionListener {
     add(saveNP, "3, 3");
     add(buttons, "1, 4, 3, 4");
 
-    setSize(300, 150);
+    setSize(330, 150);
   }
 
   public void actionPerformed(ActionEvent e) {
