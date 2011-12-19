@@ -59,20 +59,18 @@ public class connectionDialog extends JDialog
       nameField.setText(sVars.myname);
     nameField.setActionCommand("Submit");
     nameField.addActionListener(this);
-    nameField.getDocument().addDocumentListener(this);
     
-    // want to allow submit with a blank password in case "g" or
-    // "guest" is entered
-
     pwdField = new JPasswordField(20);
     pwdField.setActionCommand("Submit");
     pwdField.addActionListener(this);
-    pwdField.getDocument().addDocumentListener(this);
 
     if (sVars.saveNamePass) {
       nameField.setText(creds.getName());
       pwdField.setText(creds.getPass());
     }
+    
+    nameField.getDocument().addDocumentListener(this);
+    pwdField.getDocument().addDocumentListener(this);
     
     ok = new JButton("OK");
     ok.setActionCommand("Submit");
@@ -80,7 +78,6 @@ public class connectionDialog extends JDialog
     // the button is disabled while the name or password is blank,
     // unless the user is trying to log in as a guest ('g' or 'guest',
     // lowercase only for now)
-    ok.setEnabled(sVars.saveNamePass);
       
     JButton cancel = new JButton("Cancel");
     cancel.setActionCommand("Cancel");
@@ -106,6 +103,8 @@ public class connectionDialog extends JDialog
     add(pwdField, "2, 3");
     add(saveNP, "2, 5");
     add(buttons, "1, 7, 3, 7");
+
+    updateOK();
 
     setSize(250, 160);
   }
@@ -136,7 +135,7 @@ public class connectionDialog extends JDialog
     else ok.setEnabled(!name.equals("") && !pwd.equals(""));
   }
 
-  private void login() {
+  public void login() {
     String user = nameField.getText();
     
     if (user.startsWith("~")) {
