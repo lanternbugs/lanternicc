@@ -16,6 +16,9 @@ package lantern;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.text.Document;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -28,24 +31,19 @@ import java.util.Queue;
 
 import layout.TableLayout;
 
-class connectionDialog extends JDialog implements ActionListener {
+public class connectionDialog extends JDialog
+  implements ActionListener, DocumentListener {
 
-  JTextField nameField;
-  JPasswordField pwdField;
-  JCheckBox saveNP;
-  JLabel nameLabel;
-  JLabel pwdLabel;
-  JLabel saveLabel;
-  JButton ok;
-  JButton cancel;
-  channels sVars;
-  credentials creds;
-  Queue<myoutput> queue;
+  private JTextField nameField;
+  private JPasswordField pwdField;
+  private JCheckBox saveNP;
+  private JButton ok;
+  private channels sVars;
+  private credentials creds;
+  private Queue<myoutput> queue;
 
-  boolean snp;
-
-  connectionDialog(JFrame frame, channels sVars,
-                   Queue<myoutput> queue, boolean mybool) {
+  public connectionDialog(JFrame frame, channels sVars,
+                          Queue<myoutput> queue, boolean mybool) {
     super(frame, "Connect to ICC", mybool);
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -59,9 +57,9 @@ class connectionDialog extends JDialog implements ActionListener {
     nameField = new JTextField(20);
     if (!sVars.myname.equals(""))
       nameField.setText(sVars.myname);
-
-    //nameField.setActionCommand("Submit");
-    //nameField.addActionListener(this);
+    nameField.setActionCommand("Submit");
+    nameField.addActionListener(this);
+    nameField.getDocument().addDocumentListener(this);
     
     // want to allow submit with a blank password in case "g" or
     // "guest" is entered
@@ -69,22 +67,22 @@ class connectionDialog extends JDialog implements ActionListener {
     pwdField = new JPasswordField(20);
     pwdField.setActionCommand("Submit");
     pwdField.addActionListener(this);
+    pwdField.getDocument().addDocumentListener(this);
 
     if (sVars.saveNamePass) {
       nameField.setText(creds.getName());
       pwdField.setText(creds.getPass());
     }
     
-    nameLabel = new JLabel("User Name");
-    pwdLabel = new JLabel("Password");
-
     ok = new JButton("OK");
     ok.setActionCommand("Submit");
     ok.addActionListener(this);
-    // the submit button could be disabled while the password is
-    // blank, unless the user is trying to log in as a guest
+    // the button is disabled while the name or password is blank,
+    // unless the user is trying to log in as a guest ('g' or 'guest',
+    // lowercase only for now)
+    ok.setEnabled(sVars.saveNamePass);
       
-    cancel = new JButton("Cancel");
+    JButton cancel = new JButton("Cancel");
     cancel.setActionCommand("Cancel");
     cancel.addActionListener(this);
 
@@ -102,9 +100,9 @@ class connectionDialog extends JDialog implements ActionListener {
 
     setLayout(new TableLayout(size));
 
-    add(nameLabel, "1, 1");
+    add(new JLabel("User Name"), "1, 1");
     add(nameField, "2, 1");
-    add(pwdLabel, "1, 3");
+    add(new JLabel("Password"), "1, 3");
     add(pwdField, "2, 3");
     add(saveNP, "2, 5");
     add(buttons, "1, 7, 3, 7");
@@ -114,11 +112,31 @@ class connectionDialog extends JDialog implements ActionListener {
 
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
-    if (action.equals("Submit")) login();
+    if (action.equals("Submit") && ok.isEnabled()) login();
     if (action.equals("Cancel")) dispose();
   }
 
-  void login() {
+  public void changedUpdate(DocumentEvent e) {
+    updateOK();
+  }
+
+  public void insertUpdate(DocumentEvent e) {
+    updateOK();
+  }
+
+  public void removeUpdate(DocumentEvent e) {
+    updateOK();
+  }
+
+  private void updateOK() {
+    String name = nameField.getText();
+    String pwd = pwdField.getText();
+    if (name.equals("g") || name.equals("guest"))
+      ok.setEnabled(pwd.equals(""));
+    else ok.setEnabled(!name.equals("") && !pwd.equals(""));
+  }
+
+  private void login() {
     String user = nameField.getText();
     
     if (user.startsWith("~")) {
