@@ -28,7 +28,7 @@ class resourceClass {
 Image [][] boards;
 Image [][] pieces;
 Image [][][] multiPieces;
-
+Image xpiece;
  int light;
  int dark;
  int maxBoards;

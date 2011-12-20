@@ -94,6 +94,7 @@ class gameboardPanel extends JPanel implements MouseMotionListener, MouseListene
 	ConcurrentLinkedQueue<myoutput> queue;
 	resourceClass graphics;
 	int bugging = -1;
+        int xpiece = 99999; // piece value for examining x, can be anything i suppose just not in use
 
 gameboardPanel(Image img1[], channels sharedVariables1, gamestuff gameData1, ConcurrentLinkedQueue<myoutput> queue1, resourceClass graphics1)
 {
@@ -226,8 +227,8 @@ void setValues()
 
       if(sharedVariables.drawCoordinates == true)
       {
-        coordinateX = (int)( (double) squarex * .05);
-        coordinateY = (int) ( (double) squarey * .05);
+        coordinateX = (int)( (double) squarex * .06);
+        coordinateY = (int) ( (double) squarey * .06);
        squarex -=coordinateX;
        squarey -=coordinateY;
        coordinateX*=8;
@@ -304,12 +305,13 @@ the slider is on. otherwise it draws the curernt in play board*/
 
               int fontX = boardx-coordinateX;
               int fontY = boardy * squarey * 8 + coordinateY;
-              String [] boardFiles = {"A", "B", "C", "D", "E", "F", "G", "H"};
+              String [] boardFiles = {"a", "b", "c", "d", "e", "f", "g", "h"};
               String [] boardRows = {"1", "2", "3", "4", "5", "6", "7", "8"};
  	      g2.setColor(sharedVariables.boardForegroundColor);
               int fsize =(int) ((double) coordinateX * .8);
 	      Font coordinateFont = new Font("Times New Roman", Font.BOLD, fsize);
               g2.setFont(coordinateFont);
+              int xoffset = (int) ((double) coordinateX/4);
 
               if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0)
               {
@@ -317,7 +319,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                  for(int a=0; a< 8; a++)
                  {
                   g2.drawString(boardRows[7-a], boardx-coordinateX, boardy + a * squarey + (int) ((double) squarey/2));
-                  g2.drawString(boardFiles[a], boardx + squarex * a + (int) ((double) squarex/2), boardy + squarey*8 +(int) ((double)coordinateY * .85));
+                  g2.drawString(boardFiles[a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy + squarey*8 +(int) ((double)coordinateY * .85));
 
                  }
 
@@ -329,14 +331,14 @@ the slider is on. otherwise it draws the curernt in play board*/
                  for(int a=0; a< 8; a++)
                  {
                   g2.drawString(boardRows[a], boardx-coordinateX, boardy + a * squarey + (int) ((double) squarey/2));
-                  g2.drawString(boardFiles[7-a], boardx + squarex * a + (int) ((double) squarex/2), boardy + squarey*8 + (int) ((double)coordinateY * .85));
+                  g2.drawString(boardFiles[7-a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy + squarey*8 + (int) ((double)coordinateY * .85));
 
                  }
 
 
               }
 
-          
+
         }
 
 
@@ -663,8 +665,13 @@ if(sharedVariables.mygame[gameData.LookingAt].piecePallette== true &&
 
 				 piece=examinepiecemoving;
 				if(piece > 0) // piece moving//((int) (squarex -4 ) /2) this centers it
-							g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2), squarex - 4, squarey-4, this);
-			}
+				{
+                                  if(piece == xpiece)
+                                  g.drawImage(graphics.xpiece, mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2), squarex - 4, squarey-4, this);
+                                  else
+                                  g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2), squarex - 4, squarey-4, this);
+                                  }
+                        }
 
 }// end if
 
@@ -729,15 +736,20 @@ void drawPiecePallete(int piece, int OriginX, int OriginY, int Looking, Graphics
 		{
 			if(sharedVariables.mygame[Looking].wild==23 || sharedVariables.mygame[Looking].wild==24)
 			{
-				if(sharedVariables.mygame[Looking].crazypieces[piece] > 0)
+				if(piece != xpiece) // the examine x we dont draw in crazyhouse
+                                if(sharedVariables.mygame[Looking].crazypieces[piece] > 0)
 				{
 					g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
 				}
 			}
 			else
-				g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
-
-			if(sharedVariables.mygame[Looking].wild==23 || sharedVariables.mygame[Looking].wild==24)
+			{
+                          if(piece == xpiece)
+                          g.drawImage(graphics.xpiece, OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
+                          else
+                          g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], OriginX+2 , OriginY + a * examineSquareY + 2, examineSquareX - 4 , examineSquareY-4, this);
+                          }
+			if((sharedVariables.mygame[Looking].wild==23 || sharedVariables.mygame[Looking].wild==24) && piece != xpiece)
 			{
 				if(sharedVariables.mygame[Looking].crazypieces[piece] > 1)
 				{
@@ -807,8 +819,12 @@ if(sharedVariables.mygame[gameData.LookingAt].iflipped == 0)
 	    if(a < 6) // blacks pieces
 			piece = a + 7;
 		else if( a == 6)
-			piece =0;
-		else // whites pieces for white on bottom
+		{if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+                  piece =xpiece;
+                  else
+                  piece=0;
+		}
+                else // whites pieces for white on bottom
 		piece = a-6;
 
 }
@@ -817,7 +833,11 @@ else
 	    if(a < 6) // whites pieces
 			piece = a+1;
 		else if( a == 6)
-			piece =0;
+		{if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+                  piece =xpiece;
+                  else
+                  piece=0;
+		}
 		else // whites pieces for white on bottom
 		piece = a ;
 
@@ -919,6 +939,9 @@ void repaintPiece()
 
 	    }
 	 public void mouseEntered (MouseEvent me) {}
+
+
+
 
 
 
@@ -1138,7 +1161,10 @@ void repaintPiece()
 								movesound=new Sound(sharedVariables.songs[1]);
 
 
-					 sharedVariables.mygame[gameData.LookingAt].board[piece]=examinepiecemoving;
+					 if(examinepiecemoving == xpiece)
+                                         sharedVariables.mygame[gameData.LookingAt].board[piece]=0;
+                                         else
+                                         sharedVariables.mygame[gameData.LookingAt].board[piece]=examinepiecemoving;
 					 //String atPiece=getExamPieceMoving(exampiecemoving);
 					 String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
 
@@ -1208,6 +1234,8 @@ void repaintPiece()
 			return "q@";
 		else if(piece == 12)
 			return "k@";
+		else if(piece == xpiece)
+		       return "x@";
 	return "";
 
 	}

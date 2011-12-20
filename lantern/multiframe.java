@@ -5607,11 +5607,14 @@ sharedVariables.sposIcon = new ImageIcon(myiconurl, "Sposition");
 sharedVariables.wasIcon = new ImageIcon(myiconurl, "was");
 }catch(Exception dd){}
 
+URL myurl = this.getClass().getResource("images/x.gif");
+graphics.xpiece =Toolkit.getDefaultToolkit().getImage(myurl);
+
 for( int a = 1 ; a < graphics.maxBoards; a++)
 {
 	if( a != 6)
 	{
-		URL myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.gif");
+		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.gif");
 		graphics.boards[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
 		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.gif");
 		graphics.boards[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
@@ -5619,7 +5622,7 @@ for( int a = 1 ; a < graphics.maxBoards; a++)
 	}
 	else
 	{
-		URL myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.png");
+		 myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.png");
 		graphics.boards[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
 		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.png");
 		graphics.boards[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
@@ -5633,7 +5636,7 @@ for( int a = 0 ; a < graphics.maxPieces; a++)
 		ext = graphics.pieceExt[a];
 		if(ext.equals("mix"))// was rand
 			break;   // allways last. not real pieces , randomly generated
-		URL myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wp." + ext);
+		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wp." + ext);
 		graphics.pieces[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
 		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wn." + ext);
 		graphics.pieces[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
@@ -5757,7 +5760,7 @@ while(flagger== true)
   sharedVariables.flagImageNames.add(lookup);
   lookup="flags-small/" + lookup + ".png";
 
-		URL myurl = this.getClass().getResource( lookup);
+		myurl = this.getClass().getResource( lookup);
 		sharedVariables.flagImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
 
  }
