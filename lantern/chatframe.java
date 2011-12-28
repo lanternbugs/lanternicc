@@ -149,7 +149,7 @@ item3.addActionListener(new ActionListener() {
 			if(go == 0)
 			return;
 
-			openUrl(myurl);
+			sharedVariables.openUrl(myurl);
 
 			giveFocus();
              }catch(Exception g)
@@ -343,65 +343,6 @@ void customizeTab(int num)
 //customizeChannelsDialog frame = new customizeChannelsDialog(this, false, num, sharedVariables, consoleSubframes);
 //if(sharedVariables.looking[consoleNumber]==num)
 //	makeHappen(num);
-
-}
-void openUrl(String myurl)
-{
-
-				try {
-
-				String os = System.getProperty("os.name").toLowerCase();
-
-					//Process p = Runtime.getRuntime().exec(cmdLine);
-				Runtime rt = Runtime.getRuntime();
-				if (os.indexOf( "win" ) >= 0)
-	            {
-				 String[] cmd = new String[4];
-	              cmd[0] = "cmd.exe";
-	              cmd[1] = "/C";
-	              cmd[2] = "start";
-	              cmd[3] = myurl;
-
-	              rt.exec(cmd);
-			  }
-			  else if (os.indexOf( "mac" ) >= 0)
-	            {
-	             Runtime runtime = Runtime.getRuntime();
-				   if(myurl.startsWith("www."))
-				   myurl="http://" + myurl;
-				   String[] args = { "osascript", "-e", "open location \"" + myurl + "\"" };
-				   try
-				   {
-				     Process process = runtime.exec(args);
-				   }
-				   catch (IOException e)
-				   {
-				     // do what you want with this
-				     // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
-				   }
-
-
-
-	            }
-				else
-				{             //prioritized 'guess' of users' preference
-	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
-	                  "netscape","opera","links","lynx"};
-
-	              StringBuffer cmd = new StringBuffer();
-	              for (int i=0; i<browsers.length; i++)
-	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
-
-	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
-	              //rt.exec("firefox http://www.google.com");
-	              //System.out.println(cmd.toString());
-
-
-				}// end else
-			}// end try
-			catch(Exception e)
-			{}
-
 
 }
 void removeSelectionHighlight()
@@ -834,7 +775,7 @@ else if(myurl2.startsWith("games"))
 	dispatchCommand(myurl);
 }
 else
-openUrl(myurl);
+sharedVariables.openUrl(myurl);
 }
 
 /*	Element elm=editor.getStyledDocument().getParagraphElement(pos);
@@ -885,7 +826,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 				//String cmdLine = "start " + r.getURL();
 				//Process p = Runtime.getRuntime().exec(cmdLine);
 				String myurl="" + r.getURL();
-				openUrl("www.adam16mr.org");
+				sharedVariables.openUrl("www.adam16mr.org");
 		 	}
 
              }catch(Exception e)

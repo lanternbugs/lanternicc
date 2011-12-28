@@ -593,7 +593,7 @@ else if(myurl2.startsWith("liblist"))
 	dispatchCommand(myurl);
 }
 else
-openUrl(myurl);
+sharedVariables.openUrl(myurl);
 }
 
 
@@ -682,7 +682,7 @@ Input.addKeyListener(new KeyListener() {
 			myurl=myurl.trim();
                         myurl=myurl.replace(" ", "+");
 
-			openUrl("http://www.google.com/search?q=" + myurl);
+			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
                 }
           if( aa == 72 &&  e.getModifiersEx() == 128 )
              {
@@ -1809,11 +1809,11 @@ items[m].addActionListener(new ActionListener() {
           String name =  gameconsoles[gameData.BoardIndex].getSelectedText();
  if( sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink"))
          {
-			openUrl(name);
+			sharedVariables.openUrl(name);
        }
    else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
    {
-			openUrl("http://www.google.com//search?q=" + name);
+			sharedVariables.openUrl("http://www.google.com//search?q=" + name);
    }
 
  else
@@ -2011,7 +2011,7 @@ item3.addActionListener(new ActionListener() {
 			myurl=myurl.replace(" ", "+");
 
 
-			openUrl("http://www.google.com/search?q=" + myurl);
+			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
 
 			giveFocus();
              }catch(Exception g)
@@ -2153,8 +2153,8 @@ class arrowManagement
 
 } // end arrow manager
 
-
-void openUrl(String myurl)
+/*
+void sharedVariables.openUrl(String myurl)
 {
 
 				try {
@@ -2196,13 +2196,7 @@ void openUrl(String myurl)
 
 
 	             // rt.exec( "open " + myurl);
-          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
-            Method openURL = fileMgr.getDeclaredMethod("openURL",
-               new Class[] {String.class});
-            openURL.invoke(null, new Object[] {myurl});
 
-			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
-			*/
 			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
 			//  Process process = Runtime.getRuntime().exec(commandLine);
 
@@ -2229,6 +2223,6 @@ void openUrl(String myurl)
 
 
 }
-
+*/
 
 }// end gameconsole class

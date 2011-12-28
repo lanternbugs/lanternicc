@@ -168,7 +168,7 @@ item3.addActionListener(new ActionListener() {
 			if(go == 0)
 			return;
 
-			openUrl(myurl);
+			sharedVariables.openUrl(myurl);
 
 			giveFocus();
              }catch(Exception g)
@@ -189,7 +189,7 @@ item3.addActionListener(new ActionListener() {
 			myurl=myurl.trim();
                         myurl=myurl.replace(" ", "+");
 
-			openUrl("http://www.google.com/search?q=" + myurl);
+			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
 
 			giveFocus();
              }catch(Exception g)
@@ -454,81 +454,6 @@ JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
 customizeChannelsDialog frame = new customizeChannelsDialog((JFrame) myself.myframe, false, num, sharedVariables, myself.consoleSubframes);
 if(sharedVariables.looking[consoleNumber]==num)
 	makeHappen(num);
-
-}
-void openUrl(String myurl)
-{
-
-				try {
-
-				String os = System.getProperty("os.name").toLowerCase();
-
-					//Process p = Runtime.getRuntime().exec(cmdLine);
-				Runtime rt = Runtime.getRuntime();
-				if (os.indexOf( "win" ) >= 0)
-	            {
-				 String[] cmd = new String[4];
-	              cmd[0] = "cmd.exe";
-	              cmd[1] = "/C";
-	              cmd[2] = "start";
-	              cmd[3] = myurl;
-
-	              rt.exec(cmd);
-			  }
-			 else if (os.indexOf( "mac" ) >= 0)
-	           {
-
-	             Runtime runtime = Runtime.getRuntime();
-				   if(myurl.startsWith("www."))
-				   myurl="http://" + myurl;
-				   String[] args = { "osascript", "-e", "open location \"" + myurl + "\"" };
-				   try
-				   {
-				     Process process = runtime.exec(args);
-				   }
-				   catch (IOException e)
-				   {
-				     // do what you want with this
-				     // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
-				   }
-
-
-
-
-
-
-	             // rt.exec( "open " + myurl);
-          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
-            Method openURL = fileMgr.getDeclaredMethod("openURL",
-               new Class[] {String.class});
-            openURL.invoke(null, new Object[] {myurl});
-
-			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
-			*/
-			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
-			//  Process process = Runtime.getRuntime().exec(commandLine);
-
-
-	          }
-				else
-				{             //prioritized 'guess' of users' preference
-	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
-	                  "netscape","opera","links","lynx"};
-
-	              StringBuffer cmd = new StringBuffer();
-	              for (int i=0; i<browsers.length; i++)
-	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
-
-	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
-	              //rt.exec("firefox http://www.google.com");
-	              //System.out.println(cmd.toString());
-
-
-				}// end else
-			}// end try
-			catch(Exception e)
-			{}
-
 
 }
 void removeSelectionHighlight()
@@ -1196,7 +1121,7 @@ else if(myurl2.startsWith("liblist"))
 	dispatchCommand(myurl);
 }
 else
-openUrl(myurl);
+sharedVariables.openUrl(myurl);
 }
 
 
@@ -1225,7 +1150,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 				//String cmdLine = "start " + r.getURL();
 				//Process p = Runtime.getRuntime().exec(cmdLine);
 				String myurl="" + r.getURL();
-				openUrl("www.adam16mr.org");
+				sharedVariables.openUrl("www.adam16mr.org");
 		 	}
 
              }catch(Exception e)
@@ -1591,11 +1516,11 @@ items[m].addActionListener(new ActionListener() {
 	 	}
          else if( sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink"))
          {
-			openUrl(name);
+			sharedVariables.openUrl(name);
 		 }
         else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
          {
-			openUrl("http://www.google.com/search?q=" + name);
+			sharedVariables.openUrl("http://www.google.com/search?q=" + name);
          }
 
           else if( sharedVariables.rightClickMenu.get(mfinal).equals("Channel Notify"))
@@ -2047,7 +1972,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 			myurl=myurl.trim();
                         myurl=myurl.replace(" ", "+");
 
-			openUrl("http://www.google.com/search?q=" + myurl);
+			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
                 }
              if( a == 72) // bring history to front not needed now that its a top window
              {

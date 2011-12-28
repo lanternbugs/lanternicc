@@ -428,7 +428,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                 if(join.toLowerCase().contains(" webcast"))
                 {
                  go=true;
-                 openUrl(info);
+                 sharedVariables.openUrl(info);
                 }
                 }
              }
@@ -864,7 +864,7 @@ if(join.indexOf(" & ")!=-1)
 			{
                                 if(join1.startsWith("http"))
                                 {
-                                 openUrl(join1);
+                                 sharedVariables.openUrl(join1);
                                  return;
                                 }
 
@@ -895,7 +895,7 @@ if(join.indexOf(" & ")!=-1)
                                 
                                 if(info.startsWith("http"))
                                 {
-                                 openUrl(info);
+                                 sharedVariables.openUrl(info);
                                  return;
                                 }
                                  myoutput output = new myoutput();
@@ -990,7 +990,7 @@ if(join.indexOf(" & ")!=-1)
 */
 
 /****************************************************************************************/
-void openUrl(String myurl)
+/*void sharedVariables.openUrl(String myurl)
 {
 
 				try {
@@ -1032,13 +1032,7 @@ void openUrl(String myurl)
 
 
 	             // rt.exec( "open " + myurl);
-          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
-            Method openURL = fileMgr.getDeclaredMethod("openURL",
-               new Class[] {String.class});
-            openURL.invoke(null, new Object[] {myurl});
 
-			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
-			*/
 			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
 			//  Process process = Runtime.getRuntime().exec(commandLine);
 
@@ -1065,6 +1059,6 @@ void openUrl(String myurl)
 
 
 }
-
+ */
 
 }//end class
