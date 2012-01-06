@@ -520,6 +520,11 @@ if(sharedVariables.reconnectTimestamp == true)
 	else
 		reconnectTimestamp.setSelected(false);
 
+if(sharedVariables.andreysLayout == true)
+  BoardDesign2.setSelected(true);
+else
+  BoardDesign1.setSelected(true);
+
 if(sharedVariables.tellTimestamp == true)
 		tellTimestamp.setSelected(true);
 	else

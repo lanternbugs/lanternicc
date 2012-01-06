@@ -765,11 +765,24 @@ import layout.TableLayout;
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
       andreyNavig = new JPanel();
+     double[][] buttonSizes = {{TableLayout.FILL, 55, 5, 55, 5,  55, 5,  55, 5, TableLayout.FILL}, {25}};
+     andreyNavig.setLayout(new TableLayout(buttonSizes));
+     add(andreyNavig, " 0,5,2,5");
+     andreyNavig.add(backwardEnd, "1,0, f, b");
+     andreyNavig.add(backward, "3,0, f, b");
+     andreyNavig.add(forward, "5,0, f, b");
+     andreyNavig.add(forwardEnd, "7,0, f, b");
+
+
+
+      /*
       add(andreyNavig, "0, 5, 2, 5");
       andreyNavig.add(backwardEnd);
       andreyNavig.add(backward);
       andreyNavig.add(forward);
       andreyNavig.add(forwardEnd);
+     */
+
 
       // these are visible when playing
       andreyAct = new JPanel();
