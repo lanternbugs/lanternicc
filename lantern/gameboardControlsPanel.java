@@ -731,7 +731,7 @@ import layout.TableLayout;
       sharedVariables.gametable[gameData.BoardIndex].addMouseListener
         (mouseListenerEvents);
 
-      actionPanel= new JPanel();
+
       if (sharedVariables.andreysLayout == true)
         makeAndreysLayout();
       else
@@ -795,6 +795,7 @@ import layout.TableLayout;
     }
 
     void makeLayout() {
+      actionPanel= new JPanel();
         buttonPanel = new JPanel();
       buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
      buttonPanelFlow = new JPanel();

@@ -418,12 +418,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         else
           myconsolepanel.setHorizontalLayout();
 
-
-          if(sharedVariables.andreysLayout == true)
-          {
             mycontrolspanel.removeAll();
+          if(sharedVariables.andreysLayout == true)
             mycontrolspanel.makeAndreysLayout();
-          }
+         else
+            mycontrolspanel.makeLayout();
+
       }
       if (sharedVariables.boardConsoleType == 0) {
         // make console components invisible
