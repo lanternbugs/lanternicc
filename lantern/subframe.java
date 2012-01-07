@@ -1051,7 +1051,11 @@ public void mouseClicked (MouseEvent me) {
 consoles[consoleNumber].addMouseListener(new MouseListener()
 {
 	public void mouseClicked(MouseEvent e)
-	{    JTextPane editor = (JTextPane) e.getSource();
+	{   
+          if(e.getButton() == MouseEvent.BUTTON3)
+          return; // right click
+
+          JTextPane editor = (JTextPane) e.getSource();
 	if (! editor.isEditable())
 	{      Point pt = new Point(e.getX(), e.getY());
 	int pos = editor.viewToModel(pt);

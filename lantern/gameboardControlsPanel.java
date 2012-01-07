@@ -765,7 +765,7 @@ import layout.TableLayout;
       setLayout(new TableLayout(andreySize));
       // our 4 move buttons
       andreyNavig = new JPanel();
-     double[][] buttonSizes = {{TableLayout.FILL, 55, 5, 55, 5,  55, 5,  55, 5, TableLayout.FILL}, {25}};
+     double[][] buttonSizes = {{TableLayout.FILL, 55, 3, 55, 3,  55, 3,  55, TableLayout.FILL}, {25}};
      andreyNavig.setLayout(new TableLayout(buttonSizes));
      add(andreyNavig, " 0,5,2,5");
      andreyNavig.add(backwardEnd, "1,0, f, b");
@@ -786,10 +786,12 @@ import layout.TableLayout;
 
       // these are visible when playing
       andreyAct = new JPanel();
+      double[][] actionSizes = {{TableLayout.FILL, 75, 3, 75, 3,  75, TableLayout.FILL}, {25}};
+      andreyAct.setLayout(new TableLayout(actionSizes));
       add(andreyAct, "0, 6, 2, 6");
-      andreyAct.add(abortButton);
-      andreyAct.add(drawButton);
-      andreyAct.add(resignButton);
+      andreyAct.add(abortButton, "1,0, f, b");
+      andreyAct.add(drawButton, "3,0, f, b");
+      andreyAct.add(resignButton, "5,0, f, b");
       // end action buttons
 
       add(topClockDisplay, "0, 1, 1, 1"); // a Jlabel, clock at top of board

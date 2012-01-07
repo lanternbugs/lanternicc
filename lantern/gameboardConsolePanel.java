@@ -506,8 +506,10 @@ gameconsoles[gameData.BoardIndex].setEditable(false); // cant edit or type in a 
 
 gameconsoles[gameData.BoardIndex].addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
+         
 
-if(e.getClickCount() == 1 && e.getButton() != MouseEvent.BUTTON3)
+
+if(e.getClickCount() == 1 && e.getButton() != MouseEvent.BUTTON3 )
 removeSelectionHighlight();
 
             if (e.getButton() == MouseEvent.BUTTON3){
@@ -526,7 +528,12 @@ removeSelectionHighlight();
 gameconsoles[gameData.BoardIndex].addMouseListener(new MouseListener()
 {
 	public void mouseClicked(MouseEvent e)
-	{    JTextPane editor = (JTextPane) e.getSource();
+	{  
+          if(e.getButton() == MouseEvent.BUTTON3)
+          return; // right click
+          
+          
+          JTextPane editor = (JTextPane) e.getSource();
 	if (! editor.isEditable())
 	{      Point pt = new Point(e.getX(), e.getY());
 	int pos = editor.viewToModel(pt);

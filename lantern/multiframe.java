@@ -174,7 +174,6 @@ webframe mywebframe;
  JCheckBoxMenuItem tabbing;
   JCheckBoxMenuItem BoardDesign1;
   JCheckBoxMenuItem BoardDesign2;
-  
  JCheckBoxMenuItem tellswitch;
  JCheckBoxMenuItem highlight;
  JCheckBoxMenuItem materialCount;
@@ -1534,6 +1533,10 @@ JMenu myboardmenu = new JMenu("Game");
  JMenuItem nseek = new JMenuItem("Get a Game");
  myboardmenu.add(nseek);
  nseek.addActionListener(this);
+  
+  JMenuItem flipSent = new JMenuItem("Flip");
+  myboardmenu.add(flipSent);
+  flipSent.addActionListener(this);
 
 JMenu boardDesign = new JMenu("Board Design");
 BoardDesign1 = new JCheckBoxMenuItem("Default");
@@ -2010,6 +2013,9 @@ actionsmenu.addSeparator();
    JMenuItem showweek = new JMenuItem("Show Game of the Week Index");
  actionsmenu.add(showweek);
  showweek.addActionListener(this);
+  JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
+  actionsmenu.add(ratinggraph);
+  ratinggraph.addActionListener(this);
 
    JMenuItem showfm = new JMenuItem("Open ChessFM");
  actionsmenu.add(showfm);
@@ -3444,7 +3450,10 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
 
   openUrl("http://www.chessclub.com/chessfm/");
  }
-
+ if(event.getActionCommand().equals("Show Rating Graphs"))
+ {
+  openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl"); 
+ }
 
  if(event.getActionCommand().equals("Names List Font"))
 {JFrame f = new JFrame("FontChooser Startup");
@@ -4186,8 +4195,21 @@ if(event.getActionCommand().equals("Modern"))
                 sharedVariables.andreysLayout = true;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
+if(event.getActionCommand().equals("Flip"))
+{
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+ if(myboards[a]!=null)
+ if(myboards[a].isVisible())
+ if(myboards[a].isSelected())
+ { 
+   int flipPlus = (sharedVariables.mygame[myboards[a].gameData.LookingAt].iflipped + 1) % 2;
+   String flip= "" + flipPlus;
+   String icsGameNumber =  "" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+   myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
+   break;
 
-
+ }// end selected
+}
 
 
 
