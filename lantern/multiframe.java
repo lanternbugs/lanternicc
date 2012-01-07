@@ -4206,6 +4206,7 @@ if(event.getActionCommand().equals("Flip"))
    String flip= "" + flipPlus;
    String icsGameNumber =  "" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
    myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
+   myboards[a].mypanel.repaint();
    break;
 
  }// end selected
