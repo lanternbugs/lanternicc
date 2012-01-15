@@ -102,7 +102,8 @@ tableClass gameList;
 JFrame masterFrame;
 int blockConsoleNumber=81;
 newListAdder client3;
-	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1)
+listFrame myfirstlist;
+	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1)
 	{
 
 SUBFRAME_CONSOLES=0;
@@ -120,6 +121,7 @@ gameconsoles=gameconsoles1;
 graphics=graphics1;
 //for(int a=0; a<100; a++)
 seekGraph=seekGraph1;
+myfirstlist=myfirstlist1;
 consoles=consoles1;
 myboards=myboards1;
 sharedVariables=sharedVariables1;
@@ -3286,6 +3288,10 @@ catch(Exception qsug){}
 	sharedVariables.graphData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual);
 	if(seekGraph.isVisible())
 		seekGraph.mypanel.repaint();
+	if(myfirstlist.myseeks1.isVisible())
+		myfirstlist.myseeks1.repaint();
+	if(myfirstlist.myseeks2.isVisible())
+		myfirstlist.myseeks2.repaint();
 
 
 
@@ -3317,8 +3323,14 @@ catch(Exception qsug){}
 	seeksList.removeFromList(dg.getArg(1));
 	computerSeeksList.removeFromList(dg.getArg(1));
 	sharedVariables.graphData.removeSeek(dg.getArg(1));
-		if(seekGraph.isVisible())
+		
+                if(seekGraph.isVisible())
 			seekGraph.mypanel.repaint();
+
+        if(myfirstlist.myseeks1.isVisible())
+		myfirstlist.myseeks1.repaint();
+	if(myfirstlist.myseeks2.isVisible())
+		myfirstlist.myseeks2.repaint();
 
 }
 

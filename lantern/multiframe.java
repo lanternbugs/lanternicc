@@ -125,6 +125,10 @@ try {if(frame.sharedVariables.activitiesOpen == true && frame.sharedVariables.ac
 frame.openActivities();
 }catch(Exception badopen){}
 
+try {if(frame.sharedVariables.seeksOpen == true && frame.sharedVariables.activitiesNeverOpen != true )
+frame.openSeekGraph();
+}catch(Exception badopen){}
+
 try {
 
 
@@ -316,6 +320,11 @@ mymultiframe()
 queue = new ConcurrentLinkedQueue<myoutput>();
 
 	seekGraph = new seekGraphFrame(sharedVariables, queue);
+try {
+seekGraph.setSize(sharedVariables.mySeekSizes.con0x, sharedVariables.mySeekSizes.con0y);
+seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x, sharedVariables.mySeekSizes.point0.y);
+} catch(Exception duiseeek){}
+
 	myboards = new gameboard[sharedVariables.maxGameTabs];
 	for(int bbo=0; bbo<sharedVariables.maxGameTabs; bbo++)
 		myboards[bbo]=null;
@@ -377,7 +386,7 @@ getContentPane().add(sharedVariables.desktop, "Center");
  sharedVariables.hasSettings=mysettings.readNow(myboards, consoleSubframes,  sharedVariables, consoles, gameconsoles); // read  for any saved settings  dont know what get settings  is doing MA 5-30-10
 mineScores.readNow(sharedVariables);
 
-client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection);
+client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection, myfirstlist);
 repaint();
 client.enabletimestamp();
 
@@ -1462,6 +1471,18 @@ sharedVariables.myWindows.setMnemonic(KeyEvent.VK_W);
 
 // JMenuItem nconsole = new JMenuItem("New Console");
 // sharedVariables.myWindows.add(nconsole);
+JMenuItem eventlist = new JMenuItem("Activities Window");
+ sharedVariables.myWindows.add(eventlist);
+ eventlist.setMnemonic(KeyEvent.VK_A);
+eventlist.addActionListener(this);
+ JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
+    sharedVariables.myWindows.add(seekingGraph);
+    seekingGraph.setMnemonic(KeyEvent.VK_S);
+ seekingGraph.addActionListener(this);
+
+ sharedVariables.myWindows.addSeparator();
+
+
  JMenuItem nboard = new JMenuItem("New Board");
  sharedVariables.myWindows.add(nboard);
 nboard.addActionListener(this);
@@ -1469,24 +1490,26 @@ nboard.addActionListener(this);
 
  JMenuItem rconsole = new JMenuItem("New Chat Console");
  sharedVariables.myWindows.add(rconsole);
+rconsole.addActionListener(this);
 
   JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
   sharedVariables.myWindows.add(detachedconsole);
+ detachedconsole.addActionListener(this);
+
+sharedVariables.myWindows.addSeparator();
 
 
   JMenuItem rconsole2 = new JMenuItem("Customize Tab");
   sharedVariables.myWindows.add(rconsole2);
   rconsole2.setMnemonic(KeyEvent.VK_C);
+ rconsole2.addActionListener(this);
+
+
  JMenuItem  webopener = new JMenuItem("Open Web");
   //  sharedVariables.myWindows.add(webopener);
 
- JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
-    sharedVariables.myWindows.add(seekingGraph);
-    seekingGraph.setMnemonic(KeyEvent.VK_S);
 
-JMenuItem eventlist = new JMenuItem("Activities Window");
- sharedVariables.myWindows.add(eventlist);
- eventlist.setMnemonic(KeyEvent.VK_A);
+
 
 toolbarvisible= new JCheckBoxMenuItem("Toolbar");
 sharedVariables.myWindows.add(toolbarvisible);
@@ -1521,10 +1544,9 @@ cascading.addActionListener(this);
 sharedVariables.myWindows.addSeparator();
 
  menu.add(sharedVariables.myWindows);
- seekingGraph.addActionListener(this);
- detachedconsole.addActionListener(this);
+
+
 webopener.addActionListener(this);
-eventlist.addActionListener(this);
 toolbarvisible.addActionListener(this);
 toolbox.addActionListener(this);
 
@@ -1958,8 +1980,6 @@ menu.add(myboardmenu);
 
 
 //nconsole.addActionListener(this);
-rconsole.addActionListener(this);
-rconsole2.addActionListener(this);
 
 JMenu actionsmenu = new JMenu("Actions");
  JMenuItem showhistory = new JMenuItem("Show My Recent Games");
@@ -2487,14 +2507,7 @@ openActivities();
 
 if(event.getActionCommand().equals("Seek Graph"))
 {
-try {
-	if(seekGraph.isVisible() == false)
-{seekGraph.setVisible(true);
-seekGraph.setSize(600,500);
-}
-
-seekGraph.setSelected(true);
-}catch(Exception dummyseek){}
+openSeekGraph();
 }
 
 if(event.getActionCommand().equals("Send iloggedon"))
@@ -2693,12 +2706,18 @@ if(event.getActionCommand().equals("Save Settings"))
 		if(myfirstlist!=null)
 		if(myfirstlist.isVisible())
 			sharedVariables.activitiesOpen = true;
+			
+
+                 sharedVariables.seeksOpen = false;
+		if(seekGraph!=null)
+		if(seekGraph.isVisible())
+			sharedVariables.seeksOpen = true;
 
 mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
 	mineScores.saveNow(sharedVariables);
 sharedVariables.hasSettings = true;
 		sharedVariables.activitiesOpen = false;// it gets set to true on close and here, needs to be false so its checked on close
-
+        	sharedVariables.seeksOpen = false;
 }
 
 if(event.getActionCommand().equals("ToolBox"))
@@ -4868,6 +4887,26 @@ purpleboard.setSelected(false);
  myboards[a].mypanel.repaint();
 
 }
+
+
+
+void openSeekGraph()
+{
+try {
+	if(seekGraph.isVisible() == false)
+{
+seekGraph.setSize(sharedVariables.mySeekSizes.con0x, sharedVariables.mySeekSizes.con0y);
+seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x, sharedVariables.mySeekSizes.point0.y);
+seekGraph.setVisible(true);
+//seekGraph.setSize(600,600);
+}
+
+seekGraph.setSelected(true);
+}catch(Exception dummyseek){}
+
+}
+
+
 void resetConsoleLayout()
 {
 		if(sharedVariables.consoleLayout == 1)
@@ -5399,6 +5438,17 @@ JSettingsDialog(JFrame frame, boolean mybool, channels sharedVariables1)
 				myfirstlist.setBoardSize();
 
 		}
+
+			sharedVariables.seeksOpen = false;
+		if(seekGraph!=null)
+		if(seekGraph.isVisible())
+		{
+			sharedVariables.seeksOpen = true;
+                        seekGraph.setBoardSize();
+
+
+		}
+
 
 	setVisible(true);
         setAlwaysOnTop(true);

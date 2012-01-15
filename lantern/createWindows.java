@@ -505,19 +505,24 @@ else
 	myfirstlist.listScroller.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 1)
-	myfirstlist.seeklistScroller.setVisible(false);
+	myfirstlist.myseeks1.setVisible(false);
 else
-	myfirstlist.seeklistScroller.setVisible(true);
+	myfirstlist.myseeks1.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 2)
-	myfirstlist.computerseeklistScroller.setVisible(false);
+	myfirstlist.myseeks2.setVisible(false);
 else
-	myfirstlist.computerseeklistScroller.setVisible(true);
+	myfirstlist.myseeks2.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 3)
 myfirstlist.notifylistScroller.setVisible(false);
 else
 myfirstlist.notifylistScroller.setVisible(true);
+
+if(sharedVariables.activitiesTabNumber != 4)
+myfirstlist.channelPanel.setVisible(false);
+else
+myfirstlist.channelPanel.setVisible(true);
 
 
 

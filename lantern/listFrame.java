@@ -60,8 +60,8 @@ class listFrame extends JDialog// implements InternalFrameListener
 	JLabel channelLabel;
 	overallPanel overall;
 JScrollPane notifylistScroller;
-JScrollPane seeklistScroller;
-JScrollPane computerseeklistScroller;
+//JScrollPane seeklistScroller;
+//JScrollPane computerseeklistScroller;
 JScrollPane listScroller;
 JScrollPane channelScroller;
 JScrollPane channelScroller2;
@@ -72,6 +72,8 @@ int currentChannel2 = -1;
 int currentChannel3 = -1;
 
 JPanel channelPanel=new JPanel();
+seekPanel myseeks1;
+seekPanel myseeks2;
 
 GroupLayout layout;
 
@@ -110,6 +112,11 @@ sharedVariables=sharedVariables1;
 queue=queue1;
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 overall = new overallPanel();
+myseeks1=new seekPanel(sharedVariables, queue, seekPanel.hSeeks);// 1 for  display type. show human seeks
+myseeks2=new seekPanel(sharedVariables, queue, seekPanel.cSeeks);// 1 for  display type. show human seeks
+
+//add(mypanel);
+
 initComponents();
 homeFrame=homeFrame1;
 //addInternalFrameListener(this);
@@ -449,8 +456,8 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 channelScroller = new JScrollPane(theChannelList);
 channelScroller2 = new JScrollPane(theChannelList2);
 channelScroller3 = new JScrollPane(theChannelList3);
-seeklistScroller = new JScrollPane(theSeeksList);
-computerseeklistScroller = new JScrollPane(theComputerSeeksList);
+//seeklistScroller = new JScrollPane(theSeeksList);
+//computerseeklistScroller = new JScrollPane(theComputerSeeksList);
 notifylistScroller = new JScrollPane(theNotifyList);
 //listScroller.setPreferredSize(new Dimension(2500, 2500));
 overall.setLayout();
@@ -460,9 +467,9 @@ overall.setLayout();
 if(sharedVariables.activitiesTabNumber != 0)
 	listScroller.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 1)
-	seeklistScroller.setVisible(false);
+	myseeks1.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 2)
-	computerseeklistScroller.setVisible(false);
+	myseeks2.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 3)
 	notifylistScroller.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 4)
@@ -476,8 +483,8 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 
 				 listScroller.setVisible(true);
 				 notifylistScroller.setVisible(false);
-				 computerseeklistScroller.setVisible(false);
-				 seeklistScroller.setVisible(false);
+				 myseeks2.setVisible(false);
+				 myseeks1.setVisible(false);
 				  channelPanel.setVisible(false);
 
 				 sharedVariables.activitiesTabNumber=0;
@@ -517,8 +524,8 @@ seeksLabel.addMouseListener(new MouseAdapter() {
 
 				 listScroller.setVisible(false);
 				 notifylistScroller.setVisible(false);
-				 computerseeklistScroller.setVisible(false);
-				 seeklistScroller.setVisible(true);
+				 myseeks2.setVisible(false);
+				 myseeks1.setVisible(true);
 				 channelPanel.setVisible(false);
 				 sharedVariables.activitiesTabNumber=1;
 				 paintComponents(getGraphics());
@@ -553,8 +560,8 @@ notifyLabel.addMouseListener(new MouseAdapter() {
              //if(!seeklistScroller.isVisible())
 
 				 listScroller.setVisible(false);
-				 seeklistScroller.setVisible(false);
-				 computerseeklistScroller.setVisible(false);
+				 myseeks1.setVisible(false);
+				 myseeks2.setVisible(false);
 				 notifylistScroller.setVisible(true);
 				 channelPanel.setVisible(false);
 				 sharedVariables.activitiesTabNumber=3;
@@ -592,10 +599,10 @@ computerSeeksLabel.addMouseListener(new MouseAdapter() {
              //if(!seeklistScroller.isVisible())
 
 				 listScroller.setVisible(false);
-				 seeklistScroller.setVisible(false);
+				 myseeks1.setVisible(false);
 				 notifylistScroller.setVisible(false);
 				 channelPanel.setVisible(false);
-				 computerseeklistScroller.setVisible(true);
+				 myseeks2.setVisible(true);
 				 sharedVariables.activitiesTabNumber=2;
 				 paintComponents(getGraphics());
 
@@ -628,10 +635,10 @@ channelLabel.addMouseListener(new MouseAdapter() {
              //if(!seeklistScroller.isVisible())
 
 				 listScroller.setVisible(false);
-				 seeklistScroller.setVisible(false);
+				 myseeks1.setVisible(false);
 				 notifylistScroller.setVisible(false);
 				 channelPanel.setVisible(true);
-				 computerseeklistScroller.setVisible(false);
+				 myseeks2.setVisible(false);
 				 sharedVariables.activitiesTabNumber=4;
 				 paintComponents(getGraphics());
 
@@ -697,10 +704,10 @@ channelPanel.add(channelScroller3);
 	h2.addComponent(notifyLabel);
 	h2.addComponent(channelLabel);
 
-	h3.addComponent(seeklistScroller);
+	h3.addComponent(myseeks1);
 	h4.addComponent(listScroller);
 	h5.addComponent(notifylistScroller);
-	h6.addComponent(computerseeklistScroller);
+	h6.addComponent(myseeks2);
 	h7.addComponent(channelPanel);
 
 
@@ -745,7 +752,7 @@ v9.addComponent(channelLabel);
 
 		v2.addGroup(v9);
 
-		v2.addComponent(seeklistScroller);
+		v2.addComponent(myseeks1);
 
 
 v3.addGroup(v9);
@@ -753,7 +760,7 @@ v3.addComponent(notifylistScroller);
 v33.addGroup(v9);
 v33.addComponent(channelPanel);
 v44.addGroup(v9);
-v44.addComponent(computerseeklistScroller);
+v44.addComponent(myseeks2);
 
 v4.addGroup(v1);
 
@@ -773,12 +780,12 @@ public void paintComponent(Graphics g)
 try
 {
 	super.paintComponent(g);
-	if(seeklistScroller.isVisible())
-	seeklistScroller.setBackground(sharedVariables.listColor);
-	else if(computerseeklistScroller.isVisible())
-	computerseeklistScroller.setBackground(sharedVariables.listColor);
+	//if(seeklistScroller.isVisible())
+	//seeklistScroller.setBackground(sharedVariables.listColor);
+//	if(computerseeklistScroller.isVisible())
+//	computerseeklistScroller.setBackground(sharedVariables.listColor);
 
-	else if(listScroller.isVisible())
+	 if(listScroller.isVisible())
 	listScroller.setBackground(sharedVariables.listColor);
 	else if(notifylistScroller.isVisible())
 	notifylistScroller.setBackground(sharedVariables.listColor);

@@ -803,6 +803,17 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing activities
 	set_string = set_string + "[doneactivitiesOpen] ";
 
+// seeks opening
+	set_string = set_string + "[seeksOpen] ";
+	if(sharedVariables.seeksOpen == true)
+	set_string = set_string + "1" + " ";
+	else
+	set_string = set_string + "0" + " ";
+
+	// closing seeks
+	set_string = set_string + "[doneseeksOpen] ";
+
+
 // shoutsAlso
 	set_string = set_string + "[alsoshouts] ";
 	if(sharedVariables.shoutsAlso == true)
@@ -961,6 +972,10 @@ catch(Exception badboard){}
 			set_string = set_string + "" + sharedVariables.myActivitiesSizes.con0x + " " + sharedVariables.myActivitiesSizes.con0y + " ";
 			set_string = set_string + "[doneActivitiesSizes] ";
 
+	set_string = set_string + "[SeekSizes] ";
+			set_string = set_string + "" + sharedVariables.mySeekSizes.point0.x + " " + sharedVariables.mySeekSizes.point0.y + " ";
+			set_string = set_string + "" + sharedVariables.mySeekSizes.con0x + " " + sharedVariables.mySeekSizes.con0y + " ";
+			set_string = set_string + "[doneSeekSizes] ";
 
 
 
@@ -2213,7 +2228,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
-                		if (temp.equals("[indent]"))
+ 				if (temp.equals("[seeksOpen]"))
+				{
+				try {
+					if(tokens.nextToken().equals("0"))
+					sharedVariables.seeksOpen =  false;
+					else
+					sharedVariables.seeksOpen = true;
+					}
+					catch(Exception zzz){}
+				}
+               		if (temp.equals("[indent]"))
 				{
 				try {
 					if(tokens.nextToken().equals("0"))
@@ -2639,6 +2664,29 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				{ }
 
 		}// end if equals
+
+			if(temp.equals("[SeekSizes]"))
+			{
+
+				try {
+					int px = Integer.parseInt(tokens.nextToken());
+					int py = Integer.parseInt(tokens.nextToken());
+					int cw = Integer.parseInt(tokens.nextToken());
+					int ch = Integer.parseInt(tokens.nextToken());
+
+					// set sizes
+					sharedVariables.mySeekSizes.con0x = cw;
+					sharedVariables.mySeekSizes.con0y = ch;
+					sharedVariables.mySeekSizes.point0.x = px;
+					sharedVariables.mySeekSizes.point0.y = py;
+
+					}
+				catch(Exception zzz)
+				{ }
+
+		}// end if equals
+
+
 
 
 			if(temp.equals("[Font]"))
