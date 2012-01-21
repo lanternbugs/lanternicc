@@ -161,7 +161,7 @@ import layout.TableLayout;
         else
           setBackground(sharedVariables.boardBackgroundColor);
         */
-        if (sharedVariables.andreysLayout == false) {
+        if (isAndreyLayout() == false) {
           if(actionPanel != null)
           actionPanel.setBackground(sharedVariables.boardBackgroundColor);
           if(actionPanelFlow != null)
@@ -169,7 +169,7 @@ import layout.TableLayout;
           if(buttonPanelFlow != null)
           buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
         }
-        if(sharedVariables.andreysLayout == true)
+        if(isAndreyLayout() == true)
         {
          if(andreyNavig!=null)
          andreyNavig.setBackground(sharedVariables.boardBackgroundColor);
@@ -201,7 +201,7 @@ import layout.TableLayout;
         //topClock.setBackground(sharedVariables.boardBackgroundColor);
         //bottomClock.setBackground(sharedVariables.boardBackgroundColor);
 
-        if (sharedVariables.andreysLayout == false)
+        if (isAndreyLayout() == false)
           buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
 
         setClockBackgrounds();
@@ -269,7 +269,7 @@ import layout.TableLayout;
           if (sharedVariables.showMaterialCount==true &&
               !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
             if (sharedVariables.mygame[gameData.LookingAt].wild != 0 &&
-                sharedVariables.mygame[gameData.LookingAt].wild != 20 && sharedVariables.andreysLayout == false) {
+                sharedVariables.mygame[gameData.LookingAt].wild != 20 && isAndreyLayout() == false) {
               whiteCount=" (" + sharedVariables.mygame
                 [gameData.LookingAt].whiteMaterialCount+")";
               blackCount=" (" + sharedVariables.mygame
@@ -304,7 +304,7 @@ import layout.TableLayout;
         if (sharedVariables.showMaterialCount==true &&
             !sharedVariables.mygame[gameData.LookingAt].name1.equals(""))
           if (sharedVariables.mygame[gameData.LookingAt].wild == 0 ||
-              sharedVariables.mygame[gameData.LookingAt].wild == 20 || sharedVariables.andreysLayout == true)
+              sharedVariables.mygame[gameData.LookingAt].wild == 20 || isAndreyLayout() == true)
             listing += " " + sharedVariables.mygame
               [gameData.LookingAt].whiteMaterialCount + " - " +
               sharedVariables.mygame[gameData.LookingAt].blackMaterialCount;
@@ -318,7 +318,7 @@ import layout.TableLayout;
           drawButton.setVisible(true);
           abortButton.setVisible(true);
 
-          if (sharedVariables.andreysLayout == false)
+          if (isAndreyLayout() == false)
             actionPanel.setVisible(true);
         } else {
 
@@ -326,7 +326,7 @@ import layout.TableLayout;
           drawButton.setVisible(false);
           abortButton.setVisible(false);
 
-          if (sharedVariables.andreysLayout == false)
+          if (isAndreyLayout() == false)
             actionPanel.setVisible(false);
         }
         //sharedVariables.moveSliders[gameData.BoardIndex].setLocation(3, slidery);
@@ -732,7 +732,7 @@ import layout.TableLayout;
         (mouseListenerEvents);
 
 
-      if (sharedVariables.andreysLayout == true)
+      if (isAndreyLayout() == true)
         makeAndreysLayout();
       else
         makeLayout();
@@ -741,7 +741,17 @@ import layout.TableLayout;
 
       //handleLayout();
     }
+   boolean isAndreyLayout(){
 
+    if(myboard.isMaximum() == true && sharedVariables.andreysLayout == 2)
+    return true;
+
+    if(sharedVariables.andreysLayout == 1)
+    return true;
+    
+    return false;
+
+   }
     void makeAndreysLayout() {
 
       /* int myOverallWidth = getControlLength();  //width of this panel
@@ -815,7 +825,7 @@ import layout.TableLayout;
       buttonPanel.setBackground(sharedVariables.boardBackgroundColor);
      buttonPanelFlow = new JPanel();
 
-      if (sharedVariables.andreysLayout == false) {
+      if (isAndreyLayout() == false) {
 
         buttonPanel.add(buttonPanelFlow);
 

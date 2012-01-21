@@ -44,7 +44,9 @@ class seekGraphFrame extends JInternalFrame implements InternalFrameListener
 channels sharedVariables;
 seekPanel mypanel;
 ConcurrentLinkedQueue<myoutput> queue;
-
+final JCheckBoxMenuItem allSeeks;
+final JCheckBoxMenuItem humanSeeks;
+final JCheckBoxMenuItem computerSeeks;
 
 seekGraphFrame(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
 {
@@ -60,13 +62,105 @@ queue=queue1;
 addInternalFrameListener(this);
 setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 mypanel=new seekPanel(sharedVariables, queue, 0);// 0 for  display type. show all seeks
+
+
+// make menu
+JMenuBar seekMenu = new JMenuBar();
+
+ JMenu mymenu1 = new JMenu("Menu");
+
+  allSeeks = new JCheckBoxMenuItem("All Seeks");
+
+  allSeeks.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+             mypanel.setDisplayType(0);
+            SelectMenu(0);}
+       });
+  mymenu1.add(allSeeks);
+ humanSeeks = new JCheckBoxMenuItem("Human Seeks");
+  humanSeeks.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+             mypanel.setDisplayType(1);
+             SelectMenu(1);}
+       });
+  mymenu1.add(humanSeeks);
+
+  computerSeeks = new JCheckBoxMenuItem("Computer Seeks");
+  computerSeeks.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+             mypanel.setDisplayType(2);
+            SelectMenu(2);}
+       });
+  mymenu1.add(computerSeeks);
+
+ JMenuItem showSeekDialog = new JMenuItem("Place a Seek");
+  showSeekDialog.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+          showSeekDialog();}
+       });
+  mymenu1.add(showSeekDialog);
+
+
+
+
+seekMenu.add(mymenu1);
+setJMenuBar(seekMenu);
+seekMenu.setVisible(true);
+
 add(mypanel);
 }// end constructor
 
 
+ void SelectMenu(int n)
+ {
+  if(n !=0)
+  allSeeks.setSelected(false);
+  else
+  allSeeks.setSelected(true);
+
+  if(n !=1)
+  humanSeeks.setSelected(false);
+  else
+  humanSeeks.setSelected(true);
+
+  if(n !=2)
+  computerSeeks.setSelected(false);
+  else
+  computerSeeks.setSelected(true);
 
 
+ }
 
+void showSeekDialog()
+{
+JFrame mytempframe = new JFrame();
+seekGameDialog myseeker = new seekGameDialog(mytempframe, false, sharedVariables, queue);
+int defaultWidth = 425;
+int defaultHeight = 260;
+myseeker.setSize(defaultWidth,defaultHeight);
+
+try {
+	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+        Dimension dim = toolkit.getScreenSize();
+        int screenW = dim.width;
+        int screenH = dim.height;
+      int px = (int) ((screenW - defaultWidth) / 2);
+      if(px < 50)
+       px=50;
+      int py = (int) ((screenH - defaultHeight) / 2);
+      if(py < 50)
+       py=50;
+
+
+      myseeker.setLocation(px, py);
+}
+catch(Exception centerError){}
+
+myseeker.setTitle("Get a Game");
+
+myseeker.setVisible(true);
+
+}
 
 
 

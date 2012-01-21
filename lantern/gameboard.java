@@ -359,11 +359,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       //framer.setSize(200,100);
       //framer.setVisible(true);
 
-      if (dif > height && sharedVariables.andreysLayout == false)
+      if (dif > height && mycontrolspanel.isAndreyLayout() == false)
       {  dif = (int) (dif - height) / 2;
          controlLength+=dif;
         }
-   else if (dif > height && sharedVariables.andreysLayout == true){
+   else if (dif > height && mycontrolspanel.isAndreyLayout() == true){
         dif = (int) (dif - height);
         controlLength+=dif;
         }
@@ -419,7 +419,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           myconsolepanel.setHorizontalLayout();
 
             mycontrolspanel.removeAll();
-          if(sharedVariables.andreysLayout == true)
+          if(mycontrolspanel.isAndreyLayout() == true)
             mycontrolspanel.makeAndreysLayout();
          else
             mycontrolspanel.makeLayout();

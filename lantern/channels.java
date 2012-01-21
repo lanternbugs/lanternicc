@@ -95,7 +95,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 
-  boolean andreysLayout = false; // Andrey's layout variable
+
   boolean andreysFonts = false;
 boolean sideways;
 boolean showButtonTitle;
@@ -231,6 +231,7 @@ JButton [] mybuttons;
 
 URL [] songs;
 URL [] poweroutSounds;
+int andreysLayout = 2; // Andrey's layout variable
 int chatBufferSize=100000;
 int chatBufferExtra=1000;
 int showTenths;
@@ -584,7 +585,7 @@ else
 	myFont = new Font("Lucida Console", Font.PLAIN, 18);
 try {
 	myGameFont = new Font("Times New Roman", Font.PLAIN, 20);
-	myGameClockFont = new Font("Times New Roman", Font.PLAIN, 40);
+	myGameClockFont = new Font("Arial", Font.PLAIN, 40);
 
 }
 catch(Exception badfont1)
@@ -613,14 +614,19 @@ BackColor = new Color(0,0,0);
 //boardForegroundColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);
 boardForegroundColor = new Color(60,60,60);
-clockForegroundColor = new Color(60,60,60);
 boardBackgroundColor = new Color(255, 255, 255);
 clockLow = new Color(255,0,0);
 clockHigh = new Color(0,255,0);
-onmoveTimeForeground = new Color(255,255,255);
 timeForeground = new Color(0,0,0);
 
-onMoveBoardBackgroundColor = new Color(100, 203, 203);
+onmoveTimeForeground = new Color(255,255,255);
+/*onMoveBoardBackgroundColor = new Color(100, 203, 203);
+*/
+
+clockForegroundColor = new Color(255,255,255);
+
+onMoveBoardBackgroundColor = new Color(34, 34, 34);
+
 inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
 chatTimestampColor = new Color(40,200,40);

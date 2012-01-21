@@ -178,6 +178,7 @@ webframe mywebframe;
  JCheckBoxMenuItem tabbing;
   JCheckBoxMenuItem BoardDesign1;
   JCheckBoxMenuItem BoardDesign2;
+   JCheckBoxMenuItem BoardDesign3;
  JCheckBoxMenuItem tellswitch;
  JCheckBoxMenuItem highlight;
  JCheckBoxMenuItem materialCount;
@@ -528,10 +529,20 @@ if(sharedVariables.reconnectTimestamp == true)
 	else
 		reconnectTimestamp.setSelected(false);
 
-if(sharedVariables.andreysLayout == true)
+if(sharedVariables.andreysLayout == 0)
+  BoardDesign1.setSelected(true);
+else
+  BoardDesign1.setSelected(false);
+
+if(sharedVariables.andreysLayout == 1)
   BoardDesign2.setSelected(true);
 else
-  BoardDesign1.setSelected(true);
+  BoardDesign2.setSelected(false);
+
+  if(sharedVariables.andreysLayout == 2)
+  BoardDesign3.setSelected(true);
+else
+  BoardDesign3.setSelected(false);
 
 if(sharedVariables.tellTimestamp == true)
 		tellTimestamp.setSelected(true);
@@ -1561,12 +1572,17 @@ JMenu myboardmenu = new JMenu("Game");
   flipSent.addActionListener(this);
 
 JMenu boardDesign = new JMenu("Board Design");
-BoardDesign1 = new JCheckBoxMenuItem("Default");
+BoardDesign1 = new JCheckBoxMenuItem("Original");
 BoardDesign2 = new JCheckBoxMenuItem("Modern");
+BoardDesign3 = new JCheckBoxMenuItem("Mixed");
+
 boardDesign.add(BoardDesign1);
 boardDesign.add(BoardDesign2);
+boardDesign.add(BoardDesign3);
 BoardDesign1.addActionListener(this);
 BoardDesign2.addActionListener(this);
+BoardDesign3.addActionListener(this);
+
 myboardmenu.add(boardDesign);
 
  tabbing = new JCheckBoxMenuItem("Tabs Only");
@@ -4198,12 +4214,12 @@ if(event.getActionCommand().equals("Use Light Square as Board Background"))
 
 
 
-if(event.getActionCommand().equals("Default"))
+if(event.getActionCommand().equals("Original"))
 {
 
 		BoardDesign1.setSelected(true);
 		BoardDesign2.setSelected(false);
-                sharedVariables.andreysLayout = false;
+                sharedVariables.andreysLayout = 0;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
 if(event.getActionCommand().equals("Modern"))
@@ -4211,9 +4227,18 @@ if(event.getActionCommand().equals("Modern"))
 
 		BoardDesign1.setSelected(false);
 		BoardDesign2.setSelected(true);
-                sharedVariables.andreysLayout = true;
+                sharedVariables.andreysLayout = 1;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
+if(event.getActionCommand().equals("Mixed"))
+{
+
+		BoardDesign1.setSelected(false);
+		BoardDesign2.setSelected(true);
+                sharedVariables.andreysLayout = 2;
+                redrawBoard(sharedVariables.boardConsoleType);
+}
+
 if(event.getActionCommand().equals("Flip"))
 {
  for(int a=0; a<sharedVariables.maxGameTabs; a++)

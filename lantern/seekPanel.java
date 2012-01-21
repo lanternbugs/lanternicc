@@ -105,7 +105,25 @@ void setDimensions()
 	bulletSeekW = (int) (blitzBaseX - bulletBaseX) / sharedVariables.graphData.bulletW;
 	blitzSeekW = (int) (standardBaseX - blitzBaseX) / sharedVariables.graphData.blitzW;
 	standardSeekW = (int) (width - standardBaseX) / sharedVariables.graphData.standardW;
+       
+        if(bulletSeekW > seekHeight)
+        bulletSeekW = seekHeight;
+        if(blitzSeekW > seekHeight)
+        blitzSeekW = seekHeight;
+        if(standardSeekW > seekHeight)
+        standardSeekW = seekHeight;
 
+
+        if(seekHeight >  bulletSeekW && seekHeight >  blitzSeekW && seekHeight >  standardSeekW)
+        {
+          if(bulletSeekW > blitzSeekW && bulletSeekW > standardSeekW)
+          seekHeight = bulletSeekW;
+          else if(blitzSeekW > bulletSeekW  && blitzSeekW > standardSeekW)
+          seekHeight = blitzSeekW;
+          else
+          seekHeight = standardSeekW;
+
+        }
 
 }
 
@@ -355,7 +373,11 @@ return null;
 
 
 		}
-
+void setDisplayType(int n)
+{
+ displayType=n;
+ repaint();
+}
 }// end jpanel class
 
 

@@ -400,10 +400,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// Andreys layout
 
 	set_string = set_string + "[AndreysLayout] ";
-	if(sharedVariables.andreysLayout == true)
-		set_string = set_string + "1" + " ";
-	else
-		set_string = set_string + "0" + " ";
+		set_string = set_string + sharedVariables.andreysLayout + " ";
 	// closing
 		set_string = set_string + "[doneAndreysLayout] ";
 
@@ -1573,9 +1570,12 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
 					if(truth == 1)
-						sharedVariables.andreysLayout=true;
+						sharedVariables.andreysLayout=1;
+					else if(truth == 0)
+						sharedVariables.andreysLayout=0;
 					else
-						sharedVariables.andreysLayout=false;
+                                        	sharedVariables.andreysLayout=2;
+
 					}
 					catch(Exception zzz){}
 				}
