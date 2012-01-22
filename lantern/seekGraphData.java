@@ -67,9 +67,9 @@ seekGraphData()
 }
 
 
-void addSeek(String sIndex, String sName, String sTitles, String sRating, String sProvisional, String sWild, String sRatingType, String sTime, String sInc, String sRated, String sRange, String sColor, String sFormula, String sManual)
+void addSeek(String sIndex, String sName, String sTitles, String sRating, String sProvisional, String sWild, String sRatingType, String sTime, String sInc, String sRated, String sRange, String sColor, String sFormula, String sManual, listClass snotifyList)
 {
-	seekInfo newInfo = new  seekInfo(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual);
+	seekInfo newInfo = new  seekInfo(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual, snotifyList);
 	double etime = newInfo.etime;
 	int x=0;
 	int y=0;

@@ -67,6 +67,7 @@ static int aSeeks = 0;
 static int hSeeks = 1;
 static int cSeeks = 2;
 
+
 seekPanel(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, int displayType1)
 {
 
@@ -105,7 +106,7 @@ void setDimensions()
 	bulletSeekW = (int) (blitzBaseX - bulletBaseX) / sharedVariables.graphData.bulletW;
 	blitzSeekW = (int) (standardBaseX - blitzBaseX) / sharedVariables.graphData.blitzW;
 	standardSeekW = (int) (width - standardBaseX) / sharedVariables.graphData.standardW;
-       
+
         if(bulletSeekW > seekHeight)
         bulletSeekW = seekHeight;
         if(blitzSeekW > seekHeight)
@@ -159,7 +160,7 @@ if(sharedVariables.graphData.bulletGrid[a]!=null)
 	x=0;
 	if(y<0)
 	y=0;
-	drawSeek(g2, sharedVariables.graphData.bulletGrid[a].col, sharedVariables.graphData.bulletGrid[a].compCol, bulletBaseX, x, y, bulletSeekW, seekHeight, sharedVariables.graphData.bulletGrid[a].rated, sharedVariables.graphData.bulletGrid[a].computer);
+	drawSeek(g2, sharedVariables.graphData.bulletGrid[a].col, sharedVariables.graphData.bulletGrid[a].compCol, bulletBaseX, x, y, bulletSeekW, seekHeight, sharedVariables.graphData.bulletGrid[a].rated, sharedVariables.graphData.bulletGrid[a].computer, sharedVariables.graphData.bulletGrid[a].onNotify);
 }
 }// end draw bullet
 
@@ -175,7 +176,7 @@ if(sharedVariables.graphData.blitzGrid[a]!=null)
 	x=0;
 	if(y<0)
 	y=0;
-	drawSeek(g2, sharedVariables.graphData.blitzGrid[a].col, sharedVariables.graphData.blitzGrid[a].compCol, blitzBaseX, x, y, blitzSeekW, seekHeight, sharedVariables.graphData.blitzGrid[a].rated, sharedVariables.graphData.blitzGrid[a].computer);
+	drawSeek(g2, sharedVariables.graphData.blitzGrid[a].col, sharedVariables.graphData.blitzGrid[a].compCol, blitzBaseX, x, y, blitzSeekW, seekHeight, sharedVariables.graphData.blitzGrid[a].rated, sharedVariables.graphData.blitzGrid[a].computer, sharedVariables.graphData.blitzGrid[a].onNotify);
 }
 }// end draw blitz seeks
 
@@ -191,7 +192,7 @@ if(sharedVariables.graphData.standardGrid[a]!=null)
 	x=0;
 	if(y<0)
 	y=0;
-	drawSeek(g2, sharedVariables.graphData.standardGrid[a].col, sharedVariables.graphData.standardGrid[a].compCol, standardBaseX, x, y, standardSeekW, seekHeight, sharedVariables.graphData.standardGrid[a].rated, sharedVariables.graphData.standardGrid[a].computer);
+	drawSeek(g2, sharedVariables.graphData.standardGrid[a].col, sharedVariables.graphData.standardGrid[a].compCol, standardBaseX, x, y, standardSeekW, seekHeight, sharedVariables.graphData.standardGrid[a].rated, sharedVariables.graphData.standardGrid[a].computer, sharedVariables.graphData.standardGrid[a].onNotify);
 }
 }// end draw standard
 g2.setColor(seekTextColor);
@@ -205,8 +206,9 @@ g.drawString(seekText, local, baseHeightBottom+30);
 }// end method paint components
 
 
-void drawSeek(Graphics2D g2, Color col, Color compColor, int originX, int x, int y, int width, int height, String rated, boolean computer)
+void drawSeek(Graphics2D g2, Color col, Color compColor, int originX, int x, int y, int width, int height, String rated, boolean computer, boolean onNotify)
 {
+
 
 
 try {
@@ -215,7 +217,31 @@ return;
 if(computer == false && displayType != hSeeks && displayType != aSeeks)
 return;
 
-	g2.setColor(col);
+
+if(onNotify==true)
+{
+if(col!=null && compColor!=null)
+drawSeek2(g2, col.darker().darker(), compColor.darker().darker(), originX, x, y, width, height, rated, computer, onNotify);
+else if(col!=null)
+drawSeek2(g2, col.darker().darker(), compColor, originX, x, y, width, height, rated, computer, onNotify);
+else if(compColor!=null)
+drawSeek2(g2, col, compColor.darker().darker(), originX, x, y, width, height, rated, computer, onNotify);
+else
+drawSeek2(g2, col, compColor, originX, x, y, width, height, rated, computer, onNotify);
+}
+else
+drawSeek2(g2, col, compColor, originX, x, y, width, height, rated, computer, onNotify);
+}// end try
+catch(Exception dui){}
+
+
+}
+
+void drawSeek2(Graphics2D g2, Color col, Color compColor, int originX, int x, int y, int width, int height, String rated, boolean computer, boolean onNotify)
+{
+  
+try {
+g2.setColor(col);
 // x y width height
 if(compColor == null)
 { if(computer == true)

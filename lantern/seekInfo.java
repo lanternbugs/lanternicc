@@ -66,7 +66,10 @@ Color col;
 Color compCol;
 String seekText;
 boolean computer;
-seekInfo(String sIndex, String sName, String sTitles, String sRating, String sProvisional, String sWild, String sRatingType, String sTime, String sInc, String sRated, String sRange, String sColor, String sFormula, String sManual)
+listClass notifyList;
+boolean onNotify;
+
+seekInfo(String sIndex, String sName, String sTitles, String sRating, String sProvisional, String sWild, String sRatingType, String sTime, String sInc, String sRated, String sRange, String sColor, String sFormula, String sManual, listClass snotifyList)
 {
 //col= new Color(255,0,0);
 /*
@@ -78,12 +81,24 @@ crazyhouse pink
 above are possible values of col
 computerCol is null or one of the wild colors if its going to be half and half
 */
+
+
 computer=false;
 try {
 	if(sTitles.contains("C"))
 computer=true;
 }catch(Exception d){}
 compCol=null;
+notifyList=snotifyList;
+try {
+if(isNotified(sName))
+onNotify=true;
+else
+onNotify=false;
+
+}
+catch(Exception badnot){ onNotify=false;}
+
 if(sWild.equals("0") && computer==true)
 col=new Color(0,0,255); // blue
 else if(sWild.equals("0") && computer==false)
@@ -130,7 +145,8 @@ if(sManual.equals("m"))
 seekText = seekText + " " + sManual;
 if(sFormula.equals("f"))
 seekText =seekText + " " + sFormula;
-
+if(onNotify == true)
+seekText = seekText + " Notified";
 index=sIndex;
 name=sName;
 rating=sRating;
@@ -158,4 +174,16 @@ catch(Exception d){}
 
 }// end constructor
 
+
+
+boolean isNotified(String sName)
+{
+
+        for(int i=0; i < notifyList.model.size(); i++)
+	if(notifyList.modeldata.elementAt(i).equals(sName))
+	return true;
+
+	return false;
+
+}//end method is notified
 }// end class

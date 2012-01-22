@@ -3285,7 +3285,7 @@ catch(Exception qsug){}
 	if(dg.getArg(15).equals("1"))
 			sFormula="f";
 
-	sharedVariables.graphData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual);
+	sharedVariables.graphData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual, notifyList);
 	if(seekGraph.isVisible())
 		seekGraph.mypanel.repaint();
 	if(myfirstlist.myseeks1.isVisible())

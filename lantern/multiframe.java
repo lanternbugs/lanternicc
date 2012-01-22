@@ -361,10 +361,10 @@ sharedVariables.desktop.add(mywebframe);
 }catch(Exception d){};
 
 /*************** trying list code *****************/
+notifyList = new listClass("Notify List");
 eventsList = new listClass("Events");
 seeksList = new listClass("Human Seeks");
 computerSeeksList = new listClass("Computer Seeks");
-notifyList = new listClass("Notify List");
 myfirstlist = new listFrame(this, sharedVariables, queue, eventsList, seeksList, computerSeeksList, notifyList, this);
 gameList = new tableClass();
 myGameList = new gameFrame(sharedVariables, queue, gameList);
