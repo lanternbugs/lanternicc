@@ -2045,13 +2045,20 @@ actionsmenu.addSeparator();
   JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
  actionsmenu.add(showrelay);
  showrelay.addActionListener(this);
-
-   JMenuItem showweek = new JMenuItem("Show Game of the Week Index");
- actionsmenu.add(showweek);
- showweek.addActionListener(this);
-  JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
+ 
+ JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
   actionsmenu.add(ratinggraph);
   ratinggraph.addActionListener(this);
+ actionsmenu.addSeparator();
+
+   JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
+ actionsmenu.add(followBroadcast);
+ followBroadcast.addActionListener(this);
+
+   JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
+ actionsmenu.add(unfollowBroadcast);
+ unfollowBroadcast.addActionListener(this);
+
 
    JMenuItem showfm = new JMenuItem("Open ChessFM");
  actionsmenu.add(showfm);
@@ -3475,10 +3482,29 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
   openUrl("http://www.chessclub.com/activities/relays.html");
  }
 
-  if(event.getActionCommand().equals("Show Game of the Week Index"))
+  if(event.getActionCommand().equals("Stop Following"))
  {
 
-  openUrl("http://www.chessclub.com/chessfm/index/gotw/index.html");
+     String actionmess="Unfollow\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
+ }
+
+
+  if(event.getActionCommand().equals("Follow Broadcast- When On"))
+ {
+
+     String actionmess="Follow Broadcast\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
+
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
  }
   if(event.getActionCommand().equals("Open ChessFM"))
  {

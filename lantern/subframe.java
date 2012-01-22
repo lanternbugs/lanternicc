@@ -239,7 +239,7 @@ addInternalFrameListener(this);
 
 consoleMenu = new JMenuBar();
 
- JMenu mywindows = new JMenu("Console Menu");
+ JMenu mywindows = new JMenu("Menu");
 
  JMenuItem  selectall = new JMenuItem("Select All");
   selectall.addActionListener(this);
