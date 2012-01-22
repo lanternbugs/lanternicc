@@ -147,6 +147,9 @@ if(sFormula.equals("f"))
 seekText =seekText + " " + sFormula;
 if(onNotify == true)
 seekText = seekText + " Notified";
+if(!sTitles.equals("C") && !sTitles.equals(""))
+seekText = seekText + " (" + sTitles + ")";
+
 index=sIndex;
 name=sName;
 rating=sRating;
