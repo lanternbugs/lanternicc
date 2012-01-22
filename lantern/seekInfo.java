@@ -98,22 +98,37 @@ onNotify=false;
 
 }
 catch(Exception badnot){ onNotify=false;}
+Color notifyComputerColor = new Color(0,144,255);
 
 if(sWild.equals("0") && computer==true)
-col=new Color(0,0,255); // blue
+{
+  col=new Color(0,0,255); // blue
+  if(onNotify == true)
+  col=notifyComputerColor;
+}
 else if(sWild.equals("0") && computer==false)
-col=new Color(0,255,0);
+{
+col=new Color(34,139,34);  // forest green
+if(onNotify == true)
+col=new Color(0, 255, 127); // spring green
+}
 else // wild
 {
 	if(computer == true)
 	{
 		col=new Color(0,0,255); // blue
+		if(onNotify == true)
+                col=notifyComputerColor; // notify blue
+
 		if(sWild.equals("17") || sWild.equals("26"))// losers orange
 			compCol= new Color(255,140,0 );
 		else if(sWild.equals("23"))// crazyhouse pink
 		 	compCol = new Color(255,20,147 );
 		 else
 		  compCol= new Color(255,0,0);
+		  if(onNotify == true)
+                  compCol = compCol.darker();
+
 	}
 	else
 	{
@@ -123,13 +138,14 @@ else // wild
 		 	col = new Color(255,20,147 );
 		 else
 		  col= new Color(255,0,0);
-
+                 if(onNotify == true)
+                 col=col.darker();
 	}
 }
 
 String theTitles="";
 if(sProvisional.equals("0") || sProvisional.equals("1"))
-	sTitles = sTitles + "P";
+	sTitles = sTitles + " P";
 if(sTitles.length() > 0)
 theTitles="("+ sTitles + ")";
 
@@ -139,16 +155,15 @@ category=category + " ";
 else
 category =category + " w" + sWild + " ";
 
+String isNotified = "";
+if(onNotify == true)
+isNotified = "Notified: ";
 
-seekText=sName + theTitles + " " + sRating + " " + category + sTime + " " + sInc + " " + sRated + " " + sRange;
+seekText=isNotified + sName + theTitles + " " + sRating + " " + category + sTime + " " + sInc + " " + sRated + " " + sRange;
 if(sManual.equals("m"))
 seekText = seekText + " " + sManual;
 if(sFormula.equals("f"))
 seekText =seekText + " " + sFormula;
-if(onNotify == true)
-seekText = seekText + " Notified";
-if(!sTitles.equals("C") && !sTitles.equals(""))
-seekText = seekText + " (" + sTitles + ")";
 
 index=sIndex;
 name=sName;

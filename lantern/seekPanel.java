@@ -197,7 +197,7 @@ if(sharedVariables.graphData.standardGrid[a]!=null)
 }// end draw standard
 g2.setColor(seekTextColor);
 g2.setFont(seekTextFont);
-int local = (int)width/ 2 - 100;
+int local = 75;
 if(local < 0)
 local=0;
 g.drawString(seekText, local, baseHeightBottom+30);
@@ -218,7 +218,7 @@ if(computer == false && displayType != hSeeks && displayType != aSeeks)
 return;
 
 
-if(onNotify==true)
+/*if(onNotify==true)
 {
 if(col!=null && compColor!=null)
 drawSeek2(g2, col.darker().darker(), compColor.darker().darker(), originX, x, y, width, height, rated, computer, onNotify);
@@ -230,6 +230,7 @@ else
 drawSeek2(g2, col, compColor, originX, x, y, width, height, rated, computer, onNotify);
 }
 else
+*/
 drawSeek2(g2, col, compColor, originX, x, y, width, height, rated, computer, onNotify);
 }// end try
 catch(Exception dui){}
