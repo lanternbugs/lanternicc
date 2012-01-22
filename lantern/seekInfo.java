@@ -121,25 +121,41 @@ else // wild
                 col=notifyComputerColor; // notify blue
 
 		if(sWild.equals("17") || sWild.equals("26"))// losers orange
-			compCol= new Color(255,140,0 );
-		else if(sWild.equals("23"))// crazyhouse pink
-		 	compCol = new Color(255,20,147 );
-		 else
-		  compCol= new Color(255,0,0);
+		{
+                  compCol= new Color(255,140,0 );
+	         if(onNotify == true)
+                  compCol= new Color(255,165,0 );
+                }
+                else if(sWild.equals("23"))// crazyhouse pink
+		{ 	compCol = new Color(255,20,147 );
+		 if(onNotify == true)
+		 compCol = new Color(238, 130, 238);
+                }
+                 else
+		{  compCol= new Color(255,0,0);
 		  if(onNotify == true)
-                  compCol = compCol.darker();
-
+                  compCol = new Color(255, 99, 71);
+                }
 	}
 	else
 	{
 		if(sWild.equals("17") || sWild.equals("26"))// losers orange
-			col= new Color(255,140,0 );
-		else if(sWild.equals("23"))// crazyhouse pink
-		 	col = new Color(255,20,147 );
-		 else
-		  col= new Color(255,0,0);
-                 if(onNotify == true)
-                 col=col.darker();
+		{
+                  col= new Color(255,140,0 );
+	         if(onNotify == true)
+                  col= new Color(255,165,0 );
+                   }
+        	else if(sWild.equals("23"))// crazyhouse pink
+		{
+                  col = new Color(255,20,147 );
+		 if(onNotify == true)
+		 col = new Color(238, 130, 238);
+		}
+                 else
+		{  col= new Color(255,0,0);
+ 		  if(onNotify == true)
+                  compCol = new Color(255, 99, 71);
+                  }
 	}
 }
 

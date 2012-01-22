@@ -3498,6 +3498,8 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
   if(event.getActionCommand().equals("Follow Broadcast- When On"))
  {
 
+     client.writeToSubConsole("Be sure to turn on the radio by opening ChessFm, Actions - Open ChessFm in the menu.\n", 0);
+
      String actionmess="Follow Broadcast\n";
      if(sharedVariables.myServer.equals("ICC"))
      actionmess="`c0`" + actionmess;
