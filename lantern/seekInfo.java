@@ -143,18 +143,27 @@ else // wild
 		{
                   col= new Color(255,140,0 );
 	         if(onNotify == true)
-                  col= new Color(255,165,0 );
+                 { col= new Color(255,165,0 );
+                 compCol= new Color(255,140,0 );
+                 }
                    }
         	else if(sWild.equals("23"))// crazyhouse pink
 		{
                   col = new Color(255,20,147 );
 		 if(onNotify == true)
-		 col = new Color(238, 130, 238);
-		}
+		 {
+                   col = new Color(238, 130, 238);
+                   compCol = new Color(255,20,147 );
+	           }
+        	}
                  else
 		{  col= new Color(255,0,0);
  		  if(onNotify == true)
-                  compCol = new Color(255, 99, 71);
+                  {
+                    col = new Color(255, 99, 71);
+                    compCol= new Color(255,0,0);
+                  }
+
                   }
 	}
 }
