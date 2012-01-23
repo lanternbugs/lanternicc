@@ -52,6 +52,8 @@ int baseHeightTop;
 int bulletBaseX;
 int blitzBaseX;
 int standardBaseX;
+int drawWidth;
+
 int mx;
 int my;
 Color backColor;
@@ -106,8 +108,16 @@ void setDimensions()
 	bulletSeekW = (int) (blitzBaseX - bulletBaseX) / sharedVariables.graphData.bulletW;
 	blitzSeekW = (int) (standardBaseX - blitzBaseX) / sharedVariables.graphData.blitzW;
 	standardSeekW = (int) (width - standardBaseX) / sharedVariables.graphData.standardW;
+        
+        drawWidth = bulletSeekW;
+        if(seekHeight < drawWidth)
+        drawWidth = seekHeight;
+        if(blitzSeekW < drawWidth)
+        drawWidth=blitzSeekW;
+        if(standardSeekW < drawWidth)
+        drawWidth = standardSeekW;
 
-        if(bulletSeekW > seekHeight)
+  /*      if(bulletSeekW > seekHeight)
         bulletSeekW = seekHeight;
         if(blitzSeekW > seekHeight)
         blitzSeekW = seekHeight;
@@ -125,7 +135,7 @@ void setDimensions()
           seekHeight = standardSeekW;
 
         }
-
+    */
 }
 
 	public void paintComponent(Graphics g)
@@ -240,21 +250,21 @@ catch(Exception dui){}
 
 void drawSeek2(Graphics2D g2, Color col, Color compColor, int originX, int x, int y, int width, int height, String rated, boolean computer, boolean onNotify)
 {
-  
+
 try {
 g2.setColor(col);
 // x y width height
 if(compColor == null)
 { if(computer == true)
-   g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) width-1, (double) height-1));
+   g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) drawWidth-1, (double) height-1));
 	else
-g2.fill(new Ellipse2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) width-1, (double) height-1));
+g2.fill(new Ellipse2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) drawWidth-1, (double) height-1));
 }
 else // 2 halves
 {
-g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) width-1, (double) height/2));
+g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height, (double) drawWidth-1, (double) height/2));
 g2.setColor(compColor);
-g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height + height/2, (double) width-1, (double) height/2-1));
+g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom - y * height + height/2, (double) drawWidth-1, (double) height/2-1));
 
 
 }
@@ -262,13 +272,13 @@ g2.fill(new Rectangle2D.Double(originX + (x * width), (double) baseHeightBottom 
 if(rated.equals("u") && compColor == null)
 {g2.setColor(backColor);//  background
 if(computer == true)
-g2.fill(new Rectangle2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) width-5, (double) height-5));
+g2.fill(new Rectangle2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) drawWidth-5, (double) height-5));
 else
-g2.fill(new Ellipse2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) width-5, (double) height-5));
+g2.fill(new Ellipse2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) drawWidth-5, (double) height-5));
 }
 else if(rated.equals("u") && compColor != null)
 {g2.setColor(backColor);//  background
-g2.fill(new Rectangle2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) width-5, (double) height-6));
+g2.fill(new Rectangle2D.Double(originX + (x * width)+2, (double) baseHeightBottom - y * height + 2, (double) drawWidth-5, (double) height-6));
 }
 
 
@@ -290,7 +300,9 @@ if(mx<blitzBaseX)
 	int y=(int)(baseHeightBottom-my)/seekHeight + 1;
 	if(my > baseHeightBottom)
 	y=0;
-	return sharedVariables.graphData.bulletGrid[x + y * sharedVariables.graphData.bulletW];
+	if(x * bulletSeekW + drawWidth < mx)
+        return null;
+        return sharedVariables.graphData.bulletGrid[x + y * sharedVariables.graphData.bulletW];
 }
 else if((mx>blitzBaseX) && mx < (standardBaseX))
 {
@@ -300,6 +312,8 @@ else if((mx>blitzBaseX) && mx < (standardBaseX))
 	int y=(int)(baseHeightBottom-my)/seekHeight + 1;
 	if(my > baseHeightBottom)
 	y=0;
+	if(x * blitzSeekW + drawWidth  + blitzBaseX < mx)
+        return null;
 	return sharedVariables.graphData.blitzGrid[x + y * sharedVariables.graphData.blitzW];
 }
 else
@@ -310,6 +324,8 @@ else
 	int y=(int)(baseHeightBottom-my)/seekHeight + 1;
 	if(my > baseHeightBottom)
 	y=0;
+	if(x * standardSeekW + drawWidth  + standardBaseX < mx)
+        return null;
 	return sharedVariables.graphData.standardGrid[x + y * sharedVariables.graphData.standardW];
 
 }

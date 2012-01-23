@@ -4247,6 +4247,7 @@ if(event.getActionCommand().equals("Original"))
 
 		BoardDesign1.setSelected(true);
 		BoardDesign2.setSelected(false);
+		BoardDesign3.setSelected(false);
                 sharedVariables.andreysLayout = 0;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
@@ -4255,6 +4256,7 @@ if(event.getActionCommand().equals("Modern"))
 
 		BoardDesign1.setSelected(false);
 		BoardDesign2.setSelected(true);
+		BoardDesign3.setSelected(false);
                 sharedVariables.andreysLayout = 1;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
@@ -4262,7 +4264,8 @@ if(event.getActionCommand().equals("Mixed"))
 {
 
 		BoardDesign1.setSelected(false);
-		BoardDesign2.setSelected(true);
+		BoardDesign2.setSelected(false);
+                BoardDesign3.setSelected(true);
                 sharedVariables.andreysLayout = 2;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
