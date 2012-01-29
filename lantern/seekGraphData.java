@@ -51,7 +51,7 @@ seekInfo [] bulletGrid;
 seekInfo [] blitzGrid;
 seekInfo [] standardGrid;
 int bulletW=6;
-int blitzW=12; // was 40
+int blitzW=18; // was 40
 int standardW=6;
 int height=30;
 
@@ -94,7 +94,7 @@ if(newInfo.eTimeType == 0) // bullet
 	}
 	else if(newInfo.eTimeType == 1) // blitz
 	{
-		 x =(int)( (etime-3) * (double)blitzW / 12 - 1);
+		 x =(int)( (etime-3) * (double)blitzW / 12 );
 		if(x<0)
 		x=0;
 		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType);
