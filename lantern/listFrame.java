@@ -118,6 +118,7 @@ myseeks2=new seekPanel(sharedVariables, queue, seekPanel.cSeeks);// 1 for  displ
 //add(mypanel);
 
 initComponents();
+setTitle("Activities Window");
 homeFrame=homeFrame1;
 //addInternalFrameListener(this);
 }// end constructor

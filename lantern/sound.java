@@ -18,6 +18,7 @@ import java.applet.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+import  sun.audio.*;    //import the sun.audio package
 
 class Sound extends JApplet
     {
@@ -44,9 +45,13 @@ class Sound extends JApplet
       try
       {
 		 songPath=songPath1;
-		 play player = new play();
+		 /*play player = new play();
 		 Thread t = new Thread(player);
-	t.start();
+	t.start(); */
+	
+	AudioStream as = new AudioStream (songPath.openStream());
+        AudioPlayer.player.start(as);
+
 	//song = Applet.newAudioClip(songPath); // Load
     //song.play();
 

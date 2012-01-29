@@ -88,7 +88,7 @@ frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 
 
-frame.setTitle("Lantern Chess");
+frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
 frame.setVisible(true);
 
 // uncomment below line to test name and pass saving
@@ -5622,7 +5622,7 @@ void makeToolBar()
 {
   toolBar = new JToolBar("Still draggable");
  sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,10));
+ toolBar.setLayout(new GridLayout(1,16));
   for(int a=0; a<10; a++)
   {
 
@@ -5649,6 +5649,146 @@ void makeToolBar()
 
   }
    toolBar.add(sharedVariables.mybuttons[0]);
+
+JLabel pure1 = new JLabel();
+JLabel pure3 = new JLabel();
+JLabel pure5 = new JLabel();
+JLabel pure15 = new JLabel();
+JLabel pure45 = new JLabel();
+JLabel pure960 = new JLabel();
+
+pure1.setIcon(sharedVariables.pure1);
+pure3.setIcon(sharedVariables.pure3);
+pure5.setIcon(sharedVariables.pure5);
+pure15.setIcon(sharedVariables.pure15);
+pure45.setIcon(sharedVariables.pure45);
+pure960.setIcon(sharedVariables.pure960);
+pure1.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="1-Minute\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+pure3.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="3-Minute\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+
+pure5.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="5-Minute\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+pure15.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="15-Minute\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+pure45.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="45\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+pure960.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+				myoutput data = new myoutput();
+				data.data="960\n";
+				data.consoleNumber=0;
+				queue.add(data);
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+
+
+toolBar.add(pure1);
+toolBar.add(pure3);
+toolBar.add(pure5);
+toolBar.add(pure15);
+toolBar.add(pure45);
+toolBar.add(pure960);
+
+
+
 }
 void sendToEngine(String output)
 {
@@ -5788,6 +5928,18 @@ void loadGraphicsStandAlone()
 try {
 	URL myiconurl = this.getClass().getResource( "images/game.gif");
 sharedVariables.gameIcon = new ImageIcon(myiconurl, "Game");
+ myiconurl = this.getClass().getResource( "images/oval1.png");
+sharedVariables.pure1 = new ImageIcon(myiconurl, "1");
+ myiconurl = this.getClass().getResource( "images/oval3.png");
+sharedVariables.pure3 = new ImageIcon(myiconurl, "3");
+ myiconurl = this.getClass().getResource( "images/oval5.png");
+sharedVariables.pure5 = new ImageIcon(myiconurl, "5");
+ myiconurl = this.getClass().getResource( "images/oval15.png");
+sharedVariables.pure15 = new ImageIcon(myiconurl, "15");
+ myiconurl = this.getClass().getResource( "images/oval45.png");
+sharedVariables.pure45 = new ImageIcon(myiconurl, "45");
+ myiconurl = this.getClass().getResource( "images/oval960.png");
+sharedVariables.pure960 = new ImageIcon(myiconurl, "960");
 
 
  myiconurl = this.getClass().getResource( "images/observing.gif");

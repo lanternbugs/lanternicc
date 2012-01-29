@@ -686,7 +686,8 @@ void kriegMove(int reload)
 // prom is any promotion character, i.e 'Q'. i think type that is returnerd is for sound.
 int makemove(int from, int to, char prom, int reload, int castleCapture)
 {
-
+ try 
+{
 
 
 	if((castleCapture == 1 || castleCapture == 2) && wild==22)
@@ -863,7 +864,9 @@ copyBoard();// to have current icc board for move list
 
 setMaterialCount(board);
 return type;
-
+}
+catch(Exception esound) { }
+return 1;
 }
 
 void makeEngineMove(String move)

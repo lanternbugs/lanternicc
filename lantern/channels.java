@@ -151,6 +151,12 @@ ImageIcon playingIcon;
 ImageIcon examiningIcon;
 ImageIcon sposIcon;
 ImageIcon gameIcon;
+ImageIcon pure1;
+ImageIcon pure3;
+ImageIcon pure5;
+ImageIcon pure15;
+ImageIcon pure45;
+ImageIcon pure960;
 
 String [] userButtonCommands = new String[maxUserButtons];
 String [] tabTitle;
@@ -492,7 +498,7 @@ autoOlive = false;
 autoSlomato = false;
 autoLittlePer =false;
 
-toolbarVisible=false;
+toolbarVisible=true;
 showQsuggest=true;
 shoutsAlso=false;
 loadSizes=true;
