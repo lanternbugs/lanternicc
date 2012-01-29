@@ -5622,33 +5622,7 @@ void makeToolBar()
 {
   toolBar = new JToolBar("Still draggable");
  sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,16));
-  for(int a=0; a<10; a++)
-  {
-
-
-
-
-
-    sharedVariables.mybuttons[a] = new JButton("" + a);
-    setButtonTitle(a);
-     sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
-   final int con = a;
-
-    sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-					toolbarCommands commander = new toolbarCommands(myboards);
-				commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
-
-
-				}});
-
-   if(a != 0)
-   toolBar.add(sharedVariables.mybuttons[a]);
-
-  }
-   toolBar.add(sharedVariables.mybuttons[0]);
+ toolBar.setLayout(new GridLayout(1,17));
 
 JLabel pure1 = new JLabel();
 JLabel pure3 = new JLabel();
@@ -5779,13 +5753,41 @@ pure960.addMouseListener(new MouseAdapter() {
          public void mouseClicked (MouseEvent me) {}  });
 
 
-
 toolBar.add(pure1);
 toolBar.add(pure3);
 toolBar.add(pure5);
 toolBar.add(pure15);
 toolBar.add(pure45);
 toolBar.add(pure960);
+JLabel spacer = new JLabel("");
+toolBar.add(spacer);
+
+  for(int a=0; a<10; a++)
+  {
+
+
+
+
+
+    sharedVariables.mybuttons[a] = new JButton("" + a);
+    setButtonTitle(a);
+     sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
+   final int con = a;
+
+    sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event)
+				{
+					toolbarCommands commander = new toolbarCommands(myboards);
+				commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
+
+
+				}});
+
+   if(a != 0)
+   toolBar.add(sharedVariables.mybuttons[a]);
+
+  }
+   toolBar.add(sharedVariables.mybuttons[0]);
 
 
 
