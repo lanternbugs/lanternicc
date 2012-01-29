@@ -3663,6 +3663,7 @@ try {
 			temp.arg1=dg.getArg(1);
 			temp.arg2=dg.getArg(2);
 			temp.arg3=dg.getArg(3);
+			temp.arg4=dg.getArg(4);
 			gamequeue.add(temp);
 
 		}
@@ -4991,8 +4992,21 @@ else
                           else
                           return;
 
+                          String preKib = "";
+                          String postKib = "";
+                          if(temp.arg4.equals("0"))
+                          {
+                          preKib = "(";
+                          postKib = ")";
+                          }
+                          else if(temp.arg4.equals("2"))
+                          {
+                            preKib = "[";
+                            postKib = "]";
 
-                                               thetell = chatTime2 + temp.arg2 + joinString + temp.arg1 + chatTime + "\n";
+                          }
+
+                                               thetell = chatTime2 + preKib + temp.arg2 + postKib + joinString + temp.arg1 + chatTime + "\n";
 
 				SimpleAttributeSet attrs = new SimpleAttributeSet();
 					if(sharedVariables.kibStyle == 1 || sharedVariables.kibStyle == 3)
@@ -5055,9 +5069,9 @@ else
 					if(sharedVariables.kibStyle == 2 || sharedVariables.kibStyle == 3)
 						StyleConstants.setBold(attrs, true);
 					if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
-					processLink(doc, thetell, sharedVariables.kibcolor, gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
+					processLink(doc, thetell, sharedVariables.kibcolor.darker(), gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
 					else
-					processLink(doc, thetell, sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
+					processLink(doc, thetell, sharedVariables.kibcolor.darker(), 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
 
                     }
 
