@@ -352,7 +352,13 @@ return null;
                  return;
                 }
 
-	      if(over!=null)
+	      if(over == null)
+	      {
+               setToolTipText(null);
+                
+              }
+
+              if(over!=null)
 	      {
 		/*JFrame fr = new JFrame();
 		fr.setSize(150, 50);
@@ -360,6 +366,12 @@ return null;
 		fr.setTitle(over.seekText);
 		*/
 		seekText=over.seekText;
+
+		 setToolTipText(seekText);
+		 ToolTipManager.sharedInstance().setDismissDelay(60000);
+
+                // getToolTipLocation(e);
+
 		if(over.computer == false && over.wild.equals("0"))
 			seekTextColor=new Color(0,0,0);
 		else

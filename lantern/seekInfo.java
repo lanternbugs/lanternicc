@@ -184,7 +184,13 @@ String isNotified = "";
 if(onNotify == true)
 isNotified = "Notified: ";
 
-seekText=isNotified + sName + theTitles + " " + sRating + " " + category + sTime + " " + sInc + " " + sRated + " " + sRange;
+String ratedType = sRated;
+if(sRated.equals("r"))
+ratedType = "rated";
+else if(sRated.equals("u"))
+ratedType = "unrated";
+
+seekText=isNotified + sName + theTitles + " " + sRating + " seeks " + category + sTime + " " + sInc + " " + ratedType + " " + sRange;
 if(sManual.equals("m"))
 seekText = seekText + " " + sManual;
 if(sFormula.equals("f"))
