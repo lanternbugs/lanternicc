@@ -1056,7 +1056,7 @@ import layout.TableLayout;
                 column=0;
               sharedVariables.gametable[aaa].scrollRectToVisible
                 (sharedVariables.gametable[aaa].getCellRect(row, column, true));
-
+               repaint();
             } catch (Exception e1) {
               //ignore
             }
