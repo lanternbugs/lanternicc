@@ -426,6 +426,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                    sharedVariables.mygame[gameData.LookingAt].lastto = sharedVariables.mygame[gameData.LookingAt].currentLastto;
                     if(sharedVariables.mygame[gameData.LookingAt].movetop == 0)
                     startPosition = true;
+                 sharedVariables.mygame[gameData.LookingAt].setMaterialCount(sharedVariables.mygame[gameData.LookingAt].board);   
                 }
 
 		//g.drawString("in here",  50,  50);

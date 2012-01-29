@@ -432,7 +432,7 @@ void readInitialPosition2(String initial, int board[])
 
 
 	}// end loop
-        setMaterialCount();
+        setMaterialCount(board);
 	if(iflipped == 1)
 	{
 		flipSent(board);
@@ -546,7 +546,7 @@ void getSliderBoard(int num, int sliderboard[])
 			else
 			kriegSliderCapture(moveListTo[a], 1, sliderboard);
 		}
-
+setMaterialCount(sliderboard);
 }
 
 void replay()
@@ -861,7 +861,7 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 
 copyBoard();// to have current icc board for move list
 
-setMaterialCount();
+setMaterialCount(board);
 return type;
 
 }
@@ -1409,7 +1409,8 @@ void copyBoard()
 	boardCopy[a]=board[a];
 }
 
-void setMaterialCount()
+
+void setMaterialCount(int [] board)
 {
 	whiteMaterialCount=blackMaterialCount=0;
 

@@ -4611,10 +4611,10 @@ void proccessGameInfo(newBoardData temp)
 					if(temp.dg == 12 || temp.dg == 15 || temp.dg == 18)
 					{
 					//writeToConsole("in dg 12 15 18");
-						ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-						Lock readLock = rwl.readLock();
+					//	ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+					//	Lock readLock = rwl.readLock();
 
-						readLock.lock();
+					//	readLock.lock();
 
 					focusOwner whohasit= new focusOwner();
 					int gamenum=getNewGameBoard(temp.type);
@@ -4677,7 +4677,7 @@ void proccessGameInfo(newBoardData temp)
 
 
 					//try { Thread.sleep(100); } catch(Exception e){}
-					readLock.unlock();
+					//readLock.unlock();
 					}
 
 					if(temp.dg == 42)// illegal move
