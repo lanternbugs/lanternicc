@@ -1432,7 +1432,7 @@ randomGraphics.add(randomTiles);
 
  JMenu chattimestamp=new JMenu("Chat Timestamp");
 
-channelTimestamp=new JCheckBoxMenuItem("Timestamp Channels");
+channelTimestamp=new JCheckBoxMenuItem("Timestamp Channels and Kibs");
 channelTimestamp.addActionListener(this);
 chattimestamp.add(channelTimestamp);
 
@@ -4423,7 +4423,7 @@ if(event.getActionCommand().equals("Timestamp Tells"))
 		tellTimestamp.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Timestamp Channels"))
+if(event.getActionCommand().equals("Timestamp Channels and Kibs"))
 {
 	if(sharedVariables.channelTimestamp == false)
 	{

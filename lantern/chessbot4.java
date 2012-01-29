@@ -3662,6 +3662,7 @@ try {
 			temp.dg=20;
 			temp.arg1=dg.getArg(1);
 			temp.arg2=dg.getArg(2);
+			temp.arg3=dg.getArg(3);
 			gamequeue.add(temp);
 
 		}
@@ -4980,9 +4981,18 @@ else
 
 
 			}
+                          String joinString = "";
+                          if(temp.arg3.equals("O"))
+                          joinString = " joins game ";
+                          else if(temp.arg3.equals("E"))
+                          joinString = " is now examining game ";
+                          else if(temp.arg3.equals("X"))
+                          joinString = " has left game ";
+                          else
+                          return;
 
 
-                                               thetell = chatTime2 + temp.arg2 +" joins game " + temp.arg1 + chatTime + "\n";
+                                               thetell = chatTime2 + temp.arg2 + joinString + temp.arg1 + chatTime + "\n";
 
 				SimpleAttributeSet attrs = new SimpleAttributeSet();
 					if(sharedVariables.kibStyle == 1 || sharedVariables.kibStyle == 3)
@@ -5010,6 +5020,19 @@ else
 
 						String thetell ="";
 
+ 			String chatTime = "";
+			String chatTime2 = "";
+
+			if(sharedVariables.tellTimestamp == true)
+			{
+				if(sharedVariables.leftTimestamp == false)
+				chatTime=getATimestamp();
+				else
+				chatTime2=getATimestamp();
+
+
+			}
+
 						if(temp.arg4.equals("1"))//kib
 						{
 							thetell = temp.arg2 + "(" + temp.arg1 + ")" + " kibitzes: " + temp.arg5 + "\n";
@@ -5022,6 +5045,10 @@ else
 							if(!temp.arg3.equals(""))
 								thetell = temp.arg2 + "(" + temp.arg3 + ")" + "(" + temp.arg1 + ")" + " whispers: " + temp.arg5 + "\n";
 						}
+						
+						if(sharedVariables.channelTimestamp == true)
+						thetell = chatTime2 + thetell;
+
 				SimpleAttributeSet attrs = new SimpleAttributeSet();
 					if(sharedVariables.kibStyle == 1 || sharedVariables.kibStyle == 3)
 						StyleConstants.setItalic(attrs, true);
