@@ -300,7 +300,7 @@ int defaultBoardWide;
 int defaultBoardHigh;
 int nameListSize=90;
 int italicsBehavior=1; // for what ` ` does
-
+int playersInMyGame=2; // playing and examining
 channelTabInfo [] tabStuff = new channelTabInfo[maxConsoleTabs];
 ConcurrentLinkedQueue<myoutput> engineQueue;
 OutputStream engineOut;

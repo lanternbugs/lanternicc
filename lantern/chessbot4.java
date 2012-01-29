@@ -548,7 +548,7 @@ try {
 			String newdgs="";
 			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
-			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132 && a!= 152)
+			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132 && a!= 152)
                         dgs2= dgs2 + "0";
 			else
 			{
@@ -3323,7 +3323,7 @@ catch(Exception qsug){}
 	seeksList.removeFromList(dg.getArg(1));
 	computerSeeksList.removeFromList(dg.getArg(1));
 	sharedVariables.graphData.removeSeek(dg.getArg(1));
-		
+
                 if(seekGraph.isVisible())
 			seekGraph.mypanel.repaint();
 
@@ -3651,6 +3651,15 @@ try {
 		{
 			newBoardData temp = new newBoardData();
 			temp.dg=23;
+			temp.arg1=dg.getArg(1);
+			temp.arg2=dg.getArg(2);
+			gamequeue.add(temp);
+
+		}
+		if(dg.getArg(0).equals("20"))// 20 players in my game
+		{
+			newBoardData temp = new newBoardData();
+			temp.dg=20;
 			temp.arg1=dg.getArg(1);
 			temp.arg2=dg.getArg(2);
 			gamequeue.add(temp);
@@ -4936,6 +4945,56 @@ else
 
 
 
+   if(temp.dg == 20)// player in my game
+  {
+
+ 
+	if(sharedVariables.playersInMyGame == 0)// i dont have this on
+	return;
+
+        int gamenum=getGameBoard(temp.arg1);
+	int state =sharedVariables.mygame[gamenum].state;
+
+        if(state == sharedVariables.STATE_OBSERVING && sharedVariables.playersInMyGame == 1)
+        return;
+        else if(state != sharedVariables.STATE_OBSERVING && state != sharedVariables.STATE_EXAMINING  && state != sharedVariables.STATE_PLAYING)
+        return;
+                			// gamenum can be -1 if no board has this game
+                                                 StyledDocument doc;
+						if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
+						doc = sharedVariables.mygamedocs[gamenum];
+						else
+						doc = sharedVariables.mydocs[0];
+
+						String thetell ="";
+
+ 			String chatTime = "";
+			String chatTime2 = "";
+
+			if(sharedVariables.tellTimestamp == true)
+			{
+				if(sharedVariables.leftTimestamp == false)
+				chatTime=getATimestamp();
+				else
+				chatTime2=getATimestamp();
+
+
+			}
+
+
+                                               thetell = chatTime2 + temp.arg2 +" joins game " + temp.arg1 + chatTime + "\n";
+
+				SimpleAttributeSet attrs = new SimpleAttributeSet();
+					if(sharedVariables.kibStyle == 1 || sharedVariables.kibStyle == 3)
+						StyleConstants.setItalic(attrs, true);
+					if(sharedVariables.kibStyle == 2 || sharedVariables.kibStyle == 3)
+						StyleConstants.setBold(attrs, true);
+					if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
+					processLink(doc, thetell, sharedVariables.kibcolor, gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
+					else
+					processLink(doc, thetell, sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
+
+                    }
 
 
 					if(temp.dg == 26)// kib
