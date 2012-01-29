@@ -426,7 +426,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                    sharedVariables.mygame[gameData.LookingAt].lastto = sharedVariables.mygame[gameData.LookingAt].currentLastto;
                     if(sharedVariables.mygame[gameData.LookingAt].movetop == 0)
                     startPosition = true;
-                 sharedVariables.mygame[gameData.LookingAt].setMaterialCount(sharedVariables.mygame[gameData.LookingAt].board);   
+                 sharedVariables.mygame[gameData.LookingAt].setMaterialCount(sharedVariables.mygame[gameData.LookingAt].board);
                 }
 
 		//g.drawString("in here",  50,  50);
@@ -546,11 +546,13 @@ the slider is on. otherwise it draws the curernt in play board*/
 
 				if(sharedVariables.highlightMoves == true && startPosition == false)
 				if(gameslot == sharedVariables.mygame[gameData.LookingAt].lastfrom || gameslot == sharedVariables.mygame[gameData.LookingAt].lastto)
-				{ g2.setColor(sharedVariables.highlightcolor);
-
-
+				{
+                                if(sliding == 0)
+                                g2.setColor(sharedVariables.highlightcolor);
+                                else
+                                g2.setColor(sharedVariables.highlightcolor.brighter());
     				// horizontal
-				for(int thick = 0; thick<lineThick; thick++) // we draw multiple times at different offsents to create say 3 thick
+				for(int thick = 0; thick<lineThick + sliding ; thick++) // we draw multiple times at different offsents to create say 3 thick
 				{
 					g2.draw(new Line2D.Double((double)boardx +  b * squarex  , (double) boardy + aa * squarey + thick , (double)boardx +  b * squarex + squarex - 1 ,(double) boardy + aa * squarey + (thick ) ));
 					g2.draw(new Line2D.Double((double)boardx +  b * squarex, (double) boardy + aa * squarey + squarey - 1 - thick , (double)boardx +  b * squarex + squarex -1 ,(double) boardy + aa * squarey+squarey - 1 - (thick )));
