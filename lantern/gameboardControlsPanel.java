@@ -585,6 +585,14 @@ import layout.TableLayout;
                 loc++;
                 sharedVariables.moveSliders[gameData.BoardIndex].setValue(loc);
                 adjustMoveList();
+
+                // to garantee last move updates last square highlight
+               /* if(loc == max)
+                {
+		int [] slidingBoard = new int[64];
+                sharedVariables.mygame[gameData.BoardIndex].getSliderBoard(sharedVariables.moveSliders[gameData.BoardIndex].getValue(), slidingBoard);
+                }
+                */
                 myboard.mypanel.repaint();
               }
               myboard.giveFocus();
@@ -632,6 +640,12 @@ import layout.TableLayout;
 
                 sharedVariables.moveSliders[gameData.BoardIndex].setValue(max);
                 adjustMoveList();
+                /* if(loc == max)
+                {
+		int [] slidingBoard = new int[64];
+                sharedVariables.mygame[gameData.BoardIndex].getSliderBoard(sharedVariables.moveSliders[gameData.BoardIndex].getValue(), slidingBoard);
+                }
+                */
 
                 myboard.mypanel.repaint();
               }

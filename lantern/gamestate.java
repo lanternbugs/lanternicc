@@ -38,6 +38,9 @@ class gamestate {
 
 	int lastfrom;
 	int lastto;
+	int currentLastfrom;
+	int currentLastto;
+
 	int [] moveListTo = new int[6000];
 	int [] moveListFrom = new int[6000];
 	String [] engineMoves;
@@ -456,8 +459,11 @@ void flipMoves()
 	}
 
 	if(lastfrom>=0)
-		lastfrom = 63-lastfrom;
-	lastto = 63 - lastto;
+	{	lastfrom = 63-lastfrom;
+                currentLastfrom =lastfrom;
+        }
+        lastto = 63 - lastto;
+        currentLastto=lastto;
 
 
 }
@@ -698,7 +704,8 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 
 		lastfrom=from;
 	    lastto=to;
-
+             currentLastfrom=lastfrom;
+             currentLastto=lastto;
 		return 0;  // type for sound
 	}
 
@@ -769,7 +776,8 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 	else
 		lastfrom=to;//crazyhouse
 	lastto=to;
-
+        currentLastfrom=lastfrom;
+        currentLastto=lastto;
 
 	if(from<0)
 	 return type;

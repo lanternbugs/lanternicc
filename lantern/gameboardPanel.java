@@ -412,11 +412,21 @@ the slider is on. otherwise it draws the curernt in play board*/
 		setBackground(sharedVariables.boardBackgroundColor);
 		int [] slidingBoard = new int[64];
 		int sliding = 0;
+		boolean startPosition =false;
 		if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() < sharedVariables.moveSliders[gameData.BoardIndex].getMaximum())
 		{
 			sliding=1;
 			sharedVariables.mygame[gameData.LookingAt].getSliderBoard(sharedVariables.moveSliders[gameData.BoardIndex].getValue(), slidingBoard);
-		}
+		        if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 0)
+		        startPosition =true;
+                }
+		else if(sharedVariables.mygame[gameData.LookingAt].currentLastto >= 0)
+		{
+                   sharedVariables.mygame[gameData.LookingAt].lastfrom=sharedVariables.mygame[gameData.LookingAt].currentLastfrom;
+                   sharedVariables.mygame[gameData.LookingAt].lastto = sharedVariables.mygame[gameData.LookingAt].currentLastto;
+                    if(sharedVariables.mygame[gameData.LookingAt].movetop == 0)
+                    startPosition = true;
+                }
 
 		//g.drawString("in here",  50,  50);
 		Graphics2D g2 = (Graphics2D) g;
@@ -532,10 +542,8 @@ the slider is on. otherwise it draws the curernt in play board*/
 
 
 				int gameslot = 63 - (a * 8 + b);
-				if(sliding == 0)
-				{
 
-				if(sharedVariables.highlightMoves == true)
+				if(sharedVariables.highlightMoves == true && startPosition == false)
 				if(gameslot == sharedVariables.mygame[gameData.LookingAt].lastfrom || gameslot == sharedVariables.mygame[gameData.LookingAt].lastto)
 				{ g2.setColor(sharedVariables.highlightcolor);
 
@@ -551,6 +559,8 @@ the slider is on. otherwise it draws the curernt in play board*/
 				}// end for
 
 			    }// end highlight moves
+ 				if(sliding == 0)
+				{
 
 				if(sharedVariables.highlightMoves == true && bugging > -1)// hightlight bug partners move
 				if(gameslot == sharedVariables.mygame[bugging].lastfrom || gameslot == sharedVariables.mygame[bugging].lastto)
@@ -1032,6 +1042,8 @@ void repaintPiece()
 							 sharedVariables.mygame[gameData.LookingAt].board[piecemoving]=0;
 							 sharedVariables.mygame[gameData.LookingAt].lastto=piece;
 							 sharedVariables.mygame[gameData.LookingAt].lastfrom=piecemoving;
+							 sharedVariables.mygame[gameData.LookingAt].currentLastto=piece;
+							 sharedVariables.mygame[gameData.LookingAt].currentLastfrom=piecemoving;
 							 movingpiece=0;
 							 repaint();
 
