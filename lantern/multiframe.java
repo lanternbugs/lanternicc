@@ -5622,7 +5622,7 @@ void makeToolBar()
 {
   toolBar = new JToolBar("Still draggable");
  sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,17));
+ toolBar.setLayout(new GridLayout(1,16));
 
 JLabel pure1 = new JLabel();
 JLabel pure3 = new JLabel();
@@ -5760,7 +5760,7 @@ toolBar.add(pure15);
 toolBar.add(pure45);
 toolBar.add(pure960);
 JLabel spacer = new JLabel("");
-toolBar.add(spacer);
+//toolBar.add(spacer);
 
   for(int a=0; a<10; a++)
   {
