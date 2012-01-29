@@ -5622,7 +5622,7 @@ void makeToolBar()
 {
   toolBar = new JToolBar("Still draggable");
  sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,16));
+ toolBar.setLayout(new GridLayout(1,17));
 
 JLabel pure1 = new JLabel();
 JLabel pure3 = new JLabel();
@@ -5630,6 +5630,7 @@ JLabel pure5 = new JLabel();
 JLabel pure15 = new JLabel();
 JLabel pure45 = new JLabel();
 JLabel pure960 = new JLabel();
+JLabel seeksLabel = new JLabel();
 
 pure1.setIcon(sharedVariables.pure1);
 pure3.setIcon(sharedVariables.pure3);
@@ -5637,6 +5638,25 @@ pure5.setIcon(sharedVariables.pure5);
 pure15.setIcon(sharedVariables.pure15);
 pure45.setIcon(sharedVariables.pure45);
 pure960.setIcon(sharedVariables.pure960);
+seeksLabel.setIcon(sharedVariables.seekIcon);
+
+seeksLabel.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+			openSeekGraph();
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
+
+
 pure1.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
 
@@ -5761,7 +5781,7 @@ toolBar.add(pure45);
 toolBar.add(pure960);
 JLabel spacer = new JLabel("");
 //toolBar.add(spacer);
-
+toolBar.add(seeksLabel);
   for(int a=0; a<10; a++)
   {
 
@@ -5942,6 +5962,8 @@ sharedVariables.pure15 = new ImageIcon(myiconurl, "15");
 sharedVariables.pure45 = new ImageIcon(myiconurl, "45");
  myiconurl = this.getClass().getResource( "images/oval960.png");
 sharedVariables.pure960 = new ImageIcon(myiconurl, "960");
+ myiconurl = this.getClass().getResource( "images/seekIcon.png");
+sharedVariables.seekIcon = new ImageIcon(myiconurl, "seekIcon");
 
 
  myiconurl = this.getClass().getResource( "images/observing.gif");

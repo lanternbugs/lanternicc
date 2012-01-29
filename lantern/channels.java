@@ -157,6 +157,8 @@ ImageIcon pure5;
 ImageIcon pure15;
 ImageIcon pure45;
 ImageIcon pure960;
+ImageIcon seekIcon;
+
 
 String [] userButtonCommands = new String[maxUserButtons];
 String [] tabTitle;
