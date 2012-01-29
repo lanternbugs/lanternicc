@@ -4961,6 +4961,10 @@ else
         return;
         else if(state != sharedVariables.STATE_OBSERVING && state != sharedVariables.STATE_EXAMINING  && state != sharedVariables.STATE_PLAYING)
         return;
+        
+        if(sharedVariables.mygame[gamenum].realname1.startsWith("*"))
+        return;
+        
                 			// gamenum can be -1 if no board has this game
                                                  StyledDocument doc;
 						if(gamenum != sharedVariables.NOT_FOUND_NUMBER)

@@ -373,6 +373,12 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	set_string = set_string + "[donemynameslayouts] ";
 
 
+	//players in my games opening
+	set_string = set_string + "[playersInMyGame] ";
+	set_string = set_string + sharedVariables.playersInMyGame + " ";
+	// closing
+	set_string = set_string + "[donepieces] ";
+
 
 	// pieces opening
 	set_string = set_string + "[pieces] ";
@@ -1745,6 +1751,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				catch(Exception duitalk){}
 
 				}// end if consoleanmeslayouts
+
+
+
+
+				if (temp.equals("[playersInMyGame]"))
+				{
+				try {
+					sharedVariables.playersInMyGame = Integer.parseInt(tokens.nextToken());
+					}
+					catch(Exception zzz){}
+				}
 
 
 				if (temp.equals("[pieces]"))

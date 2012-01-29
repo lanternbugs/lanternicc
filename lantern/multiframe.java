@@ -196,6 +196,8 @@ JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole2;
  JCheckBoxMenuItem boardconsole3;
  JCheckBoxMenuItem sidewaysconsole;
+ JCheckBoxMenuItem playersInMyGame;
+
 JCheckBoxMenuItem userbuttons;
 JCheckBoxMenuItem consolemenu;
 
@@ -543,6 +545,11 @@ else
   BoardDesign3.setSelected(true);
 else
   BoardDesign3.setSelected(false);
+
+  if(sharedVariables.playersInMyGame == 2)
+  playersInMyGame.setSelected(true);
+  else
+  playersInMyGame.setSelected(false);
 
 if(sharedVariables.tellTimestamp == true)
 		tellTimestamp.setSelected(true);
@@ -1857,12 +1864,15 @@ showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
   theHideMenu.add(showRatings);
 showRatings.addActionListener(this);
 
+playersInMyGame = new JCheckBoxMenuItem("Show Observers In Games");
+playersInMyGame.addActionListener(this);
+theHideMenu.add(playersInMyGame);
+
 myboardmenu.add(theHideMenu);
 
  useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
  // myboardmenu.add(useLightBackground);   // disabled
 useLightBackground.addActionListener(this);
-
 
 
 
@@ -4151,7 +4161,19 @@ queue.add(output);
 
 }
 
-
+if(event.getActionCommand().equals("Show Observers In Games"))
+{
+	if(sharedVariables.playersInMyGame == 0)
+	{
+		playersInMyGame.setSelected(true);
+		sharedVariables.playersInMyGame = 2;
+	}
+	else
+	{
+		playersInMyGame.setSelected(false);
+		sharedVariables.playersInMyGame = 0;
+	}
+}
 
 if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 {
