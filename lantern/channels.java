@@ -194,6 +194,7 @@ Color BackColor;
 Color typedColor;
 Color MainBackColor;
 Color highlightcolor;
+Color scrollhighlightcolor;
 Color premovehighlightcolor;
 Color activeTabForeground;
 Color passiveTabForeground;
@@ -569,6 +570,7 @@ consolesNamesLayout[a]=1;
     tabBackground=new Color(255,255,255);//204,255,255);// was 204 204 204 a gray
     tabBackground2=new Color(204,255,255);
    highlightcolor = new Color(230,0,10);
+   scrollhighlightcolor = new Color(255,102,102);
 premovehighlightcolor = new Color(10,0,230);
 
     //newInfoTabBackground=new Color(150,145,130);

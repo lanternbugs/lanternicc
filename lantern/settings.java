@@ -157,6 +157,12 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		}
 	}
 
+	//hightlight moves color
+	set_string = set_string + "highlightMovesColor ";
+	set_string = set_string + sharedVariables.highlightcolor.getRGB() + " ";
+	//scroll highlight moves color
+	set_string = set_string + "scrollHighlightMovesColor ";
+	set_string = set_string + sharedVariables.scrollhighlightcolor.getRGB() + " ";
 
 	// board foreground  color
 	set_string = set_string + "boardForegroundColor ";
@@ -1250,6 +1256,16 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					if(temp.equals("clockForegroundColor"))
 					{
 						sharedVariables.clockForegroundColor=new Color(Integer.parseInt(temp2));
+					}
+
+
+ 					if(temp.equals("highlightMovesColor"))
+					{
+						sharedVariables.highlightcolor=new Color(Integer.parseInt(temp2));
+					}
+					if(temp.equals("scrollHighlightMovesColor"))
+					{
+						sharedVariables.scrollhighlightcolor=new Color(Integer.parseInt(temp2));
 					}
 
 

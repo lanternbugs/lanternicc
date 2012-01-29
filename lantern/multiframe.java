@@ -1800,6 +1800,16 @@ bcbackcolor.addActionListener(this);
 bforcolor.addActionListener(this);
 cforcolor.addActionListener(this);
 
+JMenuItem highlightcolor = new JMenuItem("Highlight Moves Color");
+highlightcolor.addActionListener(this);
+boardColors.add(highlightcolor);
+
+JMenuItem scrollhighlightcolor = new JMenuItem("Scroll Back Highlight Color");
+scrollhighlightcolor.addActionListener(this);
+boardColors.add(scrollhighlightcolor);
+
+
+
  myboardmenu.add(boardColors);
 
  JMenu boardFonts9 = new JMenu("Board Fonts");
@@ -3239,6 +3249,40 @@ Color newColor = JColorChooser.showDialog(frame, "Board Background Color", share
 
 
 }
+if(event.getActionCommand().equals("Highlight Moves Color"))
+{
+
+JDialog frame = new JDialog();
+Color newColor = JColorChooser.showDialog(frame, "Highlight Moves Color", sharedVariables.highlightcolor);
+ if(newColor != null)
+ sharedVariables.highlightcolor=newColor;
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+ if(myboards[a]!=null)
+ //if(myboards[a].isVisible() == true)
+ myboards[a].repaint();
+
+
+}
+
+if(event.getActionCommand().equals("Scroll Back Highlight Color"))
+{
+
+JDialog frame = new JDialog();
+Color newColor = JColorChooser.showDialog(frame, "Scroll Back Highlight Color", sharedVariables.scrollhighlightcolor);
+ if(newColor != null)
+ sharedVariables.scrollhighlightcolor=newColor;
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+ if(myboards[a]!=null)
+ //if(myboards[a].isVisible() == true)
+ myboards[a].repaint();
+
+
+}
+
+
+
+
+
 if(event.getActionCommand().equals("Titles In Channel Color"))
 {
 JDialog frame = new JDialog();
