@@ -5014,9 +5014,9 @@ else
 					if(sharedVariables.kibStyle == 2 || sharedVariables.kibStyle == 3)
 						StyleConstants.setBold(attrs, true);
 					if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
-					processLink(doc, thetell, sharedVariables.kibcolor, gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
+					processLink(doc, thetell, sharedVariables.kibcolor.darker(), gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
 					else
-					processLink(doc, thetell, sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
+					processLink(doc, thetell, sharedVariables.kibcolor.darker(), 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
 
                     }
 
@@ -5069,9 +5069,9 @@ else
 					if(sharedVariables.kibStyle == 2 || sharedVariables.kibStyle == 3)
 						StyleConstants.setBold(attrs, true);
 					if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
-					processLink(doc, thetell, sharedVariables.kibcolor.darker(), gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
+					processLink(doc, thetell, sharedVariables.kibcolor, gamenum, maxLinks, GAME_CONSOLES, attrs, null);// 1 at end means go to game console
 					else
-					processLink(doc, thetell, sharedVariables.kibcolor.darker(), 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
+					processLink(doc, thetell, sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);// console 0 and last 0 is not a game console
 
                     }
 
