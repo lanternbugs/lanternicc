@@ -50,10 +50,10 @@ ArrayList<seekInfo> seekList;
 seekInfo [] bulletGrid;
 seekInfo [] blitzGrid;
 seekInfo [] standardGrid;
-int bulletW=10;
+int bulletW=6;
 int blitzW=12; // was 40
-int standardW=12;
-int height=50;
+int standardW=6;
+int height=30;
 
 
 
@@ -78,7 +78,7 @@ int rating = Integer.parseInt(sRating);
 if(rating < 0)
 rating=0;
 
-y=(int) (rating * height / 3500) - 1;
+y=(int) (rating * height / 2750) - 1;
 if(y<1)
 y=1;
 if(y>=height)
