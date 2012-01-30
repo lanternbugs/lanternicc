@@ -5773,15 +5773,7 @@ pure960.addMouseListener(new MouseAdapter() {
          public void mouseClicked (MouseEvent me) {}  });
 
 
-toolBar.add(pure1);
-toolBar.add(pure3);
-toolBar.add(pure5);
-toolBar.add(pure15);
-toolBar.add(pure45);
-toolBar.add(pure960);
-JLabel spacer = new JLabel("");
-//toolBar.add(spacer);
-toolBar.add(seeksLabel);
+
   for(int a=0; a<10; a++)
   {
 
@@ -5808,7 +5800,15 @@ toolBar.add(seeksLabel);
 
   }
    toolBar.add(sharedVariables.mybuttons[0]);
-
+ toolBar.add(seeksLabel);
+ toolBar.add(pure1);
+toolBar.add(pure3);
+toolBar.add(pure5);
+toolBar.add(pure15);
+toolBar.add(pure45);
+toolBar.add(pure960);
+JLabel spacer = new JLabel("");
+//toolBar.add(spacer);
 
 
 }
