@@ -5624,20 +5624,28 @@ void makeToolBar()
  sharedVariables.mybuttons = new JButton[10];
  toolBar.setLayout(new GridLayout(1,17));
 
-JLabel pure1 = new JLabel();
-JLabel pure3 = new JLabel();
-JLabel pure5 = new JLabel();
-JLabel pure15 = new JLabel();
-JLabel pure45 = new JLabel();
-JLabel pure960 = new JLabel();
+JButton pure1 = new JButton("1-min");
+JButton pure3 = new JButton("3-min");
+JButton pure5 = new JButton("5-min");
+JButton pure15 = new JButton("15-min");
+JButton pure45 = new JButton("45 45");
+JButton pure960 = new JButton("Chess960");
 JLabel seeksLabel = new JLabel();
 
-pure1.setIcon(sharedVariables.pure1);
+/*pure1.setIcon(sharedVariables.pure1);
 pure3.setIcon(sharedVariables.pure3);
 pure5.setIcon(sharedVariables.pure5);
 pure15.setIcon(sharedVariables.pure15);
 pure45.setIcon(sharedVariables.pure45);
 pure960.setIcon(sharedVariables.pure960);
+*/
+pure1.setBackground(new Color(255,255,255));
+pure3.setBackground(new Color(255,255,255));
+pure5.setBackground(new Color(255,255,255));
+pure15.setBackground(new Color(255,255,255));
+pure45.setBackground(new Color(255,255,255));
+pure960.setBackground(new Color(255,255,255));
+
 seeksLabel.setIcon(sharedVariables.seekIcon);
 
 seeksLabel.addMouseListener(new MouseAdapter() {
