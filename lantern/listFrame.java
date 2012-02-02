@@ -426,6 +426,8 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 		 	 }*/
              
              boolean go=false;
+             if(listing.equals("-"))
+             return;
              if(listing.contains("[VIDEO]"))
              {
                 if(!info.equals(""))

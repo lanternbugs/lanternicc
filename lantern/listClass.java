@@ -108,13 +108,16 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	info = "!!!";
 
 	for(int i=0; i < model.size(); i++)
-	if(modeldata.elementAt(i).equals(number))
+        {
+          String tempentry = (String) model.elementAt(i);
+	if(modeldata.elementAt(i).equals(number) || (tempentry.equals("-") && spot == 1))
 	{ model.set(i,  entry);
 	  modeljoin.set(i,  join);
 	  modelinfo.set(i,  info);
 	  modelwatch.set(i,  watch);
 		return;
 	}
+        }// end for
 
 	// we will use this but for now below model.add(model.size(), entry);
 	if(spot == 1)
@@ -139,7 +142,18 @@ void removeFromEvents(String index)
 {
 	for(int i=0; i < model.size(); i++)
 	if(modeldata.elementAt(i).equals(index))
-	{model.remove(i);
+	{  String tempwatch = (String) modelwatch.elementAt(i);
+          if(modelinfo.elementAt(i).equals("!!!") && modeljoin.elementAt(i).equals("!!!")  && tempwatch.toLowerCase().startsWith("observe"))
+          {
+          model.set(i,  "-");// entry
+	  modeljoin.set(i,  "!!!");
+	  modelinfo.set(i,  "!!!");
+	  modelwatch.set(i,  "!!!");
+
+
+          }
+
+          model.remove(i);
 	modelinfo.remove(i);
 	modeljoin.remove(i);
 	modelwatch.remove(i);
