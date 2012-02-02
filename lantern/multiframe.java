@@ -1578,6 +1578,11 @@ JMenu myboardmenu = new JMenu("Game");
   myboardmenu.add(flipSent);
   flipSent.addActionListener(this);
 
+   JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
+  myboardmenu.add(withdrawSent);
+  withdrawSent.addActionListener(this);
+
+
 JMenu boardDesign = new JMenu("Board Design");
 BoardDesign1 = new JCheckBoxMenuItem("Original");
 BoardDesign2 = new JCheckBoxMenuItem("Modern");
@@ -2069,6 +2074,12 @@ actionsmenu.addSeparator();
  JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
   actionsmenu.add(ratinggraph);
   ratinggraph.addActionListener(this);
+
+ JMenuItem addfriend = new JMenuItem("Add a Friend");
+  actionsmenu.add(addfriend);
+ addfriend.addActionListener(this);
+
+
  actionsmenu.addSeparator();
 
    JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
@@ -2100,9 +2111,19 @@ JMenu helpmenu = new JMenu("Help");
  helpmenu.add(infohelp);
  infohelp.addActionListener(this);
 
- JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
+
+  JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
  helpmenu.add(commandhelp);
  commandhelp.addActionListener(this);
+
+ JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
+ helpmenu.add(joinrenewhelp);
+ joinrenewhelp.addActionListener(this);
+
+  JMenuItem passwordhelp = new JMenuItem("Lost Password");
+ helpmenu.add(passwordhelp);
+ passwordhelp.addActionListener(this);
+
  JMenu poweroutmenu = new JMenu("Extra-games");
  JMenuItem power = new JMenuItem("Start Powerout");
  poweroutmenu.add(power);
@@ -2343,6 +2364,17 @@ if(event.getActionCommand().equals("ICC Command Help Files"))
 {
 	mycreator.createWebFrame("http://www.chessclub.com/help/help-list");
 }
+
+if(event.getActionCommand().equals("Join/Renew"))
+{
+ openUrl("http://www.chessclub.com/tryicc/purchase.html");
+}
+
+if(event.getActionCommand().equals("Lost Password"))
+{
+	 openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
+}
+
 
 if(event.getActionCommand().equals("Start AutoExam"))
 {
@@ -3536,6 +3568,14 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
   openUrl("http://www.chessclub.com/activities/relays.html");
  }
 
+ 
+ if(event.getActionCommand().equals("Add a Friend"))
+ {
+
+  addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
+
+ }
+
   if(event.getActionCommand().equals("Stop Following"))
  {
 
@@ -3565,7 +3605,13 @@ myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
   if(event.getActionCommand().equals("Open ChessFM"))
  {
 
-  openUrl("http://www.chessclub.com/chessfm/");
+ // ?user=me&pass=pass
+
+/*if(sharedVariables.myname.length() > 0 && sharedVariables.mypassword.length() > 0)
+openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname + "&pass=" + sharedVariables.mypassword);
+else
+*/
+openUrl("http://www.chessclub.com/chessfm/");
  }
  if(event.getActionCommand().equals("Show Rating Graphs"))
  {
@@ -4353,9 +4399,17 @@ if(event.getActionCommand().equals("Flip"))
  }// end selected
 }
 
+if(event.getActionCommand().equals("Withdraw Challenges"))
+{
+      String actionmess="multi match\n";
+     if(sharedVariables.myServer.equals("ICC"))
+     actionmess="`c0`" + actionmess;
 
+     myoutput data = new myoutput();
+     data.data=actionmess;
+    queue.add(data);
 
-
+}
 if(event.getActionCommand().equals("Tabs Only"))
 {
 	if(sharedVariables.tabsOnly == false)

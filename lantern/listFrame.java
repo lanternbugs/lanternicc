@@ -439,8 +439,36 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                  sharedVariables.openUrl(info);
                 }
                 }
-             }
+              if(!join.equals(""))
+                if(join.startsWith("https://"))
+                {
 
+                if(!join.equals(""))
+                if(join.toLowerCase().contains("gotd"))
+                {
+                 go=true;
+                 sharedVariables.openUrl(join);
+                }
+                }
+             }
+             if(join.equals("!!!") && info.equals("!!!") && watch.toLowerCase().startsWith("observe "))
+             {
+                myoutput data = new myoutput();
+                data.consoleNumber = 0;
+                data.data=watch + "\n";
+                queue.add(data);
+                go=true;
+               
+             }
+             if(watch.equals("!!!") && info.equals("!!!") && join.toLowerCase().startsWith("examine "))
+             {
+                myoutput data = new myoutput();
+                data.consoleNumber = 0;
+                data.data=join + "\n";
+                queue.add(data);
+                go=true;
+               
+             }
              if(go == false)
              {
                eventDialog aDialog;
@@ -870,6 +898,13 @@ if(join.indexOf(" & ")!=-1)
 	buttonjoin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
+                              /* if(join1.startsWith("https:") && join1.contains("webcast"))
+                               if(sharedVariables.myname.length() > 0 && sharedVariables.mypassword.length() > 0)
+                                {
+                                 sharedVariables.openUrl(join1 + "?user=" + sharedVariables.myname + "&pass=" + sharedVariables.mypassword);
+                                 return;
+                                }
+                                */
                                 if(join1.startsWith("http"))
                                 {
                                  sharedVariables.openUrl(join1);

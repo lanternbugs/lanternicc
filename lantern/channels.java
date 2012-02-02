@@ -167,6 +167,7 @@ String [] consoleTabCustomTitles;
 String wallpaperFileName;
 String lasttell;
 String myname;// my login on the server
+String mypassword; // used if we need to open a secure web page
 String myPartner; // my bughouse partner
 String myopponent;
 String myServer; // FICS or ICC
@@ -745,6 +746,7 @@ for(int a=0; a<maxChannels; a++)
 
 
 	myname="";
+	mypassword="";
 	myPartner="";
 	autoexamspeed=6000;
 	autoexam=0;

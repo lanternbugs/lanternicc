@@ -41,6 +41,7 @@ public class connectionDialog extends JDialog
   private channels sVars;
   private credentials creds;
   private Queue<myoutput> queue;
+  private channels sharedVariables;
 
   public connectionDialog(JFrame frame, channels sVars,
                           Queue<myoutput> queue, boolean mybool) {
@@ -151,7 +152,7 @@ public class connectionDialog extends JDialog
     
     myoutput data2 = new myoutput();
     data2.data = pwd + "\n";
-
+    sVars.mypassword= pwd;
     queue.add(data1);
     queue.add(data2);
 

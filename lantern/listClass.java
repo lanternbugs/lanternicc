@@ -90,12 +90,17 @@ void removeFromList(String index)
 void addToEvents(String entry, String number, String join, String watch, String info)
 {
 	int add=1;
-	if(join.equals(""))
+	
+        int spot = -1;
+        if(join.equals("") && info.equals("") && watch.toLowerCase().startsWith("observe "))
+        spot=1;  // we place high rated games to watch at top
+
+        if(join.equals(""))
 	join="!!!";
 
 	if(watch.equals(""))
 	watch = "!!!";
- 
+
  //        if(entry.contains("[VIDEO]") && info.equals(""))
  //        return;
 
@@ -112,12 +117,23 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	}
 
 	// we will use this but for now below model.add(model.size(), entry);
-	model.add(model.size(), entry);
+	if(spot == 1)
+	{
+        model.add(spot, entry);
+	modeljoin.add(spot, join);
+	modelinfo.add(spot, info);
+	modelwatch.add(spot, watch);
+	modeldata.add(spot, number);
+
+         }
+         else
+         {
+        model.add(model.size(), entry);
 	modeljoin.add(modeljoin.size(), join);
 	modelinfo.add(modelinfo.size(), info);
 	modelwatch.add(modelwatch.size(), watch);
 	modeldata.add(modeldata.size(), number);
-
+         }
 }
 void removeFromEvents(String index)
 {
