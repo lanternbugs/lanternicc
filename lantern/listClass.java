@@ -143,13 +143,15 @@ void removeFromEvents(String index)
 	for(int i=0; i < model.size(); i++)
 	if(modeldata.elementAt(i).equals(index))
 	{  String tempwatch = (String) modelwatch.elementAt(i);
-          if(modelinfo.elementAt(i).equals("!!!") && modeljoin.elementAt(i).equals("!!!")  && tempwatch.toLowerCase().startsWith("observe"))
+	 String tempinfo = (String) modelinfo.elementAt(i);
+	  String tempjoin = (String) modeljoin.elementAt(i);
+          if(tempinfo.equals("!!!") && tempjoin.equals("!!!")  && tempwatch.toLowerCase().startsWith("observe"))
           {
           model.set(i,  "-");// entry
 	  modeljoin.set(i,  "!!!");
 	  modelinfo.set(i,  "!!!");
 	  modelwatch.set(i,  "!!!");
-
+           break;
 
           }
 
