@@ -4272,12 +4272,18 @@ if(chatTime2.length() > 0)
 for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 {
 	//write;
-	if(cindex2[z]==1)
-	{
-	StyledDocument doc = sharedVariables.mydocs[z];
-	doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
-	}
+if(z == 0 && goTab == false)
+{
+StyledDocument doc = sharedVariables.mydocs[z];
+doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+break;
 }
+else if(cindex2[z]==1)
+{
+StyledDocument doc = sharedVariables.mydocs[z];
+doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+} // end else
+} // end for
 
 }
 
@@ -4294,7 +4300,13 @@ StyleConstants.setForeground(attrs, channelcolor.darker());
 for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 {
 	//write;
-	if(cindex2[z]==1)
+if(z == 0 && goTab == false)
+{
+StyledDocument doc = sharedVariables.mydocs[z];
+doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
+break;
+}
+else if(cindex2[z]==1)
 	{
 	StyledDocument doc = sharedVariables.mydocs[z];
 	doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
