@@ -216,7 +216,7 @@ JCheckBoxMenuItem reconnectTimestamp;
 JCheckBoxMenuItem qtellTimestamp;
 JCheckBoxMenuItem checkLegality;
 JCheckBoxMenuItem useTopGame;
-
+JCheckBoxMenuItem notifyMainAlso;
 
 
  JCheckBoxMenuItem aspect0;
@@ -427,6 +427,10 @@ consoleSubframes[0].makeHappen(0);
     else
     	gameend.setSelected(true);
 
+ if(sharedVariables.notifyMainAlso == true)
+ notifyMainAlso.setSelected(true);
+ else
+ notifyMainAlso.setSelected(false);
 
  if(sharedVariables.useTopGames == true)
  useTopGame.setSelected(true);
@@ -1315,6 +1319,10 @@ advancedOptions.add(autobufferchat);
 useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
 advancedOptions.add(useTopGame);
 useTopGame.addActionListener(this);
+
+notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
+advancedOptions.add(notifyMainAlso);
+notifyMainAlso.addActionListener(this);
 
 
   autopopup = new JCheckBoxMenuItem("Auto Name Popup");
@@ -4570,6 +4578,19 @@ if(event.getActionCommand().equals("Use Basketball Logo ICC Flag"))
 		basketballFlag.setSelected(false);
 	}
 }
+if(event.getActionCommand().equals("Print Channel Notify for Main Also"))
+{
+	if(sharedVariables.notifyMainAlso == false)
+	{
+		sharedVariables.notifyMainAlso = true;
+		notifyMainAlso.setSelected(true);
+	}
+	else
+	{
+		sharedVariables.notifyMainAlso = false;
+		notifyMainAlso.setSelected(false);
+	}
+}
 if(event.getActionCommand().equals("Auto Name Popup"))
 {
 	if(sharedVariables.autopopup == false)
@@ -5971,16 +5992,34 @@ void loadSoundsStandAlone()
 
 // load sounds
 try {
-	URL songPath = this.getClass().getResource("tell.wav"); // Geturl of sound
+	URL songPath;
+
+        if(sharedVariables.operatingSystem.equals("unix"))
+        {
+        songPath = this.getClass().getResource("whistle.au"); // Geturl of sound
+	sharedVariables.songs[0]=songPath;
+	songPath = this.getClass().getResource("move-icc.au"); // Geturl of sound
+	sharedVariables.songs[1]=songPath;
+       songPath = this.getClass().getResource("capture-icc.au"); // Geturl of sound
+	sharedVariables.songs[2]=songPath;
+ 	songPath = this.getClass().getResource("ding.au"); // Geturl of sound
+	sharedVariables.songs[4]=songPath;
+
+        }
+        else
+        {
+        songPath = this.getClass().getResource("tell.wav"); // Geturl of sound
 	sharedVariables.songs[0]=songPath;
 	songPath = this.getClass().getResource("click18a.wav"); // Geturl of sound
-	sharedVariables.songs[1]=songPath;
-	songPath = this.getClass().getResource("click10b.wav"); // Geturl of sound
+  	sharedVariables.songs[1]=songPath;
+       songPath = this.getClass().getResource("click10b.wav"); // Geturl of sound
 	sharedVariables.songs[2]=songPath;
-	songPath = this.getClass().getResource("serv1a.wav"); // Geturl of sound
-	sharedVariables.songs[3]=songPath;
 	songPath = this.getClass().getResource("beeppure.wav"); // Geturl of sound
 	sharedVariables.songs[4]=songPath;
+       }
+
+	songPath = this.getClass().getResource("serv1a.wav"); // Geturl of sound
+	sharedVariables.songs[3]=songPath;
 	songPath = this.getClass().getResource("fitebell.au"); // Geturl of sound
 	sharedVariables.songs[5]=songPath;
 	songPath = this.getClass().getResource("buzzer.wav"); // Geturl of sound

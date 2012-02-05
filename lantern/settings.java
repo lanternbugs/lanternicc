@@ -400,6 +400,17 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[doneactivitiesTabNumber] ";
 
 
+	// show notifyMainAlso
+	set_string = set_string + "[notifyMainAlso] ";
+	if(sharedVariables.notifyMainAlso == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donenotifyMainAlso] ";
+
+
+
 	// show qsuggest
 	set_string = set_string + "[qsuggestShow] ";
 	if(sharedVariables.showQsuggest == true)
@@ -1768,6 +1779,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				{
 				try {
 					sharedVariables.pieceType = Integer.parseInt(tokens.nextToken());
+					}
+					catch(Exception zzz){}
+				}
+				if (temp.equals("[notifyMainAlso]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.notifyMainAlso=true;
+					else
+						sharedVariables.notifyMainAlso=false;
 					}
 					catch(Exception zzz){}
 				}

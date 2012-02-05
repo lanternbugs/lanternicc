@@ -4222,8 +4222,10 @@ writeIt(mess, channel);
 
 void writeIt(String mess, String channel)
 {
+  int tempInt = 0;
+
 	try {
-		int tempInt=Integer.parseInt(channel);
+		tempInt=Integer.parseInt(channel);
 		int [] cindex2 = new int[sharedVariables.maxConsoleTabs];
 
 		boolean goTab=false;
@@ -4241,7 +4243,7 @@ void writeIt(String mess, String channel)
 
 		}
 
- 		
+
 String chatTime2="";
 if(sharedVariables.channelTimestamp == true)
 chatTime2=getATimestamp();
@@ -4278,6 +4280,13 @@ StyledDocument doc = sharedVariables.mydocs[z];
 doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
 break;
 }
+else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
+{
+StyledDocument doc = sharedVariables.mydocs[z];
+doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+
+  
+}
 else if(cindex2[z]==1)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
@@ -4305,6 +4314,11 @@ if(z == 0 && goTab == false)
 StyledDocument doc = sharedVariables.mydocs[z];
 doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
 break;
+}
+else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
+{
+StyledDocument doc = sharedVariables.mydocs[z];
+doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
 }
 else if(cindex2[z]==1)
 	{

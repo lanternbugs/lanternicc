@@ -18,11 +18,15 @@ import java.applet.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+import free.util.IOUtilities;
+import free.util.audio.AudioClip;
+
 
 class Sound extends JApplet
     {
- private AudioClip song; // Sound player
+ private  java.applet.AudioClip song; // Sound player
  private URL songPath; // Sound path
+ String operatingSystem;
  Sound(String filename)
  {
      try
@@ -41,37 +45,52 @@ class Sound extends JApplet
  }
  Sound(URL songPath1)
   {
+    
+    String os = System.getProperty("os.name").toLowerCase();
+if (os.indexOf( "win" ) >= 0)
+	operatingSystem = "win";
+else if(os.indexOf( "mac" ) >= 0)
+	operatingSystem = "mac";
+else
+	operatingSystem = "unix";
+
+    if(operatingSystem.equals("unix"))
+    {
+     try {
+        free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
+      // playUnixSound(unixClip);
+       unixClip.play();
+     }
+     catch(Exception dui){}
+    }
+    else 
+    {
+
       try
       {
 		 songPath=songPath1;
-		 play player = new play();
+		 playNative player = new playNative();
 		 Thread t = new Thread(player);
-	t.start();
+	         t.start();
 	//song = Applet.newAudioClip(songPath); // Load
     //song.play();
 
 
       }
       catch(Exception e){} // Satisfy the catch
- }
+
+    }// end else
+ }              // end method
 
  public void playURL(URL song)
  {
 
  }
 
- public void play()
- {
-     song.play(); // Play once
-     /* use song.loop(); to loop
-     and song.stop(); to stop */
-
- }
 
 
 
-
- class play implements Runnable {
+ class playNative implements Runnable {
 
 	 public void run()
 	{
