@@ -814,6 +814,12 @@ try {
 	setMySize();
 }
 catch(Exception donthaveit){}
+ 
+ try {
+myfirstlist.theEventsList.setFont(sharedVariables.eventsFont);
+ }
+ catch(Exception badfontsetting){}
+
 
 if(sharedVariables.hasSettings == false) // this hasSettings is returned by readNow which reads settings. if false. they have no settings file and i try to position windows. MA 9-19-10
 {
@@ -1143,6 +1149,9 @@ inChannelNamesMenu.add(namelistFont);
 namelistFont.addActionListener(this);
 mywindowscolors.add(inChannelNamesMenu);
 /*********** end names list ******************/
+JMenuItem eventsFont = new JMenuItem("Events List Font");
+eventsFont.addActionListener(this);
+mywindowscolors.add(eventsFont);
 
 JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
 colortimestamp.addActionListener(this);
@@ -3631,6 +3640,21 @@ openUrl("http://www.chessclub.com/chessfm/");
   openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl"); 
  }
 
+
+ if(event.getActionCommand().equals("Events List Font"))
+{JFrame f = new JFrame("Events List Font");
+    FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
+    fc.setVisible(true);
+	         Font fnt = fc.getSelectedFont();
+	        if(fnt != null)
+	        {
+				sharedVariables.eventsFont=fnt;
+				myfirstlist.theEventsList.setFont(sharedVariables.eventsFont);
+                }
+  }// end events font
+
+
+
  if(event.getActionCommand().equals("Names List Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.nameListFont);
@@ -5441,8 +5465,11 @@ catch(Exception wrongsize) {
 }
 setSize(width,height);
 if(valid == false)
-setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+{
+ if(sharedVariables.operatingSystem.equals("unix"))
+ setVisible(true);
+  setExtendedState(JFrame.MAXIMIZED_BOTH);
+}
 
 }// end outer try
 catch(Exception d)

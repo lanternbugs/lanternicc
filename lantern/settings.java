@@ -1019,6 +1019,16 @@ catch(Exception badboard){}
 
 
 
+	set_string = set_string + "[eventsFont] ";
+	aFont= sharedVariables.eventsFont.getFontName();
+	aFont=aFont.replace(" ", "*");
+	set_string = set_string + aFont + " ";
+	aFontStyle="" + sharedVariables.eventsFont.getStyle();
+	set_string = set_string + aFontStyle + " ";
+	aFontSize="" + sharedVariables.eventsFont.getSize();
+	set_string = set_string + aFontSize + " ";
+	set_string = set_string + "[doneeventsFont] ";
+
 
 
 	set_string = set_string + "[FonGame] ";
@@ -2831,6 +2841,30 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 			}// end if font
 
 
+			if(temp.equals("[eventsFont]"))
+			{
+				String temp9=tokens.nextToken();
+				temp9=temp9.replace("*", " "); // we searlize is with * for spaces
+				fontStyle=tokens.nextToken();
+				fontSize=tokens.nextToken();
+
+				try {
+				Font aFont = new Font(temp9, Integer.parseInt(fontStyle), Integer.parseInt(fontSize));
+				if(aFont != null)
+				{
+
+						sharedVariables.eventsFont=aFont;
+					temp="[allDone]";
+
+				// we set the font after settings is called with the myconsolepanel.setfont() methos outside this class/file
+
+				}// end if not null font
+			}
+				catch(Exception dd)
+				{ }
+
+
+			}// end if font
 
 
 

@@ -154,6 +154,15 @@ theEventsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 theEventsList.setLayoutOrientation(JList.VERTICAL);
 theEventsList.setVisibleRowCount(-1);
 listScroller = new JScrollPane(theEventsList);
+/* grab font*/
+/*	String aFont=theEventsList.getFont().getFontName();
+	aFont=aFont.replace(" ", "*");
+
+
+        JFrame fontFrame = new JFrame("" + aFont + " " +  theEventsList.getFont().getSize());
+         fontFrame.setSize(500,100);
+         fontFrame.setVisible(true);
+*/
 //listScroller.setPreferredSize(new Dimension(2500, 2500));
 
 /********* now seeks list *****************/

@@ -191,6 +191,7 @@ Font myTabFont;
 Font inputFont;
 Font nameListFont;
 Font [] consoleFonts;
+Font eventsFont;
 Color [] channelColor = new Color[500];
 Color lightcolor;
 Color darkcolor;
@@ -325,7 +326,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.72";
+version = "v4.73";
 newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
@@ -588,7 +589,11 @@ premovehighlightcolor = new Color(10,0,230);
 	newInfoTabBackground=new Color(0, 204, 255);//200,145,130);
 	tabImOnBackground = new Color(51, 133, 255); //255, 255, 0);
 //myFont = new Font("Comic Sans MS", Font.PLAIN, 18);
-
+try {
+  
+    eventsFont = new Font("Tahoma", Font.PLAIN, 14);
+}
+catch(Exception badEventsFont){}
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
 else if(operatingSystem.equals("mac"))
