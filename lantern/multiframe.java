@@ -173,6 +173,7 @@ webframe mywebframe;
  JCheckBoxMenuItem autobufferchat;
   JCheckBoxMenuItem autoHistoryPopup;
  JCheckBoxMenuItem makeObserveSounds;
+ JCheckBoxMenuItem hearsound;
  JCheckBoxMenuItem gameend;
  JCheckBoxMenuItem channelNumberLeft;
  JCheckBoxMenuItem tabbing;
@@ -651,6 +652,11 @@ if(sharedVariables.makeObserveSounds == true)
 	makeObserveSounds.setSelected(true);
 else
 	makeObserveSounds.setSelected(false);
+
+if(sharedVariables.makeSounds == true)
+	hearsound.setSelected(true);
+else
+	hearsound.setSelected(false);
 
 
 if(sharedVariables.showConsoleMenu == true)
@@ -1244,8 +1250,7 @@ consoleColors.addActionListener(this);
 
 JMenu optionsmenu = new JMenu("Options");
  JMenu soundmenu = new JMenu("Sound");
- JCheckBoxMenuItem hearsound = new JCheckBoxMenuItem("Sounds");
-hearsound.setSelected(true);
+  hearsound = new JCheckBoxMenuItem("Sounds");
 makeObserveSounds= new JCheckBoxMenuItem("Sounds for Observed Games");
 makeObserveSounds.addActionListener(this);
 
