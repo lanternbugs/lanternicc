@@ -1914,25 +1914,23 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
         overall.Input.setForeground(sharedVariables.inputChatColor);
 		}
 
-
-        if( e.getModifiersEx() == 128 )// ctrl + t
-        {
-
-            if(a == 70)// F
-            {
-
-             textSearcher ts = new textSearcher();
-             ts.find(Input.getText(), consoles[consoleNumber]);
-            }
-            if(a == 61) // - 45 = 61
+if( e.getModifiersEx() == 128 || e.getModifiersEx() == 192) // 128 control 192 control + shift
+{
+int moveKeyType=e.getModifiersEx();
+           if(a == 61) // - 45 = 61
             {
               int games = getActiveGame();
           if(games > -1)
            {
            int loc = sharedVariables.moveSliders[games].getValue();
               int max = sharedVariables.moveSliders[games].getMaximum();
-              if (loc < max) {
+              if (loc < max || moveKeyType == 192) {
+
+                if(moveKeyType == 192)
+                loc=max;
+                else
                 loc++;
+
                 sharedVariables.moveSliders[games].setValue(loc);
                 myboards[games].mycontrolspanel.adjustMoveList();
                 myboards[games].repaint();
@@ -1954,8 +1952,13 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
            {
              int loc = sharedVariables.moveSliders[games].getValue();
 
-              if (loc > 0) {
+              if (loc > 0 || moveKeyType == 192) {
+
+                if(moveKeyType == 192)
+                loc=0;
+                else
                 loc--;
+
                 sharedVariables.moveSliders[games].setValue(loc);
                 myboards[games].mycontrolspanel.adjustMoveList();
                 myboards[games].repaint();
@@ -1967,6 +1970,18 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
               return;
             }
 
+}// if control or control + shift
+
+
+        if( e.getModifiersEx() == 128 )// ctrl + t
+        {
+
+            if(a == 70)// F
+            {
+
+             textSearcher ts = new textSearcher();
+             ts.find(Input.getText(), consoles[consoleNumber]);
+            }
 
                 if( a == 71) // ctrl + g
                 {

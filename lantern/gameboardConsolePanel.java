@@ -732,8 +732,9 @@ newframe.setVisible(true);
 
 
 
-        if( e.getModifiersEx() == 128 )// ctrl + t
-        {
+if( e.getModifiersEx() == 128 || e.getModifiersEx() == 192) // 128 control 192 control + shift
+{
+int moveKeyType=e.getModifiersEx();
             if(aa == 61) // - 45 = 61
             {
               int games = gameData.LookingAt;
@@ -741,8 +742,13 @@ newframe.setVisible(true);
            {
            int loc = sharedVariables.moveSliders[games].getValue();
               int max = sharedVariables.moveSliders[games].getMaximum();
-              if (loc < max) {
+              if (loc < max || moveKeyType == 192) {
+
+                if(moveKeyType == 192)
+                loc=max;
+                else
                 loc++;
+
                 sharedVariables.moveSliders[games].setValue(loc);
                 mycontrolspanel.adjustMoveList();
                 mypanel.repaint();
@@ -764,7 +770,11 @@ newframe.setVisible(true);
            {
              int loc = sharedVariables.moveSliders[games].getValue();
 
-              if (loc > 0) {
+              if (loc > 0 || moveKeyType == 192) {
+
+                if(moveKeyType == 192)
+                loc=0;
+                else
                 loc--;
                 sharedVariables.moveSliders[games].setValue(loc);
                  mycontrolspanel.adjustMoveList();
@@ -776,8 +786,11 @@ newframe.setVisible(true);
 
               return;
             }
+        }// if control or control + shift
 
-            if(aa == 70)// F
+        if( e.getModifiersEx() == 128 )// ctrl + t
+        {
+             if(aa == 70)// F
             {
 
              textSearcher ts = new textSearcher();
