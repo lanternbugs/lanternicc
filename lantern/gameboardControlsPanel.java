@@ -698,7 +698,22 @@ import layout.TableLayout;
         sharedVariables.moveSliders[gameData.BoardIndex] .setOrientation
           (JSlider.VERTICAL);
         sharedVariables.moveSliders[gameData.BoardIndex] .setInverted(true);
-        sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener
+       
+        sharedVariables.moveSliders[gameData.BoardIndex].addChangeListener(new ChangeListener() {
+    public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider)e.getSource();
+       // if (!source.getValueIsAdjusting()) {
+         //   smile = source.getValue();  // this only sets smile
+            // should do something with this value now.
+        //}
+        
+        myboard.mypanel.repaint();
+                adjustMoveList();
+    }
+});
+
+
+      /* sharedVariables.moveSliders[gameData.BoardIndex].addMouseListener
           (new MouseAdapter() {
               public void mousePressed(MouseEvent e) {}
               public void mouseReleased(MouseEvent e) {
@@ -708,6 +723,8 @@ import layout.TableLayout;
               public void mouseEntered (MouseEvent me) {}
               public void mouseExited (MouseEvent me) {}
               public void mouseClicked (MouseEvent me) {}  });
+      */
+
       }
       if (sharedVariables.mygametable[gameData.BoardIndex] == null) {
 	sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
@@ -1056,6 +1073,11 @@ import layout.TableLayout;
                 column=0;
               sharedVariables.gametable[aaa].scrollRectToVisible
                 (sharedVariables.gametable[aaa].getCellRect(row, column, true));
+                // highlight
+                 if( row > 0)
+                 row--;
+
+                sharedVariables.gametable[aaa].changeSelection(row, column, false, false);
                repaint();
             } catch (Exception e1) {
               //ignore

@@ -5467,7 +5467,10 @@ setSize(width,height);
 if(valid == false)
 {
  if(sharedVariables.operatingSystem.equals("unix"))
- setVisible(true);
+ {
+   setVisible(true); // unix needs the window to be visible before maximized
+   setLocation(0,0);// put it in top corner to hopefully fix a bug on some linux that mouse and menu got out of snych
+ } 
   setExtendedState(JFrame.MAXIMIZED_BOTH);
 }
 

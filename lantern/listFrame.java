@@ -462,7 +462,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                 }
                 }
              }
-             if(join.equals("!!!") && info.equals("!!!") && watch.toLowerCase().startsWith("observe "))
+             if(join.equals("!!!") && info.equals("!!!") && (watch.toLowerCase().startsWith("observe ") && !listing.startsWith("LIVE")))
              {
                 myoutput data = new myoutput();
                 data.consoleNumber = 0;

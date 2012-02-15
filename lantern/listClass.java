@@ -92,7 +92,7 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	int add=1;
 	
         int spot = -1;
-        if(join.equals("") && info.equals("") && watch.toLowerCase().startsWith("observe "))
+        if(join.equals("") && info.equals("") && (watch.toLowerCase().startsWith("observe ")&& !entry.startsWith("LIVE")))
         spot=1;  // we place high rated games to watch at top
 
         if(join.equals(""))
