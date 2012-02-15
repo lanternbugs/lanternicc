@@ -761,6 +761,38 @@ import layout.TableLayout;
         };
       sharedVariables.gametable[gameData.BoardIndex].addMouseListener
         (mouseListenerEvents);
+ 
+ MouseWheelListener wheellistener = new MouseWheelListener() {
+
+
+      public void mouseWheelMoved(MouseWheelEvent e) {
+
+ int notches = e.getWheelRotation();
+      // if (notches < 0) // scroll up
+
+
+//         int row =sharedVariables.gametable[gameData.BoardIndex].rowAtPoint(e.getPoint());
+//Rectangle r = sharedVariables.gametable[gameData.BoardIndex].getCellRect(row,0,true);
+//sharedVariables.gametable[gameData.BoardIndex].scrollRectToVisible(r);
+ int current = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+// if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
+  //    {
+if(notches < 0)
+sharedVariables.moveSliders[gameData.BoardIndex].setValue(current -1);
+else
+sharedVariables.moveSliders[gameData.BoardIndex].setValue(current + 1);
+adjustMoveList();
+    //  }  // end unit event
+
+      }// end method
+
+
+
+    };
+
+      listScroller.addMouseWheelListener(wheellistener);
+
+listScroller.getVerticalScrollBar().setUnitIncrement(1);
 
 
       if (isAndreyLayout() == true)
