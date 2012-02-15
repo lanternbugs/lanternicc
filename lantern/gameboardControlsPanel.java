@@ -471,7 +471,7 @@ import layout.TableLayout;
 
             menu2.add(item6);
 
-            add(menu2);
+
             menu2.show(e.getComponent(),e.getX(),e.getY());
           }
         });
@@ -559,7 +559,7 @@ import layout.TableLayout;
 
             menu2.add(item6);
 
-            add(menu2);
+           
             menu2.show(e.getComponent(),e.getX(),e.getY());
           }
         });
