@@ -1082,6 +1082,7 @@ String myurl2=myurl;
 myurl2=myurl2.toLowerCase();
 if(myurl2.startsWith("/"))
 myurl2=myurl2.substring(1, myurl2.length());
+
 if(myurl2.startsWith("observe"))
 {
 	dispatchCommand(myurl);
@@ -1190,7 +1191,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
        // newbox.setRows(5);
        // newbox.setWrapStyleWord(true);
         consoles[consoleNumber].setEditable(false);
-        sharedVariables.ConsoleScrollPane[consoleNumber] = new JScrollPane(consoles[consoleNumber]);
+        sharedVariables.ConsoleScrollPane[consoleNumber] = new JScrollPane(consoles[consoleNumber], JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 
 

@@ -733,7 +733,7 @@ import layout.TableLayout;
           new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
       }
       //gametable.setBackground(listColor);
-      listScroller = new JScrollPane(sharedVariables.gametable[gameData.BoardIndex]);
+      listScroller = new JScrollPane(sharedVariables.gametable[gameData.BoardIndex], JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       MouseListener mouseListenerEvents = new MouseAdapter() {
           public void mouseClicked(MouseEvent e) {
 
@@ -754,46 +754,33 @@ import layout.TableLayout;
               sharedVariables.moveSliders[gameData.BoardIndex].setValue(index);
 
               readLock.unlock();
-              
+
               myboard.mypanel.repaint();
             }
           }
         };
       sharedVariables.gametable[gameData.BoardIndex].addMouseListener
         (mouseListenerEvents);
- 
+
  MouseWheelListener wheellistener = new MouseWheelListener() {
-
-
-      public void mouseWheelMoved(MouseWheelEvent e) {
-
- int notches = e.getWheelRotation();
-      // if (notches < 0) // scroll up
-
-
-//         int row =sharedVariables.gametable[gameData.BoardIndex].rowAtPoint(e.getPoint());
-//Rectangle r = sharedVariables.gametable[gameData.BoardIndex].getCellRect(row,0,true);
-//sharedVariables.gametable[gameData.BoardIndex].scrollRectToVisible(r);
- int current = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
-// if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
-  //    {
-if(notches < 0)
-sharedVariables.moveSliders[gameData.BoardIndex].setValue(current -1);
-else
-sharedVariables.moveSliders[gameData.BoardIndex].setValue(current + 1);
-adjustMoveList();
-    //  }  // end unit event
-
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        mouseWheelScroll(e);
       }// end method
-
 
 
     };
 
-      listScroller.addMouseWheelListener(wheellistener);
 
+listScroller.addMouseWheelListener(wheellistener);
 listScroller.getVerticalScrollBar().setUnitIncrement(1);
 
+MouseWheelListener panelwheellistener = new MouseWheelListener() {
+      public void mouseWheelMoved(MouseWheelEvent e) {
+        mouseWheelScroll(e);
+      }// end method
+};
+
+addMouseWheelListener(panelwheellistener);
 
       if (isAndreyLayout() == true)
         makeAndreysLayout();
@@ -802,8 +789,21 @@ listScroller.getVerticalScrollBar().setUnitIncrement(1);
 
       setFont();
 
-      //handleLayout();
-    }
+
+} // end method
+
+void mouseWheelScroll(MouseWheelEvent e)
+{
+int notches = e.getWheelRotation();
+      // if (notches < 0) // scroll up
+int current = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
+if(notches < 0)
+sharedVariables.moveSliders[gameData.BoardIndex].setValue(current -1);
+else
+sharedVariables.moveSliders[gameData.BoardIndex].setValue(current + 1);
+adjustMoveList();
+} // end method mouse wheel scroll
+
    boolean isAndreyLayout(){
 
     if(myboard.isMaximum() == true && sharedVariables.andreysLayout == 2)

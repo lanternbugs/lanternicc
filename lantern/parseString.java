@@ -410,7 +410,7 @@ void parse(String s)
 			j--;
 
 		}
-		if(j > -1)
+		if(j > -1 && spaceLink == 0)
 		{
 			text1="";
 			text2=s.substring(0, j);
@@ -421,6 +421,32 @@ void parse(String s)
 			stop3=s.length()+start;
 			return;
 		}// end if
+if(spaceLink == 1 && j > -1)
+{
+	int j1=s.indexOf("\"", j+1);
+	int j2=s.indexOf("'", j+1);
+
+	if(s.charAt(i) == '"')
+	j=j1;
+	else if(s.charAt(i) == '\'')
+	j=j2;
+	else
+	j=s.indexOf(" ", j+1);
+	
+	if(j == -1)
+	j=s.indexOf(" ");
+	text1=s.substring(0, 1);
+	text2=s.substring(1, j);
+	text3=s.substring(j, s.length());
+	start2=0 + start;
+	stop2=j+start;
+	start3=j+start;
+	stop3=s.length()+start;
+	return;
+
+
+}
+
 	}// end if
 
 // whats left? hyperlink must be in middle or end
