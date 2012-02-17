@@ -103,7 +103,8 @@ JFrame masterFrame;
 int blockConsoleNumber=81;
 newListAdder client3;
 listFrame myfirstlist;
-	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1)
+listInternalFrame mysecondlist;
+	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
 SUBFRAME_CONSOLES=0;
@@ -122,6 +123,7 @@ graphics=graphics1;
 //for(int a=0; a<100; a++)
 seekGraph=seekGraph1;
 myfirstlist=myfirstlist1;
+mysecondlist=mysecondlist1;
 consoles=consoles1;
 myboards=myboards1;
 sharedVariables=sharedVariables1;
@@ -3288,10 +3290,10 @@ catch(Exception qsug){}
 	sharedVariables.graphData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual, notifyList);
 	if(seekGraph.isVisible())
 		seekGraph.mypanel.repaint();
-	if(myfirstlist.myseeks1.isVisible())
-		myfirstlist.myseeks1.repaint();
-	if(myfirstlist.myseeks2.isVisible())
-		myfirstlist.myseeks2.repaint();
+	if(sharedVariables.activitiesPanel.myseeks1.isVisible())
+		sharedVariables.activitiesPanel.myseeks1.repaint();
+	if(sharedVariables.activitiesPanel.myseeks2.isVisible())
+		sharedVariables.activitiesPanel.myseeks2.repaint();
 
 
 
@@ -3327,10 +3329,10 @@ catch(Exception qsug){}
                 if(seekGraph.isVisible())
 			seekGraph.mypanel.repaint();
 
-        if(myfirstlist.myseeks1.isVisible())
-		myfirstlist.myseeks1.repaint();
-	if(myfirstlist.myseeks2.isVisible())
-		myfirstlist.myseeks2.repaint();
+        if(sharedVariables.activitiesPanel.myseeks1.isVisible())
+		sharedVariables.activitiesPanel.myseeks1.repaint();
+	if(sharedVariables.activitiesPanel.myseeks2.isVisible())
+		sharedVariables.activitiesPanel.myseeks2.repaint();
 
 }
 
@@ -5802,6 +5804,12 @@ public void run()
                                           mycreator.updateBoardsMenuClosing(tosend.boardClosing);
                                           tosend=queue.poll();
                                         }
+                                       else if(tosend.swapActivities > -1)// make activities on top or not , swap frames
+                                        {
+                                        swapActivities();
+                                          tosend=queue.poll();
+                                        }
+
 					else if(tosend.reconnectTry > -1)
 					{
                                                // detectDisconnect();
@@ -5875,7 +5883,56 @@ public void run()
 
 }// end while
 }// end run
+void swapActivities()
+{
+ if(sharedVariables.ActivitiesOnTop == true)
+ {
+try {
+  //myfirstlist.setModalityType(Dialog.ModalityType.MODELESS);
 
+ myfirstlist.setBoardSize();
+ myfirstlist.getContentPane().remove(sharedVariables.activitiesPanel);
+  mysecondlist.getContentPane().add(sharedVariables.activitiesPanel);
+                mysecondlist.invalidate();
+                mysecondlist.validate();
+
+  myfirstlist.setVisible(false);
+ mysecondlist.setVisible(true);
+	mysecondlist.setSize(sharedVariables.myActivitiesSizes.con0x, sharedVariables.myActivitiesSizes.con0y);
+mysecondlist.setLocation(sharedVariables.myActivitiesSizes.point0.x, sharedVariables.myActivitiesSizes.point0.y);
+
+
+
+ sharedVariables.ActivitiesOnTop = false;
+ mysecondlist.notontop.setSelected(false);
+ }
+ catch(Exception nomode){}
+ }   // end if
+ else
+ {
+ try {
+  //myfirstlist.setModalityType(Dialog.ModalityType.MODELESS);
+
+
+ mysecondlist.getContentPane().remove(sharedVariables.activitiesPanel);
+  myfirstlist.getContentPane().add(sharedVariables.activitiesPanel);
+                myfirstlist.invalidate();
+                myfirstlist.validate();
+
+ mysecondlist.setVisible(false);
+ myfirstlist.setVisible(true);
+	myfirstlist.setSize(sharedVariables.myActivitiesSizes.con0x, sharedVariables.myActivitiesSizes.con0y);
+myfirstlist.setLocation(sharedVariables.myActivitiesSizes.point0.x, sharedVariables.myActivitiesSizes.point0.y);
+
+
+ mysecondlist.setVisible(false);
+ sharedVariables.ActivitiesOnTop = true;
+ myfirstlist.notontop.setSelected(true);
+ }
+ catch(Exception nomode){}
+ }//end else
+
+} // end method
 void detectDisconnect()
 {
 										try {

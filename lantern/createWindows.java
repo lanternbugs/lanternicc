@@ -55,10 +55,11 @@ ConcurrentLinkedQueue<newBoardData> gamequeue;
 webframe mywebframe;
 resourceClass graphics;
 listFrame myfirstlist;
+listInternalFrame mysecondlist;
 docWriter myDocWriter;
 chatframe [] consoleChatframes;
 mymultiframe masterFrame;
-createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1, mymultiframe masterFrame1)
+createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, listInternalFrame mysecondlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1, mymultiframe masterFrame1)
 {
 consoleSubframes=consoleSubframes1;
 sharedVariables=sharedVariables1;
@@ -72,6 +73,7 @@ img=img1;
 mywebframe=mywebframe1;
 graphics = graphics1;
 myfirstlist=myfirstlist1;
+mysecondlist=mysecondlist1;
 myDocWriter=myDocWriter1;
 consoleChatframes=consoleChatframes1;
 }
@@ -485,44 +487,53 @@ sharedVariables.openBoardCount++;
 
 protected void createListFrame(listClass eventsList, listClass seeksList, listClass computerSeeksList, listClass notifyList, JFrame homeFrame)
 {
-if(myfirstlist == null)
+/*if(myfirstlist == null)
 {
  JFrame master = new JFrame();
   myfirstlist = new listFrame(master, sharedVariables, queue, eventsList, seeksList, computerSeeksList, notifyList, homeFrame);
-}
+} */
 try {
-	myfirstlist.setSize(sharedVariables.myActivitiesSizes.con0x, sharedVariables.myActivitiesSizes.con0y);
+if(sharedVariables.ActivitiesOnTop == true)
+ {	myfirstlist.setSize(sharedVariables.myActivitiesSizes.con0x, sharedVariables.myActivitiesSizes.con0y);
 myfirstlist.setLocation(sharedVariables.myActivitiesSizes.point0.x, sharedVariables.myActivitiesSizes.point0.y);
+myfirstlist.setVisible(true);
+}
+else
+{
+	mysecondlist.setSize(sharedVariables.myActivitiesSizes.con0x, sharedVariables.myActivitiesSizes.con0y);
+mysecondlist.setLocation(sharedVariables.myActivitiesSizes.point0.x, sharedVariables.myActivitiesSizes.point0.y);
+mysecondlist.setVisible(true);
+}
 }catch(Exception activitiesFailure){}
 
-myfirstlist.setVisible(true);
+
 //sharedVariables.desktop.add(myfirstlist);
 try
     { //myfirstlist.setSelected(true);
 if(sharedVariables.activitiesTabNumber != 0)
-	myfirstlist.listScroller.setVisible(false);
+	sharedVariables.activitiesPanel.listScrollerPanel.setVisible(false);
 else
-	myfirstlist.listScroller.setVisible(true);
+	sharedVariables.activitiesPanel.listScrollerPanel.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 1)
-	myfirstlist.myseeks1.setVisible(false);
+	sharedVariables.activitiesPanel.myseeks1.setVisible(false);
 else
-	myfirstlist.myseeks1.setVisible(true);
+	sharedVariables.activitiesPanel.myseeks1.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 2)
-	myfirstlist.myseeks2.setVisible(false);
+	sharedVariables.activitiesPanel.myseeks2.setVisible(false);
 else
-	myfirstlist.myseeks2.setVisible(true);
+	sharedVariables.activitiesPanel.myseeks2.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 3)
-myfirstlist.notifylistScroller.setVisible(false);
+sharedVariables.activitiesPanel.notifylistScroller.setVisible(false);
 else
-myfirstlist.notifylistScroller.setVisible(true);
+sharedVariables.activitiesPanel.notifylistScroller.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 4)
-myfirstlist.channelPanel.setVisible(false);
+sharedVariables.activitiesPanel.channelPanel.setVisible(false);
 else
-myfirstlist.channelPanel.setVisible(true);
+sharedVariables.activitiesPanel.channelPanel.setVisible(true);
 
 
 

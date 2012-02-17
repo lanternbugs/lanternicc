@@ -35,7 +35,7 @@ import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-class listFrame extends JDialog// implements InternalFrameListener
+class listInternalFrame extends JInternalFrame implements InternalFrameListener
 {
 
 	//subframe [] consoleSubframes;
@@ -43,28 +43,19 @@ channels sharedVariables;
 JCheckBoxMenuItem notontop;
 ConcurrentLinkedQueue queue;
 //subframe(JFrame frame, boolean mybool)
-listFrame(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue queue1)
-{     super(master, false);
-sharedVariables=sharedVariables1;
-queue=queue1;
+listInternalFrame(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue queue1)
+{
 //super(frame, mybool);
-/* super("Activities Window- double click to select",
+ super("Activities Window- double click to select",
           true, //resizable
           true, //closable
           true, //maximizable
           true);//iconifiable
-  */
+
+sharedVariables=sharedVariables1;
+queue=queue1;
 
  setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
- addWindowListener(new WindowAdapter() {
-    public void windowClosing(WindowEvent we) {
-	if(isVisible() && getMaximumSize() != getSize() && getMinimumSize() != getSize())
-	{
-		setBoardSize();
-	}
-         setVisible(false);
-    }
-});
 
 setTitle("Activities Window");
 // make menu
@@ -80,6 +71,7 @@ JMenuBar myMenu = new JMenuBar();
             data.swapActivities=1;
             queue.add(data);
 
+
             }
        });
   mymenu1.add(notontop);
@@ -89,7 +81,7 @@ myMenu.add(mymenu1);
 setJMenuBar(myMenu);
 myMenu.setVisible(true);
 
-//addInternalFrameListener(this);
+addInternalFrameListener(this);
 }// end constructor
 
 
@@ -97,21 +89,22 @@ myMenu.setVisible(true);
 
     void setBoardSize()
      {
-	if(isVisible() == false)
+	if(isVisible() == false || isIcon() == true || isMaximum() == true)
         return;
-		sharedVariables.myActivitiesSizes.point0=getLocation();
+        sharedVariables.myActivitiesSizes.point0=getLocation();
 		//set_string = set_string + "" + point0.x + " " + point0.y + " ";
 		sharedVariables.myActivitiesSizes.con0x=getWidth();
 		sharedVariables.myActivitiesSizes.con0y=getHeight();
 		//set_string = set_string + "" + con0x + " " + con0y + " ";
 
 	 }
-/*
+
 
       public void internalFrameClosing(InternalFrameEvent e) {
 	if(isVisible() && isMaximum() == false && isIcon() == false)
 	{
 		setBoardSize();
+		setVisible(false);
 	}
 
     }
@@ -139,7 +132,7 @@ myMenu.setVisible(true);
      // System.out.println("fame activate");
 	if(isVisible() && isMaximum() == false && isIcon() == false)
 	{
-		setBoardSize();
+	//	setBoardSize();
 	}
 
 
@@ -151,7 +144,7 @@ myMenu.setVisible(true);
 
     }
 
-*/
+
 
 /****************************************************************************************/
 /*void sharedVariables.openUrl(String myurl)

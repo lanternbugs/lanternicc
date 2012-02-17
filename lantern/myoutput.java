@@ -57,6 +57,7 @@ class myoutput {
 	 int soundBoard;
 	 int boardClosing;
 	 int repaintTabBorders;
+	 int swapActivities;
          boolean printing;
          writer mywriter;
 myoutput(){
@@ -84,6 +85,7 @@ myoutput(){
 	trimboard=-1;
 	startengine=-1;
 	repaint64=-1;
+	swapActivities=-1;
 	}
 
 class writer {

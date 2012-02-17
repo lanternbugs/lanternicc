@@ -154,6 +154,7 @@ seekGraphFrame seekGraph;
 JToolBar toolBar;
 docWriter myDocWriter;
 listFrame myfirstlist;
+listInternalFrame mysecondlist;
 gameFrame myGameList;
 listClass eventsList;
 listClass seeksList;
@@ -368,7 +369,11 @@ notifyList = new listClass("Notify List");
 eventsList = new listClass("Events");
 seeksList = new listClass("Human Seeks");
 computerSeeksList = new listClass("Computer Seeks");
-myfirstlist = new listFrame(this, sharedVariables, queue, eventsList, seeksList, computerSeeksList, notifyList, this);
+sharedVariables.activitiesPanel = new ActivitiesWindowPanel(this, sharedVariables, queue, eventsList, seeksList, computerSeeksList, notifyList, this);
+myfirstlist = new listFrame(this, sharedVariables, queue);
+mysecondlist = new listInternalFrame(this, sharedVariables, queue);
+ sharedVariables.desktop.add(mysecondlist);
+myfirstlist.add(sharedVariables.activitiesPanel);
 gameList = new tableClass();
 myGameList = new gameFrame(sharedVariables, queue, gameList);
 sharedVariables.myGameList=myGameList;
@@ -377,7 +382,7 @@ myGameList.setSize(600,425);
 
 /*************** end list code******************/
 docWriter myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles, gameconsoles, myboards, consoleChatframes);
-mycreator = new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles, queue, img, gamequeue, mywebframe, graphics, myfirstlist, myDocWriter, consoleChatframes, this);
+mycreator = new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles, queue, img, gamequeue, mywebframe, graphics, myfirstlist, mysecondlist, myDocWriter, consoleChatframes, this);
 mycreator.createConsoleFrame(); //Create first window
 mycreator.createGameFrame();
 //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
@@ -390,7 +395,7 @@ getContentPane().add(sharedVariables.desktop, "Center");
  sharedVariables.hasSettings=mysettings.readNow(myboards, consoleSubframes,  sharedVariables, consoles, gameconsoles); // read  for any saved settings  dont know what get settings  is doing MA 5-30-10
 mineScores.readNow(sharedVariables);
 
-client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection, myfirstlist);
+client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection, myfirstlist, mysecondlist);
 repaint();
 client.enabletimestamp();
 
@@ -692,15 +697,15 @@ else
 */
 
 /* name list stuff */
-myfirstlist.theChannelList.setForeground(sharedVariables.nameForegroundColor);
-myfirstlist.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
-myfirstlist.theChannelList.setFont(sharedVariables.nameListFont);
-myfirstlist.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
-myfirstlist.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
-myfirstlist.theChannelList2.setFont(sharedVariables.nameListFont);
-myfirstlist.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
-myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
-myfirstlist.theChannelList3.setFont(sharedVariables.nameListFont);
+sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
+sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
+sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
+sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
+sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
+sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
 
 
 for(int iii=0; iii<sharedVariables.maxConsoleTabs; iii++)
@@ -816,7 +821,7 @@ try {
 catch(Exception donthaveit){}
  
  try {
-myfirstlist.theEventsList.setFont(sharedVariables.eventsFont);
+sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
  }
  catch(Exception badfontsetting){}
 
@@ -2803,7 +2808,10 @@ if(event.getActionCommand().equals("Save Settings"))
 		if(myfirstlist!=null)
 		if(myfirstlist.isVisible())
 			sharedVariables.activitiesOpen = true;
-			
+		if(mysecondlist!=null)
+		if(mysecondlist.isVisible())
+			sharedVariables.activitiesOpen = true;
+
 
                  sharedVariables.seeksOpen = false;
 		if(seekGraph!=null)
@@ -2986,6 +2994,18 @@ else
 	//	myfirstlist.setSelected(true);
 
 	}
+	if(mysecondlist!=null)
+	if(mysecondlist.isVisible())
+	{
+
+		mysecondlist.setSize(width,height);
+		mysecondlist.setLocation(x + count * dif, y + count * dif);
+		mysecondlist.setSelected(true);
+
+	}
+
+
+
 }
 catch(Exception d){}
 }
@@ -3437,9 +3457,9 @@ Color newColor = JColorChooser.showDialog(frame, "Names List Foreground Color", 
  if(newColor != null)
  {
 	 sharedVariables.nameForegroundColor=newColor;
-	  myfirstlist.theChannelList.setForeground(sharedVariables.nameForegroundColor);
-	   myfirstlist.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
-	    myfirstlist.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
+	  sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
+	   sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
+	    sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
 	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
 	 {
 		 if(consoleSubframes[c]!=null)
@@ -3460,9 +3480,9 @@ Color newColor = JColorChooser.showDialog(frame, "Names List Background Color", 
  {
 	 sharedVariables.nameBackgroundColor=newColor;
 
-myfirstlist.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
-myfirstlist.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
-myfirstlist.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
+sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
 
 	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
 	 {
@@ -3649,7 +3669,7 @@ openUrl("http://www.chessclub.com/chessfm/");
 	        if(fnt != null)
 	        {
 				sharedVariables.eventsFont=fnt;
-				myfirstlist.theEventsList.setFont(sharedVariables.eventsFont);
+				sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
                 }
   }// end events font
 
@@ -3663,9 +3683,9 @@ openUrl("http://www.chessclub.com/chessfm/");
 	        if(fnt != null)
 	        {
 				sharedVariables.nameListFont=fnt;
-				myfirstlist.theChannelList.setFont(sharedVariables.nameListFont);
-				myfirstlist.theChannelList2.setFont(sharedVariables.nameListFont);
-				myfirstlist.theChannelList3.setFont(sharedVariables.nameListFont);
+				sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
+				sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
+				sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
 
 	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
 	 {
@@ -4886,8 +4906,8 @@ if(event.getActionCommand().equals("Activities Window Color"))
  Color newColor = JColorChooser.showDialog(frame, "Choose Activites Window Background Color", sharedVariables.listColor);
  if(newColor != null)
  sharedVariables.listColor=newColor;
- if(myfirstlist != null)
- myfirstlist.setColors();
+ if( sharedVariables.activitiesPanel != null)
+ sharedVariables.activitiesPanel.setColors();
 
 }
 
@@ -5021,12 +5041,12 @@ if(event.getActionCommand().equals("Channel Colors"))
 void openActivities()
 {
 try {
-	if(myfirstlist == null)
+//	if(myfirstlist == null)
+//	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+	if(!myfirstlist.isVisible() && !mysecondlist.isVisible())
 	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-	else if(!myfirstlist.isVisible())
-	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-
-	myfirstlist.setColors();
+  
+	sharedVariables.activitiesPanel.setColors();
 //	myfirstlist.setSelected(true);
 }catch(Exception dui){}
 }
@@ -5670,6 +5690,17 @@ JSettingsDialog(JFrame frame, boolean mybool, channels sharedVariables1)
 				myfirstlist.setBoardSize();
 
 		}
+
+		if(mysecondlist!=null)
+		if(mysecondlist.isVisible())
+		{
+			sharedVariables.activitiesOpen = true;
+
+				mysecondlist.setBoardSize();
+
+		}
+
+
 
 			sharedVariables.seeksOpen = false;
 		if(seekGraph!=null)
