@@ -162,6 +162,7 @@ JToolBar toolBar;
 docWriter myDocWriter;
 listFrame myfirstlist;
 listInternalFrame mysecondlist;
+notifyFrame myNotifyFrame;
 gameFrame myGameList;
 listClass eventsList;
 listClass seeksList;
@@ -381,6 +382,7 @@ sharedVariables.activitiesPanel = new ActivitiesWindowPanel(this, sharedVariable
 myfirstlist = new listFrame(this, sharedVariables, queue);
 mysecondlist = new listInternalFrame(this, sharedVariables, queue);
  sharedVariables.desktop.add(mysecondlist);
+ myNotifyFrame = new notifyFrame(this, sharedVariables, queue,  notifyList);
 gameList = new tableClass();
 myGameList = new gameFrame(sharedVariables, queue, gameList);
 sharedVariables.myGameList=myGameList;
@@ -1544,6 +1546,11 @@ eventlist.addActionListener(this);
     seekingGraph.setMnemonic(KeyEvent.VK_S);
  seekingGraph.addActionListener(this);
 
+JMenuItem mynotify = new JMenuItem("Notify Window");
+ sharedVariables.myWindows.add(mynotify);
+mynotify.addActionListener(this);
+
+
  sharedVariables.myWindows.addSeparator();
 
 
@@ -2646,6 +2653,14 @@ if(event.getActionCommand().equals("Activities Window"))
 {
 openActivities();
 }
+
+
+if(event.getActionCommand().equals("Notify Window"))
+{
+ myNotifyFrame.setSize(90,240);
+ myNotifyFrame.setVisible(true);
+}
+
 
 if(event.getActionCommand().equals("Seek Graph"))
 {
@@ -4948,6 +4963,8 @@ if(event.getActionCommand().equals("Activities Window Color"))
  sharedVariables.listColor=newColor;
  if( sharedVariables.activitiesPanel != null)
  sharedVariables.activitiesPanel.setColors();
+ if( myNotifyFrame != null)
+ myNotifyFrame.theNotifyList.setBackground(sharedVariables.listColor);
 
 }
 
