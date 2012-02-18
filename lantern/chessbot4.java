@@ -5747,7 +5747,13 @@ void swapActivities()
  {
 try {
   //myfirstlist.setModalityType(Dialog.ModalityType.MODELESS);
-  if(myfirstlist.isMaximumSizeSet())
+	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+        Dimension dim = toolkit.getScreenSize();
+        int screenW = dim.width;
+        int screenH = dim.height;
+
+
+  if(myfirstlist.getSize().height > screenH - 100)
   { myfirstlist.notontop.setSelected(true);
     return;
   }

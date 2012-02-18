@@ -16,7 +16,6 @@ package lantern;
 
 //http://java.sun.com/products/jfc/tsc/articles/tablelayout/
 import layout.*;
-
 import java.awt.*;
 import java.awt.Window.*;
 import java.awt.event.*;
@@ -810,6 +809,12 @@ try{
 		URL myurl = this.getClass().getResource("lantern.png");
 		myIconImage =Toolkit.getDefaultToolkit().getImage(myurl);
 		setIconImage(myIconImage);
+// need a package for this
+/*if(sharedVariables.operatingSystem.equals("mac"))
+{Application app = new Application();
+app.setDockIconImage(myIconImage);
+}
+*/
 }
 catch(Exception e)
 {
