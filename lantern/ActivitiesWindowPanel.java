@@ -220,11 +220,20 @@ MouseListener mouseListenerChannel = new MouseAdapter() {
        return;
 
       int mychan=0;
-      if(currentChannel > -1)
+    if (e.getButton() == MouseEvent.BUTTON3)
+{
+      if(currentChannel > 0)
+      mychan=currentChannel-1;
+      else if(mychan == 0)
+      mychan= sharedVariables.channelNamesList.size() - 1;
+
+}
+else
+{    if(currentChannel > -1)
       mychan=currentChannel+1;
       if(mychan >= sharedVariables.channelNamesList.size())
       mychan=0;
-
+}
      currentChannel=mychan;
 
    theChannelList.setModel(sharedVariables.channelNamesList.get(mychan).model2);
@@ -244,11 +253,21 @@ MouseListener mouseListenerChannel2 = new MouseAdapter() {
        return;
 
       int mychan=0;
+  if (e.getButton() == MouseEvent.BUTTON3)
+{
+      if(currentChannel2 > 0)
+      mychan=currentChannel2-1;
+      else if(mychan == 0)
+      mychan= sharedVariables.channelNamesList.size() - 1;
+
+}
+else
+{
       if(currentChannel2 > -1)
       mychan=currentChannel2+1;
       if(mychan >= sharedVariables.channelNamesList.size())
       mychan=0;
-
+}
      currentChannel2=mychan;
 
    theChannelList2.setModel(sharedVariables.channelNamesList.get(mychan).model2);
@@ -268,11 +287,22 @@ MouseListener mouseListenerChannel3 = new MouseAdapter() {
        return;
 
       int mychan=0;
+
+if (e.getButton() == MouseEvent.BUTTON3)
+{
+      if(currentChannel3 > 0)
+      mychan=currentChannel3-1;
+      else if(mychan == 0)
+      mychan= sharedVariables.channelNamesList.size() - 1;
+
+}
+else
+{
       if(currentChannel3 > -1)
       mychan=currentChannel3+1;
       if(mychan >= sharedVariables.channelNamesList.size())
       mychan=0;
-
+}
      currentChannel3=mychan;
 
    theChannelList3.setModel(sharedVariables.channelNamesList.get(mychan).model2);
@@ -525,7 +555,7 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 
 
 
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
 
             }
@@ -539,7 +569,7 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 				 notifylistScroller.setVisible(false);
 				 computerseeklistScroller.setVisible(false);
 				 listScroller.setVisible(true);
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
 			 }
           */
@@ -563,7 +593,7 @@ seeksLabel.addMouseListener(new MouseAdapter() {
 				 channelPanel.setVisible(false);
 				  myseeks1.setVisible(true);
 				 sharedVariables.activitiesTabNumber=1;
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
 
             }
@@ -577,7 +607,7 @@ seeksLabel.addMouseListener(new MouseAdapter() {
 				 notifylistScroller.setVisible(false);
 				 computerseeklistScroller.setVisible(false);
 				 seeklistScroller.setVisible(true);
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
 			 }
          */
@@ -601,7 +631,7 @@ notifyLabel.addMouseListener(new MouseAdapter() {
 				 channelPanel.setVisible(false);
 				  notifylistScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=3;
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
             }
 
@@ -614,7 +644,7 @@ notifyLabel.addMouseListener(new MouseAdapter() {
 				 seeklistScroller.setVisible(false);
 				 computerseeklistScroller.setVisible(false);
 				 notifylistScroller.setVisible(true);
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
 			 }
 
@@ -640,7 +670,7 @@ computerSeeksLabel.addMouseListener(new MouseAdapter() {
 				 channelPanel.setVisible(false);
 				 myseeks2.setVisible(true);
 				 sharedVariables.activitiesTabNumber=2;
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
             }
 
@@ -677,7 +707,7 @@ channelLabel.addMouseListener(new MouseAdapter() {
 				 myseeks2.setVisible(false);
 				 channelPanel.setVisible(true);
 				 sharedVariables.activitiesTabNumber=4;
-				 paintComponents(getGraphics());
+				 paintComponents(getGraphics()); repaint();
 
             }
 
@@ -807,25 +837,7 @@ v4.addGroup(v33);
 	layout.setVerticalGroup(vGroup);
 
 }// end set layout
-public void paintComponent(Graphics g)
-{
 
-try
-{
-	super.paintComponent(g);
-	//if(seeklistScroller.isVisible())
-	//seeklistScroller.setBackground(sharedVariables.listColor);
-//	if(computerseeklistScroller.isVisible())
-//	computerseeklistScroller.setBackground(sharedVariables.listColor);
-
-/*	 if(listScrollerPanel.isVisible())
-	listScrollerPanel.setBackground(sharedVariables.listColor);
-	else if(notifylistScroller.isVisible())
-	notifylistScroller.setBackground(sharedVariables.listColor);
-*/
-}
-catch(Exception e){}
-}//end paint components
 
 
 
@@ -1123,5 +1135,26 @@ class NotifyPanel extends JPanel
 
   }
 
- }
+ } // end class notify panel
+ 
+ public void paintComponent(Graphics g)
+{
+
+try
+{
+	super.paintComponent(g);
+	//if(seeklistScroller.isVisible())
+	//seeklistScroller.setBackground(sharedVariables.listColor);
+//	if(computerseeklistScroller.isVisible())
+//	computerseeklistScroller.setBackground(sharedVariables.listColor);
+
+	 if(listScroller.isVisible())
+	listScroller.setBackground(sharedVariables.listColor);
+	else if(notifylistScroller.isVisible())
+	notifylistScroller.setBackground(sharedVariables.listColor);
+}
+catch(Exception e){}
+}//end paint components
+
+
 }//end class
