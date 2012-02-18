@@ -4945,7 +4945,14 @@ else
 								return;
 							if(myboards[gamenum]== null)
 								return;
-							myboards[gamenum].gameEndedExamined(temp.arg1); // pass game number
+
+                                                        if(sharedVariables.unobserveGoExamine == true)
+                                                        {
+                                                         myoutput tempo = new myoutput();
+                                                         tempo.data = "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
+                                                         queue.add(tempo);
+                                                        }
+                                                	myboards[gamenum].gameEndedExamined(temp.arg1); // pass game number
 							updateGameTabs("WE", gamenum);
 							repaintBoards(gamenum);
 				    }

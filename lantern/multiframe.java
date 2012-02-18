@@ -206,6 +206,7 @@ JCheckBoxMenuItem useLightBackground;
  JCheckBoxMenuItem boardconsole3;
  JCheckBoxMenuItem sidewaysconsole;
  JCheckBoxMenuItem playersInMyGame;
+ JCheckBoxMenuItem unobserveGoExamine;
 
 JCheckBoxMenuItem userbuttons;
 JCheckBoxMenuItem consolemenu;
@@ -566,6 +567,12 @@ else
   playersInMyGame.setSelected(true);
   else
   playersInMyGame.setSelected(false);
+
+  if(sharedVariables.unobserveGoExamine == true)
+  unobserveGoExamine.setSelected(true);
+  else
+  unobserveGoExamine.setSelected(false);
+
 
 if(sharedVariables.tellTimestamp == true)
 		tellTimestamp.setSelected(true);
@@ -1987,6 +1994,10 @@ checkLegality=new JCheckBoxMenuItem("Check Move Legality");
 checkLegality.addActionListener(this);
 AdvancedGameMenu.add(checkLegality);
 
+unobserveGoExamine=new JCheckBoxMenuItem("Unobserve Games Gone Examine");
+unobserveGoExamine.addActionListener(this);
+AdvancedGameMenu.add(unobserveGoExamine);
+
 newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
 AdvancedGameMenu.add(newObserveGameSwitch);
 newObserveGameSwitch.addActionListener(this);
@@ -2266,6 +2277,23 @@ else
 {
 	sharedVariables.checkLegality=true;
 	checkLegality.setSelected(true);
+
+}
+}
+
+if(event.getActionCommand().equals("Unobserve Games Gone Examine"))
+{
+
+if(sharedVariables.unobserveGoExamine == true)
+{
+	sharedVariables.unobserveGoExamine=false;
+	unobserveGoExamine.setSelected(false);
+
+}
+else
+{
+	sharedVariables.unobserveGoExamine=true;
+	unobserveGoExamine.setSelected(true);
 
 }
 }

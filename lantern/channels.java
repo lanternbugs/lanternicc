@@ -123,6 +123,7 @@ boolean newObserveGameSwitch = true;
 boolean saveNamePass = false;
 boolean drawCoordinates = true;
 boolean ActivitiesOnTop=true;
+boolean unobserveGoExamine=false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();
