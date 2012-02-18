@@ -40,7 +40,6 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JList theEventsList;
 	JList theSeeksList;
 	JList theComputerSeeksList;
-	JList theNotifyList;
 	JList theChannelList;
 	JList theChannelList2;
 	JList theChannelList3;
@@ -59,7 +58,6 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JLabel notifyLabel;
 	JLabel channelLabel;
 
-JScrollPane notifylistScroller;
 //JScrollPane seeklistScroller;
 //JScrollPane computerseeklistScroller;
 JScrollPane listScroller;
@@ -67,7 +65,7 @@ JScrollPane channelScroller;
 JScrollPane channelScroller2;
 JScrollPane channelScroller3;
 EventsPanel listScrollerPanel;
-NotifyPanel notifylistScrollerPanel;
+notifyPanel notifylistScrollerPanel;
 
 int currentChannel = -1;
 int currentChannel2 = -1;
@@ -107,7 +105,8 @@ myseeks1=new seekPanel(sharedVariables, queue, seekPanel.hSeeks);// 1 for  displ
 myseeks2=new seekPanel(sharedVariables, queue, seekPanel.cSeeks);// 1 for  display type. show human seeks
 
 //add(mypanel);
-
+notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
+//notifylistScrollerPanel.add(notifylistScrollerPanel.notifylistScroller);
 initComponents();
 
 homeFrame=homeFrame1;
@@ -119,7 +118,7 @@ void setColors()
 theEventsList.setBackground(sharedVariables.listColor);
 theSeeksList.setBackground(sharedVariables.listColor);
 theComputerSeeksList.setBackground(sharedVariables.listColor);
-theNotifyList.setBackground(sharedVariables.listColor);
+notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 //theChannelList.setBackground(sharedVariables.listColor);
 
 }
@@ -169,24 +168,6 @@ theComputerSeeksList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTI
 theComputerSeeksList.setLayoutOrientation(JList.VERTICAL);
 theComputerSeeksList.setVisibleRowCount(-1);
 
-/********* now notify list *****************/
-theNotifyList = new JList(notifyList.model);
-theNotifyList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-theNotifyList.setLayoutOrientation(JList.VERTICAL);
-theNotifyList.setVisibleRowCount(-1);
-theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-       Component c = super.getListCellRendererComponent(
-            list,value,index,isSelected,cellHasFocus);
-       if( value.toString().contains("Playing"))
-        c.setForeground(sharedVariables.channelColor[400]);
-        else
-        c.setForeground(Color.black);
-        
-        return c;
-    }
-});
 
 /********* now channel list *****************/
 
@@ -315,79 +296,6 @@ theChannelList3.addMouseListener(mouseListenerChannel3);
 
 /********************* end channel mouse listeners ****************/
 
-
-MouseListener mouseListenerNotify = new MouseAdapter() {
-     public void mouseClicked(MouseEvent e) {
-
-
-
-              int index = theNotifyList.locationToIndex(e.getPoint());
-             final String watchName =(String) notifyList.modeldata.elementAt(index);
-
-
-
- // if right click
-if (e.getButton() == MouseEvent.BUTTON3)
-{
-// determine their state
-boolean supressLogins=sharedVariables.getNotifyControllerState(watchName);
-
-JPopupMenu menu2=new JPopupMenu("Popup2");
-JMenuItem item1;
-if(supressLogins == false)
-{
-
-item1= new JMenuItem("Suppress Login Logout Messages");
- item1.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sharedVariables.notifyControllerScript.add(watchName);
-            sharedVariables.setNotifyControllerState();
-            }
-       });
-       menu2.add(item1);
-
-}
-else
-{
-item1= new JMenuItem("Enable Login Logout Messages");
- item1.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sharedVariables.notifyControllerScript.remove(watchName);
-           sharedVariables.setNotifyControllerState();
-
-            }
-       });
-       menu2.add(item1);
-
-
-}
-add(menu2);
-menu2.show(e.getComponent(),e.getX(),e.getY());
-
-
-}// end if right click
-         else if (e.getClickCount() == 2) {
-
-
-
-
-
-             String watch = "Observe " + watchName + "\n";
-
-				 myoutput output = new myoutput();
-				 output.data=watch;
-
-				 output.consoleNumber=0;
-      			 queue.add(output);
-
-             //seekDialog aDialog;
-			 //aDialog= new seekDialog(homeFrame, false,"Selected from " +  index );
-			 //aDialog.setVisible(true);
-
-          }
-     }
- };
- theNotifyList.addMouseListener(mouseListenerNotify);
 
 
 
@@ -521,7 +429,6 @@ channelScroller2 = new JScrollPane(theChannelList2);
 channelScroller3 = new JScrollPane(theChannelList3);
 //seeklistScroller = new JScrollPane(theSeeksList);
 //computerseeklistScroller = new JScrollPane(theComputerSeeksList);
-notifylistScroller = new JScrollPane(theNotifyList);
 //listScroller.setPreferredSize(new Dimension(2500, 2500));
 setLayout();
 
@@ -534,7 +441,7 @@ if(sharedVariables.activitiesTabNumber != 1)
 if(sharedVariables.activitiesTabNumber != 2)
 	myseeks2.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 3)
-	notifylistScroller.setVisible(false);
+	notifylistScrollerPanel.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 4)
 	channelPanel.setVisible(false);
 
@@ -545,7 +452,7 @@ eventsLabel.addMouseListener(new MouseAdapter() {
            //  if(!listScroller.isVisible())
 
 
-				 notifylistScroller.setVisible(false);
+				 notifylistScrollerPanel.setVisible(false);
 				 myseeks2.setVisible(false);
 				 myseeks1.setVisible(false);
 				  channelPanel.setVisible(false);
@@ -587,7 +494,7 @@ seeksLabel.addMouseListener(new MouseAdapter() {
              //if(!seeklistScroller.isVisible())
 
 				 listScrollerPanel.setVisible(false);
-				 notifylistScroller.setVisible(false);
+				 notifylistScrollerPanel.setVisible(false);
 				 myseeks2.setVisible(false);
 
 				 channelPanel.setVisible(false);
@@ -623,15 +530,23 @@ notifyLabel.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
              // turn on events and off seeks
              //if(!seeklistScroller.isVisible())
-
+                                   // JFrame tempo1 = new JFrame("1");
+                                   // tempo1.setVisible(true);
+                                   // tempo1.setSize(100,100);
 				 listScrollerPanel.setVisible(false);
 				 myseeks1.setVisible(false);
 				 myseeks2.setVisible(false);
 
 				 channelPanel.setVisible(false);
-				  notifylistScroller.setVisible(true);
+				  notifylistScrollerPanel.setVisible(true);
+				  notifylistScrollerPanel.notifylistScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=3;
-				 paintComponents(getGraphics()); repaint();
+				   notifylistScrollerPanel.repaint();
+                                   paintComponents(getGraphics());
+                                    repaint();
+                                  //  JFrame tempo2 = new JFrame("2");
+                                   // tempo2.setVisible(true);
+                                   // tempo2.setSize(100,100);
 
             }
 
@@ -666,7 +581,7 @@ computerSeeksLabel.addMouseListener(new MouseAdapter() {
 
 				 listScrollerPanel.setVisible(false);
 				 myseeks1.setVisible(false);
-				 notifylistScroller.setVisible(false);
+				 notifylistScrollerPanel.setVisible(false);
 				 channelPanel.setVisible(false);
 				 myseeks2.setVisible(true);
 				 sharedVariables.activitiesTabNumber=2;
@@ -702,7 +617,7 @@ channelLabel.addMouseListener(new MouseAdapter() {
 
 				 listScrollerPanel.setVisible(false);
 				 myseeks1.setVisible(false);
-				 notifylistScroller.setVisible(false);
+				 notifylistScrollerPanel.setVisible(false);
 
 				 myseeks2.setVisible(false);
 				 channelPanel.setVisible(true);
@@ -769,7 +684,7 @@ channelPanel.add(channelScroller3);
 
 	h3.addComponent(myseeks1);
 	h4.addComponent(listScrollerPanel);
-	h5.addComponent(notifylistScroller);
+	h5.addComponent(notifylistScrollerPanel);
 	h6.addComponent(myseeks2);
 	h7.addComponent(channelPanel);
 
@@ -819,7 +734,7 @@ v9.addComponent(channelLabel);
 
 
 v3.addGroup(v9);
-v3.addComponent(notifylistScroller);
+v3.addComponent(notifylistScrollerPanel);
 v33.addGroup(v9);
 v33.addComponent(channelPanel);
 v44.addGroup(v9);
@@ -1100,42 +1015,7 @@ if(join.indexOf(" & ")!=-1)
 
 
 
-class NotifyPanel extends JPanel
- {
-  NotifyPanel()
-  {
-   GroupLayout layout = new GroupLayout(this);
-      setLayout(layout);
-	//Create a parallel group for the horizontal axis
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 
-
-
-
-
-
-
-	h1.addComponent(notifylistScroller);
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-	//Create a parallel group for the vertical axis
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
-
-
-
-
-	vGroup.addComponent(notifylistScroller);
-
-	layout.setVerticalGroup(vGroup);
-
-
-  }
-
- } // end class notify panel
  
  public void paintComponent(Graphics g)
 {
@@ -1150,8 +1030,8 @@ try
 
 	 if(listScroller.isVisible())
 	listScroller.setBackground(sharedVariables.listColor);
-	else if(notifylistScroller.isVisible())
-	notifylistScroller.setBackground(sharedVariables.listColor);
+	else if(notifylistScrollerPanel.notifylistScroller.isVisible())
+	notifylistScrollerPanel.notifylistScroller.setBackground(sharedVariables.listColor);
 }
 catch(Exception e){}
 }//end paint components

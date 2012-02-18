@@ -526,9 +526,9 @@ else
 	sharedVariables.activitiesPanel.myseeks2.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 3)
-sharedVariables.activitiesPanel.notifylistScroller.setVisible(false);
+sharedVariables.activitiesPanel.notifylistScrollerPanel.notifylistScroller.setVisible(false);
 else
-sharedVariables.activitiesPanel.notifylistScroller.setVisible(true);
+sharedVariables.activitiesPanel.notifylistScrollerPanel.notifylistScroller.setVisible(true);
 
 if(sharedVariables.activitiesTabNumber != 4)
 sharedVariables.activitiesPanel.channelPanel.setVisible(false);

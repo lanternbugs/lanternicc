@@ -43,9 +43,7 @@ channels sharedVariables;
 JCheckBoxMenuItem notontop;
  listClass notifyList;
  ConcurrentLinkedQueue queue;
-JList theNotifyList;
-JScrollPane notifylistScroller;
-NotifyPanel notifylistScrollerPanel;
+notifyPanel notifylistScrollerPanel;
 
 
 notifyFrame(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue queue1,  listClass notifyList1)
@@ -63,174 +61,20 @@ notifyList=notifyList1;
 });
 
 setTitle("Notify Window");
-initializeComponents();
 
-// make menu
+ notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
 
-/****************** of for now no menu
-JMenuBar myMenu = new JMenuBar();
-
- JMenu mymenu1 = new JMenu("Menu");
-
-   notontop = new JCheckBoxMenuItem("On Top Window");
-   notontop.setSelected(true);
-  notontop.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            myoutput data = new myoutput();
-            data.swapActivities=1;
-            queue.add(data);
-
-            }
-       });
-  mymenu1.add(notontop);
+ notifylistScrollerPanel.notifylistScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 
-myMenu.add(mymenu1);
-setJMenuBar(myMenu);
-myMenu.setVisible(true);
-*/
+ add(notifylistScrollerPanel);
 
 
 }// end constructor
 
-void initializeComponents()
-{
-/********* now notify list *****************/
-theNotifyList = new JList(notifyList.model);
-theNotifyList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-theNotifyList.setLayoutOrientation(JList.VERTICAL);
-theNotifyList.setVisibleRowCount(-1);
-theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-       Component c = super.getListCellRendererComponent(
-            list,value,index,isSelected,cellHasFocus);
-       if( value.toString().contains("Playing"))
-        c.setForeground(sharedVariables.channelColor[400]);
-        else
-        c.setForeground(Color.black);
-        
-        return c;
-    }
-});
 
 
 
-MouseListener mouseListenerNotify = new MouseAdapter() {
-     public void mouseClicked(MouseEvent e) {
-
-
-
-              int index = theNotifyList.locationToIndex(e.getPoint());
-             final String watchName =(String) notifyList.modeldata.elementAt(index);
-
-
-
- // if right click
-if (e.getButton() == MouseEvent.BUTTON3)
-{
-// determine their state
-boolean supressLogins=sharedVariables.getNotifyControllerState(watchName);
-
-JPopupMenu menu2=new JPopupMenu("Popup2");
-JMenuItem item1;
-if(supressLogins == false)
-{
-
-item1= new JMenuItem("Suppress Login Logout Messages");
- item1.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sharedVariables.notifyControllerScript.add(watchName);
-            sharedVariables.setNotifyControllerState();
-            }
-       });
-       menu2.add(item1);
-
-}
-else
-{
-item1= new JMenuItem("Enable Login Logout Messages");
- item1.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            sharedVariables.notifyControllerScript.remove(watchName);
-           sharedVariables.setNotifyControllerState();
-
-            }
-       });
-       menu2.add(item1);
-
-
-}
-add(menu2);
-menu2.show(e.getComponent(),e.getX(),e.getY());
-
-
-}// end if right click
-         else if (e.getClickCount() == 2) {
-
-
-
-
-
-             String watch = "Observe " + watchName + "\n";
-
-				 myoutput output = new myoutput();
-				 output.data=watch;
-
-				 output.consoleNumber=0;
-      			 queue.add(output);
-
-             //seekDialog aDialog;
-			 //aDialog= new seekDialog(homeFrame, false,"Selected from " +  index );
-			 //aDialog.setVisible(true);
-
-          }
-     }
- };
- theNotifyList.addMouseListener(mouseListenerNotify);
- theNotifyList.setBackground(sharedVariables.listColor);
- notifylistScroller = new JScrollPane(theNotifyList); 
- notifylistScrollerPanel = new NotifyPanel();
-// notifylistScrollerPanel.add(notifylistScroller);
- add(notifylistScrollerPanel);
-} // end init components
-
-class NotifyPanel extends JPanel
- {
-  NotifyPanel()
-  {
-   GroupLayout layout = new GroupLayout(this);
-      setLayout(layout);
-	//Create a parallel group for the horizontal axis
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-
-
-
-
-
-
-
-	h1.addComponent(notifylistScroller);
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-	//Create a parallel group for the vertical axis
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
-
-
-
-
-	vGroup.addComponent(notifylistScroller);
-
-	layout.setVerticalGroup(vGroup);
-
-
-  }
-
- }// end notify panel
 
 
 }//end class

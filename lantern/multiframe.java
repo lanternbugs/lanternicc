@@ -4964,7 +4964,7 @@ if(event.getActionCommand().equals("Activities Window Color"))
  if( sharedVariables.activitiesPanel != null)
  sharedVariables.activitiesPanel.setColors();
  if( myNotifyFrame != null)
- myNotifyFrame.theNotifyList.setBackground(sharedVariables.listColor);
+ myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 
 }
 
