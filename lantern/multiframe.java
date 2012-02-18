@@ -118,6 +118,14 @@ try { frame.consoleSubframes[0].setSelected(true);} catch(Exception dd){}
 
 String swarning="This is a beta version of Mike's new Interface.  Game play is possible but it's highly recommended you play unrated.  I want more testing before rated play can happen.  Not all wilds are supported.";
 
+if(frame.sharedVariables.ActivitiesOnTop == true)
+{frame.myfirstlist.add(frame.sharedVariables.activitiesPanel);
+ frame.myfirstlist.notontop.setSelected(true);
+}
+else
+{frame.mysecondlist.add(frame.sharedVariables.activitiesPanel);
+ frame.mysecondlist.notontop.setSelected(false);
+}
 //Popup pframe = new Popup((JFrame) frame, true, swarning);
 //pframe.setVisible(true);
 try {if(frame.sharedVariables.activitiesOpen == true && frame.sharedVariables.activitiesNeverOpen != true )
@@ -372,7 +380,6 @@ sharedVariables.activitiesPanel = new ActivitiesWindowPanel(this, sharedVariable
 myfirstlist = new listFrame(this, sharedVariables, queue);
 mysecondlist = new listInternalFrame(this, sharedVariables, queue);
  sharedVariables.desktop.add(mysecondlist);
-myfirstlist.add(sharedVariables.activitiesPanel);
 gameList = new tableClass();
 myGameList = new gameFrame(sharedVariables, queue, gameList);
 sharedVariables.myGameList=myGameList;
