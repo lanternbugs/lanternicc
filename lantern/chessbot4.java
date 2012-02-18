@@ -3536,7 +3536,8 @@ try {
 					temp.arg6=dg.getArg(6);
 					temp.arg7=dg.getArg(7);
 					temp.arg8=dg.getArg(8);
-					temp.arg13=dg.getArg(13);
+					temp.arg11=dg.getArg(11);
+                                        temp.arg13=dg.getArg(13);
 					temp.arg14=dg.getArg(14);
 					temp.arg16=dg.getArg(16);
 					temp.arg17=dg.getArg(17);
@@ -3563,6 +3564,7 @@ try {
 					temp.arg6=dg.getArg(6);
 					temp.arg7=dg.getArg(7);
 					temp.arg8=dg.getArg(8);
+					temp.arg11=dg.getArg(11);
 					temp.arg13=dg.getArg(13);
 					temp.arg14=dg.getArg(14);
 					temp.arg16=dg.getArg(16);
@@ -4482,8 +4484,16 @@ void proccessGameInfo(newBoardData temp)
 					myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, temp.arg17, temp.type); // pass game number
 					else // fics
 					myboards[gamenum].gameStartedFics(temp.arg1);
+					
+					if(temp.dg == 18) // for when we auto unoberve games
+                                        {
+                                         if(temp.arg11.equals("1"))
+                                         sharedVariables.mygame[gamenum].played_game = 1;
+                                         else
+                                          sharedVariables.mygame[gamenum].played_game = 0;
+                                        }
 
-				}// end try
+                        	}// end try
 				catch(Exception ddd){}
 
 
@@ -4946,7 +4956,7 @@ else
 							if(myboards[gamenum]== null)
 								return;
 
-                                                        if(sharedVariables.unobserveGoExamine == true)
+                                                        if(sharedVariables.unobserveGoExamine == true && sharedVariables.mygame[gamenum].played_game == 1)
                                                         {
                                                          myoutput tempo = new myoutput();
                                                          tempo.data = "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";

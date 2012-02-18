@@ -108,7 +108,7 @@ String whiteRating="";
 String blackRating="";
 int time=0;
 int inc=0;
-
+int played_game;
 
 boolean piecePallette;
 ArrayList<Shapes> myShapes;
@@ -162,7 +162,7 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2)
         clickCount=0;
 	wtime=0;
 	btime=0;
-
+        played_game = -1; // 0 not played 1 played -1 not set, used in auto unob on examine
 	newBoard = true;
 	whiteMaterialCount=blackMaterialCount=39;
 	myGameNumber = -100;
