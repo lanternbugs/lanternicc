@@ -2097,7 +2097,7 @@ if(dg.getArg(0).equals("27"))
 
 		}
 
-		if(dg.getArg(0).equals("0"))
+		if(dg.getArg(0).equals(Datagram1.DG_WHO_AM_I))
 		{sendMessage("multi set-quietly prompt 0\n");
 
 		 sendMessage("multi set-quietly style 13\n");
@@ -4437,175 +4437,6 @@ else if(cindex2[z]==1)
 
 
 
-public class Datagram1
-{
-
-
-Datagram1()
-{
-
-}
-
-
-Datagram1(String s)
-{
-    makeDatagram(s);
-}
-
-
-void makeDatagram(String s)
-{
-try {
-	if(s.length() == 0)// this is fics dummy datagram
-		return;
-
-		type = -1;
-
-        int len = s.length();
-        if (len >= 100000)
-        {
-               // Datagram to long!!
-                len = 100000 - 1;
-        }
-
-
-       String p = s.substring(2, len-1);
-
-		// newbox
-		//newbox.append("trying to parse 2, p.length =" + p.length() + " p is: " + p + "\n");
-/*StyledDocument doc=consoles[0].getStyledDocument();
-						try {
-							doc.insertString(doc.getEndPosition().getOffset(), "trying to parse 2, p.length =" + p.length() + " p is: " + p + "\n", null);
-
-
-						consoles[0].setStyledDocument(doc);
-						}
-						catch(Exception e)
-						{
-						}
-
-*/
-        argc=0;
-		int a=1; // allways on
-        while (a==1)
-        {
-                if (p.charAt(0)=='{')
-                {
-                        int end = p.indexOf("}");
-                        String p2;
-                        if(end != 1)
-                        p2=p.substring(1, end);
-                        else
-                        p2="";
-                        arg[argc++] = p2;
-                        try {
-							p=p.substring(end+1, p.length());
-							if(p.length() < 3)
-								return;
-													}
-						catch(Exception dd){ return;}
-
-                }
-                else if(p.charAt(0)=='\031' && p.charAt(1)=='{'){
-					int counter=0;
-					while (p.charAt(0)=='\031' && p.charAt(1)=='{')
-                {
-					counter++;
-
-                       int end = p.indexOf("\031}") ;
-                         String p2;
-                        if(end != 2)
-                        p2=p.substring(2, end);
-                        else
-                        p2="";
-                        arg[argc++] = p2;
-                        try {
-							p=p.substring(end+2, p.length());
-							if(p.length() < 3)
-							  return;
-						}
-						catch(Exception dd){ return;}
-
-                }// end while
-                }// end if
-                else if(p.charAt(0) != ' ' && p.charAt(0) != ')')
-                {
-				int end = p.indexOf(" ");
-				//writedg("p remains start :" + p + ": and lenght is " + p.length());
-				if(end == -1)
-				{end = p.indexOf("\031");
-				if(end == -1)
-					return;
-				}
-					//writedg("final else " + argc);
-                        String p2=p.substring(0, end);
-                        arg[argc++] = p2;
-                        p=p.substring(end, p.length());
-                    //    writedg("final else2 " + argc + " and arg is :" + arg[argc-1] + ":");
-                    //    writedg("p remains end :" + p + ": and lenght is " + p.length());
-
-				}
-
-				//if(p.charAt(0) == '\031' && p.charAt(1) == ')')
-               // return;
-
-                while (a==1)
-                {
-                        if(p.length() <= 1) // " )'\n''031'" in no particular order
-                        return;
-                        else
-                        {
-                   		if(p.charAt(0) == '{')
-                   		break;
-                   		else if(p.charAt(0) == '\031' && p.charAt(1) == '{')
-                   		break;
-                   		else
-                   		p=p.substring(1, p.length());
-				   		}
-                       if(p.length() == 1) // " )'\n''031'" in no particular order
-                        return;
-                        if (p.charAt(0) != ' ')          // Look for a non-space.
-                                break;
-                }
-        }
-}// end try
-catch(Exception dui){writeToSubConsole(" datagram exception \n", sharedVariables.openConsoleCount-1);}
-
-}
-
-void writedg(String mydg)
-{
-
-	StyledDocument doc=consoles[0].getStyledDocument();
-							try {
-								doc.insertString(doc.getEndPosition().getOffset(), mydg + "\n", null);
-
-
-							consoles[0].setStyledDocument(doc);
-							}
-							catch(Exception e)
-							{
-							}
-
-}
-
-public String getArg(int i)
-{
-        if (i>=argc || i<0)
-                return "";
-
-        return arg[i];
-}
-
-
-public String [] arg = new String[5000];
-public int argc;
-public int type;
-
-
-}// end class
-
-
 
 
 class newBoardCreator implements Runnable
@@ -5367,6 +5198,33 @@ for(bb=0; bb<sharedVariables.openConsoleCount; bb++)
 				}
 }// end try
 catch(Exception e) {}
+// if seek graph or non tabbed activities is maximum make maximum true as well
+// seekGraph and mysecondlist
+
+try {
+if(seekGraph != null)
+if(seekGraph.isVisible())
+if(seekGraph.isSelected())
+if(seekGraph.isMaximum())
+{
+	maximum=true;
+	seekGraph.setMaximum(false);
+}
+}//end try
+catch(Exception cantmaxseek){}
+
+try {
+if(mysecondlist != null)
+if(mysecondlist.isVisible())
+if(mysecondlist.isSelected())
+if(mysecondlist.isMaximum())
+{
+	maximum=true;
+	mysecondlist.setMaximum(false);
+}
+}// end try
+catch(Exception cantmaxactivities){}
+
 
 if(sharedVariables.tabsOnly == true)
 	for(bb=0; bb<sharedVariables.openBoardCount; bb++)
@@ -5889,6 +5747,10 @@ void swapActivities()
  {
 try {
   //myfirstlist.setModalityType(Dialog.ModalityType.MODELESS);
+  if(myfirstlist.isMaximumSizeSet())
+  { myfirstlist.notontop.setSelected(true);
+    return;
+  }
 
  myfirstlist.setBoardSize();
  myfirstlist.getContentPane().remove(sharedVariables.activitiesPanel);
@@ -5912,8 +5774,12 @@ mysecondlist.setLocation(sharedVariables.myActivitiesSizes.point0.x, sharedVaria
  {
  try {
   //myfirstlist.setModalityType(Dialog.ModalityType.MODELESS);
-
-
+  if(mysecondlist.isMaximum())
+  {
+   mysecondlist.notontop.setSelected(false);
+    return;
+  }
+  mysecondlist.setBoardSize();
  mysecondlist.getContentPane().remove(sharedVariables.activitiesPanel);
   myfirstlist.getContentPane().add(sharedVariables.activitiesPanel);
                 myfirstlist.invalidate();

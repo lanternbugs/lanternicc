@@ -591,14 +591,14 @@ premovehighlightcolor = new Color(10,0,230);
 	tabImOnBackground = new Color(51, 133, 255); //255, 255, 0);
 //myFont = new Font("Comic Sans MS", Font.PLAIN, 18);
 try {
-  
+
     eventsFont = new Font("Tahoma", Font.PLAIN, 14);
 }
 catch(Exception badEventsFont){}
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
 else if(operatingSystem.equals("mac"))
-	myFont = new Font("Andale Mono", Font.PLAIN, 18);
+	myFont = new Font("Andale Mono", Font.BOLD, 18);
 else
 	myFont = new Font("Lucida Console", Font.PLAIN, 18);
 try {
@@ -648,7 +648,7 @@ onMoveBoardBackgroundColor = new Color(205, 205, 205);
 inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
 chatTimestampColor = new Color(40,200,40);
-listColor = new Color(245, 245, 245);
+listColor = new Color(204, 204, 204);
 lightcolor= new Color(255, 255, 255);
 darkcolor = new Color(71,203,211);
 tellcolor = new Color(255,255,0);
