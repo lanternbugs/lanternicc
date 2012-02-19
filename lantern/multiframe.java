@@ -2660,7 +2660,7 @@ openActivities();
 
 if(event.getActionCommand().equals("Notify Window"))
 {
- myNotifyFrame.setSize(90,240);
+
 
 
   myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);

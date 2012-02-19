@@ -61,7 +61,7 @@ notifyList=notifyList1;
 });
 
 setTitle("Notify Window");
-
+setSize(90,240);
  notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
 
  notifylistScrollerPanel.notifylistScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

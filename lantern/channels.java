@@ -666,7 +666,7 @@ defaultChannelColor = new Color(180, 128, 95);
 kibcolor = new Color(240, 10, 10);
 qtellChannelNumberColor=new Color(204,204,255);
 channelTitlesColor = new Color(204, 255, 204);
-tellNameColor=new Color(255,255,0);
+tellNameColor=new Color(255,255,153);
 nameForegroundColor = new Color(51, 51, 0);
 nameBackgroundColor = new Color(255,255,204);
 // my original tan board
