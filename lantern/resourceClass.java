@@ -46,8 +46,8 @@ resourceClass()
 
 
 maxBoards=11;
-maxPieces=23;
-maxPiecePaths=20;
+maxPieces=24;
+maxPiecePaths=50;
 
  //squares
  light=0;
@@ -95,12 +95,12 @@ piecePaths[16]="motif";
 piecePaths[19]="maya";
  piecePaths[20]="medieval";
 
+piecePaths[21]="ccube";
+
+piecePaths[22]="mongemix";
 
 
-piecePaths[21]="mongemix";
-
-
-piecePaths[22]="random";
+piecePaths[23]="random";
 //for(num=0; num < 16; num++)
 //piecePaths[num]="/" + piecePaths[num];
 
@@ -126,9 +126,9 @@ pieceExt[17]="png";
 pieceExt[18]="png";
 pieceExt[19]="png";
 pieceExt[20]="png";
-
-pieceExt[21]="mix";
-pieceExt[22]="ran";
+pieceExt[21]="png";
+pieceExt[22]="mix";
+pieceExt[23]="ran";
 
 resizable=new boolean[maxPieces];
 resizable[0]=false;
@@ -153,8 +153,9 @@ resizable[18]=false;
 resizable[19]=false;
 resizable[20]=false;
 resizable[21]=false;
+resizable[22]=false;
 
-resizable[22]=true;
+resizable[23]=true;
 
 
 pieces = new Image[maxPieces][12];
@@ -168,8 +169,10 @@ for(int b=0; b<maxPieces; b++)
 		numberPiecePaths[b]=8;
 	else if(b==12)
 		numberPiecePaths[b]=6;
-	else if(b==6 || b==7 || b == 13 || b== 14 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 21)
+	else if(b==6 || b==7 || b == 13 || b== 14 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 22)
 		numberPiecePaths[b]=15;
+	else if(b==21)
+		numberPiecePaths[b]=47;
 
 	else
 		numberPiecePaths[b]=0;
@@ -221,8 +224,60 @@ if(b==5 || b==8)// alpha
 
 
 }
+if(b==21)// ccube
+{
+	multiPiecePaths[b][0]=8;
+	multiPiecePaths[b][1]=10;
+	multiPiecePaths[b][2]=12;
+	multiPiecePaths[b][3]=14;
+	multiPiecePaths[b][4]=16;
+	multiPiecePaths[b][5]=18;
+	multiPiecePaths[b][6]=20;
+	multiPiecePaths[b][7]=22;
+	multiPiecePaths[b][8]=24;
+	multiPiecePaths[b][9]=26;
+	multiPiecePaths[b][10]=28;
+	multiPiecePaths[b][11]=30;
+	multiPiecePaths[b][12]=32;
+	multiPiecePaths[b][13]=34;
+	multiPiecePaths[b][14]=36;
+	multiPiecePaths[b][15]=38;
+	multiPiecePaths[b][16]=40;
+	multiPiecePaths[b][17]=42;
+	multiPiecePaths[b][18]=44;
+	multiPiecePaths[b][19]=46;
+	multiPiecePaths[b][20]=48;
+	multiPiecePaths[b][21]=50;
+	multiPiecePaths[b][22]=52;
+	multiPiecePaths[b][23]=54;
+	multiPiecePaths[b][24]=56;
+	multiPiecePaths[b][25]=58;
+	multiPiecePaths[b][26]=60;
+	multiPiecePaths[b][27]=62;
+	multiPiecePaths[b][28]=64;
+	multiPiecePaths[b][29]=66;
+	multiPiecePaths[b][30]=68;
+	multiPiecePaths[b][31]=70;
+	multiPiecePaths[b][32]=72;
+	multiPiecePaths[b][33]=74;
 
-if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 21)// monge harlequin
+        multiPiecePaths[b][34]=76;
+	multiPiecePaths[b][35]=78;
+	multiPiecePaths[b][36]=80;
+	multiPiecePaths[b][37]=82;
+	multiPiecePaths[b][37]=84;
+	multiPiecePaths[b][39]=86;
+	multiPiecePaths[b][40]=88;
+	multiPiecePaths[b][41]=90;
+	multiPiecePaths[b][42]=92;
+	multiPiecePaths[b][43]=94;
+	multiPiecePaths[b][44]=96;
+	multiPiecePaths[b][45]=98;
+	multiPiecePaths[b][46]=100;
+
+
+}
+if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 22)// monge harlequin
 {
 	multiPiecePaths[b][0]=20;
 	multiPiecePaths[b][1]=24;

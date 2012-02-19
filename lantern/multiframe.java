@@ -271,6 +271,7 @@ JCheckBoxMenuItem pieces20;
 JCheckBoxMenuItem pieces21;
 JCheckBoxMenuItem pieces22;
 JCheckBoxMenuItem pieces23;
+JCheckBoxMenuItem pieces24;
 
 JCheckBoxMenuItem [] italicsBehavior = new JCheckBoxMenuItem[3];
 
@@ -1728,10 +1729,11 @@ pieces19 = new JCheckBoxMenuItem("Adventure");
 pieces20 = new JCheckBoxMenuItem("Maya");
 pieces21 = new JCheckBoxMenuItem("Medieval");
 
+pieces22 = new JCheckBoxMenuItem("CCube");
 
 
-pieces22 = new JCheckBoxMenuItem("Monge Mix");
-pieces23 = new JCheckBoxMenuItem("Random Pieces");
+pieces23 = new JCheckBoxMenuItem("Monge Mix");
+pieces24 = new JCheckBoxMenuItem("Random Pieces");
 
 JMenuItem aboutmonge = new JMenuItem ("About Monge Pieces");
 
@@ -1746,7 +1748,7 @@ JMenu mongeMenu = new JMenu("Monge");
 mongeMenu.add(pieces7);
 mongeMenu.add(pieces14);
 mongeMenu.add(pieces15);
-mongeMenu.add(pieces22);
+mongeMenu.add(pieces23);
 
 mongeMenu.add(aboutmonge);
 
@@ -1770,8 +1772,8 @@ moltenmenu.add(pieces11);
 moltenmenu.add(pieces12);
 moltenmenu.add(pieces13);
 selectpieces.add(moltenmenu);
-
-selectpieces.add(pieces23);
+selectpieces.add(pieces22);
+selectpieces.add(pieces24);
 
 
 
@@ -1803,6 +1805,7 @@ pieces20.addActionListener(this);
 pieces21.addActionListener(this);
 pieces22.addActionListener(this);
 pieces23.addActionListener(this);
+pieces24.addActionListener(this);
 
 
 aboutmonge.addActionListener(this);
@@ -4002,11 +4005,16 @@ sharedVariables.pieceType=20;
 setPieces(sharedVariables.pieceType);
 
 }
+if(event.getActionCommand().equals("CCube"))
+{
+sharedVariables.pieceType=21;
+setPieces(sharedVariables.pieceType);
 
+}
 
 if(event.getActionCommand().equals("Monge Mix"))
 {
-sharedVariables.pieceType=21;
+sharedVariables.pieceType=22;
 setPieces(sharedVariables.pieceType);
 
 }
@@ -4020,7 +4028,7 @@ if(event.getActionCommand().equals("About Monge Pieces"))
 }
 if(event.getActionCommand().equals("Random Pieces"))
 {
-sharedVariables.pieceType=22;
+sharedVariables.pieceType=23;
 setPieces(sharedVariables.pieceType);
 
 }
@@ -5456,27 +5464,31 @@ pieces19.setSelected(false);
 
 
 if(type == 19)
-pieces19.setSelected(true);
+pieces20.setSelected(true);
 else
-pieces19.setSelected(false);
+pieces20.setSelected(false);
 if(type == 20)
-pieces19.setSelected(true);
+pieces21.setSelected(true);
 else
-pieces19.setSelected(false);
+pieces21.setSelected(false);
 if(type == 21)
-pieces19.setSelected(true);
+pieces22.setSelected(true);
 else
-pieces19.setSelected(false);
-
-
-
+pieces22.setSelected(false);
 if(type == 22)
+pieces23.setSelected(true);
+else
+pieces23.setSelected(false);
+
+
+
+if(type == 23)
 {
-	pieces20.setSelected(true);
+	pieces24.setSelected(true);
 	generateRandomPieces(type);
 }
 else
-pieces20.setSelected(false);
+pieces24.setSelected(false);
 
 
  for(int a=0; a<sharedVariables.maxGameTabs; a++)
