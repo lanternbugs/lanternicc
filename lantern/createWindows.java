@@ -528,8 +528,11 @@ else
 if(sharedVariables.activitiesTabNumber != 3)
 sharedVariables.activitiesPanel.notifylistScrollerPanel.notifylistScroller.setVisible(false);
 else
-sharedVariables.activitiesPanel.notifylistScrollerPanel.notifylistScroller.setVisible(true);
+{
+  sharedVariables.activitiesPanel.notifylistScrollerPanel.setVisible(true);
+  sharedVariables.activitiesPanel.notifylistScrollerPanel.notifylistScroller.setVisible(true);
 
+}
 if(sharedVariables.activitiesTabNumber != 4)
 sharedVariables.activitiesPanel.channelPanel.setVisible(false);
 else

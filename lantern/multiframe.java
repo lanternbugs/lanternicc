@@ -1129,7 +1129,7 @@ JMenuItem channelcol = new JMenuItem("Channel Colors");
  JMenuItem consoleColors = new JMenuItem("Console Colors");
   mywindowscolors.add(consoleColors);
 
-JMenuItem listColor = new JMenuItem("Activities Window Color");
+JMenuItem listColor = new JMenuItem("Notify an Events Background Color");
   mywindowscolors.add(listColor);
 listColor.addActionListener(this);
 
@@ -2658,7 +2658,11 @@ openActivities();
 if(event.getActionCommand().equals("Notify Window"))
 {
  myNotifyFrame.setSize(90,240);
- myNotifyFrame.setVisible(true);
+
+
+  myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
+  myNotifyFrame.setVisible(true);
+
 }
 
 
@@ -4954,11 +4958,11 @@ if(event.getActionCommand().equals("Console Colors"))
 
 
 }
-if(event.getActionCommand().equals("Activities Window Color"))
+if(event.getActionCommand().equals("Notify an Events Background Color"))
 {
 // BackColor
  JDialog frame = new JDialog();
- Color newColor = JColorChooser.showDialog(frame, "Choose Activites Window Background Color", sharedVariables.listColor);
+ Color newColor = JColorChooser.showDialog(frame, "Choose Notify an Events Background Color", sharedVariables.listColor);
  if(newColor != null)
  sharedVariables.listColor=newColor;
  if( sharedVariables.activitiesPanel != null)

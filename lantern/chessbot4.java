@@ -2093,7 +2093,10 @@ if(dg.getArg(0).equals("27"))
 }
 
 		if(dg.getArg(0).equals("91")){
-		mycreator.createWebFrame(dg.getArg(1));
+		if(dg.getArg(1).startsWith("https") || dg.getArg(1).contains("tryicc/register"))
+		 sharedVariables.openUrl(dg.getArg(1));
+		else
+                mycreator.createWebFrame(dg.getArg(1));
 
 		}
 
@@ -3378,7 +3381,7 @@ else
 	processLink(doc, theNotifyTell, sharedVariables.tabStuff[0].ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
 
 try {
-	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true)
+	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true && channelLogin == true)
 {
 	Sound nsound=new Sound(sharedVariables.songs[4]);
 }

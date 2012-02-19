@@ -127,6 +127,60 @@ item1= new JMenuItem("Enable Login Logout Messages");
 
 
 }
+
+JMenuItem item2= new JMenuItem("History " + watchName);
+ item2.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "History " + watchName + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item2);
+JMenuItem item3= new JMenuItem("Finger " + watchName);
+ item3.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Finger " + watchName + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item3);
+
+
+JMenuItem item4= new JMenuItem("Games " + watchName);
+ item4.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Games " + watchName + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item4);
+
+JMenuItem item5= new JMenuItem("Ping " + watchName);
+ item5.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Ping " + watchName + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item5);
+
+
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());
 
@@ -158,6 +212,7 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
  notifylistScroller = new JScrollPane(theNotifyList); 
   makeLayout();
 } // end init components
+
 
 
 void  makeLayout()

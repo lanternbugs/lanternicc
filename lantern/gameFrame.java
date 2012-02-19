@@ -125,7 +125,8 @@ else // library search
 
 MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
-         if (e.getClickCount() == 2 && (sharedVariables.autoHistoryPopup == false || mygametable.type1.equals("stored"))) {
+         if ((e.getClickCount() == 2 && (e.getButton() != MouseEvent.BUTTON3 ||  mygametable.type1.equals("stored") ))
+         && (sharedVariables.autoHistoryPopup == false || mygametable.type1.equals("stored"))) {
 
              JTable target = (JTable)e.getSource();
       int row = target.getSelectedRow();
@@ -214,6 +215,29 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
        });
 			    menu2.add(item1);
+
+				JMenuItem item13 = new JMenuItem("sposition");
+				 item13.addActionListener(new ActionListener() {
+          		public void actionPerformed(ActionEvent e) {
+					String examineString = "";
+
+
+				 	if(type1.equals("history"))
+				 	examineString = "Sposition " + type2 + " " + gameIndex;
+				 	else if(type1.equals("liblist"))
+				 	examineString = "Sposition " + type2 + " %" + gameIndex;
+				 	else if(type1.equals("search"))
+				 	examineString = "Sposition " + gameIndex;
+				 	myoutput output = new myoutput();
+				 	output.data=examineString + "\n";
+
+				 	output.consoleNumber=0;
+      			 	queue.add(output);
+
+				}
+
+       });
+			    menu2.add(item13);
 				JMenuItem item2 = new JMenuItem("libappend");
 				 item2.addActionListener(new ActionListener() {
           		public void actionPerformed(ActionEvent e) {
