@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
+*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -89,12 +89,12 @@ public class connectionDialog extends JDialog
     buttons.add(cancel);
 
     int ht = 20;
-    int border = 10;
+    double border = 10;
     int space = 5;
 
     double[][] size = {{border, 70, TableLayout.FILL, border},
                        {border, ht, space, ht, space, ht,
-                        space, TableLayout.FILL, border}};
+                        space, TableLayout.FILL, 40}};
 
     setLayout(new TableLayout(size));
 
@@ -103,11 +103,11 @@ public class connectionDialog extends JDialog
     add(new JLabel("Password"), "1, 3");
     add(pwdField, "2, 3");
     add(saveNP, "2, 5");
-    add(buttons, "1, 7, 3, 7");
+    add(buttons, "1, 8, 3, 8");
 
     updateOK();
 
-    setSize(250, 160);
+    setSize(300, 200);
   }
 
   public void actionPerformed(ActionEvent e) {
