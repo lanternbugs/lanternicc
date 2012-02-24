@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
+*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -47,108 +47,96 @@ import java.util.StringTokenizer;
 
 
 //public class multiframe  extends JApplet
-public class multiframe
-{
-  public static void createFrame ()
-    {
-        Frame frame = new Frame();
-        frame.setBounds (100, 100, 300, 300);
-        frame.show();
+public class multiframe {
+  
+  public static void createFrame() {
+    Frame frame = new Frame();
+    frame.setBounds(100, 100, 300, 300);
+    frame.show();
 
-        double size[][] =
-            {{0.25, 0.25, 0.25, 0.25},
-             {50, TableLayout.FILL, 40, 40, 40}};
+    double size[][] =
+      {{0.25, 0.25, 0.25, 0.25},
+       {50, TableLayout.FILL, 40, 40, 40}};
 
-        frame.setLayout (new TableLayout(size));
-    }
+    frame.setLayout (new TableLayout(size));
+  }
 
-public static void main(String[] args)
-{
-//public void init()
+  public static void main(String[] args) {
+    //public void init()
 
-//{
-	try {
+    //{
+    try {
 
-String os = System.getProperty("os.name").toLowerCase();
-if (os.indexOf( "win" ) >= 0)
-	UIManager.setLookAndFeel( "com.sun.java.swing.plaf.windows.WindowsLookAndFeel" );
+      String os = System.getProperty("os.name").toLowerCase();
+      if (os.indexOf( "win" ) >= 0)
+	UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 	// UIManager.setLookAndFeel( "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+      else
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.SystemLookAndFeel");
+      
+    } catch(Exception d) {}
 
-else
-UIManager.setLookAndFeel( "com.sun.java.swing.plaf.motif.SystemLookAndFeel");
+    final mymultiframe frame = new mymultiframe();
+    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    //DO_NOTHING_ON_CLOSE
 
-}
-catch(Exception d){}
+    frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
+    frame.setVisible(true);
 
-
-final mymultiframe frame = new mymultiframe();
-frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//DO_NOTHING_ON_CLOSE
-
-
-
-frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
-frame.setVisible(true);
-
-// uncomment below line to test name and pass saving
-//passTest tester = new passTest();
+    // uncomment below line to test name and pass saving
+    //passTest tester = new passTest();
 
 
+    //frame.setDefaultLookAndFeelDecorated(false);
+
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
+            frame.repaintTabs();
+          } catch (Exception e1) {
+            //ignore
+          }
+        }
+      });
 
 
+    try {
+      frame.consoleSubframes[0].setSelected(true);
+    } catch(Exception dd) {}
 
-//frame.setDefaultLookAndFeelDecorated(false);
+    // warning dialogue
 
-SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                             frame.repaintTabs();
-                            } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
+    String swarning="This is a beta version of Mike's new Interface.  Game play is possible but it's highly recommended you play unrated.  I want more testing before rated play can happen.  Not all wilds are supported.";
 
+    if (frame.sharedVariables.ActivitiesOnTop) {
+      frame.myfirstlist.add(frame.sharedVariables.activitiesPanel);
+      frame.myfirstlist.notontop.setSelected(true);
+    } else {
+      frame.mysecondlist.add(frame.sharedVariables.activitiesPanel);
+      frame.mysecondlist.notontop.setSelected(false);
+    }
+    //Popup pframe = new Popup((JFrame) frame, true, swarning);
+    //pframe.setVisible(true);
+    try {
+      if (frame.sharedVariables.activitiesOpen &&
+          !frame.sharedVariables.activitiesNeverOpen)
+        frame.openActivities();
+    } catch(Exception badopen) {}
 
+    try {
+      if (frame.sharedVariables.seeksOpen &&
+          !frame.sharedVariables.activitiesNeverOpen)
+        frame.openSeekGraph();
+    } catch(Exception badopen) {}
 
-try { frame.consoleSubframes[0].setSelected(true);} catch(Exception dd){}
+    try {
+      frame.myConnection =
+        new connectionDialog(frame, frame.sharedVariables, frame.queue, false);
+      frame.myConnection.setVisible(true);
 
-    // warning dialouge
-
-String swarning="This is a beta version of Mike's new Interface.  Game play is possible but it's highly recommended you play unrated.  I want more testing before rated play can happen.  Not all wilds are supported.";
-
-if(frame.sharedVariables.ActivitiesOnTop == true)
-{frame.myfirstlist.add(frame.sharedVariables.activitiesPanel);
- frame.myfirstlist.notontop.setSelected(true);
-}
-else
-{frame.mysecondlist.add(frame.sharedVariables.activitiesPanel);
- frame.mysecondlist.notontop.setSelected(false);
-}
-//Popup pframe = new Popup((JFrame) frame, true, swarning);
-//pframe.setVisible(true);
-try {if(frame.sharedVariables.activitiesOpen == true && frame.sharedVariables.activitiesNeverOpen != true )
-frame.openActivities();
-}catch(Exception badopen){}
-
-try {if(frame.sharedVariables.seeksOpen == true && frame.sharedVariables.activitiesNeverOpen != true )
-frame.openSeekGraph();
-}catch(Exception badopen){}
-
-try {
-
-
-	frame.myConnection = new connectionDialog(frame, frame.sharedVariables, frame.queue, false);
-	frame.myConnection.setVisible(true);
-
-}catch(Exception bfocus){}
-
-}
-
-
-
-
+    } catch(Exception bfocus) {}
+  }
 }// end main class
 
 class mymultiframe extends JFrame implements ActionListener, ChangeListener, WindowListener
