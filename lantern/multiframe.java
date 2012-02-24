@@ -311,471 +311,535 @@ class mymultiframe extends JFrame
 
       return false; // JLabel and JPanel.
     }
-}
-mymultiframe()
-{
+  }
+  
+  mymultiframe() {
 
-	graphics = new resourceClass();
-	gamequeue = new ConcurrentLinkedQueue<newBoardData>();
+    graphics = new resourceClass();
+    gamequeue = new ConcurrentLinkedQueue<newBoardData>();
 
-	sharedVariables = new channels();
-	sharedVariables.useTopGames = getOnTopSetting();
-queue = new ConcurrentLinkedQueue<myoutput>();
+    sharedVariables = new channels();
+    sharedVariables.useTopGames = getOnTopSetting();
+    queue = new ConcurrentLinkedQueue<myoutput>();
 
-	seekGraph = new seekGraphFrame(sharedVariables, queue);
-try {
-seekGraph.setSize(sharedVariables.mySeekSizes.con0x, sharedVariables.mySeekSizes.con0y);
-seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x, sharedVariables.mySeekSizes.point0.y);
-} catch(Exception duiseeek){}
+    seekGraph = new seekGraphFrame(sharedVariables, queue);
+    
+    try {
+      seekGraph.setSize(sharedVariables.mySeekSizes.con0x,
+                        sharedVariables.mySeekSizes.con0y);
+      seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x,
+                            sharedVariables.mySeekSizes.point0.y);
+    } catch(Exception duiseeek) {}
 
-	myboards = new gameboard[sharedVariables.maxGameTabs];
-	for(int bbo=0; bbo<sharedVariables.maxGameTabs; bbo++)
-		myboards[bbo]=null;
+    myboards = new gameboard[sharedVariables.maxGameTabs];
+    for (int bbo=0; bbo<sharedVariables.maxGameTabs; bbo++)
+      myboards[bbo] = null;
 
-img = new Image[14];
-mineScores = new saveScores();
+    img = new Image[14];
+    mineScores = new saveScores();
 
-mysettings = new settings(sharedVariables);
-
-
-sharedVariables.img=img;
-
-consoles = new JTextPane[sharedVariables.maxConsoleTabs];
-gameconsoles = new JTextPane[sharedVariables.maxGameConsoles];
-consoleSubframes=new subframe[sharedVariables.maxConsoles];;
-consoleChatframes=new chatframe[sharedVariables.maxConsoles];;
-
-colortype=1;
-sharedVariables.desktop = new JDesktopPaneCustom(sharedVariables, myboards, consoleSubframes, this);
-sharedVariables.desktop.add(seekGraph);
+    mysettings = new settings(sharedVariables);
 
 
+    sharedVariables.img=img;
+
+    consoles = new JTextPane[sharedVariables.maxConsoleTabs];
+    gameconsoles = new JTextPane[sharedVariables.maxGameConsoles];
+    consoleSubframes = new subframe[sharedVariables.maxConsoles];
+    consoleChatframes = new chatframe[sharedVariables.maxConsoles];
+
+    colortype = 1;
+    sharedVariables.desktop = new JDesktopPaneCustom(sharedVariables, myboards,
+                                                     consoleSubframes, this);
+    sharedVariables.desktop.add(seekGraph);
 
 
-setFocusCycleRoot(true);
-setFocusTraversalPolicy(new MyFocusTraversalPolicy());
+    setFocusCycleRoot(true);
+    setFocusTraversalPolicy(new MyFocusTraversalPolicy());
 
-String myweburl = "www.google.com";
-mywebframe = new webframe(sharedVariables,  queue, myweburl);
-sharedVariables.desktop.add(mywebframe);
-		try {
-			mywebframe.setSize(sharedVariables.webframeWidth, sharedVariables.webframeHeight);
-}catch(Exception d){};
+    String myweburl = "www.google.com";
+    mywebframe = new webframe(sharedVariables,  queue, myweburl);
+    sharedVariables.desktop.add(mywebframe);
+    try {
+      mywebframe.setSize(sharedVariables.webframeWidth, sharedVariables.webframeHeight);
+    } catch(Exception d) {};
 
-/*************** trying list code *****************/
-notifyList = new listClass("Notify List");
-eventsList = new listClass("Events");
-seeksList = new listClass("Human Seeks");
-computerSeeksList = new listClass("Computer Seeks");
-sharedVariables.activitiesPanel = new ActivitiesWindowPanel(this, sharedVariables, queue, eventsList, seeksList, computerSeeksList, notifyList, this);
-myfirstlist = new listFrame(this, sharedVariables, queue);
-mysecondlist = new listInternalFrame(this, sharedVariables, queue);
- sharedVariables.desktop.add(mysecondlist);
- myNotifyFrame = new notifyFrame(this, sharedVariables, queue,  notifyList);
-gameList = new tableClass();
-myGameList = new gameFrame(sharedVariables, queue, gameList);
-sharedVariables.myGameList=myGameList;
-myGameList.setSize(600,425);
-//sharedVariables.desktop.add(myGameList);
+    /*************** trying list code *****************/
+    notifyList = new listClass("Notify List");
+    eventsList = new listClass("Events");
+    seeksList = new listClass("Human Seeks");
+    computerSeeksList = new listClass("Computer Seeks");
+    sharedVariables.activitiesPanel =
+      new ActivitiesWindowPanel(this, sharedVariables, queue, eventsList,
+                                seeksList, computerSeeksList, notifyList, this);
+    myfirstlist = new listFrame(this, sharedVariables, queue);
+    mysecondlist = new listInternalFrame(this, sharedVariables, queue);
+    sharedVariables.desktop.add(mysecondlist);
+    myNotifyFrame = new notifyFrame(this, sharedVariables, queue,  notifyList);
+    gameList = new tableClass();
+    myGameList = new gameFrame(sharedVariables, queue, gameList);
+    sharedVariables.myGameList=myGameList;
+    myGameList.setSize(600,425);
+    //sharedVariables.desktop.add(myGameList);
 
-/*************** end list code******************/
-docWriter myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles, gameconsoles, myboards, consoleChatframes);
-mycreator = new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles, queue, img, gamequeue, mywebframe, graphics, myfirstlist, mysecondlist, myDocWriter, consoleChatframes, this);
-mycreator.createConsoleFrame(); //Create first window
-mycreator.createGameFrame();
-//mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-//setContentPane(sharedVariables.desktop);
-// add window listener so we can close an engine if open
-addWindowListener(this);
-getContentPane().add(sharedVariables.desktop, "Center");
+    /*************** end list code******************/
+    docWriter myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles,
+                                          gameconsoles, myboards, consoleChatframes);
+    mycreator =
+      new createWindows(sharedVariables, consoleSubframes ,myboards, consoles, gameconsoles,
+                        queue, img, gamequeue, mywebframe, graphics, myfirstlist,
+                        mysecondlist, myDocWriter, consoleChatframes, this);
+    mycreator.createConsoleFrame(); //Create first window
+    mycreator.createGameFrame();
+    //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+    //setContentPane(sharedVariables.desktop);
+    // add window listener so we can close an engine if open
+    addWindowListener(this);
+    getContentPane().add(sharedVariables.desktop, "Center");
 
- getSettings();
- sharedVariables.hasSettings=mysettings.readNow(myboards, consoleSubframes,  sharedVariables, consoles, gameconsoles); // read  for any saved settings  dont know what get settings  is doing MA 5-30-10
-mineScores.readNow(sharedVariables);
+    getSettings();
+    sharedVariables.hasSettings =
+      mysettings.readNow(myboards, consoleSubframes,
+                         sharedVariables, consoles, gameconsoles);
+    // read  for any saved settings don't know what get settings is doing MA 5-30-10
+    mineScores.readNow(sharedVariables);
 
-client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables, myboards, consoleSubframes, mycreator, graphics, eventsList, seeksList, computerSeeksList, notifyList, gameList, myGameList, this, consoleChatframes, seekGraph, this, myConnection, myfirstlist, mysecondlist);
-repaint();
-client.enabletimestamp();
+    client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables,
+                           myboards, consoleSubframes, mycreator, graphics, eventsList,
+                           seeksList, computerSeeksList, notifyList, gameList,
+                           myGameList, this, consoleChatframes, seekGraph, this,
+                           myConnection, myfirstlist, mysecondlist);
+    repaint();
+    client.enabletimestamp();
 
-loadGraphicsStandAlone();
-loadSoundsStandAlone();
-//loadGraphicsApplet();
-//loadSoundsApplet();
+    loadGraphicsStandAlone();
+    loadSoundsStandAlone();
+    //loadGraphicsApplet();
+    //loadSoundsApplet();
 
-// we look if these files  exist and if we do load name pass then any commands into script array list for connect to run
-// MA 1-1-11
-try  {
+    // we look if these files exist and if we do load name pass then
+    // any commands into script array list for connect to run MA
+    // 1-1-11
+    try {
 
-scriptLoader loadScripts = new  scriptLoader();
-loadScripts.loadScript(sharedVariables.iccLoginScript, "lantern_icc.ini");
-loadScripts.loadScript(sharedVariables.ficsLoginScript, "lantern_fics.ini");
-loadScripts.loadScript(sharedVariables.notifyControllerScript, sharedVariables.notifyControllerFile);
+      scriptLoader loadScripts = new  scriptLoader();
+      loadScripts.loadScript(sharedVariables.iccLoginScript, "lantern_icc.ini");
+      loadScripts.loadScript(sharedVariables.ficsLoginScript, "lantern_fics.ini");
+      loadScripts.loadScript(sharedVariables.notifyControllerScript,
+                             sharedVariables.notifyControllerFile);
 
-} catch(Exception scriptErrror){}
-setUpChannelNotify();
-setUpLanternNotify();
-parseCountries();
-Thread t = new Thread(client);
-t.start();
+    } catch(Exception scriptErrror) {}
+    
+    setUpChannelNotify();
+    setUpLanternNotify();
+    parseCountries();
+    Thread t = new Thread(client);
+    t.start();
 
 
-	createMenu();
-consoleSubframes[0].makeHappen(0);
-    if(sharedVariables.highlightMoves == false)
-    	highlight.setSelected(false);
+    createMenu();
+    consoleSubframes[0].makeHappen(0);
+    /*
+    if (sharedVariables.highlightMoves == false)
+      highlight.setSelected(false);
     else
-    	highlight.setSelected(true);
+      highlight.setSelected(true);
 
-    if(sharedVariables.gameend == false)
-    	gameend.setSelected(false);
+    if (sharedVariables.gameend == false)
+      gameend.setSelected(false);
     else
-    	gameend.setSelected(true);
+      gameend.setSelected(true);
 
- if(sharedVariables.notifyMainAlso == true)
- notifyMainAlso.setSelected(true);
- else
- notifyMainAlso.setSelected(false);
-
- if(sharedVariables.useTopGames == true)
- useTopGame.setSelected(true);
- else
- useTopGame.setSelected(false);
-
- if(sharedVariables.showMaterialCount == false)
-    	materialCount.setSelected(false);
+    if (sharedVariables.notifyMainAlso == true)
+      notifyMainAlso.setSelected(true);
     else
-    	materialCount.setSelected(true);
+      notifyMainAlso.setSelected(false);
 
- if(sharedVariables.drawCoordinates == false)
-    	drawCoordinates.setSelected(false);
+    if (sharedVariables.useTopGames == true)
+      useTopGame.setSelected(true);
     else
-    	drawCoordinates.setSelected(true);
+      useTopGame.setSelected(false);
 
- if(sharedVariables.showRatings == false)
-    	showRatings.setSelected(false);
+    if (sharedVariables.showMaterialCount == false)
+      materialCount.setSelected(false);
     else
-    	showRatings.setSelected(true);
+      materialCount.setSelected(true);
 
- if(sharedVariables.showFlags == false)
-    	showFlags.setSelected(false);
+    if (sharedVariables.drawCoordinates == false)
+      drawCoordinates.setSelected(false);
     else
-    	showFlags.setSelected(true);
+      drawCoordinates.setSelected(true);
 
- if(sharedVariables.showPallette == false)
-    	showPallette.setSelected(false);
+    if (sharedVariables.showRatings == false)
+      showRatings.setSelected(false);
     else
-    	showPallette.setSelected(true);
+      showRatings.setSelected(true);
 
- if(sharedVariables.autoChat == false)
-    	autoChat.setSelected(false);
+    if (sharedVariables.showFlags == false)
+      showFlags.setSelected(false);
     else
-    	autoChat.setSelected(true);
- if(sharedVariables.lowTimeColors == false)
-    	lowTimeColors.setSelected(false);
-    else
-    	lowTimeColors.setSelected(true);
- if(sharedVariables.newObserveGameSwitch == false)
-    	newObserveGameSwitch.setSelected(false);
-    else
-    	newObserveGameSwitch.setSelected(true);
+      showFlags.setSelected(true);
 
- if(sharedVariables.blockSays == false)
-    	blockSays.setSelected(false);
+    if (sharedVariables.showPallette == false)
+      showPallette.setSelected(false);
     else
-    	blockSays.setSelected(true);
+      showPallette.setSelected(true);
 
-
-if(sharedVariables.useLightBackground == false)
-    	useLightBackground.setSelected(false);
+    if (sharedVariables.autoChat == false)
+      autoChat.setSelected(false);
     else
-    	useLightBackground.setSelected(true);
+      autoChat.setSelected(true);
+    
+    if (sharedVariables.lowTimeColors == false)
+      lowTimeColors.setSelected(false);
+    else
+      lowTimeColors.setSelected(true);
+    
+    if (sharedVariables.newObserveGameSwitch == false)
+      newObserveGameSwitch.setSelected(false);
+    else
+      newObserveGameSwitch.setSelected(true);
 
+    if (sharedVariables.blockSays == false)
+      blockSays.setSelected(false);
+    else
+      blockSays.setSelected(true);
+
+    if (sharedVariables.useLightBackground == false)
+      useLightBackground.setSelected(false);
+    else
+      useLightBackground.setSelected(true);
+    */
+
+    highlight.           setSelected(sharedVariables.highlightMoves);
+    gameend.             setSelected(sharedVariables.gameend);
+    notifyMainAlso.      setSelected(sharedVariables.notifyMainAlso);
+    useTopGame.          setSelected(sharedVariables.useTopGames);
+    materialCount.       setSelected(sharedVariables.showMaterialCount);
+    drawCoordinates.     setSelected(sharedVariables.drawCoordinates);
+    showRatings.         setSelected(sharedVariables.showRatings);
+    showFlags.           setSelected(sharedVariables.showFlags);
+    showPallette.        setSelected(sharedVariables.showPallette);
+    autoChat.            setSelected(sharedVariables.autoChat);
+    lowTimeColors.       setSelected(sharedVariables.lowTimeColors);
+    newObserveGameSwitch.setSelected(sharedVariables.newObserveGameSwitch);
+    blockSays.           setSelected(sharedVariables.blockSays);
+    useLightBackground.  setSelected(sharedVariables.useLightBackground);
+    
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
-
-	if(sharedVariables.pgnObservedLogging == true)
-		pgnObservedLogging.setSelected(true);
-	else
-		pgnObservedLogging.setSelected(false);
-
-	if(sharedVariables.pgnLogging == true)
-		pgnlogging.setSelected(true);
-	else
-		pgnlogging.setSelected(false);
-
-	if(sharedVariables.switchOnTell == true)
-		tellswitch.setSelected(true);
-	else
-		tellswitch.setSelected(false);
-if(sharedVariables.toolbarVisible == true)
-		toolbarvisible.setSelected(true);
-	else
-		toolbarvisible.setSelected(false);
-
- if(sharedVariables.autoBufferChat == false)
-    	autobufferchat.setSelected(false);
+    /*
+    if (sharedVariables.pgnObservedLogging == true)
+      pgnObservedLogging.setSelected(true);
     else
-    	autobufferchat.setSelected(true);
- if(sharedVariables.channelNumberLeft == false)
-        channelNumberLeft.setSelected(false);
+      pgnObservedLogging.setSelected(false);
+
+    if (sharedVariables.pgnLogging == true)
+      pgnlogging.setSelected(true);
     else
-    	channelNumberLeft.setSelected(true);
+      pgnlogging.setSelected(false);
 
+    if (sharedVariables.switchOnTell == true)
+      tellswitch.setSelected(true);
+    else
+      tellswitch.setSelected(false);
+    
+    if (sharedVariables.toolbarVisible == true)
+      toolbarvisible.setSelected(true);
+    else
+      toolbarvisible.setSelected(false);
 
-if(sharedVariables.channelTimestamp == true)
-		channelTimestamp.setSelected(true);
-	else
-		channelTimestamp.setSelected(false);
-if(sharedVariables.shoutTimestamp == true)
-		shoutTimestamp.setSelected(true);
-	else
-		shoutTimestamp.setSelected(false);
-if(sharedVariables.qtellTimestamp == true)
-		qtellTimestamp.setSelected(true);
-	else
-		qtellTimestamp.setSelected(false);
-if(sharedVariables.reconnectTimestamp == true)
-		reconnectTimestamp.setSelected(true);
-	else
-		reconnectTimestamp.setSelected(false);
+    if (sharedVariables.autoBufferChat == false)
+      autobufferchat.setSelected(false);
+    else
+      autobufferchat.setSelected(true);
+    
+    if (sharedVariables.channelNumberLeft == false)
+      channelNumberLeft.setSelected(false);
+    else
+      channelNumberLeft.setSelected(true);
+    
+    if (sharedVariables.channelTimestamp == true)
+      channelTimestamp.setSelected(true);
+    else
+      channelTimestamp.setSelected(false);
+    
+    if (sharedVariables.shoutTimestamp == true)
+      shoutTimestamp.setSelected(true);
+    else
+      shoutTimestamp.setSelected(false);
+    
+    if (sharedVariables.qtellTimestamp == true)
+      qtellTimestamp.setSelected(true);
+    else
+      qtellTimestamp.setSelected(false);
+    
+    if (sharedVariables.reconnectTimestamp == true)
+      reconnectTimestamp.setSelected(true);
+    else
+      reconnectTimestamp.setSelected(false);
 
-if(sharedVariables.andreysLayout == 0)
-  BoardDesign1.setSelected(true);
-else
-  BoardDesign1.setSelected(false);
+    if(sharedVariables.andreysLayout == 0)
+      BoardDesign1.setSelected(true);
+    else
+      BoardDesign1.setSelected(false);
 
-if(sharedVariables.andreysLayout == 1)
-  BoardDesign2.setSelected(true);
-else
-  BoardDesign2.setSelected(false);
+    if (sharedVariables.andreysLayout == 1)
+      BoardDesign2.setSelected(true);
+    else
+      BoardDesign2.setSelected(false);
 
-  if(sharedVariables.andreysLayout == 2)
-  BoardDesign3.setSelected(true);
-else
-  BoardDesign3.setSelected(false);
+    if (sharedVariables.andreysLayout == 2)
+      BoardDesign3.setSelected(true);
+    else
+      BoardDesign3.setSelected(false);
 
-  if(sharedVariables.playersInMyGame == 2)
-  playersInMyGame.setSelected(true);
-  else
-  playersInMyGame.setSelected(false);
+    if (sharedVariables.playersInMyGame == 2)
+      playersInMyGame.setSelected(true);
+    else
+      playersInMyGame.setSelected(false);
 
-  if(sharedVariables.unobserveGoExamine == true)
-  unobserveGoExamine.setSelected(true);
-  else
-  unobserveGoExamine.setSelected(false);
+    if(sharedVariables.unobserveGoExamine == true)
+      unobserveGoExamine.setSelected(true);
+    else
+      unobserveGoExamine.setSelected(false);
 
+    if (sharedVariables.tellTimestamp == true)
+      tellTimestamp.setSelected(true);
+    else
+      tellTimestamp.setSelected(false);
+    
+    if (sharedVariables.leftTimestamp == true)
+      leftNameTimestamp.setSelected(true);
+    else
+      leftNameTimestamp.setSelected(false);
 
-if(sharedVariables.tellTimestamp == true)
-		tellTimestamp.setSelected(true);
-	else
-		tellTimestamp.setSelected(false);
-if(sharedVariables.leftTimestamp == true)
-		leftNameTimestamp.setSelected(true);
-	else
-		leftNameTimestamp.setSelected(false);
+    if (sharedVariables.checkLegality == true)
+      checkLegality.setSelected(true);
+    else
+      checkLegality.setSelected(false);
 
+    if (sharedVariables.indent == true)
+      lineindent.setSelected(true);
+    else
+      lineindent.setSelected(false);
+    */
+      
+    pgnObservedLogging.  setSelected(sharedVariables.pgnObservedLogging);
+    pgnlogging.          setSelected(sharedVariables.pgnLogging);
+    tellswitch.          setSelected(sharedVariables.switchOnTell);
+    toolbarvisible.      setSelected(sharedVariables.toolbarVisible);
+    autobufferchat.      setSelected(sharedVariables.autoBufferChat);
+    channelNumberLeft.   setSelected(sharedVariables.channelNumberLeft);
+    channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
+    shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
+    qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
+    reconnectTimestamp.  setSelected(sharedVariables.reconnectTimestamp);
+    BoardDesign1.        setSelected((sharedVariables.andreysLayout == 0));
+    BoardDesign2.        setSelected((sharedVariables.andreysLayout == 1));
+    BoardDesign3.        setSelected((sharedVariables.andreysLayout == 2));
+    playersInMyGame.     setSelected((sharedVariables.playersInMyGame == 2));
+    unobserveGoExamine.  setSelected(sharedVariables.unobserveGoExamine);
+    tellTimestamp.       setSelected(sharedVariables.tellTimestamp);
+    leftNameTimestamp.   setSelected(sharedVariables.leftTimestamp);
+    checkLegality.       setSelected(sharedVariables.checkLegality);
+    lineindent.          setSelected(sharedVariables.indent);
+    
+    checkItalicsBehavior(sharedVariables.italicsBehavior);
 
-if(sharedVariables.checkLegality == true)
-		checkLegality.setSelected(true);
-	else
-		checkLegality.setSelected(false);
+    /*
+    if (sharedVariables.randomArmy == true)
+      randomArmy.setSelected(true);
+    else
+      randomArmy.setSelected(false);
+    
+    if (sharedVariables.randomBoardTiles == true)
+      randomTiles.setSelected(true);
+    else
+      randomTiles.setSelected(false);
 
+    if (sharedVariables.specificSounds[4] == true)
+      notifysound.setSelected(true);
+    else
+      notifysound.setSelected(false);
+    
+    if (sharedVariables.tabsOnly == true)
+      tabbing.setSelected(true);
+    else
+      tabbing.setSelected(false);
 
-if(sharedVariables.indent == true)
-		lineindent.setSelected(true);
-	else
-		lineindent.setSelected(false);
+    if (sharedVariables.showQsuggest == true)
+      qsuggestPopup.setSelected(true);
+    else
+      qsuggestPopup.setSelected(false);
+    */
 
-checkItalicsBehavior(sharedVariables.italicsBehavior);
-
-
-if(sharedVariables.randomArmy == true)
-		randomArmy.setSelected(true);
-	else
-		randomArmy.setSelected(false);
-if(sharedVariables.randomBoardTiles == true)
-		randomTiles.setSelected(true);
-	else
-		randomTiles.setSelected(false);
-
-
-if(sharedVariables.specificSounds[4] == true)
-		notifysound.setSelected(true);
-	else
-		notifysound.setSelected(false);
-if(sharedVariables.tabsOnly == true)
-	tabbing.setSelected(true);
-else
-	tabbing.setSelected(false);
-
-if(sharedVariables.showQsuggest == true)
-	qsuggestPopup.setSelected(true);
-else
-	qsuggestPopup.setSelected(false);
-
-
-if(sharedVariables.rotateAways == true)
-{
-	rotateaways.setSelected(true);
-try{
+    randomArmy.          setSelected(sharedVariables.randomArmy);
+    randomTiles.         setSelected(sharedVariables.randomBoardTiles);
+    notifysound.         setSelected(sharedVariables.specificSounds[4]);
+    tabbing.             setSelected(sharedVariables.tabsOnly);
+    qsuggestPopup.       setSelected(sharedVariables.showQsuggest);
+    rotateaways.         setSelected(sharedVariables.rotateAways);
+    
+    if (sharedVariables.rotateAways == true) {
+      //rotateaways.setSelected(true);
+      try {
 	scriptLoader loadScripts = new  scriptLoader();
 	loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
-}catch(Exception du){}
-}
-else
-	rotateaways.setSelected(false);
+      } catch(Exception du) {}
+    }
+    /*
+    else
+      rotateaways.setSelected(false);
+    */
 
-if(sharedVariables.iloggedon == true)
-	iloggedon.setSelected(true);
-else
-	iloggedon.setSelected(false);
+    iloggedon.           setSelected(sharedVariables.iloggedon);
+    sidewaysconsole.     setSelected(sharedVariables.sideways);
+    userbuttons.         setSelected(sharedVariables.showButtonTitle);
+    autopopup.           setSelected(sharedVariables.autopopup);
+    basketballFlag.      setSelected(sharedVariables.basketballFlag);
+    autoHistoryPopup.    setSelected(sharedVariables.autoHistoryPopup);
+    makeObserveSounds.   setSelected(sharedVariables.makeObserveSounds);
+    hearsound.           setSelected(sharedVariables.makeSounds);
+    consolemenu.         setSelected(sharedVariables.showConsoleMenu);
+
+    /*
+    if (sharedVariables.iloggedon == true)
+      iloggedon.setSelected(true);
+    else
+      iloggedon.setSelected(false);
+
+    if (sharedVariables.sideways == true)
+      sidewaysconsole.setSelected(true);
+    else
+      sidewaysconsole.setSelected(false);
+
+    if (sharedVariables.showButtonTitle == true)
+      userbuttons.setSelected(true);
+    else
+      userbuttons.setSelected(false);
+
+    if (sharedVariables.autopopup == true)
+      autopopup.setSelected(true);
+    else
+      autopopup.setSelected(false);
+
+    if (sharedVariables.basketballFlag == true)
+      basketballFlag.setSelected(true);
+    else
+      basketballFlag.setSelected(false);
+
+    if (sharedVariables.autoHistoryPopup == true)
+      autoHistoryPopup.setSelected(true);
+    else
+      autoHistoryPopup.setSelected(false);
+    
+    if (sharedVariables.makeObserveSounds == true)
+      makeObserveSounds.setSelected(true);
+    else
+      makeObserveSounds.setSelected(false);
+
+    if (sharedVariables.makeSounds == true)
+      hearsound.setSelected(true);
+    else
+      hearsound.setSelected(false);
+
+    if (sharedVariables.showConsoleMenu == true)
+      consolemenu.setSelected(true);
+    else
+      consolemenu.setSelected(false);
+    */
+      
+    /*
+    if(sharedVariables.consoleLayout == 1) {
+      tabLayout1.setSelected(true);
+      tabLayout2.setSelected(false);
+      tabLayout3.setSelected(false);
+    } else if(sharedVariables.consoleLayout == 3) {
+      tabLayout1.setSelected(false);
+      tabLayout2.setSelected(false);
+      tabLayout3.setSelected(true);
+      consoleSubframes[0].overall.recreate();
+    } else {
+      tabLayout1.setSelected(false);
+      tabLayout2.setSelected(true);
+      tabLayout3.setSelected(false);
+      
+      consoleSubframes[0].overall.recreate();
+    }
+    */
+
+    /* name list stuff */
+    sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
+    sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
+    sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
+    sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
+    sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
+    sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
+    sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
+    sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
+    sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
 
 
-if(sharedVariables.sideways == true)
-	sidewaysconsole.setSelected(true);
-else
-	sidewaysconsole.setSelected(false);
+    for (int iii=0; iii<sharedVariables.maxConsoleTabs; iii++) {
+      if (consoleSubframes[iii]!=null) {
 
-if(sharedVariables.showButtonTitle == true)
-	userbuttons.setSelected(true);
-else
-	userbuttons.setSelected(false);
-
-
-if(sharedVariables.autopopup == true)
-	autopopup.setSelected(true);
-else
-	autopopup.setSelected(false);
-
-if(sharedVariables.basketballFlag == true)
-	basketballFlag.setSelected(true);
-else
-	basketballFlag.setSelected(false);
-
-
-if(sharedVariables.autoHistoryPopup == true)
-	autoHistoryPopup.setSelected(true);
-else
-	autoHistoryPopup.setSelected(false);
-if(sharedVariables.makeObserveSounds == true)
-	makeObserveSounds.setSelected(true);
-else
-	makeObserveSounds.setSelected(false);
-
-if(sharedVariables.makeSounds == true)
-	hearsound.setSelected(true);
-else
-	hearsound.setSelected(false);
-
-
-if(sharedVariables.showConsoleMenu == true)
-	consolemenu.setSelected(true);
-else
-	consolemenu.setSelected(false);
-
-/*if(sharedVariables.consoleLayout == 1)
-{
-	tabLayout1.setSelected(true);
-	tabLayout2.setSelected(false);
-	tabLayout3.setSelected(false);
-
-}
-else if(sharedVariables.consoleLayout == 3)
-{
-	tabLayout1.setSelected(false);
-	tabLayout2.setSelected(false);
-	tabLayout3.setSelected(true);
-	consoleSubframes[0].overall.recreate();
-
-
-}
-else
-{
-	tabLayout1.setSelected(false);
-	tabLayout2.setSelected(true);
-	tabLayout3.setSelected(false);
-
-	consoleSubframes[0].overall.recreate();
-
-}
-*/
-
-/* name list stuff */
-sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
-sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
-sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
-sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
-sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
-sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
-sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
-sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
-sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
-
-
-for(int iii=0; iii<sharedVariables.maxConsoleTabs; iii++)
-{
-	if(consoleSubframes[iii]!=null)
-	{
-
-	if(sharedVariables.nameListFont == null)
-		sharedVariables.nameListFont=consoleSubframes[iii].myNameList.getFont();
-	if(sharedVariables.consolesNamesLayout[iii]==0)
-	{
-
-		consoleSubframes[iii].listChoice.setSelected(false);
+	if (sharedVariables.nameListFont == null)
+          sharedVariables.nameListFont=consoleSubframes[iii].myNameList.getFont();
+	if (sharedVariables.consolesNamesLayout[iii]==0) {
+          
+          consoleSubframes[iii].listChoice.setSelected(false);
 	}
 	consoleSubframes[iii].myNameList.setForeground(sharedVariables.nameForegroundColor);
 	consoleSubframes[iii].myNameList.setBackground(sharedVariables.nameBackgroundColor);
 
 	consoleSubframes[iii].overall.recreate(sharedVariables.consolesTabLayout[iii]);
-final int iiii=iii;
-SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                              	if(sharedVariables.tellconsole!=iiii)
-							  		consoleSubframes[iiii].tellCheckbox.setSelected(false);// we set it to true in create console to match tell variable. undo the first one here if needed
+        final int iiii=iii;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                if (sharedVariables.tellconsole!=iiii)
+                  consoleSubframes[iiii].tellCheckbox.setSelected(false);
+                // we set it to true in create console to match tell
+                // variable. undo the first one here if needed
+              } catch (Exception e1) {             
+
+              }
+            }
+          });
+      }
+    }
+    
+    for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
+      consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
 
 
-                            } catch (Exception e1) {
+    if (sharedVariables.channelColor[0]!=null)
+      sharedVariables.typedColor=sharedVariables.channelColor[0];
 
-                            }
-                        }
-                    });
-	}
-}
+    
+    /****************** we do these next few in gui thread *****************************/
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
 
-	for(int bam=0; bam<sharedVariables.openConsoleCount; bam++)
-		consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+            if (sharedVariables.boardConsoleType != 2)
+              redrawBoard(sharedVariables.boardConsoleType);
+            // now apply foreground color to tabs
+            for (int cona=0; cona<sharedVariables.maxConsoleTabs; cona++)
+              consoles[cona].setForeground(sharedVariables.ForColor);
+            // now add in channel tab default names
+            try {
+              for (int mycons=1; mycons<sharedVariables.maxConsoleTabs; mycons++) {
+                setConsoleTabTitles asetter = new setConsoleTabTitles();
+                asetter.createConsoleTabTitle(sharedVariables, mycons, consoleSubframes,
+                                              sharedVariables.consoleTabCustomTitles[mycons]);
+              }
+            } catch(Exception badsetting) {}
 
-
-
-if(sharedVariables.channelColor[0]!=null)
-	sharedVariables.typedColor=sharedVariables.channelColor[0];
- 
- 
- 
- /****************** we do these next few in gui thread **********************************/
-  SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-
-	if(sharedVariables.boardConsoleType != 2)
-	redrawBoard(sharedVariables.boardConsoleType);
-	// now apply foreground color to tabs
-	for(int cona=0; cona< sharedVariables.maxConsoleTabs ; cona++)
-		consoles[cona].setForeground(sharedVariables.ForColor);
-	// now add in channel tab default names
-	try{
-		for(int mycons=1; mycons<sharedVariables.maxConsoleTabs; mycons++)
-		{
-	setConsoleTabTitles asetter = new setConsoleTabTitles();
-    asetter.createConsoleTabTitle(sharedVariables, mycons, consoleSubframes, sharedVariables.consoleTabCustomTitles[mycons]);
-	}
-}catch(Exception badsetting){}
-
-setInputFont();
+            setInputFont();
 try {
 
 					// now game boards
