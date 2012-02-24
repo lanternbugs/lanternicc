@@ -37,6 +37,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Queue; // added by Andrey
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
@@ -139,178 +140,177 @@ public class multiframe {
   }
 }// end main class
 
-class mymultiframe extends JFrame implements ActionListener, ChangeListener, WindowListener
+class mymultiframe extends JFrame
+  implements ActionListener, ChangeListener, WindowListener {
                                             //WindowFocusListener,
                                            // WindowStateListene
-{
+  connectionDialog myConnection;
+  seekGraphFrame seekGraph;
+  JToolBar toolBar;
+  docWriter myDocWriter;
+  listFrame myfirstlist;
+  listInternalFrame mysecondlist;
+  notifyFrame myNotifyFrame;
+  gameFrame myGameList;
+  listClass eventsList;
+  listClass seeksList;
+  listClass computerSeeksList;
 
-connectionDialog myConnection;
-seekGraphFrame seekGraph;
-JToolBar toolBar;
-docWriter myDocWriter;
-listFrame myfirstlist;
-listInternalFrame mysecondlist;
-notifyFrame myNotifyFrame;
-gameFrame myGameList;
-listClass eventsList;
-listClass seeksList;
-listClass computerSeeksList;
+  saveScores mineScores;
 
-saveScores mineScores;
+  listClass notifyList;
+  tableClass gameList;
+  webframe mywebframe;
+  channels sharedVariables;
+  private JTextPane[] consoles;
+  private JTextPane[] gameconsoles;
+  protected JColorChooser tcc;
+  int colortype;
 
-listClass notifyList;
-tableClass gameList;
-webframe mywebframe;
- channels sharedVariables;
- private JTextPane [] consoles;
- private JTextPane [] gameconsoles;
- protected JColorChooser tcc;
- int colortype;
- JCheckBoxMenuItem autonoidle;
- JCheckBoxMenuItem autobufferchat;
+  // Andrey notes: organize these in an intuitive manner
+  JCheckBoxMenuItem autonoidle;
+  JCheckBoxMenuItem autobufferchat;
   JCheckBoxMenuItem autoHistoryPopup;
- JCheckBoxMenuItem makeObserveSounds;
- JCheckBoxMenuItem hearsound;
- JCheckBoxMenuItem gameend;
- JCheckBoxMenuItem channelNumberLeft;
- JCheckBoxMenuItem tabbing;
+  JCheckBoxMenuItem makeObserveSounds;
+  JCheckBoxMenuItem hearsound;
+  JCheckBoxMenuItem gameend;
+  JCheckBoxMenuItem channelNumberLeft;
+  JCheckBoxMenuItem tabbing;
   JCheckBoxMenuItem BoardDesign1;
   JCheckBoxMenuItem BoardDesign2;
-   JCheckBoxMenuItem BoardDesign3;
- JCheckBoxMenuItem tellswitch;
- JCheckBoxMenuItem highlight;
- JCheckBoxMenuItem materialCount;
- JCheckBoxMenuItem drawCoordinates;
- JCheckBoxMenuItem showRatings;
- JCheckBoxMenuItem showFlags;
- JCheckBoxMenuItem showPallette;
+  JCheckBoxMenuItem BoardDesign3;
+  JCheckBoxMenuItem tellswitch;
+  JCheckBoxMenuItem highlight;
+  JCheckBoxMenuItem materialCount;
+  JCheckBoxMenuItem drawCoordinates;
+  JCheckBoxMenuItem showRatings;
+  JCheckBoxMenuItem showFlags;
+  JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
   JCheckBoxMenuItem lowTimeColors;
- JCheckBoxMenuItem newObserveGameSwitch;
-   JCheckBoxMenuItem blockSays;
-JCheckBoxMenuItem useLightBackground;
- JCheckBoxMenuItem boardconsole0;
- JCheckBoxMenuItem boardconsole1;
- JCheckBoxMenuItem boardconsole2;
- JCheckBoxMenuItem boardconsole3;
- JCheckBoxMenuItem sidewaysconsole;
- JCheckBoxMenuItem playersInMyGame;
- JCheckBoxMenuItem unobserveGoExamine;
+  JCheckBoxMenuItem newObserveGameSwitch;
+  JCheckBoxMenuItem blockSays;
+  JCheckBoxMenuItem useLightBackground;
+  JCheckBoxMenuItem boardconsole0;
+  JCheckBoxMenuItem boardconsole1;
+  JCheckBoxMenuItem boardconsole2;
+  JCheckBoxMenuItem boardconsole3;
+  JCheckBoxMenuItem sidewaysconsole;
+  JCheckBoxMenuItem playersInMyGame;
+  JCheckBoxMenuItem unobserveGoExamine;
 
-JCheckBoxMenuItem userbuttons;
-JCheckBoxMenuItem consolemenu;
+  JCheckBoxMenuItem userbuttons;
+  JCheckBoxMenuItem consolemenu;
 
-JCheckBoxMenuItem toolbarvisible;
-JCheckBoxMenuItem lineindent;
+  JCheckBoxMenuItem toolbarvisible;
+  JCheckBoxMenuItem lineindent;
 
-JCheckBoxMenuItem tabLayout1;
-JCheckBoxMenuItem tabLayout2;
-JCheckBoxMenuItem tabLayout3;
+  JCheckBoxMenuItem tabLayout1;
+  JCheckBoxMenuItem tabLayout2;
+  JCheckBoxMenuItem tabLayout3;
 
-JCheckBoxMenuItem shoutTimestamp;
-JCheckBoxMenuItem tellTimestamp;
-JCheckBoxMenuItem channelTimestamp;
-JCheckBoxMenuItem leftNameTimestamp;
-JCheckBoxMenuItem reconnectTimestamp;
-JCheckBoxMenuItem qtellTimestamp;
-JCheckBoxMenuItem checkLegality;
-JCheckBoxMenuItem useTopGame;
-JCheckBoxMenuItem notifyMainAlso;
+  JCheckBoxMenuItem shoutTimestamp;
+  JCheckBoxMenuItem tellTimestamp;
+  JCheckBoxMenuItem channelTimestamp;
+  JCheckBoxMenuItem leftNameTimestamp;
+  JCheckBoxMenuItem reconnectTimestamp;
+  JCheckBoxMenuItem qtellTimestamp;
+  JCheckBoxMenuItem checkLegality;
+  JCheckBoxMenuItem useTopGame;
+  JCheckBoxMenuItem notifyMainAlso;
 
+  JCheckBoxMenuItem aspect0;
+  JCheckBoxMenuItem aspect1;
+  JCheckBoxMenuItem aspect2;
+  JCheckBoxMenuItem aspect3;
+  JCheckBoxMenuItem woodenboard1;
+  JCheckBoxMenuItem woodenboard2;
+  JCheckBoxMenuItem woodenboard3;
+  JCheckBoxMenuItem grayishboard;
+  JCheckBoxMenuItem solidboard;
+  JCheckBoxMenuItem oliveboard;
+  JCheckBoxMenuItem cherryboard;
+  JCheckBoxMenuItem purpleboard;
 
- JCheckBoxMenuItem aspect0;
- JCheckBoxMenuItem aspect1;
- JCheckBoxMenuItem aspect2;
- JCheckBoxMenuItem aspect3;
-JCheckBoxMenuItem woodenboard1;
-JCheckBoxMenuItem woodenboard2;
-JCheckBoxMenuItem woodenboard3;
-JCheckBoxMenuItem grayishboard;
-JCheckBoxMenuItem solidboard;
-JCheckBoxMenuItem oliveboard;
-JCheckBoxMenuItem cherryboard;
-JCheckBoxMenuItem purpleboard;
+  JCheckBoxMenuItem board5;
+  JCheckBoxMenuItem board6;
+  JCheckBoxMenuItem board7;
 
+  JCheckBoxMenuItem pieces1;
+  JCheckBoxMenuItem pieces2;
+  JCheckBoxMenuItem pieces3;
+  JCheckBoxMenuItem pieces4;
+  JCheckBoxMenuItem pieces5;
+  JCheckBoxMenuItem pieces6;
+  JCheckBoxMenuItem pieces7;
+  JCheckBoxMenuItem pieces8;
+  JCheckBoxMenuItem pieces9;
+  JCheckBoxMenuItem pieces10;
+  JCheckBoxMenuItem pieces11;
+  JCheckBoxMenuItem pieces12;
+  JCheckBoxMenuItem pieces13;
+  JCheckBoxMenuItem pieces14;
+  JCheckBoxMenuItem pieces15;
+  JCheckBoxMenuItem pieces16;
+  JCheckBoxMenuItem pieces17;
+  JCheckBoxMenuItem pieces18;
+  JCheckBoxMenuItem pieces19;
+  JCheckBoxMenuItem pieces20;
+  JCheckBoxMenuItem pieces21;
+  JCheckBoxMenuItem pieces22;
+  JCheckBoxMenuItem pieces23;
+  JCheckBoxMenuItem pieces24;
 
-JCheckBoxMenuItem board5;
-JCheckBoxMenuItem board6;
-JCheckBoxMenuItem board7;
+  JCheckBoxMenuItem[] italicsBehavior = new JCheckBoxMenuItem[3];
 
-JCheckBoxMenuItem pieces1;
-JCheckBoxMenuItem pieces2;
-JCheckBoxMenuItem pieces3;
-JCheckBoxMenuItem pieces4;
-JCheckBoxMenuItem pieces5;
-JCheckBoxMenuItem pieces6;
-JCheckBoxMenuItem pieces7;
-JCheckBoxMenuItem pieces8;
-JCheckBoxMenuItem pieces9;
-JCheckBoxMenuItem pieces10;
-JCheckBoxMenuItem pieces11;
-JCheckBoxMenuItem pieces12;
-JCheckBoxMenuItem pieces13;
-JCheckBoxMenuItem pieces14;
-JCheckBoxMenuItem pieces15;
-JCheckBoxMenuItem pieces16;
-JCheckBoxMenuItem pieces17;
-JCheckBoxMenuItem pieces18;
-JCheckBoxMenuItem pieces19;
-JCheckBoxMenuItem pieces20;
-JCheckBoxMenuItem pieces21;
-JCheckBoxMenuItem pieces22;
-JCheckBoxMenuItem pieces23;
-JCheckBoxMenuItem pieces24;
+  JCheckBoxMenuItem randomArmy;
+  JCheckBoxMenuItem randomTiles;
 
-JCheckBoxMenuItem [] italicsBehavior = new JCheckBoxMenuItem[3];
+  JCheckBoxMenuItem iloggedon;
+  JCheckBoxMenuItem rotateaways;
+  JCheckBoxMenuItem notifysound;
+  JCheckBoxMenuItem qsuggestPopup;
+  JCheckBoxMenuItem autopopup;
+  JCheckBoxMenuItem basketballFlag;
 
-
-JCheckBoxMenuItem randomArmy;
-JCheckBoxMenuItem randomTiles;
-
-JCheckBoxMenuItem iloggedon;
-JCheckBoxMenuItem rotateaways;
-JCheckBoxMenuItem notifysound;
-JCheckBoxMenuItem qsuggestPopup;
-JCheckBoxMenuItem autopopup;
-JCheckBoxMenuItem basketballFlag;
-
-
-JCheckBoxMenuItem pgnlogging;
-JCheckBoxMenuItem pgnObservedLogging;
-JCheckBoxMenuItem compactNameList;
+  JCheckBoxMenuItem pgnlogging;
+  JCheckBoxMenuItem pgnObservedLogging;
+  JCheckBoxMenuItem compactNameList;
+  
   JMenuItem preset0;
   JMenuItem preset1;
   JMenuItem preset2;
   JMenuItem preset3;
-  JMenuItem  reconnect2;
+  JMenuItem reconnect2;
+  
   createWindows mycreator;
   resourceClass graphics;
-Runtime rt;
+  Runtime rt;
 
-ConcurrentLinkedQueue<myoutput> queue;
+  ConcurrentLinkedQueue<myoutput> queue;
+  // want to be able to change this to:
+  //Queue<myoutput> queue;
 
-chessbot4 client;
-gameboard myboards[];
-Image [] img;
-ConcurrentLinkedQueue<newBoardData> gamequeue;
-subframe [] consoleSubframes;
-chatframe [] consoleChatframes;
+  chessbot4 client;
+  gameboard[] myboards;
+  Image[] img;
+  ConcurrentLinkedQueue<newBoardData> gamequeue;
+  // want to be able to change this to:
+  //Queue<newBoardData> gamequeue;
+  subframe[] consoleSubframes;
+  chatframe[] consoleChatframes;
 
-settings mysettings;
+  settings mysettings;
 
 
+  class MyFocusTraversalPolicy extends ContainerOrderFocusTraversalPolicy {
 
- class MyFocusTraversalPolicy extends ContainerOrderFocusTraversalPolicy
+    protected boolean accept(Component aComp) {
+      if (aComp instanceof subframe || aComp instanceof gameboard)
+        return super.accept(aComp);
 
-{ protected boolean accept(Component aComp)
-
-{ if (aComp instanceof subframe || aComp instanceof gameboard)
-
-return super.accept(aComp);
-
-return false; // JLabel and JPanel.
-
-}
+      return false; // JLabel and JPanel.
+    }
 }
 mymultiframe()
 {
