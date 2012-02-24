@@ -33,7 +33,7 @@ public class autoExamDialog extends JDialog
   implements ChangeListener, ActionListener {
 
   private channels sVars;
-  private gameboard myboards;
+  private gameboard[] myboards;
   private SpinnerNumberModel model;
   private JCheckBox showf;
 
