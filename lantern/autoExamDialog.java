@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
+*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -29,49 +29,46 @@ import java.awt.event.ActionEvent;
 
 import layout.TableLayout;
 
-class autoExamDialog extends JDialog implements ChangeListener, ActionListener {
+public class autoExamDialog extends JDialog
+  implements ChangeListener, ActionListener {
 
-  channels sVars;
-  SpinnerNumberModel model;
-  JCheckBox showf;
-  long aes;
-  boolean aen;
+  private channels sVars;
+  private gameboard myboards;
+  private SpinnerNumberModel model;
+  private JCheckBox showf;
 
-  autoExamDialog(JFrame frame, boolean mybool, channels sVars) {
+  public autoExamDialog(JFrame frame, boolean mybool,
+                 channels sVars, gameboard[] myboards) {
     super(frame, mybool);
     this.sVars = sVars;
+    this.myboards = myboards;
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    aes = sVars.autoexamspeed;
-
-
-    model = new SpinnerNumberModel(aes*.001, .25, 60, .25);
+    model = new SpinnerNumberModel(sVars.autoexamspeed*.001,
+                                   .25, 60, .25);
     JSpinner speed = new JSpinner(model);
     speed.addChangeListener(this);
 
     showf = new JCheckBox();
-    aen = (sVars.autoexamnoshow==0);
-    showf.setSelected(aen);
+    showf.setSelected((sVars.autoexamnoshow==0));
     showf.setActionCommand("showf");
     showf.addActionListener(this);
 
-    JButton ok = new JButton("OK");
-    ok.setActionCommand("OK");
-    ok.addActionListener(this);
+    JButton start = new JButton("Start");
+    start.setActionCommand("Start");
+    start.addActionListener(this);
 
-    JButton cancel = new JButton("Cancel");
-    cancel.setActionCommand("Cancel");
-    cancel.addActionListener(this);
+    JButton stop = new JButton("Stop");
+    stop.setActionCommand("Stop");
+    stop.addActionListener(this);
 
     JPanel buttons = new JPanel();
-    buttons.add(ok);
-    buttons.add(cancel);
+    buttons.add(start);
+    buttons.add(stop);
     
     int border = 10;
-
     int space = 5;
-
     int ht = 20;
 
     double[][] size = {{border, 20, 40, space, TableLayout.FILL, border},
@@ -94,11 +91,14 @@ class autoExamDialog extends JDialog implements ChangeListener, ActionListener {
 
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
-    if (action.equals("OK")) dispose();
-    if (action.equals("Cancel")) {
-      sVars.autoexamspeed = aes;
-      sVars.autoexamnoshow = (aen ? 0 : 1);
-      dispose();
+    if (action.equals("Start")) {
+      for (int i=0; i<sVars.maxGameTabs; i++)
+        if (myboards[i] != null &&
+            sVars.mygame[i].state == 2)
+          myboards[i].setautoexamon();
+    }
+    if (action.equals("Stop")) {
+      sVars.autoexam = 0;
     }
     if (action.equals("showf"))
       sVars.autoexamnoshow = (showf.isSelected() ? 0 : 1);

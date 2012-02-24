@@ -2815,15 +2815,13 @@ if(event.getActionCommand().equals("Stop AutoExam"))
 
 }
 
-if(event.getActionCommand().equals("Set AutoExam Speed"))
-{
-
-  autoExamDialog frame = new autoExamDialog((JFrame) this, false, sharedVariables);
+if(event.getActionCommand().equals("Set AutoExam Speed")) {
+  autoExamDialog frame = new autoExamDialog((JFrame) this, false,
+                                            sharedVariables, myboards);
   frame.pack();
   frame.setVisible(true);
-
-
 }
+
 if(event.getActionCommand().equals("Reconnect to Queen"))
 {
 
