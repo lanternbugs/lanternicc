@@ -681,7 +681,7 @@ class mymultiframe extends JFrame
     qsuggestPopup.       setSelected(sharedVariables.showQsuggest);
     rotateaways.         setSelected(sharedVariables.rotateAways);
     
-    if (sharedVariables.rotateAways == true) {
+    if (sharedVariables.rotateAways) {
       //rotateaways.setSelected(true);
       try {
 	scriptLoader loadScripts = new  scriptLoader();
