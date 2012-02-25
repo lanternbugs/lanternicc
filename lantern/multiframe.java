@@ -840,165 +840,144 @@ class mymultiframe extends JFrame
             } catch(Exception badsetting) {}
 
             setInputFont();
-try {
+            try {
+              // now game boards
+              for (int i=0; i < sharedVariables.maxGameTabs; i++) {
+                if (myboards[i] != null) {
+                  myboards[i].mycontrolspanel.setFont();
+                }
+              }
+              
+              //  JFrame framer = new JFrame("open board count is (later event hopefully)" +
+              //                             sharedVariables.openBoardCount);
+              //  framer.setSize(200,100);
+              //  framer.setVisible(true);
+            } catch (Exception bdfont) {}
 
-					// now game boards
- 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
- 			 {
- 				 if(myboards[i] != null)
- 	 			{
- 	        		myboards[i].mycontrolspanel.setFont();
- 	 			}
- 			}
-
-                    //    JFrame framer = new JFrame("open board count is ( later event hopefully)" + sharedVariables.openBoardCount);
-                      //  framer.setSize(200,100);
-                      //  framer.setVisible(true);
-
-}
-catch(Exception bdfont){}
-
-
-                             } catch (Exception e1) {
-
-                            }
-                        }
-                    });
+          } catch (Exception e1) {
+            
+          }
+        }
+      });
 
 
+    // applet
+    //Image myIconImage = getImage(getDocumentBase(), "lantern.png");
+    //setIconImage(myIconImage);
+    // end applet
+    // stand alone
+    try {
+      Image myIconImage = null;
+      URL myurl = this.getClass().getResource("lantern.png");
+      myIconImage = Toolkit.getDefaultToolkit().getImage(myurl);
+      setIconImage(myIconImage);
+      // need a package for this
+      /*
+      if (sharedVariables.operatingSystem.equals("mac")) {
+        Application app = new Application();
+        app.setDockIconImage(myIconImage);
+      }
+      */
+    } catch (Exception e) {
 
-
-// applet
-//Image myIconImage = getImage(getDocumentBase(), "lantern.png");
-//setIconImage(myIconImage);
-// end applet
-// stand alone
-try{
-		Image myIconImage=null;
-		URL myurl = this.getClass().getResource("lantern.png");
-		myIconImage =Toolkit.getDefaultToolkit().getImage(myurl);
-		setIconImage(myIconImage);
-// need a package for this
-/*if(sharedVariables.operatingSystem.equals("mac"))
-{Application app = new Application();
-app.setDockIconImage(myIconImage);
-}
-*/
-}
-catch(Exception e)
-{
-
-}
-try {
-	setMySize();
-}
-catch(Exception donthaveit){}
+    }
+    try {
+      setMySize();
+    } catch(Exception donthaveit) {}
  
- try {
-sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
- }
- catch(Exception badfontsetting){}
+    try {
+      sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
+    }  catch(Exception badfontsetting) {}
 
 
-if(sharedVariables.hasSettings == false) // this hasSettings is returned by readNow which reads settings. if false. they have no settings file and i try to position windows. MA 9-19-10
-{
-try {
-		if(sharedVariables.screenW > 100 && sharedVariables.screenH > 100)
-		{
-		int px = 30;
-		int py = 30;
-		int cw = (int) (sharedVariables.screenW / 2 - px - 1/10 * sharedVariables.screenW/2);
-		int ch = (int) (sharedVariables.screenH - py -   sharedVariables.screenH / 6);
+    if (!sharedVariables.hasSettings) {
+      // this hasSettings is returned by readNow which reads
+      // settings. if false. they have no settings file and i try to
+      // position windows. MA 9-19-10
+      try {
+        if (sharedVariables.screenW > 100 && sharedVariables.screenH > 100) {
+          int px = 30;
+          int py = 30;
+          int cw = (int) (sharedVariables.screenW/2 - px - 1/10*sharedVariables.screenW/2);
+          int ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
 
 
-		consoleSubframes[0].setLocation(px, py);
-		consoleSubframes[0].setSize(cw, ch);
-		px = px + px + cw;
-		py = 30;
-		cw = (int) (sharedVariables.screenW / 2 - 30 -   (sharedVariables.screenW/2) / 10);
-		ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH / 6);
-		if(ch > cw + 100)
-		ch=cw+100;
-                if(sharedVariables.useTopGames == false)
-                {
-		myboards[0].setLocation(px, py);
-		myboards[0].setSize(cw, ch);
-                }
-                else
-                {
+          consoleSubframes[0].setLocation(px, py);
+          consoleSubframes[0].setSize(cw, ch);
+          px = px + px + cw;
+          py = 30;
+          cw = (int) (sharedVariables.screenW/2 - 30 - (sharedVariables.screenW/2) / 10);
+          ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
+          if (ch > cw + 100)
+            ch=cw+100;
+          
+          if (!sharedVariables.useTopGames) {
+            myboards[0].setLocation(px, py);
+            myboards[0].setSize(cw, ch);
+          } else {
+            final int px1 = px;
+            final int py1 = py;
+            final int cw1 = cw;
+            final int ch1 = ch;
+            try {
+              SwingUtilities.invokeLater(new Runnable() {
+                  @Override
+                    public void run() {
+                    try {
+                      if (myboards[0].topGame != null) {
+                        myboards[0].topGame.setLocation(px1, py1);
+                        myboards[0].topGame.setSize(cw1, ch1);
+                      }
+                    } catch (Exception e1) {
+                      //ignore
+                    }
+                  }
+                });
+              
+            } catch (Exception badf) {}
+          }
+        }
+      } catch (Exception dontknow) {}
+      // could not complete getting screen size and postioning windows
+    }// end if not have any settings read
 
-                  final int px1 = px;
-                  final int py1 = py;
-                  final int cw1 = cw;
-                  final int ch1 = ch;
-                try {
-                SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                              if(myboards[0].topGame != null)
-                              {
-                 myboards[0].topGame.setLocation(px1, py1);
-		myboards[0].topGame.setSize(cw1, ch1);
-                              }
-                            } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
+    // make as many consoles as we had last time
+    try {
+	if (sharedVariables.visibleConsoles>1)
+          for (int nummake=1; nummake<sharedVariables.visibleConsoles; nummake++)
+            mycreator.restoreConsoleFrame();
 
-                }catch(Exception badf){}
-                }
-
-                }
-
-}catch(Exception dontknow){}// could not complete getting screen size and postioning windows
-}// end if not have any settings read
-
-
-// make as many consoles as we had last time
-try {
-	if(sharedVariables.visibleConsoles>1)
-		for(int nummake=1; nummake<sharedVariables.visibleConsoles; nummake++)
-			mycreator.restoreConsoleFrame();
-
-}catch(Exception makingConsoles){}
+    } catch(Exception makingConsoles) {}
 
 
+    makeToolBar();
+    getContentPane().add(toolBar,  BorderLayout.NORTH);
 
-makeToolBar();
-getContentPane().add(toolBar,  BorderLayout.NORTH);
+    toolBar.setVisible(sharedVariables.toolbarVisible);
+    /*
+    if (sharedVariables.toolbarVisible == true)
+      toolBar.setVisible(true);
+    else
+      toolBar.setVisible(false);
+    */
 
-if(sharedVariables.toolbarVisible == true)
-toolBar.setVisible(true);
-else
-toolBar.setVisible(false);
-
-              try {
-                SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                            // myboards[0].recreate();
-                                     } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-
-                }catch(Exception badf){}
-
-
-
-
-mycreator.updateBoardsMenu(0);  // first board
-
-}
+    try {
+      SwingUtilities.invokeLater(new Runnable() {
+          @Override
+            public void run() {
+            try {
+              // myboards[0].recreate();
+            } catch (Exception e1) {
+              //ignore
+            }
+          }
+        });
+      
+    } catch(Exception badf) {}
 
 
-
-
-
+    mycreator.updateBoardsMenu(0);  // first board
+  }
 
 
 public void parseCountries()
