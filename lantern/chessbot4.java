@@ -6248,12 +6248,14 @@ try {
 			data.data=data.data+prefixcommand;
 			int myGameNumber = -100;
 		if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_PLAYING)
-		{	data.data = "Resign\n";
+		{	/*data.data = "Resign\n";
 			data.consoleNumber = 0;
 			data.game=1;
 			queue.add(data);
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
-		}
+	                */
+	                return;
+        	}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_EXAMINING)
 		{	data.data = "Unexamine\n";
 			data.consoleNumber = 0;
