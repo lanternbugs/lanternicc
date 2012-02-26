@@ -526,7 +526,8 @@ void sliderflip(int board[])
 		board[48+a]=1;
 
 	}
-
+if(!initialPosition.equals("*"))
+readInitialPosition2(initialPosition, board);
 
 }
 
