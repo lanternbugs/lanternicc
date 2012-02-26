@@ -5916,7 +5916,8 @@ seeksLabel.addMouseListener(new MouseAdapter() {
          public void mouseExited (MouseEvent me) {}
          public void mouseClicked (MouseEvent me) {}  });
 
-activitesLabel.setIcon(sharedVariables.activitiesIcon);
+//activitesLabel.setIcon(sharedVariables.activitiesIcon);
+  activitesLabel.setText("<html><Center><B>A</b></center></html>");
 activitesLabel.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
 
