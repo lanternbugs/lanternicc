@@ -5144,7 +5144,12 @@ try {
 //	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
 	if(!myfirstlist.isVisible() && !mysecondlist.isVisible())
 	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-  
+        else if(mysecondlist.isVisible() && mysecondlist.isSelected() == false)
+        mysecondlist.setSelected(true);
+        else if(mysecondlist.isVisible())
+        mysecondlist.setVisible(false);
+        else if(myfirstlist.isVisible())
+        myfirstlist.setVisible(false);
 	sharedVariables.activitiesPanel.setColors();
 //	myfirstlist.setSelected(true);
 }catch(Exception dui){}
@@ -5243,10 +5248,14 @@ try {
 seekGraph.setSize(sharedVariables.mySeekSizes.con0x, sharedVariables.mySeekSizes.con0y);
 seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x, sharedVariables.mySeekSizes.point0.y);
 seekGraph.setVisible(true);
+seekGraph.setSelected(true);
 //seekGraph.setSize(600,600);
 }
-
+else if(seekGraph.isSelected() == false)
 seekGraph.setSelected(true);
+else
+seekGraph.setVisible(false);
+
 }catch(Exception dummyseek){}
 
 }
@@ -5866,7 +5875,7 @@ void makeToolBar()
 {
   toolBar = new JToolBar("Still draggable");
  sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,17));
+ toolBar.setLayout(new GridLayout(1,18));
 
 JButton pure1 = new JButton("1-min");
 JButton pure3 = new JButton("3-min");
@@ -5875,7 +5884,7 @@ JButton pure15 = new JButton("15-min");
 JButton pure45 = new JButton("45 45");
 JButton pure960 = new JButton("Chess960");
 JLabel seeksLabel = new JLabel();
-
+JLabel activitesLabel = new JLabel();
 /*pure1.setIcon(sharedVariables.pure1);
 pure3.setIcon(sharedVariables.pure3);
 pure5.setIcon(sharedVariables.pure5);
@@ -5891,7 +5900,6 @@ pure45.setBackground(new Color(255,255,255));
 pure960.setBackground(new Color(255,255,255));
 
 seeksLabel.setIcon(sharedVariables.seekIcon);
-
 seeksLabel.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
 
@@ -5908,6 +5916,22 @@ seeksLabel.addMouseListener(new MouseAdapter() {
          public void mouseExited (MouseEvent me) {}
          public void mouseClicked (MouseEvent me) {}  });
 
+activitesLabel.setIcon(sharedVariables.activitiesIcon);
+activitesLabel.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+
+
+ 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+ 			;
+ 			 else
+ 			 {
+			openActivities();
+                          }// end else
+			 }
+         public void mouseReleased(MouseEvent e) {}
+         public void mouseEntered (MouseEvent me) {}
+         public void mouseExited (MouseEvent me) {}
+         public void mouseClicked (MouseEvent me) {}  });
 
 pure1.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
@@ -6053,6 +6077,7 @@ pure960.addMouseListener(new MouseAdapter() {
   }
    toolBar.add(sharedVariables.mybuttons[0]);
  toolBar.add(seeksLabel);
+ toolBar.add(activitesLabel);
  toolBar.add(pure1);
 toolBar.add(pure3);
 toolBar.add(pure5);
@@ -6235,6 +6260,8 @@ sharedVariables.pure960 = new ImageIcon(myiconurl, "960");
  myiconurl = this.getClass().getResource( "images/seekIcon.png");
 sharedVariables.seekIcon = new ImageIcon(myiconurl, "seekIcon");
 
+ myiconurl = this.getClass().getResource( "images/activitiesIcon.png");
+sharedVariables.activitiesIcon = new ImageIcon(myiconurl, "activitiesIcon");
 
  myiconurl = this.getClass().getResource( "images/observing.gif");
 sharedVariables.observeIcon = new ImageIcon(myiconurl, "observing");

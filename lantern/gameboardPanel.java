@@ -309,7 +309,7 @@ the slider is on. otherwise it draws the curernt in play board*/
               String [] boardRows = {"1", "2", "3", "4", "5", "6", "7", "8"};
  	      g2.setColor(sharedVariables.boardForegroundColor);
               int fsize =(int) ((double) coordinateX * .8);
-	      Font coordinateFont = new Font("Times New Roman", Font.BOLD, fsize);
+	      Font coordinateFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
               g2.setFont(coordinateFont);
               int xoffset = (int) ((double) coordinateX/4);
 
