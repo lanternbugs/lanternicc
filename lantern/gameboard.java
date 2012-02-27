@@ -764,6 +764,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     if (tempnumber ==
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
       if(relation.equals("E")) {
+       if (sharedVariables.makeSounds == true  && sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING)
+       makeASound(8);
         sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_EXAMINING;
         sharedVariables.mygame[gameData.BoardIndex].piecePallette=true;
@@ -1101,6 +1103,8 @@ catch(Exception logging){}
         "W" + sharedVariables.mygame[gameData.BoardIndex].myGameNumber;
       queue.add(output);
       */
+       if (sharedVariables.makeSounds == true  && sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING)
+       makeASound(8);
 
       sharedVariables.mygame[gameData.BoardIndex].title =
         "game over - " +
@@ -1184,6 +1188,10 @@ void stopTheEngine()
     // remove this
 
     if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
+
+       if (sharedVariables.makeSounds == true  && sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING)
+       makeASound(8);
+
 
       sharedVariables.mygame[gameData.BoardIndex].title =
         "game over now examined- " +
@@ -1667,6 +1675,20 @@ void stopTheEngine()
               }
             }
           });
+
+      if (type == 8)
+	SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                Sound movesound=new Sound(sharedVariables.songs[7]);
+
+              } catch (Exception e1) {
+                //ignore
+              }
+            }
+          });
+
 
     } catch(Exception dumb1) {}
 

@@ -6219,6 +6219,8 @@ try {
 	sharedVariables.songs[5]=songPath;
 	songPath = this.getClass().getResource("buzzer.wav"); // Geturl of sound
 	sharedVariables.songs[6]=songPath;
+	songPath = this.getClass().getResource("fitbell.wav"); // Geturl of sound
+	sharedVariables.songs[7]=songPath;
 
 
 	songPath = this.getClass().getResource("BEEP_FM.wav"); // Geturl of sound

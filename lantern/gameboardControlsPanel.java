@@ -430,7 +430,7 @@ import layout.TableLayout;
               });
 
             menu2.add(item2);
-     
+
             JMenuItem item3 = new JMenuItem("Unfollow ");
             item3.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -449,8 +449,38 @@ import layout.TableLayout;
 
             menu2.add(item4);
 
-            JMenuItem item5 = new JMenuItem("Move Board Up ");
+            JMenuItem item5 = new JMenuItem("Pstat  " + nameF);
             item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Pstat " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item5);
+
+            JMenuItem item6 = new JMenuItem("Notify  " + nameF);
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("+notify " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item6);
+
+            JMenuItem item7 = new JMenuItem("Game Notify  " + nameF);
+            item7.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("+gnotify " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item7);
+
+
+
+
+            JMenuItem item8 = new JMenuItem("Move Board Up ");
+            item8.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   try {
                     myboard.moveBoardDown();
@@ -458,10 +488,10 @@ import layout.TableLayout;
                 }
               });
 
-            menu2.add(item5);
+            menu2.add(item8);
 
-            JMenuItem item6 = new JMenuItem("Move Board Down ");
-            item6.addActionListener(new ActionListener() {
+            JMenuItem item9 = new JMenuItem("Move Board Down ");
+            item9.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   try {
                     myboard.moveBoardUp();
@@ -469,7 +499,7 @@ import layout.TableLayout;
                 }
               });
 
-            menu2.add(item6);
+            menu2.add(item9);
 
 
             menu2.show(e.getComponent(),e.getX(),e.getY());
@@ -537,8 +567,38 @@ import layout.TableLayout;
 
             menu2.add(item4);
 
-            JMenuItem item5 = new JMenuItem("Move Board Up ");
+            JMenuItem item5 = new JMenuItem("Pstat  " + nameF);
             item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Pstat " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item5);
+
+            JMenuItem item6 = new JMenuItem("Notify  " + nameF);
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("+notify " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item6);
+
+            JMenuItem item7 = new JMenuItem("Game Notify  " + nameF);
+            item7.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("+gnotify " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item7);
+
+
+
+
+            JMenuItem item8 = new JMenuItem("Move Board Up ");
+            item8.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   try {
                     myboard.moveBoardDown();
@@ -546,10 +606,10 @@ import layout.TableLayout;
                 }
               });
 
-            menu2.add(item5);
+            menu2.add(item8);
 
-            JMenuItem item6 = new JMenuItem("Move Board Down ");
-            item6.addActionListener(new ActionListener() {
+            JMenuItem item9 = new JMenuItem("Move Board Down ");
+            item9.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   try {
                     myboard.moveBoardUp();
@@ -557,7 +617,7 @@ import layout.TableLayout;
                 }
               });
 
-            menu2.add(item6);
+            menu2.add(item9);
 
            
             menu2.show(e.getComponent(),e.getX(),e.getY());
