@@ -156,9 +156,9 @@ public void makehappen(int i)
                          if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true)
                          {
                            if(sharedVariables.mygame[gameData.LookingAt].clickCount %2 == 0)
-                           gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);
+                           setEngineDoc();
                            else
-                            gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
+                           setGameDoc();
                             sharedVariables.mygame[gameData.LookingAt].clickCount++;
                          }
                          else
@@ -170,6 +170,26 @@ public void makehappen(int i)
 			adjustMoveList();
  								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type something
  }
+ 
+void setEngineDoc()
+{
+gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);
+gameconsoles[gameData.BoardIndex].setFont(sharedVariables.analysisFont);
+gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.analysisForegroundColor);
+gameconsoles[gameData.BoardIndex].setBackground(sharedVariables.analysisBackgroundColor);
+
+}
+void  setGameDoc()
+ {
+   gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
+   gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.ForColor);
+gameconsoles[gameData.BoardIndex].setBackground(sharedVariables.BackColor);
+if(sharedVariables.myFont != null)
+	gameconsoles[gameData.BoardIndex].setFont(sharedVariables.myFont);
+
+ }
+
+
 public void makerightclickmainhappen(MouseEvent e)
 {
 JPopupMenu menu2=new JPopupMenu("Popup2");

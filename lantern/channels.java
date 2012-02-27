@@ -194,6 +194,7 @@ Font inputFont;
 Font nameListFont;
 Font [] consoleFonts;
 Font eventsFont;
+Font analysisFont;
 Color [] channelColor = new Color[500];
 Color lightcolor;
 Color darkcolor;
@@ -237,6 +238,8 @@ Color channelTitlesColor;
 Color tellNameColor;
 Color nameForegroundColor;
 Color nameBackgroundColor;
+Color analysisForegroundColor;
+Color analysisBackgroundColor;
 
 StyledDocument [] mydocs;
 StyledDocument [] mygamedocs = new StyledDocument[100];
@@ -601,6 +604,12 @@ try {
     eventsFont = new Font("Tahoma", Font.PLAIN, 14);
 }
 catch(Exception badEventsFont){}
+try {
+analysisFont = new Font("Times New Roman", Font.PLAIN, 12);
+
+}
+catch(Exception badanalysisfont){}
+
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
 else if(operatingSystem.equals("mac"))
@@ -669,6 +678,10 @@ channelTitlesColor = new Color(204, 255, 204);
 tellNameColor=new Color(255,255,153);
 nameForegroundColor = new Color(51, 51, 0);
 nameBackgroundColor = new Color(255,255,204);
+
+analysisForegroundColor =  new Color(51, 51, 0);
+analysisBackgroundColor =  new Color(255,255,204);
+
 // my original tan board
 //lightcolor= new Color(255, 204, 204);
 //darkcolor = new Color(193,153,153);

@@ -1351,6 +1351,21 @@ JMenuItem enginestop = new JMenuItem("Stop Engine");
   optionsmenu.add(enginestop);
 enginestop.addActionListener(this);
 
+JMenu engineMenu = new JMenu("Analysis Display");
+
+JMenuItem ananfont = new JMenuItem("Analysis Font");
+  engineMenu.add(ananfont);
+ananfont.addActionListener(this);
+
+JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
+  engineMenu.add(ananfore);
+ananfore.addActionListener(this);
+
+JMenuItem ananback = new JMenuItem("Analysis Background Color");
+  engineMenu.add(ananback);
+ananback.addActionListener(this);
+optionsmenu.add(engineMenu);
+
 optionsmenu.addSeparator();
 JMenuItem customizetools = new JMenuItem("Customize User Buttons");
 customizetools.addActionListener(this);
@@ -2620,6 +2635,46 @@ sharedVariables.wallpaperImage=Toolkit.getDefaultToolkit().getImage(wallpaperURL
 		catch(Exception e){}
 
 }
+
+
+if(event.getActionCommand().equals("Analysis Font"))
+{
+JFrame f = new JFrame("FontChooser Startup");
+    FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
+    fc.setVisible(true);
+	         Font fnt = fc.getSelectedFont();
+	        if(fnt != null)
+	        {
+				
+                                sharedVariables.analysisFont=fnt;
+	                        // sharedVariables.engineDoc.setFont(sharedVariables.analysisFont);
+                }
+
+
+}
+
+if(event.getActionCommand().equals("Analysis Foreground Color"))
+{
+JDialog frame = new JDialog();
+Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color", sharedVariables.analysisForegroundColor);
+ if(newColor != null)
+ {
+	 sharedVariables.analysisForegroundColor=newColor;
+ }
+  
+}
+if(event.getActionCommand().equals("Analysis Background Color"))
+{
+JDialog frame = new JDialog();
+Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color", sharedVariables.analysisBackgroundColor);
+ if(newColor != null)
+ {
+	 sharedVariables.analysisBackgroundColor=newColor;
+ }
+
+  
+}
+
 
 if(event.getActionCommand().equals("Stop Engine"))
 {
