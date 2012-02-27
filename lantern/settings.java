@@ -147,6 +147,12 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	set_string = set_string + "listcolor ";
 	set_string = set_string + sharedVariables.listColor.getRGB() + " ";
 
+//analysisForegroundColor
+	set_string = set_string + "analysisForegroundColor ";
+	set_string = set_string + sharedVariables.analysisForegroundColor.getRGB() + " ";
+// analysisBackgroundColor
+	set_string = set_string + "analysisBackgroundColor ";
+	set_string = set_string + sharedVariables.analysisBackgroundColor.getRGB() + " ";
 
 	for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	{
@@ -1037,6 +1043,15 @@ catch(Exception badboard){}
 	set_string = set_string + aFontSize + " ";
 	set_string = set_string + "[doneFont] ";
 
+	set_string = set_string + "[analysisFont] ";
+	aFont= sharedVariables.analysisFont.getFontName();
+	aFont=aFont.replace(" ", "*");
+	set_string = set_string + aFont + " ";
+	aFontStyle="" + sharedVariables.analysisFont.getStyle();
+	set_string = set_string + aFontStyle + " ";
+	aFontSize="" + sharedVariables.analysisFont.getSize();
+	set_string = set_string + aFontSize + " ";
+	set_string = set_string + "[analysisFont] ";
 
 
 	set_string = set_string + "[eventsFont] ";
@@ -1366,6 +1381,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					if(temp.equals("listcolor"))
 					{
 						sharedVariables.listColor=new Color(Integer.parseInt(temp2));
+
+					}
+
+					if(temp.equals("analysisForegroundColor"))
+					{
+						sharedVariables.analysisForegroundColor=new Color(Integer.parseInt(temp2));
+
+					}
+					if(temp.equals("analysisBackgroundColor"))
+					{
+						sharedVariables.analysisBackgroundColor=new Color(Integer.parseInt(temp2));
 
 					}
 
@@ -2910,6 +2936,30 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 
 			}// end if font
 
+			if(temp.equals("[analysisFont]"))
+			{
+				String temp9=tokens.nextToken();
+				temp9=temp9.replace("*", " "); // we searlize is with * for spaces
+				fontStyle=tokens.nextToken();
+				fontSize=tokens.nextToken();
+
+				try {
+				Font aFont = new Font(temp9, Integer.parseInt(fontStyle), Integer.parseInt(fontSize));
+				if(aFont != null)
+				{
+
+						sharedVariables.analysisFont=aFont;
+					temp="[allDone]";
+
+				// we set the font after settings is called with the myconsolepanel.setfont() methos outside this class/file
+
+				}// end if not null font
+			}
+				catch(Exception dd)
+				{ }
+
+
+			}// end if analysisFont
 
 
 
