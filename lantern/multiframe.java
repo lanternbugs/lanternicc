@@ -2647,10 +2647,18 @@ JFrame f = new JFrame("FontChooser Startup");
 	        {
 				
                                 sharedVariables.analysisFont=fnt;
-	                        // sharedVariables.engineDoc.setFont(sharedVariables.analysisFont);
-                }
 
 
+for(int a=0; a<sharedVariables.maxGameTabs; a++)
+if(myboards[a]!= null)
+if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+myboards[a].myconsolepanel.setEngineDoc();
+}
+
+         }// if fnt not null
 }
 
 if(event.getActionCommand().equals("Analysis Foreground Color"))
@@ -2660,8 +2668,17 @@ Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color", sh
  if(newColor != null)
  {
 	 sharedVariables.analysisForegroundColor=newColor;
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+if(myboards[a]!= null)
+if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+myboards[a].myconsolepanel.setEngineDoc();
+}
+
  }
-  
+
 }
 if(event.getActionCommand().equals("Analysis Background Color"))
 {
@@ -2670,6 +2687,15 @@ Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color", sh
  if(newColor != null)
  {
 	 sharedVariables.analysisBackgroundColor=newColor;
+ for(int a=0; a<sharedVariables.maxGameTabs; a++)
+if(myboards[a]!= null)
+if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+myboards[a].myconsolepanel.setEngineDoc();
+}
+
  }
 
   
@@ -5204,8 +5230,10 @@ try {
         else if(mysecondlist.isVisible())
         mysecondlist.setVisible(false);
         else if(myfirstlist.isVisible())
-        myfirstlist.setVisible(false);
-	sharedVariables.activitiesPanel.setColors();
+        { myfirstlist.setBoardSize();
+          myfirstlist.setVisible(false);
+        }
+        sharedVariables.activitiesPanel.setColors();
 //	myfirstlist.setSelected(true);
 }catch(Exception dui){}
 }
@@ -5309,8 +5337,9 @@ seekGraph.setSelected(true);
 else if(seekGraph.isSelected() == false)
 seekGraph.setSelected(true);
 else
+{seekGraph.setBoardSize();
 seekGraph.setVisible(false);
-
+}
 }catch(Exception dummyseek){}
 
 }

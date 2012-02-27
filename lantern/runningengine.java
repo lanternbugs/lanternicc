@@ -244,7 +244,7 @@ if(sharedVariables.gamelooking[a]==BoardIndex)
   
  if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
  if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
-gameconsoles[a].setStyledDocument(doc);
+setEngineDoc(doc, a);
 }
 
 }
@@ -266,7 +266,14 @@ while(go==1);
 catch(Exception e){}
 }// end run winboard
 
+void setEngineDoc(StyledDocument doc, int a)
+{
+gameconsoles[a].setStyledDocument(doc);
+gameconsoles[a].setFont(sharedVariables.analysisFont);
+gameconsoles[a].setForeground(sharedVariables.analysisForegroundColor);
+gameconsoles[a].setBackground(sharedVariables.analysisBackgroundColor);
 
+}
 void runUci()
 {
 try {
@@ -445,7 +452,7 @@ catch(Exception e) {}
 if(text.length() > 0 && ((text.contains("pv") && stage ==3) || stage<3))
 {
 try {
-if(text.startsWith("info") && (text.contains("pv") && stage ==3))
+if(text.startsWith("info") && (text.contains("pv") && !text.contains("info currmove") && stage ==3))
 {
 	String line1 = text.substring(0, text.indexOf("pv"));
 	String line2 = text.substring(text.indexOf("pv") + 3, text.length());
@@ -493,7 +500,7 @@ if(sharedVariables.gamelooking[a]==BoardIndex)
 {
  if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
  if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
-gameconsoles[a].setStyledDocument(doc);
+setEngineDoc(doc, a);
 
 //gameconsoles[a].setStyledDocument(doc);
 }
