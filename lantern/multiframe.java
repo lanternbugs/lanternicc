@@ -1504,506 +1504,461 @@ class mymultiframe extends JFrame
     JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
   
 
- randomArmy = new JCheckBoxMenuItem("Random Piece Set Observe Only");
-randomArmy.addActionListener(this);
-randomGraphics.add(randomArmy);
+    randomArmy = new JCheckBoxMenuItem("Random Piece Set Observe Only");
+    randomArmy.addActionListener(this);
+    randomGraphics.add(randomArmy);
 
-JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
-configureRand.addActionListener(this);
-randomGraphics.add(configureRand);
+    JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
+    configureRand.addActionListener(this);
+    randomGraphics.add(configureRand);
 
-JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
-configureRandBlack.addActionListener(this);
-randomGraphics.add(configureRandBlack);
-
-
-
- randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
-randomTiles.addActionListener(this);
-randomGraphics.add(randomTiles);
-
- observeOptions.add(randomGraphics);
-
- optionsmenu.add(observeOptions);
+    JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
+    configureRandBlack.addActionListener(this);
+    randomGraphics.add(configureRandBlack);
 
 
+    randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
+    randomTiles.addActionListener(this);
+    randomGraphics.add(randomTiles);
 
- JMenu chattimestamp=new JMenu("Chat Timestamp");
+    observeOptions.add(randomGraphics);
 
-channelTimestamp=new JCheckBoxMenuItem("Timestamp Channels and Kibs");
-channelTimestamp.addActionListener(this);
-chattimestamp.add(channelTimestamp);
-
-shoutTimestamp=new JCheckBoxMenuItem("Timestamp Shouts");
-shoutTimestamp.addActionListener(this);
-chattimestamp.add(shoutTimestamp);
+    optionsmenu.add(observeOptions);
 
 
+    JMenu chattimestamp = new JMenu("Chat Timestamp");
+
+    channelTimestamp = new JCheckBoxMenuItem("Timestamp Channels and Kibs");
+    channelTimestamp.addActionListener(this);
+    chattimestamp.add(channelTimestamp);
+
+    shoutTimestamp = new JCheckBoxMenuItem("Timestamp Shouts");
+    shoutTimestamp.addActionListener(this);
+    chattimestamp.add(shoutTimestamp);
 
 
+    tellTimestamp = new JCheckBoxMenuItem("Timestamp Tells");
+    tellTimestamp.addActionListener(this);
+    chattimestamp.add(tellTimestamp);
 
-tellTimestamp=new JCheckBoxMenuItem("Timestamp Tells");
-tellTimestamp.addActionListener(this);
-chattimestamp.add(tellTimestamp);
+    leftNameTimestamp=new JCheckBoxMenuItem("Timestamp To Left Of Name");
+    leftNameTimestamp.addActionListener(this);
+    //chattimestamp.add(leftNameTimestamp); disabling the option
 
-leftNameTimestamp=new JCheckBoxMenuItem("Timestamp To Left Of Name");
-leftNameTimestamp.addActionListener(this);
-//chattimestamp.add(leftNameTimestamp); disabling the option
-
-qtellTimestamp=new JCheckBoxMenuItem("Timestamp Channel Qtells");
-qtellTimestamp.addActionListener(this);
-chattimestamp.add(qtellTimestamp);
-
-
-reconnectTimestamp=new JCheckBoxMenuItem("Timestamp Connecting");
-reconnectTimestamp.addActionListener(this);
-chattimestamp.add(reconnectTimestamp);
+    qtellTimestamp=new JCheckBoxMenuItem("Timestamp Channel Qtells");
+    qtellTimestamp.addActionListener(this);
+    chattimestamp.add(qtellTimestamp);
 
 
-
-optionsmenu.add(chattimestamp);
-
-
- menu.add(optionsmenu);
+    reconnectTimestamp=new JCheckBoxMenuItem("Timestamp Connecting");
+    reconnectTimestamp.addActionListener(this);
+    chattimestamp.add(reconnectTimestamp);
 
 
-/******************************************* end of options window *****************/
+    optionsmenu.add(chattimestamp);
 
 
+    menu.add(optionsmenu);
+    /******************************************* end of options window *****************/
 
+    sharedVariables.myWindows = new JMenu("Windows");
+    sharedVariables.myWindows.setMnemonic(KeyEvent.VK_W);
 
-
-
-
-sharedVariables.myWindows = new JMenu("Windows");
-sharedVariables.myWindows.setMnemonic(KeyEvent.VK_W);
-
-// JMenuItem nconsole = new JMenuItem("New Console");
-// sharedVariables.myWindows.add(nconsole);
-JMenuItem eventlist = new JMenuItem("Activities Window");
- sharedVariables.myWindows.add(eventlist);
- eventlist.setMnemonic(KeyEvent.VK_A);
-eventlist.addActionListener(this);
- JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
+    // JMenuItem nconsole = new JMenuItem("New Console");
+    // sharedVariables.myWindows.add(nconsole);
+    JMenuItem eventlist = new JMenuItem("Activities Window");
+    sharedVariables.myWindows.add(eventlist);
+    eventlist.setMnemonic(KeyEvent.VK_A);
+    eventlist.addActionListener(this);
+    JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     sharedVariables.myWindows.add(seekingGraph);
     seekingGraph.setMnemonic(KeyEvent.VK_S);
- seekingGraph.addActionListener(this);
+    seekingGraph.addActionListener(this);
 
-JMenuItem mynotify = new JMenuItem("Notify Window");
- sharedVariables.myWindows.add(mynotify);
-mynotify.addActionListener(this);
-
-
- sharedVariables.myWindows.addSeparator();
+    JMenuItem mynotify = new JMenuItem("Notify Window");
+    sharedVariables.myWindows.add(mynotify);
+    mynotify.addActionListener(this);
 
 
- JMenuItem nboard = new JMenuItem("New Board");
- sharedVariables.myWindows.add(nboard);
-nboard.addActionListener(this);
+    sharedVariables.myWindows.addSeparator();
 
 
- JMenuItem rconsole = new JMenuItem("New Chat Console");
- sharedVariables.myWindows.add(rconsole);
-rconsole.addActionListener(this);
-
-  JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
-  sharedVariables.myWindows.add(detachedconsole);
- detachedconsole.addActionListener(this);
-
-sharedVariables.myWindows.addSeparator();
+    JMenuItem nboard = new JMenuItem("New Board");
+    sharedVariables.myWindows.add(nboard);
+    nboard.addActionListener(this);
 
 
-  JMenuItem rconsole2 = new JMenuItem("Customize Tab");
-  sharedVariables.myWindows.add(rconsole2);
-  rconsole2.setMnemonic(KeyEvent.VK_C);
- rconsole2.addActionListener(this);
+    JMenuItem rconsole = new JMenuItem("New Chat Console");
+    sharedVariables.myWindows.add(rconsole);
+    rconsole.addActionListener(this);
+
+    JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
+    sharedVariables.myWindows.add(detachedconsole);
+    detachedconsole.addActionListener(this);
+
+    sharedVariables.myWindows.addSeparator();
 
 
- JMenuItem  webopener = new JMenuItem("Open Web");
-  //  sharedVariables.myWindows.add(webopener);
+    JMenuItem rconsole2 = new JMenuItem("Customize Tab");
+    sharedVariables.myWindows.add(rconsole2);
+    rconsole2.setMnemonic(KeyEvent.VK_C);
+    rconsole2.addActionListener(this);
 
 
+    JMenuItem  webopener = new JMenuItem("Open Web");
+    //  sharedVariables.myWindows.add(webopener);
 
 
-toolbarvisible= new JCheckBoxMenuItem("Toolbar");
-sharedVariables.myWindows.add(toolbarvisible);
-toolbarvisible.setMnemonic(KeyEvent.VK_T);
+    toolbarvisible = new JCheckBoxMenuItem("Toolbar");
+    sharedVariables.myWindows.add(toolbarvisible);
+    toolbarvisible.setMnemonic(KeyEvent.VK_T);
 
 
-JMenuItem channelmap = new JMenuItem("Channel Map");
-sharedVariables.myWindows.add(channelmap);
-channelmap.addActionListener(this);
-channelmap.setMnemonic(KeyEvent.VK_M);
+    JMenuItem channelmap = new JMenuItem("Channel Map");
+    sharedVariables.myWindows.add(channelmap);
+    channelmap.addActionListener(this);
+    channelmap.setMnemonic(KeyEvent.VK_M);
 
 
-JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
-sharedVariables.myWindows.add(channelnotifymap);
-channelnotifymap.setMnemonic(KeyEvent.VK_N);
-channelnotifymap.addActionListener(this);
+    JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
+    sharedVariables.myWindows.add(channelnotifymap);
+    channelnotifymap.setMnemonic(KeyEvent.VK_N);
+    channelnotifymap.addActionListener(this);
 
-JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
-sharedVariables.myWindows.add(channelnotifyonline);
-channelnotifyonline.setMnemonic(KeyEvent.VK_O);
-channelnotifyonline.addActionListener(this);
-
-
-
-JMenuItem toolbox = new JMenuItem("ToolBox");
-sharedVariables.myWindows.add(toolbox);
-
-JMenuItem cascading = new JMenuItem("Cascade");
-sharedVariables.myWindows.add(cascading);
-cascading.addActionListener(this);
-
-sharedVariables.myWindows.addSeparator();
-
- menu.add(sharedVariables.myWindows);
+    JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
+    sharedVariables.myWindows.add(channelnotifyonline);
+    channelnotifyonline.setMnemonic(KeyEvent.VK_O);
+    channelnotifyonline.addActionListener(this);
 
 
-webopener.addActionListener(this);
-toolbarvisible.addActionListener(this);
-toolbox.addActionListener(this);
+    JMenuItem toolbox = new JMenuItem("ToolBox");
+    sharedVariables.myWindows.add(toolbox);
 
-JMenu myboardmenu = new JMenu("Game");
+    JMenuItem cascading = new JMenuItem("Cascade");
+    sharedVariables.myWindows.add(cascading);
+    cascading.addActionListener(this);
 
- JMenuItem nseek = new JMenuItem("Get a Game");
- myboardmenu.add(nseek);
- nseek.addActionListener(this);
+    sharedVariables.myWindows.addSeparator();
+
+    menu.add(sharedVariables.myWindows);
+
+
+    webopener.addActionListener(this);
+    toolbarvisible.addActionListener(this);
+    toolbox.addActionListener(this);
+
+    JMenu myboardmenu = new JMenu("Game");
+
+    JMenuItem nseek = new JMenuItem("Get a Game");
+    myboardmenu.add(nseek);
+    nseek.addActionListener(this);
   
-  JMenuItem flipSent = new JMenuItem("Flip");
-  myboardmenu.add(flipSent);
-  flipSent.addActionListener(this);
-
-   JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
-  myboardmenu.add(withdrawSent);
-  withdrawSent.addActionListener(this);
-
-
-JMenu boardDesign = new JMenu("Board Design");
-BoardDesign1 = new JCheckBoxMenuItem("Original");
-BoardDesign2 = new JCheckBoxMenuItem("Modern");
-BoardDesign3 = new JCheckBoxMenuItem("Mixed");
-
-boardDesign.add(BoardDesign1);
-boardDesign.add(BoardDesign2);
-boardDesign.add(BoardDesign3);
-BoardDesign1.addActionListener(this);
-BoardDesign2.addActionListener(this);
-BoardDesign3.addActionListener(this);
-
-myboardmenu.add(boardDesign);
-
- tabbing = new JCheckBoxMenuItem("Tabs Only");
-  myboardmenu.add(tabbing);
-tabbing.addActionListener(this);
-
-
-
-  JMenu selectboards = new JMenu("Boards");
-solidboard = new JCheckBoxMenuItem("Solid Color Board");
-
-woodenboard1 = new JCheckBoxMenuItem("Pale Wood");
-woodenboard2 = new JCheckBoxMenuItem("Light Wood");
-woodenboard3 = new JCheckBoxMenuItem("Dark Wood");
-grayishboard = new JCheckBoxMenuItem("Gray Marble");
-board5 = new JCheckBoxMenuItem("Red Marble");
-board6 = new JCheckBoxMenuItem("Crampled Paper");
-board7 = new JCheckBoxMenuItem("Winter");
-oliveboard = new JCheckBoxMenuItem("Olive Board");
-cherryboard = new JCheckBoxMenuItem("Cherry Board");
-purpleboard = new JCheckBoxMenuItem("Purple Board");
-
-
-
-selectboards.add(solidboard);
-selectboards.add(woodenboard1);
-selectboards.add(woodenboard2);
-selectboards.add(woodenboard3);
-selectboards.add(grayishboard);
-selectboards.add(board5);
-selectboards.add(board6);
-selectboards.add(board7);
-selectboards.add(oliveboard);
-selectboards.add(cherryboard);
-selectboards.add(purpleboard);
+    JMenuItem flipSent = new JMenuItem("Flip");
+    myboardmenu.add(flipSent);
+    flipSent.addActionListener(this);
+
+    JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
+    myboardmenu.add(withdrawSent);
+    withdrawSent.addActionListener(this);
+
+
+    JMenu boardDesign = new JMenu("Board Design");
+    BoardDesign1 = new JCheckBoxMenuItem("Original");
+    BoardDesign2 = new JCheckBoxMenuItem("Modern");
+    BoardDesign3 = new JCheckBoxMenuItem("Mixed");
+
+    boardDesign.add(BoardDesign1);
+    boardDesign.add(BoardDesign2);
+    boardDesign.add(BoardDesign3);
+    BoardDesign1.addActionListener(this);
+    BoardDesign2.addActionListener(this);
+    BoardDesign3.addActionListener(this);
+
+    myboardmenu.add(boardDesign);
+
+    tabbing = new JCheckBoxMenuItem("Tabs Only");
+    myboardmenu.add(tabbing);
+    tabbing.addActionListener(this);
+
+
+    JMenu selectboards = new JMenu("Boards");
+    solidboard = new JCheckBoxMenuItem("Solid Color Board");
+
+    woodenboard1 = new JCheckBoxMenuItem("Pale Wood");
+    woodenboard2 = new JCheckBoxMenuItem("Light Wood");
+    woodenboard3 = new JCheckBoxMenuItem("Dark Wood");
+    grayishboard = new JCheckBoxMenuItem("Gray Marble");
+    board5 = new JCheckBoxMenuItem("Red Marble");
+    board6 = new JCheckBoxMenuItem("Crampled Paper");
+    board7 = new JCheckBoxMenuItem("Winter");
+    oliveboard = new JCheckBoxMenuItem("Olive Board");
+    cherryboard = new JCheckBoxMenuItem("Cherry Board");
+    purpleboard = new JCheckBoxMenuItem("Purple Board");
+
+
+    selectboards.add(solidboard);
+    selectboards.add(woodenboard1);
+    selectboards.add(woodenboard2);
+    selectboards.add(woodenboard3);
+    selectboards.add(grayishboard);
+    selectboards.add(board5);
+    selectboards.add(board6);
+    selectboards.add(board7);
+    selectboards.add(oliveboard);
+    selectboards.add(cherryboard);
+    selectboards.add(purpleboard);
+
+
+    myboardmenu.add(selectboards);
+    solidboard.addActionListener(this);
+    woodenboard1.addActionListener(this);
+    woodenboard2.addActionListener(this);
+    woodenboard3.addActionListener(this);
+    grayishboard.addActionListener(this);
+    board5.addActionListener(this);
+    board6.addActionListener(this);
+    board7.addActionListener(this);
+    oliveboard.addActionListener(this);
+    cherryboard.addActionListener(this);
+    purpleboard.addActionListener(this);
+
+    woodenboard2.setSelected(true);
+
+    // pieces
+    JMenu selectpieces = new JMenu("Pieces");
+    pieces1 = new JCheckBoxMenuItem("Dyche1");
+    pieces2 = new JCheckBoxMenuItem("Dyche2");
+    pieces3 = new JCheckBoxMenuItem("Dyche3");
+    pieces4 = new JCheckBoxMenuItem("Bookup");
+    pieces5 = new JCheckBoxMenuItem("Xboard");
+    pieces6 = new JCheckBoxMenuItem("Alpha");
+    pieces7 = new JCheckBoxMenuItem("Spatial");
+    pieces8 = new JCheckBoxMenuItem("Harlequin");
+    pieces9 = new JCheckBoxMenuItem("Berlin");
+    pieces10 = new JCheckBoxMenuItem("Eboard Classic");
+    pieces11 = new JCheckBoxMenuItem("Molten Good");
+    pieces12 = new JCheckBoxMenuItem("Molten Evil");
+    pieces13 = new JCheckBoxMenuItem("Liebeskind");
+    pieces14 = new JCheckBoxMenuItem("Eyes");
+    pieces15 = new JCheckBoxMenuItem("Fantasy");
+
+    pieces16 = new JCheckBoxMenuItem("Line");
+    pieces17 = new JCheckBoxMenuItem("Motif");
+    pieces18 = new JCheckBoxMenuItem("Utrecht");
+
+    pieces19 = new JCheckBoxMenuItem("Adventure");
+    pieces20 = new JCheckBoxMenuItem("Maya");
+    pieces21 = new JCheckBoxMenuItem("Medieval");
+
+    pieces22 = new JCheckBoxMenuItem("CCube");
+
+    pieces23 = new JCheckBoxMenuItem("Monge Mix");
+    pieces24 = new JCheckBoxMenuItem("Random Pieces");
+
+    JMenuItem aboutmonge = new JMenuItem ("About Monge Pieces");
+
+    selectpieces.add(pieces1);
+    selectpieces.add(pieces2);
+    selectpieces.add(pieces3);
+    selectpieces.add(pieces4);
+    selectpieces.add(pieces5);
+    selectpieces.add(pieces6);
+    //selectpieces.add(pieces7);
+    JMenu mongeMenu = new JMenu("Monge");
+    mongeMenu.add(pieces7);
+    mongeMenu.add(pieces14);
+    mongeMenu.add(pieces15);
+    mongeMenu.add(pieces23);
+
+    mongeMenu.add(aboutmonge);
+
+    selectpieces.add(pieces19);
+    selectpieces.add(pieces20);
+    selectpieces.add(pieces21);
+
+    selectpieces.add(mongeMenu);
+
+    selectpieces.add(pieces8);
+    selectpieces.add(pieces9);
+    selectpieces.add(pieces10);
+
+    selectpieces.add(pieces16);
+    selectpieces.add(pieces17);
+    selectpieces.add(pieces18);
+
+    JMenu moltenmenu=new JMenu("Molten");
+    moltenmenu.add(pieces11);
+    moltenmenu.add(pieces12);
+    moltenmenu.add(pieces13);
+    selectpieces.add(moltenmenu);
+    selectpieces.add(pieces22);
+    selectpieces.add(pieces24);
+
+
+    myboardmenu.add(selectpieces);
+    pieces1.addActionListener(this);
+    pieces2.addActionListener(this);
+    pieces3.addActionListener(this);
+    pieces4.addActionListener(this);
+    pieces5.addActionListener(this);
+    pieces6.addActionListener(this);
+    pieces7.addActionListener(this);
+    pieces8.addActionListener(this);
+    pieces9.addActionListener(this);
+    pieces10.addActionListener(this);
+    pieces11.addActionListener(this);
+    pieces12.addActionListener(this);
+    pieces13.addActionListener(this);
+    pieces14.addActionListener(this);
+    pieces15.addActionListener(this);
+    pieces16.addActionListener(this);
+    pieces17.addActionListener(this);
+    pieces18.addActionListener(this);
+    pieces19.addActionListener(this);
+    pieces20.addActionListener(this);
+
+    pieces21.addActionListener(this);
+    pieces22.addActionListener(this);
+    pieces23.addActionListener(this);
+    pieces24.addActionListener(this);
+
+
+    aboutmonge.addActionListener(this);
+
+    pieces1.setSelected(true);
+    /********** end pieces **************/
+
+    JMenu preset = new JMenu("Preset Color Boards");
+
+    preset0 = new JMenuItem("Default Board");
+    preset.add(preset0);
+
+    preset1 = new JMenuItem("Tan Board");
+    preset.add(preset1);
+
+    preset2 = new JMenuItem("Gray Color Board");
+    preset.add(preset2);
+
+    preset3 = new JMenuItem("Blitzin Green Board");
+    preset.add(preset3);
 
-
-myboardmenu.add(selectboards);
-solidboard.addActionListener(this);
-woodenboard1.addActionListener(this);
-woodenboard2.addActionListener(this);
-woodenboard3.addActionListener(this);
-grayishboard.addActionListener(this);
-board5.addActionListener(this);
-board6.addActionListener(this);
-board7.addActionListener(this);
-oliveboard.addActionListener(this);
-cherryboard.addActionListener(this);
-purpleboard.addActionListener(this);
-
-woodenboard2.setSelected(true);
-
-
-// pieces
-
-  JMenu selectpieces = new JMenu("Pieces");
-pieces1 = new JCheckBoxMenuItem("Dyche1");
-pieces2 = new JCheckBoxMenuItem("Dyche2");
-pieces3 = new JCheckBoxMenuItem("Dyche3");
-pieces4 = new JCheckBoxMenuItem("Bookup");
-pieces5 = new JCheckBoxMenuItem("Xboard");
-pieces6 = new JCheckBoxMenuItem("Alpha");
-pieces7 = new JCheckBoxMenuItem("Spatial");
-pieces8 = new JCheckBoxMenuItem("Harlequin");
-pieces9 = new JCheckBoxMenuItem("Berlin");
-pieces10 = new JCheckBoxMenuItem("Eboard Classic");
-pieces11 = new JCheckBoxMenuItem("Molten Good");
-pieces12 = new JCheckBoxMenuItem("Molten Evil");
-pieces13 = new JCheckBoxMenuItem("Liebeskind");
-pieces14 = new JCheckBoxMenuItem("Eyes");
-pieces15 = new JCheckBoxMenuItem("Fantasy");
+    selectboards.add(preset);
+
+    preset0.addActionListener(this);
+    preset1.addActionListener(this);
+    preset2.addActionListener(this);
+    preset3.addActionListener(this);
+    
+    /******************* board colors ********************/
+    JMenu boardSquareColors = new JMenu("Board Squares Colors");
+    JMenuItem lcolor = new JMenuItem("Light Square Color");
+    boardSquareColors.add(lcolor);
+    JMenuItem dcolor = new JMenuItem("Dark Square Color");
+    boardSquareColors.add(dcolor);
+    lcolor.addActionListener(this);
+    dcolor.addActionListener(this);
+    myboardmenu.add(boardSquareColors);
+
+
+    JMenu boardColors = new JMenu("Board Colors");
+
+    JMenuItem bbackcolor = new JMenuItem("Board Background Color");
+    boardColors.add(bbackcolor);
+    JMenuItem bforcolor = new JMenuItem("Board Foreground Color");
+    boardColors.add(bforcolor);
+
+    JMenuItem cforcolor = new JMenuItem("Clock Foreground Color");
+    boardColors.add(cforcolor);
+
+
+    JMenuItem bcbackcolor = new JMenuItem("Board Clock Background Color");
+    boardColors.add(bcbackcolor);
+    bbackcolor.addActionListener(this);
+    bcbackcolor.addActionListener(this);
+    bforcolor.addActionListener(this);
+    cforcolor.addActionListener(this);
+
+    JMenuItem highlightcolor = new JMenuItem("Highlight Moves Color");
+    highlightcolor.addActionListener(this);
+    boardColors.add(highlightcolor);
+
+    JMenuItem scrollhighlightcolor = new JMenuItem("Scroll Back Highlight Color");
+    scrollhighlightcolor.addActionListener(this);
+    boardColors.add(scrollhighlightcolor);
+
+
+    myboardmenu.add(boardColors);
+
+    JMenu boardFonts9 = new JMenu("Board Fonts");
+
+    JMenuItem gamefont = new JMenuItem("Game Board Font");
+    boardFonts9.add(gamefont);
+    gamefont.addActionListener(this);
+    JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
+    boardFonts9.add(gameclockfont);
+    gameclockfont.addActionListener(this);
+    myboardmenu.add(boardFonts9);
+    /*************** end board colors *****************/
+
+    JMenu theHideMenu = new JMenu("Things to Hide or Show");
+
+    highlight = new JCheckBoxMenuItem("Highlight Moves");
+    theHideMenu.add(highlight);
+    materialCount = new JCheckBoxMenuItem("Material Count");
+    theHideMenu.add(materialCount);
+    materialCount.addActionListener(this);
+
+    drawCoordinates = new JCheckBoxMenuItem("Draw Coordinates");
+    theHideMenu.add(drawCoordinates);
+    drawCoordinates.addActionListener(this);
+
+
+    showPallette = new JCheckBoxMenuItem("Show Examine Mode Pallette");
+    theHideMenu.add(showPallette);
+    showPallette.addActionListener(this);
+
+
+    showFlags = new JCheckBoxMenuItem("Show Flags");
+    theHideMenu.add(showFlags);
+    showFlags.addActionListener(this);
+
+    showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
+    theHideMenu.add(showRatings);
+    showRatings.addActionListener(this);
+
+    playersInMyGame = new JCheckBoxMenuItem("Show Observers In Games");
+    playersInMyGame.addActionListener(this);
+    theHideMenu.add(playersInMyGame);
+
+    myboardmenu.add(theHideMenu);
+
+    useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
+    // myboardmenu.add(useLightBackground);   // disabled
+    useLightBackground.addActionListener(this);
+
+
+    /* examine game replay */
+    JMenu examReplay = new JMenu("Examine Game Replay");
+
+    /*
+    JMenuItem autostart = new JMenuItem("Start AutoExam");
+    examReplay.add(autostart);
+    JMenuItem autostop = new JMenuItem("Stop AutoExam");
+    examReplay.add(autostop);
+    JMenuItem autoset = new JMenuItem("Set AutoExam Speed");
+    */
+    JMenuItem autoset = new JMenuItem("AutoExam Dialog");
+    examReplay.add(autoset);
 
-pieces16 = new JCheckBoxMenuItem("Line");
-pieces17 = new JCheckBoxMenuItem("Motif");
-pieces18 = new JCheckBoxMenuItem("Utrecht");
-
-pieces19 = new JCheckBoxMenuItem("Adventure");
-pieces20 = new JCheckBoxMenuItem("Maya");
-pieces21 = new JCheckBoxMenuItem("Medieval");
-
-pieces22 = new JCheckBoxMenuItem("CCube");
-
-
-pieces23 = new JCheckBoxMenuItem("Monge Mix");
-pieces24 = new JCheckBoxMenuItem("Random Pieces");
-
-JMenuItem aboutmonge = new JMenuItem ("About Monge Pieces");
-
-selectpieces.add(pieces1);
-selectpieces.add(pieces2);
-selectpieces.add(pieces3);
-selectpieces.add(pieces4);
-selectpieces.add(pieces5);
-selectpieces.add(pieces6);
-//selectpieces.add(pieces7);
-JMenu mongeMenu = new JMenu("Monge");
-mongeMenu.add(pieces7);
-mongeMenu.add(pieces14);
-mongeMenu.add(pieces15);
-mongeMenu.add(pieces23);
-
-mongeMenu.add(aboutmonge);
-
-selectpieces.add(pieces19);
-selectpieces.add(pieces20);
-selectpieces.add(pieces21);
-
-selectpieces.add(mongeMenu);
-
-selectpieces.add(pieces8);
-selectpieces.add(pieces9);
-selectpieces.add(pieces10);
-
-selectpieces.add(pieces16);
-selectpieces.add(pieces17);
-selectpieces.add(pieces18);
-
-
-JMenu moltenmenu=new JMenu("Molten");
-moltenmenu.add(pieces11);
-moltenmenu.add(pieces12);
-moltenmenu.add(pieces13);
-selectpieces.add(moltenmenu);
-selectpieces.add(pieces22);
-selectpieces.add(pieces24);
-
-
-
-
-
-
-myboardmenu.add(selectpieces);
-pieces1.addActionListener(this);
-pieces2.addActionListener(this);
-pieces3.addActionListener(this);
-pieces4.addActionListener(this);
-pieces5.addActionListener(this);
-pieces6.addActionListener(this);
-pieces7.addActionListener(this);
-pieces8.addActionListener(this);
-pieces9.addActionListener(this);
-pieces10.addActionListener(this);
-pieces11.addActionListener(this);
-pieces12.addActionListener(this);
-pieces13.addActionListener(this);
-pieces14.addActionListener(this);
-pieces15.addActionListener(this);
-pieces16.addActionListener(this);
-pieces17.addActionListener(this);
-pieces18.addActionListener(this);
-pieces19.addActionListener(this);
-pieces20.addActionListener(this);
-
-pieces21.addActionListener(this);
-pieces22.addActionListener(this);
-pieces23.addActionListener(this);
-pieces24.addActionListener(this);
-
-
-aboutmonge.addActionListener(this);
-
-pieces1.setSelected(true);
-
-/********** end pieces **************/
-
-
-
-  JMenu preset = new JMenu("Preset Color Boards");
-
-preset0 = new JMenuItem("Default Board");
-preset.add(preset0);
-
-
-preset1 = new JMenuItem("Tan Board");
-preset.add(preset1);
-
-preset2 = new JMenuItem("Gray Color Board");
-preset.add(preset2);
-
-
-preset3 = new JMenuItem("Blitzin Green Board");
-preset.add(preset3);
-
-selectboards.add(preset);
-
-preset0.addActionListener(this);
-preset1.addActionListener(this);
-preset2.addActionListener(this);
-preset3.addActionListener(this);
-/******************* board colors ********************/
-
-JMenu boardSquareColors = new JMenu("Board Squares Colors");
-JMenuItem lcolor = new JMenuItem("Light Square Color");
- boardSquareColors.add(lcolor);
- JMenuItem dcolor = new JMenuItem("Dark Square Color");
-  boardSquareColors.add(dcolor);
-lcolor.addActionListener(this);
-dcolor.addActionListener(this);
-myboardmenu.add(boardSquareColors);
-
-
-JMenu boardColors = new JMenu("Board Colors");
-
- JMenuItem bbackcolor = new JMenuItem("Board Background Color");
- boardColors.add(bbackcolor);
- JMenuItem bforcolor = new JMenuItem("Board Foreground Color");
-  boardColors.add(bforcolor);
-
-  JMenuItem cforcolor = new JMenuItem("Clock Foreground Color");
-  boardColors.add(cforcolor);
-
-
-JMenuItem bcbackcolor = new JMenuItem("Board Clock Background Color");
-  boardColors.add(bcbackcolor);
- bbackcolor.addActionListener(this);
-bcbackcolor.addActionListener(this);
-bforcolor.addActionListener(this);
-cforcolor.addActionListener(this);
-
-JMenuItem highlightcolor = new JMenuItem("Highlight Moves Color");
-highlightcolor.addActionListener(this);
-boardColors.add(highlightcolor);
-
-JMenuItem scrollhighlightcolor = new JMenuItem("Scroll Back Highlight Color");
-scrollhighlightcolor.addActionListener(this);
-boardColors.add(scrollhighlightcolor);
-
-
-
- myboardmenu.add(boardColors);
-
- JMenu boardFonts9 = new JMenu("Board Fonts");
-
- JMenuItem gamefont = new JMenuItem("Game Board Font");
-  boardFonts9.add(gamefont);
-  gamefont.addActionListener(this);
-JMenuItem gameclockfont = new JMenuItem("Game Clock Font");
-  boardFonts9.add(gameclockfont);
- gameclockfont.addActionListener(this);
- myboardmenu.add(boardFonts9);
-
-
-
-
-
-/*************** end board colors *****************/
-
-
-
-  JMenu theHideMenu = new JMenu("Things to Hide or Show");
-
-   highlight = new JCheckBoxMenuItem("Highlight Moves");
-  theHideMenu.add(highlight);
-  materialCount = new JCheckBoxMenuItem("Material Count");
-  theHideMenu.add(materialCount);
-materialCount.addActionListener(this);
-
-  drawCoordinates = new JCheckBoxMenuItem("Draw Coordinates");
-  theHideMenu.add(drawCoordinates);
-drawCoordinates.addActionListener(this);
-
-
-
-  showPallette = new JCheckBoxMenuItem("Show Examine Mode Pallette");
-  theHideMenu.add(showPallette);
-showPallette.addActionListener(this);
-
-
- showFlags = new JCheckBoxMenuItem("Show Flags");
-  theHideMenu.add(showFlags);
-showFlags.addActionListener(this);
-
-showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
-  theHideMenu.add(showRatings);
-showRatings.addActionListener(this);
-
-playersInMyGame = new JCheckBoxMenuItem("Show Observers In Games");
-playersInMyGame.addActionListener(this);
-theHideMenu.add(playersInMyGame);
-
-myboardmenu.add(theHideMenu);
-
- useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
- // myboardmenu.add(useLightBackground);   // disabled
-useLightBackground.addActionListener(this);
-
-
-
-
-
-
-
-
-
-
-
-/* examine game replay */
-JMenu examReplay = new JMenu("Examine Game Replay");
- JMenuItem autostart = new JMenuItem("Start AutoExam");
- examReplay.add(autostart);
- JMenuItem autostop = new JMenuItem("Stop AutoExam");
- examReplay.add(autostop);
- JMenuItem autoset = new JMenuItem("Set AutoExam Speed");
-  examReplay.add(autoset);
  
- JMenuItem whatexaminereplay = new JMenuItem("What's Examine Game Replay Quick Help");
- examReplay.add(whatexaminereplay);
- whatexaminereplay.addActionListener(this);
+    JMenuItem whatexaminereplay = new JMenuItem("What's Examine Game Replay Quick Help");
+    examReplay.add(whatexaminereplay);
+    whatexaminereplay.addActionListener(this);
 
- autostart.addActionListener(this);
-autoset.addActionListener(this);
-autostop.addActionListener(this);
- myboardmenu.add(examReplay);
+    //autostart.addActionListener(this);
+    autoset.addActionListener(this);
+    //autostop.addActionListener(this);
+    myboardmenu.add(examReplay);
 
 /* Pgn      */
 JMenu PgnMenu = new JMenu("PGN");
@@ -2494,7 +2449,7 @@ if(event.getActionCommand().equals("Lost Password"))
 	 openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
 }
 
-
+/*
 if(event.getActionCommand().equals("Start AutoExam"))
 {
 for(int a=0; a<sharedVariables.maxGameTabs; a++)
@@ -2509,6 +2464,7 @@ for(int a=0; a<sharedVariables.maxGameTabs; a++)
 
 
 }
+*/
 if(event.getActionCommand().equals("Load Winboard Engine"))
 {
 	boolean go = false;
@@ -2915,15 +2871,16 @@ mypopper.setVisible(true);
 
 }
 
-
+/*
 if(event.getActionCommand().equals("Stop AutoExam"))
 {
 
  sharedVariables.autoexam=0;
 
 }
-
-if(event.getActionCommand().equals("Set AutoExam Speed")) {
+*/
+if (event.getActionCommand().equals("AutoExam Dialog")) {
+// if (event.getActionCommand().equals("Set AutoExam Speed")) {
   autoExamDialog frame = new autoExamDialog((JFrame) this, false,
                                             sharedVariables, myboards);
   frame.pack();
