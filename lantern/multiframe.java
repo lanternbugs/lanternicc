@@ -1960,255 +1960,241 @@ class mymultiframe extends JFrame
     //autostop.addActionListener(this);
     myboardmenu.add(examReplay);
 
-/* Pgn      */
-JMenu PgnMenu = new JMenu("PGN");
-pgnlogging = new JCheckBoxMenuItem("Log Pgn");
-PgnMenu.add(pgnlogging);
-pgnlogging.addActionListener(this);
-pgnlogging.setSelected(true);
+    /* Pgn      */
+    JMenu PgnMenu = new JMenu("PGN");
+    pgnlogging = new JCheckBoxMenuItem("Log Pgn");
+    PgnMenu.add(pgnlogging);
+    pgnlogging.addActionListener(this);
+    pgnlogging.setSelected(true);
 
-pgnObservedLogging = new JCheckBoxMenuItem("Log Observed Games To Pgn");
-PgnMenu.add(pgnObservedLogging);
-pgnObservedLogging.addActionListener(this);
-pgnObservedLogging.setSelected(true);
+    pgnObservedLogging = new JCheckBoxMenuItem("Log Observed Games To Pgn");
+    PgnMenu.add(pgnObservedLogging);
+    pgnObservedLogging.addActionListener(this);
+    pgnObservedLogging.setSelected(true);
 
-JMenuItem openpgn = new JMenuItem("Open Pgn");
- PgnMenu.add(openpgn);
- openpgn.addActionListener(this);
+    JMenuItem openpgn = new JMenuItem("Open Pgn");
+    PgnMenu.add(openpgn);
+    openpgn.addActionListener(this);
 
-myboardmenu.add(PgnMenu);
-/* communications */
-JMenu Communications = new JMenu("Communications");
+    myboardmenu.add(PgnMenu);
+    /* communications */
+    JMenu Communications = new JMenu("Communications");
 
-blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
-Communications.add(blockSays);
-blockSays.addActionListener(this);
- gameend = new JCheckBoxMenuItem("Send Game End Messages");
-  Communications.add(gameend);
- gameend.addActionListener(this);
- autoChat = new JCheckBoxMenuItem("AutoChat");
-Communications.add(autoChat);
-autoChat.addActionListener(this);
+    blockSays = new JCheckBoxMenuItem("Block Opponents Says When Not Playing");
+    Communications.add(blockSays);
+    blockSays.addActionListener(this);
+    gameend = new JCheckBoxMenuItem("Send Game End Messages");
+    Communications.add(gameend);
+    gameend.addActionListener(this);
+    autoChat = new JCheckBoxMenuItem("AutoChat");
+    Communications.add(autoChat);
+    autoChat.addActionListener(this);
 
- myboardmenu.add(Communications);
-/* Advanced */
-JMenu AdvancedGameMenu = new JMenu("Advanced");
-lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
-AdvancedGameMenu.add(lowTimeColors);
-lowTimeColors.addActionListener(this);
+    myboardmenu.add(Communications);
+    
+    /* Advanced */
+    JMenu AdvancedGameMenu = new JMenu("Advanced");
+    lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
+    AdvancedGameMenu.add(lowTimeColors);
+    lowTimeColors.addActionListener(this);
 
-checkLegality=new JCheckBoxMenuItem("Check Move Legality");
-checkLegality.addActionListener(this);
-AdvancedGameMenu.add(checkLegality);
+    checkLegality = new JCheckBoxMenuItem("Check Move Legality");
+    checkLegality.addActionListener(this);
+    AdvancedGameMenu.add(checkLegality);
 
-unobserveGoExamine=new JCheckBoxMenuItem("Unobserve Games Gone Examine");
-unobserveGoExamine.addActionListener(this);
-AdvancedGameMenu.add(unobserveGoExamine);
+    unobserveGoExamine = new JCheckBoxMenuItem("Unobserve Games Gone Examine");
+    unobserveGoExamine.addActionListener(this);
+    AdvancedGameMenu.add(unobserveGoExamine);
 
-newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
-AdvancedGameMenu.add(newObserveGameSwitch);
-newObserveGameSwitch.addActionListener(this);
+    newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
+    AdvancedGameMenu.add(newObserveGameSwitch);
+    newObserveGameSwitch.addActionListener(this);
 
-JMenu aspect = new JMenu("Board Aspect Ratio");
-aspect0 = new JCheckBoxMenuItem("1:1");
-aspect.add(aspect0);
-aspect0.setSelected(true);
+    JMenu aspect = new JMenu("Board Aspect Ratio");
+    aspect0 = new JCheckBoxMenuItem("1:1");
+    aspect.add(aspect0);
+    aspect0.setSelected(true);
 
-aspect1 = new JCheckBoxMenuItem("5:4");
-aspect.add(aspect1);
-aspect1.setSelected(false);
+    aspect1 = new JCheckBoxMenuItem("5:4");
+    aspect.add(aspect1);
+    aspect1.setSelected(false);
 
-aspect2 = new JCheckBoxMenuItem("4:3");
-aspect.add(aspect2);
-aspect2.setSelected(false);
+    aspect2 = new JCheckBoxMenuItem("4:3");
+    aspect.add(aspect2);
+    aspect2.setSelected(false);
 
-aspect3 = new JCheckBoxMenuItem("3:2");
-aspect.add(aspect3);
-aspect3.setSelected(false);
-aspect0.addActionListener(this);
-aspect1.addActionListener(this);
-aspect2.addActionListener(this);
-aspect3.addActionListener(this);
-AdvancedGameMenu.add(aspect);
-myboardmenu.add(AdvancedGameMenu);
-/*************** menu for board console *****************/
-JMenu consoleaspect = new JMenu("Board Console");
+    aspect3 = new JCheckBoxMenuItem("3:2");
+    aspect.add(aspect3);
+    aspect3.setSelected(false);
+    
+    aspect0.addActionListener(this);
+    aspect1.addActionListener(this);
+    aspect2.addActionListener(this);
+    aspect3.addActionListener(this);
+    
+    AdvancedGameMenu.add(aspect);
+    myboardmenu.add(AdvancedGameMenu);
+    
+    /*************** menu for board console *****************/
+    JMenu consoleaspect = new JMenu("Board Console");
 
-boardconsole0 = new JCheckBoxMenuItem("Hide Board Console");
-consoleaspect.add(boardconsole0);
-boardconsole0.setSelected(false);
+    boardconsole0 = new JCheckBoxMenuItem("Hide Board Console");
+    consoleaspect.add(boardconsole0);
+    boardconsole0.setSelected(false);
 
-boardconsole1 = new JCheckBoxMenuItem("Compact Board Console");
-consoleaspect.add(boardconsole1);
-boardconsole1.setSelected(false);
+    boardconsole1 = new JCheckBoxMenuItem("Compact Board Console");
+    consoleaspect.add(boardconsole1);
+    boardconsole1.setSelected(false);
 
-boardconsole2 = new JCheckBoxMenuItem("Normal Board Console");
-consoleaspect.add(boardconsole2);
-boardconsole2.setSelected(true);
+    boardconsole2 = new JCheckBoxMenuItem("Normal Board Console");
+    consoleaspect.add(boardconsole2);
+    boardconsole2.setSelected(true);
 
-boardconsole3 = new JCheckBoxMenuItem("Larger Board Console");
-consoleaspect.add(boardconsole3);
-boardconsole3.setSelected(false);
-consoleaspect.addSeparator();
-sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
-consoleaspect.add(sidewaysconsole);
-sidewaysconsole.setSelected(false);
+    boardconsole3 = new JCheckBoxMenuItem("Larger Board Console");
+    consoleaspect.add(boardconsole3);
+    boardconsole3.setSelected(false);
+    
+    consoleaspect.addSeparator();
+    
+    sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
+    consoleaspect.add(sidewaysconsole);
+    sidewaysconsole.setSelected(false);
 
+    myboardmenu.add(consoleaspect);
+    
+    boardconsole0.addActionListener(this);
+    boardconsole1.addActionListener(this);
+    boardconsole2.addActionListener(this);
+    boardconsole3.addActionListener(this);
+    sidewaysconsole.addActionListener(this);
+    /***************** end board console menu **************/
 
+    highlight.addActionListener(this);
 
-myboardmenu.add(consoleaspect);
-boardconsole0.addActionListener(this);
-boardconsole1.addActionListener(this);
-boardconsole2.addActionListener(this);
-boardconsole3.addActionListener(this);
-sidewaysconsole.addActionListener(this);
+    highlight.setSelected(true);
 
-/***************** end board console menu **************/
+    menu.add(myboardmenu);
 
+    //nconsole.addActionListener(this);
 
-highlight.addActionListener(this);
+    JMenu actionsmenu = new JMenu("Actions");
+    JMenuItem showhistory = new JMenuItem("Show My Recent Games");
+    actionsmenu.add(showhistory);
+    showhistory.addActionListener(this);
 
+    JMenuItem showlib = new JMenuItem("Show My Game Library");
+    actionsmenu.add(showlib);
+    showlib.addActionListener(this);
 
+    JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
+    actionsmenu.add(showstored);
+    showstored.addActionListener(this);
 
-
-
-highlight.setSelected(true);
-
-menu.add(myboardmenu);
-
-
-//nconsole.addActionListener(this);
-
-JMenu actionsmenu = new JMenu("Actions");
- JMenuItem showhistory = new JMenuItem("Show My Recent Games");
- actionsmenu.add(showhistory);
- showhistory.addActionListener(this);
-
- JMenuItem showlib = new JMenuItem("Show My Game Library");
- actionsmenu.add(showlib);
- showlib.addActionListener(this);
-
- JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
- actionsmenu.add(showstored);
- showstored.addActionListener(this);
-
-actionsmenu.addSeparator();
-JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
- actionsmenu.add(showfinger);
- showfinger.addActionListener(this);
+    actionsmenu.addSeparator();
+    JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
+    actionsmenu.add(showfinger);
+    showfinger.addActionListener(this);
 
 
+    JMenuItem showexam = new JMenuItem("Enter Examination Mode");
+    actionsmenu.add(showexam);
+    showexam.addActionListener(this);
 
-JMenuItem showexam = new JMenuItem("Enter Examination Mode");
- actionsmenu.add(showexam);
- showexam.addActionListener(this);
-
-JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
- actionsmenu.add(showexamlast);
- showexamlast.addActionListener(this);
-
+    JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
+    actionsmenu.add(showexamlast);
+    showexamlast.addActionListener(this);
 
 
-actionsmenu.addSeparator();
+    actionsmenu.addSeparator();
 
- JMenuItem showobs= new JMenuItem("Observe High Rated Game");
- actionsmenu.add(showobs);
- showobs.addActionListener(this);
+    JMenuItem showobs = new JMenuItem("Observe High Rated Game");
+    actionsmenu.add(showobs);
+    showobs.addActionListener(this);
 
- JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
- actionsmenu.add(showobs5);
- showobs5.addActionListener(this);
+    JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
+    actionsmenu.add(showobs5);
+    showobs5.addActionListener(this);
 
- JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
- actionsmenu.add(showobs15);
- showobs15.addActionListener(this);
+    JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
+    actionsmenu.add(showobs15);
+    showobs15.addActionListener(this);
 
- actionsmenu.addSeparator();
-  JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
- actionsmenu.add(showrelay);
- showrelay.addActionListener(this);
+    actionsmenu.addSeparator();
+    
+    JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
+    actionsmenu.add(showrelay);
+    showrelay.addActionListener(this);
  
- JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
-  actionsmenu.add(ratinggraph);
-  ratinggraph.addActionListener(this);
+    JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
+    actionsmenu.add(ratinggraph);
+    ratinggraph.addActionListener(this);
 
- JMenuItem addfriend = new JMenuItem("Add a Friend");
-  actionsmenu.add(addfriend);
- addfriend.addActionListener(this);
+    JMenuItem addfriend = new JMenuItem("Add a Friend");
+    actionsmenu.add(addfriend);
+    addfriend.addActionListener(this);
 
+    actionsmenu.addSeparator();
 
- actionsmenu.addSeparator();
+    JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
+    actionsmenu.add(followBroadcast);
+    followBroadcast.addActionListener(this);
 
-   JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
- actionsmenu.add(followBroadcast);
- followBroadcast.addActionListener(this);
+    JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
+    actionsmenu.add(unfollowBroadcast);
+    unfollowBroadcast.addActionListener(this);
 
-   JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
- actionsmenu.add(unfollowBroadcast);
- unfollowBroadcast.addActionListener(this);
+    JMenuItem showfm = new JMenuItem("Open ChessFM");
+    actionsmenu.add(showfm);
+    showfm.addActionListener(this);
 
+    menu.add(actionsmenu);
 
-   JMenuItem showfm = new JMenuItem("Open ChessFM");
- actionsmenu.add(showfm);
- showfm.addActionListener(this);
+    JMenu helpmenu = new JMenu("Help");
+    JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
+    helpmenu.add(lanternmanual);
+    lanternmanual.addActionListener(this);
 
-menu.add(actionsmenu);
+    JMenuItem changelog = new JMenuItem("Change Log");
+    helpmenu.add(changelog);
+    changelog.addActionListener(this);
 
-JMenu helpmenu = new JMenu("Help");
- JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
- helpmenu.add(lanternmanual);
- lanternmanual.addActionListener(this);
+    JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
+    helpmenu.add(infohelp);
+    infohelp.addActionListener(this);
 
-  JMenuItem changelog = new JMenuItem("Change Log");
- helpmenu.add(changelog);
- changelog.addActionListener(this);
+    JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
+    helpmenu.add(commandhelp);
+    commandhelp.addActionListener(this);
 
+    JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
+    helpmenu.add(joinrenewhelp);
+    joinrenewhelp.addActionListener(this);
 
- JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
- helpmenu.add(infohelp);
- infohelp.addActionListener(this);
+    JMenuItem passwordhelp = new JMenuItem("Lost Password");
+    helpmenu.add(passwordhelp);
+    passwordhelp.addActionListener(this);
 
+    JMenu poweroutmenu = new JMenu("Extra-games");
+    JMenuItem power = new JMenuItem("Start Powerout");
+    poweroutmenu.add(power);
+    power.addActionListener(this);
+    
+    JMenuItem mines = new JMenuItem("Start MineSweeper");
+    poweroutmenu.add(mines);
+    mines.addActionListener(this);
 
-  JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
- helpmenu.add(commandhelp);
- commandhelp.addActionListener(this);
+    JMenuItem mastermind = new JMenuItem("Start Mastermind");
+    poweroutmenu.add(mastermind);
+    mastermind.addActionListener(this);
 
- JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
- helpmenu.add(joinrenewhelp);
- joinrenewhelp.addActionListener(this);
+    JMenuItem startfour = new JMenuItem("Start Connect Four");
+    poweroutmenu.add(startfour);
+    startfour.addActionListener(this);
 
-  JMenuItem passwordhelp = new JMenuItem("Lost Password");
- helpmenu.add(passwordhelp);
- passwordhelp.addActionListener(this);
+    helpmenu.add(poweroutmenu);
 
- JMenu poweroutmenu = new JMenu("Extra-games");
- JMenuItem power = new JMenuItem("Start Powerout");
- poweroutmenu.add(power);
- power.addActionListener(this);
- JMenuItem mines = new JMenuItem("Start MineSweeper");
- poweroutmenu.add(mines);
- mines.addActionListener(this);
-
-
- JMenuItem mastermind = new JMenuItem("Start Mastermind");
- poweroutmenu.add(mastermind);
- mastermind.addActionListener(this);
-
- JMenuItem startfour = new JMenuItem("Start Connect Four");
- poweroutmenu.add(startfour);
- startfour.addActionListener(this);
-
-
-
-
-helpmenu.add(poweroutmenu);
-
-
-menu.add(helpmenu);
-
-
-}
-
+    menu.add(helpmenu);
+  }
 
 public void stateChanged(ChangeEvent e) {
 
