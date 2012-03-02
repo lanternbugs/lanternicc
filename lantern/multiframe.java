@@ -167,7 +167,8 @@ class mymultiframe extends JFrame
   protected JColorChooser tcc;
   int colortype;
 
-  // Andrey notes: organize these in an intuitive manner
+  // Andrey says:
+  // organize these in an intuitive manner
   JCheckBoxMenuItem autonoidle;
   JCheckBoxMenuItem autobufferchat;
   JCheckBoxMenuItem autoHistoryPopup;
@@ -288,6 +289,7 @@ class mymultiframe extends JFrame
   Runtime rt;
 
   ConcurrentLinkedQueue<myoutput> queue;
+  // Andrey says:
   // want to be able to change this to:
   //Queue<myoutput> queue;
 
@@ -295,6 +297,7 @@ class mymultiframe extends JFrame
   gameboard[] myboards;
   Image[] img;
   ConcurrentLinkedQueue<newBoardData> gamequeue;
+  // Andrey says:
   // want to be able to change this to:
   //Queue<newBoardData> gamequeue;
   subframe[] consoleSubframes;
@@ -428,7 +431,7 @@ class mymultiframe extends JFrame
       loadScripts.loadScript(sharedVariables.notifyControllerScript,
                              sharedVariables.notifyControllerFile);
 
-    } catch(Exception scriptErrror) {}
+    } catch (Exception scriptErrror) {}
     
     setUpChannelNotify();
     setUpLanternNotify();
@@ -980,532 +983,525 @@ class mymultiframe extends JFrame
   }
 
 
-public void parseCountries()
-{
-/*
-try {
-  scriptLoader loadScripts = new  scriptLoader();
- ArrayList<String> country = new ArrayList();
-loadScripts.loadScript(country, "flags3.txt");
-String output = "";
-
-
-for(int z=0; z<country.size(); z++)
-{
-  String line= country.get(z);
-      String first="";
-      String last="";
-      String text="";
-      String oldtext="";
-
-  try {
-
-	line=line.replace("\t", " ");
-	if(line.contains("N/A"))
-	continue;
-        		StringTokenizer tokens = new StringTokenizer(line, " ");
-
-      boolean lastToken=false;
-
-      while(lastToken == false)
-      {
-      oldtext=text;
+  public void parseCountries() {
+    /*
     try {
+      scriptLoader loadScripts = new  scriptLoader();
+      ArrayList<String> country = new ArrayList();
+      loadScripts.loadScript(country, "flags3.txt");
+      String output = "";
 
-      text=tokens.nextToken();
-      if(text==null)
-      {
-       last=oldtext;
-       lastToken=true;
-      }// end if null
-      else
-      {
-       if(first.equals(""))
-       first=oldtext;
-       else
-       first=first + "_" + oldtext;
-      }
 
-      }// end try
-      catch(Exception dui){last=oldtext; lastToken=true;}
-      } // end while
-      output+=last.toUpperCase() + ";" + first + ";";
-    //int i=line.indexOf(";");
-   // String line1=line.substring(0, i);
-   // String line2=line.substring(i+1, line.length());
-  //  output+=line2 + ";" + line1 + ";";
+      for (int z=0; z<country.size(); z++) {
+        String line= country.get(z);
+        String first="";
+        String last="";
+        String text="";
+        String oldtext="";
 
+        try {
+          
+          line=line.replace("\t", " ");
+          if (line.contains("N/A"))
+            continue;
+          StringTokenizer tokens = new StringTokenizer(line, " ");
+
+          boolean lastToken=false;
+
+          while (!lastToken) {
+            oldtext=text;
+            try {
+
+              text=tokens.nextToken();
+              if (text==null) {
+                last=oldtext;
+                lastToken=true;
+                // end if null
+              } else {
+                if (first.equals(""))
+                  first=oldtext;
+                else
+                  first=first + "_" + oldtext;
+              }
+
+            }// end try
+            catch (Exception dui) {
+              last=oldtext;
+              lastToken=true;
+            }
+          } // end while
+          output+=last.toUpperCase() + ";" + first + ";";
+          //int i=line.indexOf(";");
+          //String line1=line.substring(0, i);
+          //String line2=line.substring(i+1, line.length());
+          //output+=line2 + ";" + line1 + ";";
+          
+        } catch (Exception dogeatdog) {}
+      }// end for
+      FileWrite writer = new FileWrite();
+      writer.write(output, "new-countries.txt");
+    } catch(Exception dumb) {}
+    */
   }
-  catch(Exception dogeatdog){}
-}// end for
-FileWrite writer = new FileWrite();
-writer.write(output, "new-countries.txt");
-}
-catch(Exception dumb){}
-      */
+
+  boolean getOnTopSetting() {
+
+    scriptLoader loadScripts = new  scriptLoader();
+    ArrayList<String> ontop = new ArrayList();
+    // Andrey says:
+    // want to be able to change this to:
+    //List<String> ontop = new ArrayList<String>();
+    loadScripts.loadScript(ontop, "lantern_board_on_top.txt");
+    if (ontop.size() > 0) {
+      String top = ontop.get(0);
+      if (top.equals("true"))
+        return true;
+    }
+    return false;
   }
 
-boolean getOnTopSetting()
-{
+  public void setUpLanternNotify() {
+    try {
+      scriptLoader loadScripts = new  scriptLoader();
+      ArrayList<String> notifyScript = new ArrayList();
+      // Andrey says:
+      // want to be able to change this to:
+      //List<String> notifyScript = new ArrayList<String>();
+      loadScripts.loadScript(notifyScript, "lantern_global_notify.txt");
+      for (int z=0; z<notifyScript.size(); z++) {
+        String notString = notifyScript.get(z);
+        try {
+          int i = notString.indexOf(" ");
+          if (i > 1) {// first two spaces minimum needed for name
 
-scriptLoader loadScripts = new  scriptLoader();
- ArrayList<String> ontop = new ArrayList();
-loadScripts.loadScript(ontop, "lantern_board_on_top.txt");
-if(ontop.size() > 0)
-{String top= ontop.get(0);
-if(top.equals("true"))
-return true;
-}
-return false;
-}
+            lanternNotifyClass temp = new lanternNotifyClass();
+            temp.name = notString.substring(0, i);
+            try {
+              int on = Integer.parseInt(notString.substring(i+1, notString.length()-2));
+              // -2 for the \r\n
+              if (on==1)
+                temp.sound = true;
+            } catch (Exception nosound) {}
+            sharedVariables.lanternNotifyList.add(temp);
+          }
+          // end inner try
+        } catch (Exception duii) {}
+      }// end for
+      // end try
+    } catch (Exception dui) {}
+  }// end method
 
-public void setUpLanternNotify()
-{
-try {
-  scriptLoader loadScripts = new  scriptLoader();
- ArrayList<String> notifyScript = new ArrayList();
-loadScripts.loadScript(notifyScript, "lantern_global_notify.txt");
-for(int z=0; z<notifyScript.size(); z++)
-{
-  String notString= notifyScript.get(z);
-  try {
-           int i=notString.indexOf(" ");
-           if(i > 1) // first two spaces minimum needed for name
-           {
-                   lanternNotifyClass temp = new lanternNotifyClass();
-                   temp.name=notString.substring(0, i);
-                   try {int on=Integer.parseInt(notString.substring(i+1, notString.length()-2));// -2 for the \r\n
-                   if(on==1)
-                   temp.sound=true;
-           } 
-           catch(Exception nosound){}
-                   sharedVariables.lanternNotifyList.add(temp);
-           }
-  }// end inner try
-  catch(Exception duii){}
-}// end for
-}// end try
-catch(Exception dui){}
-}// end method
+  public void setUpChannelNotify() {
+    try {
+      scriptLoader loadScripts = new  scriptLoader();
+      ArrayList<String> notifyScript = new ArrayList();
+      // Andrey says:
+      // want to be able to change this to:
+      //List<String> notifyScript = new ArrayList<String>();
+      loadScripts.loadScript(notifyScript, "lantern_channel_notify.txt");
+      String channel = "";
+      channelNotifyClass temp = null;
+      for (int z=0; z<notifyScript.size(); z++) {
+        if (notifyScript.get(z).startsWith("#")) {
+          channel = notifyScript.get(z).substring(1, notifyScript.get(z).length());
+          // add node
+          if (temp != null) // add last channel on new channel
+            sharedVariables.channelNotifyList.add(temp);
 
-public void setUpChannelNotify()
-{
-try {
-  scriptLoader loadScripts = new  scriptLoader();
- ArrayList<String> notifyScript = new ArrayList();
-loadScripts.loadScript(notifyScript, "lantern_channel_notify.txt");
-String channel="";
-channelNotifyClass temp=null;
-for(int z=0; z<notifyScript.size(); z++)
-{
-if(notifyScript.get(z).startsWith("#"))
-{
- channel=notifyScript.get(z).substring(1, notifyScript.get(z).length());
- // add node
- if(temp!=null)// add last channel on new channel
- sharedVariables.channelNotifyList.add(temp);
+          temp = new channelNotifyClass();
+          temp.channel = channel;
+        } else if (!channel.equals("")) {
+          temp.nameList.add(notifyScript.get(z));
+        }// end else if
+      }// end for
+      if (temp != null && !channel.equals(""))
+        if (temp.nameList.size() > 0)
+          // to get last one or even first one since prior loads happen on next item
+          sharedVariables.channelNotifyList.add(temp);
+      // end try
+    } catch (Exception dui) {}
+  }// end method setupchannelnotify
+  
+  public void createMenu() {
 
- temp = new channelNotifyClass();
- temp.channel=channel;
-}
-else if(!channel.equals(""))
-{
- temp.nameList.add(notifyScript.get(z));
-}// end else if
-}  // end for
- if(temp!=null && !channel.equals(""))
- if(temp.nameList.size()> 0)
- sharedVariables.channelNotifyList.add(temp);// to get last one or even first one since prior loads happen on next item
-}// end try
-catch(Exception dui){}
-}// end method setupchannelnotify
-public void createMenu()
-{
+    JMenuBar menu = new JMenuBar();
+    JMenu myfiles = new JMenu("File");
+    myfiles.setMnemonic(KeyEvent.VK_F);
 
-JMenuBar menu = new JMenuBar();
- JMenu myfiles = new JMenu("File");
- myfiles.setMnemonic(KeyEvent.VK_F);
+    JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
+    myfiles.add(reconnect1);
+    reconnect1.setMnemonic(KeyEvent.VK_R);
 
-  JMenuItem  reconnect1 = new JMenuItem("Reconnect to ICC");
-  myfiles.add(reconnect1);
-  reconnect1.setMnemonic(KeyEvent.VK_R);
+    JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
+    myfiles.add(reconnect3);
 
-  JMenuItem  reconnect3 = new JMenuItem("Reconnect to Queen");
-  myfiles.add(reconnect3);
-
-  reconnect2 = new JMenuItem("Reconnect to FICS");// off now
-  myfiles.add(reconnect2);
-  reconnect2.setVisible(false);
-  JMenuItem  wallpaper1 = new JMenuItem("Set Wallpaper");
-  myfiles.add(wallpaper1);
-    JMenuItem  settings2 = new JMenuItem("Save Settings");
+    reconnect2 = new JMenuItem("Reconnect to FICS");// off now
+    myfiles.add(reconnect2);
+    reconnect2.setVisible(false);
+    JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
+    myfiles.add(wallpaper1);
+    JMenuItem settings2 = new JMenuItem("Save Settings");
     myfiles.add(settings2);
 
- menu.add(myfiles);
+    menu.add(myfiles);
 
 
-JMenu mywindowscolors = new JMenu("Colors");
+    JMenu mywindowscolors = new JMenu("Colors");
 
-  JMenuItem fontchange = new JMenuItem("Change Font");
-  mywindowscolors.add(fontchange);
-   fontchange.addActionListener(this);
-
-
+    JMenuItem fontchange = new JMenuItem("Change Font");
+    mywindowscolors.add(fontchange);
+    fontchange.addActionListener(this);
 
 
+    JMenuItem channelcol = new JMenuItem("Channel Colors");
+    mywindowscolors.add(channelcol);
+
+    JMenuItem consoleColors = new JMenuItem("Console Colors");
+    mywindowscolors.add(consoleColors);
+
+    JMenuItem listColor = new JMenuItem("Notify an Events Background Color");
+    mywindowscolors.add(listColor);
+    listColor.addActionListener(this);
 
 
-JMenuItem channelcol = new JMenuItem("Channel Colors");
-  mywindowscolors.add(channelcol);
-
- JMenuItem consoleColors = new JMenuItem("Console Colors");
-  mywindowscolors.add(consoleColors);
-
-JMenuItem listColor = new JMenuItem("Notify an Events Background Color");
-  mywindowscolors.add(listColor);
-listColor.addActionListener(this);
+    JMenuItem tellNameColor = new JMenuItem("PTell Name Color");
+    mywindowscolors.add(tellNameColor);
+    tellNameColor.addActionListener(this);
 
 
+    JMenu typingarea = new JMenu("Typing Field");
+
+    JMenuItem inputfontchange = new JMenuItem("Change Input Font");
+    typingarea.add(inputfontchange);
+    inputfontchange.addActionListener(this);
+
+    JMenuItem inputcommand = new JMenuItem("Input Command Color");
+    typingarea.add(inputcommand);
+    inputcommand.addActionListener(this);
+
+    JMenuItem inputchat = new JMenuItem("Input Chat Color");
+    typingarea.add(inputchat);
+    inputchat.addActionListener(this);
+
+    mywindowscolors.add(typingarea);
 
 
-JMenuItem tellNameColor = new JMenuItem("PTell Name Color");
-mywindowscolors.add(tellNameColor);
-tellNameColor.addActionListener(this);
+    /****************** names list *****************/
+    JMenu inChannelNamesMenu = new JMenu("In Channel Names Menu");
+
+    JMenuItem nameForegroundColor = new JMenuItem("Names List Foreground Color");
+    inChannelNamesMenu.add(nameForegroundColor);
+    nameForegroundColor.addActionListener(this);
+
+    JMenuItem nameBackgroundColor = new JMenuItem("Names List Background Color");
+    inChannelNamesMenu.add(nameBackgroundColor);
+    nameBackgroundColor.addActionListener(this);
+
+    JMenuItem namelistFont = new JMenuItem("Names List Font");
+    inChannelNamesMenu.add(namelistFont);
+    namelistFont.addActionListener(this);
+    mywindowscolors.add(inChannelNamesMenu);
+    /*********** end names list ******************/
+    
+    JMenuItem eventsFont = new JMenuItem("Events List Font");
+    eventsFont.addActionListener(this);
+    mywindowscolors.add(eventsFont);
+
+    JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
+    colortimestamp.addActionListener(this);
+    mywindowscolors.add(colortimestamp);
+
+    /*
+    JMenuItem channelTitles = new JMenuItem("Titles In Channel Color");
+    mywindowscolors.add(channelTitles);
+    channelTitles.addActionListener(this);
+    */
+    //duplicate
+    //JMenuItem mainback = new JMenuItem("Main Background");
+    //myfiles.add(mainback);
+
+    JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
 
 
- JMenu typingarea = new JMenu("Typing Field");
+    JMenu tabback = new JMenu("Tab Background");
+    tabsColorsMenu.add(tabback);
+    JMenuItem tabback1 = new JMenuItem("Visited");
+    JMenuItem tabback2 = new JMenuItem("Unvisited");
+    JMenuItem tabback5 = new JMenuItem("Unvisited/Visited");
 
- JMenuItem inputfontchange = new JMenuItem("Change Input Font");
-  typingarea.add(inputfontchange);
-inputfontchange.addActionListener(this);
-
-JMenuItem inputcommand = new JMenuItem("Input Command Color");
-  typingarea.add(inputcommand);
-inputcommand.addActionListener(this);
-
-JMenuItem inputchat = new JMenuItem("Input Chat Color");
-  typingarea.add(inputchat);
-inputchat.addActionListener(this);
-
-mywindowscolors.add(typingarea);
+    tabback.add(tabback1);
+    tabback.add(tabback2);
+    tabback.add(tabback5);
+    JMenuItem tabimon = new JMenuItem("Tab I'm On Background");
+    tabback.add(tabimon);
 
 
+    JMenu tabfore = new JMenu("Tab Foreground");
+    tabsColorsMenu.add(tabfore);
+    JMenuItem tabback3 = new JMenuItem("Active");
+    JMenuItem tabback4 = new JMenuItem("Non Active");
+    tabfore.add(tabback3);
+    tabfore.add(tabback4);
 
-/****************** names list *****************/
-JMenu inChannelNamesMenu = new JMenu("In Channel Names Menu");
-
-JMenuItem nameForegroundColor = new JMenuItem("Names List Foreground Color");
-inChannelNamesMenu.add(nameForegroundColor);
-nameForegroundColor.addActionListener(this);
-
-JMenuItem nameBackgroundColor = new JMenuItem("Names List Background Color");
-inChannelNamesMenu.add(nameBackgroundColor);
-nameBackgroundColor.addActionListener(this);
-
-JMenuItem namelistFont = new JMenuItem("Names List Font");
-inChannelNamesMenu.add(namelistFont);
-namelistFont.addActionListener(this);
-mywindowscolors.add(inChannelNamesMenu);
-/*********** end names list ******************/
-JMenuItem eventsFont = new JMenuItem("Events List Font");
-eventsFont.addActionListener(this);
-mywindowscolors.add(eventsFont);
-
-JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
-colortimestamp.addActionListener(this);
-mywindowscolors.add(colortimestamp);
+    tabback1.addActionListener(this);
+    tabback2.addActionListener(this);
+    tabback3.addActionListener(this);
+    tabback4.addActionListener(this);
+    tabback5.addActionListener(this);
+    tabimon.addActionListener(this);
 
 
-/*JMenuItem channelTitles = new JMenuItem("Titles In Channel Color");
-mywindowscolors.add(channelTitles);
-channelTitles.addActionListener(this);
-  */
-//duplicate
-// JMenuItem mainback = new JMenuItem("Main Background");
-//  myfiles.add(mainback);
+    JMenuItem tabborder1 = new JMenuItem("Tab Border");
+    tabborder1.addActionListener(this);
+    tabsColorsMenu.add(tabborder1);
 
-JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
+    JMenuItem tabborder2 = new JMenuItem("Tell Tab Border");
+    tabborder2.addActionListener(this);
+    tabsColorsMenu.add(tabborder2);
 
 
-JMenu tabback = new JMenu("Tab Background");
-tabsColorsMenu.add(tabback);
-JMenuItem tabback1 = new JMenuItem("Visited");
-JMenuItem tabback2 = new JMenuItem("Unvisited");
-JMenuItem tabback5 = new JMenuItem("Unvisited/Visited");
-
-tabback.add(tabback1);
-tabback.add(tabback2);
-tabback.add(tabback5);
-JMenuItem tabimon = new JMenuItem("Tab I'm On Background");
-tabback.add(tabimon);
+    JMenuItem tabfontchange = new JMenuItem("Change Tab Font");
+    tabsColorsMenu.add(tabfontchange);
+    tabfontchange.addActionListener(this);
 
 
-JMenu tabfore = new JMenu("Tab Foreground");
-tabsColorsMenu.add(tabfore);
-JMenuItem tabback3 = new JMenuItem("Active");
-JMenuItem tabback4 = new JMenuItem("Non Active");
-tabfore.add(tabback3);
-tabfore.add(tabback4);
-
-tabback1.addActionListener(this);
-tabback2.addActionListener(this);
-tabback3.addActionListener(this);
-tabback4.addActionListener(this);
-tabback5.addActionListener(this);
-tabimon.addActionListener(this);
+    mywindowscolors.add(tabsColorsMenu);
 
 
-JMenuItem tabborder1 = new JMenuItem("Tab Border");
-tabborder1.addActionListener(this);
-tabsColorsMenu.add(tabborder1);
-
-JMenuItem tabborder2 = new JMenuItem("Tell Tab Border");
-tabborder2.addActionListener(this);
-tabsColorsMenu.add(tabborder2);
-
-
-
-JMenuItem tabfontchange = new JMenuItem("Change Tab Font");
-  tabsColorsMenu.add(tabfontchange);
-tabfontchange.addActionListener(this);
-
-
-mywindowscolors.add(tabsColorsMenu);
-
-
- JMenuItem  wallpaper2 = new JMenuItem("Set Application Background Color");
+    JMenuItem wallpaper2 = new JMenuItem("Set Application Background Color");
     mywindowscolors.add(wallpaper2);
-   wallpaper2.addActionListener(this);
+    wallpaper2.addActionListener(this);
 
 
+    menu.add(mywindowscolors);
 
 
+    setJMenuBar(menu);
+    //mainback.addActionListener(this);
 
+    settings2.addActionListener(this);
+    reconnect1.addActionListener(this);
+    reconnect2.addActionListener(this);
+    reconnect3.addActionListener(this);
 
-menu.add(mywindowscolors);
+    wallpaper1.addActionListener(this);
 
 
+    channelcol.addActionListener(this);
+    consoleColors.addActionListener(this);
 
+    /*************************  options window now ************/
+    JMenu optionsmenu = new JMenu("Options");
+    
+    // Andreys adds:
+    optionsmenu.setMnemonic(KeyEvent.VK_O);
+    
+    JMenu soundmenu = new JMenu("Sound");
+    hearsound = new JCheckBoxMenuItem("Sounds");
+    makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
+    makeObserveSounds.addActionListener(this);
 
 
+    notifysound=new JCheckBoxMenuItem("Sounds for Notifications");
+    hearsound.addActionListener(this);
+    notifysound.addActionListener(this);
 
+    soundmenu.add(hearsound);
+    soundmenu.add(makeObserveSounds);
+    soundmenu.add(notifysound);
 
+    optionsmenu.add(soundmenu);
 
 
+    optionsmenu.addSeparator();
+    JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
+    winanalysis.addActionListener(this);
+    optionsmenu.add(winanalysis);
 
+    JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
+    optionsmenu.add(ucianalysis);
+    ucianalysis.addActionListener(this);
 
+    JMenuItem enginerestart = new JMenuItem("Restart Engine");
+    optionsmenu.add(enginerestart);
+    enginerestart.addActionListener(this);
 
 
+    JMenuItem enginestop = new JMenuItem("Stop Engine");
+    optionsmenu.add(enginestop);
+    enginestop.addActionListener(this);
 
+    JMenu engineMenu = new JMenu("Analysis Display");
 
-setJMenuBar(menu);
-//mainback.addActionListener(this);
+    JMenuItem ananfont = new JMenuItem("Analysis Font");
+    engineMenu.add(ananfont);
+    ananfont.addActionListener(this);
 
-settings2.addActionListener(this);
-reconnect1.addActionListener(this);
-reconnect2.addActionListener(this);
-reconnect3.addActionListener(this);
+    JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
+    engineMenu.add(ananfore);
+    ananfore.addActionListener(this);
 
-wallpaper1.addActionListener(this);
+    JMenuItem ananback = new JMenuItem("Analysis Background Color");
+    engineMenu.add(ananback);
+    ananback.addActionListener(this);
+    optionsmenu.add(engineMenu);
 
+    optionsmenu.addSeparator();
+    JMenuItem customizetools = new JMenuItem("Customize User Buttons");
+    customizetools.addActionListener(this);
+    optionsmenu.add(customizetools);
 
+    optionsmenu.addSeparator();
+    
+    /************** advanced ****************/
+    JMenu advancedOptions = new JMenu("Advanced");
+    qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
+    qsuggestPopup.addActionListener(this);
+    advancedOptions.add(qsuggestPopup);
 
-channelcol.addActionListener(this);
-consoleColors.addActionListener(this);
+    userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
+    userbuttons.addActionListener(this);
+    advancedOptions.add(userbuttons);
 
-/*************************  options window now ************/
+    consolemenu = new JCheckBoxMenuItem("Show Console Menu");
+    consolemenu.setSelected(true);
+    consolemenu.addActionListener(this);
+    advancedOptions.add(consolemenu);
 
-JMenu optionsmenu = new JMenu("Options");
- JMenu soundmenu = new JMenu("Sound");
-  hearsound = new JCheckBoxMenuItem("Sounds");
-makeObserveSounds= new JCheckBoxMenuItem("Sounds for Observed Games");
-makeObserveSounds.addActionListener(this);
+    channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
+    channelNumberLeft.setSelected(true);
+    channelNumberLeft.addActionListener(this);
+    advancedOptions.add(channelNumberLeft);
 
 
-notifysound=new JCheckBoxMenuItem("Sounds for Notifications");
-hearsound.addActionListener(this);
-notifysound.addActionListener(this);
+    compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
+    compactNameList.setSelected(false);
+    compactNameList.addActionListener(this);
+    advancedOptions.add(compactNameList);
 
-soundmenu.add(hearsound);
-soundmenu.add(makeObserveSounds);
-soundmenu.add(notifysound);
 
-optionsmenu.add(soundmenu);
+    autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
+    advancedOptions.add(autobufferchat);
 
+    useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
+    advancedOptions.add(useTopGame);
+    useTopGame.addActionListener(this);
 
- optionsmenu.addSeparator();
- JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
-winanalysis.addActionListener(this);
-  optionsmenu.add(winanalysis);
+    notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
+    advancedOptions.add(notifyMainAlso);
+    notifyMainAlso.addActionListener(this);
 
-JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
-  optionsmenu.add(ucianalysis);
-ucianalysis.addActionListener(this);
 
-JMenuItem enginerestart = new JMenuItem("Restart Engine");
-  optionsmenu.add(enginerestart);
-enginerestart.addActionListener(this);
+    autopopup = new JCheckBoxMenuItem("Auto Name Popup");
+    advancedOptions.add(autopopup);
+    autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
+    advancedOptions.add(autoHistoryPopup);
 
+    autobufferchat.addActionListener(this);
+    autopopup.addActionListener(this);
+    autoHistoryPopup.addActionListener(this);
 
-JMenuItem enginestop = new JMenuItem("Stop Engine");
-  optionsmenu.add(enginestop);
-enginestop.addActionListener(this);
+    basketballFlag = new JCheckBoxMenuItem("Use Basketball Logo ICC Flag");
+    advancedOptions.add(basketballFlag);
+    basketballFlag.addActionListener(this);
 
-JMenu engineMenu = new JMenu("Analysis Display");
+    lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
+    lineindent.addActionListener(this);
+    advancedOptions.add(lineindent);
 
-JMenuItem ananfont = new JMenuItem("Analysis Font");
-  engineMenu.add(ananfont);
-ananfont.addActionListener(this);
 
-JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
-  engineMenu.add(ananfore);
-ananfore.addActionListener(this);
+    JMenu italicsBehaviorMenu = new JMenu("` ` Behavior");
+    italicsBehavior[0] = new JCheckBoxMenuItem("` ` Do Nothing");
+    italicsBehavior[0].addActionListener(this);
+    italicsBehaviorMenu.add(italicsBehavior[0]);
 
-JMenuItem ananback = new JMenuItem("Analysis Background Color");
-  engineMenu.add(ananback);
-ananback.addActionListener(this);
-optionsmenu.add(engineMenu);
+    italicsBehavior[1] = new JCheckBoxMenuItem("` ` Italics");
+    italicsBehavior[1].addActionListener(this);
+    italicsBehaviorMenu.add(italicsBehavior[1]);
 
-optionsmenu.addSeparator();
-JMenuItem customizetools = new JMenuItem("Customize User Buttons");
-customizetools.addActionListener(this);
-optionsmenu.add(customizetools);
+    italicsBehavior[2] = new JCheckBoxMenuItem("` ` Brighter Color");
+    italicsBehavior[2].addActionListener(this);
+    italicsBehaviorMenu.add(italicsBehavior[2]);
 
-optionsmenu.addSeparator();
-/************** advanced ****************/
-
-JMenu advancedOptions = new JMenu("Advanced");
-qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
-qsuggestPopup.addActionListener(this);
-advancedOptions.add(qsuggestPopup);
-
-userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
-userbuttons.addActionListener(this);
-advancedOptions.add(userbuttons);
-
-consolemenu = new JCheckBoxMenuItem("Show Console Menu");
-consolemenu.setSelected(true);
-consolemenu.addActionListener(this);
-advancedOptions.add(consolemenu);
-
-channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
-channelNumberLeft.setSelected(true);
-channelNumberLeft.addActionListener(this);
-advancedOptions.add(channelNumberLeft);
-
-
-compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
-compactNameList.setSelected(false);
-compactNameList.addActionListener(this);
-advancedOptions.add(compactNameList);
-
-
-autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
-advancedOptions.add(autobufferchat);
-
-useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
-advancedOptions.add(useTopGame);
-useTopGame.addActionListener(this);
-
-notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
-advancedOptions.add(notifyMainAlso);
-notifyMainAlso.addActionListener(this);
-
-
-  autopopup = new JCheckBoxMenuItem("Auto Name Popup");
-  advancedOptions.add(autopopup);
-   autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
-  advancedOptions.add(autoHistoryPopup);
-
-  autobufferchat.addActionListener(this);
-autopopup.addActionListener(this);
-autoHistoryPopup.addActionListener(this);
-
-basketballFlag = new JCheckBoxMenuItem("Use Basketball Logo ICC Flag");
-advancedOptions.add(basketballFlag);
-basketballFlag.addActionListener(this);
-
-lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
-lineindent.addActionListener(this);
-advancedOptions.add(lineindent);
-
-
-
-JMenu italicsBehaviorMenu = new JMenu("` ` Behavior");
-italicsBehavior[0] = new JCheckBoxMenuItem("` ` Do Nothing");
-italicsBehavior[0].addActionListener(this);
-italicsBehaviorMenu.add(italicsBehavior[0]);
-
-italicsBehavior[1] = new JCheckBoxMenuItem("` ` Italics");
-italicsBehavior[1].addActionListener(this);
-italicsBehaviorMenu.add(italicsBehavior[1]);
-
-italicsBehavior[2] = new JCheckBoxMenuItem("` ` Brighter Color");
-italicsBehavior[2].addActionListener(this);
-italicsBehaviorMenu.add(italicsBehavior[2]);
-
-advancedOptions.add(italicsBehaviorMenu);
-
-
+    advancedOptions.add(italicsBehaviorMenu);
 /**************************** end advanced ***********************/
-optionsmenu.add(advancedOptions);
+    
+    optionsmenu.add(advancedOptions);
 
 
-JMenu featuresMenu = new JMenu("Features");
+    JMenu featuresMenu = new JMenu("Features");
 
 
- tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
-tellswitch.addActionListener(this);
-  featuresMenu.add(tellswitch);
+    tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
+    tellswitch.addActionListener(this);
+    featuresMenu.add(tellswitch);
 
-autonoidle = new JCheckBoxMenuItem("No Idle");
-featuresMenu.add(autonoidle);
-autonoidle.addActionListener(this);
+    autonoidle = new JCheckBoxMenuItem("No Idle");
+    featuresMenu.add(autonoidle);
+    autonoidle.addActionListener(this);
 
- rotateaways = new JCheckBoxMenuItem("Rotate Away Message");
-  featuresMenu.add(rotateaways);
-iloggedon = new JCheckBoxMenuItem("Send iloggedon");
-featuresMenu.add(iloggedon);
-iloggedon.addActionListener(this);
-rotateaways.addActionListener(this);
-
-
-optionsmenu.add(featuresMenu);
+    rotateaways = new JCheckBoxMenuItem("Rotate Away Message");
+    featuresMenu.add(rotateaways);
+    iloggedon = new JCheckBoxMenuItem("Send iloggedon");
+    featuresMenu.add(iloggedon);
+    iloggedon.addActionListener(this);
+    rotateaways.addActionListener(this);
 
 
-JMenu observeOptions = new JMenu("Observing Options");
-JMenu tournieFollow = new JMenu("Follow Tomato Tournament Games");
-JCheckBoxMenuItem autoflash = new JCheckBoxMenuItem("Auto Observe Flash");
-  tournieFollow.add(autoflash);
-JCheckBoxMenuItem autocooly = new JCheckBoxMenuItem("Auto Observe Cooly");
-  tournieFollow.add(autocooly);
-JCheckBoxMenuItem autotomato = new JCheckBoxMenuItem("Auto Observe Tomato");
-  tournieFollow.add(autotomato);
-JCheckBoxMenuItem autowildone = new JCheckBoxMenuItem("Auto Observe WildOne");
-  tournieFollow.add(autowildone);
-JCheckBoxMenuItem autoslomato = new JCheckBoxMenuItem("Auto Observe Slomato");
-  tournieFollow.add(autoslomato);
-JCheckBoxMenuItem autoketchup = new JCheckBoxMenuItem("Auto Observe Ketchup");
-  tournieFollow.add(autoketchup);
-JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Auto Observe Olive");
-  tournieFollow.add(autoolive);
-JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("Auto Observe LittlePer");
-  tournieFollow.add(autolittleper);
+    optionsmenu.add(featuresMenu);
 
 
+    JMenu observeOptions = new JMenu("Observing Options");
 
-  autoflash.addActionListener(this);
-autocooly.addActionListener(this);
-autotomato.addActionListener(this);
-autowildone.addActionListener(this);
-autoslomato.addActionListener(this);
-autoketchup.addActionListener(this);
-autoolive.addActionListener(this);
-autolittleper.addActionListener(this);
+    // Andrey adds:
+    observeOptions.setMnemonic(KeyEvent.VK_O);
+    
+    JMenu tournieFollow = new JMenu("Follow Tomato Tournament Games");
 
+    // Andrey adds:
+    tournieFollow.setMnemonic(KeyEvent.VK_F);
 
- observeOptions.add(tournieFollow);
-  JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
+    // Andrey edits:
+    // remove "Auto Observe"
+    JCheckBoxMenuItem autoflash = new JCheckBoxMenuItem("Flash");
+    JCheckBoxMenuItem autocooly = new JCheckBoxMenuItem("Cooly");
+    JCheckBoxMenuItem autotomato = new JCheckBoxMenuItem("Tomato");
+    JCheckBoxMenuItem autowildone = new JCheckBoxMenuItem("WildOne");
+    JCheckBoxMenuItem autoslomato = new JCheckBoxMenuItem("Slomato");
+    JCheckBoxMenuItem autoketchup = new JCheckBoxMenuItem("Ketchup");
+    JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Olive");
+    JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("LittlePer");
+
+    tournieFollow.add(autoflash);
+    tournieFollow.add(autocooly);
+    tournieFollow.add(autotomato);
+    tournieFollow.add(autowildone);
+    tournieFollow.add(autoslomato);
+    tournieFollow.add(autoketchup);
+    tournieFollow.add(autoolive);
+    tournieFollow.add(autolittleper);
+
+    autoflash.addActionListener(this);
+    autocooly.addActionListener(this);
+    autotomato.addActionListener(this);
+    autowildone.addActionListener(this);
+    autoslomato.addActionListener(this);
+    autoketchup.addActionListener(this);
+    autoolive.addActionListener(this);
+    autolittleper.addActionListener(this);
+    
+    // Andrey adds:
+    autoflash.setMnemonic(KeyEvent.VK_F);
+    autocooly.setMnemonic(KeyEvent.VK_C);
+    autotomato.setMnemonic(KeyEvent.VK_T);
+    autowildone.setMnemonic(KeyEvent.VK_W);
+    autoslomato.setMnemonic(KeyEvent.VK_S);
+    autoketchup.setMnemonic(KeyEvent.VK_K);
+    autoolive.setMnemonic(KeyEvent.VK_O);
+    autolittleper.setMnemonic(KeyEvent.VK_L);
+
+    observeOptions.add(tournieFollow);
+    JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
   
 
  randomArmy = new JCheckBoxMenuItem("Random Piece Set Observe Only");
@@ -4844,7 +4840,10 @@ if(event.getActionCommand().equals("Auto History Popup"))
 		autoHistoryPopup.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Auto Observe Tomato"))
+
+// Andrey edits:
+// remove "Auto Observe"
+if(event.getActionCommand().equals("Tomato"))
 {
 	if(sharedVariables.autoTomato == false)
 	sharedVariables.autoTomato = true;
@@ -4852,14 +4851,14 @@ if(event.getActionCommand().equals("Auto Observe Tomato"))
 	sharedVariables.autoTomato = false;
 }
 
-if(event.getActionCommand().equals("Auto Observe Cooly"))
+if(event.getActionCommand().equals("Cooly"))
 {
 	if(sharedVariables.autoCooly == false)
 	sharedVariables.autoCooly = true;
 	else
 	sharedVariables.autoCooly = false;
 }
-if(event.getActionCommand().equals("Auto Observe WildOne"))
+if(event.getActionCommand().equals("WildOne"))
 {
 	if(sharedVariables.autoWildOne == false)
 	sharedVariables.autoWildOne = true;
@@ -4870,7 +4869,7 @@ if(event.getActionCommand().equals("Auto Observe WildOne"))
 }
 
 
-if(event.getActionCommand().equals("Auto Observe Flash"))
+if(event.getActionCommand().equals("Flash"))
 {
 	if(sharedVariables.autoFlash == false)
 	sharedVariables.autoFlash = true;
@@ -4878,14 +4877,14 @@ if(event.getActionCommand().equals("Auto Observe Flash"))
 	sharedVariables.autoFlash = false;
 }
 
-if(event.getActionCommand().equals("Auto Observe Olive"))
+if(event.getActionCommand().equals("Olive"))
 {
 	if(sharedVariables.autoOlive == false)
 	sharedVariables.autoOlive = true;
 	else
 	sharedVariables.autoOlive = false;
 }
-if(event.getActionCommand().equals("Auto Observe Ketchup"))
+if(event.getActionCommand().equals("Ketchup"))
 {
 	if(sharedVariables.autoKetchup == false)
 	sharedVariables.autoKetchup = true;
@@ -4896,7 +4895,7 @@ if(event.getActionCommand().equals("Auto Observe Ketchup"))
 }
 
 
-if(event.getActionCommand().equals("Auto Observe LittlePer"))
+if(event.getActionCommand().equals("LittlePer"))
 {
 	if(sharedVariables.autoLittlePer == false)
 	sharedVariables.autoLittlePer = true;
@@ -4906,7 +4905,7 @@ if(event.getActionCommand().equals("Auto Observe LittlePer"))
 
 
 
-if(event.getActionCommand().equals("Auto Observe Slomato"))
+if(event.getActionCommand().equals("Slomato"))
 {
 	if(sharedVariables.autoSlomato == false)
 	sharedVariables.autoSlomato = true;
