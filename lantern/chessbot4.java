@@ -478,7 +478,7 @@ if(myboards[i] != null)
 
 }
 */
-closeAllGameTabs();
+closeAllGameTabs(true);
 }// end try
 catch(Exception badgameclose)
 {// do nothing
@@ -588,7 +588,7 @@ try {
 		}
 }
 
-void closeAllGameTabs()
+void closeAllGameTabs(boolean reconnecting)
 {
 try {
 for(int i=sharedVariables.openBoardCount-1; i>=0; i--)
@@ -596,7 +596,10 @@ if(myboards[i] != null)
 {
 
    //myoutput data = new myoutput(); // we set it up to close all these tabs now. we end the game first so no resign or unob etc is sent in closetab method
-    closeGameTab(i);
+
+   closeGameTab(i, reconnecting);
+
+
    // queue.add(data);
 }
 }// end try
@@ -5669,9 +5672,9 @@ public void run()
 					else if(tosend.closetab > -1)
 					{
                                                 if(isABoardVisible() == false)
-                                                closeAllGameTabs();
+                                                closeAllGameTabs(false);
                                                 else
-                                                closeGameTab(tosend.closetab);
+                                                closeGameTab(tosend.closetab, false);
 						if(tosend.focusConsole > -1)
 						consoleSubframes[tosend.focusConsole].giveFocus();
                                                 tosend=queue.poll();
@@ -6228,7 +6231,7 @@ try {
 
 
 
-	void closeGameTab(int tabNumber)
+	void closeGameTab(int tabNumber, boolean reconnecting)
 	{ 
           int physicalTab=tabNumber;
           tabNumber=sharedVariables.tabLooking[tabNumber];
@@ -6252,9 +6255,14 @@ try {
 			data.consoleNumber = 0;
 			data.game=1;
 			queue.add(data);
-			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
-	                */
-	                return;
+                        */
+                        
+                        if(reconnecting == false)
+                        return;
+
+                        myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
+
+
         	}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_EXAMINING)
 		{	data.data = "Unexamine\n";
