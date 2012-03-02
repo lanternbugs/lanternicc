@@ -39,7 +39,7 @@ public class autoExamDialog extends JDialog
 
   public autoExamDialog(JFrame frame, boolean mybool,
                  channels sVars, gameboard[] myboards) {
-    super(frame, mybool);
+    super(frame, "Auto Examine", mybool);
     this.sVars = sVars;
     this.myboards = myboards;
 
