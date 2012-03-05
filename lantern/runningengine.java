@@ -454,9 +454,26 @@ if(text.length() > 0 && ((text.contains("pv") && stage ==3) || stage<3))
 try {
 if(text.startsWith("info") && (text.contains("pv") && !text.contains("info currmove") && stage ==3))
 {
-	String line1 = text.substring(0, text.indexOf("pv"));
-	String line2 = text.substring(text.indexOf("pv") + 3, text.length());
-	line2=pgnGetter.getPgn(line2, sharedVariables.mygame[gameData.BoardIndex].iflipped, sharedVariables.mygame[gameData.BoardIndex].board);
+	
+        // routine for those who print pv twice
+        int tryone=text.indexOf("pv");
+        int trytwo = text.indexOf("pv", tryone + 1);
+
+        String line1="";
+        String line2="";
+        if(trytwo != -1)
+        {
+       line1 = text.substring(0, trytwo);
+       line2 = text.substring(trytwo + 3, text.length());
+
+
+        }
+        else
+        {
+        line1 = text.substring(0, text.indexOf("pv"));
+	line2 = text.substring(text.indexOf("pv") + 3, text.length());
+         }
+        line2=pgnGetter.getPgn(line2, sharedVariables.mygame[gameData.BoardIndex].iflipped, sharedVariables.mygame[gameData.BoardIndex].board);
 	writeOut(line1);
 	writeOut(line2);
 }
