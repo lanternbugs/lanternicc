@@ -2196,294 +2196,218 @@ class mymultiframe extends JFrame
     menu.add(helpmenu);
   }
 
-public void stateChanged(ChangeEvent e) {
+  public void stateChanged(ChangeEvent e) {
 
- for(int i=0; i < sharedVariables.openConsoleCount; i++)
- {
-	 if(consoles[i]!= null)
-	 {
- if(colortype == 1)
- {
-	 Color newColor = tcc.getColor();
-        consoles[i].setForeground(newColor);
-}
-else if(colortype == 2)
-{
-	 Color newColor = tcc.getColor();
-        consoles[i].setBackground(newColor);
-}
-} // end if not null
-} // end for
-}// end method
+    for (int i=0; i < sharedVariables.openConsoleCount; i++) {
+      if (consoles[i]!= null) {
+        if (colortype == 1) {
+          Color newColor = tcc.getColor();
+          consoles[i].setForeground(newColor);
+        } else if (colortype == 2) {
+          Color newColor = tcc.getColor();
+          consoles[i].setBackground(newColor);
+        }
+      } // end if not null
+    } // end for
+  }// end method
 
-public void actionPerformed(ActionEvent event)
-{
-//Object source = event.getSource();
-//handle action event here
-if(event.getActionCommand().equals("Single Rows of Tabs"))
-{
-	sharedVariables.consoleLayout=1;
-	resetConsoleLayout();
-}
-
-if(event.getActionCommand().equals("No Visible Tabs"))
-{
-	sharedVariables.consoleLayout=3;
-	resetConsoleLayout();
-}
-
-if(event.getActionCommand().equals("Two Rows of Tabs"))
-{
-
-	sharedVariables.consoleLayout=2;
-	resetConsoleLayout();
-}
-
-
-if(event.getActionCommand().equals("Indent Multi Line Tells"))
-{
-
-if(sharedVariables.indent == true)
-{
+  public void actionPerformed(ActionEvent event) {
+    //Object source = event.getSource();
+    //handle action event here
+    // Andrey edits:
+    String action = event.getActionCommand();
+    // and replaces "event.getActionCommand()" with "action" below
+    
+    if (action.equals("Single Rows of Tabs")) {
+      sharedVariables.consoleLayout=1;
+      resetConsoleLayout();
+      
+    } else if (action.equals("No Visible Tabs")) {
+      sharedVariables.consoleLayout=3;
+      resetConsoleLayout();
+      
+    } else if (action.equals("Two Rows of Tabs")) {
+      sharedVariables.consoleLayout=2;
+      resetConsoleLayout();
+      
+    } else if (action.equals("Indent Multi Line Tells")) {
+      /*
+      if(sharedVariables.indent == true) {
 	sharedVariables.indent=false;
 	lineindent.setSelected(false);
-
-}
-else
-{
+      } else {
 	sharedVariables.indent=true;
 	lineindent.setSelected(true);
-
-}
-}
-
-if(event.getActionCommand().equals("Check Move Legality"))
-{
-
-if(sharedVariables.checkLegality == true)
-{
+      }
+      */
+      sharedVariables.indent = !sharedVariables.indent;
+      lineindent.setSelected(sharedVariables.indent);
+      
+    } else if (action.equals("Check Move Legality")) {
+      /*
+      if (sharedVariables.checkLegality == true) {
 	sharedVariables.checkLegality=false;
 	checkLegality.setSelected(false);
-
-}
-else
-{
+      } else {
 	sharedVariables.checkLegality=true;
 	checkLegality.setSelected(true);
-
-}
-}
-
-if(event.getActionCommand().equals("Unobserve Games Gone Examine"))
-{
-
-if(sharedVariables.unobserveGoExamine == true)
-{
+      }
+      */
+      sharedVariables.checkLegality = !sharedVariables.checkLegality;
+      checkLegality.setSelected(sharedVariables.checkLegality);
+      
+    } else if (action.equals("Unobserve Games Gone Examine")) {
+      /*
+      if (sharedVariables.unobserveGoExamine == true) {
 	sharedVariables.unobserveGoExamine=false;
 	unobserveGoExamine.setSelected(false);
-
-}
-else
-{
+      } else {
 	sharedVariables.unobserveGoExamine=true;
 	unobserveGoExamine.setSelected(true);
-
-}
-}
-
-
-
-if(event.getActionCommand().equals("Compact Channel Name List"))
-{
-try{
-	if(sharedVariables.compactNameList == true)
-	{
-		sharedVariables.compactNameList = false;
-		sharedVariables.nameListSize=90;
-		compactNameList.setSelected(false);
+      }
+      */
+      sharedVariables.unobserveGoExamine = !sharedVariables.unobserveGoExamine;
+      unobserveGoExamine.setSelected(sharedVariables.unobserveGoExamine);
+      
+    } else if (action.equals("Compact Channel Name List")) {
+      sharedVariables.compactNameList = !sharedVariables.compactNameList;
+      sharedVariables.nameListSize =
+        (sharedVariables.compactNameList ? 65 : 90);
+      compactNameList.setSelected(sharedVariables.compactNameList);
+      
+      try {
+        /*
+	if (sharedVariables.compactNameList == true) {
+          sharedVariables.compactNameList = false;
+          sharedVariables.nameListSize=90;
+          compactNameList.setSelected(false);
+	} else {
+          sharedVariables.compactNameList = true;
+          sharedVariables.nameListSize=65;
+          compactNameList.setSelected(true);
 	}
-	else
-	{
-
-		sharedVariables.compactNameList = true;
-		sharedVariables.nameListSize=65;
-		compactNameList.setSelected(true);
-	}
-
-for(int iii=0; iii<sharedVariables.maxConsoleTabs; iii++)
-{
-	if(consoleSubframes[iii]!=null)
-	{
-
-	consoleSubframes[iii].overall.recreate(sharedVariables.consolesTabLayout[iii]);
-	}
-}//end for
-}// end try
-catch(Exception namebad){}
-}
-if(event.getActionCommand().equals("Channel Number On Left"))
-{
-
-if(sharedVariables.channelNumberLeft == true)
-{
+        */
+        for (int iii=0; iii<sharedVariables.maxConsoleTabs; iii++) {
+          if (consoleSubframes[iii]!=null) {
+            consoleSubframes[iii].overall.recreate(sharedVariables.consolesTabLayout[iii]);
+          }
+        }//end for
+      // end try
+      } catch(Exception namebad) {}
+      
+    } else if (action.equals("Channel Number On Left")) {
+      /*
+      if (sharedVariables.channelNumberLeft == true) {
 	sharedVariables.channelNumberLeft=false;
 	channelNumberLeft.setSelected(false);
-
-}
-else
-{
+      } else {
 	sharedVariables.channelNumberLeft=true;
 	channelNumberLeft.setSelected(true);
-
-}
-}
-
-
-if(event.getActionCommand().equals("Show Console Menu"))
-{
-	if(sharedVariables.showConsoleMenu == true)
-	{
-		sharedVariables.showConsoleMenu = false;
-		consolemenu.setSelected(false);
-	}
-	else
-	{
-		sharedVariables.showConsoleMenu = true;
-		consolemenu.setSelected(true);
-
-	}
-	try {
-	for(int bam=0; bam<sharedVariables.openConsoleCount; bam++)
-		consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
-	}
-	catch(Exception bal){}
-}
-
-if(event.getActionCommand().equals("Show User Button Titles"))
-{
-if(sharedVariables.showButtonTitle == true)
-{
+      }
+      */
+      sharedVariables.channelNumberLeft = !sharedVariables.channelNumberLeft;
+      channelNumberLeft.setSelected(sharedVariables.channelNumberLeft);
+      
+    } else if (action.equals("Show Console Menu")) {
+      /*
+      if (sharedVariables.showConsoleMenu == true) {
+        sharedVariables.showConsoleMenu = false;
+        consolemenu.setSelected(false);
+      } else {
+        sharedVariables.showConsoleMenu = true;
+        consolemenu.setSelected(true);
+      }
+      */
+      sharedVariables.showConsoleMenu = !sharedVariables.showConsoleMenu;
+      consolemenu.setSelected(sharedVariables.showConsoleMenu);
+      
+      try {
+	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
+          consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+      }	catch(Exception bal) {}
+      
+    } else if (action.equals("Show User Button Titles")) {
+      /*
+      if (sharedVariables.showButtonTitle == true) {
 	sharedVariables.showButtonTitle=false;
 	userbuttons.setSelected(false);
-
-}
-else
-{
+      } else {
 	sharedVariables.showButtonTitle=true;
 	userbuttons.setSelected(true);
+      }
+      */
+      sharedVariables.showButtonTitle = !sharedVariables.showButtonTitle;
+      userbuttons.setSelected(sharedVariables.showButtonTitle);
+      
+      for (int a=0; a<sharedVariables.maxUserButtons; a++)
+        setButtonTitle(a);
 
-}
-
-for(int a=0; a<sharedVariables.maxUserButtons; a++)
-setButtonTitle(a);
-
-}// end qsuggest popups
-
-
-
-
-
-
-if(event.getActionCommand().equals("Qsuggest Popups"))
-{
-if(sharedVariables.showQsuggest == true)
-{
+    } else if (action.equals("Qsuggest Popups")) {
+      /*
+      if (sharedVariables.showQsuggest == true) {
 	qsuggestPopup.setSelected(false);
 	sharedVariables.showQsuggest=false;
-
-}
-else
-{
+      } else {
 	qsuggestPopup.setSelected(true);
 	sharedVariables.showQsuggest=true;
+      }
+      */
+      sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
+      qsuggestPopup.setSelected(sharedVariables.showQsuggest);
 
-}
+    } else if (action.equals("Lantern Manual")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.html");
+      
+    } else if (action.equals("Change Log")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
+      
+    } else if (action.equals("ICC Information Help Files")) {
+      mycreator.createWebFrame("http://www.chessclub.com/help/info-list");
+      
+    } else if (action.equals("ICC Command Help Files")) {
+      mycreator.createWebFrame("http://www.chessclub.com/help/help-list");
 
-}// end qsuggest popups
+    } else if (action.equals("Join/Renew")) {
+      openUrl("http://www.chessclub.com/tryicc/purchase.html");
 
-
-
-
-if(event.getActionCommand().equals("Lantern Manual"))
-{
-	mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.html");
-}
-
-if(event.getActionCommand().equals("Change Log"))
-{
-	mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
-}
-
-
-if(event.getActionCommand().equals("ICC Information Help Files"))
-{
-	mycreator.createWebFrame("http://www.chessclub.com/help/info-list");
-}
-
-if(event.getActionCommand().equals("ICC Command Help Files"))
-{
-	mycreator.createWebFrame("http://www.chessclub.com/help/help-list");
-}
-
-if(event.getActionCommand().equals("Join/Renew"))
-{
- openUrl("http://www.chessclub.com/tryicc/purchase.html");
-}
-
-if(event.getActionCommand().equals("Lost Password"))
-{
-	 openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
-}
-
-/*
-if(event.getActionCommand().equals("Start AutoExam"))
-{
-for(int a=0; a<sharedVariables.maxGameTabs; a++)
-{
-	if(myboards[a]!=null)
-	{
-		if(sharedVariables.mygame[a].state == 2)
-		myboards[a].setautoexamon();
-
+    } else if (action.equals("Lost Password")) {
+      openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
+      
+      /*
+    } else if (action.equals("Start AutoExam")) {
+      for (int a=0; a<sharedVariables.maxGameTabs; a++) {
+	if (myboards[a]!=null) {
+          if (sharedVariables.mygame[a].state == 2)
+            myboards[a].setautoexamon();
 	}
-}
+      }
+      */
+      
+    } else if (action.equals("Load Winboard Engine")) {
+      boolean go = false;
+      if (!sharedVariables.engineOn) {
+        go=true;
+        try {
+          JFileChooser fc = new JFileChooser();
+          fc.setCurrentDirectory(new File("."));
+
+          int returnVal = fc.showOpenDialog(this);
+
+          if (returnVal == JFileChooser.APPROVE_OPTION) {
+            sharedVariables.engineFile = fc.getSelectedFile();
+            sharedVariables.uci=false;
+
+            startTheEngine();
+          }
+        } catch (Exception e) {}
+      }
+
+      if (!go && !sharedVariables.engineOn)
+        makeEngineWarning();
+    }
 
 
-}
-*/
-if(event.getActionCommand().equals("Load Winboard Engine"))
-{
-	boolean go = false;
-	if(sharedVariables.engineOn == false)
-	{
-		go=true;
-		try {
-			JFileChooser fc = new JFileChooser();
-			 fc.setCurrentDirectory(new File("."));;
-
-			 int returnVal = fc.showOpenDialog(this);
-
-			 if (returnVal == JFileChooser.APPROVE_OPTION) {
-			 sharedVariables.engineFile = fc.getSelectedFile();
-			 	sharedVariables.uci=false;
-
-                        startTheEngine();
-		    }
-
-
-
-		}
-		catch(Exception e){}
-
-	}
-
-	if(go== false && sharedVariables.engineOn == false)
-		makeEngineWarning();
-
-}
-
-
-if(event.getActionCommand().equals("Set Application Background Color"))
+if(action.equals("Set Application Background Color"))
 {
 
 try {
@@ -2502,7 +2426,7 @@ catch(Exception e)
 }
 
 
-if(event.getActionCommand().equals("Open Web"))
+if(action.equals("Open Web"))
 {
 	mycreator.createWebFrame("http://www.google.com");
 }
@@ -2510,7 +2434,7 @@ if(event.getActionCommand().equals("Open Web"))
 
 
 
-if(event.getActionCommand().equals("Open Pgn"))
+if(action.equals("Open Pgn"))
 {
 		try {
 			JFileChooser fc = new JFileChooser();
@@ -2546,7 +2470,7 @@ if(event.getActionCommand().equals("Open Pgn"))
 
 
 
-if(event.getActionCommand().equals("Set Wallpaper"))
+if(action.equals("Set Wallpaper"))
 {
 		try {
 			JFileChooser fc = new JFileChooser();
@@ -2575,7 +2499,7 @@ sharedVariables.wallpaperImage=Toolkit.getDefaultToolkit().getImage(wallpaperURL
 }
 
 
-if(event.getActionCommand().equals("Analysis Font"))
+if(action.equals("Analysis Font"))
 {
 JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
@@ -2599,7 +2523,7 @@ myboards[a].myconsolepanel.setEngineDoc();
          }// if fnt not null
 }
 
-if(event.getActionCommand().equals("Analysis Foreground Color"))
+if(action.equals("Analysis Foreground Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color", sharedVariables.analysisForegroundColor);
@@ -2618,7 +2542,7 @@ myboards[a].myconsolepanel.setEngineDoc();
  }
 
 }
-if(event.getActionCommand().equals("Analysis Background Color"))
+if(action.equals("Analysis Background Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color", sharedVariables.analysisBackgroundColor);
@@ -2640,7 +2564,7 @@ myboards[a].myconsolepanel.setEngineDoc();
 }
 
 
-if(event.getActionCommand().equals("Stop Engine"))
+if(action.equals("Stop Engine"))
 {
 
 
@@ -2665,13 +2589,13 @@ if(event.getActionCommand().equals("Stop Engine"))
 }
 
 
-if(event.getActionCommand().equals("Restart Engine"))
+if(action.equals("Restart Engine"))
 {
 	if(sharedVariables.engineOn == false)
 	startTheEngine();
 
 }
-if(event.getActionCommand().equals("Load UCI Engine"))
+if(action.equals("Load UCI Engine"))
 {
 	boolean go = false;
 	if(sharedVariables.engineOn == false)
@@ -2702,13 +2626,13 @@ if(event.getActionCommand().equals("Load UCI Engine"))
 
 }
 
-if(event.getActionCommand().equals("Activities Window"))
+if(action.equals("Activities Window"))
 {
 openActivities();
 }
 
 
-if(event.getActionCommand().equals("Notify Window"))
+if(action.equals("Notify Window"))
 {
 
 
@@ -2719,12 +2643,12 @@ if(event.getActionCommand().equals("Notify Window"))
 }
 
 
-if(event.getActionCommand().equals("Seek Graph"))
+if(action.equals("Seek Graph"))
 {
 openSeekGraph();
 }
 
-if(event.getActionCommand().equals("Send iloggedon"))
+if(action.equals("Send iloggedon"))
 {
 	if(sharedVariables.iloggedon== false)
 	{
@@ -2738,7 +2662,7 @@ if(event.getActionCommand().equals("Send iloggedon"))
 		iloggedon.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Channel Notify Map"))
+if(action.equals("Channel Notify Map"))
 {
  String mess="Map of people on channel notify.\n\n";
 for(int z=0; z<sharedVariables.channelNotifyList.size(); z++)
@@ -2755,7 +2679,7 @@ mypopper.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("Channel Notify Online"))
+if(action.equals("Channel Notify Online"))
 {
   
 String mess = sharedVariables.getChannelNotifyOnline();
@@ -2766,7 +2690,7 @@ mypopper.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("Channel Map"))
+if(action.equals("Channel Map"))
 {
 
 String mymap="Map of channels, shouts and sshouts moved to tabs.\n\n";
@@ -2798,7 +2722,7 @@ mypopper.setVisible(true);
 
 
 }
-if(event.getActionCommand().equals("Send Game End Messages"))
+if(action.equals("Send Game End Messages"))
 {
 if(sharedVariables.gameend == false) // activate
 {
@@ -2820,7 +2744,7 @@ sharedVariables.gameend=false;
 
 }   // end gameend menu item
 
-if(event.getActionCommand().equals("Rotate Away Message"))
+if(action.equals("Rotate Away Message"))
 {
 if(sharedVariables.rotateAways == false)
 {scriptLoader loadScripts = new  scriptLoader();
@@ -2848,7 +2772,7 @@ sharedVariables.rotateAways=false;
 }// if rotate aways true
 
 }
-if(event.getActionCommand().equals("What's Examine Game Replay Quick Help"))
+if(action.equals("What's Examine Game Replay Quick Help"))
 {
 String mes = "If Examining a game from a history (including your own), library or search list, you can have Lantern issue the command forward 1, at a set interval with delay set by the user between moves.\n\nFor example go to the Actions menu and choose Examine My Last game, then to to Start Examine Game Replay.";
 Popup mypopper = new Popup(this, false, mes);
@@ -2858,22 +2782,22 @@ mypopper.setVisible(true);
 }
 
 /*
-if(event.getActionCommand().equals("Stop AutoExam"))
+if(action.equals("Stop AutoExam"))
 {
 
  sharedVariables.autoexam=0;
 
 }
 */
-if (event.getActionCommand().equals("AutoExam Dialog")) {
-// if (event.getActionCommand().equals("Set AutoExam Speed")) {
+if (action.equals("AutoExam Dialog")) {
+// if (action.equals("Set AutoExam Speed")) {
   autoExamDialog frame = new autoExamDialog((JFrame) this, false,
                                             sharedVariables, myboards);
   frame.pack();
   frame.setVisible(true);
 }
 
-if(event.getActionCommand().equals("Reconnect to Queen"))
+if(action.equals("Reconnect to Queen"))
 {
 
  try {
@@ -2890,7 +2814,7 @@ myConnection.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("Reconnect to ICC"))
+if(action.equals("Reconnect to ICC"))
 {
 
 try {
@@ -2905,7 +2829,7 @@ myConnection.setVisible(true);
 }catch(Exception conn){}
 }
 
-if(event.getActionCommand().equals("Reconnect to FICS"))
+if(action.equals("Reconnect to FICS"))
 {
 
  sharedVariables.myServer="FICS";
@@ -2913,7 +2837,7 @@ if(event.getActionCommand().equals("Reconnect to FICS"))
 
 }
 
-if(event.getActionCommand().equals("Save Settings"))
+if(action.equals("Save Settings"))
 {
 		sharedVariables.activitiesOpen = false;
 		if(myfirstlist!=null)
@@ -2936,21 +2860,21 @@ sharedVariables.hasSettings = true;
         	sharedVariables.seeksOpen = false;
 }
 
-if(event.getActionCommand().equals("ToolBox"))
+if(action.equals("ToolBox"))
 {
 toolboxDialog mybox = new toolboxDialog(this, false, queue, sharedVariables);
 mybox.setSize(500,450);
 mybox.setLocation(200,250);
 mybox.setVisible(true);
 }
-if(event.getActionCommand().equals("Customize User Buttons"))
+if(action.equals("Customize User Buttons"))
 {
 userButtonsDialog mydialog = new userButtonsDialog((JFrame) this, sharedVariables);
 mydialog.setSize(400,400);
 mydialog.setVisible(true);
 }
 
-if(event.getActionCommand().equals("Toolbar"))
+if(action.equals("Toolbar"))
 {
  if(sharedVariables.toolbarVisible == true)
  {
@@ -2973,7 +2897,7 @@ if(event.getActionCommand().equals("Toolbar"))
 
 
 
-if(event.getActionCommand().equals("New Console"))
+if(action.equals("New Console"))
 {
 createChannelConsoleDialog frame = new createChannelConsoleDialog((JFrame) this, true, sharedVariables, mycreator, consoleSubframes);
 	frame.setSize(550,120);
@@ -2981,7 +2905,7 @@ createChannelConsoleDialog frame = new createChannelConsoleDialog((JFrame) this,
 
 
 }
-if(event.getActionCommand().equals("Customize Tab"))
+if(action.equals("Customize Tab"))
 {
 int hasfocus=-1;
 for(int nn=0; nn<sharedVariables.openConsoleCount; nn++)
@@ -3014,7 +2938,7 @@ pframe.setVisible(true);
 return;
 }
 }
-if(event.getActionCommand().equals("New Detached Chat Console"))
+if(action.equals("New Detached Chat Console"))
 {
 boolean makeChatter = false;
 if(consoleChatframes[11]== null)
@@ -3045,17 +2969,17 @@ mypopper.setVisible(true);
 }
 }
 
-if(event.getActionCommand().equals("New Chat Console"))
+if(action.equals("New Chat Console"))
 {
 mycreator.restoreConsoleFrame();
 }
-if(event.getActionCommand().equals("New Board"))
+if(action.equals("New Board"))
 {
 
 mycreator.createGameFrame();
 
 }
-if(event.getActionCommand().equals("Cascade"))
+if(action.equals("Cascade"))
 {
 	int x=160;
 	int y=120;
@@ -3124,7 +3048,7 @@ catch(Exception d){}
 
 
 
-if(event.getActionCommand().equals("Make Boards Always On Top"))
+if(action.equals("Make Boards Always On Top"))
 {
 /* SwingUtilities.invokeLater(new Runnable() {
                         @Override
@@ -3228,7 +3152,7 @@ else
 
 
 
-if(event.getActionCommand().equals("Get a Game"))
+if(action.equals("Get a Game"))
 {
 
 seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
@@ -3259,7 +3183,7 @@ myseeker.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("Log Pgn"))
+if(action.equals("Log Pgn"))
 {
 	if(sharedVariables.pgnLogging == true)
 	 {
@@ -3274,7 +3198,7 @@ if(event.getActionCommand().equals("Log Pgn"))
 
 
 }
-if(event.getActionCommand().equals("Log Observed Games To Pgn"))
+if(action.equals("Log Observed Games To Pgn"))
 {
 	if(sharedVariables.pgnObservedLogging == true)
 	 {
@@ -3293,7 +3217,7 @@ if(event.getActionCommand().equals("Log Observed Games To Pgn"))
 
 }
 
-if(event.getActionCommand().equals("1:1"))
+if(action.equals("1:1"))
 {
 	sharedVariables.aspect=0;
 	aspect0.setSelected(true);
@@ -3307,7 +3231,7 @@ if(event.getActionCommand().equals("1:1"))
 
 }
 
-if(event.getActionCommand().equals("5:4"))
+if(action.equals("5:4"))
 {
 	sharedVariables.aspect=1;
 	aspect0.setSelected(false);
@@ -3320,7 +3244,7 @@ if(event.getActionCommand().equals("5:4"))
  myboards[a].mypanel.repaint();
 
 }
-if(event.getActionCommand().equals("4:3"))
+if(action.equals("4:3"))
 {
 	sharedVariables.aspect=2;
 	aspect0.setSelected(false);
@@ -3333,7 +3257,7 @@ if(event.getActionCommand().equals("4:3"))
  myboards[a].mypanel.repaint();
 
 }
-if(event.getActionCommand().equals("3:2"))
+if(action.equals("3:2"))
 {
 	sharedVariables.aspect=3;
 	aspect0.setSelected(false);
@@ -3347,7 +3271,7 @@ if(event.getActionCommand().equals("3:2"))
 
 }
 
-if(event.getActionCommand().equals("Hide Board Console"))
+if(action.equals("Hide Board Console"))
 {
 	sharedVariables.boardConsoleType=0;
 		sharedVariables.sideways=false;
@@ -3355,26 +3279,26 @@ if(event.getActionCommand().equals("Hide Board Console"))
 	
 	redrawBoard(sharedVariables.boardConsoleType);
 }
-if(event.getActionCommand().equals("Compact Board Console"))
+if(action.equals("Compact Board Console"))
 {
 compactConsole();
 }
-if(event.getActionCommand().equals("Normal Board Console"))
+if(action.equals("Normal Board Console"))
 {
 normalConsole();
 }
-if(event.getActionCommand().equals("Larger Board Console"))
+if(action.equals("Larger Board Console"))
 {
 largerConsole();
 }
-if(event.getActionCommand().equals("Console On Side"))
+if(action.equals("Console On Side"))
 {
 sideConsole();
 }
 
 
 
-if(event.getActionCommand().equals("Default Board"))
+if(action.equals("Default Board"))
 {
 sharedVariables.boardType = 0;
 sharedVariables.lightcolor=sharedVariables.preselectBoards.light[0];
@@ -3384,7 +3308,7 @@ setBoard(0);
 
 }
 
-if(event.getActionCommand().equals("Tan Board"))
+if(action.equals("Tan Board"))
 {
 sharedVariables.boardType = 0;
 sharedVariables.lightcolor=sharedVariables.preselectBoards.light[1];
@@ -3394,7 +3318,7 @@ setBoard(0);
 
 }
 
-if(event.getActionCommand().equals("Gray Color Board"))
+if(action.equals("Gray Color Board"))
 {
 sharedVariables.boardType = 0;
 sharedVariables.lightcolor=sharedVariables.preselectBoards.light[2];
@@ -3404,7 +3328,7 @@ setBoard(0);
 
 }
 
-if(event.getActionCommand().equals("Blitzin Green Board"))
+if(action.equals("Blitzin Green Board"))
 {
 sharedVariables.boardType = 0;
 sharedVariables.lightcolor=sharedVariables.preselectBoards.light[3];
@@ -3414,7 +3338,7 @@ sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[3];
 
 }
 
-if(event.getActionCommand().equals("Board Clock Background Color"))
+if(action.equals("Board Clock Background Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3430,7 +3354,7 @@ Color newColor = JColorChooser.showDialog(frame, "Board Clock Background Color",
 }
 
 
-if(event.getActionCommand().equals("Board Background Color"))
+if(action.equals("Board Background Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3444,7 +3368,7 @@ Color newColor = JColorChooser.showDialog(frame, "Board Background Color", share
 
 
 }
-if(event.getActionCommand().equals("Highlight Moves Color"))
+if(action.equals("Highlight Moves Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3459,7 +3383,7 @@ Color newColor = JColorChooser.showDialog(frame, "Highlight Moves Color", shared
 
 }
 
-if(event.getActionCommand().equals("Scroll Back Highlight Color"))
+if(action.equals("Scroll Back Highlight Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3478,7 +3402,7 @@ Color newColor = JColorChooser.showDialog(frame, "Scroll Back Highlight Color", 
 
 
 
-if(event.getActionCommand().equals("Titles In Channel Color"))
+if(action.equals("Titles In Channel Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Set Titles In Channel Color", sharedVariables.channelTitlesColor);
@@ -3487,7 +3411,7 @@ Color newColor = JColorChooser.showDialog(frame, "Set Titles In Channel Color", 
 
 }
 
-if(event.getActionCommand().equals("Channel Name Color"))
+if(action.equals("Channel Name Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Set Channel Name Color", sharedVariables.qtellChannelNumberColor);
@@ -3496,7 +3420,7 @@ Color newColor = JColorChooser.showDialog(frame, "Set Channel Name Color", share
 
 }
 
-if(event.getActionCommand().equals("Brighter Channel Name Color"))
+if(action.equals("Brighter Channel Name Color"))
 {
 String mycolstring="";
 float[] hsbValues = new float[3];
@@ -3524,7 +3448,7 @@ mypopper.setVisible(true);
 
 }
 
-	if(event.getActionCommand().equals("Darker Channel Name Color"))
+	if(action.equals("Darker Channel Name Color"))
 {
 
 String mycolstring="";
@@ -3553,7 +3477,7 @@ mypopper.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("PTell Name Color"))
+if(action.equals("PTell Name Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Tell Name Color", sharedVariables.tellNameColor);
@@ -3561,7 +3485,7 @@ Color newColor = JColorChooser.showDialog(frame, "Tell Name Color", sharedVariab
  sharedVariables.tellNameColor=newColor;
 
 }
-if(event.getActionCommand().equals("Names List Foreground Color"))
+if(action.equals("Names List Foreground Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Names List Foreground Color", sharedVariables.nameForegroundColor);
@@ -3583,7 +3507,7 @@ Color newColor = JColorChooser.showDialog(frame, "Names List Foreground Color", 
  }
 
 }
-if(event.getActionCommand().equals("Names List Background Color"))
+if(action.equals("Names List Background Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Names List Background Color", sharedVariables.nameBackgroundColor);
@@ -3608,7 +3532,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
 }// end if name list background
 
- if(event.getActionCommand().equals("Show My Recent Games"))
+ if(action.equals("Show My Recent Games"))
  {
      String actionmess="History\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3619,7 +3543,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
     queue.add(data);
 
  }
-  if(event.getActionCommand().equals("Show My Game Library"))
+  if(action.equals("Show My Game Library"))
  {
       String actionmess="Liblist\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3631,7 +3555,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-  if(event.getActionCommand().equals("Show My Adjourned Games"))
+  if(action.equals("Show My Adjourned Games"))
  {
       String actionmess="Stored\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3643,7 +3567,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-  if(event.getActionCommand().equals("Show My Profile and Ratings"))
+  if(action.equals("Show My Profile and Ratings"))
  {
       String actionmess="Finger\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3655,7 +3579,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-  if(event.getActionCommand().equals("Enter Examination Mode"))
+  if(action.equals("Enter Examination Mode"))
  {
       String actionmess="Examine\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3667,7 +3591,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-   if(event.getActionCommand().equals("Examine My Last Game"))
+   if(action.equals("Examine My Last Game"))
  {
       String actionmess="Examine -1\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3680,7 +3604,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
  }
 
 
-  if(event.getActionCommand().equals("Observe High Rated Game"))
+  if(action.equals("Observe High Rated Game"))
  {
       String actionmess="Observe *\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3692,7 +3616,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-  if(event.getActionCommand().equals("Observe High Rated 5-Minute Game"))
+  if(action.equals("Observe High Rated 5-Minute Game"))
  {
       String actionmess="Observe *f\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3704,7 +3628,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
 
  }
 
-  if(event.getActionCommand().equals("Observe High Rated 15-Minute Game"))
+  if(action.equals("Observe High Rated 15-Minute Game"))
  {
       String actionmess="Observe *P\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -3715,21 +3639,21 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
     queue.add(data);
 
  }
-  if(event.getActionCommand().equals("Show Relay Schedule"))
+  if(action.equals("Show Relay Schedule"))
  {
 
   openUrl("http://www.chessclub.com/activities/relays.html");
  }
 
  
- if(event.getActionCommand().equals("Add a Friend"))
+ if(action.equals("Add a Friend"))
  {
 
   addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
 
  }
 
-  if(event.getActionCommand().equals("Stop Following"))
+  if(action.equals("Stop Following"))
  {
 
      String actionmess="Unfollow\n";
@@ -3742,7 +3666,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
  }
 
 
-  if(event.getActionCommand().equals("Follow Broadcast- When On"))
+  if(action.equals("Follow Broadcast- When On"))
  {
 
      client.writeToSubConsole("Be sure to turn on the radio by opening ChessFm, Actions - Open ChessFm in the menu.\n", 0);
@@ -3755,7 +3679,7 @@ sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.na
      data.data=actionmess;
     queue.add(data);
  }
-  if(event.getActionCommand().equals("Open ChessFM"))
+  if(action.equals("Open ChessFM"))
  {
 
  // ?user=me&pass=pass
@@ -3766,13 +3690,13 @@ else
 */
 openUrl("http://www.chessclub.com/chessfm/");
  }
- if(event.getActionCommand().equals("Show Rating Graphs"))
+ if(action.equals("Show Rating Graphs"))
  {
   openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl"); 
  }
 
 
- if(event.getActionCommand().equals("Events List Font"))
+ if(action.equals("Events List Font"))
 {JFrame f = new JFrame("Events List Font");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
     fc.setVisible(true);
@@ -3786,7 +3710,7 @@ openUrl("http://www.chessclub.com/chessfm/");
 
 
 
- if(event.getActionCommand().equals("Names List Font"))
+ if(action.equals("Names List Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.nameListFont);
     fc.setVisible(true);
@@ -3817,7 +3741,7 @@ for(int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardM
  if(myboards[openBoardMenu] == null)
  break;
  if(sharedVariables.openBoards[openBoardMenu]!=null)
-if(event.getActionCommand().equals(sharedVariables.openBoards[openBoardMenu].getText()))
+if(action.equals(sharedVariables.openBoards[openBoardMenu].getText()))
 {
  try {
  myboards[openBoardMenu].setSelected(true);
@@ -3828,7 +3752,7 @@ if(event.getActionCommand().equals(sharedVariables.openBoards[openBoardMenu].get
 
 }   // end for
 
-if(event.getActionCommand().equals("Chat Timestamp Color"))
+if(action.equals("Chat Timestamp Color"))
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Set Timestamp Color", sharedVariables.chatTimestampColor);
@@ -3836,7 +3760,7 @@ Color newColor = JColorChooser.showDialog(frame, "Set Timestamp Color", sharedVa
  sharedVariables.chatTimestampColor=newColor;
 
 }
-if(event.getActionCommand().equals("Board Foreground Color"))
+if(action.equals("Board Foreground Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3851,7 +3775,7 @@ Color newColor = JColorChooser.showDialog(frame, "Board Foreground Color", share
 
 }
 
-if(event.getActionCommand().equals("Clock Foreground Color"))
+if(action.equals("Clock Foreground Color"))
 {
 
 JDialog frame = new JDialog();
@@ -3870,73 +3794,73 @@ Color newColor = JColorChooser.showDialog(frame, "Clock Foreground Color", share
 
 
 
-if(event.getActionCommand().equals("Solid Color Board"))
+if(action.equals("Solid Color Board"))
 {
 sharedVariables.boardType=0;
 setBoard(sharedVariables.boardType);
 }
 
-if(event.getActionCommand().equals("Pale Wood"))
+if(action.equals("Pale Wood"))
 {
 sharedVariables.boardType=1;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Light Wood"))
+if(action.equals("Light Wood"))
 {
 sharedVariables.boardType=2;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Dark Wood"))
+if(action.equals("Dark Wood"))
 {
 sharedVariables.boardType=3;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Gray Marble"))
+if(action.equals("Gray Marble"))
 {
 sharedVariables.boardType=4;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Red Marble"))
+if(action.equals("Red Marble"))
 {
 sharedVariables.boardType=5;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Crampled Paper"))
+if(action.equals("Crampled Paper"))
 {
 sharedVariables.boardType=6;
 setBoard(sharedVariables.boardType);
 
 }
 
-if(event.getActionCommand().equals("Winter"))
+if(action.equals("Winter"))
 {
 sharedVariables.boardType=7;
 setBoard(sharedVariables.boardType);
 
 }
-if(event.getActionCommand().equals("Olive Board"))
+if(action.equals("Olive Board"))
 {
 sharedVariables.boardType=8;
 setBoard(sharedVariables.boardType);
 
 }
-if(event.getActionCommand().equals("Cherry Board"))
+if(action.equals("Cherry Board"))
 {
 sharedVariables.boardType=9;
 setBoard(sharedVariables.boardType);
 
 }
-if(event.getActionCommand().equals("Purple Board"))
+if(action.equals("Purple Board"))
 {
 sharedVariables.boardType=10;
 setBoard(sharedVariables.boardType);
@@ -3944,54 +3868,54 @@ setBoard(sharedVariables.boardType);
 }
 
 
-if(event.getActionCommand().equals("Dyche1"))
+if(action.equals("Dyche1"))
 {
 sharedVariables.pieceType=0;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Dyche2"))
+if(action.equals("Dyche2"))
 {
 sharedVariables.pieceType=1;
 setPieces(sharedVariables.pieceType);
 
-}if(event.getActionCommand().equals("Dyche3"))
+}if(action.equals("Dyche3"))
 {
 sharedVariables.pieceType=2;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Bookup"))
+if(action.equals("Bookup"))
 {
 sharedVariables.pieceType=3;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Xboard"))
+if(action.equals("Xboard"))
 {
 sharedVariables.pieceType=4;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Alpha"))
+if(action.equals("Alpha"))
 {
 sharedVariables.pieceType=5;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Spatial"))
+if(action.equals("Spatial"))
 {
 sharedVariables.pieceType=6;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Harlequin"))
+if(action.equals("Harlequin"))
 {
 sharedVariables.pieceType=7;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Berlin"))
+if(action.equals("Berlin"))
 {
 sharedVariables.pieceType=8;
 setPieces(sharedVariables.pieceType);
@@ -3999,75 +3923,75 @@ setPieces(sharedVariables.pieceType);
 }
 
 
-if(event.getActionCommand().equals("Eboard Classic"))
+if(action.equals("Eboard Classic"))
 {
 sharedVariables.pieceType=9;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Molten Good"))
+if(action.equals("Molten Good"))
 {
 sharedVariables.pieceType=10;
 setPieces(sharedVariables.pieceType);
 
 }
 
-if(event.getActionCommand().equals("Molten Evil"))
+if(action.equals("Molten Evil"))
 {
 sharedVariables.pieceType=11;
 setPieces(sharedVariables.pieceType);
 
 }
 
-if(event.getActionCommand().equals("Liebeskind"))
+if(action.equals("Liebeskind"))
 {
 sharedVariables.pieceType=12;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Eyes"))
+if(action.equals("Eyes"))
 {
 sharedVariables.pieceType=13;
 setPieces(sharedVariables.pieceType);
 
-}if(event.getActionCommand().equals("Fantasy"))
+}if(action.equals("Fantasy"))
 {
 sharedVariables.pieceType=14;
 setPieces(sharedVariables.pieceType);
 
 }
 
-if(event.getActionCommand().equals("Adventure"))
+if(action.equals("Adventure"))
 {
 sharedVariables.pieceType=18;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Maya"))
+if(action.equals("Maya"))
 {
 sharedVariables.pieceType=19;
 setPieces(sharedVariables.pieceType);
 
-}if(event.getActionCommand().equals("Medieval"))
+}if(action.equals("Medieval"))
 {
 sharedVariables.pieceType=20;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("CCube"))
+if(action.equals("CCube"))
 {
 sharedVariables.pieceType=21;
 setPieces(sharedVariables.pieceType);
 
 }
 
-if(event.getActionCommand().equals("Monge Mix"))
+if(action.equals("Monge Mix"))
 {
 sharedVariables.pieceType=22;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("About Monge Pieces"))
+if(action.equals("About Monge Pieces"))
 {
 
   String warning = "The Monge chess pieces are authored by Maurizio Monge, at this time, three of the six sets are currently in Lantern and they are under the LGPL (library GPL) license at the time of this writing. \n\n Virtually all the piece sets in Lantern come from the Jin Chess, and except in case's like the Monge pieces, where i know the license, I offer no more rights than Jin does.  LGPL allows you to resuse the pieces in your own application if your a developer. So unzip the lantern.jar to get at the pieces.  A warning though, the \\setName\\64\\ folder is a general folder for when i want pieces i can resize, and the monge pieces dont actually come in the 64 size.\n\n  The monge mix is a mix of pieces from the Fantasy and Spatial set i've put together.";
@@ -4075,7 +3999,7 @@ if(event.getActionCommand().equals("About Monge Pieces"))
  mypopup.setSize(600,500);
  mypopup.setVisible(true);
 }
-if(event.getActionCommand().equals("Random Pieces"))
+if(action.equals("Random Pieces"))
 {
 sharedVariables.pieceType=23;
 setPieces(sharedVariables.pieceType);
@@ -4084,39 +4008,39 @@ setPieces(sharedVariables.pieceType);
 
 
 
-if(event.getActionCommand().equals("Line"))
+if(action.equals("Line"))
 {
 sharedVariables.pieceType=15;
 setPieces(sharedVariables.pieceType);
 
-}if(event.getActionCommand().equals("Motif"))
+}if(action.equals("Motif"))
 {
 sharedVariables.pieceType=16;
 setPieces(sharedVariables.pieceType);
 
 }
-if(event.getActionCommand().equals("Utrecht"))
+if(action.equals("Utrecht"))
 {
 sharedVariables.pieceType=17;
 setPieces(sharedVariables.pieceType);
 
 }
 
-if(event.getActionCommand().equals("` ` Do Nothing"))
+if(action.equals("` ` Do Nothing"))
 {
  sharedVariables.italicsBehavior = 0;
  checkItalicsBehavior(0);
 
 }
 
-if(event.getActionCommand().equals("` ` Italics"))
+if(action.equals("` ` Italics"))
 {
  sharedVariables.italicsBehavior = 1;
  checkItalicsBehavior(1);
 
 }
 
-if(event.getActionCommand().equals("` ` Brighter Color"))
+if(action.equals("` ` Brighter Color"))
 {
  sharedVariables.italicsBehavior = 2;
  checkItalicsBehavior(2);
@@ -4125,7 +4049,7 @@ if(event.getActionCommand().equals("` ` Brighter Color"))
 
 
 
-if(event.getActionCommand().equals("Light Square Color"))
+if(action.equals("Light Square Color"))
 {
 
 JDialog frame = new JDialog();
@@ -4139,7 +4063,7 @@ Color newColor = JColorChooser.showDialog(frame, "Light Square Color", sharedVar
 
 
 }
-if(event.getActionCommand().equals("Dark Square Color"))
+if(action.equals("Dark Square Color"))
 {
 
 JDialog frame = new JDialog();
@@ -4154,7 +4078,7 @@ Color newColor = JColorChooser.showDialog(frame, "Dark Square Color", sharedVari
 }
 
 
-if(event.getActionCommand().equals("Unvisited/Visited"))// active tab
+if(action.equals("Unvisited/Visited"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4166,7 +4090,7 @@ Color newColor = JColorChooser.showDialog(frame, "Unvisited/Visited Color", shar
 }
 
 
-if(event.getActionCommand().equals("Unvisited"))// active tab
+if(action.equals("Unvisited"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4200,7 +4124,7 @@ Color newColor = JColorChooser.showDialog(frame, "Unvisited Color", sharedVariab
 
 
 
-if(event.getActionCommand().equals("Tab I'm On Background"))// active tab
+if(action.equals("Tab I'm On Background"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4222,7 +4146,7 @@ Color newColor = JColorChooser.showDialog(frame, "Tab I'm On Color", sharedVaria
 
 
 
-if(event.getActionCommand().equals("Visited"))// active tab
+if(action.equals("Visited"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4255,7 +4179,7 @@ Color newColor = JColorChooser.showDialog(frame, "Visited Color", sharedVariable
 
 
 
-if(event.getActionCommand().equals("Tab Border"))// active tab
+if(action.equals("Tab Border"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4264,7 +4188,7 @@ Color newColor = JColorChooser.showDialog(frame, "Tab Border Color", sharedVaria
  sharedVariables.tabBorderColor=newColor;
 repaintTabBorders();
 }
-if(event.getActionCommand().equals("Tell Tab Border"))// active tab
+if(action.equals("Tell Tab Border"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4277,14 +4201,14 @@ repaintTabBorders();
 
 
 
-if(event.getActionCommand().equals("Input Command Color"))//Input Command Color
+if(action.equals("Input Command Color"))//Input Command Color
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Input Command Color", sharedVariables.activeTabForeground);
  if(newColor != null)
  sharedVariables.inputCommandColor=newColor;
 }
-if(event.getActionCommand().equals("Input Chat Color"))//Input Chat Color
+if(action.equals("Input Chat Color"))//Input Chat Color
 {
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Input Chat Color", sharedVariables.activeTabForeground);
@@ -4292,7 +4216,7 @@ Color newColor = JColorChooser.showDialog(frame, "Input Chat Color", sharedVaria
  sharedVariables.inputChatColor=newColor;
 }
 
-if(event.getActionCommand().equals("Active"))// active tab
+if(action.equals("Active"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4313,7 +4237,7 @@ Color newColor = JColorChooser.showDialog(frame, "Active Foreground Color", shar
 
 }
 
-if(event.getActionCommand().equals("Non Active"))// active tab
+if(action.equals("Non Active"))// active tab
 {
 
 JDialog frame = new JDialog();
@@ -4334,7 +4258,7 @@ Color newColor = JColorChooser.showDialog(frame, "Non Active Foreground Color", 
 
 }
 
-if(event.getActionCommand().equals("Highlight Moves"))
+if(action.equals("Highlight Moves"))
 {
 	if(sharedVariables.highlightMoves == false)
 	{
@@ -4348,7 +4272,7 @@ if(event.getActionCommand().equals("Highlight Moves"))
 	}
 }
 
-if(event.getActionCommand().equals("Material Count"))
+if(action.equals("Material Count"))
 {
 	if(sharedVariables.showMaterialCount == false)
 	{
@@ -4361,7 +4285,7 @@ if(event.getActionCommand().equals("Material Count"))
 		sharedVariables.showMaterialCount = false;
 	}
 }
-if(event.getActionCommand().equals("Draw Coordinates"))
+if(action.equals("Draw Coordinates"))
 {
 	if(sharedVariables.drawCoordinates == false)
 	{
@@ -4380,7 +4304,7 @@ queue.add(output);
 
 }
 
-if(event.getActionCommand().equals("Show Observers In Games"))
+if(action.equals("Show Observers In Games"))
 {
 	if(sharedVariables.playersInMyGame == 0)
 	{
@@ -4394,7 +4318,7 @@ if(event.getActionCommand().equals("Show Observers In Games"))
 	}
 }
 
-if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
+if(action.equals("Show Ratings on Board When Playing"))
 {
 	if(sharedVariables.showRatings == false)
 	{
@@ -4407,7 +4331,7 @@ if(event.getActionCommand().equals("Show Ratings on Board When Playing"))
 		sharedVariables.showRatings = false;
 	}
 }
-if(event.getActionCommand().equals("Switch To New Game Tab On Observe"))
+if(action.equals("Switch To New Game Tab On Observe"))
 {
 	if(sharedVariables.newObserveGameSwitch == false)
 	{
@@ -4422,7 +4346,7 @@ if(event.getActionCommand().equals("Switch To New Game Tab On Observe"))
 
   
 }
-if(event.getActionCommand().equals("Low Time Clock Colors ( Bullet Only)"))
+if(action.equals("Low Time Clock Colors ( Bullet Only)"))
 {
 	if(sharedVariables.lowTimeColors == false)
 	{
@@ -4436,7 +4360,7 @@ if(event.getActionCommand().equals("Low Time Clock Colors ( Bullet Only)"))
 	}
   
 }
-if(event.getActionCommand().equals("AutoChat"))
+if(action.equals("AutoChat"))
 {
 	if(sharedVariables.autoChat == false)
 	{
@@ -4450,7 +4374,7 @@ if(event.getActionCommand().equals("AutoChat"))
 	}
 }
 
-if(event.getActionCommand().equals("Block Opponents Says When Not Playing"))
+if(action.equals("Block Opponents Says When Not Playing"))
 {
 	if(sharedVariables.blockSays == false)
 	{
@@ -4465,7 +4389,7 @@ if(event.getActionCommand().equals("Block Opponents Says When Not Playing"))
 }
 
 
-if(event.getActionCommand().equals("Show Examine Mode Pallette"))
+if(action.equals("Show Examine Mode Pallette"))
 {
 	if(sharedVariables.showPallette == false)
 	{
@@ -4489,7 +4413,7 @@ if(event.getActionCommand().equals("Show Examine Mode Pallette"))
 
 }
 
-if(event.getActionCommand().equals("Show Flags"))
+if(action.equals("Show Flags"))
 {
 	if(sharedVariables.showFlags == false)
 	{
@@ -4508,7 +4432,7 @@ pframe.setVisible(true);
 
 }
 
-if(event.getActionCommand().equals("Use Light Square as Board Background"))
+if(action.equals("Use Light Square as Board Background"))
 {
 	if(sharedVariables.useLightBackground == false)
 	{
@@ -4527,7 +4451,7 @@ if(event.getActionCommand().equals("Use Light Square as Board Background"))
 
 
 
-if(event.getActionCommand().equals("Original"))
+if(action.equals("Original"))
 {
 
 		BoardDesign1.setSelected(true);
@@ -4536,7 +4460,7 @@ if(event.getActionCommand().equals("Original"))
                 sharedVariables.andreysLayout = 0;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
-if(event.getActionCommand().equals("Modern"))
+if(action.equals("Modern"))
 {
 
 		BoardDesign1.setSelected(false);
@@ -4545,7 +4469,7 @@ if(event.getActionCommand().equals("Modern"))
                 sharedVariables.andreysLayout = 1;
                 redrawBoard(sharedVariables.boardConsoleType);
 }
-if(event.getActionCommand().equals("Mixed"))
+if(action.equals("Mixed"))
 {
 
 		BoardDesign1.setSelected(false);
@@ -4555,7 +4479,7 @@ if(event.getActionCommand().equals("Mixed"))
                 redrawBoard(sharedVariables.boardConsoleType);
 }
 
-if(event.getActionCommand().equals("Flip"))
+if(action.equals("Flip"))
 {
  for(int a=0; a<sharedVariables.maxGameTabs; a++)
  if(myboards[a]!=null)
@@ -4573,7 +4497,7 @@ if(event.getActionCommand().equals("Flip"))
  }// end selected
 }
 
-if(event.getActionCommand().equals("Withdraw Challenges"))
+if(action.equals("Withdraw Challenges"))
 {
       String actionmess="multi match\n";
      if(sharedVariables.myServer.equals("ICC"))
@@ -4584,7 +4508,7 @@ if(event.getActionCommand().equals("Withdraw Challenges"))
     queue.add(data);
 
 }
-if(event.getActionCommand().equals("Tabs Only"))
+if(action.equals("Tabs Only"))
 {
 	if(sharedVariables.tabsOnly == false)
 	{
@@ -4599,7 +4523,7 @@ if(event.getActionCommand().equals("Tabs Only"))
 }
 
 
-if(event.getActionCommand().equals("Auto Buffer Chat Length"))
+if(action.equals("Auto Buffer Chat Length"))
 {
 
 	if(sharedVariables.autoBufferChat == false)
@@ -4615,7 +4539,7 @@ if(event.getActionCommand().equals("Auto Buffer Chat Length"))
 }
 
 
-if(event.getActionCommand().equals("No Idle"))
+if(action.equals("No Idle"))
 {
 
 	if(sharedVariables.noidle == false)
@@ -4631,7 +4555,7 @@ if(event.getActionCommand().equals("No Idle"))
 }
 
 
-if(event.getActionCommand().equals("Switch Tab On Tell"))
+if(action.equals("Switch Tab On Tell"))
 {
 
 	if(sharedVariables.switchOnTell == false)
@@ -4646,7 +4570,7 @@ if(event.getActionCommand().equals("Switch Tab On Tell"))
 	}
 }
 
-if(event.getActionCommand().equals("Timestamp To Left Of Name"))
+if(action.equals("Timestamp To Left Of Name"))
 {
 	if(sharedVariables.leftTimestamp == false)
 	{
@@ -4660,7 +4584,7 @@ if(event.getActionCommand().equals("Timestamp To Left Of Name"))
 	}
 
 }
-if(event.getActionCommand().equals("Timestamp Connecting"))
+if(action.equals("Timestamp Connecting"))
 {
 	if(sharedVariables.reconnectTimestamp == false)
 	{
@@ -4675,7 +4599,7 @@ if(event.getActionCommand().equals("Timestamp Connecting"))
 
 }
 
-if(event.getActionCommand().equals("Timestamp Shouts"))
+if(action.equals("Timestamp Shouts"))
 {
 	if(sharedVariables.shoutTimestamp == false)
 	{
@@ -4689,7 +4613,7 @@ if(event.getActionCommand().equals("Timestamp Shouts"))
 	}
 }
 
-if(event.getActionCommand().equals("Timestamp Channel Qtells"))
+if(action.equals("Timestamp Channel Qtells"))
 {
 	if(sharedVariables.qtellTimestamp == false)
 	{
@@ -4704,7 +4628,7 @@ if(event.getActionCommand().equals("Timestamp Channel Qtells"))
 }
 
 
-if(event.getActionCommand().equals("Timestamp Tells"))
+if(action.equals("Timestamp Tells"))
 {
 	if(sharedVariables.tellTimestamp == false)
 	{
@@ -4717,7 +4641,7 @@ if(event.getActionCommand().equals("Timestamp Tells"))
 		tellTimestamp.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Timestamp Channels and Kibs"))
+if(action.equals("Timestamp Channels and Kibs"))
 {
 	if(sharedVariables.channelTimestamp == false)
 	{
@@ -4731,7 +4655,7 @@ if(event.getActionCommand().equals("Timestamp Channels and Kibs"))
 	}
 }
 
-if(event.getActionCommand().equals("Use Basketball Logo ICC Flag"))
+if(action.equals("Use Basketball Logo ICC Flag"))
 {
 	if(sharedVariables.basketballFlag == false)
 	{
@@ -4744,7 +4668,7 @@ if(event.getActionCommand().equals("Use Basketball Logo ICC Flag"))
 		basketballFlag.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Print Channel Notify for Main Also"))
+if(action.equals("Print Channel Notify for Main Also"))
 {
 	if(sharedVariables.notifyMainAlso == false)
 	{
@@ -4757,7 +4681,7 @@ if(event.getActionCommand().equals("Print Channel Notify for Main Also"))
 		notifyMainAlso.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Auto Name Popup"))
+if(action.equals("Auto Name Popup"))
 {
 	if(sharedVariables.autopopup == false)
 	{
@@ -4770,7 +4694,7 @@ if(event.getActionCommand().equals("Auto Name Popup"))
 		autopopup.setSelected(false);
 	}
 }
-if(event.getActionCommand().equals("Auto History Popup"))
+if(action.equals("Auto History Popup"))
 {
 	if(sharedVariables.autoHistoryPopup == false)
 	{
@@ -4786,7 +4710,7 @@ if(event.getActionCommand().equals("Auto History Popup"))
 
 // Andrey edits:
 // remove "Auto Observe"
-if(event.getActionCommand().equals("Tomato"))
+if(action.equals("Tomato"))
 {
 	if(sharedVariables.autoTomato == false)
 	sharedVariables.autoTomato = true;
@@ -4794,14 +4718,14 @@ if(event.getActionCommand().equals("Tomato"))
 	sharedVariables.autoTomato = false;
 }
 
-if(event.getActionCommand().equals("Cooly"))
+if(action.equals("Cooly"))
 {
 	if(sharedVariables.autoCooly == false)
 	sharedVariables.autoCooly = true;
 	else
 	sharedVariables.autoCooly = false;
 }
-if(event.getActionCommand().equals("WildOne"))
+if(action.equals("WildOne"))
 {
 	if(sharedVariables.autoWildOne == false)
 	sharedVariables.autoWildOne = true;
@@ -4812,7 +4736,7 @@ if(event.getActionCommand().equals("WildOne"))
 }
 
 
-if(event.getActionCommand().equals("Flash"))
+if(action.equals("Flash"))
 {
 	if(sharedVariables.autoFlash == false)
 	sharedVariables.autoFlash = true;
@@ -4820,14 +4744,14 @@ if(event.getActionCommand().equals("Flash"))
 	sharedVariables.autoFlash = false;
 }
 
-if(event.getActionCommand().equals("Olive"))
+if(action.equals("Olive"))
 {
 	if(sharedVariables.autoOlive == false)
 	sharedVariables.autoOlive = true;
 	else
 	sharedVariables.autoOlive = false;
 }
-if(event.getActionCommand().equals("Ketchup"))
+if(action.equals("Ketchup"))
 {
 	if(sharedVariables.autoKetchup == false)
 	sharedVariables.autoKetchup = true;
@@ -4838,7 +4762,7 @@ if(event.getActionCommand().equals("Ketchup"))
 }
 
 
-if(event.getActionCommand().equals("LittlePer"))
+if(action.equals("LittlePer"))
 {
 	if(sharedVariables.autoLittlePer == false)
 	sharedVariables.autoLittlePer = true;
@@ -4848,7 +4772,7 @@ if(event.getActionCommand().equals("LittlePer"))
 
 
 
-if(event.getActionCommand().equals("Slomato"))
+if(action.equals("Slomato"))
 {
 	if(sharedVariables.autoSlomato == false)
 	sharedVariables.autoSlomato = true;
@@ -4858,7 +4782,7 @@ if(event.getActionCommand().equals("Slomato"))
 
 
 
-if(event.getActionCommand().equals("Random Piece Set Observe Only"))
+if(action.equals("Random Piece Set Observe Only"))
 {
 	if(sharedVariables.randomArmy == false)
 	{
@@ -4871,19 +4795,19 @@ if(event.getActionCommand().equals("Random Piece Set Observe Only"))
         randomArmy.setSelected(false);
         }
 }
-if(event.getActionCommand().equals("Configure Random Pieces For White"))
+if(action.equals("Configure Random Pieces For White"))
 {
  customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesWhite, true);
  goConfigure.setVisible(true);
 }
-if(event.getActionCommand().equals("Configure Random Pieces For Black"))
+if(action.equals("Configure Random Pieces For Black"))
 {
  customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesBlack, false);
  goConfigure.setVisible(true);
 }
 
 
-if(event.getActionCommand().equals("Random Square Tiles Observe Only"))
+if(action.equals("Random Square Tiles Observe Only"))
 {
 	if(sharedVariables.randomBoardTiles == false)
 	{
@@ -4896,7 +4820,7 @@ if(event.getActionCommand().equals("Random Square Tiles Observe Only"))
         randomTiles.setSelected(false);
         }
 }
-if(event.getActionCommand().equals("Sounds for Notifications"))
+if(action.equals("Sounds for Notifications"))
 {
 	if(sharedVariables.specificSounds[4] == false)
 	{
@@ -4910,7 +4834,7 @@ if(event.getActionCommand().equals("Sounds for Notifications"))
 	}
 }
 
-if(event.getActionCommand().equals("Sounds for Observed Games"))
+if(action.equals("Sounds for Observed Games"))
 {
 	if(sharedVariables.makeObserveSounds == false)
 	{
@@ -4923,7 +4847,7 @@ if(event.getActionCommand().equals("Sounds for Observed Games"))
 		sharedVariables.makeObserveSounds = false;
 	}
 }
-if(event.getActionCommand().equals("Sounds"))
+if(action.equals("Sounds"))
 {
 	if(sharedVariables.makeSounds == false)
 	sharedVariables.makeSounds = true;
@@ -4933,7 +4857,7 @@ if(event.getActionCommand().equals("Sounds"))
 
 
 
-if(event.getActionCommand().equals("Start Powerout"))
+if(action.equals("Start Powerout"))
 {
 
 //JFrame aframe = new JFrame();
@@ -4954,7 +4878,7 @@ frame.setSize(700,550);
 //frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
 }
-if(event.getActionCommand().equals("Start MineSweeper"))
+if(action.equals("Start MineSweeper"))
 {
 
 
@@ -4971,7 +4895,7 @@ sharedVariables.desktop.add(frame);
 
 
 
-if(event.getActionCommand().equals("Start Connect Four"))
+if(action.equals("Start Connect Four"))
 {
 
 
@@ -4988,7 +4912,7 @@ sharedVariables.desktop.add(frame);
 
 
 
-if(event.getActionCommand().equals("Start Mastermind"))
+if(action.equals("Start Mastermind"))
 {
 
 
@@ -5007,7 +4931,7 @@ sharedVariables.desktop.add(frame);
 
 
 
-if(event.getActionCommand().equals("Console Colors"))
+if(action.equals("Console Colors"))
 {
 
 //JDialog frame = new JDialog();
@@ -5019,7 +4943,7 @@ if(event.getActionCommand().equals("Console Colors"))
 
 
 }
-if(event.getActionCommand().equals("Notify an Events Background Color"))
+if(action.equals("Notify an Events Background Color"))
 {
 // BackColor
  JDialog frame = new JDialog();
@@ -5033,7 +4957,7 @@ if(event.getActionCommand().equals("Notify an Events Background Color"))
 
 }
 
-if(event.getActionCommand().equals("Main Background"))
+if(action.equals("Main Background"))
 {
 // BackColor
  JDialog frame = new JDialog();
@@ -5046,7 +4970,7 @@ if(event.getActionCommand().equals("Main Background"))
 }
 
 
- if(event.getActionCommand().equals("Change Font"))
+ if(action.equals("Change Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.myFont);
     fc.setVisible(true);
@@ -5075,7 +4999,7 @@ if(event.getActionCommand().equals("Main Background"))
 
 }
 
-if(event.getActionCommand().equals("Change Tab Font"))
+if(action.equals("Change Tab Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.myTabFont);
     fc.setVisible(true);
@@ -5087,7 +5011,7 @@ if(event.getActionCommand().equals("Change Tab Font"))
 				repaintTabs();
 			}// end if font not null
 }
-if(event.getActionCommand().equals("Change Input Font"))
+if(action.equals("Change Input Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.inputFont);
     fc.setVisible(true);
@@ -5103,7 +5027,7 @@ if(event.getActionCommand().equals("Change Input Font"))
 
 
 
-if(event.getActionCommand().equals("Game Board Font"))
+if(action.equals("Game Board Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameFont);
     fc.setVisible(true);
@@ -5125,7 +5049,7 @@ if(event.getActionCommand().equals("Game Board Font"))
 
 }
 
-if(event.getActionCommand().equals("Game Clock Font"))
+if(action.equals("Game Clock Font"))
 {JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameClockFont);
     fc.setVisible(true);
@@ -5152,7 +5076,7 @@ if(event.getActionCommand().equals("Game Clock Font"))
 
 
 
-if(event.getActionCommand().equals("Channel Colors"))
+if(action.equals("Channel Colors"))
 {
 	customizeChannelColorDialog frame = new customizeChannelColorDialog((JFrame) this, false, sharedVariables, consoles);
 	//frame.setSize(300,250);
