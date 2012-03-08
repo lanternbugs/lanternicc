@@ -2404,164 +2404,132 @@ class mymultiframe extends JFrame
 
       if (!go && !sharedVariables.engineOn)
         makeEngineWarning();
-    }
-
-
-if(action.equals("Set Application Background Color"))
-{
-
-try {
+      
+    } else if (action.equals("Set Application Background Color")) {
+      try {
 	JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Application Color", sharedVariables.MainBackColor);
- if(newColor != null)
- {
-	 sharedVariables.MainBackColor=newColor;
-	 sharedVariables.wallpaperImage=null;
-	 repaint();
- }
-}
-catch(Exception e)
-{}
+        Color newColor = JColorChooser.showDialog(frame, "Application Color",
+                                                  sharedVariables.MainBackColor);
+        if (newColor != null) {
+          sharedVariables.MainBackColor=newColor;
+          sharedVariables.wallpaperImage=null;
+          repaint();
+        }
+      } catch (Exception e) {}
 
-}
+    } else if (action.equals("Open Web")) {
+      mycreator.createWebFrame("http://www.google.com");
 
+    } else if (action.equals("Open Pgn")) {
+      try {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("."));;
 
-if(action.equals("Open Web"))
-{
-	mycreator.createWebFrame("http://www.google.com");
-}
+        int returnVal = fc.showOpenDialog(this);
 
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+          String myfile = fc.getSelectedFile().toString();
+          pgnLoader myLoader = new pgnLoader(myfile);
+          tableClass myTableClass = new tableClass();
+          myTableClass.createPgnListColumns();
+          myLoader.loadTable(myTableClass);
+          pgnFrame myPgnFrame = new pgnFrame(sharedVariables, queue,
+                                             myTableClass, myLoader);
+          sharedVariables.desktop.add(myPgnFrame);
+          myPgnFrame.setSize(600,400);
+          myPgnFrame.setVisible(true);
+        }
+      } catch (Exception nine) {}
+      
+    } else if (action.equals("Set Wallpaper")) {
+      try {
+        JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(this);
 
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+          sharedVariables.wallpaperFile = fc.getSelectedFile();
+          URL wallpaperURL = sharedVariables.wallpaperFile.toURL();
+          //applet
+          //sharedVariables.wallpaperImage=getImage(wallpaperURL);
+          // end applet
+          // stand alone
+          sharedVariables.wallpaperImage =
+            Toolkit.getDefaultToolkit().getImage(wallpaperURL);
+          // end stand alone
+        }
 
+        repaint();
+      // end try
+      } catch (Exception e) {}
 
-if(action.equals("Open Pgn"))
-{
-		try {
-			JFileChooser fc = new JFileChooser();
-			fc.setCurrentDirectory(new File("."));;
+    } else if (action.equals("Analysis Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.analysisFont=fnt;
 
-			 int returnVal = fc.showOpenDialog(this);
+        // Andrey says:
+        // can we turn this into a separate method?
+        for (int a=0; a<sharedVariables.maxGameTabs; a++)
+          if (myboards[a] != null)
+            if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
+              if ((sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_EXAMINING ||
+                   sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_OBSERVING) &&
+                  sharedVariables.engineOn)
+                if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
+                  myboards[a].myconsolepanel.setEngineDoc();
+            }
+      }// if fnt not null
+      
+    } else if (action.equals("Analysis Foreground Color")) {
+      JDialog frame = new JDialog();
+      Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color",
+                                                sharedVariables.analysisForegroundColor);
+      if (newColor != null) {
+        sharedVariables.analysisForegroundColor=newColor;
 
-			 if (returnVal == JFileChooser.APPROVE_OPTION)
-			 {
-			 String myfile = fc.getSelectedFile().toString();
-			 pgnLoader myLoader = new pgnLoader(myfile);
-			 tableClass myTableClass = new tableClass();
-			 myTableClass.createPgnListColumns();
-			 myLoader.loadTable(myTableClass);
-			 pgnFrame myPgnFrame = new pgnFrame(sharedVariables, queue, myTableClass, myLoader);
-			 sharedVariables.desktop.add(myPgnFrame);
-			 myPgnFrame.setSize(600,400);
-			 myPgnFrame.setVisible(true);
+        // Andrey says:
+        // marked for future edits
+        for (int a=0; a<sharedVariables.maxGameTabs; a++)
+          if (myboards[a] != null)
+            if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
+              if ((sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_EXAMINING ||
+                   sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_OBSERVING) &&
+                  sharedVariables.engineOn)
+                if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
+                  myboards[a].myconsolepanel.setEngineDoc();
+            }
+      }
 
-		 }
-	 }catch(Exception nine){}
-}
+    } else if (action.equals("Analysis Background Color")) {
+      JDialog frame = new JDialog();
+      Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color",
+                                                sharedVariables.analysisBackgroundColor);
+      if (newColor != null) {
+        sharedVariables.analysisBackgroundColor=newColor;
 
-
-
-
-
-
-
-
-
-
-
-
-
-if(action.equals("Set Wallpaper"))
-{
-		try {
-			JFileChooser fc = new JFileChooser();
-			 int returnVal = fc.showOpenDialog(this);
-
-			 if (returnVal == JFileChooser.APPROVE_OPTION)
-			 {
-			 sharedVariables.wallpaperFile = fc.getSelectedFile();
-			 URL wallpaperURL = sharedVariables.wallpaperFile.toURL();
-//applet
-//sharedVariables.wallpaperImage=getImage(wallpaperURL);
-// end applet
-// stand alone
-sharedVariables.wallpaperImage=Toolkit.getDefaultToolkit().getImage(wallpaperURL);
-// end stand alone
-
-}
-
-
-			repaint();
-
-
-			}// end try
-		catch(Exception e){}
-
-}
-
-
-if(action.equals("Analysis Font"))
-{
-JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				
-                                sharedVariables.analysisFont=fnt;
-
-
-for(int a=0; a<sharedVariables.maxGameTabs; a++)
-if(myboards[a]!= null)
-if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
-{
- if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
- if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
-myboards[a].myconsolepanel.setEngineDoc();
-}
-
-         }// if fnt not null
-}
-
-if(action.equals("Analysis Foreground Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color", sharedVariables.analysisForegroundColor);
- if(newColor != null)
- {
-	 sharedVariables.analysisForegroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
-if(myboards[a]!= null)
-if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
-{
- if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
- if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
-myboards[a].myconsolepanel.setEngineDoc();
-}
-
- }
-
-}
-if(action.equals("Analysis Background Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color", sharedVariables.analysisBackgroundColor);
- if(newColor != null)
- {
-	 sharedVariables.analysisBackgroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
-if(myboards[a]!= null)
-if(sharedVariables.gamelooking[a]== sharedVariables.engineBoard)
-{
- if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
- if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
-myboards[a].myconsolepanel.setEngineDoc();
-}
-
- }
-
+        // Andrey says:
+        // marked for future edits
+        for (int a=0; a<sharedVariables.maxGameTabs; a++)
+          if (myboards[a] != null)
+            if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
+              if ((sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_EXAMINING ||
+                   sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
+                   sharedVariables.STATE_OBSERVING) &&
+                  sharedVariables.engineOn)
+                if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
+                  myboards[a].myconsolepanel.setEngineDoc();
+            }
+      }
   
-}
+    }
 
 
 if(action.equals("Stop Engine"))
