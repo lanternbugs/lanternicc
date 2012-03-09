@@ -2489,16 +2489,45 @@ class mymultiframe extends JFrame
       // end try
       } catch (Exception e) {}
 
-    } else if (action.equals("Analysis Font")) {
-      JFrame f = new JFrame("FontChooser Startup");
-      FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
-      fc.setVisible(true);
-      Font fnt = fc.getSelectedFont();
-      if (fnt != null) {
-        sharedVariables.analysisFont=fnt;
+      // Andrey edits:
+      // merging the various analysis settings into one response
+    } else if (action.equals("Analysis Font") ||
+               action.equals("Analysis Foreground Color") ||
+               action.equals("Analysis Background Color")) {
+      // Andrey edits:
+      // checking if the new setting was made
+      boolean newSetting = false;
 
-        // Andrey says:
-        // can we turn this into a separate method?
+      if (action.equals("Analysis Font")) {
+        JFrame f = new JFrame("FontChooser Startup");
+        FontChooser2 fc = new FontChooser2(f, sharedVariables.analysisFont);
+        fc.setVisible(true);
+        Font fnt = fc.getSelectedFont();
+        
+        if (fnt != null) {
+          sharedVariables.analysisFont=fnt;
+          newSetting = true;
+        }
+        
+      } else {
+        boolean foregroundColor = action.equals("Analysis Foreground Color");
+        JDialog frame = new JDialog();
+        Color analysisColor = (foregroundColor ?
+                               sharedVariables.analysisForegroundColor :
+                               sharedVariables.analysisBackgroundColor);
+        
+        Color newColor = JColorChooser.showDialog(frame, action, analysisColor);
+
+        if (newColor != null) {
+          if (foregroundColor)
+            sharedVariables.analysisForegroundColor = newColor;
+          else
+            sharedVariables.analysisBackgroundColor = newColor;
+          newSetting = true;
+        }
+      }
+
+      if (newSetting) {
         for (int a=0; a<sharedVariables.maxGameTabs; a++)
           if (myboards[a] != null)
             if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
@@ -2510,8 +2539,9 @@ class mymultiframe extends JFrame
                 if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
                   myboards[a].myconsolepanel.setEngineDoc();
             }
-      }// if fnt not null
+      }
       
+      /*
     } else if (action.equals("Analysis Foreground Color")) {
       JDialog frame = new JDialog();
       Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color",
@@ -2555,6 +2585,7 @@ class mymultiframe extends JFrame
                   myboards[a].myconsolepanel.setEngineDoc();
             }
       }
+      */
   
     } else if (action.equals("Stop Engine")) {
 
@@ -2579,55 +2610,42 @@ class mymultiframe extends JFrame
     } else if (action.equals("Activities Window")) {
       openActivities();
 
+    } else if (action.equals("Notify Window")) {
+
+      myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
+      myNotifyFrame.setVisible(true);
+
+    } else if (action.equals("Seek Graph")) {
+      openSeekGraph();
+
+    } else if (action.equals("Send iloggedon")) {
+      /*
+      if (sharedVariables.iloggedon== false) {
+        sharedVariables.iloggedon=true;
+        iloggedon.setSelected(true);
+      } else {
+        sharedVariables.iloggedon=false;
+        iloggedon.setSelected(false);
+      }
+      */
+      sharedVariables.iloggedon = !sharedVariables.iloggedon;
+      iloggedon.setSelected(sharedVariables.iloggedon);
+      
+    } else if (action.equals("Channel Notify Map")) {
+      String mess="Map of people on channel notify.\n\n";
+      
+      for (int z=0; z<sharedVariables.channelNotifyList.size(); z++)
+        if (sharedVariables.channelNotifyList.get(z).nameList.size()>0) {
+          mess+="\n#" + sharedVariables.channelNotifyList.get(z).channel + " ";
+          for (int x=0; x < sharedVariables.channelNotifyList.get(z).nameList.size(); x++)
+            mess+=sharedVariables.channelNotifyList.get(z).nameList.get(x) + " ";
+        }
+      
+      Popup mypopper = new Popup(this, false, mess);
+      mypopper.setSize(600,500);
+      mypopper.setVisible(true);
+
     }
-
-
-if(action.equals("Notify Window"))
-{
-
-
-
-  myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
-  myNotifyFrame.setVisible(true);
-
-}
-
-
-if(action.equals("Seek Graph"))
-{
-openSeekGraph();
-}
-
-if(action.equals("Send iloggedon"))
-{
-	if(sharedVariables.iloggedon== false)
-	{
-		sharedVariables.iloggedon=true;
-		iloggedon.setSelected(true);
-
-	}
-	else
-	{
-		sharedVariables.iloggedon=false;
-		iloggedon.setSelected(false);
-	}
-}
-if(action.equals("Channel Notify Map"))
-{
- String mess="Map of people on channel notify.\n\n";
-for(int z=0; z<sharedVariables.channelNotifyList.size(); z++)
-if(sharedVariables.channelNotifyList.get(z).nameList.size()>0)
-{
-mess+="\n#" + sharedVariables.channelNotifyList.get(z).channel + " ";
-for(int x=0; x < sharedVariables.channelNotifyList.get(z).nameList.size(); x++)
-mess+=sharedVariables.channelNotifyList.get(z).nameList.get(x) + " ";
-}
-Popup mypopper = new Popup(this, false, mess);
-mypopper.setSize(600,500);
-mypopper.setVisible(true);
-
-
-}
 
 if(action.equals("Channel Notify Online"))
 {
