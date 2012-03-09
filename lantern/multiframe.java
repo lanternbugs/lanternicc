@@ -2382,8 +2382,11 @@ class mymultiframe extends JFrame
 	}
       }
       */
-      
-    } else if (action.equals("Load Winboard Engine")) {
+
+    } else if (action.equals("Load Winboard Engine") ||
+               // Andrey edits:
+               // merge the responses for loading engines
+               action.equals("Load UCI Engine")) {
       boolean go = false;
       if (!sharedVariables.engineOn) {
         go=true;
@@ -2395,7 +2398,8 @@ class mymultiframe extends JFrame
 
           if (returnVal == JFileChooser.APPROVE_OPTION) {
             sharedVariables.engineFile = fc.getSelectedFile();
-            sharedVariables.uci=false;
+            //sharedVariables.uci = false;
+            sharedVariables.uci = (action.equals("Load UCI Engine"));
 
             startTheEngine();
           }
@@ -2404,6 +2408,29 @@ class mymultiframe extends JFrame
 
       if (!go && !sharedVariables.engineOn)
         makeEngineWarning();
+      
+      /*    
+    } else if (action.equals("Load UCI Engine")) {
+      boolean go = false;
+      if (!sharedVariables.engineOn) {
+        go=true;
+	try {
+          JFileChooser fc = new JFileChooser();
+          fc.setCurrentDirectory(new File("."));;
+
+          int returnVal = fc.showOpenDialog(this);
+
+          if (returnVal == JFileChooser.APPROVE_OPTION) {
+            sharedVariables.engineFile = fc.getSelectedFile();
+            sharedVariables.uci=true;
+            startTheEngine();
+          }
+        } catch (Exception e) {}
+      }
+
+      if (!go && !sharedVariables.engineOn)
+        makeEngineWarning();
+      */
       
     } else if (action.equals("Set Application Background Color")) {
       try {
@@ -2529,75 +2556,30 @@ class mymultiframe extends JFrame
             }
       }
   
-    }
+    } else if (action.equals("Stop Engine")) {
 
+      if (sharedVariables.engineOn) {
 
-if(action.equals("Stop Engine"))
-{
+        myoutput outgoing = new myoutput();
+        outgoing.data = "exit\n";
 
+        sharedVariables.engineQueue.add(outgoing);
 
-	if(sharedVariables.engineOn == true)
-	{
+        myoutput outgoing2 = new myoutput();
+        outgoing2.data = "quit\n";
 
+        sharedVariables.engineQueue.add(outgoing2);
+        sharedVariables.engineOn=false;
+      }
 
-
-
-			myoutput outgoing = new myoutput();
-			outgoing.data = "exit\n";
-
-			sharedVariables.engineQueue.add(outgoing);
-
-			myoutput outgoing2 = new myoutput();
-			outgoing2.data = "quit\n";
-
-			sharedVariables.engineQueue.add(outgoing2);
-			sharedVariables.engineOn=false;
-		}
-
-}
-
-
-if(action.equals("Restart Engine"))
-{
-	if(sharedVariables.engineOn == false)
+    } else if (action.equals("Restart Engine")) {
+      if (!sharedVariables.engineOn)
 	startTheEngine();
 
-}
-if(action.equals("Load UCI Engine"))
-{
-	boolean go = false;
-	if(sharedVariables.engineOn == false)
-	{
-        go=true;
-	try {
-			JFileChooser fc = new JFileChooser();
-			fc.setCurrentDirectory(new File("."));;
+    } else if (action.equals("Activities Window")) {
+      openActivities();
 
-			 int returnVal = fc.showOpenDialog(this);
-
-			 if (returnVal == JFileChooser.APPROVE_OPTION) {
-			 sharedVariables.engineFile = fc.getSelectedFile();
-			 	sharedVariables.uci=true;
-                          startTheEngine();
-
-		    }
-
-
-
-		}
-		catch(Exception e){}
-
-	}
-
-	if(go== false && sharedVariables.engineOn == false)
-		makeEngineWarning();
-
-}
-
-if(action.equals("Activities Window"))
-{
-openActivities();
-}
+    }
 
 
 if(action.equals("Notify Window"))
