@@ -2826,116 +2826,124 @@ class mymultiframe extends JFrame
       // it's checked on close
       sharedVariables.seeksOpen = false;
 
+    } else if (action.equals("ToolBox")) {
+      toolboxDialog mybox = new toolboxDialog(this, false, queue,
+                                              sharedVariables);
+      mybox.setSize(500,450);
+      mybox.setLocation(200,250);
+      mybox.setVisible(true);
+
+    } else if (action.equals("Customize User Buttons")) {
+      userButtonsDialog mydialog = new userButtonsDialog((JFrame) this,
+                                                         sharedVariables);
+      mydialog.setSize(400,400);
+      mydialog.setVisible(true);
+
+    } else if (action.equals("Toolbar")) {
+      /*
+      if (sharedVariables.toolbarVisible == true) {
+        toolbarvisible.setSelected(false);
+        sharedVariables.toolbarVisible = false;
+        toolBar.setVisible(false);
+      } else {
+        toolbarvisible.setSelected(true);
+        sharedVariables.toolbarVisible = true;
+        toolBar.setVisible(true);
+      }
+      */
+      sharedVariables.toolbarVisible = !sharedVariables.toolbarVisible;
+      toolbarvisible.setSelected(sharedVariables.toolbarVisible);
+      toolBar.setVisible(sharedVariables.toolbarVisible);
+      
+    } else if (action.equals("New Console")) {
+      createChannelConsoleDialog frame =
+        new createChannelConsoleDialog((JFrame) this, true, sharedVariables,
+                                       mycreator, consoleSubframes);
+      frame.setSize(550,120);
+      frame.setVisible(true);
+
+    } else if (action.equals("Customize Tab")) {
+      int hasfocus=-1;
+      for (int nn=0; nn<sharedVariables.openConsoleCount; nn++)
+	if (consoleSubframes[nn] != null)
+          if (consoleSubframes[nn].isSelected())
+            hasfocus=nn;
+
+      if (hasfocus == -1) {
+        String swarning = "First click or select a console window, " +
+          "and change tab to one to customize.";
+        Popup pframe = new Popup((JFrame) this, true, swarning);
+        pframe.setVisible(true);
+        return;
+      }
+
+      // new idea we know the console lets find the tab
+      hasfocus = sharedVariables.looking[hasfocus];
+
+      String consoleWithFocus = "No console has focus";
+      if (hasfocus > 0) {
+	customizeChannelsDialog frame =
+          new customizeChannelsDialog((JFrame) this, false, hasfocus,
+                                      sharedVariables, consoleSubframes);
+      } else {
+        String swarning = "The currently selected window is looking at the " +
+          "main console tab, this can't be customized, click C1, C2, etc., first.";
+        Popup pframe = new Popup((JFrame) this, true, swarning);
+        pframe.setVisible(true);
+        return;
+      }
+
+    } else if (action.equals("New Detached Chat Console")) {
+      /*
+      boolean makeChatter = false;
+      if (consoleChatframes[11] == null)
+        makeChatter=true;
+      else if (!consoleChatframes[11].isVisible())
+        makeChatter=true;
+
+      if (makeChatter == true) {
+        sharedVariables.chatFrame=11;
+        consoleChatframes[11] =
+          new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
+        consoleChatframes[11].setVisible(true);
+      } else {
+        if (consoleChatframes[10] == null)
+          makeChatter=true;
+        else if (!consoleChatframes[10].isVisible())
+          makeChatter=true;
+        if (makeChatter == true) {
+          sharedVariables.chatFrame=10;
+          consoleChatframes[10] =
+            new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
+          consoleChatframes[10].setVisible(true);
+        } else {
+          Popup mypopper =
+            new Popup(this, false, "Can only have two detached chat frames open now");
+          mypopper.setVisible(true);
+        }
+      }
+      */
+
+      // Andrey says:
+      // worth looking at further
+      int detachedIndex = 11;
+      while (detachedIndex > 9 &&
+             consoleChatframes[detachedIndex] != null &&
+             consoleChatframes[detachedIndex].isVisible())
+        detachedIndex--;
+
+      if (detachedIndex > 9) {
+        sharedVariables.chatFrame = detachedIndex;
+        consoleChatframes[detachedIndex] =
+          new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
+        consoleChatframes[detachedIndex].setVisible(true);
+      } else {
+        Popup mypopper =
+          new Popup(this, false, "Can only have two detached chat frames open now.");
+        mypopper.setVisible(true);
+      }
+
     }
-
-if(action.equals("ToolBox"))
-{
-toolboxDialog mybox = new toolboxDialog(this, false, queue, sharedVariables);
-mybox.setSize(500,450);
-mybox.setLocation(200,250);
-mybox.setVisible(true);
-}
-if(action.equals("Customize User Buttons"))
-{
-userButtonsDialog mydialog = new userButtonsDialog((JFrame) this, sharedVariables);
-mydialog.setSize(400,400);
-mydialog.setVisible(true);
-}
-
-if(action.equals("Toolbar"))
-{
- if(sharedVariables.toolbarVisible == true)
- {
-  toolbarvisible.setSelected(false);
-  sharedVariables.toolbarVisible = false;
-  toolBar.setVisible(false);
- }
- else
- {
-  toolbarvisible.setSelected(true);
-    sharedVariables.toolbarVisible = true;
-  toolBar.setVisible(true);
- }
-}
-
-
-
-
-
-
-
-
-if(action.equals("New Console"))
-{
-createChannelConsoleDialog frame = new createChannelConsoleDialog((JFrame) this, true, sharedVariables, mycreator, consoleSubframes);
-	frame.setSize(550,120);
-	frame.setVisible(true);
-
-
-}
-if(action.equals("Customize Tab"))
-{
-int hasfocus=-1;
-for(int nn=0; nn<sharedVariables.openConsoleCount; nn++)
-	if(consoleSubframes[nn]!=null)
-	if(consoleSubframes[nn].isSelected())
-		hasfocus=nn;
-
-if(hasfocus == -1)
-{
-String swarning = "First click or select a console window, and change tab to one to customize.";
-Popup pframe = new Popup((JFrame) this, true, swarning);
-pframe.setVisible(true);
-return;
-}
-
-// new idea we know the console lets find the tab
-hasfocus=sharedVariables.looking[hasfocus];
-
-String consoleWithFocus = "No console has focus";
-if(hasfocus> 0)
-{
-	customizeChannelsDialog frame = new customizeChannelsDialog((JFrame) this, false, hasfocus, sharedVariables, consoleSubframes);
-
-}
-else
-{
-String swarning = "The currently selected window is looking at the main console tab, this cant be custimized, click C1, C2, etc first.";
-Popup pframe = new Popup((JFrame) this, true, swarning);
-pframe.setVisible(true);
-return;
-}
-}
-if(action.equals("New Detached Chat Console"))
-{
-boolean makeChatter = false;
-if(consoleChatframes[11]== null)
-makeChatter=true;
-else if(!consoleChatframes[11].isVisible())
-makeChatter=true;
-if(makeChatter == true)
-{sharedVariables.chatFrame=11;
-consoleChatframes[11] =  new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
-consoleChatframes[11].setVisible(true);
-}
-else
-{
-if(consoleChatframes[10]== null)
-makeChatter=true;
-else if(!consoleChatframes[10].isVisible())
-makeChatter=true;
-if(makeChatter == true)
-{
-	sharedVariables.chatFrame=10;
-consoleChatframes[10] =  new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
-consoleChatframes[10].setVisible(true);
-}
-else
-{Popup mypopper= new Popup(this, false, "Can only have two detached chat frames open now");
-mypopper.setVisible(true);
-}
-}
-}
 
 if(action.equals("New Chat Console"))
 {
