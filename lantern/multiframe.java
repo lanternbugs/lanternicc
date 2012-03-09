@@ -2645,165 +2645,158 @@ class mymultiframe extends JFrame
       mypopper.setSize(600,500);
       mypopper.setVisible(true);
 
-    }
-
-if(action.equals("Channel Notify Online"))
-{
+    } else if(action.equals("Channel Notify Online")) {
   
-String mess = sharedVariables.getChannelNotifyOnline();
-mess += sharedVariables.getConnectNotifyOnline();
-Popup mypopper = new Popup(this, false, mess);
-mypopper.setSize(600,500);
-mypopper.setVisible(true);
+      String mess = sharedVariables.getChannelNotifyOnline();
+      mess += sharedVariables.getConnectNotifyOnline();
+      Popup mypopper = new Popup(this, false, mess);
+      mypopper.setSize(600,500);
+      mypopper.setVisible(true);
 
-}
+    } else if (action.equals("Channel Map")) {
 
-if(action.equals("Channel Map"))
-{
+      String mymap="Map of channels, shouts and sshouts moved to tabs.\n\n";
 
-String mymap="Map of channels, shouts and sshouts moved to tabs.\n\n";
+      for (int a=1; a<sharedVariables.maxConsoleTabs; a++) {
+        mymap+="C" + a +  ": ";
+        for (int aa=0; aa<500; aa++)
+          if (sharedVariables.console[a][aa] == 1) {
+            mymap+=aa;
 
-for(int a=1; a< sharedVariables.maxConsoleTabs; a++)
-{
-mymap+="C" + a +  ": ";
-for(int aa=0; aa<500; aa++)
-if(sharedVariables.console[a][aa]==1)
-{
-	mymap+=aa;
+            if (sharedVariables.mainAlso[aa])
+              mymap+="m";
 
-	if(sharedVariables.mainAlso[aa] == true)
-	mymap+="m";
+            mymap+= " ";
+          }
 
-	mymap+= " ";
-}
+        if (sharedVariables.shoutRouter.shoutsConsole == a)
+          mymap += "Shouts ";
+        if (sharedVariables.shoutRouter.sshoutsConsole == a)
+          mymap += "S-Shouts ";
+        mymap+="\n";
+      }
 
-if(sharedVariables.shoutRouter.shoutsConsole == a)
-	mymap += "Shouts ";
-if(sharedVariables.shoutRouter.sshoutsConsole == a)
-	mymap += "S-Shouts ";
-mymap+="\n";
-}
+      Popup mypopper = new Popup(this, false, mymap);
+      mypopper.setSize(600,500);
+      mypopper.setVisible(true);
 
-Popup mypopper = new Popup(this, false, mymap);
-mypopper.setSize(600,500);
-mypopper.setVisible(true);
+    } else if (action.equals("Send Game End Messages")) {
+      /*  
+      if (sharedVariables.gameend == false) {// activate
+        gameend.setSelected(true);
+        sharedVariables.gameend=true;
+      */
+      sharedVariables.gameend = !sharedVariables.gameend;
+      gameend.setSelected(sharedVariables.gameend);
+
+      if (sharedVariables.gameend) {
+        String mes1 = "Lantern will send to the server the commands: " +
+          "gameendwin, gameendloss, gameenddraw.  These will produce " +
+          "'command not found: gameendwin' for example untill you alias" +
+          " them to do 'says' which speak to last opponent.\n\n";
+        String mes2 = "type for example: +alias gameendloss say darnit lost again\n\n";
+        String mes3 = "Create 3 gameend alias's, one for each type, " +
+          "gameendwin, gameenddraw, gameendloss.  format is type in main" +
+          " console +alias   then the alias name, then the command which" +
+          " should start with 'say' to speak to your opponent\n";
+        Popup mypopper = new Popup(this, false, mes1 + mes2 + mes3);
+        mypopper.setSize(600,500);
+        mypopper.setVisible(true);
+      }
+      /*
+      } else {// deactivate
+        gameend.setSelected(false);
+        sharedVariables.gameend=false;
+      }
+      */
+      // end gameend menu item
+      
+  } else if (action.equals("Rotate Away Message")) {
+      if (!sharedVariables.rotateAways) {
+        scriptLoader loadScripts = new scriptLoader();
+        sharedVariables.lanternAways.clear();
+        loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
+        if (sharedVariables.lanternAways.size() > 0) {
+          rotateaways.setSelected(true);
+          sharedVariables.rotateAways=true;
+          // size > 0
+        } else {
+          String mes="lantern_away.txt not found or has nothing in it.  " +
+            "Create a file called lantern_away.txt and put away messages " +
+            "in it till you run out of ideas, then reselect this option";
+          Popup mypopper = new Popup(this, false, mes);
+          mypopper.setVisible(true);
+          rotateaways.setSelected(false);
+        }// else size not > 0
+
+        // if rotateAways == false
+      } else {
+        rotateaways.setSelected(false);
+        sharedVariables.rotateAways=false;
+      }// if rotate aways true
+
+    } else if (action.equals("What's Examine Game Replay Quick Help")) {
+      String mes = "If Examining a game from a history (including your own)," +
+        " library or search list, you can have Lantern issue the command " +
+        "forward 1, at a set interval with delay set by the user between " +
+        "moves.\n\nFor example go to the Actions menu and choose Examine My " +
+        "Last game, then to to Start Examine Game Replay.";
+      Popup mypopper = new Popup(this, false, mes);
+      mypopper.setSize(300,350);
+      mypopper.setVisible(true);
+      /*
+    } else if (action.equals("Stop AutoExam")) {
+      sharedVariables.autoexam=0;
+      */
+
+    } else if (action.equals("AutoExam Dialog")) {
+    //} else if (action.equals("Set AutoExam Speed")) {
+      autoExamDialog frame = new autoExamDialog((JFrame) this, false,
+                                                sharedVariables, myboards);
+      frame.pack();
+      frame.setVisible(true);
 
 
-}
-if(action.equals("Send Game End Messages"))
-{
-if(sharedVariables.gameend == false) // activate
-{
-gameend.setSelected(true);
-sharedVariables.gameend=true;
-String mes1 = "Lantern will send to the server the commands: gameendwin, gameendloss, gameenddraw.  These will produce 'command not found: gameendwin' for example untill you alias them to do 'says' which speak to last opponent.\n\n";
-String mes2 = "type for example: +alias gameendloss say darnit lost again\n\n";
-String mes3 = "Create 3 gameend alias's, one for each type, gameendwin, gameenddraw, gameendloss.  format is type in main console +alias   then the alias name, then the command which should start with 'say' to speak to your opponent\n";
-Popup mypopper = new Popup(this, false, mes1 + mes2 + mes3);
-mypopper.setSize(600,500);
-mypopper.setVisible(true);
+    } else if (action.equals("Reconnect to Queen") ||
+      // Andrey edits:
+      // merging queen and main reconnect
+               action.equals("Reconnect to ICC")) {
+      try {
+        sharedVariables.myServer = "ICC";
+        sharedVariables.chessclubIP = (action.equals("Reconnect to Queen") ?
+                                       "207.99.83.231" :
+                                       "207.99.83.228");
+        sharedVariables.doreconnect=true;
+        //if (myConnection == null)
+        if (myConnection == null || !myConnection.isVisible())
+          myConnection = new connectionDialog(this, sharedVariables, queue, false);
+        //else if (!myConnection.isVisible())
+        //  myConnection = new connectionDialog(this, sharedVariables, queue, false);
 
-}
-else// deactivate
-{
-gameend.setSelected(false);
-sharedVariables.gameend=false;
-}
+        myConnection.setVisible(true);
+      } catch(Exception conn) {}
 
-}   // end gameend menu item
+      /*
+    } else if (action.equals("Reconnect to ICC")) {
 
-if(action.equals("Rotate Away Message"))
-{
-if(sharedVariables.rotateAways == false)
-{scriptLoader loadScripts = new  scriptLoader();
-sharedVariables.lanternAways.clear();
-loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
-if(sharedVariables.lanternAways.size()>0)
-{
-rotateaways.setSelected(true);
-sharedVariables.rotateAways=true;
-}// size > 0
-else
-{
-String mes="lantern_away.txt not found or has nothing in it.  Create a file called lantern_away.txt and put away messages in it till you run out of ideas, then reselect this option";
-Popup mypopper = new Popup(this, false, mes);
-mypopper.setVisible(true);
-rotateaways.setSelected(false);
-}// else size not > 0
-
-}// if rotateAways == false
-else
-{
-rotateaways.setSelected(false);
-sharedVariables.rotateAways=false;
-
-}// if rotate aways true
-
-}
-if(action.equals("What's Examine Game Replay Quick Help"))
-{
-String mes = "If Examining a game from a history (including your own), library or search list, you can have Lantern issue the command forward 1, at a set interval with delay set by the user between moves.\n\nFor example go to the Actions menu and choose Examine My Last game, then to to Start Examine Game Replay.";
-Popup mypopper = new Popup(this, false, mes);
-mypopper.setSize(300,350);
-mypopper.setVisible(true);
-
-}
-
-/*
-if(action.equals("Stop AutoExam"))
-{
-
- sharedVariables.autoexam=0;
-
-}
-*/
-if (action.equals("AutoExam Dialog")) {
-// if (action.equals("Set AutoExam Speed")) {
-  autoExamDialog frame = new autoExamDialog((JFrame) this, false,
-                                            sharedVariables, myboards);
-  frame.pack();
-  frame.setVisible(true);
-}
-
-if(action.equals("Reconnect to Queen"))
-{
-
- try {
-	 sharedVariables.myServer="ICC";
- sharedVariables.chessclubIP="207.99.83.231";
- sharedVariables.doreconnect=true;
- if(myConnection == null)
- myConnection = new connectionDialog(this, sharedVariables, queue, false);
- else if(!myConnection.isVisible())
- myConnection = new connectionDialog(this, sharedVariables, queue, false);
-
-myConnection.setVisible(true);
-}catch(Exception conn){}
-
-}
-
-if(action.equals("Reconnect to ICC"))
-{
-
-try {
+      try {
 	sharedVariables.myServer="ICC";
- sharedVariables.chessclubIP = "207.99.83.228";
- sharedVariables.doreconnect=true;
-if(myConnection == null)
- myConnection = new connectionDialog(this, sharedVariables, queue, false);
- else if(!myConnection.isVisible())
- myConnection = new connectionDialog(this, sharedVariables, queue, false);
-myConnection.setVisible(true);
-}catch(Exception conn){}
-}
+        sharedVariables.chessclubIP = "207.99.83.228";
+        sharedVariables.doreconnect=true;
+        if(myConnection == null)
+          myConnection = new connectionDialog(this, sharedVariables, queue, false);
+        else if(!myConnection.isVisible())
+          myConnection = new connectionDialog(this, sharedVariables, queue, false);
+        myConnection.setVisible(true);
+      } catch(Exception conn) {}
+      */
 
-if(action.equals("Reconnect to FICS"))
-{
+    } else if (action.equals("Reconnect to FICS")) {
 
- sharedVariables.myServer="FICS";
- sharedVariables.doreconnect=true;
+      sharedVariables.myServer="FICS";
+      sharedVariables.doreconnect=true;
 
-}
+    }
 
 if(action.equals("Save Settings"))
 {
