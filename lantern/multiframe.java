@@ -2796,30 +2796,37 @@ class mymultiframe extends JFrame
       sharedVariables.myServer="FICS";
       sharedVariables.doreconnect=true;
 
+    } else if (action.equals("Save Settings")) {
+      /*
+      sharedVariables.activitiesOpen = false;
+      if (myfirstlist != null)
+        if (myfirstlist.isVisible())
+          sharedVariables.activitiesOpen = true;
+      if (mysecondlist != null)
+        if (mysecondlist.isVisible())
+          sharedVariables.activitiesOpen = true;
+
+      sharedVariables.seeksOpen = false;
+      if (seekGraph != null)
+        if (seekGraph.isVisible())
+          sharedVariables.seeksOpen = true;
+      */
+      sharedVariables.activitiesOpen =
+        (myfirstlist != null && myfirstlist.isVisible() ||
+         mysecondlist != null && mysecondlist.isVisible());
+
+      sharedVariables.seeksOpen = (seekGraph != null &&
+                                   seekGraph.isVisible());
+
+      mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
+      mineScores.saveNow(sharedVariables);
+      sharedVariables.hasSettings = true;
+      sharedVariables.activitiesOpen = false;
+      // it gets set to true on close and here, needs to be false so
+      // it's checked on close
+      sharedVariables.seeksOpen = false;
+
     }
-
-if(action.equals("Save Settings"))
-{
-		sharedVariables.activitiesOpen = false;
-		if(myfirstlist!=null)
-		if(myfirstlist.isVisible())
-			sharedVariables.activitiesOpen = true;
-		if(mysecondlist!=null)
-		if(mysecondlist.isVisible())
-			sharedVariables.activitiesOpen = true;
-
-
-                 sharedVariables.seeksOpen = false;
-		if(seekGraph!=null)
-		if(seekGraph.isVisible())
-			sharedVariables.seeksOpen = true;
-
-mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
-	mineScores.saveNow(sharedVariables);
-sharedVariables.hasSettings = true;
-		sharedVariables.activitiesOpen = false;// it gets set to true on close and here, needs to be false so its checked on close
-        	sharedVariables.seeksOpen = false;
-}
 
 if(action.equals("ToolBox"))
 {
