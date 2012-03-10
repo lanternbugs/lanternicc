@@ -2865,9 +2865,9 @@ class mymultiframe extends JFrame
     } else if (action.equals("Customize Tab")) {
       int hasfocus=-1;
       for (int nn=0; nn<sharedVariables.openConsoleCount; nn++)
-	if (consoleSubframes[nn] != null)
-          if (consoleSubframes[nn].isSelected())
-            hasfocus=nn;
+	if (consoleSubframes[nn] != null &&
+            consoleSubframes[nn].isSelected())
+          hasfocus=nn;
 
       if (hasfocus == -1) {
         String swarning = "First click or select a console window, " +
@@ -2943,237 +2943,186 @@ class mymultiframe extends JFrame
         mypopper.setVisible(true);
       }
 
-    }
+    } else if (action.equals("New Chat Console")) {
+      mycreator.restoreConsoleFrame();
 
-if(action.equals("New Chat Console"))
-{
-mycreator.restoreConsoleFrame();
-}
-if(action.equals("New Board"))
-{
+    } else if (action.equals("New Board")) {
+      mycreator.createGameFrame();
 
-mycreator.createGameFrame();
-
-}
-if(action.equals("Cascade"))
-{
-	int x=160;
-	int y=120;
-	int width=400;
-	int height=300;
-	int dif=30;
-	int count=0;
-try {
-
-	for(int a=0; a<sharedVariables.openConsoleCount; a++)
-	if(consoleSubframes[a]!=null)
-	if(consoleSubframes[a].isVisible())
-	{
-		consoleSubframes[a].setSize(width,height);
-		consoleSubframes[a].setLocation(x + count * dif, y + count * dif);
-		consoleSubframes[a].setSelected(true);
-		count++;
-	}
-	for(int a=0; a<sharedVariables.openBoardCount; a++)
-	if(myboards[a]!=null)
-	if(myboards[a].isVisible())
-	{
-if(sharedVariables.useTopGames == false)
-{		myboards[a].setSize(width,height);
-		myboards[a].setLocation(x + count * dif, y + count * dif);
-		myboards[a].setSelected(true);
-}
-else
-{
- if(myboards[a].topGame != null)
- {
-  		myboards[a].topGame.setSize(width,height);
-		myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
-
-
- }
-}
-		 count++;
-	}
-
-	if(myfirstlist!=null)
-	if(myfirstlist.isVisible())
-	{
-
-		myfirstlist.setSize(width,height);
-		myfirstlist.setLocation(x + count * dif, y + count * dif);
-	//	myfirstlist.setSelected(true);
-
-	}
-	if(mysecondlist!=null)
-	if(mysecondlist.isVisible())
-	{
-
-		mysecondlist.setSize(width,height);
-		mysecondlist.setLocation(x + count * dif, y + count * dif);
-		mysecondlist.setSelected(true);
-
-	}
-
-
-
-}
-catch(Exception d){}
-}
-
-
-
-
-if(action.equals("Make Boards Always On Top"))
-{
-/* SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-	int x=160;
-	int y=120;
-	int width=400;
-	int height=300;
-	int dif=30;
-	int count=0;
-
-
-try {
-
-	for(int a=0; a<myboards.length; a++)
-	if(myboards[a]!=null)
-{
-
-            if(sharedVariables.useTopGames == true)
-            {
-               myboards[a].switchFrame(false);
-
+    } else if (action.equals("Cascade")) {
+      int x=160;
+      int y=120;
+      int width=400;
+      int height=300;
+      int dif=30;
+      int count=0;
+      try {
+	for (int a=0; a<sharedVariables.openConsoleCount; a++)
+          if (consoleSubframes[a] != null &&
+              consoleSubframes[a].isVisible()) {
+            consoleSubframes[a].setSize(width,height);
+            consoleSubframes[a].setLocation(x + count * dif, y + count * dif);
+            consoleSubframes[a].setSelected(true);
+            count++;
+          }
+        
+	for (int a=0; a<sharedVariables.openBoardCount; a++)
+          if (myboards[a] != null && myboards[a].isVisible()) {
+            if (!sharedVariables.useTopGames) {
               myboards[a].setSize(width,height);
-            		myboards[a].setLocation(x + count * dif, y + count * dif);
-            		myboards[a].setSelected(true);
-
-             myboards[a].topGame.setAlwaysOnTop(false);
+              myboards[a].setLocation(x + count * dif, y + count * dif);
+              myboards[a].setSelected(true);
+            } else {
+              if (myboards[a].topGame != null) {
+                myboards[a].topGame.setSize(width,height);
+                myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
+              }
             }
-            else
-            {
-             if(myboards[a].topGame != null)
-             {
-                          myboards[a].switchFrame(true);
+            count++;
+          }
 
-               		myboards[a].topGame.setSize(width,height);
-            		myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
+	if (myfirstlist != null && myfirstlist.isVisible()) {
+          myfirstlist.setSize(width,height);
+          myfirstlist.setLocation(x + count * dif, y + count * dif);
+          //myfirstlist.setSelected(true);
+        }
+        
+	if (mysecondlist != null && mysecondlist.isVisible()) {
+          mysecondlist.setSize(width,height);
+          mysecondlist.setLocation(x + count * dif, y + count * dif);
+          mysecondlist.setSelected(true);
+        }
+      } catch(Exception d) {}
 
-             myboards[a].topGame.setAlwaysOnTop(true);
-              myboards[a].setVisible(false);
-             }
-             }// end else
-		 count++;
+    } else if (action.equals("Make Boards Always On Top")) {
+      /*
+      SwingUtilities.invokeLater(new Runnable() {
+          @Override
+            public void run() {
+            try {
+              int x=160;
+              int y=120;
+              int width=400;
+              int height=300;
+              int dif=30;
+              int count=0;
 
-}// if not null
-else
-break;
+              try {
 
+                for (int a=0; a<myboards.length; a++)
+                  if (myboards[a]!=null) {
+                    if (sharedVariables.useTopGames == true) {
+                      myboards[a].switchFrame(false);
 
+                      myboards[a].setSize(width,height);
+                      myboards[a].setLocation(x + count * dif, y + count * dif);
+                      myboards[a].setSelected(true);
 
-}
-catch(Exception d){}
- if(sharedVariables.useTopGames == true)
-sharedVariables.useTopGames = false;
-else
-sharedVariables.useTopGames = true;
-                           } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
+                      myboards[a].topGame.setAlwaysOnTop(false);
+                    } else {
+                      if (myboards[a].topGame != null) {
+                        myboards[a].switchFrame(true);
+                        
+                        myboards[a].topGame.setSize(width,height);
+                        myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
+                        
+                        myboards[a].topGame.setAlwaysOnTop(true);
+                        myboards[a].setVisible(false);
+                      }
+                    }// end else
+                    count++;
+                    // if not null
+                  } else
+                    break;
+              } catch(Exception d) {}
+              if (sharedVariables.useTopGames == true)
+                sharedVariables.useTopGames = false;
+              else
+                sharedVariables.useTopGames = true;
+            } catch (Exception e1) {
+              //ignore
+            }
+          }
+        });
 
-  SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                            for(int b=0; b< myboards.length; b++)
-                            if(myboards[b]!=null && sharedVariables.useTopGames == true)
-                            myboards[b].setVisible(false);
-                           } catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-*/
+      SwingUtilities.invokeLater(new Runnable() {
+          @Override
+            public void run() {
+            try {
+              for (int b=0; b< myboards.length; b++)
+                if (myboards[b]!=null && sharedVariables.useTopGames == true)
+                  myboards[b].setVisible(false);
+            } catch (Exception e1) {
+              //ignore
+            }
+          }
+        });
+      */
 
-//lantern_board_on_top.txt
+      //lantern_board_on_top.txt
 
-boolean ontop = getOnTopSetting();
+      boolean ontop = getOnTopSetting();
 
-FileWrite mywriter = new FileWrite();
-if(ontop == false)
-{
-    String mess = "Next time you start the program, boards will be on top windows.";
-  Popup mypopper = new Popup(this, true, mess);
-  mypopper.setVisible(true);
-  mywriter.write("true\r\n", "lantern_board_on_top.txt");
-}
-else
-{
-    String mess = "Next time you start the program, boards will NOT be on top windows.";
-   Popup mypopper = new Popup(this, true, mess);
-   mypopper.setVisible(true);
-    mywriter.write("false\r\n", "lantern_board_on_top.txt");
-}
+      FileWrite mywriter = new FileWrite();
+      /*
+      if (ontop == false) {
+        String mess = "Next time you start the program, boards will be on top windows.";
+        Popup mypopper = new Popup(this, true, mess);
+        mypopper.setVisible(true);
+        mywriter.write("true\r\n", "lantern_board_on_top.txt");
+      } else {
+        String mess = "Next time you start the program, boards will NOT be on top windows.";
+        Popup mypopper = new Popup(this, true, mess);
+        mypopper.setVisible(true);
+        mywriter.write("false\r\n", "lantern_board_on_top.txt");
+      }
+      */
+      String mess = "Next time you start the program, boards " +
+        (ontop ? "will NOT" : "will") + " be on top windows.";
+      Popup mypopper = new Popup(this, true, mess);
+      mypopper.setVisible(true);
+      mywriter.write((ontop ? "false" : "true") + "\r\n", "lantern_board_on_top.txt");
 
-}
+    } else if (action.equals("Get a Game")) {
 
+      seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
+      int defaultWidth = 425;
+      int defaultHeight = 260;
+      myseeker.setSize(defaultWidth,defaultHeight);
 
-
-
-
-
-if(action.equals("Get a Game"))
-{
-
-seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
-int defaultWidth = 425;
-int defaultHeight = 260;
-myseeker.setSize(defaultWidth,defaultHeight);
-
-try {
-	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+      try {
+	Toolkit toolkit =  Toolkit.getDefaultToolkit();
         Dimension dim = toolkit.getScreenSize();
         int screenW = dim.width;
         int screenH = dim.height;
-      int px = (int) ((screenW - defaultWidth) / 2);
-      if(px < 50)
-       px=50;
-      int py = (int) ((screenH - defaultHeight) / 2);
-      if(py < 50)
-       py=50;
+        int px = (int) ((screenW - defaultWidth) / 2);
+        if (px < 50)
+          px = 50;
+        int py = (int) ((screenH - defaultHeight) / 2);
+        if (py < 50)
+          py=50;
 
+        myseeker.setLocation(px, py);
+      } catch (Exception centerError) {}
 
-      myseeker.setLocation(px, py);
-}
-catch(Exception centerError){}
+      myseeker.setTitle("Get a Game");
 
-myseeker.setTitle("Get a Game");
+      myseeker.setVisible(true);
 
-myseeker.setVisible(true);
-
-}
-
-if(action.equals("Log Pgn"))
-{
-	if(sharedVariables.pgnLogging == true)
-	 {
-		 sharedVariables.pgnLogging = false;
-	 	pgnlogging.setSelected(false);
-	}
-	 else
-	 {
-		 sharedVariables.pgnLogging = true;
-		 pgnlogging.setSelected(true);
- 	}
-
-
-}
+    } else if (action.equals("Log Pgn")) {
+      /*
+      if(sharedVariables.pgnLogging == true) {
+        sharedVariables.pgnLogging = false;
+        pgnlogging.setSelected(false);
+      } else {
+        sharedVariables.pgnLogging = true;
+        pgnlogging.setSelected(true);
+      }
+      */
+      sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
+      pgnlogging.setSelected(sharedVariables.pgnLogging);
+    }
+    
 if(action.equals("Log Observed Games To Pgn"))
 {
 	if(sharedVariables.pgnObservedLogging == true)
