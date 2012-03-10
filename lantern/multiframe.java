@@ -3121,117 +3121,106 @@ class mymultiframe extends JFrame
       */
       sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
       pgnlogging.setSelected(sharedVariables.pgnLogging);
-    }
-    
-if(action.equals("Log Observed Games To Pgn"))
-{
-	if(sharedVariables.pgnObservedLogging == true)
-	 {
-		 sharedVariables.pgnObservedLogging = false;
-	 	pgnObservedLogging.setSelected(false);
-	}
-	 else
-	 {
-		 sharedVariables.pgnObservedLogging = true;
-		 pgnObservedLogging.setSelected(true);
-		 String s = "Lantern will log bullet, blitz and standard games you observe to lantern_obullet.pgn, lantern_oblitz.pgn, and lantern_ostandard.pgn.\n\n  Not currently configured to log wild games.";
-		 Popup temp = new Popup(this, false, s); 
-		 temp.setVisible(true);
- 	}
 
+    } else if (action.equals("Log Observed Games To Pgn")) {
+      /*
+      if (sharedVariables.pgnObservedLogging == true) {
+        sharedVariables.pgnObservedLogging = false;
+        pgnObservedLogging.setSelected(false);
+      } else {
+        sharedVariables.pgnObservedLogging = true;
+        pgnObservedLogging.setSelected(true);
+      */
+      sharedVariables.pgnObservedLogging = !sharedVariables.pgnObservedLogging;
+      pgnObservedLogging.setSelected(sharedVariables.pgnObservedLogging);
+      if (sharedVariables.pgnObservedLogging) {
+        String s = "Lantern will log bullet, blitz and standard games " +
+          "you observe to lantern_obullet.pgn, lantern_oblitz.pgn, and " +
+          "lantern_ostandard.pgn.\n\n  Not currently configured to log wild games.";
+        Popup temp = new Popup(this, false, s); 
+        temp.setVisible(true);
+      }
 
-}
+      // Andrey edits:
+      // merging the aspect actions
+    } else if (action.equals("1:1") ||
+               action.equals("5:4") ||
+               action.equals("4:3") ||
+               action.equals("3:2")) {
+      sharedVariables.aspect = (action.equals("1:1") ? 0 :
+                                (action.equals("5:4") ? 1 :
+                                 (action.equals("4:3") ? 2 : 3)));
+      // Andrey says:
+      // I believe this can be done with a button group
+      aspect0.setSelected((sharedVariables.aspect == 0));
+      aspect1.setSelected((sharedVariables.aspect == 1));
+      aspect2.setSelected((sharedVariables.aspect == 2));
+      aspect3.setSelected((sharedVariables.aspect == 3));
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null && myboards[a].isVisible())
+          myboards[a].mypanel.repaint();
+      
+      /*
+    } else if (action.equals("5:4")) {
+      sharedVariables.aspect=1;
+      aspect0.setSelected(false);
+      aspect1.setSelected(true);
+      aspect2.setSelected(false);
+      aspect3.setSelected(false);
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          if (myboards[a].isVisible() == true)
+            myboards[a].mypanel.repaint();
 
-if(action.equals("1:1"))
-{
-	sharedVariables.aspect=0;
-	aspect0.setSelected(true);
-	aspect1.setSelected(false);
-	aspect2.setSelected(false);
-	aspect3.setSelected(false);
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
+    } else if (action.equals("4:3")) {
+      sharedVariables.aspect=2;
+      aspect0.setSelected(false);
+      aspect1.setSelected(false);
+      aspect2.setSelected(true);
+      aspect3.setSelected(false);
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          if (myboards[a].isVisible() == true)
+            myboards[a].mypanel.repaint();
 
-}
-
-if(action.equals("5:4"))
-{
-	sharedVariables.aspect=1;
-	aspect0.setSelected(false);
-	aspect1.setSelected(true);
-	aspect2.setSelected(false);
-	aspect3.setSelected(false);
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-if(action.equals("4:3"))
-{
-	sharedVariables.aspect=2;
-	aspect0.setSelected(false);
-	aspect1.setSelected(false);
-	aspect2.setSelected(true);
-	aspect3.setSelected(false);
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-if(action.equals("3:2"))
-{
-	sharedVariables.aspect=3;
-	aspect0.setSelected(false);
-	aspect1.setSelected(false);
-	aspect2.setSelected(false);
-	aspect3.setSelected(true);
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-
-if(action.equals("Hide Board Console"))
-{
-	sharedVariables.boardConsoleType=0;
-		sharedVariables.sideways=false;
-		sidewaysconsole.setSelected(false);
+    } else if (action.equals("3:2")) {
+      sharedVariables.aspect=3;
+      aspect0.setSelected(false);
+      aspect1.setSelected(false);
+      aspect2.setSelected(false);
+      aspect3.setSelected(true);
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          if (myboards[a].isVisible() == true)
+            myboards[a].mypanel.repaint();
+      */
+      
+    } else if (action.equals("Hide Board Console")) {
+      sharedVariables.boardConsoleType = 0;
+      sharedVariables.sideways = false;
+      sidewaysconsole.setSelected(false);
 	
-	redrawBoard(sharedVariables.boardConsoleType);
-}
-if(action.equals("Compact Board Console"))
-{
-compactConsole();
-}
-if(action.equals("Normal Board Console"))
-{
-normalConsole();
-}
-if(action.equals("Larger Board Console"))
-{
-largerConsole();
-}
-if(action.equals("Console On Side"))
-{
-sideConsole();
-}
+      redrawBoard(sharedVariables.boardConsoleType);
 
+    } else if (action.equals("Compact Board Console")) {
+      compactConsole();
 
+    } else if (action.equals("Normal Board Console")) {
+      normalConsole();
 
-if(action.equals("Default Board"))
-{
-sharedVariables.boardType = 0;
-sharedVariables.lightcolor=sharedVariables.preselectBoards.light[0];
-sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[0];
+    } else if (action.equals("Larger Board Console")) {
+      largerConsole();
 
-setBoard(0);
+    } else if (action.equals("Console On Side")) {
+      sideConsole();
 
-}
+    } else if (action.equals("Default Board")) {
+      sharedVariables.boardType = 0;
+      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[0];
+      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[0];
+
+      setBoard(0);
+    }
 
 if(action.equals("Tan Board"))
 {
