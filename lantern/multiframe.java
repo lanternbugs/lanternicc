@@ -3214,46 +3214,44 @@ class mymultiframe extends JFrame
     } else if (action.equals("Console On Side")) {
       sideConsole();
 
-    } else if (action.equals("Default Board")) {
+      // Andrey edits:
+      // merge the board actions
+    } else if (action.equals("Default Board") ||
+               action.equals("Tan Board") ||
+               action.equals("Gray Color Board") ||
+               action.equals("Blitzin Green Board")) {
+      int boardTypeIndex = (action.equals("Default Board") ? 0 :
+                            (action.equals("Tan Board") ? 1 :
+                             (action.equals("Gray Color Board") ? 2 : 3)));
       sharedVariables.boardType = 0;
-      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[0];
-      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[0];
+      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[boardTypeIndex];
+      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[boardTypeIndex];
 
       setBoard(0);
-    }
 
-if(action.equals("Tan Board"))
-{
-sharedVariables.boardType = 0;
-sharedVariables.lightcolor=sharedVariables.preselectBoards.light[1];
-sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[1];
+      /*
+    } else if (action.equals("Tan Board")) {
+      sharedVariables.boardType = 0;
+      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[1];
+      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[1];
 
-setBoard(0);
+      setBoard(0);
 
-}
+    } else if (action.equals("Gray Color Board")) {
+      sharedVariables.boardType = 0;
+      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[2];
+      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[2];
 
-if(action.equals("Gray Color Board"))
-{
-sharedVariables.boardType = 0;
-sharedVariables.lightcolor=sharedVariables.preselectBoards.light[2];
-sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[2];
+      setBoard(0);
 
-setBoard(0);
+    } else if (action.equals("Blitzin Green Board")) {
+      sharedVariables.boardType = 0;
+      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[3];
+      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[3];
 
-}
-
-if(action.equals("Blitzin Green Board"))
-{
-sharedVariables.boardType = 0;
-sharedVariables.lightcolor=sharedVariables.preselectBoards.light[3];
-sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[3];
-
- setBoard(0);
-
-}
-
-if(action.equals("Board Clock Background Color"))
-{
+      setBoard(0);
+      */
+    } else if (action.equals("Board Clock Background Color")) {
 
 JDialog frame = new JDialog();
 Color newColor = JColorChooser.showDialog(frame, "Board Clock Background Color", sharedVariables.onMoveBoardBackgroundColor);
