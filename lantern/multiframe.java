@@ -3537,15 +3537,46 @@ class mymultiframe extends JFrame
       }//end if not null
       // end if name list background
 
-    } else if (action.equals("Show My Recent Games")) {
-      String actionmess = "History\n";
+      // Andrey edits:
+      // merge all the commands sent from the action menu
+    } else if (action.equals("Show My Recent Games") ||
+               action.equals("Show My Game Library") ||
+               action.equals("Show My Adjourned Games") ||
+               action.equals("Show My Profile and Ratings") ||
+               action.equals("Enter Examination Mode") ||
+               action.equals("Examine My Last Game") ||
+               action.equals("Observe High Rated Game") ||
+               action.equals("Observe High Rated 5-Minute Game") ||
+               action.equals("Observe High Rated 15-Minute Game") ||
+               action.equals("Stop Following") ||
+               action.equals("Follow Broadcast- When On")) {
+      if (action.equals("Follow Broadcast- When On"))
+        client.writeToSubConsole("Be sure to turn on the radio by opening ChessFM, " +
+                                 "Actions - Open ChessFM in the menu.\n", 0);
+        
+      //String actionmess = "History\n";
+      String actionmess =
+        (action.equals("Show My Recent Games") ? "History" :
+         (action.equals("Show My Game Library") ? "Liblist" :
+          (action.equals("Show My Adjourned Games") ? "Stored" :
+           (action.equals("Show My Profile and Ratings") ? "Finger" :
+            (action.equals("Enter Examination Mode") ? "Examine" :
+             (action.equals("Examine My Last Game") ? "Examine -1" :
+              (action.equals("Observe High Rated Game") ? "Observe *" :
+               (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
+                (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
+                 (action.equals("Stop Following") ? "Unfollow" :
+                  "Follow Broadcast")))))))))) + "\n";
+
+      
       if (sharedVariables.myServer.equals("ICC"))
         actionmess = "`c0`" + actionmess;
 
       myoutput data = new myoutput();
       data.data=actionmess;
       queue.add(data);
-
+      
+      /*
     } else if (action.equals("Show My Game Library")) {
       String actionmess = "Liblist\n";
       if (sharedVariables.myServer.equals("ICC"))
@@ -3617,13 +3648,15 @@ class mymultiframe extends JFrame
       myoutput data = new myoutput();
       data.data=actionmess;
       queue.add(data);
-
+      */
+      
     } else if (action.equals("Show Relay Schedule")) {
       openUrl("http://www.chessclub.com/activities/relays.html");
 
     } else if (action.equals("Add a Friend")) {
       addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
 
+      /*
     } else if (action.equals("Stop Following")) {
 
       String actionmess="Unfollow\n";
@@ -3646,7 +3679,8 @@ class mymultiframe extends JFrame
       myoutput data = new myoutput();
       data.data=actionmess;
       queue.add(data);
-
+      */
+      
     } else if (action.equals("Open ChessFM")) {
 
       // ?user=me&pass=pass
