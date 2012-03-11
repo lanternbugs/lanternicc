@@ -3332,362 +3332,296 @@ class mymultiframe extends JFrame
           //if(myboards[a].isVisible() == true)
           myboards[a].repaint();
       */
-    }
 
+      // Andrey says:
+      // the next few actions appear to be no longer called
+      /*
+    } else if (action.equals("Titles In Channel Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Set Titles In Channel Color",
+                                 sharedVariables.channelTitlesColor);
+      if (newColor != null)
+        sharedVariables.channelTitlesColor=newColor;
 
+    } else if (action.equals("Channel Name Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Set Channel Name Color",
+                                 sharedVariables.qtellChannelNumberColor);
+      if (newColor != null)
+        sharedVariables.qtellChannelNumberColor=newColor;
 
+      // Andrey edits:
+      // merge brighter channel name color with darker
+    } else if (action.equals("Brighter Channel Name Color") ||
+               action.equals("Darker Channel Name Color")) {
+      String mycolstring;
+      float[] hsbValues = new float[3];
+      Color col2 = sharedVariables.qtellChannelNumberColor;
+      hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),
+                                 col2.getBlue(), hsbValues);
+      float hue, saturation, brightness;
+      hue = hsbValues[0];
+      saturation = hsbValues[1];
+      brightness = hsbValues[2];
+      mycolstring = "color values were hue= " + hue + " and saturation= " +
+        saturation + " and brightness=" + brightness + " and red=" +
+        col2.getRed() + " and blue =" + col2.getGreen() + " and green=" +
+        col2.getBlue() + " ";
 
+      sharedVariables.qtellChannelNumberColor =
+        (action.equals("Brighter Channel Name Color") ?
+         col2.brighter() : col2.darker());
 
-if(action.equals("Titles In Channel Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Set Titles In Channel Color", sharedVariables.channelTitlesColor);
- if(newColor != null)
- sharedVariables.channelTitlesColor=newColor;
+      col2 = sharedVariables.qtellChannelNumberColor;
+      hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),
+                                 col2.getBlue(), hsbValues);
 
-}
+      hue = hsbValues[0];
+      saturation = hsbValues[1];
+      brightness = hsbValues[2];
+      mycolstring = mycolstring + " color values now hue= " + hue +
+        " and saturation= " + saturation + " and brightness=" + brightness +
+        " and red=" + col2.getRed() + " and blue =" + col2.getGreen() +
+        " and green=" + col2.getBlue() + " ";
+      Popup mypopper= new Popup(this, false, mycolstring);
+      mypopper.setVisible(true);
 
-if(action.equals("Channel Name Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Set Channel Name Color", sharedVariables.qtellChannelNumberColor);
- if(newColor != null)
- sharedVariables.qtellChannelNumberColor=newColor;
+      /*
+    } else if (action.equals("Darker Channel Name Color")) {
 
-}
+      String mycolstring = "";
+      float[] hsbValues = new float[3];
+      Color col2 = sharedVariables.qtellChannelNumberColor;
+      hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
+      float hue, saturation, brightness;
+      hue = hsbValues[0];
+      saturation = hsbValues[1];
+      brightness = hsbValues[2];
+      mycolstring = "color values were hue= " + hue + " and saturation= " +
+        saturation + " and brightness=" + brightness + " and red=" +
+        col2.getRed() + " and blue =" + col2.getGreen() + " and green=" +
+        col2.getBlue() + " ";
 
-if(action.equals("Brighter Channel Name Color"))
-{
-String mycolstring="";
-float[] hsbValues = new float[3];
-Color col2=sharedVariables.qtellChannelNumberColor;
-hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
-float hue, saturation, brightness;
-hue = hsbValues[0];
-saturation = hsbValues[1];
-brightness = hsbValues[2];
-mycolstring="color values were hue= " + hue + " and saturation= " + saturation + " and brightness=" + brightness + " and red=" + col2.getRed() + " and blue =" + col2.getGreen() + " and green=" + col2.getBlue() + " ";
+      sharedVariables.qtellChannelNumberColor =
+        sharedVariables.qtellChannelNumberColor.darker();
 
+      col2 = sharedVariables.qtellChannelNumberColor;
+      hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
 
-	sharedVariables.qtellChannelNumberColor=sharedVariables.qtellChannelNumberColor.brighter();
+      hue = hsbValues[0];
+      saturation = hsbValues[1];
+      brightness = hsbValues[2];
+      mycolstring = mycolstring + " color values now hue= " + hue +
+        " and saturation= " + saturation + " and brightness=" + brightness +
+        " and red=" + col2.getRed() + " and blue =" + col2.getGreen() +
+        " and green=" + col2.getBlue() + " ";
 
-col2=sharedVariables.qtellChannelNumberColor;
-hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
+      Popup mypopper= new Popup(this, false, mycolstring);
+      mypopper.setVisible(true);
+      */
+    } else if (action.equals("PTell Name Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Tell Name Color",
+                                 sharedVariables.tellNameColor);
+      if (newColor != null)
+        sharedVariables.tellNameColor = newColor;
 
-hue = hsbValues[0];
-saturation = hsbValues[1];
-brightness = hsbValues[2];
-mycolstring=mycolstring + " color values now hue= " + hue + " and saturation= " + saturation + " and brightness=" + brightness +  " and red=" + col2.getRed() + " and blue =" + col2.getGreen() + " and green=" + col2.getBlue() + " ";
-Popup mypopper= new Popup(this, false, mycolstring);
-mypopper.setVisible(true);
+    } else if (action.equals("Names List Foreground Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Names List Foreground Color",
+                                 sharedVariables.nameForegroundColor);
+      if (newColor != null) {
+        sharedVariables.nameForegroundColor = newColor;
+        sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
+        sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
+        sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
+        for (int c=0; c<sharedVariables.maxConsoleTabs; c++) {
+          if (consoleSubframes[c] != null) {
+            consoleSubframes[c].myNameList.setForeground(newColor);
+          }
+        }
+      }
 
+    } else if (action.equals("Names List Background Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Names List Background Color",
+                                 sharedVariables.nameBackgroundColor);
+      if (newColor != null) {
+        sharedVariables.nameBackgroundColor = newColor;
 
-}
+        sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
+        sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
+        sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
 
-	if(action.equals("Darker Channel Name Color"))
-{
+        for (int c=0; c<sharedVariables.maxConsoleTabs; c++) {
+          if (consoleSubframes[c] != null) {
+            consoleSubframes[c].myNameList.setBackground(newColor);
+          }
+        }// end for
+      }//end if not null
+      // end if name list background
 
-String mycolstring="";
-float[] hsbValues = new float[3];
-Color col2=sharedVariables.qtellChannelNumberColor;
-hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
-float hue, saturation, brightness;
-hue = hsbValues[0];
-saturation = hsbValues[1];
-brightness = hsbValues[2];
-mycolstring="color values were hue= " + hue + " and saturation= " + saturation + " and brightness=" + brightness + " and red=" + col2.getRed() + " and blue =" + col2.getGreen() + " and green=" + col2.getBlue() + " ";
+    } else if (action.equals("Show My Recent Games")) {
+      String actionmess = "History\n";
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess = "`c0`" + actionmess;
 
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
-	sharedVariables.qtellChannelNumberColor=sharedVariables.qtellChannelNumberColor.darker();
+    } else if (action.equals("Show My Game Library")) {
+      String actionmess = "Liblist\n";
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-col2=sharedVariables.qtellChannelNumberColor;
-hsbValues = Color.RGBtoHSB(col2.getRed(), col2.getGreen(),col2.getBlue(), hsbValues);
+      myoutput data = new myoutput();
+      data.data = actionmess;
+      queue.add(data);
 
-hue = hsbValues[0];
-saturation = hsbValues[1];
-brightness = hsbValues[2];
-mycolstring=mycolstring + " color values now hue= " + hue + " and saturation= " + saturation + " and brightness=" + brightness +  " and red=" + col2.getRed() + " and blue =" + col2.getGreen() + " and green=" + col2.getBlue() + " ";
+    } else if (action.equals("Show My Adjourned Games")) {
+      String actionmess = "Stored\n";
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-Popup mypopper= new Popup(this, false, mycolstring);
-mypopper.setVisible(true);
+      myoutput data = new myoutput();
+      data.data = actionmess;
+      queue.add(data);
 
-}
-
-if(action.equals("PTell Name Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Tell Name Color", sharedVariables.tellNameColor);
- if(newColor != null)
- sharedVariables.tellNameColor=newColor;
-
-}
-if(action.equals("Names List Foreground Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Names List Foreground Color", sharedVariables.nameForegroundColor);
- if(newColor != null)
- {
-	 sharedVariables.nameForegroundColor=newColor;
-	  sharedVariables.activitiesPanel.theChannelList.setForeground(sharedVariables.nameForegroundColor);
-	   sharedVariables.activitiesPanel.theChannelList2.setForeground(sharedVariables.nameForegroundColor);
-	    sharedVariables.activitiesPanel.theChannelList3.setForeground(sharedVariables.nameForegroundColor);
-	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
-	 {
-		 if(consoleSubframes[c]!=null)
-		 {
-			 consoleSubframes[c].myNameList.setForeground(newColor);
-
-		 }
-	 }
-
- }
-
-}
-if(action.equals("Names List Background Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Names List Background Color", sharedVariables.nameBackgroundColor);
- if(newColor != null)
- {
-	 sharedVariables.nameBackgroundColor=newColor;
-
-sharedVariables.activitiesPanel.theChannelList.setBackground(sharedVariables.nameBackgroundColor);
-sharedVariables.activitiesPanel.theChannelList2.setBackground(sharedVariables.nameBackgroundColor);
-sharedVariables.activitiesPanel.theChannelList3.setBackground(sharedVariables.nameBackgroundColor);
-
-	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
-	 {
-		 if(consoleSubframes[c]!=null)
-		 {
-			 consoleSubframes[c].myNameList.setBackground(newColor);
-
-		 }
-	 }// end for
-
- }//end if not null
-
-}// end if name list background
-
- if(action.equals("Show My Recent Games"))
- {
-     String actionmess="History\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
-
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
-
- }
-  if(action.equals("Show My Game Library"))
- {
-      String actionmess="Liblist\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
-
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
-
- }
-
-  if(action.equals("Show My Adjourned Games"))
- {
-      String actionmess="Stored\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
-
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
-
- }
-
-  if(action.equals("Show My Profile and Ratings"))
- {
+    } else if (action.equals("Show My Profile and Ratings")) {
       String actionmess="Finger\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
- }
-
-  if(action.equals("Enter Examination Mode"))
- {
+    } else if(action.equals("Enter Examination Mode")) {
       String actionmess="Examine\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
- }
-
-   if(action.equals("Examine My Last Game"))
- {
+    } else if(action.equals("Examine My Last Game")) {
       String actionmess="Examine -1\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
-
- }
-
-
-  if(action.equals("Observe High Rated Game"))
- {
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
+      
+    } else if (action.equals("Observe High Rated Game")) {
       String actionmess="Observe *\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
- }
-
-  if(action.equals("Observe High Rated 5-Minute Game"))
- {
+    } else if (action.equals("Observe High Rated 5-Minute Game")) {
       String actionmess="Observe *f\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
- }
-
-  if(action.equals("Observe High Rated 15-Minute Game"))
- {
+    } if (action.equals("Observe High Rated 15-Minute Game")) {
       String actionmess="Observe *P\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
- }
-  if(action.equals("Show Relay Schedule"))
- {
+    } if (action.equals("Show Relay Schedule")) {
+      openUrl("http://www.chessclub.com/activities/relays.html");
 
-  openUrl("http://www.chessclub.com/activities/relays.html");
- }
+    } else if (action.equals("Add a Friend")) {
+      addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
 
- 
- if(action.equals("Add a Friend"))
- {
+    } else if (action.equals("Stop Following")) {
 
-  addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
+      String actionmess="Unfollow\n";
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
- }
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
-  if(action.equals("Stop Following"))
- {
+    } else if (action.equals("Follow Broadcast- When On")) {
 
-     String actionmess="Unfollow\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      client.writeToSubConsole("Be sure to turn on the radio by opening ChessFm, " +
+                               "Actions - Open ChessFm in the menu.\n", 0);
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
- }
+      String actionmess="Follow Broadcast\n";
+      if (sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
 
-  if(action.equals("Follow Broadcast- When On"))
- {
+    } else if (action.equals("Open ChessFM")) {
 
-     client.writeToSubConsole("Be sure to turn on the radio by opening ChessFm, Actions - Open ChessFm in the menu.\n", 0);
+      // ?user=me&pass=pass
 
-     String actionmess="Follow Broadcast\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      /*
+      if (sharedVariables.myname.length() > 0 &&
+          sharedVariables.mypassword.length() > 0)
+        openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname +
+                "&pass=" + sharedVariables.mypassword);
+      else
+      */
+      openUrl("http://www.chessclub.com/chessfm/");
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
- }
-  if(action.equals("Open ChessFM"))
- {
+    } else if(action.equals("Show Rating Graphs")) {
+      openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl"); 
 
- // ?user=me&pass=pass
+    } else if(action.equals("Events List Font")) {
+      JFrame f = new JFrame("Events List Font");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.eventsFont=fnt;
+        sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
+      }
+      // end events font
 
-/*if(sharedVariables.myname.length() > 0 && sharedVariables.mypassword.length() > 0)
-openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname + "&pass=" + sharedVariables.mypassword);
-else
-*/
-openUrl("http://www.chessclub.com/chessfm/");
- }
- if(action.equals("Show Rating Graphs"))
- {
-  openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl"); 
- }
+    } else if (action.equals("Names List Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.nameListFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.nameListFont=fnt;
+        sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
+        sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
+        sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
 
+        for (int c=0; c<sharedVariables.maxConsoleTabs; c++) {
+          if (consoleSubframes[c] != null) {
+            consoleSubframes[c].myNameList.setFont(fnt);
+          }
+        }// end for
+      }
 
- if(action.equals("Events List Font"))
-{JFrame f = new JFrame("Events List Font");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				sharedVariables.eventsFont=fnt;
-				sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
-                }
-  }// end events font
-
-
-
- if(action.equals("Names List Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.nameListFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				sharedVariables.nameListFont=fnt;
-				sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
-				sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
-				sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
-
-	 for(int c=0; c<sharedVariables.maxConsoleTabs; c++)
-	 {
-		 if(consoleSubframes[c]!=null)
-		 {
-			 consoleSubframes[c].myNameList.setFont(fnt);
-
-		 }
-	 }// end for
-
-
-
-		}
-
-}
-for(int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++)
-{
- if(myboards[openBoardMenu] == null)
- break;
- if(sharedVariables.openBoards[openBoardMenu]!=null)
-if(action.equals(sharedVariables.openBoards[openBoardMenu].getText()))
-{
- try {
- myboards[openBoardMenu].setSelected(true);
- break;
- }
- catch(Exception duiii){}
-}// end if
-
-}   // end for
-
+    }
 if(action.equals("Chat Timestamp Color"))
 {
 JDialog frame = new JDialog();
@@ -5018,6 +4952,21 @@ if(action.equals("Channel Colors"))
 	//frame.setSize(300,250);
 	frame.setVisible(true);
 }
+
+    // moved the for loop to the end of the action performed method
+    for (int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++) {
+      if (myboards[openBoardMenu] == null)
+        break;
+      if (sharedVariables.openBoards[openBoardMenu] != null &&
+          action.equals(sharedVariables.openBoards[openBoardMenu].getText())) {
+        try {
+          myboards[openBoardMenu].setSelected(true);
+          break;
+        } catch(Exception duiii) {}
+      }// end if
+      // end for
+    }
+
 
 }// end action performed method
 void openActivities()
