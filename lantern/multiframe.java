@@ -3251,64 +3251,88 @@ class mymultiframe extends JFrame
 
       setBoard(0);
       */
-    } else if (action.equals("Board Clock Background Color")) {
 
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Board Clock Background Color", sharedVariables.onMoveBoardBackgroundColor);
- if(newColor != null)
- sharedVariables.onMoveBoardBackgroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
+      // Andrey edits:
+      // merge the board color settings
+    } else if (action.equals("Board Clock Background Color") ||
+               action.equals("Board Background Color") ||
+               action.equals("Highlight Moves Color") ||
+               action.equals("Scroll Back Highlight Color")) {
 
+      JDialog frame = new JDialog();
 
-}
+      int boardSetting = (action.equals("Board Clock Background Color") ? 0 :
+                          (action.equals("Board Background Color") ? 1 :
+                           (action.equals("Highlight Moves Color") ? 2 : 3)));
 
+      Color boardSettingColor = (boardSetting == 0 ?
+                                 sharedVariables.onMoveBoardBackgroundColor :
+                                 (boardSetting == 1 ?
+                                  sharedVariables.boardBackgroundColor :
+                                  (boardSetting == 2 ?
+                                   sharedVariables.highlightcolor :
+                                   sharedVariables.scrollhighlightcolor)));
 
-if(action.equals("Board Background Color"))
-{
+      Color newColor =
+        JColorChooser.showDialog(frame, action, boardSettingColor);
 
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Board Background Color", sharedVariables.boardBackgroundColor);
- if(newColor != null)
- sharedVariables.boardBackgroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
+      if (newColor != null) {
+        if (boardSetting == 0)
+          sharedVariables.onMoveBoardBackgroundColor = newColor;
+        else if (boardSetting == 1)
+          sharedVariables.boardBackgroundColor = newColor;
+        else if (boardSetting == 2)
+          sharedVariables.highlightcolor = newColor;
+        else // if (boardSetting == 3)
+          sharedVariables.scrollhighlightcolor = newColor;
+      }
+      
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a] != null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
 
+      /*
+    } else if (action.equals("Board Background Color")) {
 
-}
-if(action.equals("Highlight Moves Color"))
-{
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Board Background Color",
+                                 sharedVariables.boardBackgroundColor);
+      if (newColor != null)
+        sharedVariables.boardBackgroundColor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a] != null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
 
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Highlight Moves Color", sharedVariables.highlightcolor);
- if(newColor != null)
- sharedVariables.highlightcolor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
+    } else if (action.equals("Highlight Moves Color")) {
 
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Highlight Moves Color",
+                                 sharedVariables.highlightcolor);
+      if (newColor != null)
+        sharedVariables.highlightcolor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
 
-}
+    } if (action.equals("Scroll Back Highlight Color")) {
 
-if(action.equals("Scroll Back Highlight Color"))
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Scroll Back Highlight Color", sharedVariables.scrollhighlightcolor);
- if(newColor != null)
- sharedVariables.scrollhighlightcolor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
-
-
-}
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Scroll Back Highlight Color",
+                                 sharedVariables.scrollhighlightcolor);
+      if (newColor != null)
+        sharedVariables.scrollhighlightcolor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a] != null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
+      */
+    }
 
 
 
