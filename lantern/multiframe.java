@@ -3257,21 +3257,32 @@ class mymultiframe extends JFrame
     } else if (action.equals("Board Clock Background Color") ||
                action.equals("Board Background Color") ||
                action.equals("Highlight Moves Color") ||
-               action.equals("Scroll Back Highlight Color")) {
+               action.equals("Scroll Back Highlight Color") ||
+               action.equals("Board Foreground Color") ||
+               action.equals("Clock Foreground Color") ||
+               action.equals("Light Square Color") ||
+               action.equals("Dark Square Color")) {
 
       JDialog frame = new JDialog();
 
-      int boardSetting = (action.equals("Board Clock Background Color") ? 0 :
-                          (action.equals("Board Background Color") ? 1 :
-                           (action.equals("Highlight Moves Color") ? 2 : 3)));
+      int boardSetting =
+        (action.equals("Board Clock Background Color") ? 0 :
+         (action.equals("Board Background Color") ? 1 :
+          (action.equals("Highlight Moves Color") ? 2 :
+           (action.equals("Scroll Back Highlight Color") ? 3 :
+            (action.equals("Board Foreground Color") ? 4 :
+             (action.equals("Clock Foreground Color") ? 5 :
+              (action.equals("Light Square Color") ? 6 : 7)))))));
 
-      Color boardSettingColor = (boardSetting == 0 ?
-                                 sharedVariables.onMoveBoardBackgroundColor :
-                                 (boardSetting == 1 ?
-                                  sharedVariables.boardBackgroundColor :
-                                  (boardSetting == 2 ?
-                                   sharedVariables.highlightcolor :
-                                   sharedVariables.scrollhighlightcolor)));
+      Color boardSettingColor =
+        (boardSetting == 0 ? sharedVariables.onMoveBoardBackgroundColor :
+         (boardSetting == 1 ? sharedVariables.boardBackgroundColor :
+          (boardSetting == 2 ? sharedVariables.highlightcolor :
+           (boardSetting == 3 ? sharedVariables.scrollhighlightcolor :
+            (boardSetting == 4 ? sharedVariables.boardForegroundColor :
+             (boardSetting == 5 ? sharedVariables.clockForegroundColor :
+              (boardSetting == 6 ? sharedVariables.lightcolor :
+               sharedVariables.darkcolor)))))));
 
       Color newColor =
         JColorChooser.showDialog(frame, action, boardSettingColor);
@@ -3283,8 +3294,16 @@ class mymultiframe extends JFrame
           sharedVariables.boardBackgroundColor = newColor;
         else if (boardSetting == 2)
           sharedVariables.highlightcolor = newColor;
-        else // if (boardSetting == 3)
+        else if (boardSetting == 3)
           sharedVariables.scrollhighlightcolor = newColor;
+        else if (boardSetting == 4)
+          sharedVariables.boardForegroundColor = newColor;
+        else if (boardSetting == 5)
+          sharedVariables.clockForegroundColor = newColor;
+        else if (boardSetting == 6)
+          sharedVariables.lightcolor = newColor;
+        else // if (boardSetting == 7)
+          sharedVariables.darkcolor = newColor;
       }
       
       for (int a=0; a<sharedVariables.maxGameTabs; a++)
@@ -3331,6 +3350,58 @@ class mymultiframe extends JFrame
         if (myboards[a] != null)
           //if(myboards[a].isVisible() == true)
           myboards[a].repaint();
+
+    } else if (action.equals("Board Foreground Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Board Foreground Color",
+                                 sharedVariables.boardForegroundColor);
+      if (newColor != null)
+        sharedVariables.boardForegroundColor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a] != null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
+
+    } else if (action.equals("Clock Foreground Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Clock Foreground Color",
+                                 sharedVariables.clockForegroundColor);
+      if (newColor != null)
+        sharedVariables.clockForegroundColor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
+
+    } else if (action.equals("Light Square Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Light Square Color",
+                                 sharedVariables.lightcolor);
+      if (newColor != null)
+        sharedVariables.lightcolor=newColor;
+      for (int a=0; a< sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].mypanel.repaint();
+
+    } else if (action.equals("Dark Square Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Dark Square Color",
+                                 sharedVariables.darkcolor);
+      if (newColor != null)
+        sharedVariables.darkcolor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].mypanel.repaint();
       */
 
       // Andrey says:
@@ -3388,7 +3459,6 @@ class mymultiframe extends JFrame
       Popup mypopper= new Popup(this, false, mycolstring);
       mypopper.setVisible(true);
 
-      /*
     } else if (action.equals("Darker Channel Name Color")) {
 
       String mycolstring = "";
@@ -3421,6 +3491,7 @@ class mymultiframe extends JFrame
       Popup mypopper= new Popup(this, false, mycolstring);
       mypopper.setVisible(true);
       */
+      
     } else if (action.equals("PTell Name Color")) {
       JDialog frame = new JDialog();
       Color newColor =
@@ -3538,7 +3609,7 @@ class mymultiframe extends JFrame
       data.data=actionmess;
       queue.add(data);
 
-    } if (action.equals("Observe High Rated 15-Minute Game")) {
+    } else if (action.equals("Observe High Rated 15-Minute Game")) {
       String actionmess="Observe *P\n";
       if (sharedVariables.myServer.equals("ICC"))
         actionmess="`c0`" + actionmess;
@@ -3547,7 +3618,7 @@ class mymultiframe extends JFrame
       data.data=actionmess;
       queue.add(data);
 
-    } if (action.equals("Show Relay Schedule")) {
+    } else if (action.equals("Show Relay Schedule")) {
       openUrl("http://www.chessclub.com/activities/relays.html");
 
     } else if (action.equals("Add a Friend")) {
@@ -3628,32 +3699,6 @@ class mymultiframe extends JFrame
                                  sharedVariables.chatTimestampColor);
       if (newColor != null)
         sharedVariables.chatTimestampColor=newColor;
-
-    } else if (action.equals("Board Foreground Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Board Foreground Color",
-                                 sharedVariables.boardForegroundColor);
-      if (newColor != null)
-        sharedVariables.boardForegroundColor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a] != null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } else if (action.equals("Clock Foreground Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Clock Foreground Color",
-                                 sharedVariables.clockForegroundColor);
-      if (newColor != null)
-        sharedVariables.clockForegroundColor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
 
     } else if (action.equals("Solid Color Board")) {
       sharedVariables.boardType=0;
@@ -3824,86 +3869,43 @@ class mymultiframe extends JFrame
       sharedVariables.italicsBehavior = 2;
       checkItalicsBehavior(2);
 
-    }
+    } else if (action.equals("Unvisited/Visited")) {// active tab
 
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Unvisited/Visited Color",
+                                 sharedVariables.tabBackground2);
+      if (newColor != null)
+        sharedVariables.tabBackground2 = newColor;
 
+    } else if (action.equals("Unvisited")) {// active tab
 
-if(action.equals("Light Square Color"))
-{
+      JDialog frame = new JDialog();
+      Color newColor = JColorChooser.showDialog(frame, "Unvisited Color",
+                                                sharedVariables.newInfoTabBackground);
+      if (newColor != null)
+        sharedVariables.newInfoTabBackground = newColor;
 
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Light Square Color", sharedVariables.lightcolor);
- if(newColor != null)
- sharedVariables.lightcolor=newColor;
- for(int a=0; a< sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
+      for (int a=0; a<sharedVariables.openBoardCount; a++)
+        if (myboards[a] != null &&
+            myboards[a].isVisible())
+          for (int aa=0; aa<sharedVariables.openBoardCount; aa++) {
+            newColor = myboards[a].myconsolepanel.channelTabs[aa].getBackground();
 
+            if (newColor.getRGB() != sharedVariables.tabBackground.getRGB())
+              myboards[a].myconsolepanel.channelTabs[aa].setBackground(sharedVariables.newInfoTabBackground);
+          }
+      // now update consoles
+      for (int a=0; a<sharedVariables.openConsoleCount; a++)
+        if (consoleSubframes[a] != null &&
+            consoleSubframes[a].isVisible())
+          for (int aa=0; aa<sharedVariables.openConsoleCount; aa++) {
+            newColor = consoleSubframes[a].channelTabs[aa].getBackground();
+            if (newColor.getRGB() != sharedVariables.tabBackground.getRGB())
+              consoleSubframes[a].channelTabs[aa].setBackground(sharedVariables.newInfoTabBackground);
+          }
 
-}
-if(action.equals("Dark Square Color"))
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Dark Square Color", sharedVariables.darkcolor);
- if(newColor != null)
- sharedVariables.darkcolor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-
-
-if(action.equals("Unvisited/Visited"))// active tab
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Unvisited/Visited Color", sharedVariables.tabBackground2);
- if(newColor != null)
- sharedVariables.tabBackground2=newColor;
-
-
-}
-
-
-if(action.equals("Unvisited"))// active tab
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Unvisited Color", sharedVariables.newInfoTabBackground);
- if(newColor != null)
- sharedVariables.newInfoTabBackground=newColor;
-
-
- for(int a=0; a<sharedVariables.openBoardCount; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- for(int aa=0; aa<sharedVariables.openBoardCount; aa++)
- {
-	 newColor = myboards[a].myconsolepanel.channelTabs[aa].getBackground();
-
-	if( newColor.getRGB() != sharedVariables.tabBackground.getRGB())
-	myboards[a].myconsolepanel.channelTabs[aa].setBackground(sharedVariables.newInfoTabBackground);
- }
-// now update consoles
- for(int a=0; a<sharedVariables.openConsoleCount; a++)
- if(consoleSubframes[a]!=null)
- if(consoleSubframes[a].isVisible() == true)
- for(int aa=0; aa<sharedVariables.openConsoleCount; aa++)
- {
-	 newColor = consoleSubframes[a].channelTabs[aa].getBackground();
-	 if( newColor.getRGB() != sharedVariables.tabBackground.getRGB())
-	consoleSubframes[a].channelTabs[aa].setBackground(sharedVariables.newInfoTabBackground);
- }
-
-}
-
-
-
-if(action.equals("Tab I'm On Background"))// active tab
+    } else if (action.equals("Tab I'm On Background"))// active tab
 {
 
 JDialog frame = new JDialog();
