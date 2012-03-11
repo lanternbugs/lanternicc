@@ -3609,7 +3609,7 @@ class mymultiframe extends JFrame
       fc.setVisible(true);
       Font fnt = fc.getSelectedFont();
       if (fnt != null) {
-        sharedVariables.nameListFont=fnt;
+        sharedVariables.nameListFont = fnt;
         sharedVariables.activitiesPanel.theChannelList.setFont(sharedVariables.nameListFont);
         sharedVariables.activitiesPanel.theChannelList2.setFont(sharedVariables.nameListFont);
         sharedVariables.activitiesPanel.theChannelList3.setFont(sharedVariables.nameListFont);
@@ -3621,301 +3621,210 @@ class mymultiframe extends JFrame
         }// end for
       }
 
+    } else if (action.equals("Chat Timestamp Color")) {
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Set Timestamp Color",
+                                 sharedVariables.chatTimestampColor);
+      if (newColor != null)
+        sharedVariables.chatTimestampColor=newColor;
+
+    } else if (action.equals("Board Foreground Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Board Foreground Color",
+                                 sharedVariables.boardForegroundColor);
+      if (newColor != null)
+        sharedVariables.boardForegroundColor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a] != null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
+
+    } else if (action.equals("Clock Foreground Color")) {
+
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Clock Foreground Color",
+                                 sharedVariables.clockForegroundColor);
+      if (newColor != null)
+        sharedVariables.clockForegroundColor=newColor;
+      for (int a=0; a<sharedVariables.maxGameTabs; a++)
+        if (myboards[a]!=null)
+          //if(myboards[a].isVisible() == true)
+          myboards[a].repaint();
+
+    } else if (action.equals("Solid Color Board")) {
+      sharedVariables.boardType=0;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Pale Wood")) {
+      sharedVariables.boardType=1;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Light Wood")) {
+      sharedVariables.boardType=2;
+      setBoard(sharedVariables.boardType);
+
+    } else if(action.equals("Dark Wood")) {
+      sharedVariables.boardType=3;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Gray Marble")) {
+      sharedVariables.boardType=4;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Red Marble")) {
+      sharedVariables.boardType=5;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Crampled Paper")) {
+      sharedVariables.boardType=6;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Winter")) {
+      sharedVariables.boardType=7;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Olive Board")) {
+      sharedVariables.boardType=8;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Cherry Board")) {
+      sharedVariables.boardType=9;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Purple Board")) {
+      sharedVariables.boardType=10;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Dyche1")) {
+      sharedVariables.pieceType=0;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Dyche2")) {
+      sharedVariables.pieceType=1;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Dyche3")) {
+      sharedVariables.pieceType=2;
+      setPieces(sharedVariables.pieceType);
+
+    } else if(action.equals("Bookup")) {
+      sharedVariables.pieceType=3;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Xboard")) {
+      sharedVariables.pieceType=4;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Alpha")) {
+      sharedVariables.pieceType=5;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Spatial")) {
+      sharedVariables.pieceType=6;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Harlequin")) {
+      sharedVariables.pieceType=7;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Berlin")) {
+      sharedVariables.pieceType=8;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Eboard Classic")) {
+      sharedVariables.pieceType=9;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Molten Good")) {
+      sharedVariables.pieceType=10;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Molten Evil")) {
+      sharedVariables.pieceType=11;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Liebeskind")) {
+      sharedVariables.pieceType=12;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Eyes")) {
+      sharedVariables.pieceType=13;
+      setPieces(sharedVariables.pieceType);
+
+    } if (action.equals("Fantasy")) {
+      sharedVariables.pieceType=14;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Adventure")) {
+      sharedVariables.pieceType=18;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Maya")) {
+      sharedVariables.pieceType=19;
+      setPieces(sharedVariables.pieceType);
+
+    } if (action.equals("Medieval")) {
+      sharedVariables.pieceType=20;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("CCube")) {
+      sharedVariables.pieceType=21;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Monge Mix")) {
+      sharedVariables.pieceType=22;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("About Monge Pieces")) {
+
+      String warning = "The Monge chess pieces are authored by Maurizio Monge, " +
+        "at this time, three of the six sets are currently in Lantern and they " +
+        "are under the LGPL (library GPL) license at the time of this writing. " +
+        "\n\n Virtually all the piece sets in Lantern come from the Jin Chess, " +
+        "and except in cases like the Monge pieces, where I know the license, " +
+        "I offer no more rights than Jin does.  LGPL allows you to reuse the " +
+        "pieces in your own application if you're a developer. So unzip the " +
+        "lantern.jar to get at the pieces.  A warning though, the \\setName\\64\\" +
+        "folder is a general folder for when I want pieces I can resize, and the " +
+        "monge pieces don't actually come in the 64 size.\n\n  The monge mix is a " +
+        "mix of pieces from the Fantasy and Spatial set I've put together.";
+      Popup mypopup = new Popup(this, false, warning);
+      mypopup.setSize(600,500);
+      mypopup.setVisible(true);
+
+    } else if (action.equals("Random Pieces")) {
+      sharedVariables.pieceType=23;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Line")) {
+      sharedVariables.pieceType=15;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Motif")) {
+      sharedVariables.pieceType=16;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("Utrecht")) {
+      sharedVariables.pieceType=17;
+      setPieces(sharedVariables.pieceType);
+
+    } else if (action.equals("` ` Do Nothing")) {
+      sharedVariables.italicsBehavior = 0;
+      checkItalicsBehavior(0);
+
+    } else if (action.equals("` ` Italics")) {
+      sharedVariables.italicsBehavior = 1;
+      checkItalicsBehavior(1);
+
+    } else if (action.equals("` ` Brighter Color")) {
+      sharedVariables.italicsBehavior = 2;
+      checkItalicsBehavior(2);
+
     }
-if(action.equals("Chat Timestamp Color"))
-{
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Set Timestamp Color", sharedVariables.chatTimestampColor);
- if(newColor != null)
- sharedVariables.chatTimestampColor=newColor;
-
-}
-if(action.equals("Board Foreground Color"))
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Board Foreground Color", sharedVariables.boardForegroundColor);
- if(newColor != null)
- sharedVariables.boardForegroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
-
-
-}
-
-if(action.equals("Clock Foreground Color"))
-{
-
-JDialog frame = new JDialog();
-Color newColor = JColorChooser.showDialog(frame, "Clock Foreground Color", sharedVariables.clockForegroundColor);
- if(newColor != null)
- sharedVariables.clockForegroundColor=newColor;
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].repaint();
-
-
-}
-
-
-
-
-
-if(action.equals("Solid Color Board"))
-{
-sharedVariables.boardType=0;
-setBoard(sharedVariables.boardType);
-}
-
-if(action.equals("Pale Wood"))
-{
-sharedVariables.boardType=1;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Light Wood"))
-{
-sharedVariables.boardType=2;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Dark Wood"))
-{
-sharedVariables.boardType=3;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Gray Marble"))
-{
-sharedVariables.boardType=4;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Red Marble"))
-{
-sharedVariables.boardType=5;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Crampled Paper"))
-{
-sharedVariables.boardType=6;
-setBoard(sharedVariables.boardType);
-
-}
-
-if(action.equals("Winter"))
-{
-sharedVariables.boardType=7;
-setBoard(sharedVariables.boardType);
-
-}
-if(action.equals("Olive Board"))
-{
-sharedVariables.boardType=8;
-setBoard(sharedVariables.boardType);
-
-}
-if(action.equals("Cherry Board"))
-{
-sharedVariables.boardType=9;
-setBoard(sharedVariables.boardType);
-
-}
-if(action.equals("Purple Board"))
-{
-sharedVariables.boardType=10;
-setBoard(sharedVariables.boardType);
-
-}
-
-
-if(action.equals("Dyche1"))
-{
-sharedVariables.pieceType=0;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Dyche2"))
-{
-sharedVariables.pieceType=1;
-setPieces(sharedVariables.pieceType);
-
-}if(action.equals("Dyche3"))
-{
-sharedVariables.pieceType=2;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Bookup"))
-{
-sharedVariables.pieceType=3;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Xboard"))
-{
-sharedVariables.pieceType=4;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Alpha"))
-{
-sharedVariables.pieceType=5;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Spatial"))
-{
-sharedVariables.pieceType=6;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Harlequin"))
-{
-sharedVariables.pieceType=7;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Berlin"))
-{
-sharedVariables.pieceType=8;
-setPieces(sharedVariables.pieceType);
-
-}
-
-
-if(action.equals("Eboard Classic"))
-{
-sharedVariables.pieceType=9;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Molten Good"))
-{
-sharedVariables.pieceType=10;
-setPieces(sharedVariables.pieceType);
-
-}
-
-if(action.equals("Molten Evil"))
-{
-sharedVariables.pieceType=11;
-setPieces(sharedVariables.pieceType);
-
-}
-
-if(action.equals("Liebeskind"))
-{
-sharedVariables.pieceType=12;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Eyes"))
-{
-sharedVariables.pieceType=13;
-setPieces(sharedVariables.pieceType);
-
-}if(action.equals("Fantasy"))
-{
-sharedVariables.pieceType=14;
-setPieces(sharedVariables.pieceType);
-
-}
-
-if(action.equals("Adventure"))
-{
-sharedVariables.pieceType=18;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Maya"))
-{
-sharedVariables.pieceType=19;
-setPieces(sharedVariables.pieceType);
-
-}if(action.equals("Medieval"))
-{
-sharedVariables.pieceType=20;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("CCube"))
-{
-sharedVariables.pieceType=21;
-setPieces(sharedVariables.pieceType);
-
-}
-
-if(action.equals("Monge Mix"))
-{
-sharedVariables.pieceType=22;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("About Monge Pieces"))
-{
-
-  String warning = "The Monge chess pieces are authored by Maurizio Monge, at this time, three of the six sets are currently in Lantern and they are under the LGPL (library GPL) license at the time of this writing. \n\n Virtually all the piece sets in Lantern come from the Jin Chess, and except in case's like the Monge pieces, where i know the license, I offer no more rights than Jin does.  LGPL allows you to resuse the pieces in your own application if your a developer. So unzip the lantern.jar to get at the pieces.  A warning though, the \\setName\\64\\ folder is a general folder for when i want pieces i can resize, and the monge pieces dont actually come in the 64 size.\n\n  The monge mix is a mix of pieces from the Fantasy and Spatial set i've put together.";
- Popup mypopup = new Popup(this, false, warning);
- mypopup.setSize(600,500);
- mypopup.setVisible(true);
-}
-if(action.equals("Random Pieces"))
-{
-sharedVariables.pieceType=23;
-setPieces(sharedVariables.pieceType);
-
-}
-
-
-
-if(action.equals("Line"))
-{
-sharedVariables.pieceType=15;
-setPieces(sharedVariables.pieceType);
-
-}if(action.equals("Motif"))
-{
-sharedVariables.pieceType=16;
-setPieces(sharedVariables.pieceType);
-
-}
-if(action.equals("Utrecht"))
-{
-sharedVariables.pieceType=17;
-setPieces(sharedVariables.pieceType);
-
-}
-
-if(action.equals("` ` Do Nothing"))
-{
- sharedVariables.italicsBehavior = 0;
- checkItalicsBehavior(0);
-
-}
-
-if(action.equals("` ` Italics"))
-{
- sharedVariables.italicsBehavior = 1;
- checkItalicsBehavior(1);
-
-}
-
-if(action.equals("` ` Brighter Color"))
-{
- sharedVariables.italicsBehavior = 2;
- checkItalicsBehavior(2);
-
-}
 
 
 
@@ -4952,7 +4861,7 @@ if(action.equals("Channel Colors"))
 	//frame.setSize(300,250);
 	frame.setVisible(true);
 }
-
+    // Andrey says:
     // moved the for loop to the end of the action performed method
     for (int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++) {
       if (myboards[openBoardMenu] == null)
