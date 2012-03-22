@@ -1583,7 +1583,9 @@ tellMasterDialog frame = new tellMasterDialog((JFrame) myself.myframe, false, sh
       {
        JMenu LMenu = new JMenu("Edit List");
        sharedVariables.setUpListMenu(LMenu, handle, queue);
+      menu3.addSeparator();
        menu3.add(LMenu);
+       menu3.addSeparator();
       }
       }
 }// end for
