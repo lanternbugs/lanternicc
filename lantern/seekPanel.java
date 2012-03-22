@@ -414,20 +414,94 @@ return null;
 
 			      if(over!=null)
 			      {
-				/*JFrame fr = new JFrame();
-				fr.setSize(150, 50);
-				fr.setVisible(true);
-				fr.setTitle(over.seekText);
-				*/
-					String play = "play " + over.index + "\n";
+
+                              if (me.getButton() == MouseEvent.BUTTON3)
+                              rightClick(me, over);
+                              else
+                              {
+
+                                        String play = "play " + over.index + "\n";
 					myoutput temp =new myoutput();
 					temp.data=play;
 					temp.consoleNumber=0;
 					queue.add(temp);
-			  	}
+                                   }// not right click
+			  	}// not null
 
 
-		}
+		}  // end method
+
+void rightClick(MouseEvent me, final seekInfo over)
+{
+JPopupMenu menu2=new JPopupMenu("Popup2");
+final String Name = over.name;
+
+JMenuItem item1= new JMenuItem("Finger " + Name);
+ item1.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Finger " + Name + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item1);
+JMenuItem item2= new JMenuItem("History " + Name);
+ item2.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "History " + Name + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item2);
+JMenuItem item3= new JMenuItem("Vars " + Name);
+ item3.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Vars " + Name + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item3);
+       
+JMenuItem item4= new JMenuItem("Ping " + Name);
+ item4.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Ping " + Name + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item4);
+JMenuItem item5= new JMenuItem("Assess " + Name);
+ item5.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "Assess " + Name + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(item5);
+
+menu2.show(me.getComponent(),me.getX(),me.getY());
+
+
+}
 void setDisplayType(int n)
 {
  displayType=n;

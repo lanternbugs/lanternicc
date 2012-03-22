@@ -1883,6 +1883,15 @@ items[m].addActionListener(new ActionListener() {
       if(m == 3 || m == 7 || m == 9)
       menu3.addSeparator();
 
+      if(m < sharedVariables.rightClickMenu.size())
+      {String menuEntry = sharedVariables.rightClickMenu.get(m);
+      if(menuEntry.equals("Stored"))// now add edit list sub menu
+      {
+       JMenu LMenu = new JMenu("Edit List");
+       sharedVariables.setUpListMenu(LMenu, handle, queue);
+       menu3.add(LMenu);
+      }
+      }
 }// end for
 }// end if any items
 /*

@@ -126,6 +126,7 @@ boolean ActivitiesOnTop=true;
 boolean unobserveGoExamine=false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
+ArrayList<String> rightClickListMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();
 ArrayList<String> ficsLoginScript = new ArrayList();
 ArrayList<String> notifyControllerScript = new ArrayList();
@@ -803,8 +804,83 @@ void setupMenu()
 	rightClickMenu.add("Channel Notify");
 	rightClickMenu.add("Tell");
 
-}
 
+        rightClickListMenu.add("Notify (To be Notified on Arrival)");
+        rightClickListMenu.add("NoPlay (Block Play)");
+        rightClickListMenu.add("Censor (Bock Communication)");
+        rightClickListMenu.add("Remove from Notify");
+        rightClickListMenu.add("Remove from NoPlay");
+        rightClickListMenu.add("Remove from Censor");
+}
+void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue<myoutput> queue)
+{
+     JMenuItem item0 = new JMenuItem(rightClickListMenu.get(0) + " " + handle);
+     item0.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "+Notify " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item0);
+
+     JMenuItem item1 = new JMenuItem(rightClickListMenu.get(1) + " " + handle);
+     item1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "+NoPlay " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item1);
+
+     JMenuItem item2 = new JMenuItem(rightClickListMenu.get(2) + " " + handle);
+     item2.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "+Censor " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item2);
+      LMenu.addSeparator();
+     JMenuItem item3 = new JMenuItem(rightClickListMenu.get(3) + " " + handle);
+     item3.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "-Notify " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item3);
+
+     JMenuItem item4 = new JMenuItem(rightClickListMenu.get(4) + " " + handle);
+     item4.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "-NoPlay " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item4);
+
+     JMenuItem item5 = new JMenuItem(rightClickListMenu.get(5) + " " + handle);
+     item5.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+
+           myoutput data = new myoutput();
+           data.data = "-Censor " + handle + "\n";
+           queue.add(data);
+                   }
+      });
+      LMenu.add(item5);
+
+}
 
 void openUrl(String myurl)
 {
