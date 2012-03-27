@@ -3549,7 +3549,8 @@ class mymultiframe extends JFrame
                action.equals("Observe High Rated 5-Minute Game") ||
                action.equals("Observe High Rated 15-Minute Game") ||
                action.equals("Stop Following") ||
-               action.equals("Follow Broadcast- When On")) {
+               action.equals("Follow Broadcast- When On") ||
+               action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
         client.writeToSubConsole("Be sure to turn on the radio by opening ChessFM, " +
                                  "Actions - Open ChessFM in the menu.\n", 0);
@@ -3566,7 +3567,8 @@ class mymultiframe extends JFrame
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
-                  "Follow Broadcast")))))))))) + "\n";
+                  (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
+                                 "Match"))))))))))) + "\n";
 
       
       if (sharedVariables.myServer.equals("ICC"))
@@ -4325,317 +4327,313 @@ class mymultiframe extends JFrame
         }// end selected
       }
 
+      /*
     } else if (action.equals("Withdraw Challenges")) {
       String actionmess="multi match\n";
-     if(sharedVariables.myServer.equals("ICC"))
-     actionmess="`c0`" + actionmess;
+      if(sharedVariables.myServer.equals("ICC"))
+        actionmess="`c0`" + actionmess;
 
-     myoutput data = new myoutput();
-     data.data=actionmess;
-    queue.add(data);
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
+      */
 
-}
-if(action.equals("Tabs Only"))
-{
-	if(sharedVariables.tabsOnly == false)
-	{
-		tabbing.setSelected(true);
-		sharedVariables.tabsOnly = true;
-	}
-	else
-	{
-		tabbing.setSelected(false);
-		sharedVariables.tabsOnly = false;
-	}
-}
+    } else if (action.equals("Tabs Only")) {
+      /*
+      if (sharedVariables.tabsOnly == false) {
+        tabbing.setSelected(true);
+        sharedVariables.tabsOnly = true;
+      } else {
+        tabbing.setSelected(false);
+        sharedVariables.tabsOnly = false;
+      }
+      */
+      sharedVariables.tabsOnly = !sharedVariables.tabsOnly;
+      tabbing.setSelected(sharedVariables.tabsOnly);
 
+    } else if (action.equals("Auto Buffer Chat Length")) {
+      /*
+      if (sharedVariables.autoBufferChat == false) {
+        sharedVariables.autoBufferChat=true;
+        autobufferchat.setSelected(true);
+      } else {
+        sharedVariables.autoBufferChat=false;
+        autobufferchat.setSelected(false);
+      }
+      */
+      sharedVariables.autoBufferChat = !sharedVariables.autoBufferChat;
+      autobufferchat.setSelected(sharedVariables.autoBufferChat);
 
-if(action.equals("Auto Buffer Chat Length"))
-{
+    } else if (action.equals("No Idle")) {
+      /*
+      if (sharedVariables.noidle == false) {
+        sharedVariables.noidle=true;
+        autonoidle.setSelected(true);
+      } else {
+        sharedVariables.noidle=false;
+        autonoidle.setSelected(false);
+      }
+      */
+      sharedVariables.noidle = !sharedVariables.noidle;
+      autonoidle.setSelected(sharedVariables.noidle);
 
-	if(sharedVariables.autoBufferChat == false)
-	{
-		sharedVariables.autoBufferChat=true;
-		autobufferchat.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.autoBufferChat=false;
-		autobufferchat.setSelected(false);
-	}
-}
+    } else if (action.equals("Switch Tab On Tell")) {
+      /*
+      if (sharedVariables.switchOnTell == false) {
+        sharedVariables.switchOnTell=true;
+        tellswitch.setSelected(true);
+      } else {
+        sharedVariables.switchOnTell=false;
+        tellswitch.setSelected(false);
+      }
+      */
+      sharedVariables.switchOnTell = !sharedVariables.switchOnTell;
+      tellswitch.setSelected(sharedVariables.switchOnTell);
 
-
-if(action.equals("No Idle"))
-{
-
-	if(sharedVariables.noidle == false)
-	{
-		sharedVariables.noidle=true;
-		autonoidle.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.noidle=false;
-		autonoidle.setSelected(false);
-	}
-}
-
-
-if(action.equals("Switch Tab On Tell"))
-{
-
-	if(sharedVariables.switchOnTell == false)
-	{
-		sharedVariables.switchOnTell=true;
-		tellswitch.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.switchOnTell=false;
-		tellswitch.setSelected(false);
-	}
-}
-
-if(action.equals("Timestamp To Left Of Name"))
-{
-	if(sharedVariables.leftTimestamp == false)
-	{
-		sharedVariables.leftTimestamp = true;
-		leftNameTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.leftTimestamp = false;
-		leftNameTimestamp.setSelected(false);
-	}
-
-}
-if(action.equals("Timestamp Connecting"))
-{
-	if(sharedVariables.reconnectTimestamp == false)
-	{
-		sharedVariables.reconnectTimestamp = true;
-		reconnectTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.reconnectTimestamp = false;
-		reconnectTimestamp.setSelected(false);
-	}
-
-}
-
-if(action.equals("Timestamp Shouts"))
-{
-	if(sharedVariables.shoutTimestamp == false)
-	{
-		sharedVariables.shoutTimestamp = true;
-		shoutTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.shoutTimestamp = false;
-		shoutTimestamp.setSelected(false);
-	}
-}
-
-if(action.equals("Timestamp Channel Qtells"))
-{
-	if(sharedVariables.qtellTimestamp == false)
-	{
-		sharedVariables.qtellTimestamp = true;
-		qtellTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.qtellTimestamp = false;
-		qtellTimestamp.setSelected(false);
-	}
-}
+    } else if (action.equals("Timestamp To Left Of Name")) {
+      /*
+      if (sharedVariables.leftTimestamp == false) {
+        sharedVariables.leftTimestamp = true;
+        leftNameTimestamp.setSelected(true);
+      } else {
+        sharedVariables.leftTimestamp = false;
+        leftNameTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.leftTimestamp = !sharedVariables.leftTimestamp;
+      leftNameTimestamp.setSelected(sharedVariables.leftTimestamp);
 
 
-if(action.equals("Timestamp Tells"))
-{
-	if(sharedVariables.tellTimestamp == false)
-	{
-		sharedVariables.tellTimestamp = true;
-		tellTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.tellTimestamp = false;
-		tellTimestamp.setSelected(false);
-	}
-}
-if(action.equals("Timestamp Channels and Kibs"))
-{
-	if(sharedVariables.channelTimestamp == false)
-	{
-		sharedVariables.channelTimestamp = true;
-		channelTimestamp.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.channelTimestamp = false;
-		channelTimestamp.setSelected(false);
-	}
-}
+    } else if (action.equals("Timestamp Connecting")) {
+      /*
+      if (sharedVariables.reconnectTimestamp == false) {
+        sharedVariables.reconnectTimestamp = true;
+        reconnectTimestamp.setSelected(true);
+      } else {
+        sharedVariables.reconnectTimestamp = false;
+        reconnectTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.reconnectTimestamp = !sharedVariables.reconnectTimestamp;
+      reconnectTimestamp.setSelected(sharedVariables.reconnectTimestamp);
 
-if(action.equals("Use Basketball Logo ICC Flag"))
-{
-	if(sharedVariables.basketballFlag == false)
-	{
-		sharedVariables.basketballFlag = true;
-		basketballFlag.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.basketballFlag = false;
-		basketballFlag.setSelected(false);
-	}
-}
-if(action.equals("Print Channel Notify for Main Also"))
-{
-	if(sharedVariables.notifyMainAlso == false)
-	{
-		sharedVariables.notifyMainAlso = true;
-		notifyMainAlso.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.notifyMainAlso = false;
-		notifyMainAlso.setSelected(false);
-	}
-}
-if(action.equals("Auto Name Popup"))
-{
-	if(sharedVariables.autopopup == false)
-	{
-		sharedVariables.autopopup = true;
-		autopopup.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.autopopup = false;
-		autopopup.setSelected(false);
-	}
-}
-if(action.equals("Auto History Popup"))
-{
-	if(sharedVariables.autoHistoryPopup == false)
-	{
-		sharedVariables.autoHistoryPopup = true;
-		autoHistoryPopup.setSelected(true);
-	}
-	else
-	{
-		sharedVariables.autoHistoryPopup = false;
-		autoHistoryPopup.setSelected(false);
-	}
-}
+    } else if (action.equals("Timestamp Shouts")) {
+      /*
+      if (sharedVariables.shoutTimestamp == false) {
+        sharedVariables.shoutTimestamp = true;
+        shoutTimestamp.setSelected(true);
+      } else {
+        sharedVariables.shoutTimestamp = false;
+        shoutTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.shoutTimestamp = !sharedVariables.shoutTimestamp;
+      shoutTimestamp.setSelected(sharedVariables.shoutTimestamp);
+
+    } else if (action.equals("Timestamp Channel Qtells")) {
+      /*
+      if (sharedVariables.qtellTimestamp == false) {
+        sharedVariables.qtellTimestamp = true;
+        qtellTimestamp.setSelected(true);
+      } else {
+        sharedVariables.qtellTimestamp = false;
+        qtellTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.qtellTimestamp = !sharedVariables.qtellTimestamp;
+      qtellTimestamp.setSelected(sharedVariables.qtellTimestamp);
+
+    } else if (action.equals("Timestamp Tells")) {
+      /*
+      if (sharedVariables.tellTimestamp == false) {
+        sharedVariables.tellTimestamp = true;
+        tellTimestamp.setSelected(true);
+      } else {
+        sharedVariables.tellTimestamp = false;
+        tellTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.tellTimestamp = !sharedVariables.tellTimestamp;
+      tellTimestamp.setSelected(sharedVariables.tellTimestamp);
+
+    } else if (action.equals("Timestamp Channels and Kibs")) {
+      /*
+      if (sharedVariables.channelTimestamp == false) {
+        sharedVariables.channelTimestamp = true;
+        channelTimestamp.setSelected(true);
+      } else {
+        sharedVariables.channelTimestamp = false;
+        channelTimestamp.setSelected(false);
+      }
+      */
+      sharedVariables.channelTimestamp = !sharedVariables.channelTimestamp;
+      channelTimestamp.setSelected(sharedVariables.channelTimestamp);
+
+    } else if (action.equals("Use Basketball Logo ICC Flag")) {
+      /*
+      if (sharedVariables.basketballFlag == false) {
+        sharedVariables.basketballFlag = true;
+        basketballFlag.setSelected(true);
+      } else {
+        sharedVariables.basketballFlag = false;
+        basketballFlag.setSelected(false);
+      }
+      */
+      sharedVariables.basketballFlag = !sharedVariables.basketballFlag;
+      basketballFlag.setSelected(sharedVariables.basketballFlag);
+
+    } else if (action.equals("Print Channel Notify for Main Also")) {
+      /*
+      if (sharedVariables.notifyMainAlso == false) {
+        sharedVariables.notifyMainAlso = true;
+        notifyMainAlso.setSelected(true);
+      } else {
+        sharedVariables.notifyMainAlso = false;
+        notifyMainAlso.setSelected(false);
+      }
+      */
+      sharedVariables.notifyMainAlso = !sharedVariables.notifyMainAlso;
+      notifyMainAlso.setSelected(sharedVariables.notifyMainAlso);
+
+    } else if (action.equals("Auto Name Popup")) {
+      /*
+      if (sharedVariables.autopopup == false) {
+        sharedVariables.autopopup = true;
+        autopopup.setSelected(true);
+      } else {
+        sharedVariables.autopopup = false;
+        autopopup.setSelected(false);
+      }
+      */
+      sharedVariables.autopopup = !sharedVariables.autopopup;
+      autopopup.setSelected(sharedVariables.autopopup);
+
+    } else if (action.equals("Auto History Popup")) {
+      /*
+      if (sharedVariables.autoHistoryPopup == false) {
+        sharedVariables.autoHistoryPopup = true;
+        autoHistoryPopup.setSelected(true);
+      } else {
+        sharedVariables.autoHistoryPopup = false;
+        autoHistoryPopup.setSelected(false);
+      }
+      */
+      sharedVariables.autoHistoryPopup = !sharedVariables.autoHistoryPopup;
+      autoHistoryPopup.setSelected(sharedVariables.autoHistoryPopup);
 
 // Andrey edits:
 // remove "Auto Observe"
-if(action.equals("Tomato"))
-{
-	if(sharedVariables.autoTomato == false)
+    } else if (action.equals("Tomato")) {
+      /*
+      if (sharedVariables.autoTomato == false)
 	sharedVariables.autoTomato = true;
-	else
+      else
 	sharedVariables.autoTomato = false;
-}
+      */
+      sharedVariables.autoTomato = !sharedVariables.autoTomato;
 
-if(action.equals("Cooly"))
-{
-	if(sharedVariables.autoCooly == false)
+    } else if (action.equals("Cooly")) {
+      /*
+      if (sharedVariables.autoCooly == false)
 	sharedVariables.autoCooly = true;
-	else
+      else
 	sharedVariables.autoCooly = false;
-}
-if(action.equals("WildOne"))
-{
-	if(sharedVariables.autoWildOne == false)
+      */
+      sharedVariables.autoCooly = !sharedVariables.autoCooly;
+
+    } else if (action.equals("WildOne")) {
+      /*
+      if (sharedVariables.autoWildOne == false)
 	sharedVariables.autoWildOne = true;
-	else
+      else
 	sharedVariables.autoWildOne = false;
+      //reconnect2.setVisible(true);
+      */
+      sharedVariables.autoWildOne = !sharedVariables.autoWildOne;
 
-//	reconnect2.setVisible(true);
-}
-
-
-if(action.equals("Flash"))
-{
-	if(sharedVariables.autoFlash == false)
+    } else if (action.equals("Flash")) {
+      /*
+      if (sharedVariables.autoFlash == false)
 	sharedVariables.autoFlash = true;
-	else
+      else
 	sharedVariables.autoFlash = false;
-}
+      */
+      sharedVariables.autoFlash = !sharedVariables.autoFlash;
 
-if(action.equals("Olive"))
-{
-	if(sharedVariables.autoOlive == false)
+    } if (action.equals("Olive")) {
+      /*
+      if (sharedVariables.autoOlive == false)
 	sharedVariables.autoOlive = true;
-	else
+      else
 	sharedVariables.autoOlive = false;
-}
-if(action.equals("Ketchup"))
-{
-	if(sharedVariables.autoKetchup == false)
+      */
+      sharedVariables.autoOlive = !sharedVariables.autoOlive;
+
+    } else if (action.equals("Ketchup")) {
+      /*
+      if (sharedVariables.autoKetchup == false)
 	sharedVariables.autoKetchup = true;
-	else
+      else
 	sharedVariables.autoKetchup = false;
+      //reconnect2.setVisible(true);
+      */
+      sharedVariables.autoKetchup = !sharedVariables.autoKetchup;
 
-//	reconnect2.setVisible(true);
-}
-
-
-if(action.equals("LittlePer"))
-{
-	if(sharedVariables.autoLittlePer == false)
+    } else if (action.equals("LittlePer")) {
+      /*
+      if (sharedVariables.autoLittlePer == false)
 	sharedVariables.autoLittlePer = true;
-	else
+      else
 	sharedVariables.autoLittlePer = false;
-}
+      */
+      sharedVariables.autoLittlePer = !sharedVariables.autoLittlePer;
 
-
-
-if(action.equals("Slomato"))
-{
-	if(sharedVariables.autoSlomato == false)
+    } else if (action.equals("Slomato")) {
+      /*
+      if (sharedVariables.autoSlomato == false)
 	sharedVariables.autoSlomato = true;
-	else
+      else
 	sharedVariables.autoSlomato = false;
-}
+      */
+      sharedVariables.autoSlomato = !sharedVariables.autoSlomato;
 
-
-
-if(action.equals("Random Piece Set Observe Only"))
-{
-	if(sharedVariables.randomArmy == false)
-	{
-          sharedVariables.randomArmy = true;
-          randomArmy.setSelected(true);
-	}
-        else
-        {
+    } else if (action.equals("Random Piece Set Observe Only")) {
+      /*
+      if (sharedVariables.randomArmy == false) {
+        sharedVariables.randomArmy = true;
+        randomArmy.setSelected(true);
+      } else {
 	sharedVariables.randomArmy = false;
         randomArmy.setSelected(false);
-        }
-}
-if(action.equals("Configure Random Pieces For White"))
-{
- customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesWhite, true);
- goConfigure.setVisible(true);
-}
-if(action.equals("Configure Random Pieces For Black"))
-{
- customizeExcludedPiecesDialog goConfigure = new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics, sharedVariables.excludedPiecesBlack, false);
- goConfigure.setVisible(true);
-}
+      }
+      */
+      sharedVariables.randomArmy = !sharedVariables.randomArmy;
+      randomArmy.setSelected(sharedVariables.randomArmy);
 
+      // Andrey edits:
+      // merge the next 2 actions
+    } else if (action.equals("Configure Random Pieces For White") ||
+               action.equals("Configure Random Pieces For Black")) {
+      boolean whiteSetting = action.equals("Configure Random Pieces For White");
+      boolean[] excludedSetting = (whiteSetting ?
+                                   sharedVariables.excludedPiecesWhite :
+                                   sharedVariables.excludedPiecesBlack);
+      
+      customizeExcludedPiecesDialog goConfigure =
+        new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics,
+                                          excludedSetting, whiteSetting);
+                                          //sharedVariables.excludedPiecesWhite, true);
+      goConfigure.setVisible(true);
 
-if(action.equals("Random Square Tiles Observe Only"))
-{
+      /*
+    } else if (action.equals("Configure Random Pieces For Black")) {
+      customizeExcludedPiecesDialog goConfigure =
+        new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics,
+                                          sharedVariables.excludedPiecesBlack, false);
+      goConfigure.setVisible(true);
+      */
+      
+    } else if (action.equals("Random Square Tiles Observe Only")) {
 	if(sharedVariables.randomBoardTiles == false)
 	{
           sharedVariables.randomBoardTiles = true;
