@@ -1913,7 +1913,7 @@ class mymultiframe extends JFrame
     drawCoordinates.addActionListener(this);
 
 
-    showPallette = new JCheckBoxMenuItem("Show Examine Mode Pallette");
+    showPallette = new JCheckBoxMenuItem("Show Examine Mode Palette");
     theHideMenu.add(showPallette);
     showPallette.addActionListener(this);
 
@@ -1994,7 +1994,7 @@ class mymultiframe extends JFrame
     
     /* Advanced */
     JMenu AdvancedGameMenu = new JMenu("Advanced");
-    lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors ( Bullet Only)");
+    lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors (Bullet Only)");
     AdvancedGameMenu.add(lowTimeColors);
     lowTimeColors.addActionListener(this);
 
@@ -4098,249 +4098,234 @@ class mymultiframe extends JFrame
             consoleSubframes[a].isVisible())
           consoleSubframes[a].setActiveTabForeground(sharedVariables.looking[a]);
       */
-    }
+      
+    } else if (action.equals("Highlight Moves")) {
+      /*
+      if (sharedVariables.highlightMoves == false) {
+        highlight.setSelected(true);
+        sharedVariables.highlightMoves = true;
+      } else {
+        highlight.setSelected(false);
+        sharedVariables.highlightMoves = false;
+      }
+      */
+      sharedVariables.highlightMoves = !sharedVariables.highlightMoves;
+      highlight.setSelected(sharedVariables.highlightMoves);
+      
+    } else if (action.equals("Material Count")) {
+      /*
+      if (sharedVariables.showMaterialCount == false) {
+        materialCount.setSelected(true);
+        sharedVariables.showMaterialCount = true;
+      } else {
+        materialCount.setSelected(false);
+        sharedVariables.showMaterialCount = false;
+      }
+      */
+      sharedVariables.showMaterialCount = !sharedVariables.showMaterialCount;
+      materialCount.setSelected(sharedVariables.showMaterialCount);
+      
+    } else if (action.equals("Draw Coordinates")) {
+      /*
+      if (sharedVariables.drawCoordinates == false) {
+        drawCoordinates.setSelected(true);
+        sharedVariables.drawCoordinates = true;
+      } else {
+        drawCoordinates.setSelected(false);
+        sharedVariables.drawCoordinates = false;
+      }
+      */
+      sharedVariables.drawCoordinates = !sharedVariables.drawCoordinates;
+      drawCoordinates.setSelected(sharedVariables.drawCoordinates);
+      
+      myoutput output = new myoutput();
+      output.repaint64=1;
+      queue.add(output);
 
-if(action.equals("Highlight Moves"))
-{
-	if(sharedVariables.highlightMoves == false)
-	{
-		highlight.setSelected(true);
-		sharedVariables.highlightMoves = true;
-	}
-	else
-	{
-		highlight.setSelected(false);
-		sharedVariables.highlightMoves = false;
-	}
-}
-
-if(action.equals("Material Count"))
-{
-	if(sharedVariables.showMaterialCount == false)
-	{
-		materialCount.setSelected(true);
-		sharedVariables.showMaterialCount = true;
-	}
-	else
-	{
-		materialCount.setSelected(false);
-		sharedVariables.showMaterialCount = false;
-	}
-}
-if(action.equals("Draw Coordinates"))
-{
-	if(sharedVariables.drawCoordinates == false)
-	{
-		drawCoordinates.setSelected(true);
-		sharedVariables.drawCoordinates = true;
-	}
-	else
-	{
-		drawCoordinates.setSelected(false);
-		sharedVariables.drawCoordinates = false;
-	}
-myoutput output = new myoutput();
-output.repaint64=1;
-queue.add(output);
-
-
-}
-
-if(action.equals("Show Observers In Games"))
-{
-	if(sharedVariables.playersInMyGame == 0)
-	{
-		playersInMyGame.setSelected(true);
-		sharedVariables.playersInMyGame = 2;
-	}
-	else
-	{
-		playersInMyGame.setSelected(false);
-		sharedVariables.playersInMyGame = 0;
-	}
-}
-
-if(action.equals("Show Ratings on Board When Playing"))
-{
-	if(sharedVariables.showRatings == false)
-	{
-		showRatings.setSelected(true);
-		sharedVariables.showRatings = true;
-	}
-	else
-	{
-		showRatings.setSelected(false);
-		sharedVariables.showRatings = false;
-	}
-}
-if(action.equals("Switch To New Game Tab On Observe"))
-{
-	if(sharedVariables.newObserveGameSwitch == false)
-	{
-		newObserveGameSwitch.setSelected(true);
-		sharedVariables.newObserveGameSwitch = true;
-	}
-	else
-	{
-		newObserveGameSwitch.setSelected(false);
-		sharedVariables.newObserveGameSwitch = false;
-	}
-
+    } else if (action.equals("Show Observers In Games")) {
+      /*
+      if (sharedVariables.playersInMyGame == 0) {
+        playersInMyGame.setSelected(true);
+        sharedVariables.playersInMyGame = 2;
+      } else {
+        playersInMyGame.setSelected(false);
+        sharedVariables.playersInMyGame = 0;
+      }
+      */
+      sharedVariables.playersInMyGame =
+        (sharedVariables.playersInMyGame == 0 ? 2 : 0);
+      playersInMyGame.setSelected(sharedVariables.playersInMyGame != 0);
+                                         
+    } else if (action.equals("Show Ratings on Board When Playing")) {
+      /*
+      if (sharedVariables.showRatings == false) {
+        showRatings.setSelected(true);
+        sharedVariables.showRatings = true;
+      } else {
+        showRatings.setSelected(false);
+        sharedVariables.showRatings = false;
+      }
+      */
+      sharedVariables.showRatings = !sharedVariables.showRatings;
+      showRatings.setSelected(sharedVariables.showRatings);
+      
+    } else if (action.equals("Switch To New Game Tab On Observe")) {
+      /*
+      if (sharedVariables.newObserveGameSwitch == false) {
+        newObserveGameSwitch.setSelected(true);
+        sharedVariables.newObserveGameSwitch = true;
+      } else {
+        newObserveGameSwitch.setSelected(false);
+        sharedVariables.newObserveGameSwitch = false;
+      }
+      */
+      sharedVariables.newObserveGameSwitch = !sharedVariables.newObserveGameSwitch;
+      newObserveGameSwitch.setSelected(sharedVariables.newObserveGameSwitch);
   
-}
-if(action.equals("Low Time Clock Colors ( Bullet Only)"))
-{
-	if(sharedVariables.lowTimeColors == false)
-	{
-		lowTimeColors.setSelected(true);
-		sharedVariables.lowTimeColors = true;
-	}
-	else
-	{
-		lowTimeColors.setSelected(false);
-		sharedVariables.lowTimeColors = false;
-	}
+    } else if (action.equals("Low Time Clock Colors (Bullet Only)")) {
+      /*
+      if (sharedVariables.lowTimeColors == false) {
+        lowTimeColors.setSelected(true);
+        sharedVariables.lowTimeColors = true;
+      } else {
+        lowTimeColors.setSelected(false);
+        sharedVariables.lowTimeColors = false;
+      }
+      */
+      sharedVariables.lowTimeColors = !sharedVariables.lowTimeColors;
+      lowTimeColors.setSelected(sharedVariables.lowTimeColors);
   
-}
-if(action.equals("AutoChat"))
-{
-	if(sharedVariables.autoChat == false)
-	{
-		autoChat.setSelected(true);
-		sharedVariables.autoChat = true;
-	}
-	else
-	{
-		autoChat.setSelected(false);
-		sharedVariables.autoChat = false;
-	}
-}
+    } else if (action.equals("AutoChat")) {
+      /*
+      if (sharedVariables.autoChat == false) {
+        autoChat.setSelected(true);
+        sharedVariables.autoChat = true;
+      } else {
+        autoChat.setSelected(false);
+        sharedVariables.autoChat = false;
+      }
+      */
+      sharedVariables.autoChat = !sharedVariables.autoChat;
+      autoChat.setSelected(sharedVariables.autoChat);
+      
+    } else if (action.equals("Block Opponents Says When Not Playing")) {
+      /*
+      if (sharedVariables.blockSays == false) {
+        blockSays.setSelected(true);
+        sharedVariables.blockSays = true;
+      } else {
+        blockSays.setSelected(false);
+        sharedVariables.blockSays = false;
+      }
+      */
+      sharedVariables.blockSays = !sharedVariables.blockSays;
+      blockSays.setSelected(sharedVariables.blockSays);
 
-if(action.equals("Block Opponents Says When Not Playing"))
-{
-	if(sharedVariables.blockSays == false)
-	{
-		blockSays.setSelected(true);
-		sharedVariables.blockSays = true;
-	}
-	else
-	{
-		blockSays.setSelected(false);
-		sharedVariables.blockSays = false;
-	}
-}
-
-
-if(action.equals("Show Examine Mode Pallette"))
-{
-	if(sharedVariables.showPallette == false)
-	{
-		showPallette.setSelected(true);
-		sharedVariables.showPallette = true;
-	}
-	else
-	{
-		showPallette.setSelected(false);
-		sharedVariables.showPallette = false;
-	}
+    } else if (action.equals("Show Examine Mode Palette")) {
+      /*
+      if (sharedVariables.showPallette == false) {
+        showPallette.setSelected(true);
+        sharedVariables.showPallette = true;
+      } else {
+        showPallette.setSelected(false);
+        sharedVariables.showPallette = false;
+      }
+      */
+      sharedVariables.showPallette = !sharedVariables.showPallette;
+      showPallette.setSelected(sharedVariables.showPallette);
 	
-	for(int bn=0; bn < sharedVariables.maxGameTabs; bn++)
-	if(myboards[bn]!=null)
-	{
-              myboards[bn].mypanel.repaint();
-        }
-        else
-        break;
+      for (int bn=0; bn < sharedVariables.maxGameTabs; bn++) {
+	if (myboards[bn]!=null)
+          myboards[bn].mypanel.repaint();
+        else break;
+      }
 
+    } else if (action.equals("Show Flags")) {
+      /*
+      if (sharedVariables.showFlags == false) {
+        showFlags.setSelected(true);
+        sharedVariables.showFlags = true;
+      } else {
+        showFlags.setSelected(false);
+        sharedVariables.showFlags = false;
+      }
+      */
+      sharedVariables.showFlags = !sharedVariables.showFlags;
+      showFlags.setSelected(sharedVariables.showFlags);
 
-}
+      String swarning =
+        "This setting will update on board as soon as the next game starts.";
+      Popup pframe = new Popup((JFrame) this, true, swarning);
+      pframe.setVisible(true);
 
-if(action.equals("Show Flags"))
-{
-	if(sharedVariables.showFlags == false)
-	{
-		showFlags.setSelected(true);
-		sharedVariables.showFlags = true;
-	}
-	else
-	{
-		showFlags.setSelected(false);
-		sharedVariables.showFlags = false;
-	}
+    } else if (action.equals("Use Light Square as Board Background")) {
+      /*
+      if (sharedVariables.useLightBackground == false) {
+        useLightBackground.setSelected(true);
+        sharedVariables.useLightBackground = true;
+      } else {
+        useLightBackground.setSelected(false);
+        sharedVariables.useLightBackground = false;
+      }
+      */
+      sharedVariables.useLightBackground = !sharedVariables.useLightBackground;
+      useLightBackground.setSelected(sharedVariables.useLightBackground);
+      
+      // Andrey edits:
+      // merge the following 3 actions
+    } else if (action.equals("Original") ||
+               action.equals("Modern") ||
+               action.equals("Mixed")) {
+      /*
+      BoardDesign1.setSelected(true);
+      BoardDesign2.setSelected(false);
+      BoardDesign3.setSelected(false);
+      sharedVariables.andreysLayout = 0;
+      */
+      sharedVariables.andreysLayout = (action.equals("Original") ? 0 :
+                                       (action.equals("Modern") ? 1 :
+                                        2));
+      BoardDesign1.setSelected(sharedVariables.andreysLayout == 0);
+      BoardDesign2.setSelected(sharedVariables.andreysLayout == 1);
+      BoardDesign3.setSelected(sharedVariables.andreysLayout == 2);
+                                       
+      redrawBoard(sharedVariables.boardConsoleType);
 
-String swarning = "This setting will update on board as soon as the next game starts.";
-Popup pframe = new Popup((JFrame) this, true, swarning);
-pframe.setVisible(true);
+      /*
+    } else if (action.equals("Modern")) {
 
-}
+      BoardDesign1.setSelected(false);
+      BoardDesign2.setSelected(true);
+      BoardDesign3.setSelected(false);
+      sharedVariables.andreysLayout = 1;
+      redrawBoard(sharedVariables.boardConsoleType);
 
-if(action.equals("Use Light Square as Board Background"))
-{
-	if(sharedVariables.useLightBackground == false)
-	{
-		useLightBackground.setSelected(true);
-		sharedVariables.useLightBackground = true;
-	}
-	else
-	{
-		useLightBackground.setSelected(false);
-		sharedVariables.useLightBackground = false;
-	}
+    } else if (action.equals("Mixed")) {
 
-}
+      BoardDesign1.setSelected(false);
+      BoardDesign2.setSelected(false);
+      BoardDesign3.setSelected(true);
+      sharedVariables.andreysLayout = 2;
+      redrawBoard(sharedVariables.boardConsoleType);
+      */
 
+    } else if (action.equals("Flip")) {
+      for (int a=0; a<sharedVariables.maxGameTabs; a++) {
+        if (myboards[a] != null &&
+            myboards[a].isVisible() &&
+            myboards[a].isSelected()) { 
+          int flipPlus = (sharedVariables.mygame[myboards[a].gameData.LookingAt].iflipped + 1) % 2;
+          String flip= "" + flipPlus;
+          String icsGameNumber =  "" +
+            sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+          myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
+          myboards[a].mypanel.repaint();
+          myboards[a].mycontrolspanel.repaint();
+          break;
+        }// end selected
+      }
 
-
-
-
-if(action.equals("Original"))
-{
-
-		BoardDesign1.setSelected(true);
-		BoardDesign2.setSelected(false);
-		BoardDesign3.setSelected(false);
-                sharedVariables.andreysLayout = 0;
-                redrawBoard(sharedVariables.boardConsoleType);
-}
-if(action.equals("Modern"))
-{
-
-		BoardDesign1.setSelected(false);
-		BoardDesign2.setSelected(true);
-		BoardDesign3.setSelected(false);
-                sharedVariables.andreysLayout = 1;
-                redrawBoard(sharedVariables.boardConsoleType);
-}
-if(action.equals("Mixed"))
-{
-
-		BoardDesign1.setSelected(false);
-		BoardDesign2.setSelected(false);
-                BoardDesign3.setSelected(true);
-                sharedVariables.andreysLayout = 2;
-                redrawBoard(sharedVariables.boardConsoleType);
-}
-
-if(action.equals("Flip"))
-{
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible())
- if(myboards[a].isSelected())
- { 
-   int flipPlus = (sharedVariables.mygame[myboards[a].gameData.LookingAt].iflipped + 1) % 2;
-   String flip= "" + flipPlus;
-   String icsGameNumber =  "" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-   myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
-   myboards[a].mypanel.repaint();
-   myboards[a].mycontrolspanel.repaint();
-   break;
-
- }// end selected
-}
-
-if(action.equals("Withdraw Challenges"))
-{
+    } else if (action.equals("Withdraw Challenges")) {
       String actionmess="multi match\n";
      if(sharedVariables.myServer.equals("ICC"))
      actionmess="`c0`" + actionmess;
@@ -4964,7 +4949,7 @@ try {
 
 void makeEngineWarning()
 {
-String swarning = "You must be in examine or observe mode to load an engine and you need to click on the board and game tab that is in this mode as well first.";
+String swarning = "You must be in examine or observe mode o load an engine and you need to click on the board and game tab that is in this mode as well first.";
 Popup pframe = new Popup((JFrame) this, true, swarning);
 pframe.setVisible(true);
 
