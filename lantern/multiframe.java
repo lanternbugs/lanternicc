@@ -332,7 +332,7 @@ class mymultiframe extends JFrame
                         sharedVariables.mySeekSizes.con0y);
       seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x,
                             sharedVariables.mySeekSizes.point0.y);
-    } catch(Exception duiseeek) {}
+    } catch (Exception duiseeek) {}
 
     myboards = new gameboard[sharedVariables.maxGameTabs];
     for (int bbo=0; bbo<sharedVariables.maxGameTabs; bbo++)
@@ -3980,16 +3980,29 @@ class mymultiframe extends JFrame
               consoleSubframes[a].channelTabs[aa].setBackground(sharedVariables.tabBackground);
           }
 
-    } else if (action.equals("Tab Border")) {// active tab
+      // Andrey edits:
+      // merge the tab border actions
+    } else if (action.equals("Tab Border") ||
+               action.equals("Tell Tab Border")) {// active tab
 
       JDialog frame = new JDialog();
+      
+      Color tabSetting = (action.equals("Tab Border") ?
+                          sharedVariables.tabBorderColor :
+                          sharedVariables.tellTabBorderColor);
+      
       Color newColor =
-        JColorChooser.showDialog(frame, "Tab Border Color",
-                                 sharedVariables.tabBorderColor);
-      if (newColor != null)
-        sharedVariables.tabBorderColor = newColor;
-      repaintTabBorders();
+        JColorChooser.showDialog(frame, action + " Color", tabSetting);
 
+      if (newColor != null) {
+        if (action.equals("Tab Border"))
+          sharedVariables.tabBorderColor = newColor;
+        else
+          sharedVariables.tellTabBorderColor = newColor;
+      }
+      repaintTabBorders();
+      
+      /*
     } else if (action.equals("Tell Tab Border")) {// active tab
 
       JDialog frame = new JDialog();
@@ -3999,16 +4012,30 @@ class mymultiframe extends JFrame
       if (newColor != null)
         sharedVariables.tellTabBorderColor = newColor;
       repaintTabBorders();
+      */
 
-    } else if (action.equals("Input Command Color")) {//Input Command Color
+      // Andrey edits:
+      // merge the input settings
+    } else if (action.equals("Input Command Color") ||
+               action.equals("Input Chat Color")) {//Input Colors
 
       JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Input Command Color",
-                                 sharedVariables.activeTabForeground);
-      if (newColor != null)
-        sharedVariables.inputCommandColor = newColor;
 
+      Color inputSetting = (action.equals("Input Command Color") ?
+                            sharedVariables.inputCommandColor :
+                            sharedVariables.inputChatColor);
+                            
+      Color newColor =
+        JColorChooser.showDialog(frame, action, inputSetting);
+
+      if (newColor != null) {
+        if (action.equals("Input Command Color"))
+          sharedVariables.inputCommandColor = newColor;
+        else
+          sharedVariables.inputChatColor = newColor;
+      }
+
+      /*
     } else if (action.equals("Input Chat Color")) {//Input Chat Color
 
       JDialog frame = new JDialog();
@@ -4017,6 +4044,7 @@ class mymultiframe extends JFrame
                                  sharedVariables.activeTabForeground);
       if (newColor != null)
         sharedVariables.inputChatColor = newColor;
+      */
       
       // Andrey edits:
       // merge active with non-active
