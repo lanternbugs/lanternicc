@@ -1159,7 +1159,7 @@ class mymultiframe extends JFrame
     JMenuItem consoleColors = new JMenuItem("Console Colors");
     mywindowscolors.add(consoleColors);
 
-    JMenuItem listColor = new JMenuItem("Notify an Events Background Color");
+    JMenuItem listColor = new JMenuItem("Notify and Events Background Color");
     mywindowscolors.add(listColor);
     listColor.addActionListener(this);
 
@@ -4634,151 +4634,128 @@ class mymultiframe extends JFrame
       */
       
     } else if (action.equals("Random Square Tiles Observe Only")) {
-	if(sharedVariables.randomBoardTiles == false)
-	{
-          sharedVariables.randomBoardTiles = true;
-          randomTiles.setSelected(true);
-	}
-        else
-        {
+      /*
+      if (sharedVariables.randomBoardTiles == false) {
+        sharedVariables.randomBoardTiles = true;
+        randomTiles.setSelected(true);
+      } else {
 	sharedVariables.randomBoardTiles = false;
         randomTiles.setSelected(false);
-        }
-}
-if(action.equals("Sounds for Notifications"))
-{
-	if(sharedVariables.specificSounds[4] == false)
-	{
-		notifysound.setSelected(true);
-		sharedVariables.specificSounds[4] = true;
-	}
-	else
-	{
-		notifysound.setSelected(false);
-		sharedVariables.specificSounds[4] = false;
-	}
-}
+      }
+      */
+      sharedVariables.randomBoardTiles = !sharedVariables.randomBoardTiles;
+      randomTiles.setSelected(sharedVariables.randomBoardTiles);
 
-if(action.equals("Sounds for Observed Games"))
-{
-	if(sharedVariables.makeObserveSounds == false)
-	{
-		makeObserveSounds.setSelected(true);
-		sharedVariables.makeObserveSounds = true;
-	}
-	else
-	{
-		makeObserveSounds.setSelected(false);
-		sharedVariables.makeObserveSounds = false;
-	}
-}
-if(action.equals("Sounds"))
-{
-	if(sharedVariables.makeSounds == false)
+    } else if (action.equals("Sounds for Notifications")) {
+      /*
+      if (sharedVariables.specificSounds[4] == false) {
+        notifysound.setSelected(true);
+        sharedVariables.specificSounds[4] = true;
+      } else {
+        notifysound.setSelected(false);
+        sharedVariables.specificSounds[4] = false;
+      }
+      */
+      sharedVariables.specificSounds[4] = !sharedVariables.specificSounds[4];
+      notifysound.setSelected(sharedVariables.specificSounds[4]);
+
+    } else if (action.equals("Sounds for Observed Games")) {
+      /*
+      if (sharedVariables.makeObserveSounds == false) {
+        makeObserveSounds.setSelected(true);
+        sharedVariables.makeObserveSounds = true;
+      } else {
+        makeObserveSounds.setSelected(false);
+        sharedVariables.makeObserveSounds = false;
+      }
+      */
+      sharedVariables.makeObserveSounds = !sharedVariables.makeObserveSounds;
+      makeObserveSounds.setSelected(sharedVariables.makeObserveSounds);
+
+    } else if (action.equals("Sounds")) {
+      /*
+      if (sharedVariables.makeSounds == false)
 	sharedVariables.makeSounds = true;
-	else
+      else
 	sharedVariables.makeSounds = false;
-}
+      */
+      sharedVariables.makeSounds = !sharedVariables.makeSounds;
 
+    } else if (action.equals("Start Powerout")) {
 
-
-if(action.equals("Start Powerout"))
-{
-
-//JFrame aframe = new JFrame();
-//aframe.setVisible(true);
-poweroutframe frame = new poweroutframe(sharedVariables.poweroutSounds);
-//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//frame.pack();
-sharedVariables.desktop.add(frame);
-frame.setVisible(true);
-/*JComponent newContentPane = new poweroutpanel();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-*/   try {
+      //JFrame aframe = new JFrame();
+      //aframe.setVisible(true);
+      poweroutframe frame = new poweroutframe(sharedVariables.poweroutSounds);
+      //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      //frame.pack();
+      sharedVariables.desktop.add(frame);
+      frame.setVisible(true);
+      /*
+      JComponent newContentPane = new poweroutpanel();
+      newContentPane.setOpaque(true); //content panes must be opaque
+      frame.setContentPane(newContentPane);
+      */
+      try {
         frame.setSelected(true);
         //aa.Input.setFocusable(true);
-    } catch (Exception e) {}
-frame.setSize(700,550);
-//frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+      } catch (Exception e) {}
+      frame.setSize(700,550);
+      //frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
-}
-if(action.equals("Start MineSweeper"))
-{
+    } else if (action.equals("Start MineSweeper")) {
 
+      minesweeper10 frame = new minesweeper10(sharedVariables, this);
 
-minesweeper10 frame = new minesweeper10(sharedVariables, this);
+      sharedVariables.desktop.add(frame);
 
-sharedVariables.desktop.add(frame);
-
-   try {
+      try {
         frame.setSelected(true);
         //aa.Input.setFocusable(true);
-    } catch (Exception e) {}
+      } catch (Exception e) {}
 
-}
+    } else if (action.equals("Start Connect Four")) {
 
+      connectFour frame = new connectFour();
 
+      sharedVariables.desktop.add(frame);
 
-if(action.equals("Start Connect Four"))
-{
-
-
-connectFour frame = new connectFour();
-
-sharedVariables.desktop.add(frame);
-
-   try {
+      try {
         frame.setSelected(true);
         //aa.Input.setFocusable(true);
-    } catch (Exception e) {}
+      } catch (Exception e) {}
 
-}
+    } else if (action.equals("Start Mastermind")) {
 
+      mastermind11 frame = new mastermind11();
 
+      sharedVariables.desktop.add(frame);
 
-if(action.equals("Start Mastermind"))
-{
-
-
-mastermind11 frame = new mastermind11();
-
-sharedVariables.desktop.add(frame);
-
-   try {
+      try {
         frame.setSelected(true);
         //aa.Input.setFocusable(true);
-    } catch (Exception e) {}
+      } catch (Exception e) {}
 
-}
+    } else if (action.equals("Console Colors")) {
 
+      //JDialog frame = new JDialog();
+      //sharedVariables.shoutcolor =
+      //  JColorChooser.showDialog(frame, "Choose Shout Color",
+      //                           sharedVariables.shoutcolor);
+      customizeConsolelColorsDialog frame =
+        new customizeConsolelColorsDialog((JFrame) this, false, sharedVariables,
+                                          consoles, gameconsoles);
 
-
-
-
-if(action.equals("Console Colors"))
-{
-
-//JDialog frame = new JDialog();
-//sharedVariables.shoutcolor = JColorChooser.showDialog(frame, "Choose Shout Color", sharedVariables.shoutcolor);
-	customizeConsolelColorsDialog frame = new customizeConsolelColorsDialog((JFrame) this, false, sharedVariables, consoles, gameconsoles);
-
-
-
-
-
-}
-if(action.equals("Notify an Events Background Color"))
-{
-// BackColor
- JDialog frame = new JDialog();
- Color newColor = JColorChooser.showDialog(frame, "Choose Notify an Events Background Color", sharedVariables.listColor);
- if(newColor != null)
- sharedVariables.listColor=newColor;
- if( sharedVariables.activitiesPanel != null)
- sharedVariables.activitiesPanel.setColors();
- if( myNotifyFrame != null)
- myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
+    } else if (action.equals("Notify and Events Background Color")) {
+      // BackColor
+      JDialog frame = new JDialog();
+      Color newColor = JColorChooser.showDialog(frame, "Choose " + action,
+                                                sharedVariables.listColor);
+      if (newColor != null)
+        sharedVariables.listColor = newColor;
+      if (sharedVariables.activitiesPanel != null)
+        sharedVariables.activitiesPanel.setColors();
+      if (myNotifyFrame != null)
+        myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 
 }
 
