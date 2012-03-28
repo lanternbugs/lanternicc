@@ -75,7 +75,7 @@ public class multiframe {
       else
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.SystemLookAndFeel");
       
-    } catch(Exception d) {}
+    } catch (Exception d) {}
 
     final mymultiframe frame = new mymultiframe();
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -104,11 +104,13 @@ public class multiframe {
 
     try {
       frame.consoleSubframes[0].setSelected(true);
-    } catch(Exception dd) {}
+    } catch (Exception dd) {}
 
     // warning dialogue
 
-    String swarning="This is a beta version of Mike's new Interface.  Game play is possible but it's highly recommended you play unrated.  I want more testing before rated play can happen.  Not all wilds are supported.";
+    String swarning = "This is a beta version of Mike's new Interface.  Game " +
+      "play is possible but it's highly recommended you play unrated.  I want" +
+      " more testing before rated play can happen.  Not all wilds are supported.";
 
     if (frame.sharedVariables.ActivitiesOnTop) {
       frame.myfirstlist.add(frame.sharedVariables.activitiesPanel);
@@ -123,20 +125,20 @@ public class multiframe {
       if (frame.sharedVariables.activitiesOpen &&
           !frame.sharedVariables.activitiesNeverOpen)
         frame.openActivities();
-    } catch(Exception badopen) {}
+    } catch (Exception badopen) {}
 
     try {
       if (frame.sharedVariables.seeksOpen &&
           !frame.sharedVariables.activitiesNeverOpen)
         frame.openSeekGraph();
-    } catch(Exception badopen) {}
+    } catch (Exception badopen) {}
 
     try {
       frame.myConnection =
         new connectionDialog(frame, frame.sharedVariables, frame.queue, false);
       frame.myConnection.setVisible(true);
 
-    } catch(Exception bfocus) {}
+    } catch (Exception bfocus) {}
   }
 }// end main class
 
@@ -689,7 +691,7 @@ class mymultiframe extends JFrame
       try {
 	scriptLoader loadScripts = new  scriptLoader();
 	loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
-      } catch(Exception du) {}
+      } catch (Exception du) {}
     }
     /*
     else
@@ -840,7 +842,7 @@ class mymultiframe extends JFrame
                 asetter.createConsoleTabTitle(sharedVariables, mycons, consoleSubframes,
                                               sharedVariables.consoleTabCustomTitles[mycons]);
               }
-            } catch(Exception badsetting) {}
+            } catch (Exception badsetting) {}
 
             setInputFont();
             try {
@@ -886,11 +888,11 @@ class mymultiframe extends JFrame
     }
     try {
       setMySize();
-    } catch(Exception donthaveit) {}
+    } catch (Exception donthaveit) {}
  
     try {
       sharedVariables.activitiesPanel.theEventsList.setFont(sharedVariables.eventsFont);
-    }  catch(Exception badfontsetting) {}
+    }  catch (Exception badfontsetting) {}
 
 
     if (!sharedVariables.hasSettings) {
@@ -950,7 +952,7 @@ class mymultiframe extends JFrame
           for (int nummake=1; nummake<sharedVariables.visibleConsoles; nummake++)
             mycreator.restoreConsoleFrame();
 
-    } catch(Exception makingConsoles) {}
+    } catch (Exception makingConsoles) {}
 
 
     makeToolBar();
@@ -1124,92 +1126,143 @@ class mymultiframe extends JFrame
   
   public void createMenu() {
 
+    // the whole menu bar
     JMenuBar menu = new JMenuBar();
+    setJMenuBar(menu);
+
     JMenu myfiles = new JMenu("File");
-    myfiles.setMnemonic(KeyEvent.VK_F);
-
+    // File
     JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
-    myfiles.add(reconnect1);
-    reconnect1.setMnemonic(KeyEvent.VK_R);
-
     JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
-    myfiles.add(reconnect3);
-
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
-    myfiles.add(reconnect2);
-    reconnect2.setVisible(false);
     JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
-    myfiles.add(wallpaper1);
     JMenuItem settings2 = new JMenuItem("Save Settings");
+
+    // add shortcuts
+    myfiles.setMnemonic(KeyEvent.VK_F);
+    reconnect1.setMnemonic(KeyEvent.VK_R);
+    reconnect3.setMnemonic(KeyEvent.VK_Q);
+    wallpaper1.setMnemonic(KeyEvent.VK_W);
+    settings2.setMnemonic(KeyEvent.VK_S);
+
+    // add to menu bar
+    menu.add(myfiles);
+    myfiles.add(reconnect1);
+    myfiles.add(reconnect3);
+    //myfiles.add(reconnect2);
+    myfiles.add(wallpaper1);
     myfiles.add(settings2);
 
-    menu.add(myfiles);
+    // add listeners
+    settings2.addActionListener(this);
+    reconnect1.addActionListener(this);
+    reconnect2.addActionListener(this);
+    reconnect3.addActionListener(this);
+    wallpaper1.addActionListener(this);
 
+    // special settings
+    // just don't add it instead
+    //reconnect2.setVisible(false);
 
     JMenu mywindowscolors = new JMenu("Colors");
-
+    // Colors
     JMenuItem fontchange = new JMenuItem("Change Font");
-    mywindowscolors.add(fontchange);
-    fontchange.addActionListener(this);
-
-
     JMenuItem channelcol = new JMenuItem("Channel Colors");
-    mywindowscolors.add(channelcol);
-
     JMenuItem consoleColors = new JMenuItem("Console Colors");
-    mywindowscolors.add(consoleColors);
-
     JMenuItem listColor = new JMenuItem("Notify and Events Background Color");
-    mywindowscolors.add(listColor);
-    listColor.addActionListener(this);
-
-
     JMenuItem tellNameColor = new JMenuItem("PTell Name Color");
-    mywindowscolors.add(tellNameColor);
-    tellNameColor.addActionListener(this);
-
-
     JMenu typingarea = new JMenu("Typing Field");
-
+    // .. / Typing Field
     JMenuItem inputfontchange = new JMenuItem("Change Input Font");
-    typingarea.add(inputfontchange);
-    inputfontchange.addActionListener(this);
-
     JMenuItem inputcommand = new JMenuItem("Input Command Color");
-    typingarea.add(inputcommand);
-    inputcommand.addActionListener(this);
-
     JMenuItem inputchat = new JMenuItem("Input Chat Color");
-    typingarea.add(inputchat);
-    inputchat.addActionListener(this);
-
-    mywindowscolors.add(typingarea);
-
-
-    /****************** names list *****************/
+    // ..
     JMenu inChannelNamesMenu = new JMenu("In Channel Names Menu");
-
+    // .. / In Channel Names Menu
     JMenuItem nameForegroundColor = new JMenuItem("Names List Foreground Color");
-    inChannelNamesMenu.add(nameForegroundColor);
-    nameForegroundColor.addActionListener(this);
-
     JMenuItem nameBackgroundColor = new JMenuItem("Names List Background Color");
-    inChannelNamesMenu.add(nameBackgroundColor);
-    nameBackgroundColor.addActionListener(this);
-
     JMenuItem namelistFont = new JMenuItem("Names List Font");
-    inChannelNamesMenu.add(namelistFont);
-    namelistFont.addActionListener(this);
-    mywindowscolors.add(inChannelNamesMenu);
-    /*********** end names list ******************/
-    
+    // ..
     JMenuItem eventsFont = new JMenuItem("Events List Font");
-    eventsFont.addActionListener(this);
-    mywindowscolors.add(eventsFont);
-
     JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
-    colortimestamp.addActionListener(this);
+    JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
+    // .. / Tabs Colors Menu
+    JMenu tabback = new JMenu("Tab Background");
+    // .. / .. / Tab Background
+    JMenuItem tabback1 = new JMenuItem("Visited");
+    JMenuItem tabback2 = new JMenuItem("Unvisited");
+    JMenuItem tabback5 = new JMenuItem("Unvisited/Visited");
+    JMenuItem tabimon = new JMenuItem("Tab I'm On Background");
+    // .. / ..
+    JMenu tabfore = new JMenu("Tab Foreground");
+    // .. / .. / Tab Foreground
+    JMenuItem tabback3 = new JMenuItem("Active");
+    JMenuItem tabback4 = new JMenuItem("Non Active");
+    // .. / ..
+    JMenuItem tabborder1 = new JMenuItem("Tab Border");
+    JMenuItem tabborder2 = new JMenuItem("Tell Tab Border");
+    JMenuItem tabfontchange = new JMenuItem("Change Tab Font");
+    // ..
+    JMenuItem wallpaper2 = new JMenuItem("Set Application Background Color");
+
+    // add shortcuts
+    mywindowscolors.setMnemonic(KeyEvent.VK_C);
+
+    // add to menu bar
+    menu.add(mywindowscolors);
+    mywindowscolors.add(fontchange);
+    mywindowscolors.add(channelcol);
+    mywindowscolors.add(consoleColors);
+    mywindowscolors.add(listColor);
+    mywindowscolors.add(tellNameColor);
+    mywindowscolors.add(typingarea);
+    typingarea.add(inputfontchange);
+    typingarea.add(inputcommand);
+    typingarea.add(inputchat);
+    mywindowscolors.add(inChannelNamesMenu);
+    inChannelNamesMenu.add(nameForegroundColor);
+    inChannelNamesMenu.add(nameBackgroundColor);
+    inChannelNamesMenu.add(namelistFont);
+    mywindowscolors.add(eventsFont);
     mywindowscolors.add(colortimestamp);
+    tabsColorsMenu.add(tabback);
+    tabback.add(tabback1);
+    tabback.add(tabback2);
+    tabback.add(tabback5);
+    tabback.add(tabimon);
+    tabsColorsMenu.add(tabfore);
+    tabfore.add(tabback3);
+    tabfore.add(tabback4);
+    mywindowscolors.add(tabsColorsMenu);
+    tabsColorsMenu.add(tabborder1);
+    tabsColorsMenu.add(tabborder2);
+    tabsColorsMenu.add(tabfontchange);
+    mywindowscolors.add(wallpaper2);
+
+    // add listeners
+    fontchange.addActionListener(this);
+    channelcol.addActionListener(this);
+    consoleColors.addActionListener(this);
+    listColor.addActionListener(this);
+    tellNameColor.addActionListener(this);
+    inputfontchange.addActionListener(this);
+    inputcommand.addActionListener(this);
+    inputchat.addActionListener(this);
+    nameForegroundColor.addActionListener(this);
+    nameBackgroundColor.addActionListener(this);
+    namelistFont.addActionListener(this);
+    eventsFont.addActionListener(this);
+    colortimestamp.addActionListener(this);
+    tabback1.addActionListener(this);
+    tabback2.addActionListener(this);
+    tabback3.addActionListener(this);
+    tabback4.addActionListener(this);
+    tabback5.addActionListener(this);
+    tabimon.addActionListener(this);
+    tabborder1.addActionListener(this);
+    tabborder2.addActionListener(this);
+    tabfontchange.addActionListener(this);
+    wallpaper2.addActionListener(this);
 
     /*
     JMenuItem channelTitles = new JMenuItem("Titles In Channel Color");
@@ -1220,249 +1273,60 @@ class mymultiframe extends JFrame
     //JMenuItem mainback = new JMenuItem("Main Background");
     //myfiles.add(mainback);
 
-    JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
-
-
-    JMenu tabback = new JMenu("Tab Background");
-    tabsColorsMenu.add(tabback);
-    JMenuItem tabback1 = new JMenuItem("Visited");
-    JMenuItem tabback2 = new JMenuItem("Unvisited");
-    JMenuItem tabback5 = new JMenuItem("Unvisited/Visited");
-
-    tabback.add(tabback1);
-    tabback.add(tabback2);
-    tabback.add(tabback5);
-    JMenuItem tabimon = new JMenuItem("Tab I'm On Background");
-    tabback.add(tabimon);
-
-
-    JMenu tabfore = new JMenu("Tab Foreground");
-    tabsColorsMenu.add(tabfore);
-    JMenuItem tabback3 = new JMenuItem("Active");
-    JMenuItem tabback4 = new JMenuItem("Non Active");
-    tabfore.add(tabback3);
-    tabfore.add(tabback4);
-
-    tabback1.addActionListener(this);
-    tabback2.addActionListener(this);
-    tabback3.addActionListener(this);
-    tabback4.addActionListener(this);
-    tabback5.addActionListener(this);
-    tabimon.addActionListener(this);
-
-
-    JMenuItem tabborder1 = new JMenuItem("Tab Border");
-    tabborder1.addActionListener(this);
-    tabsColorsMenu.add(tabborder1);
-
-    JMenuItem tabborder2 = new JMenuItem("Tell Tab Border");
-    tabborder2.addActionListener(this);
-    tabsColorsMenu.add(tabborder2);
-
-
-    JMenuItem tabfontchange = new JMenuItem("Change Tab Font");
-    tabsColorsMenu.add(tabfontchange);
-    tabfontchange.addActionListener(this);
-
-
-    mywindowscolors.add(tabsColorsMenu);
-
-
-    JMenuItem wallpaper2 = new JMenuItem("Set Application Background Color");
-    mywindowscolors.add(wallpaper2);
-    wallpaper2.addActionListener(this);
-
-
-    menu.add(mywindowscolors);
-
-
-    setJMenuBar(menu);
     //mainback.addActionListener(this);
-
-    settings2.addActionListener(this);
-    reconnect1.addActionListener(this);
-    reconnect2.addActionListener(this);
-    reconnect3.addActionListener(this);
-
-    wallpaper1.addActionListener(this);
-
-
-    channelcol.addActionListener(this);
-    consoleColors.addActionListener(this);
 
     /*************************  options window now ************/
     JMenu optionsmenu = new JMenu("Options");
-    
-    // Andreys adds:
-    optionsmenu.setMnemonic(KeyEvent.VK_O);
-    
+    // Options
     JMenu soundmenu = new JMenu("Sound");
+    // .. / Sounds
     hearsound = new JCheckBoxMenuItem("Sounds");
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
-    makeObserveSounds.addActionListener(this);
-
-
-    notifysound=new JCheckBoxMenuItem("Sounds for Notifications");
-    hearsound.addActionListener(this);
-    notifysound.addActionListener(this);
-
-    soundmenu.add(hearsound);
-    soundmenu.add(makeObserveSounds);
-    soundmenu.add(notifysound);
-
-    optionsmenu.add(soundmenu);
-
-
-    optionsmenu.addSeparator();
+    notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
+    // .. (separator)
     JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
-    winanalysis.addActionListener(this);
-    optionsmenu.add(winanalysis);
-
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
-    optionsmenu.add(ucianalysis);
-    ucianalysis.addActionListener(this);
-
     JMenuItem enginerestart = new JMenuItem("Restart Engine");
-    optionsmenu.add(enginerestart);
-    enginerestart.addActionListener(this);
-
-
     JMenuItem enginestop = new JMenuItem("Stop Engine");
-    optionsmenu.add(enginestop);
-    enginestop.addActionListener(this);
-
     JMenu engineMenu = new JMenu("Analysis Display");
-
+    // .. / Analysis Display
     JMenuItem ananfont = new JMenuItem("Analysis Font");
-    engineMenu.add(ananfont);
-    ananfont.addActionListener(this);
-
     JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
-    engineMenu.add(ananfore);
-    ananfore.addActionListener(this);
-
     JMenuItem ananback = new JMenuItem("Analysis Background Color");
-    engineMenu.add(ananback);
-    ananback.addActionListener(this);
-    optionsmenu.add(engineMenu);
-
-    optionsmenu.addSeparator();
+    // .. (separator)
     JMenuItem customizetools = new JMenuItem("Customize User Buttons");
-    customizetools.addActionListener(this);
-    optionsmenu.add(customizetools);
-
-    optionsmenu.addSeparator();
-    
-    /************** advanced ****************/
+    // .. (separator)
     JMenu advancedOptions = new JMenu("Advanced");
+    // .. / Advanced
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
-    qsuggestPopup.addActionListener(this);
-    advancedOptions.add(qsuggestPopup);
-
     userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
-    userbuttons.addActionListener(this);
-    advancedOptions.add(userbuttons);
-
     consolemenu = new JCheckBoxMenuItem("Show Console Menu");
-    consolemenu.setSelected(true);
-    consolemenu.addActionListener(this);
-    advancedOptions.add(consolemenu);
-
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
-    channelNumberLeft.setSelected(true);
-    channelNumberLeft.addActionListener(this);
-    advancedOptions.add(channelNumberLeft);
-
-
     compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
-    compactNameList.setSelected(false);
-    compactNameList.addActionListener(this);
-    advancedOptions.add(compactNameList);
-
-
     autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
-    advancedOptions.add(autobufferchat);
-
     useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
-    advancedOptions.add(useTopGame);
-    useTopGame.addActionListener(this);
-
     notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
-    advancedOptions.add(notifyMainAlso);
-    notifyMainAlso.addActionListener(this);
-
-
     autopopup = new JCheckBoxMenuItem("Auto Name Popup");
-    advancedOptions.add(autopopup);
     autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
-    advancedOptions.add(autoHistoryPopup);
-
-    autobufferchat.addActionListener(this);
-    autopopup.addActionListener(this);
-    autoHistoryPopup.addActionListener(this);
-
     basketballFlag = new JCheckBoxMenuItem("Use Basketball Logo ICC Flag");
-    advancedOptions.add(basketballFlag);
-    basketballFlag.addActionListener(this);
-
     lineindent = new JCheckBoxMenuItem("Indent Multi Line Tells");
-    lineindent.addActionListener(this);
-    advancedOptions.add(lineindent);
-
-
     JMenu italicsBehaviorMenu = new JMenu("` ` Behavior");
+    // .. / .. / ` ` Behavior
     italicsBehavior[0] = new JCheckBoxMenuItem("` ` Do Nothing");
-    italicsBehavior[0].addActionListener(this);
-    italicsBehaviorMenu.add(italicsBehavior[0]);
-
     italicsBehavior[1] = new JCheckBoxMenuItem("` ` Italics");
-    italicsBehavior[1].addActionListener(this);
-    italicsBehaviorMenu.add(italicsBehavior[1]);
-
     italicsBehavior[2] = new JCheckBoxMenuItem("` ` Brighter Color");
-    italicsBehavior[2].addActionListener(this);
-    italicsBehaviorMenu.add(italicsBehavior[2]);
-
-    advancedOptions.add(italicsBehaviorMenu);
-/**************************** end advanced ***********************/
-    
-    optionsmenu.add(advancedOptions);
-
-
+    // ..
     JMenu featuresMenu = new JMenu("Features");
-
-
+    // .. / Features
     tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
-    tellswitch.addActionListener(this);
-    featuresMenu.add(tellswitch);
-
     autonoidle = new JCheckBoxMenuItem("No Idle");
-    featuresMenu.add(autonoidle);
-    autonoidle.addActionListener(this);
-
     rotateaways = new JCheckBoxMenuItem("Rotate Away Message");
-    featuresMenu.add(rotateaways);
     iloggedon = new JCheckBoxMenuItem("Send iloggedon");
-    featuresMenu.add(iloggedon);
-    iloggedon.addActionListener(this);
-    rotateaways.addActionListener(this);
-
-
-    optionsmenu.add(featuresMenu);
-
-
+    // ..
     JMenu observeOptions = new JMenu("Observing Options");
-
-    // Andrey adds:
-    observeOptions.setMnemonic(KeyEvent.VK_O);
-    
+    // .. / Observing Options
     JMenu tournieFollow = new JMenu("Follow Tomato Tournament Games");
-
-    // Andrey adds:
-    tournieFollow.setMnemonic(KeyEvent.VK_F);
-
-    // Andrey edits:
-    // remove "Auto Observe"
+    // .. / .. / Follow Tomato Tournament Games
     JCheckBoxMenuItem autoflash = new JCheckBoxMenuItem("Flash");
     JCheckBoxMenuItem autocooly = new JCheckBoxMenuItem("Cooly");
     JCheckBoxMenuItem autotomato = new JCheckBoxMenuItem("Tomato");
@@ -1471,26 +1335,30 @@ class mymultiframe extends JFrame
     JCheckBoxMenuItem autoketchup = new JCheckBoxMenuItem("Ketchup");
     JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Olive");
     JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("LittlePer");
-
-    tournieFollow.add(autoflash);
-    tournieFollow.add(autocooly);
-    tournieFollow.add(autotomato);
-    tournieFollow.add(autowildone);
-    tournieFollow.add(autoslomato);
-    tournieFollow.add(autoketchup);
-    tournieFollow.add(autoolive);
-    tournieFollow.add(autolittleper);
-
-    autoflash.addActionListener(this);
-    autocooly.addActionListener(this);
-    autotomato.addActionListener(this);
-    autowildone.addActionListener(this);
-    autoslomato.addActionListener(this);
-    autoketchup.addActionListener(this);
-    autoolive.addActionListener(this);
-    autolittleper.addActionListener(this);
+    // .. / ..
+    JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
+    // .. / .. / Random Pieces Board when Observing
+    randomArmy = new JCheckBoxMenuItem("Random Piece Set Observe Only");
+    JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
+    JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
+    randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
+    // ..
+    JMenu chattimestamp = new JMenu("Chat Timestamp");
+    // .. / Chat Timestamp
+    channelTimestamp = new JCheckBoxMenuItem("Timestamp Channels and Kibs");
+    shoutTimestamp = new JCheckBoxMenuItem("Timestamp Shouts");
+    tellTimestamp = new JCheckBoxMenuItem("Timestamp Tells");
+    leftNameTimestamp = new JCheckBoxMenuItem("Timestamp To Left Of Name");
+    qtellTimestamp = new JCheckBoxMenuItem("Timestamp Channel Qtells");
+    reconnectTimestamp = new JCheckBoxMenuItem("Timestamp Connecting");
     
-    // Andrey adds:
+    // add shortcuts
+    optionsmenu.setMnemonic(KeyEvent.VK_O);
+    soundmenu.setMnemonic(KeyEvent.VK_S);
+    advancedOptions.setMnemonic(KeyEvent.VK_A);
+    featuresMenu.setMnemonic(KeyEvent.VK_F);
+    observeOptions.setMnemonic(KeyEvent.VK_O);
+    tournieFollow.setMnemonic(KeyEvent.VK_F);
     autoflash.setMnemonic(KeyEvent.VK_F);
     autocooly.setMnemonic(KeyEvent.VK_C);
     autotomato.setMnemonic(KeyEvent.VK_T);
@@ -1499,66 +1367,126 @@ class mymultiframe extends JFrame
     autoketchup.setMnemonic(KeyEvent.VK_K);
     autoolive.setMnemonic(KeyEvent.VK_O);
     autolittleper.setMnemonic(KeyEvent.VK_L);
+    randomGraphics.setMnemonic(KeyEvent.VK_R);
+    chattimestamp.setMnemonic(KeyEvent.VK_C);
 
-    observeOptions.add(tournieFollow);
-    JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
-  
-
-    randomArmy = new JCheckBoxMenuItem("Random Piece Set Observe Only");
-    randomArmy.addActionListener(this);
-    randomGraphics.add(randomArmy);
-
-    JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
-    configureRand.addActionListener(this);
-    randomGraphics.add(configureRand);
-
-    JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
-    configureRandBlack.addActionListener(this);
-    randomGraphics.add(configureRandBlack);
-
-
-    randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
-    randomTiles.addActionListener(this);
-    randomGraphics.add(randomTiles);
-
-    observeOptions.add(randomGraphics);
-
+    // add to menu bar
+    menu.add(optionsmenu);
+    optionsmenu.add(soundmenu);
+    soundmenu.add(hearsound);
+    soundmenu.add(makeObserveSounds);
+    soundmenu.add(notifysound);
+    optionsmenu.addSeparator();
+    optionsmenu.add(winanalysis);
+    optionsmenu.add(ucianalysis);
+    optionsmenu.add(enginerestart);
+    optionsmenu.add(enginestop);
+    optionsmenu.add(engineMenu);
+    engineMenu.add(ananfont);
+    engineMenu.add(ananfore);
+    engineMenu.add(ananback);
+    optionsmenu.addSeparator();
+    optionsmenu.add(customizetools);
+    optionsmenu.addSeparator();
+    optionsmenu.add(advancedOptions);
+    advancedOptions.add(qsuggestPopup);
+    advancedOptions.add(userbuttons);
+    advancedOptions.add(consolemenu);
+    advancedOptions.add(channelNumberLeft);
+    advancedOptions.add(compactNameList);
+    advancedOptions.add(autobufferchat);
+    advancedOptions.add(useTopGame);
+    advancedOptions.add(notifyMainAlso);
+    advancedOptions.add(autopopup);
+    advancedOptions.add(autoHistoryPopup);
+    advancedOptions.add(basketballFlag);
+    advancedOptions.add(lineindent);
+    advancedOptions.add(italicsBehaviorMenu);
+    italicsBehaviorMenu.add(italicsBehavior[0]);
+    italicsBehaviorMenu.add(italicsBehavior[1]);
+    italicsBehaviorMenu.add(italicsBehavior[2]);
+    optionsmenu.add(featuresMenu);
+    featuresMenu.add(tellswitch);
+    featuresMenu.add(autonoidle);
+    featuresMenu.add(rotateaways);
+    featuresMenu.add(iloggedon);
     optionsmenu.add(observeOptions);
-
-
-    JMenu chattimestamp = new JMenu("Chat Timestamp");
-
-    channelTimestamp = new JCheckBoxMenuItem("Timestamp Channels and Kibs");
-    channelTimestamp.addActionListener(this);
+    observeOptions.add(tournieFollow);
+    tournieFollow.add(autoflash);
+    tournieFollow.add(autocooly);
+    tournieFollow.add(autotomato);
+    tournieFollow.add(autowildone);
+    tournieFollow.add(autoslomato);
+    tournieFollow.add(autoketchup);
+    tournieFollow.add(autoolive);
+    tournieFollow.add(autolittleper);
+    observeOptions.add(randomGraphics);
+    randomGraphics.add(randomArmy);
+    randomGraphics.add(configureRand);
+    randomGraphics.add(configureRandBlack);
+    randomGraphics.add(randomTiles);
+    optionsmenu.add(chattimestamp);
     chattimestamp.add(channelTimestamp);
-
-    shoutTimestamp = new JCheckBoxMenuItem("Timestamp Shouts");
-    shoutTimestamp.addActionListener(this);
     chattimestamp.add(shoutTimestamp);
-
-
-    tellTimestamp = new JCheckBoxMenuItem("Timestamp Tells");
-    tellTimestamp.addActionListener(this);
     chattimestamp.add(tellTimestamp);
-
-    leftNameTimestamp=new JCheckBoxMenuItem("Timestamp To Left Of Name");
-    leftNameTimestamp.addActionListener(this);
     //chattimestamp.add(leftNameTimestamp); disabling the option
-
-    qtellTimestamp=new JCheckBoxMenuItem("Timestamp Channel Qtells");
-    qtellTimestamp.addActionListener(this);
     chattimestamp.add(qtellTimestamp);
-
-
-    reconnectTimestamp=new JCheckBoxMenuItem("Timestamp Connecting");
-    reconnectTimestamp.addActionListener(this);
     chattimestamp.add(reconnectTimestamp);
 
+    // add listeners    
+    makeObserveSounds.addActionListener(this);
+    hearsound.addActionListener(this);
+    notifysound.addActionListener(this);
+    winanalysis.addActionListener(this);
+    ucianalysis.addActionListener(this);
+    enginerestart.addActionListener(this);
+    enginestop.addActionListener(this);
+    ananfont.addActionListener(this);
+    ananfore.addActionListener(this);
+    ananback.addActionListener(this);
+    customizetools.addActionListener(this);
+    qsuggestPopup.addActionListener(this);
+    userbuttons.addActionListener(this);
+    consolemenu.addActionListener(this);
+    channelNumberLeft.addActionListener(this);
+    compactNameList.addActionListener(this);
+    useTopGame.addActionListener(this);
+    notifyMainAlso.addActionListener(this);
+    autobufferchat.addActionListener(this);
+    autopopup.addActionListener(this);
+    autoHistoryPopup.addActionListener(this);
+    basketballFlag.addActionListener(this);
+    lineindent.addActionListener(this);
+    italicsBehavior[0].addActionListener(this);
+    italicsBehavior[1].addActionListener(this);
+    italicsBehavior[2].addActionListener(this);
+    tellswitch.addActionListener(this);
+    autonoidle.addActionListener(this);
+    iloggedon.addActionListener(this);
+    rotateaways.addActionListener(this);
+    autoflash.addActionListener(this);
+    autocooly.addActionListener(this);
+    autotomato.addActionListener(this);
+    autowildone.addActionListener(this);
+    autoslomato.addActionListener(this);
+    autoketchup.addActionListener(this);
+    autoolive.addActionListener(this);
+    autolittleper.addActionListener(this);
+    randomArmy.addActionListener(this);
+    configureRand.addActionListener(this);
+    configureRandBlack.addActionListener(this);
+    randomTiles.addActionListener(this);
+    channelTimestamp.addActionListener(this);
+    shoutTimestamp.addActionListener(this);
+    tellTimestamp.addActionListener(this);
+    leftNameTimestamp.addActionListener(this);
+    qtellTimestamp.addActionListener(this);
+    reconnectTimestamp.addActionListener(this);
 
-    optionsmenu.add(chattimestamp);
-
-
-    menu.add(optionsmenu);
+    // special settings
+    consolemenu.setSelected(true);
+    channelNumberLeft.setSelected(true);
+    compactNameList.setSelected(false);
     /******************************************* end of options window *****************/
 
     sharedVariables.myWindows = new JMenu("Windows");
@@ -2293,7 +2221,7 @@ class mymultiframe extends JFrame
           }
         }//end for
       // end try
-      } catch(Exception namebad) {}
+      } catch (Exception namebad) {}
       
     } else if (action.equals("Channel Number On Left")) {
       /*
@@ -2324,7 +2252,7 @@ class mymultiframe extends JFrame
       try {
 	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
           consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
-      }	catch(Exception bal) {}
+      }	catch (Exception bal) {}
       
     } else if (action.equals("Show User Button Titles")) {
       /*
@@ -4757,73 +4685,58 @@ class mymultiframe extends JFrame
       if (myNotifyFrame != null)
         myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 
-}
+    } else if (action.equals("Main Background")) {
+      // BackColor
+      JDialog frame = new JDialog();
+      Color newColor =
+        JColorChooser.showDialog(frame, "Choose Main Background Color",
+                                 sharedVariables.MainBackColor);
+      if (newColor != null)
+        sharedVariables.MainBackColor=newColor;
+      
+      sharedVariables.desktop.setBackground(sharedVariables.MainBackColor);
 
-if(action.equals("Main Background"))
-{
-// BackColor
- JDialog frame = new JDialog();
- Color newColor = JColorChooser.showDialog(frame, "Choose Main Background Color", sharedVariables.MainBackColor);
- if(newColor != null)
- sharedVariables.MainBackColor=newColor;
- sharedVariables.desktop.setBackground(sharedVariables.MainBackColor);
+    } else if (action.equals("Change Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.myFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.myFont=fnt;
+        for (int i=0; i < sharedVariables.openConsoleCount; i++) {
+          if (consoles[i] != null &&
+              sharedVariables.tabStuff[i].tabFont == null) {
+            consoles[i].setFont(sharedVariables.myFont);
+          }
+        }
 
+        // now game boards
+        for (int i=0; i < sharedVariables.openBoardCount; i++) {
+          if (gameconsoles[i] != null) {
+            gameconsoles[i].setFont(sharedVariables.myFont);
+          }
+        }
+      }//end if font not null
 
-}
+    } else if (action.equals("Change Tab Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.myTabFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.myTabFont=fnt;
+        repaintTabs();
+      }// end if font not null
 
-
- if(action.equals("Change Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.myFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				sharedVariables.myFont=fnt;
-	        for(int i=0; i < sharedVariables.openConsoleCount; i++)
-			 {
-				 if(consoles[i]!= null)
-				 if(sharedVariables.tabStuff[i].tabFont == null)
-	              {
-	              consoles[i].setFont(sharedVariables.myFont);
-	              }
- 			}
-
- // now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
- 			 {
- 				 if(gameconsoles[i]!= null)
- 	 			{
- 	        		gameconsoles[i].setFont(sharedVariables.myFont);
- 	 			}
- 			}
-	}//end if font not null
-
-}
-
-if(action.equals("Change Tab Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.myTabFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-
-				sharedVariables.myTabFont=fnt;
-				repaintTabs();
-			}// end if font not null
-}
-if(action.equals("Change Input Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.inputFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-
-				sharedVariables.inputFont=fnt;
-				setInputFont();
-			}// end if font not null
+    } else if (action.equals("Change Input Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.inputFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.inputFont=fnt;
+        setInputFont();
+      }// end if font not null
 }
 
 
