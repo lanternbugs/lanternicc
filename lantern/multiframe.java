@@ -3471,32 +3471,72 @@ class mymultiframe extends JFrame
         JColorChooser.showDialog(frame, "Choose Main Background Color",
                                  sharedVariables.MainBackColor);
       if (newColor != null)
-        sharedVariables.MainBackColor=newColor;
+        sharedVariables.MainBackColor = newColor;
       
       sharedVariables.desktop.setBackground(sharedVariables.MainBackColor);
-
-    } else if (action.equals("Change Font")) {
-      JFrame f = new JFrame("FontChooser Startup");
-      FontChooser2 fc = new FontChooser2(f, sharedVariables.myFont);
+      
+      // Andrey says:
+      // merge the font settings
+    } else if (action.equals("Change Font") ||
+               action.equals("Change Tab Font") ||
+               action.equals("Change Input Font") ||
+               action.equals("Game Board Font") ||
+               action.equals("Game Clock Font")) {
+      int fontsetting = (action.equals("Change Font") ? 0 :
+                         (action.equals("Change Tab Font") ? 1 :
+                          (action.equals("Change Input Font") ? 2 :
+                           (action.equals("Game Board Font") ? 3 :
+                            4))));
+      Font fontchanged = (fontsetting == 0 ? sharedVariables.myFont :
+                          (fontsetting == 1 ? sharedVariables.myTabFont :
+                           (fontsetting == 2 ? sharedVariables.inputFont :
+                            (fontsetting == 3 ? sharedVariables.myGameFont :
+                             sharedVariables.myGameClockFont))));
+      JFrame f = new JFrame(action);
+      FontChooser2 fc = new FontChooser2(f, fontchanged);
       fc.setVisible(true);
       Font fnt = fc.getSelectedFont();
       if (fnt != null) {
-        sharedVariables.myFont=fnt;
-        for (int i=0; i < sharedVariables.openConsoleCount; i++) {
-          if (consoles[i] != null &&
-              sharedVariables.tabStuff[i].tabFont == null) {
-            consoles[i].setFont(sharedVariables.myFont);
+        if (fontsetting == 0) {
+          sharedVariables.myFont = fnt;
+          for (int i=0; i < sharedVariables.openConsoleCount; i++) {
+            if (consoles[i] != null &&
+                sharedVariables.tabStuff[i].tabFont == null) {
+              consoles[i].setFont(sharedVariables.myFont);
+            }
           }
-        }
 
-        // now game boards
-        for (int i=0; i < sharedVariables.openBoardCount; i++) {
-          if (gameconsoles[i] != null) {
-            gameconsoles[i].setFont(sharedVariables.myFont);
+          // now game boards
+          for (int i=0; i < sharedVariables.openBoardCount; i++) {
+            if (gameconsoles[i] != null) {
+              gameconsoles[i].setFont(sharedVariables.myFont);
+            }
+          }
+
+        } else if (fontsetting == 1) {
+          sharedVariables.myTabFont = fnt;
+          repaintTabs();
+
+        } else if (fontsetting == 2) {
+          sharedVariables.inputFont = fnt;
+          setInputFont();
+
+        } else {
+          if (fontsetting == 3)
+            sharedVariables.myGameFont = fnt;
+          else
+            sharedVariables.myGameClockFont = fnt;
+          
+          // now game boards
+          for (int i=0; i < sharedVariables.openBoardCount; i++) {
+            if (myboards[i] != null) {
+              myboards[i].mycontrolspanel.setFont();
+            }
           }
         }
       }//end if font not null
 
+      /*
     } else if (action.equals("Change Tab Font")) {
       JFrame f = new JFrame("FontChooser Startup");
       FontChooser2 fc = new FontChooser2(f, sharedVariables.myTabFont);
@@ -3517,681 +3557,635 @@ class mymultiframe extends JFrame
         setInputFont();
       }// end if font not null
 
-    }
+    } else if (action.equals("Game Board Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.myGameFont=fnt;
 
+        // now game boards
+        for (int i=0; i < sharedVariables.openBoardCount; i++) {
+          if (myboards[i] != null) {
+            myboards[i].mycontrolspanel.setFont();
+          }
+        }
+      }// not null font
 
+    } else if (action.equals("Game Clock Font")) {
+      JFrame f = new JFrame("FontChooser Startup");
+      FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameClockFont);
+      fc.setVisible(true);
+      Font fnt = fc.getSelectedFont();
+      if (fnt != null) {
+        sharedVariables.myGameClockFont=fnt;
 
+        // now game boards
+        for (int i=0; i < sharedVariables.openBoardCount; i++) {
+          if (myboards[i] != null) {
+            myboards[i].mycontrolspanel.setFont();
+          }
+        }
+      }// not null font
+      */
 
-if(action.equals("Game Board Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				sharedVariables.myGameFont=fnt;
+    } else if (action.equals("Channel Colors")) {
+      customizeChannelColorDialog frame =
+        new customizeChannelColorDialog((JFrame) this, false,
+                                        sharedVariables, consoles);
+      //frame.setSize(300,250);
+      frame.setVisible(true);
 
- // now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
- 			 {
- 				 if(myboards[i]!= null)
- 	 			{
-
- 	        		myboards[i].mycontrolspanel.setFont();
- 	 			}
- 			}
-		}// not null font
-
-}
-
-if(action.equals("Game Clock Font"))
-{JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.myGameClockFont);
-    fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-	        {
-				sharedVariables.myGameClockFont=fnt;
-
- // now game boards
- 	        for(int i=0; i < sharedVariables.openBoardCount; i++)
- 			 {
- 				 if(myboards[i]!= null)
- 	 			{
-
- 	        		myboards[i].mycontrolspanel.setFont();
- 	 			}
- 			}
-		}// not null font
-
-}
-
-
-
-
-
-
-if(action.equals("Channel Colors"))
-{
-	customizeChannelColorDialog frame = new customizeChannelColorDialog((JFrame) this, false, sharedVariables, consoles);
-	//frame.setSize(300,250);
-	frame.setVisible(true);
-}
-    // Andrey says:
-    // moved the for loop to the end of the action performed method
-    for (int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++) {
-      if (myboards[openBoardMenu] == null)
-        break;
-      if (sharedVariables.openBoards[openBoardMenu] != null &&
-          action.equals(sharedVariables.openBoards[openBoardMenu].getText())) {
-        try {
-          myboards[openBoardMenu].setSelected(true);
+      // Andrey says:
+      // moved the for loop to the end of the action performed method
+    } else {
+      for (int openBoardMenu=0; openBoardMenu < sharedVariables.maxGameTabs; openBoardMenu++) {
+        if (myboards[openBoardMenu] == null)
           break;
-        } catch(Exception duiii) {}
-      }// end if
-      // end for
+        if (sharedVariables.openBoards[openBoardMenu] != null &&
+            action.equals(sharedVariables.openBoards[openBoardMenu].getText())) {
+          try {
+            myboards[openBoardMenu].setSelected(true);
+            break;
+          } catch (Exception duiii) {}
+        }// end if
+        // end for
+      }
+    }
+  }// end action performed method
+  
+  void openActivities() {
+    try {
+      //if(myfirstlist == null)
+      //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+      if (!myfirstlist.isVisible() && !mysecondlist.isVisible())
+	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+      else if (mysecondlist.isVisible() && !mysecondlist.isSelected())
+        mysecondlist.setSelected(true);
+      else if (mysecondlist.isVisible())
+        mysecondlist.setVisible(false);
+      else if(myfirstlist.isVisible()) {
+        myfirstlist.setBoardSize();
+        myfirstlist.setVisible(false);
+      }
+      sharedVariables.activitiesPanel.setColors();
+      //myfirstlist.setSelected(true);
+    } catch (Exception dui) {}
+  }
+
+  void makeEngineWarning() {
+    String swarning = "You must be in examine or observe mode to load an engine and " +
+      "you need to click on the board and game tab that is in this mode as well first.";
+    Popup pframe = new Popup((JFrame) this, true, swarning);
+    pframe.setVisible(true);
+  }
+  
+  void makeEngineWarning2() {
+    String swarning = "You must not be playing to load an engine.";
+    Popup pframe = new Popup((JFrame) this, true, swarning);
+    pframe.setVisible(true);
+  }
+
+  void setBoard(int type) {
+    /*
+    if (type == 0)
+      solidboard.setSelected(true);
+    else
+      solidboard.setSelected(false);
+
+    if (type == 1)
+      woodenboard1.setSelected(true);
+    else
+      woodenboard1.setSelected(false);
+
+    if (type == 2)
+      woodenboard2.setSelected(true);
+    else
+      woodenboard2.setSelected(false);
+
+    if (type == 3)
+      woodenboard3.setSelected(true);
+    else
+      woodenboard3.setSelected(false);
+
+    if (type == 4)
+      grayishboard.setSelected(true);
+    else
+      grayishboard.setSelected(false);
+
+    if (type == 5)
+      board5.setSelected(true);
+    else
+      board5.setSelected(false);
+
+    if (type == 6)
+      board6.setSelected(true);
+    else
+      board6.setSelected(false);
+
+    if (type == 7)
+      board7.setSelected(true);
+    else
+      board7.setSelected(false);
+
+    if (type == 8)
+      oliveboard.setSelected(true);
+    else
+      oliveboard.setSelected(false);
+
+    if (type == 9)
+      cherryboard.setSelected(true);
+    else
+      cherryboard.setSelected(false);
+
+    if (type == 10)
+      purpleboard.setSelected(true);
+    else
+      purpleboard.setSelected(false);
+    */
+    
+    solidboard.setSelected((type==0));
+    woodenboard1.setSelected((type==1));
+    woodenboard2.setSelected((type==2));
+    woodenboard3.setSelected((type==3));
+    grayishboard.setSelected((type==4));
+    board5.setSelected((type==5));
+    board6.setSelected((type==6));
+    board7.setSelected((type==7));
+    oliveboard.setSelected((type==8));
+    cherryboard.setSelected((type==9));
+    purpleboard.setSelected((type==10));
+
+    for(int a=0; a<sharedVariables.maxGameTabs; a++)
+      if(myboards[a] != null)
+        //if(myboards[a].isVisible() == true)
+        myboards[a].mypanel.repaint();
+
+  }
+
+  void openSeekGraph() {
+    try {
+      if (!seekGraph.isVisible()) {
+        seekGraph.setSize(sharedVariables.mySeekSizes.con0x,
+                          sharedVariables.mySeekSizes.con0y);
+        seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x,
+                              sharedVariables.mySeekSizes.point0.y);
+        seekGraph.setVisible(true);
+        seekGraph.setSelected(true);
+        //seekGraph.setSize(600,600);
+      } else if (!seekGraph.isSelected()) {
+        seekGraph.setSelected(true);
+      } else {
+        seekGraph.setBoardSize();
+        seekGraph.setVisible(false);
+      }
+    } catch (Exception dummyseek) {}
+  }
+
+  void resetConsoleLayout() {
+    /*
+    if (sharedVariables.consoleLayout == 1) {
+      tabLayout1.setSelected(true);
+      tabLayout2.setSelected(false);
+      tabLayout3.setSelected(false);
+    } else if (sharedVariables.consoleLayout == 2) {
+      tabLayout1.setSelected(false);
+      tabLayout2.setSelected(true);
+      tabLayout3.setSelected(false);
+    } else {
+      tabLayout1.setSelected(false);
+      tabLayout2.setSelected(false);
+      tabLayout3.setSelected(true);
+    }
+    */
+
+    tabLayout1.setSelected((sharedVariables.consoleLayout == 1));
+    tabLayout2.setSelected((sharedVariables.consoleLayout == 2));
+    tabLayout3.setSelected((sharedVariables.consoleLayout == 3));
+
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+      if (consoleSubframes[a] != null)
+        consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
+  }
+  
+  void startTheEngine() {
+    boolean go = false;
+
+    for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
+      if (sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING) {
+        sharedVariables.engineOn = false;
+        makeEngineWarning2();
+        return; 
+      }
     }
 
+    for (int a=0; a< sharedVariables.openBoardCount; a++) {
+      if (myboards[a].isSelected()) {
+	if (sharedVariables.mygame[myboards[a].gameData.LookingAt] != null &&
+            (sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
+             sharedVariables.STATE_EXAMINING ||
+             sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
+             sharedVariables.STATE_OBSERVING)) {
+          try {
+            go=true;
+            myoutput tosend = new myoutput();
 
-}// end action performed method
-void openActivities()
-{
-try {
-//	if(myfirstlist == null)
-//	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-	if(!myfirstlist.isVisible() && !mysecondlist.isVisible())
-	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-        else if(mysecondlist.isVisible() && mysecondlist.isSelected() == false)
-        mysecondlist.setSelected(true);
-        else if(mysecondlist.isVisible())
-        mysecondlist.setVisible(false);
-        else if(myfirstlist.isVisible())
-        { myfirstlist.setBoardSize();
-          myfirstlist.setVisible(false);
+            try {
+              tosend = sharedVariables.engineQueue.poll();
+              // we look for data from other areas of the program
+              while (tosend != null)
+                tosend=sharedVariables.engineQueue.poll();
+
+            } catch (Exception duiii) {}
+
+            sharedVariables.engineBoard = myboards[a].gameData.LookingAt;
+            myboards[myboards[a].gameData.LookingAt].startEngine();
+
+          } catch (Exception e) {}
+          break;
         }
-        sharedVariables.activitiesPanel.setColors();
-//	myfirstlist.setSelected(true);
-}catch(Exception dui){}
-}
+      }
+    }
+    
+    if (!go) {
+      sharedVariables.engineOn = false;
+      makeEngineWarning();
+    }// if go false
+  }
 
+  void repaintTabBorders() {
+    for (int a=0; a<sharedVariables.openBoardCount; a++)
+      if (myboards[a] != null &&
+          myboards[a].isVisible())
+        myboards[a].myconsolepanel.channelTabs[a].repaint();
 
-void makeEngineWarning()
-{
-String swarning = "You must be in examine or observe mode o load an engine and you need to click on the board and game tab that is in this mode as well first.";
-Popup pframe = new Popup((JFrame) this, true, swarning);
-pframe.setVisible(true);
-
-}
-void makeEngineWarning2()
-{
-String swarning = "You must not be playing to load an engine.";
-Popup pframe = new Popup((JFrame) this, true, swarning);
-pframe.setVisible(true);
-
-}
-void setBoard(int type)
-{
-
-
-if(type == 0)
-solidboard.setSelected(true);
-else
-solidboard.setSelected(false);
-
-if(type == 1)
-woodenboard1.setSelected(true);
-else
-woodenboard1.setSelected(false);
-
-if(type == 2)
-woodenboard2.setSelected(true);
-else
-woodenboard2.setSelected(false);
-
-if(type == 3)
-woodenboard3.setSelected(true);
-else
-woodenboard3.setSelected(false);
-
-if(type == 4)
-grayishboard.setSelected(true);
-else
-grayishboard.setSelected(false);
-
-
-if(type == 5)
-board5.setSelected(true);
-else
-board5.setSelected(false);
-
-if(type == 6)
-board6.setSelected(true);
-else
-board6.setSelected(false);
-
-if(type == 7)
-board7.setSelected(true);
-else
-board7.setSelected(false);
-
-if(type == 8)
-oliveboard.setSelected(true);
-else
-oliveboard.setSelected(false);
-
-if(type == 9)
-cherryboard.setSelected(true);
-else
-cherryboard.setSelected(false);
-
-if(type == 10)
-purpleboard.setSelected(true);
-else
-purpleboard.setSelected(false);
-
-
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-
-
-
-void openSeekGraph()
-{
-try {
-	if(seekGraph.isVisible() == false)
-{
-seekGraph.setSize(sharedVariables.mySeekSizes.con0x, sharedVariables.mySeekSizes.con0y);
-seekGraph.setLocation(sharedVariables.mySeekSizes.point0.x, sharedVariables.mySeekSizes.point0.y);
-seekGraph.setVisible(true);
-seekGraph.setSelected(true);
-//seekGraph.setSize(600,600);
-}
-else if(seekGraph.isSelected() == false)
-seekGraph.setSelected(true);
-else
-{seekGraph.setBoardSize();
-seekGraph.setVisible(false);
-}
-}catch(Exception dummyseek){}
-
-}
-
-
-void resetConsoleLayout()
-{
-		if(sharedVariables.consoleLayout == 1)
-		{
-			tabLayout1.setSelected(true);
-			tabLayout2.setSelected(false);
-			tabLayout3.setSelected(false);
-
-		}
-		else if(sharedVariables.consoleLayout == 2)
-		{
-			tabLayout1.setSelected(false);
-			tabLayout2.setSelected(true);
-			tabLayout3.setSelected(false);
-
-		}
-		else
-		{
-			tabLayout1.setSelected(false);
-			tabLayout2.setSelected(false);
-			tabLayout3.setSelected(true);
-
-		}
-
-		for(int a=0; a< sharedVariables.maxConsoleTabs; a++)
-			if(consoleSubframes[a]!=null)
-			consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
-}
-void startTheEngine()
-{        boolean go = false;
-
-         for(int aa=0; aa< sharedVariables.openBoardCount; aa++)
-         if(sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING)
-         {
-           sharedVariables.engineOn = false;
-           makeEngineWarning2();
-           return; 
-
-         }
-
-        for(int a=0; a< sharedVariables.openBoardCount; a++)
-	if(myboards[a].isSelected())
-	{
-	if(sharedVariables.mygame[myboards[a].gameData.LookingAt] != null)
-        if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_EXAMINING ||  sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
-        {	try {
-
-                              go=true;
-                              myoutput tosend = new myoutput();
-
-
-                              try {
-                              tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
-                              while(tosend!=null)
-                              tosend=sharedVariables.engineQueue.poll();
-                              }
-                              catch(Exception duiii){}
-
-                              sharedVariables.engineBoard = myboards[a].gameData.LookingAt;
-			 	myboards[myboards[a].gameData.LookingAt].startEngine();
-
-
-		    }
-		catch(Exception e){}
-		break;
-        }
-        }
-if(go== false)
-{
-  sharedVariables.engineOn = false;
-  makeEngineWarning();
-}// if go false
-}
-
-void repaintTabBorders()
-{
- for(int a=0; a<sharedVariables.openBoardCount; a++)
- if(myboards[a]!=null)
- if(myboards[a].isVisible() == true)
- myboards[a].myconsolepanel.channelTabs[a].repaint();
-
-
-// now update consoles
- for(int a=0; a<sharedVariables.openConsoleCount; a++)
- if(consoleSubframes[a]!=null)
- if(consoleSubframes[a].isVisible() == true)
- for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
- {
- consoleSubframes[a].channelTabs[aa].repaint();
-}
+    // now update consoles
+    for (int a=0; a<sharedVariables.openConsoleCount; a++)
+      if (consoleSubframes[a] != null &&
+          consoleSubframes[a].isVisible())
+        for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+          consoleSubframes[a].channelTabs[aa].repaint();
+  }
   
+  void checkItalicsBehavior(int n) {
+    /*
+    if (n == 0)
+      italicsBehavior[0].setSelected(true);
+    else
+      italicsBehavior[0].setSelected(false);
+
+    if (n == 1)
+      italicsBehavior[1].setSelected(true);
+    else
+      italicsBehavior[1].setSelected(false);
+
+    if (n == 2)
+      italicsBehavior[2].setSelected(true);
+    else
+      italicsBehavior[2].setSelected(false);
+    */
+    italicsBehavior[0].setSelected((n==0));
+    italicsBehavior[1].setSelected((n==1));
+    italicsBehavior[2].setSelected((n==2));
+  }
+
+  void redrawBoard(int type) {
+    /*
+    if (type == 0)
+      boardconsole0.setSelected(true);
+    else
+      boardconsole0.setSelected(false);
+
+    if (type == 1)
+      boardconsole1.setSelected(true);
+    else
+      boardconsole1.setSelected(false);
+
+    if (type == 2)
+      boardconsole2.setSelected(true);
+    else
+      boardconsole2.setSelected(false);
+
+    if (type == 3)
+      boardconsole3.setSelected(true);
+    else
+      boardconsole3.setSelected(false);
+    */
+    boardconsole0.setSelected((type==0));
+    boardconsole1.setSelected((type==1));
+    boardconsole2.setSelected((type==2));
+
+    for (int a = 0; a<sharedVariables.maxGameTabs; a++)
+      if (myboards[a] != null &&
+          myboards[a].isVisible())
+        myboards[a].recreate();
+  }
+  
+  void setPieces(int type) {
+    /*
+    if (type == 0)
+      pieces1.setSelected(true);
+    else
+      pieces1.setSelected(false);
+
+    if (type == 1)
+      pieces2.setSelected(true);
+    else
+      pieces2.setSelected(false);
+
+    if (type == 2)
+      pieces3.setSelected(true);
+    else
+      pieces3.setSelected(false);
+
+    if (type == 3)
+      pieces4.setSelected(true);
+    else
+      pieces4.setSelected(false);
+
+    if (type == 4)
+      pieces5.setSelected(true);
+    else
+      pieces5.setSelected(false);
+
+    if (type == 5)
+      pieces6.setSelected(true);
+    else
+      pieces6.setSelected(false);
+
+    if (type == 6)
+      pieces7.setSelected(true);
+    else
+      pieces7.setSelected(false);
+
+    if (type == 7)
+      pieces8.setSelected(true);
+    else
+      pieces8.setSelected(false);
+
+    if (type == 8)
+      pieces9.setSelected(true);
+    else
+      pieces9.setSelected(false);
+
+    if (type == 9)
+      pieces10.setSelected(true);
+    else
+      pieces10.setSelected(false);
 
 
-}
-void checkItalicsBehavior(int n)
-{
- if(n == 0)
-italicsBehavior[0].setSelected(true);
-else
-italicsBehavior[0].setSelected(false);
+    if (type == 10)
+      pieces11.setSelected(true);
+    else
+      pieces11.setSelected(false);
 
- if(n == 1)
-italicsBehavior[1].setSelected(true);
-else
-italicsBehavior[1].setSelected(false);
+    if (type == 11)
+      pieces12.setSelected(true);
+    else
+      pieces12.setSelected(false);
 
- if(n == 2)
-italicsBehavior[2].setSelected(true);
-else
-italicsBehavior[2].setSelected(false);
-}
+    if (type == 12)
+      pieces13.setSelected(true);
+    else
+      pieces13.setSelected(false);
+    
+    if (type == 13)
+      pieces14.setSelected(true);
+    else
+      pieces14.setSelected(false);
 
-void redrawBoard(int type)
-{
-if(type == 0)
-boardconsole0.setSelected(true);
-else
-boardconsole0.setSelected(false);
+    if (type == 14)
+      pieces15.setSelected(true);
+    else
+      pieces15.setSelected(false);
 
-if(type == 1)
-boardconsole1.setSelected(true);
-else
-boardconsole1.setSelected(false);
+    if (type == 15)
+      pieces16.setSelected(true);
+    else
+      pieces16.setSelected(false);
 
-if(type == 2)
-boardconsole2.setSelected(true);
-else
-boardconsole2.setSelected(false);
+    if (type == 16)
+      pieces17.setSelected(true);
+    else
+      pieces17.setSelected(false);
 
-if(type == 3)
-boardconsole3.setSelected(true);
-else
-boardconsole3.setSelected(false);
+    if (type == 17)
+      pieces18.setSelected(true);
+    else
+      pieces18.setSelected(false);
 
+    if (type == 18)
+      pieces19.setSelected(true);
+    else
+      pieces19.setSelected(false);
 
-for(int a = 0; a<sharedVariables.maxGameTabs; a++)
-if(myboards[a] != null)
-if(myboards[a].isVisible())
-myboards[a].recreate();
-}
-void setPieces(int type)
-{
+    if (type == 19)
+      pieces20.setSelected(true);
+    else
+      pieces20.setSelected(false);
 
+    if (type == 20)
+      pieces21.setSelected(true);
+    else
+      pieces21.setSelected(false);
 
-if(type == 0)
-pieces1.setSelected(true);
-else
-pieces1.setSelected(false);
+    if (type == 21)
+      pieces22.setSelected(true);
+    else
+      pieces22.setSelected(false);
 
-if(type == 1)
-pieces2.setSelected(true);
-else
-pieces2.setSelected(false);
+    if (type == 22)
+      pieces23.setSelected(true);
+    else
+      pieces23.setSelected(false);
 
-if(type == 2)
-pieces3.setSelected(true);
-else
-pieces3.setSelected(false);
+    if (type == 23) {
+      pieces24.setSelected(true);
+      generateRandomPieces(type);
+    } else {
+      pieces24.setSelected(false);
+    }
+    */
+    
+    pieces1.setSelected((type==0));
+    pieces2.setSelected((type==1));
+    pieces3.setSelected((type==2));
+    pieces4.setSelected((type==3));
+    pieces5.setSelected((type==4));
+    pieces6.setSelected((type==5));
+    pieces7.setSelected((type==6));
+    pieces8.setSelected((type==7));
+    pieces9.setSelected((type==8));
+    pieces10.setSelected((type==9));
+    pieces11.setSelected((type==10));
+    pieces12.setSelected((type==11));
+    pieces13.setSelected((type==12));
+    pieces14.setSelected((type==13));
+    pieces15.setSelected((type==14));
+    pieces16.setSelected((type==15));
+    pieces17.setSelected((type==16));
+    pieces18.setSelected((type==17));
+    pieces19.setSelected((type==18));
+    pieces20.setSelected((type==19));
+    pieces21.setSelected((type==20));    
+    pieces22.setSelected((type==21));    
+    pieces23.setSelected((type==22));    
+    pieces24.setSelected((type==23));
 
-if(type == 3)
-pieces4.setSelected(true);
-else
-pieces4.setSelected(false);
+    if (type == 23) generateRandomPieces(type);
+    
+    for (int a=0; a<sharedVariables.maxGameTabs; a++)
+      if (myboards[a]!=null)
+        //if(myboards[a].isVisible() == true)
+        myboards[a].mypanel.repaint();
+  }
 
-if(type == 4)
-pieces5.setSelected(true);
-else
-pieces5.setSelected(false);
+  void generateRandomPieces(int type) {
+    Random randomGenerator = new Random();
 
-if(type == 5)
-pieces6.setSelected(true);
-else
-pieces6.setSelected(false);
+    for (int a = 0; a<12; a++) {
+      int randomInt = randomGenerator.nextInt(type - 1);
+      graphics.pieces[type][a] = graphics.pieces[randomInt][a];
+    }
+  }
 
+  void setMySize() {
+    /* check if we need to resize differently and not maximize */
+    scriptLoader myloader = new scriptLoader();
+    boolean valid = false;
+    int width = 800;
+    int height = 800;
 
-if(type == 6)
-pieces7.setSelected(true);
-else
-pieces7.setSelected(false);
+    try {
+      Toolkit toolkit =  Toolkit.getDefaultToolkit();
+      Dimension dim = toolkit.getScreenSize();
+      sharedVariables.screenW = dim.width;
+      sharedVariables.screenH = dim.height;
 
-if(type == 7)
-pieces8.setSelected(true);
-else
-pieces8.setSelected(false);
+    } catch (Exception badtool) {
+      return;
+    }
 
-if(type == 8)
-pieces9.setSelected(true);
-else
-pieces9.setSelected(false);
+    try {
+      // Andrey says:
+      // want to be able to change this to
+      // List<String> myArray = new ArrayList<String>();
+      ArrayList<String> myArray = new ArrayList();
 
-if(type == 9)
-pieces10.setSelected(true);
-else
-pieces10.setSelected(false);
-
-
-if(type == 10)
-pieces11.setSelected(true);
-else
-pieces11.setSelected(false);
-
-if(type == 11)
-pieces12.setSelected(true);
-else
-pieces12.setSelected(false);
-
-if(type == 12)
-pieces13.setSelected(true);
-else
-pieces13.setSelected(false);
-if(type == 13)
-pieces14.setSelected(true);
-else
-pieces14.setSelected(false);
-
-if(type == 14)
-pieces15.setSelected(true);
-else
-pieces15.setSelected(false);
-
-if(type == 15)
-pieces16.setSelected(true);
-else
-pieces16.setSelected(false);
-
-if(type == 16)
-pieces17.setSelected(true);
-else
-pieces17.setSelected(false);
-
-if(type == 17)
-pieces18.setSelected(true);
-else
-pieces18.setSelected(false);
-
-if(type == 18)
-pieces19.setSelected(true);
-else
-pieces19.setSelected(false);
-
-
-if(type == 19)
-pieces20.setSelected(true);
-else
-pieces20.setSelected(false);
-if(type == 20)
-pieces21.setSelected(true);
-else
-pieces21.setSelected(false);
-if(type == 21)
-pieces22.setSelected(true);
-else
-pieces22.setSelected(false);
-if(type == 22)
-pieces23.setSelected(true);
-else
-pieces23.setSelected(false);
-
-
-
-if(type == 23)
-{
-	pieces24.setSelected(true);
-	generateRandomPieces(type);
-}
-else
-pieces24.setSelected(false);
-
-
- for(int a=0; a<sharedVariables.maxGameTabs; a++)
- if(myboards[a]!=null)
- //if(myboards[a].isVisible() == true)
- myboards[a].mypanel.repaint();
-
-}
-
-void generateRandomPieces(int type)
-{
-	Random randomGenerator = new Random();
-
-	for(int a = 0; a<12; a++)
-	{
-	      int randomInt = randomGenerator.nextInt(type - 1);
-		graphics.pieces[type][a] = graphics.pieces[randomInt][a];
-	}
-}
-
-void setMySize()
-{
-	/* check if we need to resize differently and not maximize */
-	scriptLoader myloader = new scriptLoader();
-	boolean valid = false;
-	int width=800;
-	int height=800;
-try {
-
-	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-        Dimension dim = toolkit.getScreenSize();
-        sharedVariables.screenW = dim.width;
-        sharedVariables.screenH = dim.height;
-}
-catch(Exception badtool){ return;}
-
-
-try {
-ArrayList<String> myArray = new ArrayList();
-
-myloader.loadScript(myArray, "lantern_sizing.ini");
-try {
-	if(myArray.size() > 1)
-	{
-		width=Integer.parseInt(myArray.get(0));
-		height=Integer.parseInt(myArray.get(1));
-        if(width > 200 && height > 200 && width < sharedVariables.screenW - 100 && height < sharedVariables.screenH - 50)
-        {
-			valid=true;
-			sharedVariables.screenW=width;
-			sharedVariables.screenH=height;
-		}
-        else
-        {
-			width=800;
-			height=800;
-
-		}
-
+      myloader.loadScript(myArray, "lantern_sizing.ini");
+      try {
+	if (myArray.size() > 1) {
+          width = Integer.parseInt(myArray.get(0));
+          height = Integer.parseInt(myArray.get(1));
+          if (width > 200 && height > 200 &&
+              width < sharedVariables.screenW - 100 &&
+              height < sharedVariables.screenH - 50) {
+            valid = true;
+            sharedVariables.screenW = width;
+            sharedVariables.screenH = height;
+          } else {
+            width = 800;
+            height = 800;
+          }
 	}// end size of array
-}// end try
-catch(Exception wrongsize) {
+        // end try
+      } catch (Exception wrongsize) {
+	width = 800;
+	height = 800;
+      }
+      setSize(width,height);
+      if(!valid) {
+        if (sharedVariables.operatingSystem.equals("unix")) {
+          setVisible(true);
+          // unix needs the window to be visible before maximized
+          setLocation(0,0);
+          // put it in top corner to hopefully fix a bug on some linux
+          // that mouse and menu got out of snych
+        } 
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+      }
+      // end outer try
+    } catch (Exception d) {
+      setSize(width,height);
+      if (!valid)
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }// end catch
+  }// end method set size
 
-	width=800;
-	height=800;
+  public void windowClosed(WindowEvent e) {
 
-}
-setSize(width,height);
-if(valid == false)
-{
- if(sharedVariables.operatingSystem.equals("unix"))
- {
-   setVisible(true); // unix needs the window to be visible before maximized
-   setLocation(0,0);// put it in top corner to hopefully fix a bug on some linux that mouse and menu got out of snych
- } 
-  setExtendedState(JFrame.MAXIMIZED_BOTH);
-}
+    //if(sharedVariables.engineOn == true)
+    sendToEngine("exit\n");
+    sendToEngine("quit\n");
+  }
 
-}// end outer try
-catch(Exception d)
-{
-setSize(width,height);
-if(valid == false)
-setExtendedState(JFrame.MAXIMIZED_BOTH);
+  public void windowDeactivated(WindowEvent e) {
 
-}// end catch
+  }
 
+  public void windowDeiconified(WindowEvent e) {
 
-}// end method set size
+  }
 
-public void windowClosed(WindowEvent e)
-{
+  public void windowClosing(WindowEvent e) {
+    //if(sharedVariables.engineOn == true)
+    sendToEngine("exit\n");
+    sendToEngine("quit\n");
+    if (!sharedVariables.standAlone) {
+      System.exit(0);
+    } else {
+      JSettingsDialog frame = new JSettingsDialog((JFrame) this, false, sharedVariables);
+    }
+  }
 
-//if(sharedVariables.engineOn == true)
-sendToEngine("exit\n");
-sendToEngine("quit\n");
+  /********************* Console Events **********************************/
 
-}
+  void compactConsole() {
+    sharedVariables.boardConsoleType = 1;
+    redrawBoard(sharedVariables.boardConsoleType);
+  }
 
-public void windowDeactivated(WindowEvent e)
-{
+  void normalConsole() {
+    sharedVariables.boardConsoleType=2;
+    redrawBoard(sharedVariables.boardConsoleType);
+  }
+  
+  void largerConsole() {
+    sharedVariables.boardConsoleType=3;
+    redrawBoard(sharedVariables.boardConsoleType);
+  }
+  
+  void sideConsole() {
+    /*
+    if (sharedVariables.sideways == true) {
+      sharedVariables.sideways=false;
+      sidewaysconsole.setSelected(false);
+    } else {
+      sharedVariables.sideways=true;
+      sidewaysconsole.setSelected(true);
+    }
+    */
+    sharedVariables.sideways = !sharedVariables.sideways;
+    sidewaysconsole.setSelected(sharedVariables.sideways);
+    
+    redrawBoard(sharedVariables.boardConsoleType);
+  }
+/**************************** end console events ********************************/
 
-}
-public void windowDeiconified(WindowEvent e)
-{
+  class JSettingsDialog extends JFrame {
 
-}
-public void windowClosing(WindowEvent e)
-{
-//if(sharedVariables.engineOn == true)
-sendToEngine("exit\n");
-sendToEngine("quit\n");
-if(sharedVariables.standAlone == false)
-	System.exit(0);
-else
-{
-	JSettingsDialog frame = new JSettingsDialog((JFrame) this, false, sharedVariables);
-}
-}
+    channels sharedVariables;
+    
+    JSettingsDialog (JFrame frame, boolean mybool, channels sharedVariables1) {
+      //super(frame, false);
 
-
-
-/********************* Console Events *******************************************************************************/
-
-void compactConsole()
-{
-	sharedVariables.boardConsoleType=1;
-	redrawBoard(sharedVariables.boardConsoleType);
-}
-void normalConsole()
-{
-	sharedVariables.boardConsoleType=2;
-	redrawBoard(sharedVariables.boardConsoleType);
-}
-void largerConsole()
-{
-	sharedVariables.boardConsoleType=3;
-	redrawBoard(sharedVariables.boardConsoleType);
-}
-void sideConsole()
-{
-	if(sharedVariables.sideways == true)
-	{
-		sharedVariables.sideways=false;
-		sidewaysconsole.setSelected(false);
-	}
-	else
-	{
-		sharedVariables.sideways=true;
-		sidewaysconsole.setSelected(true);
-	}
-	redrawBoard(sharedVariables.boardConsoleType);
-}
-
-
-/********************************************************** end console events ******************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class JSettingsDialog extends JFrame
-{
-
-channels sharedVariables;
-
-JSettingsDialog(JFrame frame, boolean mybool, channels sharedVariables1)
-{
-//	super(frame, false);
-
-	sharedVariables=sharedVariables1;
-	JPanel pane =  new JPanel();
-	JLabel tosave = new JLabel("Save Settings?");
-	JButton yes =  new JButton("Yes");
-	JButton no = new JButton("No");
-	yes.addActionListener(new ActionListener() {
+      sharedVariables = sharedVariables1;
+      JPanel pane =  new JPanel();
+      JLabel tosave = new JLabel("Save Settings?");
+      JButton yes =  new JButton("Yes");
+      JButton no = new JButton("No");
+      yes.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event)
 				{
 			 try
