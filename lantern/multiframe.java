@@ -444,77 +444,6 @@ class mymultiframe extends JFrame
 
     createMenu();
     consoleSubframes[0].makeHappen(0);
-    /*
-    if (sharedVariables.highlightMoves == false)
-      highlight.setSelected(false);
-    else
-      highlight.setSelected(true);
-
-    if (sharedVariables.gameend == false)
-      gameend.setSelected(false);
-    else
-      gameend.setSelected(true);
-
-    if (sharedVariables.notifyMainAlso == true)
-      notifyMainAlso.setSelected(true);
-    else
-      notifyMainAlso.setSelected(false);
-
-    if (sharedVariables.useTopGames == true)
-      useTopGame.setSelected(true);
-    else
-      useTopGame.setSelected(false);
-
-    if (sharedVariables.showMaterialCount == false)
-      materialCount.setSelected(false);
-    else
-      materialCount.setSelected(true);
-
-    if (sharedVariables.drawCoordinates == false)
-      drawCoordinates.setSelected(false);
-    else
-      drawCoordinates.setSelected(true);
-
-    if (sharedVariables.showRatings == false)
-      showRatings.setSelected(false);
-    else
-      showRatings.setSelected(true);
-
-    if (sharedVariables.showFlags == false)
-      showFlags.setSelected(false);
-    else
-      showFlags.setSelected(true);
-
-    if (sharedVariables.showPallette == false)
-      showPallette.setSelected(false);
-    else
-      showPallette.setSelected(true);
-
-    if (sharedVariables.autoChat == false)
-      autoChat.setSelected(false);
-    else
-      autoChat.setSelected(true);
-    
-    if (sharedVariables.lowTimeColors == false)
-      lowTimeColors.setSelected(false);
-    else
-      lowTimeColors.setSelected(true);
-    
-    if (sharedVariables.newObserveGameSwitch == false)
-      newObserveGameSwitch.setSelected(false);
-    else
-      newObserveGameSwitch.setSelected(true);
-
-    if (sharedVariables.blockSays == false)
-      blockSays.setSelected(false);
-    else
-      blockSays.setSelected(true);
-
-    if (sharedVariables.useLightBackground == false)
-      useLightBackground.setSelected(false);
-    else
-      useLightBackground.setSelected(true);
-    */
 
     highlight.           setSelected(sharedVariables.highlightMoves);
     gameend.             setSelected(sharedVariables.gameend);
@@ -533,102 +462,6 @@ class mymultiframe extends JFrame
     
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
-    /*
-    if (sharedVariables.pgnObservedLogging == true)
-      pgnObservedLogging.setSelected(true);
-    else
-      pgnObservedLogging.setSelected(false);
-
-    if (sharedVariables.pgnLogging == true)
-      pgnlogging.setSelected(true);
-    else
-      pgnlogging.setSelected(false);
-
-    if (sharedVariables.switchOnTell == true)
-      tellswitch.setSelected(true);
-    else
-      tellswitch.setSelected(false);
-    
-    if (sharedVariables.toolbarVisible == true)
-      toolbarvisible.setSelected(true);
-    else
-      toolbarvisible.setSelected(false);
-
-    if (sharedVariables.autoBufferChat == false)
-      autobufferchat.setSelected(false);
-    else
-      autobufferchat.setSelected(true);
-    
-    if (sharedVariables.channelNumberLeft == false)
-      channelNumberLeft.setSelected(false);
-    else
-      channelNumberLeft.setSelected(true);
-    
-    if (sharedVariables.channelTimestamp == true)
-      channelTimestamp.setSelected(true);
-    else
-      channelTimestamp.setSelected(false);
-    
-    if (sharedVariables.shoutTimestamp == true)
-      shoutTimestamp.setSelected(true);
-    else
-      shoutTimestamp.setSelected(false);
-    
-    if (sharedVariables.qtellTimestamp == true)
-      qtellTimestamp.setSelected(true);
-    else
-      qtellTimestamp.setSelected(false);
-    
-    if (sharedVariables.reconnectTimestamp == true)
-      reconnectTimestamp.setSelected(true);
-    else
-      reconnectTimestamp.setSelected(false);
-
-    if(sharedVariables.andreysLayout == 0)
-      BoardDesign1.setSelected(true);
-    else
-      BoardDesign1.setSelected(false);
-
-    if (sharedVariables.andreysLayout == 1)
-      BoardDesign2.setSelected(true);
-    else
-      BoardDesign2.setSelected(false);
-
-    if (sharedVariables.andreysLayout == 2)
-      BoardDesign3.setSelected(true);
-    else
-      BoardDesign3.setSelected(false);
-
-    if (sharedVariables.playersInMyGame == 2)
-      playersInMyGame.setSelected(true);
-    else
-      playersInMyGame.setSelected(false);
-
-    if(sharedVariables.unobserveGoExamine == true)
-      unobserveGoExamine.setSelected(true);
-    else
-      unobserveGoExamine.setSelected(false);
-
-    if (sharedVariables.tellTimestamp == true)
-      tellTimestamp.setSelected(true);
-    else
-      tellTimestamp.setSelected(false);
-    
-    if (sharedVariables.leftTimestamp == true)
-      leftNameTimestamp.setSelected(true);
-    else
-      leftNameTimestamp.setSelected(false);
-
-    if (sharedVariables.checkLegality == true)
-      checkLegality.setSelected(true);
-    else
-      checkLegality.setSelected(false);
-
-    if (sharedVariables.indent == true)
-      lineindent.setSelected(true);
-    else
-      lineindent.setSelected(false);
-    */
       
     pgnObservedLogging.  setSelected(sharedVariables.pgnObservedLogging);
     pgnlogging.          setSelected(sharedVariables.pgnLogging);
@@ -652,33 +485,6 @@ class mymultiframe extends JFrame
     
     checkItalicsBehavior(sharedVariables.italicsBehavior);
 
-    /*
-    if (sharedVariables.randomArmy == true)
-      randomArmy.setSelected(true);
-    else
-      randomArmy.setSelected(false);
-    
-    if (sharedVariables.randomBoardTiles == true)
-      randomTiles.setSelected(true);
-    else
-      randomTiles.setSelected(false);
-
-    if (sharedVariables.specificSounds[4] == true)
-      notifysound.setSelected(true);
-    else
-      notifysound.setSelected(false);
-    
-    if (sharedVariables.tabsOnly == true)
-      tabbing.setSelected(true);
-    else
-      tabbing.setSelected(false);
-
-    if (sharedVariables.showQsuggest == true)
-      qsuggestPopup.setSelected(true);
-    else
-      qsuggestPopup.setSelected(false);
-    */
-
     randomArmy.          setSelected(sharedVariables.randomArmy);
     randomTiles.         setSelected(sharedVariables.randomBoardTiles);
     notifysound.         setSelected(sharedVariables.specificSounds[4]);
@@ -687,16 +493,11 @@ class mymultiframe extends JFrame
     rotateaways.         setSelected(sharedVariables.rotateAways);
     
     if (sharedVariables.rotateAways) {
-      //rotateaways.setSelected(true);
       try {
 	scriptLoader loadScripts = new  scriptLoader();
 	loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
       } catch (Exception du) {}
     }
-    /*
-    else
-      rotateaways.setSelected(false);
-    */
 
     iloggedon.           setSelected(sharedVariables.iloggedon);
     sidewaysconsole.     setSelected(sharedVariables.sideways);
@@ -708,53 +509,6 @@ class mymultiframe extends JFrame
     hearsound.           setSelected(sharedVariables.makeSounds);
     consolemenu.         setSelected(sharedVariables.showConsoleMenu);
 
-    /*
-    if (sharedVariables.iloggedon == true)
-      iloggedon.setSelected(true);
-    else
-      iloggedon.setSelected(false);
-
-    if (sharedVariables.sideways == true)
-      sidewaysconsole.setSelected(true);
-    else
-      sidewaysconsole.setSelected(false);
-
-    if (sharedVariables.showButtonTitle == true)
-      userbuttons.setSelected(true);
-    else
-      userbuttons.setSelected(false);
-
-    if (sharedVariables.autopopup == true)
-      autopopup.setSelected(true);
-    else
-      autopopup.setSelected(false);
-
-    if (sharedVariables.basketballFlag == true)
-      basketballFlag.setSelected(true);
-    else
-      basketballFlag.setSelected(false);
-
-    if (sharedVariables.autoHistoryPopup == true)
-      autoHistoryPopup.setSelected(true);
-    else
-      autoHistoryPopup.setSelected(false);
-    
-    if (sharedVariables.makeObserveSounds == true)
-      makeObserveSounds.setSelected(true);
-    else
-      makeObserveSounds.setSelected(false);
-
-    if (sharedVariables.makeSounds == true)
-      hearsound.setSelected(true);
-    else
-      hearsound.setSelected(false);
-
-    if (sharedVariables.showConsoleMenu == true)
-      consolemenu.setSelected(true);
-    else
-      consolemenu.setSelected(false);
-    */
-      
     /*
     if(sharedVariables.consoleLayout == 1) {
       tabLayout1.setSelected(true);
@@ -787,11 +541,11 @@ class mymultiframe extends JFrame
 
 
     for (int iii=0; iii<sharedVariables.maxConsoleTabs; iii++) {
-      if (consoleSubframes[iii]!=null) {
+      if (consoleSubframes[iii] != null) {
 
 	if (sharedVariables.nameListFont == null)
-          sharedVariables.nameListFont=consoleSubframes[iii].myNameList.getFont();
-	if (sharedVariables.consolesNamesLayout[iii]==0) {
+          sharedVariables.nameListFont = consoleSubframes[iii].myNameList.getFont();
+	if (sharedVariables.consolesNamesLayout[iii] == 0) {
           
           consoleSubframes[iii].listChoice.setSelected(false);
 	}
@@ -799,12 +553,12 @@ class mymultiframe extends JFrame
 	consoleSubframes[iii].myNameList.setBackground(sharedVariables.nameBackgroundColor);
 
 	consoleSubframes[iii].overall.recreate(sharedVariables.consolesTabLayout[iii]);
-        final int iiii=iii;
+        final int iiii = iii;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
               public void run() {
               try {
-                if (sharedVariables.tellconsole!=iiii)
+                if (sharedVariables.tellconsole != iiii)
                   consoleSubframes[iiii].tellCheckbox.setSelected(false);
                 // we set it to true in create console to match tell
                 // variable. undo the first one here if needed
@@ -822,7 +576,6 @@ class mymultiframe extends JFrame
 
     if (sharedVariables.channelColor[0]!=null)
       sharedVariables.typedColor=sharedVariables.channelColor[0];
-
     
     /****************** we do these next few in gui thread *****************************/
     SwingUtilities.invokeLater(new Runnable() {
@@ -906,7 +659,6 @@ class mymultiframe extends JFrame
           int cw = (int) (sharedVariables.screenW/2 - px - 1/10*sharedVariables.screenW/2);
           int ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
 
-
           consoleSubframes[0].setLocation(px, py);
           consoleSubframes[0].setSize(cw, ch);
           px = px + px + cw;
@@ -948,7 +700,7 @@ class mymultiframe extends JFrame
 
     // make as many consoles as we had last time
     try {
-	if (sharedVariables.visibleConsoles>1)
+	if (sharedVariables.visibleConsoles > 1)
           for (int nummake=1; nummake<sharedVariables.visibleConsoles; nummake++)
             mycreator.restoreConsoleFrame();
 
@@ -959,12 +711,6 @@ class mymultiframe extends JFrame
     getContentPane().add(toolBar,  BorderLayout.NORTH);
 
     toolBar.setVisible(sharedVariables.toolbarVisible);
-    /*
-    if (sharedVariables.toolbarVisible == true)
-      toolBar.setVisible(true);
-    else
-      toolBar.setVisible(false);
-    */
 
     try {
       SwingUtilities.invokeLater(new Runnable() {
@@ -978,7 +724,7 @@ class mymultiframe extends JFrame
           }
         });
       
-    } catch(Exception badf) {}
+    } catch (Exception badf) {}
 
 
     mycreator.updateBoardsMenu(0);  // first board
@@ -1158,13 +904,9 @@ class mymultiframe extends JFrame
     // add listeners
     settings2.addActionListener(this);
     reconnect1.addActionListener(this);
-    reconnect2.addActionListener(this);
+    //reconnect2.addActionListener(this);
     reconnect3.addActionListener(this);
     wallpaper1.addActionListener(this);
-
-    // special settings
-    // just don't add it instead
-    //reconnect2.setVisible(false);
 
     /****************************** Colors ******************************/
     JMenu mywindowscolors = new JMenu("Colors");
@@ -1278,11 +1020,11 @@ class mymultiframe extends JFrame
     tabfontchange.addActionListener(this);
     wallpaper2.addActionListener(this);
 
-    /*
-    JMenuItem channelTitles = new JMenuItem("Titles In Channel Color");
-    mywindowscolors.add(channelTitles);
-    channelTitles.addActionListener(this);
-    */
+
+    //JMenuItem channelTitles = new JMenuItem("Titles In Channel Color");
+    //mywindowscolors.add(channelTitles);
+    //channelTitles.addActionListener(this);
+
     //duplicate
     //JMenuItem mainback = new JMenuItem("Main Background");
     //myfiles.add(mainback);
@@ -1463,6 +1205,11 @@ class mymultiframe extends JFrame
     chattimestamp.add(qtellTimestamp);
     chattimestamp.add(reconnectTimestamp);
 
+    // special settings
+    consolemenu.setSelected(true);
+    channelNumberLeft.setSelected(true);
+    compactNameList.setSelected(false);
+
     // add listeners    
     makeObserveSounds.addActionListener(this);
     hearsound.addActionListener(this);
@@ -1509,14 +1256,9 @@ class mymultiframe extends JFrame
     channelTimestamp.addActionListener(this);
     shoutTimestamp.addActionListener(this);
     tellTimestamp.addActionListener(this);
-    leftNameTimestamp.addActionListener(this);
+    //leftNameTimestamp.addActionListener(this);
     qtellTimestamp.addActionListener(this);
     reconnectTimestamp.addActionListener(this);
-
-    // special settings
-    consolemenu.setSelected(true);
-    channelNumberLeft.setSelected(true);
-    compactNameList.setSelected(false);
 
     /****************************** Windows ******************************/
     sharedVariables.myWindows = new JMenu("Windows");
@@ -1531,7 +1273,7 @@ class mymultiframe extends JFrame
     JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
     // .. / (separator)
     JMenuItem rconsole2 = new JMenuItem("Customize Tab");
-    JMenuItem  webopener = new JMenuItem("Open Web");
+    //JMenuItem  webopener = new JMenuItem("Open Web");
     toolbarvisible = new JCheckBoxMenuItem("Toolbar");
     JMenuItem channelmap = new JMenuItem("Channel Map");
     JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
@@ -1588,7 +1330,7 @@ class mymultiframe extends JFrame
     channelnotifymap.addActionListener(this);
     channelnotifyonline.addActionListener(this);
     cascading.addActionListener(this);
-    webopener.addActionListener(this);
+    //webopener.addActionListener(this);
     toolbarvisible.addActionListener(this);
     toolbox.addActionListener(this);
 
@@ -1871,6 +1613,22 @@ class mymultiframe extends JFrame
     consoleaspect.addSeparator();
     consoleaspect.add(sidewaysconsole);
 
+    // special settings
+    highlight.setSelected(true);
+    woodenboard2.setSelected(true);
+    pieces1.setSelected(true);
+    pgnlogging.setSelected(true);
+    pgnObservedLogging.setSelected(true);
+    aspect0.setSelected(true);
+    aspect1.setSelected(false);
+    aspect2.setSelected(false);
+    aspect3.setSelected(false);
+    boardconsole0.setSelected(false);
+    boardconsole1.setSelected(false);
+    boardconsole2.setSelected(true);
+    boardconsole3.setSelected(false);
+    sidewaysconsole.setSelected(false);
+
     // add listeners
     nseek.addActionListener(this);
     flipSent.addActionListener(this);
@@ -1935,7 +1693,7 @@ class mymultiframe extends JFrame
     showFlags.addActionListener(this);
     showRatings.addActionListener(this);
     playersInMyGame.addActionListener(this);
-    useLightBackground.addActionListener(this);
+    //useLightBackground.addActionListener(this);
     whatexaminereplay.addActionListener(this);
     autoset.addActionListener(this);
     pgnlogging.addActionListener(this);
@@ -1959,146 +1717,124 @@ class mymultiframe extends JFrame
     sidewaysconsole.addActionListener(this);
     highlight.addActionListener(this);
 
-    // special settings
-    highlight.setSelected(true);
-    woodenboard2.setSelected(true);
-    pieces1.setSelected(true);
-    pgnlogging.setSelected(true);
-    pgnObservedLogging.setSelected(true);
-    aspect0.setSelected(true);
-    aspect1.setSelected(false);
-    aspect2.setSelected(false);
-    aspect3.setSelected(false);
-    boardconsole0.setSelected(false);
-    boardconsole1.setSelected(false);
-    boardconsole2.setSelected(true);
-    boardconsole3.setSelected(false);
-    sidewaysconsole.setSelected(false);
-
     /****************************** Actions ******************************/
     JMenu actionsmenu = new JMenu("Actions");
+    // Actions /
     JMenuItem showhistory = new JMenuItem("Show My Recent Games");
-    actionsmenu.add(showhistory);
-    showhistory.addActionListener(this);
-
     JMenuItem showlib = new JMenuItem("Show My Game Library");
-    actionsmenu.add(showlib);
-    showlib.addActionListener(this);
-
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
-    actionsmenu.add(showstored);
-    showstored.addActionListener(this);
-
-    actionsmenu.addSeparator();
+    // .. / (separator)
     JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
-    actionsmenu.add(showfinger);
-    showfinger.addActionListener(this);
-
-
     JMenuItem showexam = new JMenuItem("Enter Examination Mode");
-    actionsmenu.add(showexam);
-    showexam.addActionListener(this);
-
     JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
-    actionsmenu.add(showexamlast);
-    showexamlast.addActionListener(this);
-
-
-    actionsmenu.addSeparator();
-
+    // .. / (separator)
     JMenuItem showobs = new JMenuItem("Observe High Rated Game");
-    actionsmenu.add(showobs);
-    showobs.addActionListener(this);
-
     JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
-    actionsmenu.add(showobs5);
-    showobs5.addActionListener(this);
-
     JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
-    actionsmenu.add(showobs15);
-    showobs15.addActionListener(this);
-
-    actionsmenu.addSeparator();
-    
+    // .. / (separator)
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
-    actionsmenu.add(showrelay);
-    showrelay.addActionListener(this);
- 
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
-    actionsmenu.add(ratinggraph);
-    ratinggraph.addActionListener(this);
-
     JMenuItem addfriend = new JMenuItem("Add a Friend");
-    actionsmenu.add(addfriend);
-    addfriend.addActionListener(this);
-
-    actionsmenu.addSeparator();
-
+    // .. / (separator)
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
-    actionsmenu.add(followBroadcast);
-    followBroadcast.addActionListener(this);
-
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
-    actionsmenu.add(unfollowBroadcast);
-    unfollowBroadcast.addActionListener(this);
-
     JMenuItem showfm = new JMenuItem("Open ChessFM");
-    actionsmenu.add(showfm);
-    showfm.addActionListener(this);
+
+    // add shortcuts
+    actionsmenu.setMnemonic(KeyEvent.VK_A);
 
     menu.add(actionsmenu);
-
-    JMenu helpmenu = new JMenu("Help");
-    JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
-    helpmenu.add(lanternmanual);
-    lanternmanual.addActionListener(this);
-
-    JMenuItem changelog = new JMenuItem("Change Log");
-    helpmenu.add(changelog);
-    changelog.addActionListener(this);
-
-    JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
-    helpmenu.add(infohelp);
-    infohelp.addActionListener(this);
-
-    JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
-    helpmenu.add(commandhelp);
-    commandhelp.addActionListener(this);
-
-    JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
-    helpmenu.add(joinrenewhelp);
-    joinrenewhelp.addActionListener(this);
-
-    JMenuItem passwordhelp = new JMenuItem("Lost Password");
-    helpmenu.add(passwordhelp);
-    passwordhelp.addActionListener(this);
-
-    JMenu poweroutmenu = new JMenu("Extra-games");
-    JMenuItem power = new JMenuItem("Start Powerout");
-    poweroutmenu.add(power);
-    power.addActionListener(this);
+    // Actions /
+    actionsmenu.add(showhistory);
+    actionsmenu.add(showlib);
+    actionsmenu.add(showstored);
+    actionsmenu.addSeparator();
+    actionsmenu.add(showfinger);
+    actionsmenu.add(showexam);
+    actionsmenu.add(showexamlast);
+    actionsmenu.addSeparator();
+    actionsmenu.add(showobs);
+    actionsmenu.add(showobs5);
+    actionsmenu.add(showobs15);
+    actionsmenu.addSeparator();
+    actionsmenu.add(showrelay);
+    actionsmenu.add(ratinggraph);
+    actionsmenu.add(addfriend);
+    actionsmenu.addSeparator();
+    actionsmenu.add(followBroadcast);
+    actionsmenu.add(unfollowBroadcast);
+    actionsmenu.add(showfm);
     
+    showhistory.addActionListener(this);
+    showlib.addActionListener(this);
+    showstored.addActionListener(this);
+    showfinger.addActionListener(this);
+    showexam.addActionListener(this);
+    showexamlast.addActionListener(this);
+    showobs.addActionListener(this);
+    showobs5.addActionListener(this);
+    showobs15.addActionListener(this);
+    showrelay.addActionListener(this);
+    ratinggraph.addActionListener(this);
+    addfriend.addActionListener(this);
+    followBroadcast.addActionListener(this);
+    unfollowBroadcast.addActionListener(this);
+    showfm.addActionListener(this);
+
+    /****************************** Help ******************************/
+    JMenu helpmenu = new JMenu("Help");
+    // Help /
+    JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
+    JMenuItem changelog = new JMenuItem("Change Log");
+    JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
+    JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
+    JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
+    JMenuItem passwordhelp = new JMenuItem("Lost Password");
+    JMenu poweroutmenu = new JMenu("Extra-games");
+    // .. / Extra-games
+    JMenuItem power = new JMenuItem("Start Powerout");
     JMenuItem mines = new JMenuItem("Start MineSweeper");
-    poweroutmenu.add(mines);
-    mines.addActionListener(this);
-
     JMenuItem mastermind = new JMenuItem("Start Mastermind");
-    poweroutmenu.add(mastermind);
-    mastermind.addActionListener(this);
-
     JMenuItem startfour = new JMenuItem("Start Connect Four");
-    poweroutmenu.add(startfour);
-    startfour.addActionListener(this);
 
-    helpmenu.add(poweroutmenu);
+    // add shortcut
+    helpmenu.setMnemonic(KeyEvent.VK_H);
+    lanternmanual.setMnemonic(KeyEvent.VK_M);
+    changelog.setMnemonic(KeyEvent.VK_C);
 
+    // add to menu bar
     menu.add(helpmenu);
+    // Help /
+    helpmenu.add(lanternmanual);
+    helpmenu.add(changelog);
+    helpmenu.add(infohelp);
+    helpmenu.add(commandhelp);
+    helpmenu.add(joinrenewhelp);
+    helpmenu.add(passwordhelp);
+    helpmenu.add(poweroutmenu);
+    // .. / Extra-games
+    poweroutmenu.add(power);
+    poweroutmenu.add(mines);
+    poweroutmenu.add(mastermind);
+    poweroutmenu.add(startfour);
+
+    // add listener
+    lanternmanual.addActionListener(this);
+    changelog.addActionListener(this);
+    infohelp.addActionListener(this);
+    commandhelp.addActionListener(this);
+    joinrenewhelp.addActionListener(this);
+    passwordhelp.addActionListener(this);
+    power.addActionListener(this);
+    mines.addActionListener(this);
+    mastermind.addActionListener(this);
+    startfour.addActionListener(this);
   }
 
   public void stateChanged(ChangeEvent e) {
 
     for (int i=0; i < sharedVariables.openConsoleCount; i++) {
-      if (consoles[i]!= null) {
+      if (consoles[i] != null) {
         if (colortype == 1) {
           Color newColor = tcc.getColor();
           consoles[i].setForeground(newColor);
@@ -2130,41 +1866,14 @@ class mymultiframe extends JFrame
       resetConsoleLayout();
       
     } else if (action.equals("Indent Multi Line Tells")) {
-      /*
-      if(sharedVariables.indent == true) {
-	sharedVariables.indent=false;
-	lineindent.setSelected(false);
-      } else {
-	sharedVariables.indent=true;
-	lineindent.setSelected(true);
-      }
-      */
       sharedVariables.indent = !sharedVariables.indent;
       lineindent.setSelected(sharedVariables.indent);
       
     } else if (action.equals("Check Move Legality")) {
-      /*
-      if (sharedVariables.checkLegality == true) {
-	sharedVariables.checkLegality=false;
-	checkLegality.setSelected(false);
-      } else {
-	sharedVariables.checkLegality=true;
-	checkLegality.setSelected(true);
-      }
-      */
       sharedVariables.checkLegality = !sharedVariables.checkLegality;
       checkLegality.setSelected(sharedVariables.checkLegality);
       
     } else if (action.equals("Unobserve Games Gone Examine")) {
-      /*
-      if (sharedVariables.unobserveGoExamine == true) {
-	sharedVariables.unobserveGoExamine=false;
-	unobserveGoExamine.setSelected(false);
-      } else {
-	sharedVariables.unobserveGoExamine=true;
-	unobserveGoExamine.setSelected(true);
-      }
-      */
       sharedVariables.unobserveGoExamine = !sharedVariables.unobserveGoExamine;
       unobserveGoExamine.setSelected(sharedVariables.unobserveGoExamine);
       
@@ -2175,17 +1884,6 @@ class mymultiframe extends JFrame
       compactNameList.setSelected(sharedVariables.compactNameList);
       
       try {
-        /*
-	if (sharedVariables.compactNameList == true) {
-          sharedVariables.compactNameList = false;
-          sharedVariables.nameListSize=90;
-          compactNameList.setSelected(false);
-	} else {
-          sharedVariables.compactNameList = true;
-          sharedVariables.nameListSize=65;
-          compactNameList.setSelected(true);
-	}
-        */
         for (int iii=0; iii<sharedVariables.maxConsoleTabs; iii++) {
           if (consoleSubframes[iii]!=null) {
             consoleSubframes[iii].overall.recreate(sharedVariables.consolesTabLayout[iii]);
@@ -2195,28 +1893,10 @@ class mymultiframe extends JFrame
       } catch (Exception namebad) {}
       
     } else if (action.equals("Channel Number On Left")) {
-      /*
-      if (sharedVariables.channelNumberLeft == true) {
-	sharedVariables.channelNumberLeft=false;
-	channelNumberLeft.setSelected(false);
-      } else {
-	sharedVariables.channelNumberLeft=true;
-	channelNumberLeft.setSelected(true);
-      }
-      */
       sharedVariables.channelNumberLeft = !sharedVariables.channelNumberLeft;
       channelNumberLeft.setSelected(sharedVariables.channelNumberLeft);
       
     } else if (action.equals("Show Console Menu")) {
-      /*
-      if (sharedVariables.showConsoleMenu == true) {
-        sharedVariables.showConsoleMenu = false;
-        consolemenu.setSelected(false);
-      } else {
-        sharedVariables.showConsoleMenu = true;
-        consolemenu.setSelected(true);
-      }
-      */
       sharedVariables.showConsoleMenu = !sharedVariables.showConsoleMenu;
       consolemenu.setSelected(sharedVariables.showConsoleMenu);
       
@@ -2226,15 +1906,6 @@ class mymultiframe extends JFrame
       }	catch (Exception bal) {}
       
     } else if (action.equals("Show User Button Titles")) {
-      /*
-      if (sharedVariables.showButtonTitle == true) {
-	sharedVariables.showButtonTitle=false;
-	userbuttons.setSelected(false);
-      } else {
-	sharedVariables.showButtonTitle=true;
-	userbuttons.setSelected(true);
-      }
-      */
       sharedVariables.showButtonTitle = !sharedVariables.showButtonTitle;
       userbuttons.setSelected(sharedVariables.showButtonTitle);
       
@@ -2242,15 +1913,6 @@ class mymultiframe extends JFrame
         setButtonTitle(a);
 
     } else if (action.equals("Qsuggest Popups")) {
-      /*
-      if (sharedVariables.showQsuggest == true) {
-	qsuggestPopup.setSelected(false);
-	sharedVariables.showQsuggest=false;
-      } else {
-	qsuggestPopup.setSelected(true);
-	sharedVariables.showQsuggest=true;
-      }
-      */
       sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
       qsuggestPopup.setSelected(sharedVariables.showQsuggest);
 
@@ -2282,9 +1944,9 @@ class mymultiframe extends JFrame
       }
       */
 
+      // Andrey edits:
+      // merge the responses for loading engines
     } else if (action.equals("Load Winboard Engine") ||
-               // Andrey edits:
-               // merge the responses for loading engines
                action.equals("Load UCI Engine")) {
       boolean go = false;
       if (!sharedVariables.engineOn) {
@@ -2297,7 +1959,6 @@ class mymultiframe extends JFrame
 
           if (returnVal == JFileChooser.APPROVE_OPTION) {
             sharedVariables.engineFile = fc.getSelectedFile();
-            //sharedVariables.uci = false;
             sharedVariables.uci = (action.equals("Load UCI Engine"));
 
             startTheEngine();
@@ -2307,29 +1968,6 @@ class mymultiframe extends JFrame
 
       if (!go && !sharedVariables.engineOn)
         makeEngineWarning();
-      
-      /*    
-    } else if (action.equals("Load UCI Engine")) {
-      boolean go = false;
-      if (!sharedVariables.engineOn) {
-        go=true;
-	try {
-          JFileChooser fc = new JFileChooser();
-          fc.setCurrentDirectory(new File("."));;
-
-          int returnVal = fc.showOpenDialog(this);
-
-          if (returnVal == JFileChooser.APPROVE_OPTION) {
-            sharedVariables.engineFile = fc.getSelectedFile();
-            sharedVariables.uci=true;
-            startTheEngine();
-          }
-        } catch (Exception e) {}
-      }
-
-      if (!go && !sharedVariables.engineOn)
-        makeEngineWarning();
-      */
       
     } else if (action.equals("Set Application Background Color")) {
       try {
@@ -2440,52 +2078,6 @@ class mymultiframe extends JFrame
             }
       }
       
-      /*
-    } else if (action.equals("Analysis Foreground Color")) {
-      JDialog frame = new JDialog();
-      Color newColor = JColorChooser.showDialog(frame, "Analysis Foreground Color",
-                                                sharedVariables.analysisForegroundColor);
-      if (newColor != null) {
-        sharedVariables.analysisForegroundColor=newColor;
-
-        // Andrey says:
-        // marked for future edits
-        for (int a=0; a<sharedVariables.maxGameTabs; a++)
-          if (myboards[a] != null)
-            if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
-              if ((sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
-                   sharedVariables.STATE_EXAMINING ||
-                   sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
-                   sharedVariables.STATE_OBSERVING) &&
-                  sharedVariables.engineOn)
-                if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
-                  myboards[a].myconsolepanel.setEngineDoc();
-            }
-      }
-
-    } else if (action.equals("Analysis Background Color")) {
-      JDialog frame = new JDialog();
-      Color newColor = JColorChooser.showDialog(frame, "Analysis Background Color",
-                                                sharedVariables.analysisBackgroundColor);
-      if (newColor != null) {
-        sharedVariables.analysisBackgroundColor=newColor;
-
-        // Andrey says:
-        // marked for future edits
-        for (int a=0; a<sharedVariables.maxGameTabs; a++)
-          if (myboards[a] != null)
-            if (sharedVariables.gamelooking[a] == sharedVariables.engineBoard) {
-              if ((sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
-                   sharedVariables.STATE_EXAMINING ||
-                   sharedVariables.mygame[sharedVariables.gamelooking[a]].state ==
-                   sharedVariables.STATE_OBSERVING) &&
-                  sharedVariables.engineOn)
-                if (sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount%2 == 1)
-                  myboards[a].myconsolepanel.setEngineDoc();
-            }
-      }
-      */
-  
     } else if (action.equals("Stop Engine")) {
 
       if (sharedVariables.engineOn) {
@@ -2518,15 +2110,6 @@ class mymultiframe extends JFrame
       openSeekGraph();
 
     } else if (action.equals("Send iloggedon")) {
-      /*
-      if (sharedVariables.iloggedon== false) {
-        sharedVariables.iloggedon=true;
-        iloggedon.setSelected(true);
-      } else {
-        sharedVariables.iloggedon=false;
-        iloggedon.setSelected(false);
-      }
-      */
       sharedVariables.iloggedon = !sharedVariables.iloggedon;
       iloggedon.setSelected(sharedVariables.iloggedon);
       
@@ -2580,11 +2163,6 @@ class mymultiframe extends JFrame
       mypopper.setVisible(true);
 
     } else if (action.equals("Send Game End Messages")) {
-      /*  
-      if (sharedVariables.gameend == false) {// activate
-        gameend.setSelected(true);
-        sharedVariables.gameend=true;
-      */
       sharedVariables.gameend = !sharedVariables.gameend;
       gameend.setSelected(sharedVariables.gameend);
 
@@ -2602,12 +2180,6 @@ class mymultiframe extends JFrame
         mypopper.setSize(600,500);
         mypopper.setVisible(true);
       }
-      /*
-      } else {// deactivate
-        gameend.setSelected(false);
-        sharedVariables.gameend=false;
-      }
-      */
       // end gameend menu item
       
   } else if (action.equals("Rotate Away Message")) {
@@ -2643,6 +2215,7 @@ class mymultiframe extends JFrame
       Popup mypopper = new Popup(this, false, mes);
       mypopper.setSize(300,350);
       mypopper.setVisible(true);
+
       /*
     } else if (action.equals("Stop AutoExam")) {
       sharedVariables.autoexam=0;
@@ -2655,10 +2228,9 @@ class mymultiframe extends JFrame
       frame.pack();
       frame.setVisible(true);
 
-
-    } else if (action.equals("Reconnect to Queen") ||
       // Andrey edits:
       // merging queen and main reconnect
+    } else if (action.equals("Reconnect to Queen") ||
                action.equals("Reconnect to ICC")) {
       try {
         sharedVariables.myServer = "ICC";
@@ -2675,41 +2247,12 @@ class mymultiframe extends JFrame
         myConnection.setVisible(true);
       } catch(Exception conn) {}
 
-      /*
-    } else if (action.equals("Reconnect to ICC")) {
-
-      try {
-	sharedVariables.myServer="ICC";
-        sharedVariables.chessclubIP = "207.99.83.228";
-        sharedVariables.doreconnect=true;
-        if(myConnection == null)
-          myConnection = new connectionDialog(this, sharedVariables, queue, false);
-        else if(!myConnection.isVisible())
-          myConnection = new connectionDialog(this, sharedVariables, queue, false);
-        myConnection.setVisible(true);
-      } catch(Exception conn) {}
-      */
-
     } else if (action.equals("Reconnect to FICS")) {
 
       sharedVariables.myServer="FICS";
       sharedVariables.doreconnect=true;
 
     } else if (action.equals("Save Settings")) {
-      /*
-      sharedVariables.activitiesOpen = false;
-      if (myfirstlist != null)
-        if (myfirstlist.isVisible())
-          sharedVariables.activitiesOpen = true;
-      if (mysecondlist != null)
-        if (mysecondlist.isVisible())
-          sharedVariables.activitiesOpen = true;
-
-      sharedVariables.seeksOpen = false;
-      if (seekGraph != null)
-        if (seekGraph.isVisible())
-          sharedVariables.seeksOpen = true;
-      */
       sharedVariables.activitiesOpen =
         (myfirstlist != null && myfirstlist.isVisible() ||
          mysecondlist != null && mysecondlist.isVisible());
@@ -2739,17 +2282,6 @@ class mymultiframe extends JFrame
       mydialog.setVisible(true);
 
     } else if (action.equals("Toolbar")) {
-      /*
-      if (sharedVariables.toolbarVisible == true) {
-        toolbarvisible.setSelected(false);
-        sharedVariables.toolbarVisible = false;
-        toolBar.setVisible(false);
-      } else {
-        toolbarvisible.setSelected(true);
-        sharedVariables.toolbarVisible = true;
-        toolBar.setVisible(true);
-      }
-      */
       sharedVariables.toolbarVisible = !sharedVariables.toolbarVisible;
       toolbarvisible.setSelected(sharedVariables.toolbarVisible);
       toolBar.setVisible(sharedVariables.toolbarVisible);
@@ -2793,36 +2325,6 @@ class mymultiframe extends JFrame
       }
 
     } else if (action.equals("New Detached Chat Console")) {
-      /*
-      boolean makeChatter = false;
-      if (consoleChatframes[11] == null)
-        makeChatter=true;
-      else if (!consoleChatframes[11].isVisible())
-        makeChatter=true;
-
-      if (makeChatter == true) {
-        sharedVariables.chatFrame=11;
-        consoleChatframes[11] =
-          new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
-        consoleChatframes[11].setVisible(true);
-      } else {
-        if (consoleChatframes[10] == null)
-          makeChatter=true;
-        else if (!consoleChatframes[10].isVisible())
-          makeChatter=true;
-        if (makeChatter == true) {
-          sharedVariables.chatFrame=10;
-          consoleChatframes[10] =
-            new chatframe(sharedVariables, consoles, queue, mycreator.myDocWriter);
-          consoleChatframes[10].setVisible(true);
-        } else {
-          Popup mypopper =
-            new Popup(this, false, "Can only have two detached chat frames open now");
-          mypopper.setVisible(true);
-        }
-      }
-      */
-
       // Andrey says:
       // worth looking at further
       int detachedIndex = 11;
@@ -2963,19 +2465,6 @@ class mymultiframe extends JFrame
       boolean ontop = getOnTopSetting();
 
       FileWrite mywriter = new FileWrite();
-      /*
-      if (ontop == false) {
-        String mess = "Next time you start the program, boards will be on top windows.";
-        Popup mypopper = new Popup(this, true, mess);
-        mypopper.setVisible(true);
-        mywriter.write("true\r\n", "lantern_board_on_top.txt");
-      } else {
-        String mess = "Next time you start the program, boards will NOT be on top windows.";
-        Popup mypopper = new Popup(this, true, mess);
-        mypopper.setVisible(true);
-        mywriter.write("false\r\n", "lantern_board_on_top.txt");
-      }
-      */
       String mess = "Next time you start the program, boards " +
         (ontop ? "will NOT" : "will") + " be on top windows.";
       Popup mypopper = new Popup(this, true, mess);
@@ -3009,27 +2498,10 @@ class mymultiframe extends JFrame
       myseeker.setVisible(true);
 
     } else if (action.equals("Log Pgn")) {
-      /*
-      if(sharedVariables.pgnLogging == true) {
-        sharedVariables.pgnLogging = false;
-        pgnlogging.setSelected(false);
-      } else {
-        sharedVariables.pgnLogging = true;
-        pgnlogging.setSelected(true);
-      }
-      */
       sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
       pgnlogging.setSelected(sharedVariables.pgnLogging);
 
     } else if (action.equals("Log Observed Games To Pgn")) {
-      /*
-      if (sharedVariables.pgnObservedLogging == true) {
-        sharedVariables.pgnObservedLogging = false;
-        pgnObservedLogging.setSelected(false);
-      } else {
-        sharedVariables.pgnObservedLogging = true;
-        pgnObservedLogging.setSelected(true);
-      */
       sharedVariables.pgnObservedLogging = !sharedVariables.pgnObservedLogging;
       pgnObservedLogging.setSelected(sharedVariables.pgnObservedLogging);
       if (sharedVariables.pgnObservedLogging) {
@@ -3058,41 +2530,6 @@ class mymultiframe extends JFrame
       for (int a=0; a<sharedVariables.maxGameTabs; a++)
         if (myboards[a]!=null && myboards[a].isVisible())
           myboards[a].mypanel.repaint();
-      
-      /*
-    } else if (action.equals("5:4")) {
-      sharedVariables.aspect=1;
-      aspect0.setSelected(false);
-      aspect1.setSelected(true);
-      aspect2.setSelected(false);
-      aspect3.setSelected(false);
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          if (myboards[a].isVisible() == true)
-            myboards[a].mypanel.repaint();
-
-    } else if (action.equals("4:3")) {
-      sharedVariables.aspect=2;
-      aspect0.setSelected(false);
-      aspect1.setSelected(false);
-      aspect2.setSelected(true);
-      aspect3.setSelected(false);
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          if (myboards[a].isVisible() == true)
-            myboards[a].mypanel.repaint();
-
-    } else if (action.equals("3:2")) {
-      sharedVariables.aspect=3;
-      aspect0.setSelected(false);
-      aspect1.setSelected(false);
-      aspect2.setSelected(false);
-      aspect3.setSelected(true);
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          if (myboards[a].isVisible() == true)
-            myboards[a].mypanel.repaint();
-      */
       
     } else if (action.equals("Hide Board Console")) {
       sharedVariables.boardConsoleType = 0;
@@ -3127,29 +2564,6 @@ class mymultiframe extends JFrame
       sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[boardTypeIndex];
 
       setBoard(0);
-
-      /*
-    } else if (action.equals("Tan Board")) {
-      sharedVariables.boardType = 0;
-      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[1];
-      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[1];
-
-      setBoard(0);
-
-    } else if (action.equals("Gray Color Board")) {
-      sharedVariables.boardType = 0;
-      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[2];
-      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[2];
-
-      setBoard(0);
-
-    } else if (action.equals("Blitzin Green Board")) {
-      sharedVariables.boardType = 0;
-      sharedVariables.lightcolor=sharedVariables.preselectBoards.light[3];
-      sharedVariables.darkcolor=sharedVariables.preselectBoards.dark[3];
-
-      setBoard(0);
-      */
 
       // Andrey edits:
       // merge the board color settings
@@ -3209,99 +2623,6 @@ class mymultiframe extends JFrame
         if (myboards[a] != null)
           //if(myboards[a].isVisible() == true)
           myboards[a].repaint();
-
-      /*
-    } else if (action.equals("Board Background Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Board Background Color",
-                                 sharedVariables.boardBackgroundColor);
-      if (newColor != null)
-        sharedVariables.boardBackgroundColor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a] != null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } else if (action.equals("Highlight Moves Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Highlight Moves Color",
-                                 sharedVariables.highlightcolor);
-      if (newColor != null)
-        sharedVariables.highlightcolor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } if (action.equals("Scroll Back Highlight Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Scroll Back Highlight Color",
-                                 sharedVariables.scrollhighlightcolor);
-      if (newColor != null)
-        sharedVariables.scrollhighlightcolor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a] != null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } else if (action.equals("Board Foreground Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Board Foreground Color",
-                                 sharedVariables.boardForegroundColor);
-      if (newColor != null)
-        sharedVariables.boardForegroundColor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a] != null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } else if (action.equals("Clock Foreground Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Clock Foreground Color",
-                                 sharedVariables.clockForegroundColor);
-      if (newColor != null)
-        sharedVariables.clockForegroundColor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].repaint();
-
-    } else if (action.equals("Light Square Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Light Square Color",
-                                 sharedVariables.lightcolor);
-      if (newColor != null)
-        sharedVariables.lightcolor=newColor;
-      for (int a=0; a< sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].mypanel.repaint();
-
-    } else if (action.equals("Dark Square Color")) {
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Dark Square Color",
-                                 sharedVariables.darkcolor);
-      if (newColor != null)
-        sharedVariables.darkcolor=newColor;
-      for (int a=0; a<sharedVariables.maxGameTabs; a++)
-        if (myboards[a]!=null)
-          //if(myboards[a].isVisible() == true)
-          myboards[a].mypanel.repaint();
-      */
 
       // Andrey says:
       // the next few actions appear to be no longer called
@@ -3477,111 +2798,12 @@ class mymultiframe extends JFrame
       data.data=actionmess;
       queue.add(data);
       
-      /*
-    } else if (action.equals("Show My Game Library")) {
-      String actionmess = "Liblist\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data = actionmess;
-      queue.add(data);
-
-    } else if (action.equals("Show My Adjourned Games")) {
-      String actionmess = "Stored\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data = actionmess;
-      queue.add(data);
-
-    } else if (action.equals("Show My Profile and Ratings")) {
-      String actionmess="Finger\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-
-    } else if(action.equals("Enter Examination Mode")) {
-      String actionmess="Examine\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-
-    } else if(action.equals("Examine My Last Game")) {
-      String actionmess="Examine -1\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-      
-    } else if (action.equals("Observe High Rated Game")) {
-      String actionmess="Observe *\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-
-    } else if (action.equals("Observe High Rated 5-Minute Game")) {
-      String actionmess="Observe *f\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-
-    } else if (action.equals("Observe High Rated 15-Minute Game")) {
-      String actionmess="Observe *P\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-      */
-      
     } else if (action.equals("Show Relay Schedule")) {
       openUrl("http://www.chessclub.com/activities/relays.html");
 
     } else if (action.equals("Add a Friend")) {
       addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
 
-      /*
-    } else if (action.equals("Stop Following")) {
-
-      String actionmess="Unfollow\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-
-    } else if (action.equals("Follow Broadcast- When On")) {
-
-      client.writeToSubConsole("Be sure to turn on the radio by opening ChessFm, " +
-                               "Actions - Open ChessFm in the menu.\n", 0);
-
-      String actionmess="Follow Broadcast\n";
-      if (sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-      */
-      
     } else if (action.equals("Open ChessFM")) {
 
       // ?user=me&pass=pass
@@ -3903,18 +3125,6 @@ class mymultiframe extends JFrame
       }
       repaintTabBorders();
       
-      /*
-    } else if (action.equals("Tell Tab Border")) {// active tab
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Tell Tab Border Color",
-                                 sharedVariables.tellTabBorderColor);
-      if (newColor != null)
-        sharedVariables.tellTabBorderColor = newColor;
-      repaintTabBorders();
-      */
-
       // Andrey edits:
       // merge the input settings
     } else if (action.equals("Input Command Color") ||
@@ -3936,17 +3146,6 @@ class mymultiframe extends JFrame
           sharedVariables.inputChatColor = newColor;
       }
 
-      /*
-    } else if (action.equals("Input Chat Color")) {//Input Chat Color
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Input Chat Color",
-                                 sharedVariables.activeTabForeground);
-      if (newColor != null)
-        sharedVariables.inputChatColor = newColor;
-      */
-      
       // Andrey edits:
       // merge active with non-active
     } else if (action.equals("Active") ||// active tab
@@ -3979,63 +3178,15 @@ class mymultiframe extends JFrame
             consoleSubframes[a].isVisible())
           consoleSubframes[a].setActiveTabForeground(sharedVariables.looking[a]);
 
-      /*
-    } else if (action.equals("Non Active")) {// active tab
-
-      JDialog frame = new JDialog();
-      Color newColor =
-        JColorChooser.showDialog(frame, "Non Active Foreground Color",
-                                 sharedVariables.passiveTabForeground);
-      if (newColor != null)
-        sharedVariables.passiveTabForeground=newColor;
-      for (int a=0; a<sharedVariables.openBoardCount; a++)
-        if (myboards[a] != null &&
-            myboards[a].isVisible())
-          myboards[a].myconsolepanel.setActiveTabForeground(sharedVariables.gamelooking[a]);
-
-      // now update consoles
-      for (int a=0; a<sharedVariables.openConsoleCount; a++)
-        if (consoleSubframes[a] != null &&
-            consoleSubframes[a].isVisible())
-          consoleSubframes[a].setActiveTabForeground(sharedVariables.looking[a]);
-      */
-      
     } else if (action.equals("Highlight Moves")) {
-      /*
-      if (sharedVariables.highlightMoves == false) {
-        highlight.setSelected(true);
-        sharedVariables.highlightMoves = true;
-      } else {
-        highlight.setSelected(false);
-        sharedVariables.highlightMoves = false;
-      }
-      */
       sharedVariables.highlightMoves = !sharedVariables.highlightMoves;
       highlight.setSelected(sharedVariables.highlightMoves);
       
     } else if (action.equals("Material Count")) {
-      /*
-      if (sharedVariables.showMaterialCount == false) {
-        materialCount.setSelected(true);
-        sharedVariables.showMaterialCount = true;
-      } else {
-        materialCount.setSelected(false);
-        sharedVariables.showMaterialCount = false;
-      }
-      */
       sharedVariables.showMaterialCount = !sharedVariables.showMaterialCount;
       materialCount.setSelected(sharedVariables.showMaterialCount);
       
     } else if (action.equals("Draw Coordinates")) {
-      /*
-      if (sharedVariables.drawCoordinates == false) {
-        drawCoordinates.setSelected(true);
-        sharedVariables.drawCoordinates = true;
-      } else {
-        drawCoordinates.setSelected(false);
-        sharedVariables.drawCoordinates = false;
-      }
-      */
       sharedVariables.drawCoordinates = !sharedVariables.drawCoordinates;
       drawCoordinates.setSelected(sharedVariables.drawCoordinates);
       
@@ -4044,94 +3195,31 @@ class mymultiframe extends JFrame
       queue.add(output);
 
     } else if (action.equals("Show Observers In Games")) {
-      /*
-      if (sharedVariables.playersInMyGame == 0) {
-        playersInMyGame.setSelected(true);
-        sharedVariables.playersInMyGame = 2;
-      } else {
-        playersInMyGame.setSelected(false);
-        sharedVariables.playersInMyGame = 0;
-      }
-      */
       sharedVariables.playersInMyGame =
         (sharedVariables.playersInMyGame == 0 ? 2 : 0);
       playersInMyGame.setSelected(sharedVariables.playersInMyGame != 0);
                                          
     } else if (action.equals("Show Ratings on Board When Playing")) {
-      /*
-      if (sharedVariables.showRatings == false) {
-        showRatings.setSelected(true);
-        sharedVariables.showRatings = true;
-      } else {
-        showRatings.setSelected(false);
-        sharedVariables.showRatings = false;
-      }
-      */
       sharedVariables.showRatings = !sharedVariables.showRatings;
       showRatings.setSelected(sharedVariables.showRatings);
       
     } else if (action.equals("Switch To New Game Tab On Observe")) {
-      /*
-      if (sharedVariables.newObserveGameSwitch == false) {
-        newObserveGameSwitch.setSelected(true);
-        sharedVariables.newObserveGameSwitch = true;
-      } else {
-        newObserveGameSwitch.setSelected(false);
-        sharedVariables.newObserveGameSwitch = false;
-      }
-      */
       sharedVariables.newObserveGameSwitch = !sharedVariables.newObserveGameSwitch;
       newObserveGameSwitch.setSelected(sharedVariables.newObserveGameSwitch);
   
     } else if (action.equals("Low Time Clock Colors (Bullet Only)")) {
-      /*
-      if (sharedVariables.lowTimeColors == false) {
-        lowTimeColors.setSelected(true);
-        sharedVariables.lowTimeColors = true;
-      } else {
-        lowTimeColors.setSelected(false);
-        sharedVariables.lowTimeColors = false;
-      }
-      */
       sharedVariables.lowTimeColors = !sharedVariables.lowTimeColors;
       lowTimeColors.setSelected(sharedVariables.lowTimeColors);
   
     } else if (action.equals("AutoChat")) {
-      /*
-      if (sharedVariables.autoChat == false) {
-        autoChat.setSelected(true);
-        sharedVariables.autoChat = true;
-      } else {
-        autoChat.setSelected(false);
-        sharedVariables.autoChat = false;
-      }
-      */
       sharedVariables.autoChat = !sharedVariables.autoChat;
       autoChat.setSelected(sharedVariables.autoChat);
       
     } else if (action.equals("Block Opponents Says When Not Playing")) {
-      /*
-      if (sharedVariables.blockSays == false) {
-        blockSays.setSelected(true);
-        sharedVariables.blockSays = true;
-      } else {
-        blockSays.setSelected(false);
-        sharedVariables.blockSays = false;
-      }
-      */
       sharedVariables.blockSays = !sharedVariables.blockSays;
       blockSays.setSelected(sharedVariables.blockSays);
 
     } else if (action.equals("Show Examine Mode Palette")) {
-      /*
-      if (sharedVariables.showPallette == false) {
-        showPallette.setSelected(true);
-        sharedVariables.showPallette = true;
-      } else {
-        showPallette.setSelected(false);
-        sharedVariables.showPallette = false;
-      }
-      */
       sharedVariables.showPallette = !sharedVariables.showPallette;
       showPallette.setSelected(sharedVariables.showPallette);
 	
@@ -4142,15 +3230,6 @@ class mymultiframe extends JFrame
       }
 
     } else if (action.equals("Show Flags")) {
-      /*
-      if (sharedVariables.showFlags == false) {
-        showFlags.setSelected(true);
-        sharedVariables.showFlags = true;
-      } else {
-        showFlags.setSelected(false);
-        sharedVariables.showFlags = false;
-      }
-      */
       sharedVariables.showFlags = !sharedVariables.showFlags;
       showFlags.setSelected(sharedVariables.showFlags);
 
@@ -4160,15 +3239,6 @@ class mymultiframe extends JFrame
       pframe.setVisible(true);
 
     } else if (action.equals("Use Light Square as Board Background")) {
-      /*
-      if (sharedVariables.useLightBackground == false) {
-        useLightBackground.setSelected(true);
-        sharedVariables.useLightBackground = true;
-      } else {
-        useLightBackground.setSelected(false);
-        sharedVariables.useLightBackground = false;
-      }
-      */
       sharedVariables.useLightBackground = !sharedVariables.useLightBackground;
       useLightBackground.setSelected(sharedVariables.useLightBackground);
       
@@ -4177,12 +3247,6 @@ class mymultiframe extends JFrame
     } else if (action.equals("Original") ||
                action.equals("Modern") ||
                action.equals("Mixed")) {
-      /*
-      BoardDesign1.setSelected(true);
-      BoardDesign2.setSelected(false);
-      BoardDesign3.setSelected(false);
-      sharedVariables.andreysLayout = 0;
-      */
       sharedVariables.andreysLayout = (action.equals("Original") ? 0 :
                                        (action.equals("Modern") ? 1 :
                                         2));
@@ -4191,24 +3255,6 @@ class mymultiframe extends JFrame
       BoardDesign3.setSelected(sharedVariables.andreysLayout == 2);
                                        
       redrawBoard(sharedVariables.boardConsoleType);
-
-      /*
-    } else if (action.equals("Modern")) {
-
-      BoardDesign1.setSelected(false);
-      BoardDesign2.setSelected(true);
-      BoardDesign3.setSelected(false);
-      sharedVariables.andreysLayout = 1;
-      redrawBoard(sharedVariables.boardConsoleType);
-
-    } else if (action.equals("Mixed")) {
-
-      BoardDesign1.setSelected(false);
-      BoardDesign2.setSelected(false);
-      BoardDesign3.setSelected(true);
-      sharedVariables.andreysLayout = 2;
-      redrawBoard(sharedVariables.boardConsoleType);
-      */
 
     } else if (action.equals("Flip")) {
       for (int a=0; a<sharedVariables.maxGameTabs; a++) {
@@ -4226,286 +3272,90 @@ class mymultiframe extends JFrame
         }// end selected
       }
 
-      /*
-    } else if (action.equals("Withdraw Challenges")) {
-      String actionmess="multi match\n";
-      if(sharedVariables.myServer.equals("ICC"))
-        actionmess="`c0`" + actionmess;
-
-      myoutput data = new myoutput();
-      data.data=actionmess;
-      queue.add(data);
-      */
-
     } else if (action.equals("Tabs Only")) {
-      /*
-      if (sharedVariables.tabsOnly == false) {
-        tabbing.setSelected(true);
-        sharedVariables.tabsOnly = true;
-      } else {
-        tabbing.setSelected(false);
-        sharedVariables.tabsOnly = false;
-      }
-      */
       sharedVariables.tabsOnly = !sharedVariables.tabsOnly;
       tabbing.setSelected(sharedVariables.tabsOnly);
 
     } else if (action.equals("Auto Buffer Chat Length")) {
-      /*
-      if (sharedVariables.autoBufferChat == false) {
-        sharedVariables.autoBufferChat=true;
-        autobufferchat.setSelected(true);
-      } else {
-        sharedVariables.autoBufferChat=false;
-        autobufferchat.setSelected(false);
-      }
-      */
       sharedVariables.autoBufferChat = !sharedVariables.autoBufferChat;
       autobufferchat.setSelected(sharedVariables.autoBufferChat);
 
     } else if (action.equals("No Idle")) {
-      /*
-      if (sharedVariables.noidle == false) {
-        sharedVariables.noidle=true;
-        autonoidle.setSelected(true);
-      } else {
-        sharedVariables.noidle=false;
-        autonoidle.setSelected(false);
-      }
-      */
       sharedVariables.noidle = !sharedVariables.noidle;
       autonoidle.setSelected(sharedVariables.noidle);
 
     } else if (action.equals("Switch Tab On Tell")) {
-      /*
-      if (sharedVariables.switchOnTell == false) {
-        sharedVariables.switchOnTell=true;
-        tellswitch.setSelected(true);
-      } else {
-        sharedVariables.switchOnTell=false;
-        tellswitch.setSelected(false);
-      }
-      */
       sharedVariables.switchOnTell = !sharedVariables.switchOnTell;
       tellswitch.setSelected(sharedVariables.switchOnTell);
 
     } else if (action.equals("Timestamp To Left Of Name")) {
-      /*
-      if (sharedVariables.leftTimestamp == false) {
-        sharedVariables.leftTimestamp = true;
-        leftNameTimestamp.setSelected(true);
-      } else {
-        sharedVariables.leftTimestamp = false;
-        leftNameTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.leftTimestamp = !sharedVariables.leftTimestamp;
       leftNameTimestamp.setSelected(sharedVariables.leftTimestamp);
 
 
     } else if (action.equals("Timestamp Connecting")) {
-      /*
-      if (sharedVariables.reconnectTimestamp == false) {
-        sharedVariables.reconnectTimestamp = true;
-        reconnectTimestamp.setSelected(true);
-      } else {
-        sharedVariables.reconnectTimestamp = false;
-        reconnectTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.reconnectTimestamp = !sharedVariables.reconnectTimestamp;
       reconnectTimestamp.setSelected(sharedVariables.reconnectTimestamp);
 
     } else if (action.equals("Timestamp Shouts")) {
-      /*
-      if (sharedVariables.shoutTimestamp == false) {
-        sharedVariables.shoutTimestamp = true;
-        shoutTimestamp.setSelected(true);
-      } else {
-        sharedVariables.shoutTimestamp = false;
-        shoutTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.shoutTimestamp = !sharedVariables.shoutTimestamp;
       shoutTimestamp.setSelected(sharedVariables.shoutTimestamp);
 
     } else if (action.equals("Timestamp Channel Qtells")) {
-      /*
-      if (sharedVariables.qtellTimestamp == false) {
-        sharedVariables.qtellTimestamp = true;
-        qtellTimestamp.setSelected(true);
-      } else {
-        sharedVariables.qtellTimestamp = false;
-        qtellTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.qtellTimestamp = !sharedVariables.qtellTimestamp;
       qtellTimestamp.setSelected(sharedVariables.qtellTimestamp);
 
     } else if (action.equals("Timestamp Tells")) {
-      /*
-      if (sharedVariables.tellTimestamp == false) {
-        sharedVariables.tellTimestamp = true;
-        tellTimestamp.setSelected(true);
-      } else {
-        sharedVariables.tellTimestamp = false;
-        tellTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.tellTimestamp = !sharedVariables.tellTimestamp;
       tellTimestamp.setSelected(sharedVariables.tellTimestamp);
 
     } else if (action.equals("Timestamp Channels and Kibs")) {
-      /*
-      if (sharedVariables.channelTimestamp == false) {
-        sharedVariables.channelTimestamp = true;
-        channelTimestamp.setSelected(true);
-      } else {
-        sharedVariables.channelTimestamp = false;
-        channelTimestamp.setSelected(false);
-      }
-      */
       sharedVariables.channelTimestamp = !sharedVariables.channelTimestamp;
       channelTimestamp.setSelected(sharedVariables.channelTimestamp);
 
     } else if (action.equals("Use Basketball Logo ICC Flag")) {
-      /*
-      if (sharedVariables.basketballFlag == false) {
-        sharedVariables.basketballFlag = true;
-        basketballFlag.setSelected(true);
-      } else {
-        sharedVariables.basketballFlag = false;
-        basketballFlag.setSelected(false);
-      }
-      */
       sharedVariables.basketballFlag = !sharedVariables.basketballFlag;
       basketballFlag.setSelected(sharedVariables.basketballFlag);
 
     } else if (action.equals("Print Channel Notify for Main Also")) {
-      /*
-      if (sharedVariables.notifyMainAlso == false) {
-        sharedVariables.notifyMainAlso = true;
-        notifyMainAlso.setSelected(true);
-      } else {
-        sharedVariables.notifyMainAlso = false;
-        notifyMainAlso.setSelected(false);
-      }
-      */
       sharedVariables.notifyMainAlso = !sharedVariables.notifyMainAlso;
       notifyMainAlso.setSelected(sharedVariables.notifyMainAlso);
 
     } else if (action.equals("Auto Name Popup")) {
-      /*
-      if (sharedVariables.autopopup == false) {
-        sharedVariables.autopopup = true;
-        autopopup.setSelected(true);
-      } else {
-        sharedVariables.autopopup = false;
-        autopopup.setSelected(false);
-      }
-      */
       sharedVariables.autopopup = !sharedVariables.autopopup;
       autopopup.setSelected(sharedVariables.autopopup);
 
     } else if (action.equals("Auto History Popup")) {
-      /*
-      if (sharedVariables.autoHistoryPopup == false) {
-        sharedVariables.autoHistoryPopup = true;
-        autoHistoryPopup.setSelected(true);
-      } else {
-        sharedVariables.autoHistoryPopup = false;
-        autoHistoryPopup.setSelected(false);
-      }
-      */
       sharedVariables.autoHistoryPopup = !sharedVariables.autoHistoryPopup;
       autoHistoryPopup.setSelected(sharedVariables.autoHistoryPopup);
 
-// Andrey edits:
-// remove "Auto Observe"
+      // Andrey edits:
+      // remove "Auto Observe"
     } else if (action.equals("Tomato")) {
-      /*
-      if (sharedVariables.autoTomato == false)
-	sharedVariables.autoTomato = true;
-      else
-	sharedVariables.autoTomato = false;
-      */
       sharedVariables.autoTomato = !sharedVariables.autoTomato;
 
     } else if (action.equals("Cooly")) {
-      /*
-      if (sharedVariables.autoCooly == false)
-	sharedVariables.autoCooly = true;
-      else
-	sharedVariables.autoCooly = false;
-      */
       sharedVariables.autoCooly = !sharedVariables.autoCooly;
 
     } else if (action.equals("WildOne")) {
-      /*
-      if (sharedVariables.autoWildOne == false)
-	sharedVariables.autoWildOne = true;
-      else
-	sharedVariables.autoWildOne = false;
-      //reconnect2.setVisible(true);
-      */
       sharedVariables.autoWildOne = !sharedVariables.autoWildOne;
 
     } else if (action.equals("Flash")) {
-      /*
-      if (sharedVariables.autoFlash == false)
-	sharedVariables.autoFlash = true;
-      else
-	sharedVariables.autoFlash = false;
-      */
       sharedVariables.autoFlash = !sharedVariables.autoFlash;
 
     } if (action.equals("Olive")) {
-      /*
-      if (sharedVariables.autoOlive == false)
-	sharedVariables.autoOlive = true;
-      else
-	sharedVariables.autoOlive = false;
-      */
       sharedVariables.autoOlive = !sharedVariables.autoOlive;
 
     } else if (action.equals("Ketchup")) {
-      /*
-      if (sharedVariables.autoKetchup == false)
-	sharedVariables.autoKetchup = true;
-      else
-	sharedVariables.autoKetchup = false;
-      //reconnect2.setVisible(true);
-      */
       sharedVariables.autoKetchup = !sharedVariables.autoKetchup;
 
     } else if (action.equals("LittlePer")) {
-      /*
-      if (sharedVariables.autoLittlePer == false)
-	sharedVariables.autoLittlePer = true;
-      else
-	sharedVariables.autoLittlePer = false;
-      */
       sharedVariables.autoLittlePer = !sharedVariables.autoLittlePer;
 
     } else if (action.equals("Slomato")) {
-      /*
-      if (sharedVariables.autoSlomato == false)
-	sharedVariables.autoSlomato = true;
-      else
-	sharedVariables.autoSlomato = false;
-      */
       sharedVariables.autoSlomato = !sharedVariables.autoSlomato;
 
     } else if (action.equals("Random Piece Set Observe Only")) {
-      /*
-      if (sharedVariables.randomArmy == false) {
-        sharedVariables.randomArmy = true;
-        randomArmy.setSelected(true);
-      } else {
-	sharedVariables.randomArmy = false;
-        randomArmy.setSelected(false);
-      }
-      */
       sharedVariables.randomArmy = !sharedVariables.randomArmy;
       randomArmy.setSelected(sharedVariables.randomArmy);
 
@@ -4521,63 +3371,21 @@ class mymultiframe extends JFrame
       customizeExcludedPiecesDialog goConfigure =
         new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics,
                                           excludedSetting, whiteSetting);
-                                          //sharedVariables.excludedPiecesWhite, true);
       goConfigure.setVisible(true);
 
-      /*
-    } else if (action.equals("Configure Random Pieces For Black")) {
-      customizeExcludedPiecesDialog goConfigure =
-        new customizeExcludedPiecesDialog(this, false, sharedVariables, graphics,
-                                          sharedVariables.excludedPiecesBlack, false);
-      goConfigure.setVisible(true);
-      */
-      
     } else if (action.equals("Random Square Tiles Observe Only")) {
-      /*
-      if (sharedVariables.randomBoardTiles == false) {
-        sharedVariables.randomBoardTiles = true;
-        randomTiles.setSelected(true);
-      } else {
-	sharedVariables.randomBoardTiles = false;
-        randomTiles.setSelected(false);
-      }
-      */
       sharedVariables.randomBoardTiles = !sharedVariables.randomBoardTiles;
       randomTiles.setSelected(sharedVariables.randomBoardTiles);
 
     } else if (action.equals("Sounds for Notifications")) {
-      /*
-      if (sharedVariables.specificSounds[4] == false) {
-        notifysound.setSelected(true);
-        sharedVariables.specificSounds[4] = true;
-      } else {
-        notifysound.setSelected(false);
-        sharedVariables.specificSounds[4] = false;
-      }
-      */
       sharedVariables.specificSounds[4] = !sharedVariables.specificSounds[4];
       notifysound.setSelected(sharedVariables.specificSounds[4]);
 
     } else if (action.equals("Sounds for Observed Games")) {
-      /*
-      if (sharedVariables.makeObserveSounds == false) {
-        makeObserveSounds.setSelected(true);
-        sharedVariables.makeObserveSounds = true;
-      } else {
-        makeObserveSounds.setSelected(false);
-        sharedVariables.makeObserveSounds = false;
-      }
-      */
       sharedVariables.makeObserveSounds = !sharedVariables.makeObserveSounds;
       makeObserveSounds.setSelected(sharedVariables.makeObserveSounds);
 
     } else if (action.equals("Sounds")) {
-      /*
-      if (sharedVariables.makeSounds == false)
-	sharedVariables.makeSounds = true;
-      else
-	sharedVariables.makeSounds = false;
-      */
       sharedVariables.makeSounds = !sharedVariables.makeSounds;
 
     } else if (action.equals("Start Powerout")) {
@@ -4708,7 +3516,8 @@ class mymultiframe extends JFrame
         sharedVariables.inputFont=fnt;
         setInputFont();
       }// end if font not null
-}
+
+    }
 
 
 
