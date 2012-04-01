@@ -226,6 +226,9 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem aspect1;
   JCheckBoxMenuItem aspect2;
   JCheckBoxMenuItem aspect3;
+  
+  /* Andrey edits:
+   * make an array for the boards
   JCheckBoxMenuItem woodenboard1;
   JCheckBoxMenuItem woodenboard2;
   JCheckBoxMenuItem woodenboard3;
@@ -238,7 +241,17 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem board5;
   JCheckBoxMenuItem board6;
   JCheckBoxMenuItem board7;
+  */
+  JCheckBoxMenuItem[] boardarray = new JCheckBoxMenuItem[11];
 
+  /*
+  JMenuItem preset0;
+  JMenuItem preset1;
+  JMenuItem preset2;
+  JMenuItem preset3;
+  */
+  JMenuItem[] presetarray = new JMenuItem[4];
+  
   JCheckBoxMenuItem pieces1;
   JCheckBoxMenuItem pieces2;
   JCheckBoxMenuItem pieces3;
@@ -280,10 +293,6 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem pgnObservedLogging;
   JCheckBoxMenuItem compactNameList;
   
-  JMenuItem preset0;
-  JMenuItem preset1;
-  JMenuItem preset2;
-  JMenuItem preset3;
   JMenuItem reconnect2;
   
   createWindows mycreator;
@@ -1126,6 +1135,12 @@ class mymultiframe extends JFrame
     randomGraphics.setMnemonic(KeyEvent.VK_R);
     chattimestamp.setMnemonic(KeyEvent.VK_C);
 
+    // add button groups
+    ButtonGroup italicsBehaviorGroup = new ButtonGroup();
+    italicsBehaviorGroup.add(italicsBehavior[0]);
+    italicsBehaviorGroup.add(italicsBehavior[1]);
+    italicsBehaviorGroup.add(italicsBehavior[2]);
+
     // add to menu bar
     menu.add(optionsmenu);
     // Options /
@@ -1349,23 +1364,23 @@ class mymultiframe extends JFrame
     tabbing = new JCheckBoxMenuItem("Tabs Only");
     JMenu selectboards = new JMenu("Boards");
     // .. / Boards /
-    solidboard = new JCheckBoxMenuItem("Solid Color Board");
-    woodenboard1 = new JCheckBoxMenuItem("Pale Wood");
-    woodenboard2 = new JCheckBoxMenuItem("Light Wood");
-    woodenboard3 = new JCheckBoxMenuItem("Dark Wood");
-    grayishboard = new JCheckBoxMenuItem("Gray Marble");
-    board5 = new JCheckBoxMenuItem("Red Marble");
-    board6 = new JCheckBoxMenuItem("Crampled Paper");
-    board7 = new JCheckBoxMenuItem("Winter");
-    oliveboard = new JCheckBoxMenuItem("Olive Board");
-    cherryboard = new JCheckBoxMenuItem("Cherry Board");
-    purpleboard = new JCheckBoxMenuItem("Purple Board");
+    boardarray[0] = new JCheckBoxMenuItem("Solid Color Board");
+    boardarray[1] = new JCheckBoxMenuItem("Pale Wood");
+    boardarray[2] = new JCheckBoxMenuItem("Light Wood");
+    boardarray[3] = new JCheckBoxMenuItem("Dark Wood");
+    boardarray[4] = new JCheckBoxMenuItem("Gray Marble");
+    boardarray[5] = new JCheckBoxMenuItem("Red Marble");
+    boardarray[6] = new JCheckBoxMenuItem("Crampled Paper");
+    boardarray[7] = new JCheckBoxMenuItem("Winter");
+    boardarray[8] = new JCheckBoxMenuItem("Olive Board");
+    boardarray[9] = new JCheckBoxMenuItem("Cherry Board");
+    boardarray[10] = new JCheckBoxMenuItem("Purple Board");
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
-    preset0 = new JMenuItem("Default Board");
-    preset1 = new JMenuItem("Tan Board");
-    preset2 = new JMenuItem("Gray Color Board");
-    preset3 = new JMenuItem("Blitzin Green Board");
+    presetarray[0] = new JMenuItem("Default Board");
+    presetarray[1] = new JMenuItem("Tan Board");
+    presetarray[2] = new JMenuItem("Gray Color Board");
+    presetarray[3] = new JMenuItem("Blitzin Green Board");
     // .. /
     JMenu selectpieces = new JMenu("Pieces");
     // .. / Pieces /
@@ -1477,6 +1492,16 @@ class mymultiframe extends JFrame
     selectpieces.setMnemonic(KeyEvent.VK_P);
     AdvancedGameMenu.setMnemonic(KeyEvent.VK_A);
 
+    // add button groups
+    ButtonGroup boardDesignGroup = new ButtonGroup();
+    boardDesignGroup.add(BoardDesign1);
+    boardDesignGroup.add(BoardDesign2);
+    boardDesignGroup.add(BoardDesign3);
+
+    ButtonGroup boardsGroup = new ButtonGroup();
+    for (int i=0; i<boardarray.length; i++)
+      boardsGroup.add(boardarray[i]);
+    
     // add to menu bar
     menu.add(myboardmenu);
     // Game /
@@ -1492,23 +1517,12 @@ class mymultiframe extends JFrame
     myboardmenu.add(tabbing);
     myboardmenu.add(selectboards);
     // .. / Boards /
-    selectboards.add(solidboard);
-    selectboards.add(woodenboard1);
-    selectboards.add(woodenboard2);
-    selectboards.add(woodenboard3);
-    selectboards.add(grayishboard);
-    selectboards.add(board5);
-    selectboards.add(board6);
-    selectboards.add(board7);
-    selectboards.add(oliveboard);
-    selectboards.add(cherryboard);
-    selectboards.add(purpleboard);
+    for (int i=0; i<boardarray.length; i++) 
+      selectboards.add(boardarray[i]);
     selectboards.add(preset);
     // .. / .. / Preset Color Boards /
-    preset.add(preset0);
-    preset.add(preset1);
-    preset.add(preset2);
-    preset.add(preset3);
+    for (int i=0; i<presetarray.length; i++)
+      preset.add(presetarray[i]);
     // .. /
     myboardmenu.add(selectpieces);
     // .. / Pieces /
@@ -1615,7 +1629,7 @@ class mymultiframe extends JFrame
 
     // special settings
     highlight.setSelected(true);
-    woodenboard2.setSelected(true);
+    //woodenboard2.setSelected(true);
     pieces1.setSelected(true);
     pgnlogging.setSelected(true);
     pgnObservedLogging.setSelected(true);
@@ -1637,6 +1651,9 @@ class mymultiframe extends JFrame
     BoardDesign2.addActionListener(this);
     BoardDesign3.addActionListener(this);
     tabbing.addActionListener(this);
+    for (int i=0; i<boardarray.length; i++)
+      boardarray[i].addActionListener(this);
+    /*
     solidboard.addActionListener(this);
     woodenboard1.addActionListener(this);
     woodenboard2.addActionListener(this);
@@ -1648,6 +1665,7 @@ class mymultiframe extends JFrame
     oliveboard.addActionListener(this);
     cherryboard.addActionListener(this);
     purpleboard.addActionListener(this);
+    */
     pieces1.addActionListener(this);
     pieces2.addActionListener(this);
     pieces3.addActionListener(this);
@@ -1673,10 +1691,14 @@ class mymultiframe extends JFrame
     pieces23.addActionListener(this);
     pieces24.addActionListener(this);
     aboutmonge.addActionListener(this);
+    for (int i=0; i<presetarray.length; i++)
+      presetarray[i].addActionListener(this);
+    /*
     preset0.addActionListener(this);
     preset1.addActionListener(this);
     preset2.addActionListener(this);
     preset3.addActionListener(this);
+    */
     lcolor.addActionListener(this);
     dcolor.addActionListener(this);
     bbackcolor.addActionListener(this);
@@ -3243,17 +3265,20 @@ class mymultiframe extends JFrame
       useLightBackground.setSelected(sharedVariables.useLightBackground);
       
       // Andrey edits:
-      // merge the following 3 actions
-    } else if (action.equals("Original") ||
-               action.equals("Modern") ||
-               action.equals("Mixed")) {
-      sharedVariables.andreysLayout = (action.equals("Original") ? 0 :
-                                       (action.equals("Modern") ? 1 :
-                                        2));
-      BoardDesign1.setSelected(sharedVariables.andreysLayout == 0);
-      BoardDesign2.setSelected(sharedVariables.andreysLayout == 1);
-      BoardDesign3.setSelected(sharedVariables.andreysLayout == 2);
-                                       
+      // restore the split of the three actions
+    } else if (action.equals("Original")) {
+      sharedVariables.andreysLayout = 0;
+      BoardDesign1.setSelected(true);
+      redrawBoard(sharedVariables.boardConsoleType);
+
+    } else if (action.equals("Modern")) {
+      sharedVariables.andreysLayout = 1;
+      BoardDesign2.setSelected(true);
+      redrawBoard(sharedVariables.boardConsoleType);
+
+    } else if (action.equals("Mixed")) {
+      sharedVariables.andreysLayout = 2;
+      BoardDesign3.setSelected(true);
       redrawBoard(sharedVariables.boardConsoleType);
 
     } else if (action.equals("Flip")) {
@@ -3704,18 +3729,8 @@ class mymultiframe extends JFrame
     else
       purpleboard.setSelected(false);
     */
-    
-    solidboard.setSelected((type==0));
-    woodenboard1.setSelected((type==1));
-    woodenboard2.setSelected((type==2));
-    woodenboard3.setSelected((type==3));
-    grayishboard.setSelected((type==4));
-    board5.setSelected((type==5));
-    board6.setSelected((type==6));
-    board7.setSelected((type==7));
-    oliveboard.setSelected((type==8));
-    cherryboard.setSelected((type==9));
-    purpleboard.setSelected((type==10));
+
+    boardarray[type].setSelected(true);
 
     for(int a=0; a<sharedVariables.maxGameTabs; a++)
       if(myboards[a] != null)
@@ -3845,9 +3860,8 @@ class mymultiframe extends JFrame
     else
       italicsBehavior[2].setSelected(false);
     */
-    italicsBehavior[0].setSelected((n==0));
-    italicsBehavior[1].setSelected((n==1));
-    italicsBehavior[2].setSelected((n==2));
+    if (n >= 0 && n <= 2)
+      italicsBehavior[n].setSelected(true);
   }
 
   void redrawBoard(int type) {
@@ -4135,7 +4149,9 @@ class mymultiframe extends JFrame
     if (!sharedVariables.standAlone) {
       System.exit(0);
     } else {
-      JSettingsDialog frame = new JSettingsDialog((JFrame) this, false, sharedVariables);
+      JSettingsDialog frame =
+        new JSettingsDialog((JFrame) this, false,
+                            sharedVariables);
     }
   }
 
