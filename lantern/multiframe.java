@@ -1394,6 +1394,7 @@ class mymultiframe extends JFrame
     boardarray[8] = new JCheckBoxMenuItem("Olive Board");
     boardarray[9] = new JCheckBoxMenuItem("Cherry Board");
     boardarray[10] = new JCheckBoxMenuItem("Purple Board");
+    // .. / .. / (separator)
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
     presetarray[0] = new JMenuItem("Default Board");
@@ -1548,6 +1549,7 @@ class mymultiframe extends JFrame
     // .. / Boards /
     for (int i=0; i<boardarray.length; i++) 
       selectboards.add(boardarray[i]);
+    selectboards.addSeparator();
     selectboards.add(preset);
     // .. / .. / Preset Color Boards /
     for (int i=0; i<presetarray.length; i++)
@@ -4171,7 +4173,7 @@ class mymultiframe extends JFrame
 
     channels sharedVariables;
     
-    JSettingsDialog (JFrame frame, boolean mybool, channels sharedVariables1) {
+    JSettingsDialog(JFrame frame, boolean mybool, channels sharedVariables1) {
       //super(frame, false);
 
       sharedVariables = sharedVariables1;
@@ -4180,891 +4182,735 @@ class mymultiframe extends JFrame
       JButton yes =  new JButton("Yes");
       JButton no = new JButton("No");
       yes.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-			 try
-			 	{
-						try {
-							mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
-							mineScores.saveNow(sharedVariables);
-				}
-				catch(Exception d){}
-					System.exit(0);
-						dispose();
+          public void actionPerformed(ActionEvent event) {
+            try {
+              try {
+                mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
+                mineScores.saveNow(sharedVariables);
 
-		}// end try
-			catch(Exception e)
-			{}
-		}
-});
-	no.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-			 try
-			 	{
-				System.exit(0);
-				dispose();
-		}// end try
-			catch(Exception e)
-			{}
-		}
-});
-	pane.setLayout(new GridLayout(3,1)); // rows collums
-	pane.add(tosave);
-	pane.add(yes);
-	pane.add(no);
-	add(pane);
-	setLocation(400,300);
-	setSize(200, 200);
-
-	for(int b=0; b<sharedVariables.maxGameTabs; b++)
-	if(myboards[b]!=null)
-	{
-          if(myboards[b].isVisible())
-	  {
-            if(myboards[b].isMaximum()==false)
-	    {
-              myboards[b].setBoardSize();
-              }
+              } catch (Exception d) {}
+              System.exit(0);
+              dispose();
+              // end try
+            } catch (Exception e) {}
           }
-       }
-       else
-       {
-        sharedVariables.openBoardCount=b;
-        break;
-       }
-
-
-		for(int b=0; b<sharedVariables.maxConsoleTabs; b++)
-		if(consoleSubframes[b]!=null)
-		if(consoleSubframes[b].isVisible())
-		if(consoleSubframes[b].isMaximum()==false)
-	consoleSubframes[b].setBoardSize();
-
-			sharedVariables.activitiesOpen = false;
-		if(myfirstlist!=null)
-		if(myfirstlist.isVisible())
-		{
-			sharedVariables.activitiesOpen = true;
-
-				myfirstlist.setBoardSize();
-
-		}
-
-		if(mysecondlist!=null)
-		if(mysecondlist.isVisible())
-		{
-			sharedVariables.activitiesOpen = true;
-
-				mysecondlist.setBoardSize();
-
-		}
-
-
-
-			sharedVariables.seeksOpen = false;
-		if(seekGraph!=null)
-		if(seekGraph.isVisible())
-		{
-			sharedVariables.seeksOpen = true;
-                        seekGraph.setBoardSize();
-
-
-		}
-
-
-	setVisible(true);
-        setAlwaysOnTop(true);
-}// end constructor
-
-
-}//end class
-
-
-public void windowOpened(WindowEvent e)
-{
-
-}
-
-public void windowIconified(WindowEvent e)
-{
-
-}
-
-
-public void windowActivated(WindowEvent e)
-{
- myoutput data = new myoutput();
- data.data="\n";
- data.reconnectTry=1;
- queue.add(data);
-
-
-
-}
-
-void setButtonTitle(int a)
-{
-	 String buttonTitle="" + a;
-   if(!sharedVariables.userButtonCommands[a].equals("") && sharedVariables.showButtonTitle==true)
-    {
-		buttonTitle="" + a + " - ";
-		if(sharedVariables.userButtonCommands[a].length() > 11)
-			buttonTitle+=sharedVariables.userButtonCommands[a].substring(0,11);
-		else
-			buttonTitle+=sharedVariables.userButtonCommands[a];
-
-
-	}
-sharedVariables.mybuttons[a].setText(buttonTitle);
-
-}
-void makeToolBar()
-{
-  toolBar = new JToolBar("Still draggable");
- sharedVariables.mybuttons = new JButton[10];
- toolBar.setLayout(new GridLayout(1,18));
-
-JButton pure1 = new JButton("1-min");
-JButton pure3 = new JButton("3-min");
-JButton pure5 = new JButton("5-min");
-JButton pure15 = new JButton("15-min");
-JButton pure45 = new JButton("45 45");
-JButton pure960 = new JButton("Chess960");
-JLabel seeksLabel = new JLabel();
-JLabel activitesLabel = new JLabel();
-/*pure1.setIcon(sharedVariables.pure1);
-pure3.setIcon(sharedVariables.pure3);
-pure5.setIcon(sharedVariables.pure5);
-pure15.setIcon(sharedVariables.pure15);
-pure45.setIcon(sharedVariables.pure45);
-pure960.setIcon(sharedVariables.pure960);
-*/
-pure1.setBackground(new Color(255,255,255));
-pure3.setBackground(new Color(255,255,255));
-pure5.setBackground(new Color(255,255,255));
-pure15.setBackground(new Color(255,255,255));
-pure45.setBackground(new Color(255,255,255));
-pure960.setBackground(new Color(255,255,255));
-
-seeksLabel.setIcon(sharedVariables.seekIcon);
-seeksLabel.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-			openSeekGraph();
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-//activitesLabel.setIcon(sharedVariables.activitiesIcon);
-  activitesLabel.setText("<html><Center><B>A</b></center></html>");
-activitesLabel.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-			openActivities();
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-pure1.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="1-Minute\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-pure3.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="3-Minute\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-
-pure5.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="5-Minute\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-pure15.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="15-Minute\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-pure45.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="45\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-pure960.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-
-
- 			 if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
- 			;
- 			 else
- 			 {
-				myoutput data = new myoutput();
-				data.data="960\n";
-				data.consoleNumber=0;
-				queue.add(data);
-                          }// end else
-			 }
-         public void mouseReleased(MouseEvent e) {}
-         public void mouseEntered (MouseEvent me) {}
-         public void mouseExited (MouseEvent me) {}
-         public void mouseClicked (MouseEvent me) {}  });
-
-
-
-  for(int a=0; a<10; a++)
-  {
-
-
-
-
-
-    sharedVariables.mybuttons[a] = new JButton("" + a);
-    setButtonTitle(a);
-     sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
-   final int con = a;
-
-    sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-					toolbarCommands commander = new toolbarCommands(myboards);
-				commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
-
-
-				}});
-
-   if(a != 0)
-   toolBar.add(sharedVariables.mybuttons[a]);
+        });
+      no.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            try {
+              System.exit(0);
+              dispose();
+              // end try
+            } catch (Exception e) {}
+          }
+        });
+      pane.setLayout(new GridLayout(3,1)); // rows collums
+      pane.add(tosave);
+      pane.add(yes);
+      pane.add(no);
+      add(pane);
+      setLocation(400,300);
+      setSize(200, 200);
+
+      for (int b=0; b<sharedVariables.maxGameTabs; b++) {
+	if (myboards[b] != null) {
+          if (myboards[b].isVisible() &&
+              !myboards[b].isMaximum())
+            myboards[b].setBoardSize();
+        } else {
+          sharedVariables.openBoardCount=b;
+          break;
+        }
+      }
+
+      for (int b=0; b<sharedVariables.maxConsoleTabs; b++)
+        if (consoleSubframes[b] != null &&
+            consoleSubframes[b].isVisible() &&
+            !consoleSubframes[b].isMaximum())
+          consoleSubframes[b].setBoardSize();
+
+      sharedVariables.activitiesOpen = false;
+      if (myfirstlist != null &&
+          myfirstlist.isVisible()) {
+        sharedVariables.activitiesOpen = true;
+        myfirstlist.setBoardSize();
+      }
+
+      if (mysecondlist != null &&
+          mysecondlist.isVisible()) {
+        sharedVariables.activitiesOpen = true;
+        mysecondlist.setBoardSize();
+      }
+
+      sharedVariables.seeksOpen = false;
+      if (seekGraph != null &&
+          seekGraph.isVisible()) {
+        sharedVariables.seeksOpen = true;
+        seekGraph.setBoardSize();
+      }
+
+      setVisible(true);
+      setAlwaysOnTop(true);
+    }// end constructor
+  }//end class
+
+
+  public void windowOpened(WindowEvent e) {
 
   }
-   toolBar.add(sharedVariables.mybuttons[0]);
- toolBar.add(seeksLabel);
- toolBar.add(activitesLabel);
- toolBar.add(pure1);
-toolBar.add(pure3);
-toolBar.add(pure5);
-toolBar.add(pure15);
-toolBar.add(pure45);
-toolBar.add(pure960);
-JLabel spacer = new JLabel("");
-//toolBar.add(spacer);
 
+  public void windowIconified(WindowEvent e) {
 
-}
-void sendToEngine(String output)
-{
-	byte [] b2 = new byte[2500];
-	try {
-		for(int a=0; a< output.length(); a++)
+  }
+
+  public void windowActivated(WindowEvent e) {
+    myoutput data = new myoutput();
+    data.data="\n";
+    data.reconnectTry=1;
+    queue.add(data);
+  }
+
+  void setButtonTitle(int a) {
+    String buttonTitle="" + a;
+    if (!sharedVariables.userButtonCommands[a].equals("") &&
+        sharedVariables.showButtonTitle) {
+      buttonTitle = "" + a + " - ";
+      if (sharedVariables.userButtonCommands[a].length() > 11)
+        buttonTitle += sharedVariables.userButtonCommands[a].substring(0,11);
+      else
+        buttonTitle += sharedVariables.userButtonCommands[a];
+    }
+
+    sharedVariables.mybuttons[a].setText(buttonTitle);
+  }
+
+  void makeToolBar() {
+    toolBar = new JToolBar("Still draggable");
+    sharedVariables.mybuttons = new JButton[10];
+    toolBar.setLayout(new GridLayout(1,18));
+
+    JButton pure1 = new JButton("1-min");
+    JButton pure3 = new JButton("3-min");
+    JButton pure5 = new JButton("5-min");
+    JButton pure15 = new JButton("15-min");
+    JButton pure45 = new JButton("45 45");
+    JButton pure960 = new JButton("Chess960");
+    JLabel seeksLabel = new JLabel();
+    JLabel activitesLabel = new JLabel();
+    /*
+    pure1.setIcon(sharedVariables.pure1);
+    pure3.setIcon(sharedVariables.pure3);
+    pure5.setIcon(sharedVariables.pure5);
+    pure15.setIcon(sharedVariables.pure15);
+    pure45.setIcon(sharedVariables.pure45);
+    pure960.setIcon(sharedVariables.pure960);
+    */
+    pure1.setBackground(new Color(255,255,255));
+    pure3.setBackground(new Color(255,255,255));
+    pure5.setBackground(new Color(255,255,255));
+    pure15.setBackground(new Color(255,255,255));
+    pure45.setBackground(new Color(255,255,255));
+    pure960.setBackground(new Color(255,255,255));
+
+    seeksLabel.setIcon(sharedVariables.seekIcon);
+    seeksLabel.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            openSeekGraph();
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    //activitesLabel.setIcon(sharedVariables.activitiesIcon);
+    activitesLabel.setText("<html><Center><B>A</b></center></html>");
+    activitesLabel.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            openActivities();
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure1.addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+             ;
+           else {
+             myoutput data = new myoutput();
+             data.data="1-Minute\n";
+             data.consoleNumber=0;
+             queue.add(data);
+           }// end else
+         }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure3.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data="3-Minute\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure5.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data="5-Minute\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure15.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data="15-Minute\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure45.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data="45\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    pure960.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data="960\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    for (int a=0; a<10; a++) {
+      sharedVariables.mybuttons[a] = new JButton("" + a);
+      setButtonTitle(a);
+      sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
+      final int con = a;
+
+      sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            toolbarCommands commander = new toolbarCommands(myboards);
+            commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
+          }
+        });
+
+      if (a != 0)
+        toolBar.add(sharedVariables.mybuttons[a]);
+    }
+    
+    toolBar.add(sharedVariables.mybuttons[0]);
+    toolBar.add(seeksLabel);
+    toolBar.add(activitesLabel);
+    toolBar.add(pure1);
+    toolBar.add(pure3);
+    toolBar.add(pure5);
+    toolBar.add(pure15);
+    toolBar.add(pure45);
+    toolBar.add(pure960);
+    JLabel spacer = new JLabel("");
+    //toolBar.add(spacer);
+  }
+
+  void sendToEngine(String output) {
+    byte [] b2 = new byte[2500];
+    try {
+      for (int a=0; a<output.length(); a++)
 	b2[a]=(byte) output.charAt(a);
 
+      //sharedVariables.engineQueue.add(output);
 
-//sharedVariables.engineQueue.add(output);
+      //Thread.sleep(1000);
+      //for(int a=0; a<10; a++)
+      //;
+      sharedVariables.engineOut.write(b2,0, output.length());
+      sharedVariables.engineOut.flush();
+    } catch (Exception e) {}
+  }
 
-//Thread.sleep(1000);
-//for(int a=0; a<10; a++)
-//;
-	sharedVariables.engineOut.write(b2,0, output.length());
-sharedVariables.engineOut.flush();
-}
-catch(Exception e){}
-}
+  private static final String CHARSET = "UTF-8";
 
+  void repaintTabs() {
 
+    for (int i=0; i<sharedVariables.openConsoleCount; i++) {
+      if (consoleSubframes[i] != null) {
+        for (int a=0; a<sharedVariables.maxConsoleTabs; a++) {
+          try {
+            if (a==sharedVariables.looking[consoleSubframes[i].consoleNumber])
+              // tab = console number
+              consoleSubframes[i].channelTabs[a].setBackground(sharedVariables.tabImOnBackground);
+            else
+              consoleSubframes[i].channelTabs[a].setBackground(sharedVariables.tabBackground);
 
-private static final String CHARSET = "UTF-8";
+            consoleSubframes[i].channelTabs[a].setFont(sharedVariables.myTabFont);
+            consoleSubframes[i].channelTabs[a].repaint();
+          } catch (Exception e) {}
+        }
+      }
+    }
 
+    // now game boards
+    for (int i=0; i < sharedVariables.maxGameTabs; i++) {
+      if (myboards[i] != null) {
+        myboards[i].myconsolepanel.repaint();
+      }
+    }
+  }
 
+  void setInputFont() {
+    try {
+      for (int i=0; i < sharedVariables.openConsoleCount; i++) {
+        if (consoleSubframes[i] != null) {
+          consoleSubframes[i].overall.Input.setFont(sharedVariables.inputFont);
+        }
+      }
 
-void repaintTabs()
-{
+      // now game boards
+      for (int i=0; i < sharedVariables.maxGameTabs; i++) {
+        if (myboards[i] != null) {
+          myboards[i].myconsolepanel.Input.setFont(sharedVariables.inputFont);
+        }
+      }
 
-	        for(int i=0; i < sharedVariables.openConsoleCount; i++)
-			 {
-				 if(consoleSubframes[i]!= null)
-	              {
+    } catch (Exception badfont) {}
+  }
 
-					  for(int a=0; a< sharedVariables.maxConsoleTabs; a++)
-					  {
-						 try {
-							 	if(a==sharedVariables.looking[consoleSubframes[i].consoleNumber]) // tab = console number
-							 	consoleSubframes[i].channelTabs[a].setBackground(sharedVariables.tabImOnBackground);
-							 	else
-						 		consoleSubframes[i].channelTabs[a].setBackground(sharedVariables.tabBackground);
-							 consoleSubframes[i].channelTabs[a].setFont(sharedVariables.myTabFont);
-						  consoleSubframes[i].channelTabs[a].repaint(); } catch(Exception e){}
-					  }
-	              }
+  void loadSoundsStandAlone() {
+    // load sounds
+    try {
+      URL songPath;
 
- 			  }
-
- // now game boards
- 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
- 			 {
-				 if(myboards[i]!= null)
-	              {
-	              myboards[i].myconsolepanel.repaint();
-	              }
- 			}
-
-}
-
-void setInputFont()
-{
-
-
-try {
-	        for(int i=0; i < sharedVariables.openConsoleCount; i++)
-			 {
-				 if(consoleSubframes[i]!= null)
-	              {
-
-
-
-							 consoleSubframes[i].overall.Input.setFont(sharedVariables.inputFont);
-
-	              }
-
- 			  }
-
- // now game boards
- 	        for(int i=0; i < sharedVariables.maxGameTabs; i++)
- 			 {
-				 if(myboards[i]!= null)
-	              {
-	              myboards[i].myconsolepanel.Input.setFont(sharedVariables.inputFont);
-	              }
- 			}
-
-
-}catch(Exception badfont){}
-}
-
-
-
-
-void loadSoundsStandAlone()
-{
-
-// load sounds
-try {
-	URL songPath;
-
-        if(sharedVariables.operatingSystem.equals("unix"))
-        {
+      if (sharedVariables.operatingSystem.equals("unix")) {
         songPath = this.getClass().getResource("whistle.au"); // Geturl of sound
 	sharedVariables.songs[0]=songPath;
 	songPath = this.getClass().getResource("move-icc.au"); // Geturl of sound
 	sharedVariables.songs[1]=songPath;
-       songPath = this.getClass().getResource("capture-icc.au"); // Geturl of sound
+        songPath = this.getClass().getResource("capture-icc.au"); // Geturl of sound
 	sharedVariables.songs[2]=songPath;
  	songPath = this.getClass().getResource("ding.au"); // Geturl of sound
 	sharedVariables.songs[4]=songPath;
-
-        }
-        else
-        {
+      } else {
         songPath = this.getClass().getResource("tell.wav"); // Geturl of sound
 	sharedVariables.songs[0]=songPath;
 	songPath = this.getClass().getResource("click18a.wav"); // Geturl of sound
   	sharedVariables.songs[1]=songPath;
-       songPath = this.getClass().getResource("click10b.wav"); // Geturl of sound
+        songPath = this.getClass().getResource("click10b.wav"); // Geturl of sound
 	sharedVariables.songs[2]=songPath;
 	songPath = this.getClass().getResource("beeppure.wav"); // Geturl of sound
 	sharedVariables.songs[4]=songPath;
-       }
+      }
 
-	songPath = this.getClass().getResource("serv1a.wav"); // Geturl of sound
-	sharedVariables.songs[3]=songPath;
-	songPath = this.getClass().getResource("fitebell.au"); // Geturl of sound
-	sharedVariables.songs[5]=songPath;
-	songPath = this.getClass().getResource("buzzer.wav"); // Geturl of sound
-	sharedVariables.songs[6]=songPath;
-	songPath = this.getClass().getResource("fitbell.wav"); // Geturl of sound
-	sharedVariables.songs[7]=songPath;
+      songPath = this.getClass().getResource("serv1a.wav"); // Geturl of sound
+      sharedVariables.songs[3]=songPath;
+      songPath = this.getClass().getResource("fitebell.au"); // Geturl of sound
+      sharedVariables.songs[5]=songPath;
+      songPath = this.getClass().getResource("buzzer.wav"); // Geturl of sound
+      sharedVariables.songs[6]=songPath;
+      songPath = this.getClass().getResource("fitbell.wav"); // Geturl of sound
+      sharedVariables.songs[7]=songPath;
 
+      songPath = this.getClass().getResource("BEEP_FM.wav"); // Geturl of sound
+      sharedVariables.poweroutSounds[0]=songPath;
+      songPath = this.getClass().getResource("BEEPPURE.wav"); // Geturl of sound
+      sharedVariables.poweroutSounds[1]=songPath;
+      songPath = this.getClass().getResource("BEEPSPAC.wav"); // Geturl of sound
+      sharedVariables.poweroutSounds[2]=songPath;
 
-	songPath = this.getClass().getResource("BEEP_FM.wav"); // Geturl of sound
-	sharedVariables.poweroutSounds[0]=songPath;
-	songPath = this.getClass().getResource("BEEPPURE.wav"); // Geturl of sound
-	sharedVariables.poweroutSounds[1]=songPath;
-	songPath = this.getClass().getResource("BEEPSPAC.wav"); // Geturl of sound
-	sharedVariables.poweroutSounds[2]=songPath;
+      //song1 = new Sound("DING.WAV");
+      //song2 = new Sound("BEEPPURE.wav");
+      //song1 = new Sound("BEEP_FM.wav");
+      //song3 = new Sound("BEEPSPAC.wav");
 
-//song1 = new Sound("DING.WAV");
-//song2 = new Sound("BEEPPURE.wav");
-//song1 = new Sound("BEEP_FM.wav");
-//song3 = new Sound("BEEPSPAC.wav");
-
-
-}
-catch(Exception e){}
-
-
-}
-
-
-void loadGraphicsStandAlone()
-{
-try {
-	URL myiconurl = this.getClass().getResource( "images/game.gif");
-sharedVariables.gameIcon = new ImageIcon(myiconurl, "Game");
- myiconurl = this.getClass().getResource( "images/oval1.png");
-sharedVariables.pure1 = new ImageIcon(myiconurl, "1");
- myiconurl = this.getClass().getResource( "images/oval3.png");
-sharedVariables.pure3 = new ImageIcon(myiconurl, "3");
- myiconurl = this.getClass().getResource( "images/oval5.png");
-sharedVariables.pure5 = new ImageIcon(myiconurl, "5");
- myiconurl = this.getClass().getResource( "images/oval15.png");
-sharedVariables.pure15 = new ImageIcon(myiconurl, "15");
- myiconurl = this.getClass().getResource( "images/oval45.png");
-sharedVariables.pure45 = new ImageIcon(myiconurl, "45");
- myiconurl = this.getClass().getResource( "images/oval960.png");
-sharedVariables.pure960 = new ImageIcon(myiconurl, "960");
- myiconurl = this.getClass().getResource( "images/seekIcon.png");
-sharedVariables.seekIcon = new ImageIcon(myiconurl, "seekIcon");
-
- myiconurl = this.getClass().getResource( "images/activitiesIcon.png");
-sharedVariables.activitiesIcon = new ImageIcon(myiconurl, "activitiesIcon");
-
- myiconurl = this.getClass().getResource( "images/observing.gif");
-sharedVariables.observeIcon = new ImageIcon(myiconurl, "observing");
-
- myiconurl = this.getClass().getResource( "images/playing.gif");
-sharedVariables.playingIcon = new ImageIcon(myiconurl, "Playing");
-
-myiconurl = this.getClass().getResource( "images/examining.gif");
-sharedVariables.examiningIcon = new ImageIcon(myiconurl, "Examining");
-
-
- myiconurl = this.getClass().getResource( "images/sposition.gif");
-sharedVariables.sposIcon = new ImageIcon(myiconurl, "Sposition");
-
- myiconurl = this.getClass().getResource( "images/was.gif");
-sharedVariables.wasIcon = new ImageIcon(myiconurl, "was");
-}catch(Exception dd){}
-
-URL myurl = this.getClass().getResource("images/x.gif");
-graphics.xpiece =Toolkit.getDefaultToolkit().getImage(myurl);
-
-for( int a = 1 ; a < graphics.maxBoards; a++)
-{
-	if( a != 6)
-	{
-		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.gif");
-		graphics.boards[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
-		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.gif");
-		graphics.boards[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-	}
-	else
-	{
-		 myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.png");
-		graphics.boards[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
-		myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.png");
-		graphics.boards[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
-	}
-
-}
-
-for( int a = 0 ; a < graphics.maxPieces; a++)
-{
-		String ext = "gif";
-		ext = graphics.pieceExt[a];
-		if(ext.equals("mix"))// was rand
-			break;   // allways last. not real pieces , randomly generated
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wp." + ext);
-		graphics.pieces[a][0] =Toolkit.getDefaultToolkit().getImage(myurl);
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wn." + ext);
-		graphics.pieces[a][1] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wb." + ext);
-		graphics.pieces[a][2] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wr." + ext);
-		graphics.pieces[a][3] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wq." + ext);
-		graphics.pieces[a][4] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/wk." + ext);
-		graphics.pieces[a][5] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/bp." + ext);
-		graphics.pieces[a][6] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/bn." + ext);
-		graphics.pieces[a][7] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/bb." + ext);
-		graphics.pieces[a][8] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/br." + ext);
-		graphics.pieces[a][9] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/bq." + ext);
-		graphics.pieces[a][10] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/64/bk." + ext);
-		graphics.pieces[a][11] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-// now load multi pieces
-if(graphics.resizable[a]==false)
-{for(int aa=0; aa < graphics.numberPiecePaths[a]; aa++)
-{
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wp." + ext);
-		graphics.multiPieces[a][aa][0] =Toolkit.getDefaultToolkit().getImage(myurl);
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wn." + ext);
-		graphics.multiPieces[a][aa][1] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wb." + ext);
-		graphics.multiPieces[a][aa][2] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wr." + ext);
-		graphics.multiPieces[a][aa][3] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wq." + ext);
-		graphics.multiPieces[a][aa][4] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/wk." + ext);
-		graphics.multiPieces[a][aa][5] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/bp." + ext);
-		graphics.multiPieces[a][aa][6] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/bn." + ext);
-		graphics.multiPieces[a][aa][7] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/bb." + ext);
-		graphics.multiPieces[a][aa][8] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/br." + ext);
-		graphics.multiPieces[a][aa][9] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/bq." + ext);
-		graphics.multiPieces[a][aa][10] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-		myurl = this.getClass().getResource( graphics.piecePaths[a] + "/" + graphics.multiPiecePaths[a][aa] + "/bk." + ext);
-		graphics.multiPieces[a][aa][11] =Toolkit.getDefaultToolkit().getImage(myurl);
-
-
-
-}// end aa loop
-
-}// end multi piece if
-	}// end for
-  // make monge mix pieces
-
-  int fantasy=0;
-  int spatial=0;
-
-  for(int e=0; e<graphics.maxPieces; e++)
-  { if(graphics.piecePaths[e].equals("fantasy"))
-      fantasy=e;
-  if(graphics.piecePaths[e].equals("spatial"))
-      spatial=e;
-
-  }
- for(int aa=0; aa < graphics.numberPiecePaths[graphics.maxPieces-2]; aa++)
-  {
-    graphics.multiPieces[graphics.maxPieces-2][aa][0] = graphics.multiPieces[fantasy][aa][0];
-          graphics.multiPieces[graphics.maxPieces-2][aa][1] = graphics.multiPieces[spatial][aa][1];
-        graphics.multiPieces[graphics.maxPieces-2][aa][2] = graphics.multiPieces[fantasy][aa][2];
-        graphics.multiPieces[graphics.maxPieces-2][aa][3] = graphics.multiPieces[fantasy][aa][3];
-        graphics.multiPieces[graphics.maxPieces-2][aa][4] = graphics.multiPieces[spatial][aa][4];
-        graphics.multiPieces[graphics.maxPieces-2][aa][5] = graphics.multiPieces[spatial][aa][5];
-        graphics.multiPieces[graphics.maxPieces-2][aa][6] = graphics.multiPieces[fantasy][aa][6];
-        graphics.multiPieces[graphics.maxPieces-2][aa][7] = graphics.multiPieces[spatial][aa][7];
-        graphics.multiPieces[graphics.maxPieces-2][aa][8] = graphics.multiPieces[fantasy][aa][8];
-        graphics.multiPieces[graphics.maxPieces-2][aa][9] = graphics.multiPieces[fantasy][aa][9];
-        graphics.multiPieces[graphics.maxPieces-2][aa][10] = graphics.multiPieces[spatial][aa][10];
-        graphics.multiPieces[graphics.maxPieces-2][aa][11] = graphics.multiPieces[spatial][aa][11];
+    } catch (Exception e) {}
   }
 
+  void loadGraphicsStandAlone() {
+    try {
+      URL myiconurl = this.getClass().getResource( "images/game.gif");
+      sharedVariables.gameIcon = new ImageIcon(myiconurl, "Game");
+      myiconurl = this.getClass().getResource( "images/oval1.png");
+      sharedVariables.pure1 = new ImageIcon(myiconurl, "1");
+      myiconurl = this.getClass().getResource( "images/oval3.png");
+      sharedVariables.pure3 = new ImageIcon(myiconurl, "3");
+      myiconurl = this.getClass().getResource( "images/oval5.png");
+      sharedVariables.pure5 = new ImageIcon(myiconurl, "5");
+      myiconurl = this.getClass().getResource( "images/oval15.png");
+      sharedVariables.pure15 = new ImageIcon(myiconurl, "15");
+      myiconurl = this.getClass().getResource( "images/oval45.png");
+      sharedVariables.pure45 = new ImageIcon(myiconurl, "45");
+      myiconurl = this.getClass().getResource( "images/oval960.png");
+      sharedVariables.pure960 = new ImageIcon(myiconurl, "960");
+      myiconurl = this.getClass().getResource( "images/seekIcon.png");
+      sharedVariables.seekIcon = new ImageIcon(myiconurl, "seekIcon");
 
-boolean flagger=true;
-int index11=-1;
-int index22=-1;
-int place=0;
-while(flagger== true)
-{
- index11=sharedVariables.countryNames.indexOf(";", index11+1);
- index22=sharedVariables.countryNames.indexOf(";", index11+1);
- if(index11 > -1 && index22 > -1 && index22 > index11)
- {
-  String lookup =sharedVariables.countryNames.substring(index11 + 1, index22);
-  sharedVariables.flagImageNames.add(lookup);
-  lookup="flags-small/" + lookup + ".png";
+      myiconurl = this.getClass().getResource( "images/activitiesIcon.png");
+      sharedVariables.activitiesIcon = new ImageIcon(myiconurl, "activitiesIcon");
 
-		myurl = this.getClass().getResource( lookup);
-		sharedVariables.flagImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
+      myiconurl = this.getClass().getResource( "images/observing.gif");
+      sharedVariables.observeIcon = new ImageIcon(myiconurl, "observing");
 
- }
- else
- break;
+      myiconurl = this.getClass().getResource( "images/playing.gif");
+      sharedVariables.playingIcon = new ImageIcon(myiconurl, "Playing");
 
- index11=index22;
+      myiconurl = this.getClass().getResource( "images/examining.gif");
+      sharedVariables.examiningIcon = new ImageIcon(myiconurl, "Examining");
 
+      myiconurl = this.getClass().getResource( "images/sposition.gif");
+      sharedVariables.sposIcon = new ImageIcon(myiconurl, "Sposition");
 
+      myiconurl = this.getClass().getResource( "images/was.gif");
+      sharedVariables.wasIcon = new ImageIcon(myiconurl, "was");
+    } catch (Exception dd) {}
 
+    URL myurl = this.getClass().getResource("images/x.gif");
+    graphics.xpiece = Toolkit.getDefaultToolkit().getImage(myurl);
 
+    for (int a=1; a<graphics.maxBoards; a++) {
+      if (a != 6) {
+        myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.gif");
+        graphics.boards[a][0] = Toolkit.getDefaultToolkit().getImage(myurl);
+        myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.gif");
+        graphics.boards[a][1] = Toolkit.getDefaultToolkit().getImage(myurl);
+      } else {
+        myurl = this.getClass().getResource(graphics.boardPaths[a] + "/light.png");
+        graphics.boards[a][0] = Toolkit.getDefaultToolkit().getImage(myurl);
+        myurl = this.getClass().getResource(graphics.boardPaths[a] + "/dark.png");
+        graphics.boards[a][1] = Toolkit.getDefaultToolkit().getImage(myurl);
+      }
+    }
 
+    for (int a=0; a<graphics.maxPieces; a++) {
+      String ext = "gif";
+      ext = graphics.pieceExt[a];
+      if (ext.equals("mix"))// was rand
+        break;   // allways last. not real pieces , randomly generated
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wp." + ext);
+      graphics.pieces[a][0] = Toolkit.getDefaultToolkit().getImage(myurl);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wn." + ext);
+      graphics.pieces[a][1] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-}
-}// end method
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wb." + ext);
+      graphics.pieces[a][2] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wr." + ext);
+      graphics.pieces[a][3] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-/*
-void loadGraphicsApplet()
-{
-for( int a = 1 ; a < graphics.maxBoards; a++)
-{
-	if( a != 6)
-	{
-		graphics.boards[a][0]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/light.gif");
-		graphics.boards[a][1]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/dark.gif");
-	}
-	else
-	{
-		graphics.boards[a][0]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/light.png");
-		graphics.boards[a][1]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/dark.png");
-	}
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wq." + ext);
+      graphics.pieces[a][4] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-}
-for( int a = 0 ; a < graphics.maxPieces; a++)
-{
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wk." + ext);
+      graphics.pieces[a][5] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bp." + ext);
+      graphics.pieces[a][6] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-graphics.pieces[a][0] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wp.gif");
-graphics.pieces[a][1] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wn.gif");
-graphics.pieces[a][2] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wb.gif");
-graphics.pieces[a][3] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wr.gif");
-graphics.pieces[a][4] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wq.gif");
-graphics.pieces[a][5] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wk.gif");
-graphics.pieces[a][6] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bp.gif");
-graphics.pieces[a][7] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bn.gif");
-graphics.pieces[a][8] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bb.gif");
-graphics.pieces[a][9] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/br.gif");
-graphics.pieces[a][10] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bq.gif");
-graphics.pieces[a][11] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bk.gif");
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bn." + ext);
+      graphics.pieces[a][7] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bb." + ext);
+      graphics.pieces[a][8] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/br." + ext);
+      graphics.pieces[a][9] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-}
-}//end method
-void loadSoundsApplet()
-{// load sounds
-try {
-	URL songPath = new URL(getCodeBase(), "tell.wav"); // Geturl of sound
-	sharedVariables.songs[0]=songPath;
-	songPath = new URL(getCodeBase(), "click18a.wav"); // Geturl of sound
-	sharedVariables.songs[1]=songPath;
-	songPath = new URL(getCodeBase(), "click10b.wav"); // Geturl of sound
-	sharedVariables.songs[2]=songPath;
-	songPath = new URL(getCodeBase(), "serv1a.wav"); // Geturl of sound
-	sharedVariables.songs[3]=songPath;
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bq." + ext);
+      graphics.pieces[a][10] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-}
-catch(Exception e){}
-}//end method
-*/
-void openUrl(String myurl)
-{
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bk." + ext);
+      graphics.pieces[a][11] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-				try {
+      // now load multi pieces
+      if (!graphics.resizable[a]) {
+        for (int aa=0; aa<graphics.numberPiecePaths[a]; aa++) {
 
-				String os = System.getProperty("os.name").toLowerCase();
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wp." + ext);
+          graphics.multiPieces[a][aa][0] = Toolkit.getDefaultToolkit().getImage(myurl);
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wn." + ext);
+          graphics.multiPieces[a][aa][1] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-					//Process p = Runtime.getRuntime().exec(cmdLine);
-				Runtime rt = Runtime.getRuntime();
-				if (os.indexOf( "win" ) >= 0)
-	            {
-				 String[] cmd = new String[4];
-	              cmd[0] = "cmd.exe";
-	              cmd[1] = "/C";
-	              cmd[2] = "start";
-	              cmd[3] = myurl;
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wb." + ext);
+          graphics.multiPieces[a][aa][2] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-	              rt.exec(cmd);
-			  }
-			 else if (os.indexOf( "mac" ) >= 0)
-	           {
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wr." + ext);
+          graphics.multiPieces[a][aa][3] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-	             Runtime runtime = Runtime.getRuntime();
-				   if(myurl.startsWith("www."))
-				   myurl="http://" + myurl;
-				   String[] args = { "osascript", "-e", "open location \"" + myurl + "\"" };
-				   try
-				   {
-				     Process process = runtime.exec(args);
-				   }
-				   catch (IOException e)
-				   {
-				     // do what you want with this
-				     // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
-				   }
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wq." + ext);
+          graphics.multiPieces[a][aa][4] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/wk." + ext);
+          graphics.multiPieces[a][aa][5] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/bp." + ext);
+          graphics.multiPieces[a][aa][6] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/bn." + ext);
+          graphics.multiPieces[a][aa][7] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/bb." + ext);
+          graphics.multiPieces[a][aa][8] = Toolkit.getDefaultToolkit().getImage(myurl);
 
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/br." + ext);
+          graphics.multiPieces[a][aa][9] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-	             // rt.exec( "open " + myurl);
-          /*Class fileMgr = Class.forName("com.apple.eio.FileManager");
-            Method openURL = fileMgr.getDeclaredMethod("openURL",
-               new Class[] {String.class});
-            openURL.invoke(null, new Object[] {myurl});
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/bq." + ext);
+          graphics.multiPieces[a][aa][10] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-			http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
-			*/
-			//String[] commandLine = { "safari", "http://www.javaworld.com/" };
-			//  Process process = Runtime.getRuntime().exec(commandLine);
+          myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
+                                              graphics.multiPiecePaths[a][aa] + "/bk." + ext);
+          graphics.multiPieces[a][aa][11] = Toolkit.getDefaultToolkit().getImage(myurl);
+        }// end aa loop
+      }// end multi piece if
+    }// end for
+    // make monge mix pieces
 
+    int fantasy=0;
+    int spatial=0;
 
-	          }
-				else
-				{             //prioritized 'guess' of users' preference
-	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
-	                  "netscape","opera","links","lynx"};
+    for (int e=0; e<graphics.maxPieces; e++) {
+      if (graphics.piecePaths[e].equals("fantasy"))
+        fantasy=e;
+      if (graphics.piecePaths[e].equals("spatial"))
+        spatial=e;
+    }
+    for (int aa=0; aa < graphics.numberPiecePaths[graphics.maxPieces-2]; aa++) {
+      graphics.multiPieces[graphics.maxPieces-2][aa][0] = graphics.multiPieces[fantasy][aa][0];
+      graphics.multiPieces[graphics.maxPieces-2][aa][1] = graphics.multiPieces[spatial][aa][1];
+      graphics.multiPieces[graphics.maxPieces-2][aa][2] = graphics.multiPieces[fantasy][aa][2];
+      graphics.multiPieces[graphics.maxPieces-2][aa][3] = graphics.multiPieces[fantasy][aa][3];
+      graphics.multiPieces[graphics.maxPieces-2][aa][4] = graphics.multiPieces[spatial][aa][4];
+      graphics.multiPieces[graphics.maxPieces-2][aa][5] = graphics.multiPieces[spatial][aa][5];
+      graphics.multiPieces[graphics.maxPieces-2][aa][6] = graphics.multiPieces[fantasy][aa][6];
+      graphics.multiPieces[graphics.maxPieces-2][aa][7] = graphics.multiPieces[spatial][aa][7];
+      graphics.multiPieces[graphics.maxPieces-2][aa][8] = graphics.multiPieces[fantasy][aa][8];
+      graphics.multiPieces[graphics.maxPieces-2][aa][9] = graphics.multiPieces[fantasy][aa][9];
+      graphics.multiPieces[graphics.maxPieces-2][aa][10] = graphics.multiPieces[spatial][aa][10];
+      graphics.multiPieces[graphics.maxPieces-2][aa][11] = graphics.multiPieces[spatial][aa][11];
+    }
 
-	              StringBuffer cmd = new StringBuffer();
-	              for (int i=0; i<browsers.length; i++)
-	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
+    boolean flagger=true;
+    int index11=-1;
+    int index22=-1;
+    int place=0;
+    while (flagger) {
+      index11=sharedVariables.countryNames.indexOf(";", index11+1);
+      index22=sharedVariables.countryNames.indexOf(";", index11+1);
+      if (index11 > -1 && index22 > -1 && index22 > index11) {
+        String lookup = sharedVariables.countryNames.substring(index11 + 1, index22);
+        sharedVariables.flagImageNames.add(lookup);
+        lookup="flags-small/" + lookup + ".png";
 
-	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
-	              //rt.exec("firefox http://www.google.com");
-	              //System.out.println(cmd.toString());
+        myurl = this.getClass().getResource(lookup);
+        sharedVariables.flagImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
+      }
+      else
+        break;
 
+      index11=index22;
+    }
+  }// end method
 
-				}// end else
-			}// end try
-			catch(Exception e)
-			{}
+  /*
+  void loadGraphicsApplet() {
+    for (int a=1; a<graphics.maxBoards; a++) {
+      if (a != 6) {
+        graphics.boards[a][0]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/light.gif");
+        graphics.boards[a][1]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/dark.gif");
+      } else {
+        graphics.boards[a][0]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/light.png");
+        graphics.boards[a][1]=getImage(getDocumentBase(), graphics.boardPaths[a] + "/dark.png");
+      }
+    }
+    for (int a=0; a<graphics.maxPieces; a++) {
+      graphics.pieces[a][0] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wp.gif");
+      graphics.pieces[a][1] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wn.gif");
+      graphics.pieces[a][2] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wb.gif");
+      graphics.pieces[a][3] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wr.gif");
+      graphics.pieces[a][4] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wq.gif");
+      graphics.pieces[a][5] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/wk.gif");
+      graphics.pieces[a][6] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bp.gif");
+      graphics.pieces[a][7] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bn.gif");
+      graphics.pieces[a][8] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bb.gif");
+      graphics.pieces[a][9] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/br.gif");
+      graphics.pieces[a][10] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bq.gif");
+      graphics.pieces[a][11] = getImage(getDocumentBase(), graphics.piecePaths[a] + "/64/bk.gif");
+    }
+  }//end method
 
+  void loadSoundsApplet() {// load sounds
+    try {
+      URL songPath = new URL(getCodeBase(), "tell.wav"); // Geturl of sound
+      sharedVariables.songs[0]=songPath;
+      songPath = new URL(getCodeBase(), "click18a.wav"); // Geturl of sound
+      sharedVariables.songs[1]=songPath;
+      songPath = new URL(getCodeBase(), "click10b.wav"); // Geturl of sound
+      sharedVariables.songs[2]=songPath;
+      songPath = new URL(getCodeBase(), "serv1a.wav"); // Geturl of sound
+      sharedVariables.songs[3]=songPath;
 
-}
-public void saveSettings() {
+    } catch (Exception e) {}
+  }//end method
+  */
 
+  void openUrl(String myurl) {
+    try {
+      String os = System.getProperty("os.name").toLowerCase();
 
-          }
+      //Process p = Runtime.getRuntime().exec(cmdLine);
+      Runtime rt = Runtime.getRuntime();
+      if (os.indexOf("win") >= 0) {
+        String[] cmd = new String[4];
+        cmd[0] = "cmd.exe";
+        cmd[1] = "/C";
+        cmd[2] = "start";
+        cmd[3] = myurl;
 
-// not really used. i am saving to a file on a hard drive now
-// this was an attempt to write to the web but any settings are deleted if they clear temp internet files
+        rt.exec(cmd);
+      } else if (os.indexOf("mac") >= 0) {
 
- public void getSettings() {
+        Runtime runtime = Runtime.getRuntime();
+        if (myurl.startsWith("www."))
+          myurl="http://" + myurl;
+        String[] args = {"osascript", "-e", "open location \"" + myurl + "\""};
+        try {
+          Process process = runtime.exec(args);
+        } catch (IOException e) {
+          // do what you want with this
+          // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
+        }
 
-          }
+        // rt.exec( "open " + myurl);
+        /*
+        Class fileMgr = Class.forName("com.apple.eio.FileManager");
+        Method openURL = fileMgr.getDeclaredMethod("openURL",
+                                                   new Class[] {String.class});
+        openURL.invoke(null, new Object[] {myurl});
 
+        http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
+        */
+        //String[] commandLine = { "safari", "http://www.javaworld.com/" };
+        //Process process = Runtime.getRuntime().exec(commandLine);
 
+      } else {             //prioritized 'guess' of users' preference
+        String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+                             "netscape","opera","links","lynx"};
 
+        StringBuffer cmd = new StringBuffer();
+        for (int i=0; i<browsers.length; i++)
+          cmd.append((i==0  ? "" : " || ") + browsers[i] +" \"" + myurl + "\" ");
 
-void repaintboards()
-{
-try {
-for(int coo=0; coo<sharedVariables.openBoardCount; coo++)
-if(myboards[coo]!=null)
-if(myboards[coo].isVisible())
-{
+        rt.exec(new String[] {"sh", "-c", cmd.toString()});
+        //rt.exec("firefox http://www.google.com");
+        //System.out.println(cmd.toString());
+      }// end else
+      // end try
+    } catch (Exception e) {}
+  }
 
-myboards[coo].mypanel.repaint(0,0, 5000,5000);
+  public void saveSettings() {
+    
+  }
+  // not really used. i am saving to a file on a hard drive now.  this
+  // was an attempt to write to the web but any settings are deleted
+  // if they clear temp internet files
 
-} 
-if(myboards[0]!=null)
-if(myboards[0].isVisible())
-myboards[0].repaint();                          }
-catch(Exception dui){}
+  public void getSettings() {
 
-}// end method repaint boards
+  }
 
+  void repaintboards() {
+    try {
+      for (int coo=0; coo<sharedVariables.openBoardCount; coo++) {
+        if (myboards[coo] != null &&
+            myboards[coo].isVisible()) {
+          myboards[coo].mypanel.repaint(0,0, 5000,5000);
+        }
+      }
+      if (myboards[0] != null &&
+          myboards[0].isVisible())
+        myboards[0].repaint();
 
-
-
+    } catch (Exception dui) {}
+  }// end method repaint boards
 } // end multi frame class
