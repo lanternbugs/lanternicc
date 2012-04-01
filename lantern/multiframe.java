@@ -179,9 +179,13 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem gameend;
   JCheckBoxMenuItem channelNumberLeft;
   JCheckBoxMenuItem tabbing;
+  /* Andrey edits:
+     make an array for the board designs
   JCheckBoxMenuItem BoardDesign1;
   JCheckBoxMenuItem BoardDesign2;
   JCheckBoxMenuItem BoardDesign3;
+  */
+  JCheckBoxMenuItem[] boarddesignarray = new JCheckBoxMenuItem[3];
   JCheckBoxMenuItem tellswitch;
   JCheckBoxMenuItem highlight;
   JCheckBoxMenuItem materialCount;
@@ -194,10 +198,14 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem newObserveGameSwitch;
   JCheckBoxMenuItem blockSays;
   JCheckBoxMenuItem useLightBackground;
+  /* Andrey edits:
+     make an array for the console selection
   JCheckBoxMenuItem boardconsole0;
   JCheckBoxMenuItem boardconsole1;
   JCheckBoxMenuItem boardconsole2;
   JCheckBoxMenuItem boardconsole3;
+  */
+  JCheckBoxMenuItem[] boardconsolearray = new JCheckBoxMenuItem[4];
   JCheckBoxMenuItem sidewaysconsole;
   JCheckBoxMenuItem playersInMyGame;
   JCheckBoxMenuItem unobserveGoExamine;
@@ -222,13 +230,17 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem useTopGame;
   JCheckBoxMenuItem notifyMainAlso;
 
+  /* Andrey edits:
+     make an array for the aspects
   JCheckBoxMenuItem aspect0;
   JCheckBoxMenuItem aspect1;
   JCheckBoxMenuItem aspect2;
   JCheckBoxMenuItem aspect3;
+  */
+  JCheckBoxMenuItem[] aspectarray = new JCheckBoxMenuItem[4];
   
   /* Andrey edits:
-   * make an array for the boards
+     make an array for the boards
   JCheckBoxMenuItem woodenboard1;
   JCheckBoxMenuItem woodenboard2;
   JCheckBoxMenuItem woodenboard3;
@@ -244,14 +256,17 @@ class mymultiframe extends JFrame
   */
   JCheckBoxMenuItem[] boardarray = new JCheckBoxMenuItem[11];
 
-  /*
+  /* Andrey edits:
+     make an array for the presets
   JMenuItem preset0;
   JMenuItem preset1;
   JMenuItem preset2;
   JMenuItem preset3;
   */
   JMenuItem[] presetarray = new JMenuItem[4];
-  
+
+  /* Andrey edits:
+     make an array for the pieces
   JCheckBoxMenuItem pieces1;
   JCheckBoxMenuItem pieces2;
   JCheckBoxMenuItem pieces3;
@@ -276,7 +291,9 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem pieces22;
   JCheckBoxMenuItem pieces23;
   JCheckBoxMenuItem pieces24;
-
+  */
+  JCheckBoxMenuItem[] piecesarray = new JCheckBoxMenuItem[24];
+  
   JCheckBoxMenuItem[] italicsBehavior = new JCheckBoxMenuItem[3];
 
   JCheckBoxMenuItem randomArmy;
@@ -482,9 +499,11 @@ class mymultiframe extends JFrame
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
     qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
     reconnectTimestamp.  setSelected(sharedVariables.reconnectTimestamp);
-    BoardDesign1.        setSelected((sharedVariables.andreysLayout == 0));
-    BoardDesign2.        setSelected((sharedVariables.andreysLayout == 1));
-    BoardDesign3.        setSelected((sharedVariables.andreysLayout == 2));
+    
+    if (sharedVariables.andreysLayout >= 0 &&
+        sharedVariables.andreysLayout < boarddesignarray.length)
+      boarddesignarray[sharedVariables.andreysLayout].setSelected(true);
+    
     playersInMyGame.     setSelected((sharedVariables.playersInMyGame == 2));
     unobserveGoExamine.  setSelected(sharedVariables.unobserveGoExamine);
     tellTimestamp.       setSelected(sharedVariables.tellTimestamp);
@@ -1357,9 +1376,9 @@ class mymultiframe extends JFrame
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
     JMenu boardDesign = new JMenu("Board Design");
     // .. / Board Design /
-    BoardDesign1 = new JCheckBoxMenuItem("Original");
-    BoardDesign2 = new JCheckBoxMenuItem("Modern");
-    BoardDesign3 = new JCheckBoxMenuItem("Mixed");
+    boarddesignarray[0] = new JCheckBoxMenuItem("Original");
+    boarddesignarray[1] = new JCheckBoxMenuItem("Modern");
+    boarddesignarray[2] = new JCheckBoxMenuItem("Mixed");
     // .. /
     tabbing = new JCheckBoxMenuItem("Tabs Only");
     JMenu selectboards = new JMenu("Boards");
@@ -1384,37 +1403,37 @@ class mymultiframe extends JFrame
     // .. /
     JMenu selectpieces = new JMenu("Pieces");
     // .. / Pieces /
-    pieces1 = new JCheckBoxMenuItem("Dyche1");
-    pieces2 = new JCheckBoxMenuItem("Dyche2");
-    pieces3 = new JCheckBoxMenuItem("Dyche3");
-    pieces4 = new JCheckBoxMenuItem("Bookup");
-    pieces5 = new JCheckBoxMenuItem("Xboard");
-    pieces6 = new JCheckBoxMenuItem("Alpha");
-    pieces19 = new JCheckBoxMenuItem("Adventure");
-    pieces20 = new JCheckBoxMenuItem("Maya");
-    pieces21 = new JCheckBoxMenuItem("Medieval");
+    piecesarray[0] = new JCheckBoxMenuItem("Dyche1");
+    piecesarray[1] = new JCheckBoxMenuItem("Dyche2");
+    piecesarray[2] = new JCheckBoxMenuItem("Dyche3");
+    piecesarray[3] = new JCheckBoxMenuItem("Bookup");
+    piecesarray[4] = new JCheckBoxMenuItem("Xboard");
+    piecesarray[5] = new JCheckBoxMenuItem("Alpha");
+    piecesarray[18] = new JCheckBoxMenuItem("Adventure");
+    piecesarray[19] = new JCheckBoxMenuItem("Maya");
+    piecesarray[20] = new JCheckBoxMenuItem("Medieval");
     JMenu mongeMenu = new JMenu("Monge");
     // .. / .. / Monge /
-    pieces7 = new JCheckBoxMenuItem("Spatial");
-    pieces14 = new JCheckBoxMenuItem("Eyes");
-    pieces15 = new JCheckBoxMenuItem("Fantasy");
-    pieces23 = new JCheckBoxMenuItem("Monge Mix");
+    piecesarray[6] = new JCheckBoxMenuItem("Spatial");
+    piecesarray[13] = new JCheckBoxMenuItem("Eyes");
+    piecesarray[14] = new JCheckBoxMenuItem("Fantasy");
+    piecesarray[22] = new JCheckBoxMenuItem("Monge Mix");
     JMenuItem aboutmonge = new JMenuItem ("About Monge Pieces");
     // .. / .. /
-    pieces8 = new JCheckBoxMenuItem("Harlequin");
-    pieces9 = new JCheckBoxMenuItem("Berlin");
-    pieces10 = new JCheckBoxMenuItem("Eboard Classic");
-    pieces16 = new JCheckBoxMenuItem("Line");
-    pieces17 = new JCheckBoxMenuItem("Motif");
-    pieces18 = new JCheckBoxMenuItem("Utrecht");
+    piecesarray[7] = new JCheckBoxMenuItem("Harlequin");
+    piecesarray[8] = new JCheckBoxMenuItem("Berlin");
+    piecesarray[9] = new JCheckBoxMenuItem("Eboard Classic");
+    piecesarray[15] = new JCheckBoxMenuItem("Line");
+    piecesarray[16] = new JCheckBoxMenuItem("Motif");
+    piecesarray[17] = new JCheckBoxMenuItem("Utrecht");
     JMenu moltenmenu = new JMenu("Molten");
     // .. / .. / Molten /
-    pieces11 = new JCheckBoxMenuItem("Molten Good");
-    pieces12 = new JCheckBoxMenuItem("Molten Evil");
-    pieces13 = new JCheckBoxMenuItem("Liebeskind");
+    piecesarray[10] = new JCheckBoxMenuItem("Molten Good");
+    piecesarray[11] = new JCheckBoxMenuItem("Molten Evil");
+    piecesarray[12] = new JCheckBoxMenuItem("Liebeskind");
     // .. / .. /
-    pieces22 = new JCheckBoxMenuItem("CCube");
-    pieces24 = new JCheckBoxMenuItem("Random Pieces");
+    piecesarray[21] = new JCheckBoxMenuItem("CCube");
+    piecesarray[23] = new JCheckBoxMenuItem("Random Pieces");
     // .. /
     JMenu boardSquareColors = new JMenu("Board Squares Colors");
     // .. / Board Squares Colors /
@@ -1471,17 +1490,17 @@ class mymultiframe extends JFrame
     newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
     // .. / .. / Board Aspect Ratio /
     JMenu aspect = new JMenu("Board Aspect Ratio");
-    aspect0 = new JCheckBoxMenuItem("1:1");
-    aspect1 = new JCheckBoxMenuItem("5:4");
-    aspect2 = new JCheckBoxMenuItem("4:3");
-    aspect3 = new JCheckBoxMenuItem("3:2");
+    aspectarray[0] = new JCheckBoxMenuItem("1:1");
+    aspectarray[1] = new JCheckBoxMenuItem("5:4");
+    aspectarray[2] = new JCheckBoxMenuItem("4:3");
+    aspectarray[3] = new JCheckBoxMenuItem("3:2");
     // .. /
     JMenu consoleaspect = new JMenu("Board Console");
     // .. / Board Console /
-    boardconsole0 = new JCheckBoxMenuItem("Hide Board Console");
-    boardconsole1 = new JCheckBoxMenuItem("Compact Board Console");
-    boardconsole2 = new JCheckBoxMenuItem("Normal Board Console");
-    boardconsole3 = new JCheckBoxMenuItem("Larger Board Console");
+    boardconsolearray[0] = new JCheckBoxMenuItem("Hide Board Console");
+    boardconsolearray[1] = new JCheckBoxMenuItem("Compact Board Console");
+    boardconsolearray[2] = new JCheckBoxMenuItem("Normal Board Console");
+    boardconsolearray[3] = new JCheckBoxMenuItem("Larger Board Console");
     // .. / .. / (separator)
     sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
 
@@ -1493,14 +1512,25 @@ class mymultiframe extends JFrame
     AdvancedGameMenu.setMnemonic(KeyEvent.VK_A);
 
     // add button groups
-    ButtonGroup boardDesignGroup = new ButtonGroup();
-    boardDesignGroup.add(BoardDesign1);
-    boardDesignGroup.add(BoardDesign2);
-    boardDesignGroup.add(BoardDesign3);
+    ButtonGroup boarddesigngroup = new ButtonGroup();
+    for (int i=0; i<boarddesignarray.length; i++)
+      boarddesigngroup.add(boarddesignarray[i]);
 
-    ButtonGroup boardsGroup = new ButtonGroup();
+    ButtonGroup boardgroup = new ButtonGroup();
     for (int i=0; i<boardarray.length; i++)
-      boardsGroup.add(boardarray[i]);
+      boardgroup.add(boardarray[i]);
+
+    ButtonGroup piecesgroup = new ButtonGroup();
+    for (int i=0; i<piecesarray.length; i++)
+      piecesgroup.add(piecesarray[i]);
+    
+    ButtonGroup aspectgroup = new ButtonGroup();
+    for (int i=0; i<aspectarray.length; i++)
+      aspectgroup.add(aspectarray[i]);
+
+    ButtonGroup boardconsolegroup = new ButtonGroup();
+    for (int i=0; i<boardconsolearray.length; i++)
+      boardconsolegroup.add(boardconsolearray[i]);
     
     // add to menu bar
     menu.add(myboardmenu);
@@ -1510,9 +1540,8 @@ class mymultiframe extends JFrame
     myboardmenu.add(withdrawSent);
     myboardmenu.add(boardDesign);
     // .. / Board Design /
-    boardDesign.add(BoardDesign1);
-    boardDesign.add(BoardDesign2);
-    boardDesign.add(BoardDesign3);
+    for (int i=0; i<boarddesignarray.length; i++)
+      boardDesign.add(boarddesignarray[i]);
     // .. /
     myboardmenu.add(tabbing);
     myboardmenu.add(selectboards);
@@ -1526,37 +1555,29 @@ class mymultiframe extends JFrame
     // .. /
     myboardmenu.add(selectpieces);
     // .. / Pieces /
-    selectpieces.add(pieces1);
-    selectpieces.add(pieces2);
-    selectpieces.add(pieces3);
-    selectpieces.add(pieces4);
-    selectpieces.add(pieces5);
-    selectpieces.add(pieces6);
-    selectpieces.add(pieces19);
-    selectpieces.add(pieces20);
-    selectpieces.add(pieces21);
+    for (int i=0; i<6; i++)
+      selectpieces.add(piecesarray[i]);
+    for (int i=18; i<21; i++)
+      selectpieces.add(piecesarray[i]);
     selectpieces.add(mongeMenu);
     // .. / .. / Monge /
-    mongeMenu.add(pieces7);
-    mongeMenu.add(pieces14);
-    mongeMenu.add(pieces15);
-    mongeMenu.add(pieces23);
+    mongeMenu.add(piecesarray[6]);
+    mongeMenu.add(piecesarray[13]);
+    mongeMenu.add(piecesarray[14]);
+    mongeMenu.add(piecesarray[22]);
     mongeMenu.add(aboutmonge);
     // .. / .. /
-    selectpieces.add(pieces8);
-    selectpieces.add(pieces9);
-    selectpieces.add(pieces10);
-    selectpieces.add(pieces16);
-    selectpieces.add(pieces17);
-    selectpieces.add(pieces18);
+    for (int i=7; i<10; i++)
+      selectpieces.add(piecesarray[i]);
+    for (int i=15; i<18; i++)
+      selectpieces.add(piecesarray[i]);
     selectpieces.add(moltenmenu);
     // .. / .. / Molten /
-    moltenmenu.add(pieces11);
-    moltenmenu.add(pieces12);
-    moltenmenu.add(pieces13);
+    for (int i=10; i<13; i++)
+      moltenmenu.add(piecesarray[i]);
     // .. / .. /
-    selectpieces.add(pieces22);
-    selectpieces.add(pieces24);
+    selectpieces.add(piecesarray[21]);
+    selectpieces.add(piecesarray[23]);
     // .. /
     myboardmenu.add(boardSquareColors);
     // .. / Board Squares Colors /
@@ -1613,43 +1634,32 @@ class mymultiframe extends JFrame
     AdvancedGameMenu.add(newObserveGameSwitch);
     AdvancedGameMenu.add(aspect);
     // .. / .. / Board Aspect Ratio /
-    aspect.add(aspect0);
-    aspect.add(aspect1);
-    aspect.add(aspect2);
-    aspect.add(aspect3);
+    for (int i=0; i<aspectarray.length; i++)
+      aspect.add(aspectarray[i]);
     // .. /
     myboardmenu.add(consoleaspect);
     // .. / Board Console /
-    consoleaspect.add(boardconsole0);
-    consoleaspect.add(boardconsole1);
-    consoleaspect.add(boardconsole2);
-    consoleaspect.add(boardconsole3);
+    for (int i=0; i<boardconsolearray.length; i++)
+      consoleaspect.add(boardconsolearray[i]);
     consoleaspect.addSeparator();
     consoleaspect.add(sidewaysconsole);
 
     // special settings
-    highlight.setSelected(true);
+    //highlight.setSelected(true);
     //woodenboard2.setSelected(true);
-    pieces1.setSelected(true);
-    pgnlogging.setSelected(true);
-    pgnObservedLogging.setSelected(true);
-    aspect0.setSelected(true);
-    aspect1.setSelected(false);
-    aspect2.setSelected(false);
-    aspect3.setSelected(false);
-    boardconsole0.setSelected(false);
-    boardconsole1.setSelected(false);
-    boardconsole2.setSelected(true);
-    boardconsole3.setSelected(false);
-    sidewaysconsole.setSelected(false);
+    //pieces1.setSelected(true);
+    //pgnlogging.setSelected(true);
+    //pgnObservedLogging.setSelected(true);
+    aspectarray[0].setSelected(true);
+    boardconsolearray[2].setSelected(true);
+    //sidewaysconsole.setSelected(false);
 
     // add listeners
     nseek.addActionListener(this);
     flipSent.addActionListener(this);
     withdrawSent.addActionListener(this);
-    BoardDesign1.addActionListener(this);
-    BoardDesign2.addActionListener(this);
-    BoardDesign3.addActionListener(this);
+    for (int i=0; i<boarddesignarray.length; i++)
+      boarddesignarray[i].addActionListener(this);
     tabbing.addActionListener(this);
     for (int i=0; i<boardarray.length; i++)
       boardarray[i].addActionListener(this);
@@ -1666,6 +1676,10 @@ class mymultiframe extends JFrame
     cherryboard.addActionListener(this);
     purpleboard.addActionListener(this);
     */
+
+    for (int i=0; i<piecesarray.length; i++)
+      piecesarray[i].addActionListener(this);
+    /*
     pieces1.addActionListener(this);
     pieces2.addActionListener(this);
     pieces3.addActionListener(this);
@@ -1690,6 +1704,7 @@ class mymultiframe extends JFrame
     pieces22.addActionListener(this);
     pieces23.addActionListener(this);
     pieces24.addActionListener(this);
+    */
     aboutmonge.addActionListener(this);
     for (int i=0; i<presetarray.length; i++)
       presetarray[i].addActionListener(this);
@@ -1728,14 +1743,10 @@ class mymultiframe extends JFrame
     checkLegality.addActionListener(this);
     unobserveGoExamine.addActionListener(this);
     newObserveGameSwitch.addActionListener(this);
-    aspect0.addActionListener(this);
-    aspect1.addActionListener(this);
-    aspect2.addActionListener(this);
-    aspect3.addActionListener(this);
-    boardconsole0.addActionListener(this);
-    boardconsole1.addActionListener(this);
-    boardconsole2.addActionListener(this);
-    boardconsole3.addActionListener(this);
+    for (int i=0; i<aspectarray.length; i++)
+      aspectarray[i].addActionListener(this);
+    for (int i=0; i<boardconsolearray.length; i++)
+      boardconsolearray[i].addActionListener(this);
     sidewaysconsole.addActionListener(this);
     highlight.addActionListener(this);
 
@@ -2545,10 +2556,8 @@ class mymultiframe extends JFrame
                                  (action.equals("4:3") ? 2 : 3)));
       // Andrey says:
       // I believe this can be done with a button group
-      aspect0.setSelected((sharedVariables.aspect == 0));
-      aspect1.setSelected((sharedVariables.aspect == 1));
-      aspect2.setSelected((sharedVariables.aspect == 2));
-      aspect3.setSelected((sharedVariables.aspect == 3));
+      aspectarray[sharedVariables.aspect].setSelected(true);
+
       for (int a=0; a<sharedVariables.maxGameTabs; a++)
         if (myboards[a]!=null && myboards[a].isVisible())
           myboards[a].mypanel.repaint();
@@ -3265,20 +3274,13 @@ class mymultiframe extends JFrame
       useLightBackground.setSelected(sharedVariables.useLightBackground);
       
       // Andrey edits:
-      // restore the split of the three actions
-    } else if (action.equals("Original")) {
-      sharedVariables.andreysLayout = 0;
-      BoardDesign1.setSelected(true);
-      redrawBoard(sharedVariables.boardConsoleType);
-
-    } else if (action.equals("Modern")) {
-      sharedVariables.andreysLayout = 1;
-      BoardDesign2.setSelected(true);
-      redrawBoard(sharedVariables.boardConsoleType);
-
-    } else if (action.equals("Mixed")) {
-      sharedVariables.andreysLayout = 2;
-      BoardDesign3.setSelected(true);
+      // merge the three actions
+    } else if (action.equals("Original") ||
+               action.equals("Modern") ||
+               action.equals("Mixed")) {
+      sharedVariables.andreysLayout = (action.equals("Original") ? 0 :
+                                       (action.equals("Modern") ? 1 : 2));
+      boarddesignarray[sharedVariables.andreysLayout].setSelected(true);
       redrawBoard(sharedVariables.boardConsoleType);
 
     } else if (action.equals("Flip")) {
@@ -3860,7 +3862,7 @@ class mymultiframe extends JFrame
     else
       italicsBehavior[2].setSelected(false);
     */
-    if (n >= 0 && n <= 2)
+    if (n >= 0 && n < italicsBehavior.length)
       italicsBehavior[n].setSelected(true);
   }
 
@@ -3886,9 +3888,8 @@ class mymultiframe extends JFrame
     else
       boardconsole3.setSelected(false);
     */
-    boardconsole0.setSelected((type==0));
-    boardconsole1.setSelected((type==1));
-    boardconsole2.setSelected((type==2));
+    if (type >= 0 && type < boardconsolearray.length)
+      boardconsolearray[type].setSelected(true);
 
     for (int a = 0; a<sharedVariables.maxGameTabs; a++)
       if (myboards[a] != null &&
@@ -3947,7 +3948,6 @@ class mymultiframe extends JFrame
       pieces10.setSelected(true);
     else
       pieces10.setSelected(false);
-
 
     if (type == 10)
       pieces11.setSelected(true);
@@ -4021,36 +4021,14 @@ class mymultiframe extends JFrame
       pieces24.setSelected(false);
     }
     */
-    
-    pieces1.setSelected((type==0));
-    pieces2.setSelected((type==1));
-    pieces3.setSelected((type==2));
-    pieces4.setSelected((type==3));
-    pieces5.setSelected((type==4));
-    pieces6.setSelected((type==5));
-    pieces7.setSelected((type==6));
-    pieces8.setSelected((type==7));
-    pieces9.setSelected((type==8));
-    pieces10.setSelected((type==9));
-    pieces11.setSelected((type==10));
-    pieces12.setSelected((type==11));
-    pieces13.setSelected((type==12));
-    pieces14.setSelected((type==13));
-    pieces15.setSelected((type==14));
-    pieces16.setSelected((type==15));
-    pieces17.setSelected((type==16));
-    pieces18.setSelected((type==17));
-    pieces19.setSelected((type==18));
-    pieces20.setSelected((type==19));
-    pieces21.setSelected((type==20));    
-    pieces22.setSelected((type==21));    
-    pieces23.setSelected((type==22));    
-    pieces24.setSelected((type==23));
+
+    if (type >= 0 && type < piecesarray.length)
+      piecesarray[type].setSelected(true);
 
     if (type == 23) generateRandomPieces(type);
     
     for (int a=0; a<sharedVariables.maxGameTabs; a++)
-      if (myboards[a]!=null)
+      if (myboards[a] != null)
         //if(myboards[a].isVisible() == true)
         myboards[a].mypanel.repaint();
   }
@@ -4058,7 +4036,7 @@ class mymultiframe extends JFrame
   void generateRandomPieces(int type) {
     Random randomGenerator = new Random();
 
-    for (int a = 0; a<12; a++) {
+    for (int a=0; a<12; a++) {
       int randomInt = randomGenerator.nextInt(type - 1);
       graphics.pieces[type][a] = graphics.pieces[randomInt][a];
     }
@@ -4163,12 +4141,12 @@ class mymultiframe extends JFrame
   }
 
   void normalConsole() {
-    sharedVariables.boardConsoleType=2;
+    sharedVariables.boardConsoleType = 2;
     redrawBoard(sharedVariables.boardConsoleType);
   }
   
   void largerConsole() {
-    sharedVariables.boardConsoleType=3;
+    sharedVariables.boardConsoleType = 3;
     redrawBoard(sharedVariables.boardConsoleType);
   }
   
