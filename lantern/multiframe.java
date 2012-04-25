@@ -43,6 +43,7 @@ import java.util.TimerTask;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import javax.swing.filechooser.FileFilter;
 
 //import javax.jnlp.*;
 
@@ -2027,6 +2028,26 @@ class mymultiframe extends JFrame
       try {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File("."));;
+        fc.setFileFilter(new FileFilter() {
+        public boolean accept(File f) {
+          if(f.getName().toLowerCase().endsWith(".pgn"))
+          return true;
+
+            if( f.isDirectory())
+            return true;
+            return false;
+        }
+         public String getDescription() {
+         /* if(f.getName().toLowerCase().endsWith(".b2s"))
+          return "*.b2s";
+                    if(f.getName().toLowerCase().endsWith(".b2a"))
+		            return "*.b2a";
+*/
+
+return "*.pgn";
+
+        }
+      });
 
         int returnVal = fc.showOpenDialog(this);
 
@@ -4566,31 +4587,31 @@ class mymultiframe extends JFrame
 	sharedVariables.songs[2]=songPath;
  	songPath = this.getClass().getResource("ding.au"); // Geturl of sound
 	sharedVariables.songs[4]=songPath;
-      } else {
-        songPath = this.getClass().getResource("tell.wav"); // Geturl of sound
+      } else {            // these below 4 were waves but should have converted to au now
+        songPath = this.getClass().getResource("tell.au"); // Geturl of sound
 	sharedVariables.songs[0]=songPath;
-	songPath = this.getClass().getResource("click18a.wav"); // Geturl of sound
+	songPath = this.getClass().getResource("click18a.au"); // Geturl of sound
   	sharedVariables.songs[1]=songPath;
-        songPath = this.getClass().getResource("click10b.wav"); // Geturl of sound
+        songPath = this.getClass().getResource("click10b.au"); // Geturl of sound
 	sharedVariables.songs[2]=songPath;
-	songPath = this.getClass().getResource("beeppure.wav"); // Geturl of sound
+	songPath = this.getClass().getResource("beeppure.au"); // Geturl of sound
 	sharedVariables.songs[4]=songPath;
       }
 
-      songPath = this.getClass().getResource("serv1a.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("serv1a.au"); // Geturl of sound  was wav
       sharedVariables.songs[3]=songPath;
       songPath = this.getClass().getResource("fitebell.au"); // Geturl of sound
       sharedVariables.songs[5]=songPath;
-      songPath = this.getClass().getResource("buzzer.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("buzzer.au"); // Geturl of sound   was wav
       sharedVariables.songs[6]=songPath;
-      songPath = this.getClass().getResource("fitbell.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("fitbell.au"); // Geturl of sound was wav
       sharedVariables.songs[7]=songPath;
 
-      songPath = this.getClass().getResource("BEEP_FM.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("BEEP_FM.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[0]=songPath;
-      songPath = this.getClass().getResource("BEEPPURE.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("BEEPPURE.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[1]=songPath;
-      songPath = this.getClass().getResource("BEEPSPAC.wav"); // Geturl of sound
+      songPath = this.getClass().getResource("BEEPSPAC.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[2]=songPath;
 
       //song1 = new Sound("DING.WAV");
