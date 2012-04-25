@@ -2029,25 +2029,29 @@ class mymultiframe extends JFrame
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File("."));;
         fc.setFileFilter(new FileFilter() {
-        public boolean accept(File f) {
-          if(f.getName().toLowerCase().endsWith(".pgn"))
-          return true;
+            public boolean accept(File f) {
+              return (f.getName().toLowerCase().endsWith(".pgn") ||
+                      f.isDirectory());
+              /*
+              if (f.getName().toLowerCase().endsWith(".pgn"))
+                return true;
 
-            if( f.isDirectory())
-            return true;
-            return false;
-        }
-         public String getDescription() {
-         /* if(f.getName().toLowerCase().endsWith(".b2s"))
-          return "*.b2s";
-                    if(f.getName().toLowerCase().endsWith(".b2a"))
-		            return "*.b2a";
-*/
+              if(f.isDirectory())
+                return true;
+              return false;
+              */
+            }
+            public String getDescription() {
+              /*
+              if(f.getName().toLowerCase().endsWith(".b2s"))
+                return "*.b2s";
+              if(f.getName().toLowerCase().endsWith(".b2a"))
+                return "*.b2a";
+              */
 
-return "*.pgn";
-
-        }
-      });
+              return "*.pgn";
+            }
+          });
 
         int returnVal = fc.showOpenDialog(this);
 
