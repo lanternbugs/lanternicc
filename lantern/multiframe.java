@@ -909,6 +909,7 @@ class mymultiframe extends JFrame
     // File /
     JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
     JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
+    JMenuItem reconnect4 = new JMenuItem("Reconnect to ICC (alternate)");
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
     JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
     JMenuItem settings2 = new JMenuItem("Save Settings");
@@ -916,6 +917,7 @@ class mymultiframe extends JFrame
     // add shortcuts
     myfiles.setMnemonic(KeyEvent.VK_F);
     reconnect1.setMnemonic(KeyEvent.VK_R);
+    reconnect4.setMnemonic(KeyEvent.VK_A);
     reconnect3.setMnemonic(KeyEvent.VK_Q);
     wallpaper1.setMnemonic(KeyEvent.VK_W);
     settings2.setMnemonic(KeyEvent.VK_S);
@@ -924,6 +926,7 @@ class mymultiframe extends JFrame
     menu.add(myfiles);
     // File /
     myfiles.add(reconnect1);
+    myfiles.add(reconnect4);
     myfiles.add(reconnect3);
     //myfiles.add(reconnect2);
     myfiles.add(wallpaper1);
@@ -932,6 +935,7 @@ class mymultiframe extends JFrame
     // add listeners
     settings2.addActionListener(this);
     reconnect1.addActionListener(this);
+    reconnect4.addActionListener(this);
     //reconnect2.addActionListener(this);
     reconnect3.addActionListener(this);
     wallpaper1.addActionListener(this);
@@ -2266,12 +2270,14 @@ class mymultiframe extends JFrame
       // Andrey edits:
       // merging queen and main reconnect
     } else if (action.equals("Reconnect to Queen") ||
-               action.equals("Reconnect to ICC")) {
+               action.equals("Reconnect to ICC") ||
+               action.equals("Reconnect to ICC (alternate)")) {
       try {
         sharedVariables.myServer = "ICC";
-        sharedVariables.chessclubIP = (action.equals("Reconnect to Queen") ?
-                                       "207.99.83.231" :
-                                       "207.99.83.228");
+        sharedVariables.chessclubIP =
+          (action.equals("Reconnect to Queen") ? "207.99.83.231" :
+           (action.equals("Reconnect to ICC") ? "207.99.83.228" :
+            "207.99.83.239"));
         sharedVariables.doreconnect=true;
         //if (myConnection == null)
         if (myConnection == null || !myConnection.isVisible())

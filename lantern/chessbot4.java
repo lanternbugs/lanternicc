@@ -495,7 +495,11 @@ try {
 	try{
       Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
       Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
-      requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(5000)});
+      if (sharedVariables.chessclubIP.equals("207.99.83.239")) {
+        requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(443)});
+      } else {
+        requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(5000)});
+      }
     } catch(Exception d){ }
 }
 	if(requestSocket== null)
