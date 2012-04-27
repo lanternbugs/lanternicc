@@ -2045,6 +2045,8 @@ void stopTheEngine()
 
   void createFlag(String country, boolean top) {
 
+    if (!country.equals("icc")) country = country.toUpperCase();
+
     try {
     
       String uniqueName="";
