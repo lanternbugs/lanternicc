@@ -2007,7 +2007,13 @@ if( dg.getArg(0).equals("152"))
                         {
                          
                          String uniqueName="";
-                         int bb=sharedVariables.countryNames.indexOf(";" + dg.getArg(3) + ";");
+
+                         String countryString = dg.getArg(3);
+                         if (!countryString.equals("icc"))
+                           countryString = countryString.toUpperCase();
+                         
+                         //int bb=sharedVariables.countryNames.indexOf(";" + dg.getArg(3) + ";");
+                         int bb = sharedVariables.countryNames.indexOf(";" + countryString + ";");
                          if(bb > -1)
                          {
                           int bbb=sharedVariables.countryNames.indexOf( ";", bb + 4);
