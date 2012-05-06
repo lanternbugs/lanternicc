@@ -22,6 +22,9 @@ import javax.swing.*;
 import javax.swing.JDialog;
 */
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JScrollPane;
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -31,7 +34,7 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.SpinnerListModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ChangeListener;
@@ -46,11 +49,12 @@ public class customizeChannelNotifyDialog extends JDialog
 
   private channels sVars;
   private final String name;
+  private final String lname;
 
   private JList list;
   private DefaultListModel listModel;
 
-  private SpinnerNumberModel spinnerModel;
+  private SpinnerListModel spinnerModel;
   
   private JButton removebutton;
 
@@ -69,19 +73,38 @@ public class customizeChannelNotifyDialog extends JDialog
 
     this.sVars = sVars;
     this.name = name;
+    lname = name.toLowerCase();
 
     listModel = new DefaultListModel();
-    getChannels(name);
+    getChannels(lname);
 
     list = new JList(listModel);
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.addListSelectionListener(this);
     JScrollPane listpane = new JScrollPane(list);
-    
-    spinnerModel = new SpinnerNumberModel(2, 0, 399, 1);
+
+    List<Integer> spinnerList = new ArrayList<Integer>();
+
+    List<nameListClass> cnl = sVars.channelNamesList;
+
+    for (int i=0; i<cnl.size(); i++) {
+      nameListClass nlc = cnl.get(i);
+      if (nlc.isOnList(name))
+        spinnerList.add(Integer.valueOf(nlc.channel));
+    }
+
+    Collections.sort(spinnerList);
+
+    // add all the other channels, in order
+    for (int i=0; i<400; i++) {
+      if (!spinnerList.contains(i))
+        spinnerList.add(i);
+    }
+
+    spinnerModel = new SpinnerListModel(spinnerList);
     JSpinner spinner = new JSpinner(spinnerModel);
 
-    notIndex = isOnGlobalNotify(name);
+    notIndex = isOnGlobalNotify(lname);
     JCheckBox globnot = new JCheckBox("Connect Notify", (notIndex != -1));
     globnot.setActionCommand("globnot");
     globnot.addActionListener(this);
@@ -93,6 +116,7 @@ public class customizeChannelNotifyDialog extends JDialog
     removebutton = new JButton("Remove");
     removebutton.setActionCommand("remove");
     removebutton.addActionListener(this);
+    if (listModel.getSize() > 0) list.setSelectedIndex(0);
     removebutton.setEnabled((list.getSelectedIndex() != -1));
 
     int border = 10;
@@ -147,12 +171,9 @@ public class customizeChannelNotifyDialog extends JDialog
       } catch (Exception dui) {}
       
     } else if (action.equals("add") || action.equals("remove")) {
-      int number;
-      if (action.equals("add")) {
-        number = spinnerModel.getNumber().intValue();
-      } else {
-        number = (Integer)list.getSelectedValue();
-      }
+      int number = (Integer)(action.equals("add") ?
+                             spinnerModel.getValue() :
+                             list.getSelectedValue());
 
       String text = String.valueOf(number);
 
@@ -162,7 +183,7 @@ public class customizeChannelNotifyDialog extends JDialog
         if (cnc.channel.equals(text)) {
           boolean found = false;
           for (int j=0; j<cnc.nameList.size(); j++)
-            if (cnc.nameList.get(j).toLowerCase().equals(name.toLowerCase())) {
+            if (cnc.nameList.get(j).toLowerCase().equals(lname)) {
               if (action.equals("remove")) {
                 cnc.nameList.remove(j);
                 int index = list.getSelectedIndex();
@@ -229,18 +250,24 @@ public class customizeChannelNotifyDialog extends JDialog
   }
 
   private void getChannels(String name) {
+    List<Integer> lm = new ArrayList<Integer>();
     for (int i=0; i<sVars.channelNotifyList.size(); i++) {
       channelNotifyClass cnc = sVars.channelNotifyList.get(i);
       if (cnc.nameList.size() > 0)
         for (int j=0; j<cnc.nameList.size(); j++)
-          if (cnc.nameList.get(j).toLowerCase().equals(name.toLowerCase()))
-            listModel.addElement(Integer.valueOf(cnc.channel));
+          if (cnc.nameList.get(j).toLowerCase().equals(name))
+            lm.add(Integer.valueOf(cnc.channel));
+
     }
+
+    Collections.sort(lm);
+    for (int i=0; i<lm.size(); i++)
+      listModel.addElement(lm.get(i));
   }
 
   private int isOnGlobalNotify(String name) {
     for (int i=0; i<sVars.lanternNotifyList.size(); i++)
-      if (sVars.lanternNotifyList.get(i).name.toLowerCase().equals(name.toLowerCase()))
+      if (sVars.lanternNotifyList.get(i).name.toLowerCase().equals(name))
         return i;
 
     return -1;
