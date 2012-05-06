@@ -25,6 +25,7 @@ import javax.swing.JDialog;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -34,7 +35,7 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ChangeListener;
@@ -54,8 +55,12 @@ public class customizeChannelNotifyDialog extends JDialog
   private JList list;
   private DefaultListModel listModel;
 
-  private SpinnerListModel spinnerModel;
-  
+  private JList shared;
+  private DefaultListModel sharedModel;
+
+  private SpinnerNumberModel spinnerModel;
+
+  private JButton add2button;
   private JButton removebutton;
 
   private int notIndex;
@@ -75,33 +80,19 @@ public class customizeChannelNotifyDialog extends JDialog
     this.name = name;
     lname = name.toLowerCase();
 
-    listModel = new DefaultListModel();
-    getChannels(lname);
-
+    listModel = getChannels(lname);
     list = new JList(listModel);
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.addListSelectionListener(this);
     JScrollPane listpane = new JScrollPane(list);
 
-    List<Integer> spinnerList = new ArrayList<Integer>();
+    sharedModel = getShared(lname);
+    shared = new JList(sharedModel);
+    shared.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    shared.addListSelectionListener(this);
+    JScrollPane sharedpane = new JScrollPane(shared);
 
-    List<nameListClass> cnl = sVars.channelNamesList;
-
-    for (int i=0; i<cnl.size(); i++) {
-      nameListClass nlc = cnl.get(i);
-      if (nlc.isOnList(name))
-        spinnerList.add(Integer.valueOf(nlc.channel));
-    }
-
-    Collections.sort(spinnerList);
-
-    // add all the other channels, in order
-    for (int i=0; i<400; i++) {
-      if (!spinnerList.contains(i))
-        spinnerList.add(i);
-    }
-
-    spinnerModel = new SpinnerListModel(spinnerList);
+    spinnerModel = new SpinnerNumberModel(0, 0, 399, 1);
     JSpinner spinner = new JSpinner(spinnerModel);
 
     notIndex = isOnGlobalNotify(lname);
@@ -112,40 +103,62 @@ public class customizeChannelNotifyDialog extends JDialog
     JButton addbutton = new JButton("Add");
     addbutton.setActionCommand("add");
     addbutton.addActionListener(this);
+
+    add2button = new JButton(">");
+    add2button.setActionCommand("add2");
+    add2button.addActionListener(this);
+    if (sharedModel.getSize() > 0) {
+      shared.setSelectedIndex(0);
+    } else {
+      add2button.setEnabled(false);
+    }
     
     removebutton = new JButton("Remove");
     removebutton.setActionCommand("remove");
     removebutton.addActionListener(this);
-    if (listModel.getSize() > 0) list.setSelectedIndex(0);
-    removebutton.setEnabled((list.getSelectedIndex() != -1));
+    if (listModel.getSize() > 0) {
+      list.setSelectedIndex(0);
+    } else {
+      removebutton.setEnabled(false);
+    }
 
     int border = 10;
     int space = 5;
     int ht = 20;
     double tf = TableLayout.FILL;
 
-    double[] sr = {border, ht, space, ht, space, tf, ht, tf, border};
-    double[] hr = {border, ht, tf, 0, 0, 0, 0, 0, border};
+    double[] sr = {border, 100, space, 40, space, 100, border};
+    double[] hr = {border, 100, space, 0, 0, 0, tf};
 
     showrows = sr;
     hiderows = hr;
 
-    setSize(250, (notIndex == -1 ? 200 : 100));
+    setSize((notIndex == -1 ? 300 : 150), 300);
       
-    double[][] size = {{border, tf, space, tf, border}, (notIndex == -1 ? showrows : hiderows)};
+    double[][] size = {(notIndex == -1 ? showrows : hiderows),
+                       {border, ht, space, ht, space, ht, space, tf, space, ht, border}};
     layout = new TableLayout(size);
     setLayout(layout);
 
-    add(globnot, "1, 1, 3, 1");
-    add(spinner, "1, 3");
-    add(addbutton, "3, 3");
-    add(listpane, "1, 5, 1, 7");
-    add(removebutton, "3, 6");
+    add(globnot, "1, 1");
+    add(spinner, "5, 1");
+    add(addbutton, "5, 3");
+    add(new JLabel("Shared"), "1, 3");
+    add(sharedpane, "1, 5, 1, 9");
+    add(add2button, "3, 7");
+    add(new JLabel("Notify in"), "5, 5");
+    add(listpane, "5, 7");
+    add(removebutton, "5, 9");
   }
 
   public void valueChanged(ListSelectionEvent e) {
-    if (!e.getValueIsAdjusting())
-      removebutton.setEnabled((list.getSelectedIndex() != -1));
+    if (!e.getValueIsAdjusting()) {
+      if (e.getSource().equals(list)) {
+        removebutton.setEnabled((list.getSelectedIndex() != -1));
+      } else {// if (e.getSource().equals(shared))
+        add2button.setEnabled((shared.getSelectedIndex() != -1));
+      }
+    }
   }
 
   public void actionPerformed(ActionEvent e) {
@@ -156,13 +169,13 @@ public class customizeChannelNotifyDialog extends JDialog
         ln.name = name;
         sVars.lanternNotifyList.add(ln);
         notIndex = sVars.lanternNotifyList.size() - 1;
-        layout.setRow(hiderows);
-        setSize(250, 100);
+        layout.setColumn(hiderows);
+        setSize(150, 300);
       } else {
         sVars.lanternNotifyList.remove(notIndex);
         notIndex = -1;
-        layout.setRow(showrows);
-        setSize(250, 200);
+        layout.setColumn(showrows);
+        setSize(300, 300);
       }
 
       try {
@@ -170,10 +183,12 @@ public class customizeChannelNotifyDialog extends JDialog
         
       } catch (Exception dui) {}
       
-    } else if (action.equals("add") || action.equals("remove")) {
-      int number = (Integer)(action.equals("add") ?
-                             spinnerModel.getValue() :
-                             list.getSelectedValue());
+    } else if (action.equals("add") ||
+               action.equals("add2") ||
+               action.equals("remove")) {
+      int number = (action.equals("add") ? spinnerModel.getNumber().intValue() :
+                    (action.equals("add2") ? (Integer)shared.getSelectedValue() :
+                     (Integer)list.getSelectedValue()));
 
       String text = String.valueOf(number);
 
@@ -207,7 +222,7 @@ public class customizeChannelNotifyDialog extends JDialog
               break;
             }
 
-          if (!found && action.equals("add")) {// found should always be true on remove
+          if (!found) {// found should always be true on remove
             // we have channel but he is not on list so we add him
             cnc.nameList.add(name);
             addlist(number);
@@ -217,7 +232,7 @@ public class customizeChannelNotifyDialog extends JDialog
         }
       }  
 
-      if (!haveChannel && action.equals("add")) {
+      if (!haveChannel) {
         // haveChannel should always be true on remove
         channelNotifyClass temp = new channelNotifyClass();
         temp.channel = text;
@@ -249,7 +264,26 @@ public class customizeChannelNotifyDialog extends JDialog
     list.ensureIndexIsVisible(size);
   }
 
-  private void getChannels(String name) {
+  private DefaultListModel getShared(String name) {
+    List<nameListClass> cnl = sVars.channelNamesList;
+    List<Integer> sl = new ArrayList<Integer>();
+
+    for (int i=0; i<cnl.size(); i++) {
+      nameListClass nlc = cnl.get(i);
+      if (nlc.isOnList(name))
+        sl.add(Integer.valueOf(nlc.channel));
+    }
+
+    Collections.sort(sl);
+    DefaultListModel slm = new DefaultListModel();
+
+    for (int i=0; i<sl.size(); i++)
+      slm.addElement(sl.get(i));
+
+    return slm;
+  }
+  
+  private DefaultListModel getChannels(String name) {
     List<Integer> lm = new ArrayList<Integer>();
     for (int i=0; i<sVars.channelNotifyList.size(); i++) {
       channelNotifyClass cnc = sVars.channelNotifyList.get(i);
@@ -257,12 +291,15 @@ public class customizeChannelNotifyDialog extends JDialog
         for (int j=0; j<cnc.nameList.size(); j++)
           if (cnc.nameList.get(j).toLowerCase().equals(name))
             lm.add(Integer.valueOf(cnc.channel));
-
     }
 
     Collections.sort(lm);
+    DefaultListModel dlm = new DefaultListModel();
+
     for (int i=0; i<lm.size(); i++)
-      listModel.addElement(lm.get(i));
+      dlm.addElement(lm.get(i));
+
+    return dlm;
   }
 
   private int isOnGlobalNotify(String name) {
