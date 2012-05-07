@@ -1973,11 +1973,11 @@ void stopTheEngine()
                  sharedVariables.STATE_OBSERVING &&
                  sharedVariables.makeObserveSounds == true &&
                  sharedVariables.soundGame == gameData.BoardIndex)) {
-              if (sharedVariables.lastSoundTime + 400 >
+              if (sharedVariables.lastSoundTime + 200 >
                   System.currentTimeMillis() && sharedVariables.lastSoundCount> 1)
                 ; // dont make a sound do nothing
               else {
-                if (sharedVariables.lastSoundTime + 400 > System.currentTimeMillis())
+                if (sharedVariables.lastSoundTime + 200 > System.currentTimeMillis())
                   sharedVariables.lastSoundCount++;
                 else
                   sharedVariables.lastSoundCount=0;

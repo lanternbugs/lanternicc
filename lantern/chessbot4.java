@@ -409,7 +409,7 @@ catch(Exception e)
 
 
 try {
-
+ channels.firstSound=true;
 computerSeeksList.resetList();
 seeksList.resetList();
 notifyList.resetList();

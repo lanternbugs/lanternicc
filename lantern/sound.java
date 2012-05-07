@@ -54,7 +54,7 @@ else if(os.indexOf( "mac" ) >= 0)
 else
 	operatingSystem = "unix";
 
-    if(operatingSystem.equals("unix") || operatingSystem.equals("win"))
+    if(operatingSystem.equals("unix") || (operatingSystem.equals("win") && channels.firstSound == false))
     {
      try {
         free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
@@ -63,12 +63,13 @@ else
      }
      catch(Exception dui){}
     }
-    else 
+    else
     {
 
       try
       {
-		 songPath=songPath1;
+		channels.firstSound=false;
+                 songPath=songPath1;
 		 playNative player = new playNative();
 		 Thread t = new Thread(player);
 	         t.start();
