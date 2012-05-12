@@ -272,286 +272,236 @@ class subframe extends JInternalFrame
     initComponents();
   }
 
+  public void actionPerformed(ActionEvent event) {
+  
+    try {
+      //Object source = event.getSource();
+      //handle action event here
 
-public void actionPerformed(ActionEvent event)
-{
-try
-{
-//Object source = event.getSource();
-//handle action event here
+      if (event.getActionCommand().equals("Show Channel Names List")) {
+        if (sharedVariables.consolesNamesLayout[consoleNumber] == 1) {
+          sharedVariables.consolesNamesLayout[consoleNumber] = 0;
+          listScroller.setVisible(false);
+          recreate(sharedVariables.consolesTabLayout[consoleNumber]);
+          listChoice.setSelected(false);
+        
+        } else {
+          sharedVariables.consolesNamesLayout[consoleNumber] = 1;
+          if (sharedVariables.looking[consoleNumber]!=0) {
+            listScroller.setVisible(true);
+            recreate(sharedVariables.consolesTabLayout[consoleNumber]);
+          }
+          listChoice.setSelected(true);
+        }
+      }// end if show channel names list
+    
+      if (event.getActionCommand().equals("Single Rows of Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber]=1;
+        recreate(1);
+      }
 
-if(event.getActionCommand().equals("Show Channel Names List"))
-{
-if(sharedVariables.consolesNamesLayout[consoleNumber] == 1)
-{
-	sharedVariables.consolesNamesLayout[consoleNumber] = 0;
-	listScroller.setVisible(false);
-	recreate(sharedVariables.consolesTabLayout[consoleNumber]);
-	listChoice.setSelected(false);
-}
-else
-{
-	sharedVariables.consolesNamesLayout[consoleNumber] = 1;
-	if(sharedVariables.looking[consoleNumber]!=0)
-	{
-	listScroller.setVisible(true);
-	recreate(sharedVariables.consolesTabLayout[consoleNumber]);
-	}
-	listChoice.setSelected(true);
-}
+      if (event.getActionCommand().equals("Two Rows of Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber]=2;
+        recreate(2);
+      }
+    
+      if (event.getActionCommand().equals("No Visible Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber]=3;
+        recreate(3);
+      }
 
-}// end if show channel names list
-if(event.getActionCommand().equals("Single Rows of Tabs"))
-{
-	sharedVariables.consolesTabLayout[consoleNumber]=1;
-	recreate(1);
-}
+      if (event.getActionCommand().equals("Tabs on Top")) {
+        sharedVariables.consolesTabLayout[consoleNumber]=4;
+        recreate(4);
+      }
 
-if(event.getActionCommand().equals("Two Rows of Tabs"))
-{
+      if (event.getActionCommand().equals("Select All")) {
+        
+        consoles[consoleNumber].selectAll();
+        StyledDocument doc = consoles[consoleNumber].getStyledDocument();
+        myHighlighter.addHighlight(0, doc.getLength(),
+                                   DefaultHighlighter.DefaultPainter);
+      }
+      
+      if (event.getActionCommand().equals("Copy")) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        TransferHandler transferHandler =
+          consoles[consoleNumber].getTransferHandler();
+        transferHandler.exportToClipboard(consoles[consoleNumber],
+                                          clipboard, TransferHandler.COPY);
+      }// end copy
+      // end try
+    } catch (Exception badEvent) {}
+  }// end method action performed
 
-sharedVariables.consolesTabLayout[consoleNumber]=2;
-recreate(2);
-}
-if(event.getActionCommand().equals("No Visible Tabs"))
-{
-sharedVariables.consolesTabLayout[consoleNumber]=3;
-	recreate(3);
-}
+  void recreate(int num) {
 
-if(event.getActionCommand().equals("Tabs on Top"))
-{
-sharedVariables.consolesTabLayout[consoleNumber]=4;
-	recreate(4);
-}
+    getContentPane().removeAll();
 
+    if (num == 1 || num==4)  // 4 is same as one but tabs on top
+      overall.setMyLayout1();
+    else if (num == 2)
+      overall.setMyLayout2();
+    else
+      overall.setMyLayout3();
+  }
 
-if(event.getActionCommand().equals("Select All"))
-{
+  void setTabFont(int con) {
 
-	consoles[consoleNumber].selectAll();
-StyledDocument doc = consoles[consoleNumber].getStyledDocument();
-myHighlighter.addHighlight(0, doc.getLength(), DefaultHighlighter.DefaultPainter);
-
-
-}
-if(event.getActionCommand().equals("Copy"))
-{
-
-Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-TransferHandler transferHandler = consoles[consoleNumber].getTransferHandler();
-transferHandler.exportToClipboard(consoles[consoleNumber], clipboard, TransferHandler.COPY);
-}// end copy
-
-}// end try
-catch(Exception badEvent){}
-
-
-}// end method action performed
-void recreate(int num)
- {
-
- getContentPane().removeAll();
-
- if(num == 1 || num==4)  // 4 is same as one but tabs on top
- 	overall.setMyLayout1();
- else if(num == 2)
- 	overall.setMyLayout2();
-else
- 	overall.setMyLayout3();
-
-
- }
-
-void setTabFont(int con)
-{
-
-JFrame f = new JFrame("FontChooser Startup");
+    JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.tabStuff[con].tabFont);
     fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-			{
-				sharedVariables.tabStuff[con].tabFont=fnt;
-				if(sharedVariables.looking[consoleNumber]==con)
-					consoles[consoleNumber].setFont(fnt);
-			}
-}
+    Font fnt = fc.getSelectedFont();
+    if (fnt != null) {
+      sharedVariables.tabStuff[con].tabFont=fnt;
+      if (sharedVariables.looking[consoleNumber]==con)
+        consoles[consoleNumber].setFont(fnt);
+    }
+  }
 
-void setConsoleFont()
-{
+  void setConsoleFont() {
 
-JFrame f = new JFrame("FontChooser Startup");
-    FontChooser2 fc = new FontChooser2(f, sharedVariables.consoleFonts[consoleNumber]);
+    JFrame f = new JFrame("FontChooser Startup");
+    FontChooser2 fc =
+      new FontChooser2(f, sharedVariables.consoleFonts[consoleNumber]);
     fc.setVisible(true);
-	         Font fnt = fc.getSelectedFont();
-	        if(fnt != null)
-			{
-				sharedVariables.consoleFonts[consoleNumber]=fnt;
-				if(sharedVariables.useConsoleFont[consoleNumber]!=false)
-					consoles[consoleNumber].setFont(fnt);
-			}
-}
+    Font fnt = fc.getSelectedFont();
+    if (fnt != null) {
+      sharedVariables.consoleFonts[consoleNumber]=fnt;
+      if (sharedVariables.useConsoleFont[consoleNumber]!=false)
+        consoles[consoleNumber].setFont(fnt);
+    }
+  }
 
+  void setTabColors(int con) {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    customizeTabConsolelColorsDialog frame =
+      new customizeTabConsolelColorsDialog((JFrame) myself.myframe,
+                                           false, sharedVariables,
+                                           consoles, con, this);
+  }
+  
+  void changeTellTab(boolean forward) {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    if (forward == true)
+      myself.changeTellTabForward();
+    else
+      myself.changeTellTabBackward();
+  }
 
+  void switchWindows() {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    myself.switchWindows();
+  }
 
+  void switchConsoleWindows() {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    myself.switchConsoleWindows();
+  }
 
-void setTabColors(int con)
-{
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-	customizeTabConsolelColorsDialog frame = new customizeTabConsolelColorsDialog((JFrame) myself.myframe, false, sharedVariables, consoles, con, this);
+  void customizeTabQtells(int num) {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    customizeChannelQtellsDialog frame =
+      new customizeChannelQtellsDialog((JFrame) myself.myframe,
+                                       false,  sharedVariables, num);
+    frame.setVisible(true);
+  }
 
+  void customizeTab(int num) {
+    JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+    customizeChannelsDialog frame =
+      new customizeChannelsDialog((JFrame) myself.myframe, false,
+                                  num, sharedVariables,
+                                  myself.consoleSubframes);
+    if (sharedVariables.looking[consoleNumber]==num)
+      makeHappen(num);
+  }
+  
+  void removeSelectionHighlight() {
+    //consoles[consoleNumber].getHighlighter().removeHighlights(consoles[consoleNumber]);
+    //remove highlight if they click
+    try {
+      myHighlighter.removeAllHighlights();
 
-}
- void changeTellTab(boolean forward)
- {
- JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-if(forward == true)
-myself.changeTellTabForward();
-else
-myself.changeTellTabBackward();
+    } catch (Exception d) {}
+  }
 
-   
- }
+  boolean restoreNamesList(int con) {
+    if (con==0)
+      return false;
 
-void switchWindows()
-{
-
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-myself.switchWindows();
-
-}
-
-void switchConsoleWindows()
-{
-
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-myself.switchConsoleWindows();
-
-}
-
-void customizeTabQtells(int num)
-{
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-customizeChannelQtellsDialog frame = new customizeChannelQtellsDialog((JFrame) myself.myframe, false,  sharedVariables, num);
-frame.setVisible(true);
-
-}
-
-void customizeTab(int num)
-{
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-customizeChannelsDialog frame = new customizeChannelsDialog((JFrame) myself.myframe, false, num, sharedVariables, myself.consoleSubframes);
-if(sharedVariables.looking[consoleNumber]==num)
-	makeHappen(num);
-
-}
-void removeSelectionHighlight()
-{
-//	consoles[consoleNumber].getHighlighter().removeHighlights(consoles[consoleNumber]);//remove highlight if they click
-try {
-
-myHighlighter.removeAllHighlights();
-}
-catch(Exception d){}
-}
-
-boolean restoreNamesList(int con)
-{
- if(con==0)
- return false;
-
-try {
- 	if(sharedVariables.consolesNamesLayout[consoleNumber]==1)
+    try {
+      if (sharedVariables.consolesNamesLayout[consoleNumber]==1)
 	listScroller.setVisible(true);
 
-  for(int z=0; z< sharedVariables.channelNamesList.size(); z++)
-{
-	int  mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
+      for (int z=0; z< sharedVariables.channelNamesList.size(); z++) {
+        int mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
 
-		if(sharedVariables.console[con][mychan] == 1)
-                if(sharedVariables.channelNamesList.get(z).channel.equals(namesMemory[con]))
-                {
-                   if(sharedVariables.channelNamesList.get(z).model.size()>0)
-                   {
-                     myNameList.setModel(sharedVariables.channelNamesList.get(z).model);
-                     myChannelNumber=mychan;
-                     return true;
-                   }
-                }
-}// end for
-}
-catch(Exception badmodel){}
-return false;
+        if (sharedVariables.console[con][mychan] == 1)
+          if (sharedVariables.channelNamesList.get(z).channel.equals(namesMemory[con])) {
+            if (sharedVariables.channelNamesList.get(z).model.size()>0) {
+              myNameList.setModel(sharedVariables.channelNamesList.get(z).model);
+              myChannelNumber=mychan;
+              return true;
+            }
+          }
+      }// end for
 
-}// end method
+    } catch (Exception badmodel) {}
+    return false;
+  }// end method
 
+  void setNameList(int con) {
+    int mychan=-1;
+    try {
+      if (con==0) {
+        nameListClass listclasstype = new nameListClass();
+        listclasstype.addToList("Default");
+        myNameList.setModel(listclasstype.model);
 
-void setNameList(int con)
-{
-int mychan=-1;
-	try {
-if(con==0)
-{nameListClass listclasstype = new nameListClass();
-listclasstype.addToList("Default");
-myNameList.setModel(listclasstype.model);
+        listScroller.setVisible(false);
 
-listScroller.setVisible(false);
-}
-else
-{
+      } else {
 	int number=-1;
-	if(sharedVariables.consolesNamesLayout[consoleNumber]==1)
-	listScroller.setVisible(true);
+	if (sharedVariables.consolesNamesLayout[consoleNumber]==1)
+          listScroller.setVisible(true);
 
-int z=0;
-for(z=0; z< sharedVariables.channelNamesList.size(); z++)
-{
-	 mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
+        int z=0;
+        for (z=0; z<sharedVariables.channelNamesList.size(); z++) {
+          mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
 
-		if(sharedVariables.console[con][mychan] == 1)
-		{
-			number=z;
-			break;
-		}
+          if (sharedVariables.console[con][mychan] == 1) {
+            number=z;
+            break;
+          }
+        }// end for
 
+        if (number > -1) {
+          myNameList.setModel(sharedVariables.channelNamesList.get(z).model);
+          myChannelNumber=mychan;
+          namesMemory[con]="" + mychan;
+        // end if number > -1
+        } else {
+          nameListClass listclasstype = new nameListClass();
+          listclasstype.addToList("Default");
+          myNameList.setModel(listclasstype.model);
+        }
+      }// end else
+    // end try
+    } catch (Exception nochan) {}
+  }// end method
 
-
-}// end for
-if(number > -1)
-{
-myNameList.setModel(sharedVariables.channelNamesList.get(z).model);
-myChannelNumber=mychan;
-namesMemory[con]="" + mychan;
-
-}// end if number > -1
-else
-{
-nameListClass listclasstype = new nameListClass();
-listclasstype.addToList("Default");
-myNameList.setModel(listclasstype.model);
-}
-}// end else
-}// end try
-catch(Exception nochan){}
-}// end method
-
-
-
-void changeTellTab(int n)
-{
-if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n) // i am curerntly directing tells to this tab
-{
-sharedVariables.tellsToTab = false;
-}
-else
-{
-sharedVariables.tellsToTab = true;
-sharedVariables.tellTab = n;
- myoutput data = new myoutput();
- data.repaintTabBorders=1;
- queue.add(data);
-}
+  void changeTellTab(int n) {
+    if (sharedVariables.tellsToTab == true && sharedVariables.tellTab == n) {
+      // i am currently directing tells to this tab
+      sharedVariables.tellsToTab = false;
+    } else {
+      sharedVariables.tellsToTab = true;
+      sharedVariables.tellTab = n;
+      myoutput data = new myoutput();
+      data.repaintTabBorders=1;
+      queue.add(data);
+    }
 
 
 }
