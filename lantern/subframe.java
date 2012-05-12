@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
+*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -39,248 +39,238 @@ import java.awt.datatransfer.Clipboard;
 import java.lang.reflect.Method;
 
 
-class subframe extends JInternalFrame  implements  ComponentListener, InternalFrameListener, ActionListener    // ActionListener,
-{
+class subframe extends JInternalFrame
+  implements  ComponentListener, InternalFrameListener, ActionListener {
+              // ActionListener,
 
+  //private sharedVariables.ConsoleScrollPane[BoardIndex]
+  //sharedVariables.ConsoleScrollPane[BoardIndex];
+  subPanel overall;
+  int myChannelNumber=-1;
+  int consoleNumber;
+  JPopupMenu menu;
+  JPopupMenu menu2;
+  JPopupMenu menu3;
+  JPanel mypanel;
+  String lastcommand;
+  String[] comboMemory;
+  String[] namesMemory;
+  int madeTextPane;
 
+  JPaintedLabel[] channelTabs;
+  JLabel tellLabel;
+  JCheckBox tellCheckbox;
+  JComboBox prefixHandler;
+  JComboBox tabChooser;
+  Highlighter myHighlighter;
 
-    //private sharedVariables.ConsoleScrollPane[BoardIndex] sharedVariables.ConsoleScrollPane[BoardIndex];
-	subPanel overall;
-	int myChannelNumber=-1;
-	int consoleNumber;
-	JPopupMenu menu;
-	JPopupMenu menu2;
-	JPopupMenu menu3;
-	JPanel mypanel;
-	String lastcommand;
-	String [] comboMemory;
-	String [] namesMemory;
-	int madeTextPane;
+  channels sharedVariables;
+  JTextPane[] consoles;
+  
+  // Andrey says: want to change this to
+  // Queue<myoutput> queue;
+  ConcurrentLinkedQueue<myoutput> queue;
+  
+  String consoleTitle;
+  JMenuBar consoleMenu;
+  JList myNameList;
+  JScrollPane listScroller;
+  JCheckBoxMenuItem listChoice;
+  gameboard[] myboards;
+  int blockInc=23;
+  //subframe [] consoleSubframes;
+  docWriter myDocWriter;
+  //subframe(JFrame frame, boolean mybool)
 
-	JPaintedLabel [] channelTabs;
-	JLabel tellLabel;
-	JCheckBox tellCheckbox;
-	JComboBox prefixHandler;
-	JComboBox tabChooser;
-	Highlighter myHighlighter;
+  subframe(channels sharedVariables1, JTextPane[] consoles1,
+           ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1,
+           gameboard[] myboards1) {
 
-	channels sharedVariables;
-	JTextPane [] consoles;
-	ConcurrentLinkedQueue<myoutput> queue;
-	String consoleTitle;
-	JMenuBar consoleMenu;
-	JList myNameList;
-	JScrollPane listScroller;
-	JCheckBoxMenuItem listChoice;
-	gameboard [] myboards;
-	int blockInc=23;
-	//subframe [] consoleSubframes;
-docWriter myDocWriter;
-//subframe(JFrame frame, boolean mybool)
-subframe(channels sharedVariables1, JTextPane consoles1[], ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1, gameboard [] myboards1)
-{
-
-//super(frame, mybool);
- super("Main Console" + (sharedVariables1.openConsoleCount),
+    //super(frame, mybool);
+    super("Main Console" + (sharedVariables1.openConsoleCount),
           true, //resizable
           true, //closable
           true, //maximizable
           true);//iconifiable
 
-//consoleSubframes=consoleSubframes1;
-consoles=consoles1;
-myDocWriter=myDocWriter1;
-sharedVariables=sharedVariables1;
-queue=queue1;
-myboards=myboards1;
-consoleTitle="Main Console" + (sharedVariables1.openConsoleCount) + " : ";
-setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-consoleNumber = sharedVariables.openConsoleCount;
-/*
-JMenu consoleMenu = new JMenu("Colors/fonts per console");
-JMenuItem setfont = new JMenuItem("Console's Font");
-consoleMenu.add(setfont);
-JCheckBoxMenuItem overridefont = new JCheckBoxMenuItem("Console Font Override Tab Font");
-consoleMenu.add(overridefont);
-setfont.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-			 setConsoleFont();
+    //consoleSubframes=consoleSubframes1;
+    consoles=consoles1;
+    myDocWriter=myDocWriter1;
+    sharedVariables=sharedVariables1;
+    queue=queue1;
+    myboards=myboards1;
+    consoleTitle="Main Console" + (sharedVariables1.openConsoleCount) + " : ";
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    consoleNumber = sharedVariables.openConsoleCount;
+    
+    /*
+    JMenu consoleMenu = new JMenu("Colors/fonts per console");
+    JMenuItem setfont = new JMenuItem("Console's Font");
+    consoleMenu.add(setfont);
+    JCheckBoxMenuItem overridefont =
+      new JCheckBoxMenuItem("Console Font Override Tab Font");
+    consoleMenu.add(overridefont);
+    setfont.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          setConsoleFont();
 	}
       });
-overridefont.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-           if(sharedVariables.useConsoleFont[consoleNumber]==true)
-           sharedVariables.useConsoleFont[consoleNumber]=false;
-           else
-           sharedVariables.useConsoleFont[consoleNumber]=true;
-		}
-
+    overridefont.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          if (sharedVariables.useConsoleFont[consoleNumber]==true)
+            sharedVariables.useConsoleFont[consoleNumber]=false;
+          else
+            sharedVariables.useConsoleFont[consoleNumber]=true;
+        }
       });
-JMenuBar myconsolemenu = new JMenuBar();
+    JMenuBar myconsolemenu = new JMenuBar();
 
-myconsolemenu.add(consoleMenu);
-setJMenuBar(myconsolemenu);
-*/
+    myconsolemenu.add(consoleMenu);
+    setJMenuBar(myconsolemenu);
+    */
 
-menu=new JPopupMenu("Popup");
-JMenuItem item = new JMenuItem("Copy");
-item.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            consoles[consoleNumber].copy();
-            giveFocus();}
+    menu=new JPopupMenu("Popup");
+    JMenuItem item = new JMenuItem("Copy");
+    item.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          consoles[consoleNumber].copy();
+          giveFocus();}
       });
-      menu.add(item);
+    menu.add(item);
 
-
-
-JMenuItem item2 = new JMenuItem("Copy&Paste");
-item2.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            consoles[consoleNumber].copy();
-            overall.Input.paste();
-            if(sharedVariables.operatingSystem.equals("mac"))
+    JMenuItem item2 = new JMenuItem("Copy&Paste");
+    item2.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          consoles[consoleNumber].copy();
+          overall.Input.paste();
+          if (sharedVariables.operatingSystem.equals("mac"))
             giveFocusTell();
-            else
+          else
             giveFocus();
-
-
-            }
+        }
       });
-      menu.add(item2);
-/*JMenuItem item3 = new JMenuItem("Hyperlink");
-item3.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-          try
-                {
+    menu.add(item2);
+    
+    /*
+    JMenuItem item3 = new JMenuItem("Hyperlink");
+    item3.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          try {
+            String myurl ="";
+            myurl=consoles[consoleNumber].getSelectedText();
+            myurl=myurl.trim();
+            String myurl2 = myurl.toLowerCase();
+            int go=0;
+            if (myurl2.startsWith("www."))
+              go=1;
+            if (myurl2.startsWith("http://"))
+              go=1;
+            if (myurl2.startsWith("https://"))
+              go=1;
+            if (go == 0)
+              return;
+            sharedVariables.openUrl(myurl);
 
-
-			String myurl ="";
-			myurl=consoles[consoleNumber].getSelectedText();
-			myurl=myurl.trim();
-			String myurl2 = myurl.toLowerCase();
-			int go=0;
-			if(myurl2.startsWith("www."))
-			go=1;
-			if(myurl2.startsWith("http://"))
-			go=1;
-			if(myurl2.startsWith("https://"))
-			go=1;
-			if(go == 0)
-			return;
-
-			sharedVariables.openUrl(myurl);
-
-			giveFocus();
-             }catch(Exception g)
-                {}
-           }
+            giveFocus();
+          } catch (Exception g) {}
+        }
       });
-      menu.add(item3);
-*/
- JMenuItem item3 = new JMenuItem("Google");
-item3.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-          try
-                {
+    menu.add(item3);
+    */
+    
+    JMenuItem item3 = new JMenuItem("Google");
+    item3.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          try {
+            String myurl ="";
+            myurl=consoles[consoleNumber].getSelectedText();
+            myurl=myurl.trim();
+            myurl=myurl.replace(" ", "+");
 
+            sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
 
-			String myurl ="";
-			myurl=consoles[consoleNumber].getSelectedText();
-			myurl=myurl.trim();
-                        myurl=myurl.replace(" ", "+");
-
-			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
-
-			giveFocus();
-             }catch(Exception g)
-                {}
-           }
+            giveFocus();
+          } catch (Exception g) {}
+        }
       });
-      menu.add(item3);
-           add(menu);
+    menu.add(item3);
+    add(menu);
 
+    menu2=new JPopupMenu("Popup2");
 
- menu2=new JPopupMenu("Popup2");
+    /*
+    JMenuItem item3 = new JMenuItem("copy");
+    item.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          consoles[consoleNumber].copy();}
+      });
+    menu.add(item3);
+    */
 
+    JMenuItem item4a = new JMenuItem("Copy");
+    item4a.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          overall.Input.copy();}
+      });
+    menu2.add(item4a);
 
- /*JMenuItem item3 = new JMenuItem("copy");
- item.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             consoles[consoleNumber].copy();}
-       });
-       menu.add(item3);
- */
+    JMenuItem item4 = new JMenuItem("Paste");
+    item4.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          overall.Input.paste();}
+      });
+    menu2.add(item4);
+    add(menu2);
 
+    scrollnow = 1; // we start off with auto scroll
+    wheelIsScrolling=true;
+    //addMouseListener(this);
 
+    addInternalFrameListener(this);
 
- JMenuItem item4a = new JMenuItem("Copy");
- item4a.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             overall.Input.copy();}
-       });
-       menu2.add(item4a);
+    consoleMenu = new JMenuBar();
 
+    JMenu mywindows = new JMenu("Menu");
 
+    JMenuItem  selectall = new JMenuItem("Select All");
+    selectall.addActionListener(this);
+    mywindows.add(selectall);
 
- JMenuItem item4 = new JMenuItem("Paste");
- item4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             overall.Input.paste();}
-       });
-       menu2.add(item4);
-      add(menu2);
+    JMenuItem  copyit = new JMenuItem("Copy");
+    copyit.addActionListener(this);
+    mywindows.add(copyit);
 
-scrollnow = 1; // we start off with auto scroll
-wheelIsScrolling=true;
-//addMouseListener(this);
+    mywindows.addSeparator();
 
+    JMenuItem  consoleLayout1 = new JMenuItem("Single Rows of Tabs");
+    consoleLayout1.addActionListener(this);
+    mywindows.add(consoleLayout1);
 
-addInternalFrameListener(this);
+    JMenuItem  consoleLayout2 = new JMenuItem("Two Rows of Tabs");
+    consoleLayout2.addActionListener(this);
+    mywindows.add(consoleLayout2);
 
-consoleMenu = new JMenuBar();
+    JMenuItem  consoleLayout3 = new JMenuItem("No Visible Tabs");
+    consoleLayout3.addActionListener(this);
+    mywindows.add(consoleLayout3);
 
- JMenu mywindows = new JMenu("Menu");
+    JMenuItem  consoleLayout4 = new JMenuItem("Tabs on Top");
+    consoleLayout4.addActionListener(this);
+    mywindows.add(consoleLayout4);
 
- JMenuItem  selectall = new JMenuItem("Select All");
-  selectall.addActionListener(this);
-  mywindows.add(selectall);
+    mywindows.addSeparator();
 
- JMenuItem  copyit = new JMenuItem("Copy");
-  copyit.addActionListener(this);
-  mywindows.add(copyit);
+    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
+    listChoice.addActionListener(this);
+    mywindows.add(listChoice);
+    if (sharedVariables.consolesNamesLayout[consoleNumber] == 1)
+      listChoice.setSelected(true);
 
-mywindows.addSeparator();
-
- JMenuItem  consoleLayout1 = new JMenuItem("Single Rows of Tabs");
- consoleLayout1.addActionListener(this);
- mywindows.add(consoleLayout1);
-
- JMenuItem  consoleLayout2 = new JMenuItem("Two Rows of Tabs");
-  consoleLayout2.addActionListener(this);
-  mywindows.add(consoleLayout2);
-
-JMenuItem  consoleLayout3 = new JMenuItem("No Visible Tabs");
- consoleLayout3.addActionListener(this);
- mywindows.add(consoleLayout3);
-
- JMenuItem  consoleLayout4 = new JMenuItem("Tabs on Top");
- consoleLayout4.addActionListener(this);
- mywindows.add(consoleLayout4);
-
-mywindows.addSeparator();
-
-listChoice = new JCheckBoxMenuItem("Show Channel Names List");
- listChoice.addActionListener(this);
- mywindows.add(listChoice);
-if(sharedVariables.consolesNamesLayout[consoleNumber] == 1)
-listChoice.setSelected(true);
-
- consoleMenu.add(mywindows);
-setJMenuBar(consoleMenu);
-consoleMenu.setVisible(sharedVariables.showConsoleMenu);
-initComponents();
-
-}
+    consoleMenu.add(mywindows);
+    setJMenuBar(consoleMenu);
+    consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+    initComponents();
+  }
 
 
 public void actionPerformed(ActionEvent event)
