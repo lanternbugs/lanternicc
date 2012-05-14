@@ -45,10 +45,27 @@ collumns.add("Result");
 collumns.add("Time Controls");
 collumns.add("ECO");
 collumns.add("Date Game Started");
-
 gamedata = new myDefaultTableModel(data, collumns);
 type1="none";
 type2="none";
+
+}// end constructor
+void createLiblistColumns()
+{
+data = new Vector();
+collumns = new Vector();
+
+collumns.add("index");
+collumns.add("white name");
+collumns.add("white rating");
+collumns.add("black name");
+collumns.add("black rating");
+collumns.add("Result");
+collumns.add("Time Controls");
+collumns.add("ECO");
+collumns.add("Date Game Started");
+collumns.add("Note");
+gamedata = new myDefaultTableModel(data, collumns);
 
 }// end constructor
 

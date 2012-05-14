@@ -3081,6 +3081,8 @@ gameList.type1=dg.getArg(1);
 gameList.type2=dg.getArg(2);
 if(gameList.type1.equals("history") || gameList.type1.equals("stored"))
 gameList.createHistoryListColumns();
+if(gameList.type1.equals("liblist"))
+gameList.createLiblistColumns();
 Thread.sleep(100);
 
 try {
@@ -3122,10 +3124,12 @@ data.add(dg.getArg(9));
 	String rated, String ratedType, String wild, String color, String mode)
 */
 	gameItem myItem = new gameItem();
-
+String libnote = "";
+if(gameList.type1.equals("liblist"))
+libnote = dg.getArg(21);
 if(gameList.type1.equals("liblist") || gameList.type1.equals("search"))
 myItem.addSearchLiblistRow(dg.getArg(1), dg.getArg(6), dg.getArg(8), dg.getArg(7), dg.getArg(9), dg.getArg(4), dg.getArg(5),dg.getArg(13), dg.getArg(14),
-	dg.getArg(10), dg.getArg(11), dg.getArg(12), dg.getArg(17), dg.getArg(18), dg.getArg(19), dg.getArg(20), gameList);
+	dg.getArg(10), dg.getArg(11), dg.getArg(12), dg.getArg(17), dg.getArg(18), dg.getArg(19), dg.getArg(20), libnote, gameList);
 
 else
 {

@@ -106,7 +106,7 @@ myTable.gamedata.addTableRow(data);
 
 
 void addSearchLiblistRow(String index, String whiteName, String blackName, String whiteRating, String blackRating, String date, String time, String whitetime, String whiteinc,
-	String rated, String ratedType, String wild, String eco, String status, String color, String mode, tableClass myTable)
+	String rated, String ratedType, String wild, String eco, String status, String color, String mode, String libnote,  tableClass myTable)
 
 {
 Vector<String> data = new Vector();
@@ -172,6 +172,10 @@ data.add("" + whitetime + " " + whiteinc + " [" + ratedType + " " + rated + "]")
 data.add(eco);
 //data.add(mode);
 data.add(date + " " + time);
+
+if(myTable.type1.equals("liblist"))
+data.add(libnote);
+
 myTable.gamedata.addTableRow(data);
 }// end add history
 
@@ -252,18 +256,31 @@ if(status == 1) // status 1 clause
 
 if(status == 2) // status 2 clause
 {
+                /*
+                mode 0:  (?)   Game adjourned by mutual agreement
+		mode 1:  (?)   Game adjourned when Black disconnected
+		mode 2:  (?)   Game adjourned by system shutdown
+		mode 3:  (?)   Game courtesyadjourned by Black
+		mode 4:  (?)   Game adjourned by an administrator
+		mode 5:  (?)   Game adjourned when Black got disconnected
+
+                  */ 
+        String dqcolor = "W";
+        if(color == 0)
+        dqcolor = "B";
+
 	if(mode == 0)
-	 return "?";
+	 return "Mu-Ag";
 	if(mode == 1)
-	return "?";
+	return dqcolor + "-Dis";
 	if(mode == 2)
-	 return "?";
+	 return "Shutdown";
 	if(mode == 3)
-	return "?";
+	return "Curtesy - " + dqcolor;
 	if(mode == 4)
-	 return "?";
+	 return "Admin- Adjourn";
 	if(mode == 5)
-	return "?";
+	return dqcolor + "-Dis";
 }
 
 
