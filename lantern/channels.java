@@ -25,6 +25,7 @@ import java.applet.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.*;
 
 public class channels {
 boardSizes [] myBoardSizes;
@@ -986,7 +987,7 @@ if( lanternNotifyList.get(z).name.toLowerCase().equals(temp.toLowerCase()))
     go=false;
     if(go==true)
     {
-    mess+=realName + " ";;
+   // mess+=realName + " ";;
     realnames.add(realName);
     }
 
@@ -995,6 +996,21 @@ if( lanternNotifyList.get(z).name.toLowerCase().equals(temp.toLowerCase()))
 
 }// end for
 } // end outer for
+if(realnames.size() > 0)
+{
+
+   Collections.sort(realnames,
+  new Comparator<String>() {
+	    public int compare(String name1, String name2) {
+	      //ascending order
+	      return name1.toLowerCase().compareTo(name2.toLowerCase());
+	    }
+	});
+
+  for(int m=0; m< realnames.size(); m++)
+  mess+=realnames.get(m) + " ";
+}
+
 if(!mess.equals(""))
 return mess2 + mess + "\n";
 
@@ -1035,7 +1051,7 @@ if(channelNotifyList.get(z).nameList.get(x).toLowerCase().equals(temp.toLowerCas
     go=false;
     if(go==true)
     {
-    mess+=realName + " ";;
+   // mess+=realName + " ";;
     realnames.add(realName);
     }
 
@@ -1047,8 +1063,20 @@ if(channelNotifyList.get(z).nameList.get(x).toLowerCase().equals(temp.toLowerCas
 
 }// end for
 } // end outer for
+if(realnames.size() > 0)
+{
 
+  Collections.sort(realnames,
+  new Comparator<String>() {
+	    public int compare(String name1, String name2) {
+	      //ascending order
+	      return name1.toLowerCase().compareTo(name2.toLowerCase());
+	    }
+	});
 
+  for(int m=0; m< realnames.size(); m++)
+  mess+=realnames.get(m) + " ";
+}
 return mess + "\n";
 
 } // end channel notify online

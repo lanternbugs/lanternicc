@@ -16,6 +16,7 @@ package lantern;
 
 //http://java.sun.com/products/jfc/tsc/articles/tablelayout/
 import layout.*;
+import java.util.*;
 import java.awt.*;
 import java.awt.Window.*;
 import java.awt.event.*;
@@ -2179,14 +2180,40 @@ class mymultiframe extends JFrame
       
     } else if (action.equals("Channel Notify Map")) {
       String mess="Map of people on channel notify.\n\n";
-      
+      String mess2 = "";
+       ArrayList<String> verticalList = new ArrayList();
       for (int z=0; z<sharedVariables.channelNotifyList.size(); z++)
         if (sharedVariables.channelNotifyList.get(z).nameList.size()>0) {
-          mess+="\n#" + sharedVariables.channelNotifyList.get(z).channel + " ";
+          mess2="\n#" + sharedVariables.channelNotifyList.get(z).channel + " ";
+
+          ArrayList<String> tempo = new ArrayList();
+
           for (int x=0; x < sharedVariables.channelNotifyList.get(z).nameList.size(); x++)
-            mess+=sharedVariables.channelNotifyList.get(z).nameList.get(x) + " ";
+          {  tempo.add(sharedVariables.channelNotifyList.get(z).nameList.get(x));
+          }
+          if(tempo.size() > 0)
+          {
+    Collections.sort(tempo,
+  new Comparator<String>() {
+	    public int compare(String name1, String name2) {
+	      //ascending order
+	      return name1.toLowerCase().compareTo(name2.toLowerCase());
+	    }
+	});
+
+  for(int m=0; m< tempo.size(); m++)
+  mess2+=tempo.get(m) + " ";
+
+          }//end if size
+       verticalList.add(mess2);
         }
-      
+  if(verticalList.size() > 0)
+  {
+   Collections.sort(verticalList);
+    for(int v=0; v< verticalList.size(); v++)
+    mess+=verticalList.get(v);
+
+  }// if vertical list size
       Popup mypopper = new Popup(this, false, mess);
       mypopper.setSize(600,500);
       mypopper.setVisible(true);
