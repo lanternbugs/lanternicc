@@ -2209,7 +2209,27 @@ class mymultiframe extends JFrame
         }
   if(verticalList.size() > 0)
   {
-   Collections.sort(verticalList);
+    Collections.sort(verticalList,
+  new Comparator<String>() {
+	    public int compare(String name1, String name2) {
+	      //ascending order
+	    
+         try {
+            int s = name1.indexOf(" ");
+             int number1 = Integer.parseInt(name1.substring(2, s));
+            s = name2.indexOf(" ");
+              int number2 = Integer.parseInt(name2.substring(2, s));
+                 if(number1 < number2)
+                 return 0;
+
+                 return 1;
+         }
+         catch(Exception dui){}
+
+              return name1.toLowerCase().compareTo(name2.toLowerCase());
+	    }
+	});
+
     for(int v=0; v< verticalList.size(); v++)
     mess+=verticalList.get(v);
 
