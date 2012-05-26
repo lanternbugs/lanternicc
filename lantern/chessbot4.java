@@ -2712,6 +2712,104 @@ else
 					StyledDocument doc;
 
 
+
+
+
+messageStyles myStyles = new messageStyles();
+if(dg.getArg(3).equals("0") || dg.getArg(3).equals("1"))  // regular shout
+{
+if(chatTime2.length() > 0)
+{
+if(dg.getArg(3).equals("0"))  // regular shout
+{
+
+
+	myStyles.top=3;
+	myStyles.blocks[0]=chatTime2.length() ;
+	myStyles.blocks[1]=dg.getArg(1).length() + 1 + chatTime2.length();
+
+	myStyles.colors[0] = sharedVariables.chatTimestampColor;
+	myStyles.colors[1] = sharedVariables.shoutcolor.brighter();
+	//myStyles.colors[2] = sharedVariables.qtellChannelNumberColor;
+
+	if(dg.getArg(2).equals(""))
+	{
+	myStyles.blocks[2]=thetell.length();
+	myStyles.colors[2] = sharedVariables.shoutcolor;
+
+	}
+	else
+	{	myStyles.blocks[2]=myStyles.blocks[1] + dg.getArg(2).length() + 2;
+		//myStyles.colors[3] = sharedVariables.channelTitlesColor;
+		myStyles.colors[2]=sharedVariables.shoutcolor.brighter();
+		myStyles.blocks[3]=thetell.length();
+		myStyles.colors[3] = sharedVariables.shoutcolor;
+		myStyles.top=4;
+
+	}
+}
+else
+if(dg.getArg(3).equals("1"))  // i shout
+{
+String prePart = "--> ";
+
+
+	myStyles.top=4;
+	myStyles.blocks[0]=chatTime2.length() ;
+	myStyles.blocks[1]=prePart.length()  + chatTime2.length();
+
+	myStyles.colors[0] = sharedVariables.chatTimestampColor;
+	myStyles.colors[1] = sharedVariables.shoutcolor;
+	//myStyles.colors[2] = sharedVariables.qtellChannelNumberColor;
+
+
+	myStyles.blocks[2]=myStyles.blocks[1] + dg.getArg(1).length();
+	myStyles.colors[2] = sharedVariables.shoutcolor.brighter();
+	myStyles.blocks[3]=thetell.length();
+	myStyles.colors[3] = sharedVariables.shoutcolor;
+
+
+
+}// end if 1
+
+}
+else
+myStyles =null;
+    }
+else
+myStyles =null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* code to pass an array of consoles this goes to ( just needed if more than one and right now that can just be shouts*/
 int [] cindex = new int[sharedVariables.maxConsoleTabs];
 for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
@@ -2728,11 +2826,11 @@ if(sharedVariables.shoutsAlso == true)
 if(dg.getArg(3).equals("0") || dg.getArg(3).equals("1"))
 {
 doc=sharedVariables.mydocs[sharedVariables.shoutRouter.shoutsConsole];
-	processLink2(doc, thetell, sharedVariables.shoutcolor, sharedVariables.shoutRouter.shoutsConsole, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, null);
+	processLink2(doc, thetell, sharedVariables.shoutcolor, sharedVariables.shoutRouter.shoutsConsole, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
 	if(sharedVariables.shoutRouter.shoutsConsole>0 && sharedVariables.shoutsAlso == true)
 	{
 		doc=sharedVariables.mydocs[0];
-			processLink2(doc, thetell, sharedVariables.shoutcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, null);
+			processLink2(doc, thetell, sharedVariables.shoutcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
 
 	}
 }
