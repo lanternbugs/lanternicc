@@ -2774,30 +2774,63 @@ String prePart = "--> ";
 
 }
 else
-myStyles =null;
+{
+if(dg.getArg(3).equals("0"))  // regular shout
+{
+
+
+	myStyles.top=2;
+
+	myStyles.blocks[0]=dg.getArg(1).length()-1;
+
+
+	myStyles.colors[0] = sharedVariables.shoutcolor.brighter();
+	//myStyles.colors[2] = sharedVariables.qtellChannelNumberColor;
+
+	if(dg.getArg(1).equals(""))
+	{
+	myStyles.blocks[1]=thetell.length();
+	myStyles.colors[1] = sharedVariables.shoutcolor;
+
+	}
+	else
+	{	myStyles.blocks[1]=myStyles.blocks[0] + dg.getArg(2).length() + 2;
+		//myStyles.colors[3] = sharedVariables.channelTitlesColor;
+		myStyles.colors[1]=sharedVariables.shoutcolor.brighter();
+		myStyles.blocks[2]=thetell.length();
+		myStyles.colors[2] = sharedVariables.shoutcolor;
+		myStyles.top=3;
+
+	}
+}
+else
+if(dg.getArg(3).equals("1"))  // i shout
+{
+String prePart = "--> ";
+
+
+	myStyles.top=3;
+
+	myStyles.blocks[0]=prePart.length() ;
+
+
+	myStyles.colors[0] = sharedVariables.shoutcolor;
+	//myStyles.colors[2] = sharedVariables.qtellChannelNumberColor;
+
+
+	myStyles.blocks[1]=myStyles.blocks[0] + dg.getArg(1).length();
+	myStyles.colors[1] = sharedVariables.shoutcolor.brighter();
+	myStyles.blocks[2]=thetell.length();
+	myStyles.colors[2] = sharedVariables.shoutcolor;
+
+
+
+}// end if 1
+
+}
     }
 else
 myStyles =null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2826,9 +2859,21 @@ if(sharedVariables.shoutsAlso == true)
 if(dg.getArg(3).equals("0") || dg.getArg(3).equals("1"))
 {
 doc=sharedVariables.mydocs[sharedVariables.shoutRouter.shoutsConsole];
+Color tempo = myStyles.colors[0];
+
+if(chatTime2.length() > 0 && myStyles !=null && sharedVariables.tabStuff[sharedVariables.shoutRouter.shoutsConsole].timestampColor!=null)
+myStyles.colors[0]=sharedVariables.tabStuff[sharedVariables.shoutRouter.shoutsConsole].timestampColor;
+
+
 	processLink2(doc, thetell, sharedVariables.shoutcolor, sharedVariables.shoutRouter.shoutsConsole, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
 	if(sharedVariables.shoutRouter.shoutsConsole>0 && sharedVariables.shoutsAlso == true)
 	{
+ if(chatTime2.length() > 0 && myStyles !=null && sharedVariables.tabStuff[0].timestampColor!=null)
+ myStyles.colors[0]=sharedVariables.tabStuff[0].timestampColor;
+ else if(chatTime2.length() > 0 && myStyles !=null )
+ myStyles.colors[0]=tempo;
+
+
 		doc=sharedVariables.mydocs[0];
 			processLink2(doc, thetell, sharedVariables.shoutcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
 
