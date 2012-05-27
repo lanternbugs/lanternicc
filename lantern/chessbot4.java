@@ -3954,6 +3954,7 @@ try {
 			temp.dg=13;
 
 			temp.arg1=dg.getArg(1);
+			temp.arg5=dg.getArg(5);
 			gamequeue.add(temp);
 
 		}
@@ -4038,6 +4039,7 @@ try {
 			temp.dg=16;
 
 			temp.arg1=dg.getArg(1);
+			temp.arg5=dg.getArg(5);
 			if(sharedVariables.gameend == true)
 			{
 
@@ -5171,14 +5173,39 @@ else
 
 					if(temp.dg == 13 || temp.dg == 16 || temp.dg == 19 || temp.dg == 14  || temp.dg == 17)// 13 16 19 result
 					{
-
-							//writeToConsole("in dg 13 16 19 result");
+ 							//writeToConsole("in dg 13 16 19 result");
 							int gamenum=getGameBoard(temp.arg1);
-							if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+                                                      //  JFrame framer = new JFrame("" + gamenum + " and result " + temp.arg5 + " and temp.dg is " + temp.dg);
+                                                      //   framer.setVisible(true);
+                                                      //    framer.setSize(500,100);
+
+                                                	if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+							{
+                                                       //  writeToConsole(temp.arg5 + " and gamenum is " + gamenum + "\n");
+                                                          return;
+							}
+                                                        if(myboards[gamenum]== null)
 								return;
-							if(myboards[gamenum]== null)
-								return;
-							myboards[gamenum].gameEnded(temp.arg1); // pass game number
+
+                                                        if(temp.dg == 16) //spos result
+                                                        {
+                                                StyledDocument doc;
+  						if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
+						doc = sharedVariables.mygamedocs[gamenum];
+						else
+						doc = sharedVariables.mydocs[0];
+
+						String thetell ="";
+
+						thetell = thetell + temp.arg5 + "\n";
+                                                                                                                                      // mike investigate if this is double null
+					if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
+					processLink(doc, thetell, sharedVariables.ForColor, gamenum, maxLinks, GAME_CONSOLES, null, null);// 1 at end means go to game console
+					else
+					processLink(doc, thetell, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, null, null);// console 0 and last 0 is not a game console
+                                                        }// end if 16
+
+                                                        myboards[gamenum].gameEnded(temp.arg1); // pass game number
 							if(sharedVariables.mygame[gamenum].newBoard== true)// they closed the board so this is set to keep the result from entering tab
 								updateGameTabs(sharedVariables.tabTitle[gamenum] = "G" + (gamenum+1), gamenum);
 							else

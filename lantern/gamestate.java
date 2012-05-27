@@ -724,7 +724,9 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 		board[from + 1] =0;
 
 		if(wild == 27)
-			makeAtomicCaptures(board, from, to);
+		{	makeAtomicCaptures(board, from, to);
+		        board[to]=0;
+	        }
 	}
 
 	int type =-1; // no sound
@@ -936,7 +938,9 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 		board[from + 1] =0;
 
 		if(wild == 27)
-		  makeAtomicCaptures(board, from, to);
+		{	makeAtomicCaptures(board, from, to);
+		        board[to]=0;
+	        }
 
 	}
 
