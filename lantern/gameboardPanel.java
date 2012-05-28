@@ -1169,7 +1169,21 @@ void repaintPiece()
 				 int piece=getPiece();
 				 if(piece > -1 && sharedVariables.mygame[gameData.LookingAt].movelock==0)
 				 {
-					 // sound
+
+							 ipremoving=0;
+							if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING && !sharedVariables.mygame[gameData.LookingAt].myturn())
+							 {
+								 ipremoving=1;
+							 sharedVariables.mygame[gameData.LookingAt].premovefrom=-examinepiecemoving;
+							 sharedVariables.mygame[gameData.LookingAt].premoveto=piece;
+							 movingexaminepiece=0;
+							 repaint();
+							 }
+
+
+                                          if(ipremoving == 0)
+                                          {
+                                	 // sound
 					 Sound movesound;
 					 if(sharedVariables.makeSounds == true)
 					 if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
@@ -1181,22 +1195,29 @@ void repaintPiece()
                                          else
                                          sharedVariables.mygame[gameData.LookingAt].board[piece]=examinepiecemoving;
 					 //String atPiece=getExamPieceMoving(exampiecemoving);
+
+
+                                          }// if not premoving
 					 String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
-
-
-
 					 String themove = primary  + getMove(-examinepiecemoving, piece);
 					 myoutput amove = new myoutput();
 					 amove.game=1;
 					 amove.consoleNumber=0;
 					 amove.data=themove + "\n";
-					 queue.add(amove);
+					
+                                        if(ipremoving == 0)
+                                         queue.add(amove);
+					else
+					sharedVariables.mygame[gameData.LookingAt].premove=amove.data;// when we get a move the get move from icc can send a premove (its now our turn)
+
 
 				movingexaminepiece =0;
 				 }// end if we found the board i.e. piece > -1
 			 else
-			 movingexaminepiece =0;// they dropped off the board. no longer a piece moving
-			 repaint();
+			 {movingexaminepiece =0;// they dropped off the board. no longer a piece moving
+			 sharedVariables.mygame[gameData.LookingAt].premove="";
+                          }
+                         repaint();
 
 	 	 }// end if movingexaminepiece==1
 		 }// end if examine pallete true
