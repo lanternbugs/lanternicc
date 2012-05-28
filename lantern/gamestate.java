@@ -1314,7 +1314,7 @@ int getQueenRookBlackFR(int board[])
 	int a=0;
 	if(iflipped == 1)// white on bottom 56-63
 	{
-		for(a=0; a<=7; a--)
+		for(a=0; a<=7; a++)
 		if(board[a]==10)
 		return a;
 
