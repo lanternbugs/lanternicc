@@ -1152,7 +1152,12 @@ int moveKeyType=e.getModifiersEx();
         {
           arrowManager.down();
         }
-        if(aa == 38)// up
+        if( e.getModifiersEx() == 128  && aa == 38 && !Input.getText().equals(""))
+        {
+          arrowManager.add(Input.getText());
+          Input.setText("");
+        }
+        else if(aa == 38)// up
         {
                  arrowManager.up();
 
