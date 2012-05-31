@@ -2406,7 +2406,14 @@ if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == tru
         {
           arrowManager.down();
         }
-        if(a == 38)// up
+       
+       
+        if( e.getModifiersEx() == 128  && a == 38 && !Input.getText().equals(""))
+        {
+          arrowManager.add(Input.getText());
+          Input.setText("");
+        }
+        else if(a == 38)// up
         {
                  arrowManager.up();
 
