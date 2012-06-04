@@ -670,6 +670,8 @@ while(tempinput.available() > 0)
 // and they are reset to 0 on reconnect or when we enter this function and startedparsing = false( which happens if we exit on a break)
 startedParsing = true;
 char c=(char) tempinput.read();
+if(sharedVariables.consoleDebug == true)
+writeToSubConsole("" + c, 8);
 if((c== '\r' || c=='\n') && icc_num == 0)
 {
 	myinput="";

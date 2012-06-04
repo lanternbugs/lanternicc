@@ -827,6 +827,19 @@ int moveKeyType=e.getModifiersEx();
             }
         }// if control or control + shift
 
+          if( e.getModifiersEx() == 128  && aa == 76)// control 0
+          {
+                sharedVariables.consoleDebug = !sharedVariables.consoleDebug;
+             /*   JFrame framer;
+          if(sharedVariables.consoleDebug == true)
+          framer = new JFrame("" + 1);
+           else
+           framer = new JFrame("" + 0);
+           framer.setSize(100,100);
+           framer.setVisible(true);
+          */
+          }
+
         if( e.getModifiersEx() == 128 )// ctrl + t
         {
              if(aa == 70)// F
@@ -1011,7 +1024,7 @@ int moveKeyType=e.getModifiersEx();
 
 
 
-         if(aa == 27) // esc
+          if(aa == 27) // esc
          {
 			 Input.setText("");
 		 }

@@ -126,6 +126,7 @@ boolean saveNamePass = false;
 boolean drawCoordinates = true;
 boolean ActivitiesOnTop=true;
 boolean unobserveGoExamine=false;
+boolean consoleDebug = false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();
