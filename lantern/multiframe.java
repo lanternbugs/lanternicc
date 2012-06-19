@@ -1160,6 +1160,10 @@ class mymultiframe extends JFrame
     randomGraphics.setMnemonic(KeyEvent.VK_R);
     chattimestamp.setMnemonic(KeyEvent.VK_C);
 
+    // add keystrokes
+    consolemenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,
+                                                      ActionEvent.CTRL_MASK));
+
     // add button groups
     ButtonGroup italicsBehaviorGroup = new ButtonGroup();
     italicsBehaviorGroup.add(italicsBehavior[0]);
