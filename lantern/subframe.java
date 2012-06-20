@@ -229,45 +229,87 @@ class subframe extends JInternalFrame
     addInternalFrameListener(this);
 
     consoleMenu = new JMenuBar();
-
-    JMenu mywindows = new JMenu("Menu");
-
-    JMenuItem  selectall = new JMenuItem("Select All");
-    selectall.addActionListener(this);
-    mywindows.add(selectall);
-
-    JMenuItem  copyit = new JMenuItem("Copy");
-    copyit.addActionListener(this);
-    mywindows.add(copyit);
-
-    mywindows.addSeparator();
-
-    JMenuItem  consoleLayout1 = new JMenuItem("Single Rows of Tabs");
-    consoleLayout1.addActionListener(this);
-    mywindows.add(consoleLayout1);
-
-    JMenuItem  consoleLayout2 = new JMenuItem("Two Rows of Tabs");
-    consoleLayout2.addActionListener(this);
-    mywindows.add(consoleLayout2);
-
-    JMenuItem  consoleLayout3 = new JMenuItem("No Visible Tabs");
-    consoleLayout3.addActionListener(this);
-    mywindows.add(consoleLayout3);
-
-    JMenuItem  consoleLayout4 = new JMenuItem("Tabs on Top");
-    consoleLayout4.addActionListener(this);
-    mywindows.add(consoleLayout4);
-
-    mywindows.addSeparator();
-
-    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
-    listChoice.addActionListener(this);
-    mywindows.add(listChoice);
-    if (sharedVariables.consolesNamesLayout[consoleNumber] == 1)
-      listChoice.setSelected(true);
-
-    consoleMenu.add(mywindows);
     setJMenuBar(consoleMenu);
+
+    /******************** Console Menu ********************/
+    JMenu mywindows = new JMenu("Menu");
+    // Menu / 
+    JMenuItem selectall = new JMenuItem("Select All");
+    JMenuItem copyit = new JMenuItem("Copy");
+    // .. / (separator)
+    JMenuItem consoleLayout1 = new JMenuItem("Single Rows of Tabs");
+    JMenuItem consoleLayout2 = new JMenuItem("Two Rows of Tabs");
+    JMenuItem consoleLayout3 = new JMenuItem("No Visible Tabs");
+    JMenuItem consoleLayout4 = new JMenuItem("Tabs on Top");
+    // .. / (separator)
+    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
+    
+    // add to menu bar
+    consoleMenu.add(mywindows);
+    // Menu /
+    mywindows.add(selectall);
+    mywindows.add(copyit);
+    mywindows.addSeparator();
+    mywindows.add(consoleLayout1);
+    mywindows.add(consoleLayout2);
+    mywindows.add(consoleLayout3);
+    mywindows.add(consoleLayout4);
+    mywindows.addSeparator();
+    mywindows.add(listChoice);
+
+    // special settings
+    listChoice.setSelected((sharedVariables.consolesNamesLayout[consoleNumber] == 1));
+
+    // add listeners
+    selectall.addActionListener(this);
+    copyit.addActionListener(this);
+    consoleLayout1.addActionListener(this);
+    consoleLayout2.addActionListener(this);
+    consoleLayout3.addActionListener(this);
+    consoleLayout4.addActionListener(this);
+    listChoice.addActionListener(this);
+
+    /******************** User Buttons ********************/
+    JMenu buttonmenu = new JMenu("User Buttons");
+    // User Buttons /
+    JMenuItem[] buttonlist = new JMenuItem[10];
+    for (int i=0; i<10; i++)
+      buttonlist[i] = new JMenuItem("Button "+i);
+
+    // add accelerators
+    buttonlist[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[3].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[4].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[5].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[6].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[7].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[8].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[9].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_9,
+                                                        ActionEvent.CTRL_MASK));
+    buttonlist[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
+                                                        ActionEvent.CTRL_MASK));
+
+    // add to menu bar
+    consoleMenu.add(buttonmenu);
+    // User Buttons /
+    for (int i=1; i<=10; i++)
+      buttonmenu.add(buttonlist[i%10]);
+
+    // add listeners
+    for (int i=0; i<10; i++)
+      buttonlist[i].addActionListener(this);
+
+    /******************** end of menus ********************/
+    
     consoleMenu.setVisible(sharedVariables.showConsoleMenu);
     initComponents();
   }
@@ -277,8 +319,9 @@ class subframe extends JInternalFrame
     try {
       //Object source = event.getSource();
       //handle action event here
+      String action = event.getActionCommand();
 
-      if (event.getActionCommand().equals("Show Channel Names List")) {
+      if (action.equals("Show Channel Names List")) {
         if (sharedVariables.consolesNamesLayout[consoleNumber] == 1) {
           sharedVariables.consolesNamesLayout[consoleNumber] = 0;
           listScroller.setVisible(false);
@@ -287,50 +330,73 @@ class subframe extends JInternalFrame
         
         } else {
           sharedVariables.consolesNamesLayout[consoleNumber] = 1;
-          if (sharedVariables.looking[consoleNumber]!=0) {
+          if (sharedVariables.looking[consoleNumber] != 0) {
             listScroller.setVisible(true);
             recreate(sharedVariables.consolesTabLayout[consoleNumber]);
           }
           listChoice.setSelected(true);
         }
-      }// end if show channel names list
-    
-      if (event.getActionCommand().equals("Single Rows of Tabs")) {
-        sharedVariables.consolesTabLayout[consoleNumber]=1;
-        recreate(1);
-      }
-
-      if (event.getActionCommand().equals("Two Rows of Tabs")) {
-        sharedVariables.consolesTabLayout[consoleNumber]=2;
-        recreate(2);
-      }
-    
-      if (event.getActionCommand().equals("No Visible Tabs")) {
-        sharedVariables.consolesTabLayout[consoleNumber]=3;
-        recreate(3);
-      }
-
-      if (event.getActionCommand().equals("Tabs on Top")) {
-        sharedVariables.consolesTabLayout[consoleNumber]=4;
-        recreate(4);
-      }
-
-      if (event.getActionCommand().equals("Select All")) {
         
+      } else if (action.equals("Single Rows of Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber] = 1;
+        recreate(1);
+
+      } else if (action.equals("Two Rows of Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber] = 2;
+        recreate(2);
+
+      } else if (action.equals("No Visible Tabs")) {
+        sharedVariables.consolesTabLayout[consoleNumber] = 3;
+        recreate(3);
+
+      } else if (action.equals("Tabs on Top")) {
+        sharedVariables.consolesTabLayout[consoleNumber] = 4;
+        recreate(4);
+
+      } else if (action.equals("Select All")) {
         consoles[consoleNumber].selectAll();
         StyledDocument doc = consoles[consoleNumber].getStyledDocument();
         myHighlighter.addHighlight(0, doc.getLength(),
                                    DefaultHighlighter.DefaultPainter);
-      }
-      
-      if (event.getActionCommand().equals("Copy")) {
+
+      } else if (action.equals("Copy")) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         TransferHandler transferHandler =
           consoles[consoleNumber].getTransferHandler();
         transferHandler.exportToClipboard(consoles[consoleNumber],
                                           clipboard, TransferHandler.COPY);
-      }// end copy
-      // end try
+
+      } else if (action.equals("Button 1")) {
+        doToolBarCommand(1);
+
+      } else if (action.equals("Button 2")) {
+        doToolBarCommand(2);
+
+      } else if (action.equals("Button 3")) {
+        doToolBarCommand(3);
+
+      } else if (action.equals("Button 4")) {
+        doToolBarCommand(4);
+
+      } else if (action.equals("Button 5")) {
+        doToolBarCommand(5);
+
+      } else if (action.equals("Button 6")) {
+        doToolBarCommand(6);
+
+      } else if (action.equals("Button 7")) {
+        doToolBarCommand(7);
+
+      } else if (action.equals("Button 8")) {
+        doToolBarCommand(8);
+
+      } else if (action.equals("Button 9")) {
+        doToolBarCommand(9);
+
+      } else if (action.equals("Button 0")) {
+        doToolBarCommand(0);
+
+      }
     } catch (Exception badEvent) {}
   }// end method action performed
 
@@ -1979,6 +2045,7 @@ int moveKeyType=e.getModifiersEx();
 				switchWindows();
 				return;
 			}
+                        /*
 			if(a == 49)
 			{
 				doToolBarCommand(1);
@@ -2029,6 +2096,7 @@ int moveKeyType=e.getModifiersEx();
 				doToolBarCommand(0);
 				return;
 			}
+                        */
 
 
 
