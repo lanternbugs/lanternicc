@@ -312,26 +312,38 @@ class subframe extends JInternalFrame
       buttonlist[i].addActionListener(this);
 
     /******************** Console Navigation ********************/
-    JMenu consolenav = new JMenu("Consoles");
-    // Consoles /
+    JMenu consolenav = new JMenu("Navigation");
+    // Navigation /
     JMenuItem nextconsole = new JMenuItem("Next console");
     JMenuItem nextchat = new JMenuItem("Next chat console");
+    // .. / (separator)
+    JMenuItem nextbtab = new JMenuItem("Next board tab");
+    JMenuItem prevbtab = new JMenuItem("Previous board tab");
 
     // add accelerators
     nextconsole.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
                                                       ActionEvent.CTRL_MASK));
     nextchat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                                                    ActionEvent.CTRL_MASK));
+    nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+                                                   ActionEvent.ALT_MASK));
+    prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
+                                                   ActionEvent.ALT_MASK));
 
     // add to menu bar
     consoleMenu.add(consolenav);
-    // Consoles /
+    // Navigation /
     consolenav.add(nextconsole);
     consolenav.add(nextchat);
+    consolenav.addSeparator();
+    consolenav.add(nextbtab);
+    consolenav.add(prevbtab);
 
     // add listeners
     nextconsole.addActionListener(this);
     nextchat.addActionListener(this);
+    nextbtab.addActionListener(this);
+    prevbtab.addActionListener(this);
 
     /******************** end of menus ********************/
     
@@ -426,6 +438,16 @@ class subframe extends JInternalFrame
         
       } else if (action.equals("Next chat console")) {
         switchConsoleWindows();
+
+      } else if (action.equals("Next board tab") ||
+                 action.equals("Previous board tab")) {
+        boolean nextprev = action.equals("Next board tab");
+        int games = getActiveGame();
+        if (games > -1) {
+          myboards[games].myconsolepanel.makehappen
+            (myboards[games].myconsolepanel.getNextGame(nextprev));
+          giveFocus();
+        }
 
       }
     } catch (Exception badEvent) {}
@@ -1929,6 +1951,18 @@ void giveFocusTell()
                     });
 
 }
+
+int getActiveGame() {
+  for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+    if (myboards[d] == null)
+      break;
+    if (myboards[d].isVisible()) {
+      return d;
+    }
+  }
+  return -1;
+}
+
 /****************************************************************************************/
 
 
@@ -2179,6 +2213,7 @@ int moveKeyType=e.getModifiersEx();
        }
        return;
       }
+      /*
          if(a == 82  ) //  right on board R
           {
 
@@ -2200,6 +2235,7 @@ int moveKeyType=e.getModifiersEx();
         }
            return;
          }
+      */
         if(a == 66) // B bring board to front ( first board)
          {
              int games = -1;
@@ -2574,21 +2610,21 @@ else
 */
 recreate(sharedVariables.consolesTabLayout[consoleNumber]);
 }
-int getActiveGame()
-{
-           int games = -1;
-           for(int d=0; d<sharedVariables.maxGameTabs; d++)
-           {
-            if(myboards[d]==null)
-            break;
-            if(myboards[d].isVisible())
-            {
-             games =d;
-             break;
-            }
-           }
-return games;
+/*
+  // Andrey says: copied outside the class
+int getActiveGame() {
+  int games = -1;
+  for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+    if (myboards[d] == null)
+      break;
+    if (myboards[d].isVisible()) {
+      games = d;
+      break;
+    }
+  }
+  return games;
 }
+*/
 void writeToConsole(String mes, Color col, boolean italic)
 {
 	  			try {
