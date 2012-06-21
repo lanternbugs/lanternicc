@@ -87,7 +87,7 @@ class subframe extends JInternalFrame
            gameboard[] myboards1) {
 
     //super(frame, mybool);
-    super("Main Console" + (sharedVariables1.openConsoleCount),
+    super("Main Console " + (sharedVariables1.openConsoleCount),
           true, //resizable
           true, //closable
           true, //maximizable
@@ -99,7 +99,7 @@ class subframe extends JInternalFrame
     sharedVariables=sharedVariables1;
     queue=queue1;
     myboards=myboards1;
-    consoleTitle="Main Console" + (sharedVariables1.openConsoleCount) + " : ";
+    consoleTitle="Main Console " + (sharedVariables1.openConsoleCount) + ": ";
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     consoleNumber = sharedVariables.openConsoleCount;
     
@@ -134,7 +134,8 @@ class subframe extends JInternalFrame
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           consoles[consoleNumber].copy();
-          giveFocus();}
+          giveFocus();
+        }
       });
     menu.add(item);
 
@@ -210,14 +211,16 @@ class subframe extends JInternalFrame
     JMenuItem item4a = new JMenuItem("Copy");
     item4a.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          overall.Input.copy();}
+          overall.Input.copy();
+        }
       });
     menu2.add(item4a);
 
     JMenuItem item4 = new JMenuItem("Paste");
     item4.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          overall.Input.paste();}
+          overall.Input.paste();
+        }
       });
     menu2.add(item4);
     add(menu2);
@@ -308,6 +311,23 @@ class subframe extends JInternalFrame
     for (int i=0; i<10; i++)
       buttonlist[i].addActionListener(this);
 
+    /******************** Console Navigation ********************/
+    JMenu consolenav = new JMenu("Consoles");
+    // Consoles /
+    JMenuItem nextconsole = new JMenuItem("Next console");
+
+    // add accelerators
+    nextconsole.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
+                                                      ActionEvent.CTRL_MASK));
+
+    // add to menu bar
+    consoleMenu.add(consolenav);
+    // Consoles /
+    consolenav.add(nextconsole);
+
+    // add listeners
+    nextconsole.addActionListener(this);
+
     /******************** end of menus ********************/
     
     consoleMenu.setVisible(sharedVariables.showConsoleMenu);
@@ -396,6 +416,9 @@ class subframe extends JInternalFrame
       } else if (action.equals("Button 0")) {
         doToolBarCommand(0);
 
+      } else if (action.equals("Next console")) {
+        switchWindows();
+        
       }
     } catch (Exception badEvent) {}
   }// end method action performed
@@ -2040,12 +2063,12 @@ int moveKeyType=e.getModifiersEx();
 	 	  		switchConsoleWindows();
 	 	  		return;
 	 		 }
+                        /*
 			if(a == 84)// ctrl t
 			{
 				switchWindows();
 				return;
 			}
-                        /*
 			if(a == 49)
 			{
 				doToolBarCommand(1);
