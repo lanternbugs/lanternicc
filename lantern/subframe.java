@@ -315,18 +315,23 @@ class subframe extends JInternalFrame
     JMenu consolenav = new JMenu("Consoles");
     // Consoles /
     JMenuItem nextconsole = new JMenuItem("Next console");
+    JMenuItem nextchat = new JMenuItem("Next chat console");
 
     // add accelerators
     nextconsole.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
                                                       ActionEvent.CTRL_MASK));
+    nextchat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
+                                                   ActionEvent.CTRL_MASK));
 
     // add to menu bar
     consoleMenu.add(consolenav);
     // Consoles /
     consolenav.add(nextconsole);
+    consolenav.add(nextchat);
 
     // add listeners
     nextconsole.addActionListener(this);
+    nextchat.addActionListener(this);
 
     /******************** end of menus ********************/
     
@@ -419,6 +424,9 @@ class subframe extends JInternalFrame
       } else if (action.equals("Next console")) {
         switchWindows();
         
+      } else if (action.equals("Next chat console")) {
+        switchConsoleWindows();
+
       }
     } catch (Exception badEvent) {}
   }// end method action performed
@@ -2057,13 +2065,13 @@ int moveKeyType=e.getModifiersEx();
 
                return;
               }
+                        /*
              	if( a == 90)// ctrl + z
 	 		{
 
 	 	  		switchConsoleWindows();
 	 	  		return;
 	 		 }
-                        /*
 			if(a == 84)// ctrl t
 			{
 				switchWindows();
