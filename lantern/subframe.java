@@ -621,841 +621,740 @@ class subframe extends JInternalFrame
       data.repaintTabBorders=1;
       queue.add(data);
     }
-
-
-}
-void makeHappen(int con)
-{
-     myHighlighter.removeAllHighlights();
-     channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabBackground);
-     sharedVariables.looking[consoleNumber]=con;
-     consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
-     Color my=new Color(193,153,153);
-     setActiveTabForeground(con);
-    if(con > 0 && namesMemory[con]!=null)
-    {    boolean nametry=false;
+  }
+  
+  void makeHappen(int con) {
+    myHighlighter.removeAllHighlights();
+    channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabBackground);
+    sharedVariables.looking[consoleNumber] = con;
+    consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
+    Color my = new Color(193,153,153);
+    setActiveTabForeground(con);
+    if (con > 0 && namesMemory[con]!=null) {
+      boolean nametry = false;
       try {
-     if(namesMemory[con].length()>0)
-      nametry  =restoreNamesList(con);
-      }
-      catch(Exception duey){}
-      if(nametry == false)
+        if (namesMemory[con].length() > 0)
+          nametry = restoreNamesList(con);
+
+      } catch (Exception duey) {}
+      if (!nametry)
+        setNameList(con);
+    } else {
       setNameList(con);
     }
+    //if (sharedVariables.consoleFonts[consoleNumber]!=null &&
+    //    sharedVariables.useConsoleFont[consoleNumber]== true)
+    //	consoles[consoleNumber].setFont(sharedVariables.consoleFonts[consoleNumber]);
+    //else
+    if (sharedVariables.tabStuff[con].tabFont != null)
+      consoles[consoleNumber].setFont(sharedVariables.tabStuff[con].tabFont);
     else
-    {
-     setNameList(con);
-    }
-     //if(sharedVariables.consoleFonts[consoleNumber]!=null && sharedVariables.useConsoleFont[consoleNumber]== true)
-	//	consoles[consoleNumber].setFont(sharedVariables.consoleFonts[consoleNumber]);
-     //else
-     if(sharedVariables.tabStuff[con].tabFont!=null)
-     consoles[consoleNumber].setFont(sharedVariables.tabStuff[con].tabFont);
-     else
-     consoles[consoleNumber].setFont(sharedVariables.myFont);
+      consoles[consoleNumber].setFont(sharedVariables.myFont);
 
-     if(sharedVariables.tabStuff[con].BackColor!=null)
-     consoles[consoleNumber].setBackground(sharedVariables.tabStuff[con].BackColor);
-     else
-     consoles[consoleNumber].setBackground(sharedVariables.BackColor);
+    if (sharedVariables.tabStuff[con].BackColor != null)
+      consoles[consoleNumber].setBackground(sharedVariables.tabStuff[con].BackColor);
+    else
+      consoles[consoleNumber].setBackground(sharedVariables.BackColor);
 
-     if(sharedVariables.tabStuff[con].ForColor!=null)
-     consoles[consoleNumber].setForeground(sharedVariables.tabStuff[con].ForColor);
-     else
-     consoles[consoleNumber].setForeground(sharedVariables.ForColor);
-	 setTitle(consoleTitle + sharedVariables.consoleTabTitles[con]);
-	wheelIsScrolling=false;
-	scrollnow=1;
-     updateComboBox(con);
+    if (sharedVariables.tabStuff[con].ForColor != null)
+      consoles[consoleNumber].setForeground(sharedVariables.tabStuff[con].ForColor);
+    else
+      consoles[consoleNumber].setForeground(sharedVariables.ForColor);
+    setTitle(consoleTitle + sharedVariables.consoleTabTitles[con]);
+    wheelIsScrolling = false;
+    scrollnow = 1;
+    updateComboBox(con);
+  }
 
-}
+  void initTabCombo() {
+    String[] tabNames = new String[sharedVariables.maxConsoleTabs];
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+      if (a == 0)
+        tabNames[a] = "M0";
+      else
+        tabNames[a] = "C"+a;
+    try {
+      for (int ab=0; ab<sharedVariables.maxConsoleTabs; ab++)
+        if (!sharedVariables.consoleTabCustomTitles[ab].equals(""))
+          tabNames[ab] = sharedVariables.consoleTabCustomTitles[ab];
+        else
+          tabNames[ab] = sharedVariables.consoleTabTitles[ab];
 
-void initTabCombo()
-{
-	 		String [] tabNames = new String[sharedVariables.maxConsoleTabs];
-	 		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-	 			if(a==0)
-	 				tabNames[a]="M0";
-	 			else
-	 			   tabNames[a]="C"+a;
-	 		try {
-	 		for(int ab=0; ab<sharedVariables.maxConsoleTabs; ab++)
-	 			if(!sharedVariables.consoleTabCustomTitles[ab].equals(""))
-	        			tabNames[ab]=sharedVariables.consoleTabCustomTitles[ab];
-	        		else
-	         		tabNames[ab]=sharedVariables.consoleTabTitles[ab];
-			}
-			catch(Exception d){}
+    } catch (Exception d) {}
 
-	        tabChooser = new JComboBox(tabNames);
-	         tabChooser.setEditable(false);
+    tabChooser = new JComboBox(tabNames);
+    tabChooser.setEditable(false);
+  }
+  
+  void initTabChooser() {
+    initTabCombo();
 
-}
- void initTabChooser()
- {
-			initTabCombo();
+    tabChooser.setSelectedIndex(sharedVariables.looking[consoleNumber]);
+    tabChooser.setEditable(false);
+    tabChooser.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          JComboBox cb = (JComboBox)e.getSource();
+          try {
+            makeHappen(cb.getSelectedIndex());
+            giveFocus();
+            //JFrame aframe = new JFrame();
+            //aframe.setSize(200,200);
+            //aframe.setTitle(comboMemory[sharedVariables.looking[consoleNumber]] +
+            //                " " + sharedVariables.looking[consoleNumber] +
+            //                " " + e.getActionCommand());
+            //aframe.setVisible(true);
+          } catch (Exception cant) {}
+        }
+      });
+  }
 
-	         tabChooser.setSelectedIndex(sharedVariables.looking[consoleNumber]);
-	         tabChooser.setEditable(false);
-tabChooser.addActionListener(new ActionListener(){
+  private void initComponents() {
+    String[] prefixStrings = {">"};
 
-    public void actionPerformed(ActionEvent e) {
-        JComboBox cb = (JComboBox)e.getSource();
-        try{
+    prefixHandler = new JComboBox(prefixStrings);
+    prefixHandler.setSelectedIndex(0);
+    prefixHandler.setEditable(false);
 
-  		makeHappen(cb.getSelectedIndex());
-  		giveFocus();
-      //JFrame aframe = new JFrame();
-      //aframe.setSize(200,200);
-      //aframe.setTitle(comboMemory[sharedVariables.looking[consoleNumber]] + " " + sharedVariables.looking[consoleNumber] + " " + e.getActionCommand());
-      //aframe.setVisible(true);
-	}catch(Exception cant){}
+    initTabCombo();
 
-    }
-
-});
- }
-
- private void initComponents() {
-
-
-        String[] prefixStrings = { ">"};
-
-        prefixHandler = new JComboBox(prefixStrings);
-        prefixHandler.setSelectedIndex(0);
-        prefixHandler.setEditable(false);
-
-		initTabCombo();
-
-        // for 10 tabs we assume preselected index is ">"
-        comboMemory = new String[sharedVariables.maxConsoleTabs];
-        namesMemory = new String[sharedVariables.maxConsoleTabs];
-        for(int cmem=0; cmem<sharedVariables.maxConsoleTabs; cmem++)
-        comboMemory[cmem] = ">";
-prefixHandler.addActionListener(new ActionListener(){
-
-    public void actionPerformed(ActionEvent e) {
-        JComboBox cb = (JComboBox)e.getSource();
-        try{
-
-        String mytext =(String) cb.getSelectedItem();
-        if(mytext != null)
-       {
-		   comboMemory[sharedVariables.looking[consoleNumber]]=mytext;
-		        if(mytext.equals(">") || overall.Input.getText().startsWith("/"))
-		        overall.Input.setForeground(sharedVariables.inputCommandColor);
-		        else
-		        overall.Input.setForeground(sharedVariables.inputChatColor);
-
-
-
-		}
-        giveFocus();
-      //JFrame aframe = new JFrame();
-      //aframe.setSize(200,200);
-      //aframe.setTitle(comboMemory[sharedVariables.looking[consoleNumber]] + " " + sharedVariables.looking[consoleNumber] + " " + e.getActionCommand());
-      //aframe.setVisible(true);
-	}catch(Exception cant){}
-
-    }
-
-});
-
-        updateComboBox(sharedVariables.openConsoleCount);
-
-
-		channelTabs = new JPaintedLabel[sharedVariables.maxConsoleTabs];
-		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-		{if(a==0)
-		channelTabs[a]=new JPaintedLabel("M" + a, sharedVariables, a);
-	    else
-		{
-			channelTabs[a]=new JPaintedLabel(sharedVariables.consoleTabTitles[a], sharedVariables, a);
-
-			if(!sharedVariables.consoleTabCustomTitles[a].equals(""))
-			channelTabs[a].setFullText(sharedVariables.consoleTabCustomTitles[a]);
-			else
-			channelTabs[a].setText(sharedVariables.consoleTabTitles[a]);
-		}// end else
-
-		}
-	    tellLabel=new JLabel("tells");
-	    tellCheckbox=new JCheckBox();
-	    if(sharedVariables.tellconsole == consoleNumber)
-	    tellCheckbox.setSelected(true);
-
-
-		tellCheckbox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event)
-				{
-					sharedVariables.tellconsole=consoleNumber;
-					sharedVariables.updateTellConsole=1;
-				}
-});
-
-
-for(int cona=0; cona<sharedVariables.maxConsoleTabs; cona++)
-{
-
-	final int con=cona;
-
-channelTabs[con].addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-             if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2)
-			 	makerightclickhappen(e, con);
-			else
-			{  makeHappen(con);
-			}
+    // for 10 tabs we assume preselected index is ">"
+    comboMemory = new String[sharedVariables.maxConsoleTabs];
+    namesMemory = new String[sharedVariables.maxConsoleTabs];
+    for (int cmem=0; cmem<sharedVariables.maxConsoleTabs; cmem++)
+      comboMemory[cmem] = ">";
+    prefixHandler.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          JComboBox cb = (JComboBox)e.getSource();
+          try {
+            String mytext = (String)cb.getSelectedItem();
+            if (mytext != null) {
+              comboMemory[sharedVariables.looking[consoleNumber]] = mytext;
+              if (mytext.equals(">") || overall.Input.getText().startsWith("/"))
+                overall.Input.setForeground(sharedVariables.inputCommandColor);
+              else
+                overall.Input.setForeground(sharedVariables.inputChatColor);
             }
-
-         public void mouseReleased(MouseEvent e) {
-			 if (e.getButton() == MouseEvent.BUTTON3)
-			 	;
-			 else
-			 {
-            sharedVariables.looking[consoleNumber]=con;
-            consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
-            Color my=new Color(193,153,153);
-            setActiveTabForeground(con);
-            updateComboBox(con);
-			}
-            }
-
-
-public void mouseEntered (MouseEvent me) {}
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {}
-public void makerightclickhappen(MouseEvent e, final int n)
-{
-JPopupMenu menu2=new JPopupMenu("Popup2");
-JMenuItem item11 = new JMenuItem("trim tab chat");
- item11.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            myoutput data = new myoutput();
-            data.trimconsole=n;
-            queue.add(data);
-            }
-       });
-       JMenu submenu  = new JMenu("Advanced");
-
-       submenu.add(item11);
-JMenuItem item2 = new JMenuItem("set tab channels and name");
- item2.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           customizeTab(n);
-            }
-       });
-     if(n!=0)
-     menu2.add(item2);
-
-
-JMenuItem item3 = new JMenuItem("set tab font");
- item3.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           setTabFont(n);
-            }
-       });
-
-     menu2.add(item3);
-
-
-JMenuItem item4 = new JMenuItem("set tab colors");
- item4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           setTabColors(n);
-            }
-       });
-
-     menu2.add(item4);
-
-
-     JMenuItem item1 = new JMenuItem("clear tab chat");
- item1.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            myoutput data = new myoutput();
-            data.clearconsole=n;
-            queue.add(data);
-            }
-       });
-       menu2.add(item1);
-
-
-final JCheckBoxMenuItem item5 = new JCheckBoxMenuItem("show typed text");
- item5.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-				if(sharedVariables.tabStuff[n].typed == true)
-				{
-					sharedVariables.tabStuff[n].typed=false;
-					item5.setSelected(false);
-				}
-				else
-				{
-					sharedVariables.tabStuff[n].typed=true;
-					item5.setSelected(true);
-				}
-            }
-       });
-if(sharedVariables.tabStuff[n].typed == true)
-	item5.setSelected(true);
-else
-	item5.setSelected(false);
-     submenu.add(item5);
-
-
-
-final JCheckBoxMenuItem item6 = new JCheckBoxMenuItem("suppress (told...");
- item6.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-				if(sharedVariables.tabStuff[n].told == false)
-				{
-					sharedVariables.tabStuff[n].told=true;
-					item6.setSelected(true);
-				}
-				else
-				{
-					sharedVariables.tabStuff[n].told=false;
-					item6.setSelected(false);
-				}
-            }
-       });
-if(sharedVariables.tabStuff[n].told == false)
-	item6.setSelected(true);
-else
-	item6.setSelected(false);
-     submenu.add(item6);
-
-
-
-JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
-item7.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-
-            changeTellTab(n);
-            }
-       });
-
-if(sharedVariables.tellsToTab == true && sharedVariables.tellTab == n)
-item7.setSelected(true);
-//if(sharedVariables.tellconsole == consoleNumber)
-menu2.add(item7);
-
-JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
- itemQ.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           customizeTabQtells(n);
-            }
-       });
-
-     menu2.add(itemQ);
-
-
-menu2.add(submenu);
-
-add(menu2);
-menu2.show(e.getComponent(),e.getX(),e.getY());
-
-}
-
-
-
-});
-
-}
-nameListClass listclasstype = new nameListClass();
-listclasstype.addToList("Default");
-myNameList = new JList(listclasstype.model);
-myNameList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-myNameList.setLayoutOrientation(JList.VERTICAL);
-myNameList.setVisibleRowCount(-1);
-myNameList.setForeground(sharedVariables.nameForegroundColor);
-myNameList.setBackground(sharedVariables.nameBackgroundColor);
-listScroller = new JScrollPane(myNameList);
-
-MouseListener mouseListenerNotify = new MouseAdapter() {
-     public void mouseClicked(MouseEvent e) {
-
-
-if(e.getButton() == MouseEvent.BUTTON3 )// right click
-{
-    int index = myNameList.locationToIndex(e.getPoint());
-    String Name =(String) myNameList.getModel().getElementAt(index);
-
-	setupMenu(Name);
-	menu3.show(e.getComponent(),e.getX(),e.getY());
-	return;
-}
-
-
-
-		//rotate through
-int z=0;
-int point=-1;
-int number=-1;
-int mychan=-1;
-for(z=0; z< sharedVariables.channelNamesList.size(); z++)
-{
-try{
-	mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
-
-	if(mychan==myChannelNumber)
-	{point=z;
-	break;}
-
-}catch(Exception dd){}
-
-
-}// end for
-
-for(z=point+1; z< sharedVariables.channelNamesList.size(); z++)
-{
-	mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
-
-			if(sharedVariables.console[sharedVariables.looking[consoleNumber]][mychan] == 1)
-			{
-				number=z;
-				break;
-			}
-
-
-
-
-}// end for
-
-
-if(number==-1)
-for(z=0; z< point; z++)
-{
-	 mychan=Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
-
-			if(sharedVariables.console[sharedVariables.looking[consoleNumber]][mychan] == 1)
-			{
-				number=z;
-				break;
-			}
-
-}// end for
-
-if(number > -1)
-{
-myNameList.setModel(sharedVariables.channelNamesList.get(number).model);
-myChannelNumber=mychan;
-namesMemory[sharedVariables.looking[consoleNumber]]="" + mychan;
-myNameList.repaint();
-}// end if number > -1
-
-
-          }
-
- };
- myNameList.addMouseListener(mouseListenerNotify);
-
-
-//listScroller.setVisible(false);
-//myNameList.setVisible(false);
-
-        consoles[consoleNumber] = new JTextPane();
-        myHighlighter=consoles[consoleNumber].getHighlighter();
-        if(sharedVariables.mydocs[consoleNumber] == null) // new logic we don't want to erase the console on restore
-        	sharedVariables.mydocs[consoleNumber]=consoles[consoleNumber].getStyledDocument();
-		else
-			consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[consoleNumber]);
-
-consoles[consoleNumber].addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-            //if(e.isPopupTrigger())
-				try {
-						if(e.getClickCount() == 1 && e.getButton() != MouseEvent.BUTTON3)
-						removeSelectionHighlight();
-
-					if (e.getButton() == MouseEvent.BUTTON3 || (e.getClickCount() == 2 && sharedVariables.autopopup == true))
-				{
-               if(consoles[consoleNumber].getSelectedText().indexOf(" ") == -1)
-               {
-				   setupMenu(consoles[consoleNumber].getSelectedText());
-				   menu3.show(e.getComponent(),e.getX(),e.getY());
-			   }
-               else
-               menu.show(e.getComponent(),e.getX(),e.getY());
-				}
-
-
-
-	 }// end try
-	 catch(Exception mousebad){};
- }
-
-     /*  public void mouseReleased(MouseEvent e) {
-            if(e.isPopupTrigger())
-               if(consoles[consoleNumber].getSelectedText().indexOf(" ") == -1)
-               menu3.show(e.getComponent(),e.getX(),e.getY());
-               else
-               menu.show(e.getComponent(),e.getX(),e.getY());
-
-       }*/
-
-
-public void mouseEntered (MouseEvent me) {}
-
-
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {
-
-	}
-
-
+            giveFocus();
+            //JFrame aframe = new JFrame();
+            //aframe.setSize(200,200);
+            //aframe.setTitle(comboMemory[sharedVariables.looking[consoleNumber]] +
+            //                " " + sharedVariables.looking[consoleNumber] +
+            //                " " + e.getActionCommand());
+            //aframe.setVisible(true);
+          } catch (Exception cant) {}
+        }
       });
 
+    updateComboBox(sharedVariables.openConsoleCount);
+
+    channelTabs = new JPaintedLabel[sharedVariables.maxConsoleTabs];
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++) {
+      if (a==0) {
+        channelTabs[a] = new JPaintedLabel("M" + a, sharedVariables, a);
+      } else {
+        channelTabs[a] = new JPaintedLabel(sharedVariables.consoleTabTitles[a],
+                                           sharedVariables, a);
+
+        if (!sharedVariables.consoleTabCustomTitles[a].equals(""))
+          channelTabs[a].setFullText(sharedVariables.consoleTabCustomTitles[a]);
+        else
+          channelTabs[a].setText(sharedVariables.consoleTabTitles[a]);
+      }// end else
+    }
+
+    tellLabel = new JLabel("tells");
+    tellCheckbox = new JCheckBox();
+    if (sharedVariables.tellconsole == consoleNumber)
+      tellCheckbox.setSelected(true);
+
+    tellCheckbox.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          sharedVariables.tellconsole=consoleNumber;
+          sharedVariables.updateTellConsole=1;
+        }
+      });
+
+    for (int cona=0; cona<sharedVariables.maxConsoleTabs; cona++) {
+      final int con=cona;
+
+      channelTabs[con].addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2) {
+              makerightclickhappen(e, con);
+            } else {
+              makeHappen(con);
+            }
+          }
+
+          public void mouseReleased(MouseEvent e) {
+            if (e.getButton() != MouseEvent.BUTTON3) {
+              sharedVariables.looking[consoleNumber] = con;
+              consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
+              Color my = new Color(193,153,153);
+              setActiveTabForeground(con);
+              updateComboBox(con);
+            }
+          }
+
+          public void mouseEntered(MouseEvent me) {}
+          public void mouseExited(MouseEvent me) {}
+          public void mouseClicked(MouseEvent me) {}
+          
+          public void makerightclickhappen(MouseEvent e, final int n) {
+            JPopupMenu menu2 = new JPopupMenu("Popup2");
+            JMenuItem item11 = new JMenuItem("trim tab chat");
+            item11.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  myoutput data = new myoutput();
+                  data.trimconsole = n;
+                  queue.add(data);
+                }
+              });
+            
+            JMenu submenu  = new JMenu("Advanced");
+
+            submenu.add(item11);
+            JMenuItem item2 = new JMenuItem("set tab channels and name");
+            item2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  customizeTab(n);
+                }
+              });
+            if (n != 0)
+              menu2.add(item2);
+
+            JMenuItem item3 = new JMenuItem("set tab font");
+            item3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  setTabFont(n);
+                }
+              });
+            menu2.add(item3);
+
+            JMenuItem item4 = new JMenuItem("set tab colors");
+            item4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  setTabColors(n);
+                }
+              });
+            menu2.add(item4);
+
+            JMenuItem item1 = new JMenuItem("clear tab chat");
+            item1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  myoutput data = new myoutput();
+                  data.clearconsole = n;
+                  queue.add(data);
+                }
+              });
+            menu2.add(item1);
+
+            final JCheckBoxMenuItem item5 = new JCheckBoxMenuItem("show typed text");
+            item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  /*
+                  if (sharedVariables.tabStuff[n].typed) {
+                    sharedVariables.tabStuff[n].typed = false;
+                    item5.setSelected(false);
+                  } else {
+                    sharedVariables.tabStuff[n].typed = true;
+                    item5.setSelected(true);
+                  }
+                  */
+                  sharedVariables.tabStuff[n].typed = !sharedVariables.tabStuff[n].typed;
+                  item5.setSelected(sharedVariables.tabStuff[n].typed);
+                }
+              });
+            /*
+            if (sharedVariables.tabStuff[n].typed)
+              item5.setSelected(true);
+            else
+              item5.setSelected(false);
+            */
+            item5.setSelected(sharedVariables.tabStuff[n].typed);
+            
+            submenu.add(item5);
+
+            final JCheckBoxMenuItem item6 = new JCheckBoxMenuItem("suppress (told ...)");
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  /*
+                  if (!sharedVariables.tabStuff[n].told) {
+                    sharedVariables.tabStuff[n].told = true;
+                    item6.setSelected(true);
+                  } else {
+                    sharedVariables.tabStuff[n].told = false;
+                    item6.setSelected(false);
+                  }
+                  */
+                  sharedVariables.tabStuff[n].told = !sharedVariables.tabStuff[n].told;
+                  item6.setSelected(!sharedVariables.tabStuff[n].told);
+                }
+              });
+            /*
+            if (!sharedVariables.tabStuff[n].told)
+              item6.setSelected(true);
+            else
+              item6.setSelected(false);
+            */
+            item6.setSelected(!sharedVariables.tabStuff[n].told);
+            submenu.add(item6);
+
+            JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
+            item7.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  changeTellTab(n);
+                }
+              });
+
+            if (sharedVariables.tellsToTab && sharedVariables.tellTab == n)
+              item7.setSelected(true);
+            //if (sharedVariables.tellconsole == consoleNumber)
+            menu2.add(item7);
+
+            JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
+            itemQ.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  customizeTabQtells(n);
+                }
+              });
+
+            menu2.add(itemQ);
+
+            menu2.add(submenu);
+
+            add(menu2);
+            menu2.show(e.getComponent(),e.getX(),e.getY());
+          }
+        });
+    }
+
+    nameListClass listclasstype = new nameListClass();
+    listclasstype.addToList("Default");
+    myNameList = new JList(listclasstype.model);
+    myNameList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    myNameList.setLayoutOrientation(JList.VERTICAL);
+    myNameList.setVisibleRowCount(-1);
+    myNameList.setForeground(sharedVariables.nameForegroundColor);
+    myNameList.setBackground(sharedVariables.nameBackgroundColor);
+    listScroller = new JScrollPane(myNameList);
+
+    MouseListener mouseListenerNotify = new MouseAdapter() {
+        public void mouseClicked(MouseEvent e) {
+
+          if (e.getButton() == MouseEvent.BUTTON3) {// right click
+            int index = myNameList.locationToIndex(e.getPoint());
+            String Name = (String)myNameList.getModel().getElementAt(index);
+
+            setupMenu(Name);
+            menu3.show(e.getComponent(),e.getX(),e.getY());
+            return;
+          }
+          //rotate through
+          int z = 0;
+          int point = -1;
+          int number = -1;
+          int mychan = -1;
+          for (z=0; z<sharedVariables.channelNamesList.size(); z++) {
+            try {
+              mychan = Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
+
+              if (mychan == myChannelNumber) {
+                point=z;
+                break;
+              }
+            } catch (Exception dd) {}
+          }// end for
+
+          for (z=point+1; z<sharedVariables.channelNamesList.size(); z++) {
+            mychan = Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
+
+            if (sharedVariables.console[sharedVariables.looking[consoleNumber]][mychan] == 1) {
+              number = z;
+              break;
+            }
+          }// end for
 
 
-consoles[consoleNumber].addMouseListener(new MouseListener()
-{
-	public void mouseClicked(MouseEvent e)
-	{   
-          if(e.getButton() == MouseEvent.BUTTON3)
-          return; // right click
+          if (number == -1) {
+            for (z=0; z<point; z++) {
+              mychan = Integer.parseInt(sharedVariables.channelNamesList.get(z).channel);
+
+              if (sharedVariables.console[sharedVariables.looking[consoleNumber]][mychan] == 1) {
+                number = z;
+                break;
+              }
+            }// end for
+          }
+
+          if (number > -1) {
+            myNameList.setModel(sharedVariables.channelNamesList.get(number).model);
+            myChannelNumber = mychan;
+            namesMemory[sharedVariables.looking[consoleNumber]] = "" + mychan;
+            myNameList.repaint();
+          }// end if number > -1
+        }
+      };
+
+    myNameList.addMouseListener(mouseListenerNotify);
+
+    //listScroller.setVisible(false);
+    //myNameList.setVisible(false);
+
+    consoles[consoleNumber] = new JTextPane();
+    myHighlighter = consoles[consoleNumber].getHighlighter();
+    if (sharedVariables.mydocs[consoleNumber] == null)
+      // new logic we don't want to erase the console on restore
+      sharedVariables.mydocs[consoleNumber] = consoles[consoleNumber].getStyledDocument();
+    else
+      consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[consoleNumber]);
+
+    consoles[consoleNumber].addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          //if(e.isPopupTrigger())
+          try {
+            if (e.getClickCount() == 1 && e.getButton() != MouseEvent.BUTTON3)
+              removeSelectionHighlight();
+
+            if (e.getButton() == MouseEvent.BUTTON3 ||
+                (e.getClickCount() == 2 && sharedVariables.autopopup)) {
+              if (consoles[consoleNumber].getSelectedText().indexOf(" ") == -1) {
+                setupMenu(consoles[consoleNumber].getSelectedText());
+                menu3.show(e.getComponent(),e.getX(),e.getY());
+              } else {
+                menu.show(e.getComponent(),e.getX(),e.getY());
+              }
+            }
+          // end try
+          } catch (Exception mousebad) {}
+        }
+
+        /*
+        public void mouseReleased(MouseEvent e) {
+          if (e.isPopupTrigger())
+            if (consoles[consoleNumber].getSelectedText().indexOf(" ") == -1)
+              menu3.show(e.getComponent(),e.getX(),e.getY());
+            else
+              menu.show(e.getComponent(),e.getX(),e.getY());
+        }
+        */
+
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {
+
+	}
+      });
+
+    consoles[consoleNumber].addMouseListener(new MouseListener() {
+        public void mouseClicked(MouseEvent e) {   
+          if (e.getButton() == MouseEvent.BUTTON3)
+            return; // right click
 
           JTextPane editor = (JTextPane) e.getSource();
-	if (! editor.isEditable())
-	{      Point pt = new Point(e.getX(), e.getY());
-	int pos = editor.viewToModel(pt);
-	if (pos >= 0)
-	{        // get the element at the pos
-	// check if the elemnt has the HREF
-	// attribute defined
-	// if so notify the HyperLinkListeners
-	//Style mine=getLogicalStyle(pos);
-	Element e2=editor.getStyledDocument().getCharacterElement(pos);
-	AttributeSet at = e2.getAttributes();
-//String underline="false";
-SimpleAttributeSet attrs = new SimpleAttributeSet();
-StyleConstants.setUnderline(attrs, true);
-String myurl = "";
-if(at.containsAttributes(attrs))
-{
+          if (!editor.isEditable()) {
+            Point pt = new Point(e.getX(), e.getY());
+            int pos = editor.viewToModel(pt);
+            if (pos >= 0) {
+              // get the element at the pos
+              // check if the elemnt has the HREF
+              // attribute defined
+              // if so notify the HyperLinkListeners
+              //Style mine = getLogicalStyle(pos);
+              Element e2 = editor.getStyledDocument().getCharacterElement(pos);
+              AttributeSet at = e2.getAttributes();
+              //String underline = "false";
+              SimpleAttributeSet attrs = new SimpleAttributeSet();
+              StyleConstants.setUnderline(attrs, true);
+              String myurl = "";
+              if (at.containsAttributes(attrs)) {
+                //e2.setVisible(false);
+                //underline = "true";
+                //at has atributes
+                myurl += at.getAttribute(javax.swing.text.html.HTML.Attribute.HREF).toString();
+                String myurl2 = myurl;
+                myurl2 = myurl2.toLowerCase();
+                if (myurl2.startsWith("/"))
+                  myurl2 = myurl2.substring(1, myurl2.length());
+                /*
+                if (myurl2.startsWith("observe")) {
+                  dispatchCommand(myurl);
 
-//	e2.setVisible(false);
-	//underline = "true";
- //at has atributes
-myurl += at.getAttribute(javax.swing.text.html.HTML.Attribute.HREF).toString();
-String myurl2=myurl;
-myurl2=myurl2.toLowerCase();
-if(myurl2.startsWith("/"))
-myurl2=myurl2.substring(1, myurl2.length());
+                } else if (myurl2.startsWith("finger")) {
+                  dispatchCommand(myurl);
 
-if(myurl2.startsWith("observe"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("finger"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("help"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("accept"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("decline"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("match"))
-{
-	dispatchCommand(myurl);
-}else if(myurl2.startsWith("examine"))
-{
-	dispatchCommand(myurl);
-}else if(myurl2.startsWith("follow"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("play"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("games"))
-{
-	dispatchCommand(myurl);
-}
-else if(myurl2.startsWith("liblist"))
-{
-	dispatchCommand(myurl);
-}
-else
-sharedVariables.openUrl(myurl);
-}
+                } else if (myurl2.startsWith("help")) {
+                  dispatchCommand(myurl);
 
+                } else if(myurl2.startsWith("accept")) {
+                  dispatchCommand(myurl);
 
-	}
-	}
-	}// end click event
+                } else if (myurl2.startsWith("decline")) {
+                  dispatchCommand(myurl);
 
+                } else if (myurl2.startsWith("match")) {
+                  dispatchCommand(myurl);
 
+                } else if (myurl2.startsWith("examine")) {
+                  dispatchCommand(myurl);
+                  
+                } else if (myurl2.startsWith("follow")) {
+                  dispatchCommand(myurl);
 
-		 public void mousePressed(MouseEvent e) {}
-		 public void mouseEntered (MouseEvent me) {}
-		 public void mouseReleased (MouseEvent me) {}
-		 public void mouseExited (MouseEvent me) {}
+                } else if (myurl2.startsWith("play")) {
+                  dispatchCommand(myurl);
 
+                } else if (myurl2.startsWith("games")) {
+                  dispatchCommand(myurl);
 
-});
-
-consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
-        {
-            public void hyperlinkUpdate(HyperlinkEvent r)
-            {
-                try
-                {
-             if(r.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
-             {//finalpane.setPage(r.getURL());
-				//String cmdLine = "start " + r.getURL();
-				//Process p = Runtime.getRuntime().exec(cmdLine);
-				String myurl="" + r.getURL();
-				sharedVariables.openUrl("www.adam16mr.org");
-		 	}
-
-             }catch(Exception e)
-                {}
+                } else if (myurl2.startsWith("liblist")) {
+                  dispatchCommand(myurl);
+                */
+                if (myurl2.startsWith("observe") ||
+                    myurl2.startsWith("finger") ||
+                    myurl2.startsWith("help") ||
+                    myurl2.startsWith("accept") ||
+                    myurl2.startsWith("decline") ||
+                    myurl2.startsWith("match") ||
+                    myurl2.startsWith("examine") ||
+                    myurl2.startsWith("follow") ||
+                    myurl2.startsWith("play") ||
+                    myurl2.startsWith("games") ||
+                    myurl2.startsWith("liblist")) {
+                  dispatchCommand(myurl);
+                  
+                } else {
+                  sharedVariables.openUrl(myurl);
+                }
+              }
             }
-        });
+          }
+        }// end click event
 
+        public void mousePressed(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseReleased(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+      });
 
-        scrollbutton = new JButton("no scroll");
-		scrollbutton.setVisible(false);
-		scrollbutton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event)
-			{
-				scrollnow=(scrollnow+1)%2;
-				if(scrollnow == 1)
-				scrollbutton.setText("no scroll");
-				else
-				scrollbutton.setText("autoscroll");
+    consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener() {
+        public void hyperlinkUpdate(HyperlinkEvent r) {
+          try {
+            if (r.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+              //finalpane.setPage(r.getURL());
+              //String cmdLine = "start " + r.getURL();
+              //Process p = Runtime.getRuntime().exec(cmdLine);
+              String myurl = "" + r.getURL();
+              sharedVariables.openUrl("www.adam16mr.org");
+            }
+             
+          } catch (Exception e) {}
+        }
+      });
 
-			/*	JFrame aframe = new JFrame();
-				int d =consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(), SwingConstants.VERTICAL, -1 );
-				int f=sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue();
-				int g= sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum();
-				aframe.setTitle(" curernt value" + f + " and maximum " + g + " and block inc is "+ d);
-				aframe.setVisible(true);
-			*/
-			}
-});
+    scrollbutton = new JButton("no scroll");
+    scrollbutton.setVisible(false);
+    scrollbutton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          scrollnow = (scrollnow+1)%2;
+          if (scrollnow == 1)
+            scrollbutton.setText("no scroll");
+          else
+            scrollbutton.setText("autoscroll");
+          /*
+            JFrame aframe = new JFrame();
+            int d = consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(),
+                                                                        SwingConstants.VERTICAL, -1);
+            int f = sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue();
+            int g = sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum();
+            aframe.setTitle(" current value" + f + " and maximum " + g + " and block inc is "+ d);
+            aframe.setVisible(true);
+          */
+        }
+      });
 
-
-       // newbox.setColumns(20);
-       // newbox.setLineWrap(true);
-       // newbox.setRows(5);
-       // newbox.setWrapStyleWord(true);
-        consoles[consoleNumber].setEditable(false);
-        sharedVariables.ConsoleScrollPane[consoleNumber] = new JScrollPane(consoles[consoleNumber], JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-
+    //newbox.setColumns(20);
+    //newbox.setLineWrap(true);
+    //newbox.setRows(5);
+    //newbox.setWrapStyleWord(true);
+    consoles[consoleNumber].setEditable(false);
+    sharedVariables.ConsoleScrollPane[consoleNumber] =
+      new JScrollPane(consoles[consoleNumber], JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     overall = new subPanel();
     add(overall);
 
     consoles[consoleNumber].addKeyListener(new KeyListener() {
+        public void keyPressed(KeyEvent e) {
+          int a = e.getKeyCode();
+          if (a==33) {
+            scrollnow = 0;
+          }
+        }
+          
+        public void keyTyped(KeyEvent e) {
 
-		public void keyPressed(KeyEvent e)
-		{
-        int a=e.getKeyCode();
-        if(a==33)
-        {
-			scrollnow=0;
+        }
 
-		}
-		}
- public void keyTyped(KeyEvent e) {;
+        /** Handle the key-released event from the text field.
+         */
+        public void keyReleased(KeyEvent e) {
 
-    }
+        }
+      });
 
+    consoles[consoleNumber].addMouseWheelListener(new MouseWheelListener() {
+        //sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().addMouseWheelListener(new MouseWheelListener()
+        public void mouseWheelMoved(MouseWheelEvent e) {
+          String message;
+          int notches = e.getWheelRotation();
 
+          int mult = 27;
 
-    /** Handle the key-released event from the text field.
+          if (notches < 0) {
+            message = "Mouse wheel moved UP " + -notches + " notch(es)";
+          } else {
+            message = "Mouse wheel moved DOWN " + notches + " notch(es)" ;
+          }
+          if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+            /*
+              message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
+              message += "    Scroll amount: " + e.getScrollAmount()
+                + " unit increments per notch" + newline;
+              message += "    Units to scroll: " + e.getUnitsToScroll()
+                + " unit increments" + newline;
+              message += "    Vertical unit increment: "
+                + sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getUnitIncrement(1)
+                + " pixels" + newline;
+            */
+
+            if (notches < 0) {
+              sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() - (e.getScrollAmount() * mult));
+              scrollnow = 0;
+              wheelIsScrolling = true;
+
+            } else {
+              int d = (e.getScrollAmount() * mult);
+              int myvalue = 100 + d;
+              if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue >
+                  sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum()) {
+                wheelIsScrolling = false;
+                scrollnow = 1;
+                sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum());
+
+              } else {
+                scrollnow = 0;
+                wheelIsScrolling = false;
+                sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + (e.getScrollAmount() * mult));
+              }
+            }
+
+          } else {
+            //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
+            /*
+              message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
+              message += "    Vertical block increment: "
+                + sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getBlockIncrement(1)
+                + " pixels" + newline;
+            */
+            scrollnow = 0;
+            wheelIsScrolling = true;
+
+            int block = sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getBlockIncrement(1) * mult;
+            if (notches < 0) {
+              sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() - block);
+
+            } else {
+              int myvalue = 100 + block;
+              if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue >
+                  sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum()) {
+                wheelIsScrolling = false;
+                scrollnow = 1;
+              }
+
+              sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + block);
+            }
+          }
+        }
+      });
+
+    sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setUnitIncrement(blockInc);
+    sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+        public void adjustmentValueChanged(AdjustmentEvent e) {
+          if (wheelIsScrolling) {
+            wheelIsScrolling = false;
+            return;
+          }
+          // below code tells if they click the up line button and
+          // i've over riden its value in blockInc and when
+          // adjustment =block inc i dont scroll
+          /*
+            int z = sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() -
+              sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum();
+
+            int dd = consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(),
+                                                                         SwingConstants.VERTICAL, -1);
+            z = z+dd;
+            z *= -1;
+
+            if (z == blockInc) {
+              //JFrame fri = new JFrame("z is " + z + " and dd is " + dd);
+              //fri.setVisible(true);
+              wheelIsScrolling = true;
+              scrollnow = 0;
+              return;
+            }
+          */
+
+          if (scrollnow == 1 &&
+              !sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting()) {
+            e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+            // end if not adjusting
+          } else {
+            if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
+              scrollnow = 0;
+            
+            int d = consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(),
+                                                                        SwingConstants.VERTICAL, -1);
+            int myvalue = 60 + d;
+            try {
+              if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue >
+                  sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum())
+                scrollnow = 1;
+
+              if (scrollnow == 1 &&
+                  !sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+              // end try
+            } catch (Exception e1) {}
+          }// end else
+        }// end  is adjustment value changed
+      });// end adjustment class
+
+    consoles[consoleNumber].setForeground(sharedVariables.ForColor);
+    consoles[consoleNumber].setBackground(sharedVariables.BackColor);
+    if (sharedVariables.myFont != null)
+      consoles[consoleNumber].setFont(sharedVariables.myFont);
+
+    makeHappen(consoleNumber);
+
+    Color lc=new Color(0,0,0);
+    /*
+      for (int a=0; a<10; a++)
+        channelTabs[a].setForeground(lc);
     */
-    public void keyReleased(KeyEvent e) {;
 
-    }
+    setActiveTabForeground(sharedVariables.openConsoleCount);
+    
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+      channelTabs[a].setOpaque(true);
+    
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+      channelTabs[a].setBackground(sharedVariables.tabBackground);
 
-	}
-);
-
-
-consoles[consoleNumber].addMouseWheelListener(new MouseWheelListener()
-//sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().addMouseWheelListener(new MouseWheelListener()
-{
-    public void mouseWheelMoved(MouseWheelEvent e) {
-       String message;
-       int notches = e.getWheelRotation();
-
-			int mult = 27;
-
-
-  if (notches < 0) {
-           message = "Mouse wheel moved UP "
-                        + -notches + " notch(es)";
-       } else {
-           message = "Mouse wheel moved DOWN "
-                        + notches + " notch(es)" ;
-       }
-       if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-          /* message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
-           message += "    Scroll amount: " + e.getScrollAmount()
-                   + " unit increments per notch" + newline;
-           message += "    Units to scroll: " + e.getUnitsToScroll()
-                   + " unit increments" + newline;
-           message += "    Vertical unit increment: "
-               + sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getUnitIncrement(1)
-               + " pixels" + newline;
-		*/
-
-               if (notches < 0)
-               {		sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() - (e.getScrollAmount() * mult));
-		   	   			scrollnow=0;
-   						wheelIsScrolling=true;
-
-		   		}
-               else
-               	{
-
-							int d =(e.getScrollAmount() * mult);
-							int myvalue =100 + d;
-							if(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue > sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum())
-
-							{wheelIsScrolling = false;
-							scrollnow=1;
-				   			sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum());
-
-							}
-							else
-							{
-				   			scrollnow=0;
-				   			wheelIsScrolling=false;
-				   			sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + (e.getScrollAmount() * mult));
-
-							}
-				}
-
- } else { //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
-          /* message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
-           message += "    Vertical block increment: "
-               + sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getBlockIncrement(1)
-               + " pixels" + newline;
-       */
-
-          			scrollnow=0;
-	      			wheelIsScrolling=true;
-
-       					int block=sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getBlockIncrement(1) * mult;
-                      if (notches < 0)
-	                  {
-						  sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() - block);
-
-				  		}
-	                  else
-	                  {
-
-						  int myvalue =100 + block;
-							if(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue > sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum())
-
-							{wheelIsScrolling = false;
-						  	scrollnow=1;
-						}
-
-						  sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setValue(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + block);
-
-					}
-       }
-
-	}
-});
-        sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().setUnitIncrement(blockInc);
-	sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener()
-	{
-	public void adjustmentValueChanged(AdjustmentEvent e) {
-
-		if(wheelIsScrolling)
-		{
-			wheelIsScrolling=false;
-			return;
-
-		}
-		
-		
-               // below code tells if they click the up line button and i've over riden its value in blockInc and when adjustment =block inc i dont scroll
-             /*   int z = sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() - sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum();
-
-
-                 int dd =consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(), SwingConstants.VERTICAL, -1 );
-                 z=z+dd;
-                 z*=-1;
-
-                 if(z==blockInc)
-               {
-
-                    // JFrame fri = new JFrame("z is " + z + " and dd is " + dd);
-		//	fri.setVisible(true);
-             wheelIsScrolling=true;
-             scrollnow =0;
-                return;
-               }
-               */
-
-	if(scrollnow == 1 && false == sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
-	{
-e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-
-
-
-
-	}// end if not adjusting
-	else
-	{
-		if(true == sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
-		scrollnow = 0;
-
-			int d =consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(), SwingConstants.VERTICAL, -1 );
-int myvalue =60 + d;
-	try{
-		if(sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue > sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum())
-		scrollnow = 1;
-
-				if(scrollnow == 1 && sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting() == false)
-				e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-
-	}// end try
-	catch(Exception e1)
-	{}
-	}// end else
-	}// end  is adjustment value changed
-	}// end adjustment class
-);
-
-	consoles[consoleNumber].setForeground(sharedVariables.ForColor);
-		consoles[consoleNumber].setBackground(sharedVariables.BackColor);
-		if(sharedVariables.myFont != null)
-		consoles[consoleNumber].setFont(sharedVariables.myFont);
-	makeHappen(consoleNumber);
-
-   Color lc=new Color(0,0,0);
-/*	for(int a=0; a<10; a++)
-		channelTabs[a].setForeground(lc);
-*/
-
- setActiveTabForeground(sharedVariables.openConsoleCount);
-
-	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-		channelTabs[a].setOpaque(true);
-
-	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-		channelTabs[a].setBackground(sharedVariables.tabBackground);
-
-channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabImOnBackground);
-
-    }
+    channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabImOnBackground);
+  }
 
 void setActiveTabForeground(int i)
 {
