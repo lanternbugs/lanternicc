@@ -1356,519 +1356,446 @@ class subframe extends JInternalFrame
     channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabImOnBackground);
   }
 
-void setActiveTabForeground(int i)
-{
-	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-	if(a==i)
-	{	channelTabs[a].setForeground(sharedVariables.activeTabForeground);
-		channelTabs[a].setBackground(sharedVariables.tabImOnBackground);
-	}
-	else
-		channelTabs[a].setForeground(sharedVariables.passiveTabForeground);
-
-
-}
-
-void dispatchCommand(String myurl)
-{
-
-	String mycommand="";
-	mycommand=myurl; //.substring(1, myurl.length()-1);// need to figure out why this is -2 not -1, maybe i include the end space which adds a charaacter here when i cut it
-	mycommand=mycommand + "\n";
-
-	myoutput output = new myoutput();
-      if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
-      	output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
-      else
-      	output.data=mycommand;
-	  output.consoleNumber=consoleNumber;
-      queue.add(output);
-
-	try {
-	StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
-
-	doc.insertString(doc.getEndPosition().getOffset(), mycommand, null);
-
-
-	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-	if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[a])
-	consoles[a].setStyledDocument(doc);
-		}
-	catch(Exception E){ }
-
-}
-
-
-public void componentResized( ComponentEvent e)
-{
-//updateSize();
-
-}
-public void componentHidden( ComponentEvent e)
-{
-
-}
-public void componentShown( ComponentEvent e)
-{
-
-}
-public void componentMoved( ComponentEvent e)
-{
-//updateSize();
-}
-
-
-
-/*
-
-public void mousePressed(MouseEvent e) {
- if(e.isPopupTrigger())
-               menu.show(e.getComponent(),e.getX(),e.getY());
-
-
-}
-public void mouseEntered (MouseEvent me) {}
-public void mouseReleased (MouseEvent me) {
-	if(me.isPopupTrigger())
-               menu.show(me.getComponent(),me.getX(),me.getY());
-          }
-
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {
-
-	}
-
-*/
-
-
-int scrollnow;
-boolean wheelIsScrolling;
-
-String myglobalinput;
-JButton scrollbutton;
-
-
-void setupMenu(final String handle)
-{
-
-menu3=new JPopupMenu("Popup");
-
-JMenuItem [] items;
-if(sharedVariables.rightClickMenu.size() > 0)
-{
-int removal=0;
-if(sharedVariables.looking[consoleNumber]==0)
-	removal=1;
-
-
-items = new JMenuItem[sharedVariables.rightClickMenu.size()-removal];
-
-for(int m=0; m< sharedVariables.rightClickMenu.size()-removal; m++)
-{
-
-	final int mfinal=m;
-items[m] = new JMenuItem("" + sharedVariables.rightClickMenu.get(m) + " " + handle);
-items[m].addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         // String name =  consoles[consoleNumber].getSelectedText();
-          String name = handle;
-          if( sharedVariables.rightClickMenu.get(mfinal).equals("Tell"))
-         {
-			 if(sharedVariables.looking[consoleNumber]!=0)
-			 addNameToCombo(name);
-	 	}
-         else if( sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink"))
-         {
-			sharedVariables.openUrl(name);
-		 }
-        else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
-         {
-			sharedVariables.openUrl("http://www.google.com/search?q=" + name);
-         }
-
-          else if( sharedVariables.rightClickMenu.get(mfinal).equals("Channel Notify"))
-          {
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-customizeChannelNotifyDialog frame = new customizeChannelNotifyDialog((JFrame) myself.myframe, false, sharedVariables, handle);
-frame.setVisible(true);
-          }
-         else if( sharedVariables.rightClickMenu.get(mfinal).equals("Direct tells of"))
-         {
-
-JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
-boolean soundof=true;
-
-			 for(int i=0; i< sharedVariables.toldTabNames.size(); i++)
-			 {
-				 if(sharedVariables.toldTabNames.get(i).name.equals(handle))
-						soundof=sharedVariables.toldTabNames.get(i).sound;
-			 }
-
-tellMasterDialog frame = new tellMasterDialog((JFrame) myself.myframe, false, sharedVariables, handle, soundof);
-
-		/*	 boolean found = false;
-			 for(int i=0; i< sharedVariables.toldTabNames.size(); i++)
-			 {
-				 if(sharedVariables.toldTabNames.get(i).name.equals(handle))
-				{	sharedVariables.toldTabNames.get(i).tab=sharedVariables.looking[consoleNumber];
-					found=true;
-					break;
-				}
-			 }// end for
-
-			 if(found==false)
-			 {
-				 told him = new told();
-			 	 him.name=handle;
-			 	 him.tab=sharedVariables.looking[consoleNumber];
-			 	 sharedVariables.toldTabNames.add(him);
-			 }
-
-		 */
-		 }
-        else
-          	doCommand(sharedVariables.rightClickMenu.get(mfinal) + " " + name + "\n");
-          }
-      });
-      menu3.add(items[m]);
-
-      if(m == 3 || m == 7 || m == 9 || (removal==0 && m==12))
-      menu3.addSeparator();
-
-      if(m < sharedVariables.rightClickMenu.size())
-      {String menuEntry = sharedVariables.rightClickMenu.get(m);
-      if(menuEntry.equals("Stored"))// now add edit list sub menu
-      {
-       JMenu LMenu = new JMenu("Edit List");
-       sharedVariables.setUpListMenu(LMenu, handle, queue);
-      menu3.addSeparator();
-       menu3.add(LMenu);
-       menu3.addSeparator();
+  void setActiveTabForeground(int i) {
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++) {
+      if (a == i) {
+	channelTabs[a].setForeground(sharedVariables.activeTabForeground);
+        channelTabs[a].setBackground(sharedVariables.tabImOnBackground);
+      } else {
+        channelTabs[a].setForeground(sharedVariables.passiveTabForeground);
       }
-      }
-}// end for
-}// end if any items
-
-menu3.addSeparator();
- JMenuItem item12 = new JMenuItem("Copy");
- item12.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-          consoles[consoleNumber].copy();
-			giveFocus();
-            }
-       });
-       menu3.add(item12);
-
- JMenuItem item13 = new JMenuItem("Copy&Paste");
-  item13.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-           consoles[consoleNumber].copy();
-           overall.Input.paste();
-           if(sharedVariables.operatingSystem.equals("mac"))
-           giveFocusTell();
-           else
-           giveFocus();
-
-             }
-        });
-        menu3.add(item13);
-
-
-
-
-
- add(menu3);
-
-}// end menu setup
-
-
-
-
-void doCommand(String mycommand)
-{
-	myoutput output = new myoutput();
-	output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
-	if(!sharedVariables.myServer.equals("ICC"))
-         output.data= mycommand;
-        output.consoleNumber=sharedVariables.looking[consoleNumber];
-    queue.add(output);
-    giveFocus();
-
-}
-
-void doToolBarCommand(int n)
-{
-					toolbarCommands commander = new toolbarCommands(myboards);
-				commander.dispatchCommand(n, sharedVariables.looking[consoleNumber], false, sharedVariables,  queue);
-				String mes = sharedVariables.userButtonCommands[n] + "\n";
-				StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
-
-						Style styleQ = doc.addStyle(null, null);
-
-						StyleConstants.setForeground(styleQ, sharedVariables.typedColor );
-						//StyleConstants.setUnderline(attrs, true);
-						SimpleAttributeSet attrs = new SimpleAttributeSet();
-
-						StyleConstants.setItalic(attrs, true);
-						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-	try {
-		doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
-		}catch(Exception mydoc){}
-
-}
-
-void updateComboBox(int n)
-{
-
-	// int cindex=sharedVariables.console[Integer.parseInt(dg.getArg(1))];
-    //  JFrame aaframe = new JFrame();
-    //   aaframe.setSize(200,200);
-    //   aaframe.setTitle(comboMemory[n] + " is combo memory, in update combo box and n is " + n);
-    //   aaframe.setVisible(true);
-	int count=0;
-	int foundIndex = -1;
-	int a=0;
-
-	// first loop is to check items we would add against combo memory BEFORE we remove the items triggering updates on combo memory
-	for(a=0; a<400; a++)
-	if(sharedVariables.console[sharedVariables.looking[consoleNumber]][a] == 1 && sharedVariables.looking[consoleNumber] != 0)
-	{
-		count++;
-		String aItem = "Tell " + a + " ";
-
-		if(aItem.equals(comboMemory[n]))
-		{
-
-		foundIndex=count;// the idea is we want the index that we added the item that should be selected ( its in comboMemory)
-
-
-		}
-	}
-
-// now check names
-	for(a=0; a<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); a++)
-	{
-		count++;
-		String aItem = "Tell " + sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(a) + " ";
-
-		if(aItem.equals(comboMemory[n]))
-		{
-
-		foundIndex=count;// the idea is we want the index that we added the item that should be selected ( its in comboMemory)
-
-
-		}
-	}
-
-
-
-		prefixHandler.removeAllItems();
-		prefixHandler.addItem(">");
-	for(a=0; a<400; a++)
-	if(sharedVariables.console[sharedVariables.looking[consoleNumber]][a] == 1 && sharedVariables.looking[consoleNumber] != 0)
-	{
-
-		String aItem = "Tell " + a + " ";
-		prefixHandler.addItem(aItem);
-
-	}
-
-	// now add back names
-	for(a=0; a<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); a++)
-	{
-
-		String aItem = "Tell " + sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(a) + " ";
-		prefixHandler.addItem(aItem);
-
-	}
-
-
-
-
-
-	try {
-
-		if(foundIndex > -1)
-			prefixHandler.setSelectedIndex(foundIndex);
-	}catch(Exception badcomboupdate){}
-}
-
-void updateTabChooserCombo()
-{
-int oldNumber = sharedVariables.looking[consoleNumber];
-tabChooser.removeAllItems();
-	 		for(int ab=0; ab<sharedVariables.maxConsoleTabs; ab++)
-	 			if(!sharedVariables.consoleTabCustomTitles[ab].equals(""))
-	        			tabChooser.addItem(sharedVariables.consoleTabCustomTitles[ab]);
-	        		else
-	         		tabChooser.addItem(sharedVariables.consoleTabTitles[ab]);
-
-		tabChooser.setSelectedIndex(oldNumber);
-//	makeHappen(sharedVariables.looking[consoleNumber]);
-}
-void addNameToCombo(String name)
-{
-	try {
-
-		for(int z=0; z<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); z++)
-			if(sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(z).equals(name))
-				return;
-
-			String aItem = "Tell " + name + " ";
-			prefixHandler.addItem(aItem);
-			sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].add(name);
-			prefixHandler.setSelectedIndex(prefixHandler.getItemCount()-1);
-}
-catch(Exception d){}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/************** jinternal frame listener ******************************/
-    void setBoardSize()
-     {
-		sharedVariables.myConsoleSizes[consoleNumber].point0=getLocation();
-		//set_string = set_string + "" + point0.x + " " + point0.y + " ";
-		sharedVariables.myConsoleSizes[consoleNumber].con0x=getWidth();
-		sharedVariables.myConsoleSizes[consoleNumber].con0y=getHeight();
-		//set_string = set_string + "" + con0x + " " + con0y + " ";
-
-	 }
-
-
-      public void internalFrameClosing(InternalFrameEvent e) {
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-
-    }
-
-    public void internalFrameClosed(InternalFrameEvent e) {
-
-    }
-
-    public void internalFrameOpened(InternalFrameEvent e) {
-
-    }
-
-    public void internalFrameIconified(InternalFrameEvent e) {
-
-    }
-
-    public void internalFrameDeiconified(InternalFrameEvent e) {
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-	   }
-
-    public void internalFrameActivated(final InternalFrameEvent e) {
-     // System.out.println("fame activate");
-	if(isVisible() && isMaximum() == false && isIcon() == false)
-	{
-		setBoardSize();
-	}
-
-    giveFocus();
-
-    }
-
-    public void internalFrameDeactivated(InternalFrameEvent e) {
-overall.Input.setFocusable(false);
-
-    }
-
-void giveFocus()
-{
- SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                              //  JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
-                                //SearchModel.SEARCHTEXT);
-
-                             overall.Input.setFocusable(true);
-                               overall.Input.setRequestFocusEnabled(true);
-                                //Input.requestFocus();
-                           overall.Input.requestFocusInWindow();
-                           if(sharedVariables.operatingSystem.equals("mac"))
-                           {
-                            // overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
-                          ;
-                           }
-
-                            }
-                            catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-
-}
-void giveFocusTell()
-{
- SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                              //  JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
-                                //SearchModel.SEARCHTEXT);
-
-                             overall.Input.setFocusable(true);
-                               overall.Input.setRequestFocusEnabled(true);
-                                //Input.requestFocus();
-                           overall.Input.requestFocusInWindow();
-                           if(sharedVariables.operatingSystem.equals("mac"))
-                           {
-                             
-                             String current = overall.Input.getText();
-                             if(!current.equals(""))
-                             if(current.charAt(current.length() -1) != ' ')
-                             overall.Input.setText(current + " " );
-                             if(!current.equals(""))
-                             overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
-                           }
-
-                            }
-                            catch (Exception e1) {
-                                //ignore
-                            }
-                        }
-                    });
-
-}
-
-int getActiveGame() {
-  for (int d=0; d<sharedVariables.maxGameTabs; d++) {
-    if (myboards[d] == null)
-      break;
-    if (myboards[d].isVisible()) {
-      return d;
     }
   }
-  return -1;
-}
 
-/****************************************************************************************/
+  void dispatchCommand(String myurl) {
+
+    String mycommand = "";
+    mycommand = myurl;
+    //.substring(1, myurl.length()-1);
+    // need to figure out why this is -2 not -1, maybe i include the
+    // end space which adds a charaacter here when i cut it
+    mycommand = mycommand + "\n";
+
+    myoutput output = new myoutput();
+    if (sharedVariables.myServer.equals("ICC") &&
+        sharedVariables.myname.length() > 0)
+      output.data = "`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
+    else
+      output.data = mycommand;
+    
+    output.consoleNumber = consoleNumber;
+    queue.add(output);
+
+    try {
+      StyledDocument doc =
+        sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+      doc.insertString(doc.getEndPosition().getOffset(), mycommand, null);
 
 
+      for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+	if (sharedVariables.looking[consoleNumber] == sharedVariables.looking[a])
+          consoles[a].setStyledDocument(doc);
+
+    } catch (Exception E) {}
+  }
+
+  public void componentResized(ComponentEvent e) {
+    //updateSize();
+  }
+  
+  public void componentHidden(ComponentEvent e) {
+
+  }
+  
+  public void componentShown(ComponentEvent e) {
+
+  }
+  
+  public void componentMoved(ComponentEvent e) {
+    //updateSize();
+  }
+
+  /*
+  public void mousePressed(MouseEvent e) {
+  if (e.isPopupTrigger())
+    menu.show(e.getComponent(),e.getX(),e.getY());
+  }
+  
+  public void mouseEntered(MouseEvent me) {}
+  
+  public void mouseReleased(MouseEvent me) {
+    if (me.isPopupTrigger())
+      menu.show(me.getComponent(),me.getX(),me.getY());
+  }
+
+  public void mouseExited(MouseEvent me) {}
+  public void mouseClicked(MouseEvent me) {
+
+  }
+  */
+
+  int scrollnow;
+  boolean wheelIsScrolling;
+
+  String myglobalinput;
+  JButton scrollbutton;
 
 
-class subPanel extends JPanel
-{
+  void setupMenu(final String handle) {
+
+    menu3 = new JPopupMenu("Popup");
+
+    JMenuItem[] items;
+    if (sharedVariables.rightClickMenu.size() > 0) {
+      int removal = 0;
+      if (sharedVariables.looking[consoleNumber] == 0)
+	removal = 1;
+
+      items = new JMenuItem[sharedVariables.rightClickMenu.size()-removal];
+
+      for (int m=0; m<sharedVariables.rightClickMenu.size()-removal; m++) {
+
+	final int mfinal = m;
+        items[m] = new JMenuItem("" + sharedVariables.rightClickMenu.get(m) +
+                                 " " + handle);
+        
+        items[m].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+              // String name =  consoles[consoleNumber].getSelectedText();
+              String name = handle;
+              if (sharedVariables.rightClickMenu.get(mfinal).equals("Tell")) {
+                if (sharedVariables.looking[consoleNumber] != 0)
+                  addNameToCombo(name);
+
+              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {
+                sharedVariables.openUrl(name);
+
+              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Google")) {
+                sharedVariables.openUrl("http://www.google.com/search?q=" + name);
+
+              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Channel Notify")) {
+                JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+                customizeChannelNotifyDialog frame =
+                  new customizeChannelNotifyDialog((JFrame) myself.myframe, false,
+                                                   sharedVariables, handle);
+                frame.setVisible(true);
+
+              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Direct tells of")) {
+                JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+                boolean soundof = true;
+
+                for (int i=0; i<sharedVariables.toldTabNames.size(); i++) {
+                  if (sharedVariables.toldTabNames.get(i).name.equals(handle))
+                    soundof = sharedVariables.toldTabNames.get(i).sound;
+                }
+
+                tellMasterDialog frame =
+                  new tellMasterDialog((JFrame) myself.myframe, false,
+                                       sharedVariables, handle, soundof);
+
+                /*
+                boolean found = false;
+                for (int i=0; i< sharedVariables.toldTabNames.size(); i++) {
+                  if (sharedVariables.toldTabNames.get(i).name.equals(handle)) {
+                    sharedVariables.toldTabNames.get(i).tab =
+                      sharedVariables.looking[consoleNumber];
+
+                    found = true;
+                    break;
+                  }
+                }// end for
+
+                if(!found) {
+                  told him = new told();
+                  him.name = handle;
+                  him.tab = sharedVariables.looking[consoleNumber];
+                  sharedVariables.toldTabNames.add(him);
+                }
+                */
+              } else {
+          	doCommand(sharedVariables.rightClickMenu.get(mfinal) + " " + name + "\n");
+              }
+            }
+          });
+        menu3.add(items[m]);
+
+        if (m == 3 || m == 7 || m == 9 || (removal==0 && m==12))
+          menu3.addSeparator();
+
+        if (m < sharedVariables.rightClickMenu.size()) {
+          String menuEntry = sharedVariables.rightClickMenu.get(m);
+          if (menuEntry.equals("Stored")) {// now add edit list sub menu
+            JMenu LMenu = new JMenu("Edit List");
+            sharedVariables.setUpListMenu(LMenu, handle, queue);
+            menu3.addSeparator();
+            menu3.add(LMenu);
+            menu3.addSeparator();
+          }
+        }
+      }// end for
+    }// end if any items
+
+    menu3.addSeparator();
+    JMenuItem item12 = new JMenuItem("Copy");
+    item12.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          consoles[consoleNumber].copy();
+          giveFocus();
+        }
+      });
+    menu3.add(item12);
+
+    JMenuItem item13 = new JMenuItem("Copy&Paste");
+    item13.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          consoles[consoleNumber].copy();
+          overall.Input.paste();
+          if (sharedVariables.operatingSystem.equals("mac"))
+            giveFocusTell();
+          else
+            giveFocus();
+        }
+      });
+    menu3.add(item13);
+
+    add(menu3);
+  }// end menu setup
+
+  void doCommand(String mycommand) {
+    myoutput output = new myoutput();
+    output.data = "`c" + sharedVariables.looking[consoleNumber] +
+      "`" + mycommand;
+    
+    if (!sharedVariables.myServer.equals("ICC"))
+      output.data = mycommand;
+    
+    output.consoleNumber = sharedVariables.looking[consoleNumber];
+    queue.add(output);
+    giveFocus();
+  }
+
+  void doToolBarCommand(int n) {
+    toolbarCommands commander = new toolbarCommands(myboards);
+    commander.dispatchCommand(n, sharedVariables.looking[consoleNumber],
+                              false, sharedVariables,  queue);
+    String mes = sharedVariables.userButtonCommands[n] + "\n";
+    StyledDocument doc =
+      sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+    Style styleQ = doc.addStyle(null, null);
+    
+    StyleConstants.setForeground(styleQ, sharedVariables.typedColor);
+    //StyleConstants.setUnderline(attrs, true);
+    SimpleAttributeSet attrs = new SimpleAttributeSet();
+
+    StyleConstants.setItalic(attrs, true);
+    StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+    try {
+      doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+    } catch (Exception mydoc) {}
+  }
+
+  void updateComboBox(int n) {
+    //int cindex = sharedVariables.console[Integer.parseInt(dg.getArg(1))];
+    //JFrame aaframe = new JFrame();
+    //aaframe.setSize(200,200);
+    //aaframe.setTitle(comboMemory[n] + " is combo memory, in update combo box and n is " + n);
+    //aaframe.setVisible(true);
+    int count = 0;
+    int foundIndex = -1;
+    int a = 0;
+
+    // first loop is to check items we would add against combo memory
+    // BEFORE we remove the items triggering updates on combo memory
+    for (a=0; a<400; a++) {
+      if (sharedVariables.console[sharedVariables.looking[consoleNumber]][a] == 1 &&
+          sharedVariables.looking[consoleNumber] != 0) {
+        count++;
+        String aItem = "Tell " + a + " ";
+
+        if (aItem.equals(comboMemory[n])) {
+          foundIndex = count;
+          // the idea is we want the index that we added the item that
+          // should be selected ( its in comboMemory)
+        }
+      }
+    }
+
+    // now check names
+    for (a=0; a<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); a++) {
+      count++;
+      String aItem = "Tell " +
+        sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(a) + " ";
+
+      if (aItem.equals(comboMemory[n])) {
+        foundIndex = count;
+        // the idea is we want the index that we added the item that
+        // should be selected ( its in comboMemory)
+      }
+    }
+
+    prefixHandler.removeAllItems();
+    prefixHandler.addItem(">");
+    for (a=0; a<400; a++) {
+      if (sharedVariables.console[sharedVariables.looking[consoleNumber]][a] == 1 &&
+          sharedVariables.looking[consoleNumber] != 0) {
+        String aItem = "Tell " + a + " ";
+        prefixHandler.addItem(aItem);
+      }
+    }
+
+    // now add back names
+    for (a=0; a<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); a++) {
+      String aItem = "Tell " +
+        sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(a) + " ";
+
+      prefixHandler.addItem(aItem);
+    }
+
+    try {
+      if (foundIndex > -1)
+        prefixHandler.setSelectedIndex(foundIndex);
+    } catch (Exception badcomboupdate) {}
+  }
+
+  void updateTabChooserCombo() {
+    int oldNumber = sharedVariables.looking[consoleNumber];
+    tabChooser.removeAllItems();
+    for (int ab=0; ab<sharedVariables.maxConsoleTabs; ab++) {
+      if (!sharedVariables.consoleTabCustomTitles[ab].equals(""))
+        tabChooser.addItem(sharedVariables.consoleTabCustomTitles[ab]);
+      else
+        tabChooser.addItem(sharedVariables.consoleTabTitles[ab]);
+    }
+
+    tabChooser.setSelectedIndex(oldNumber);
+    //makeHappen(sharedVariables.looking[consoleNumber]);
+  }
+  
+  void addNameToCombo(String name) {
+    try {
+      for (int z=0; z<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); z++)
+        if (sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(z).equals(name))
+          return;
+
+      String aItem = "Tell " + name + " ";
+      prefixHandler.addItem(aItem);
+      sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].add(name);
+      prefixHandler.setSelectedIndex(prefixHandler.getItemCount()-1);
+
+    } catch (Exception d) {}
+  }
+
+  /************** jinternal frame listener ******************************/
+  void setBoardSize() {
+    sharedVariables.myConsoleSizes[consoleNumber].point0 = getLocation();
+    //set_string = set_string + "" + point0.x + " " + point0.y + " ";
+    sharedVariables.myConsoleSizes[consoleNumber].con0x = getWidth();
+    sharedVariables.myConsoleSizes[consoleNumber].con0y = getHeight();
+    //set_string = set_string + "" + con0x + " " + con0y + " ";
+  }
+
+  public void internalFrameClosing(InternalFrameEvent e) {
+    if (isVisible() && !isMaximum() && !isIcon()) {
+      setBoardSize();
+    }
+  }
+
+  public void internalFrameClosed(InternalFrameEvent e) {
+
+  }
+
+  public void internalFrameOpened(InternalFrameEvent e) {
+
+  }
+
+  public void internalFrameIconified(InternalFrameEvent e) {
+
+  }
+
+  public void internalFrameDeiconified(InternalFrameEvent e) {
+    if (isVisible() && !isMaximum() && !isIcon()) {
+      setBoardSize();
+    }
+  }
+
+  public void internalFrameActivated(final InternalFrameEvent e) {
+    // System.out.println("fame activate");
+    if (isVisible() && !isMaximum() && !isIcon()) {
+      setBoardSize();
+    }
+
+    giveFocus();
+  }
+
+  public void internalFrameDeactivated(InternalFrameEvent e) {
+    overall.Input.setFocusable(false);
+  }
+
+  void giveFocus() {
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
+            //JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
+            //                                                   SearchModel.SEARCHTEXT);
+
+            overall.Input.setFocusable(true);
+            overall.Input.setRequestFocusEnabled(true);
+            //Input.requestFocus();
+            overall.Input.requestFocusInWindow();
+            //if (sharedVariables.operatingSystem.equals("mac")) {
+            //  overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
+            //}
+          } catch (Exception e1) {
+            //ignore
+          }
+        }
+      });
+  }
+  
+  void giveFocusTell() {
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
+            //JComponent comp = DataViewer.getSubcomponentByName(e.getInternalFrame(),
+            //                                                   SearchModel.SEARCHTEXT);
+
+            overall.Input.setFocusable(true);
+            overall.Input.setRequestFocusEnabled(true);
+            //Input.requestFocus();
+            overall.Input.requestFocusInWindow();
+            if (sharedVariables.operatingSystem.equals("mac")) {
+              String current = overall.Input.getText();
+              if (!current.equals("") &&
+                  current.charAt(current.length() - 1) != ' ')
+                overall.Input.setText(current + " ");
+
+              if (!current.equals(""))
+                overall.Input.setCaretPosition(overall.Input.getDocument().getLength()-1);
+            }
+          } catch (Exception e1) {
+            //ignore
+          }
+        }
+      });
+  }
+
+  int getActiveGame() {
+    for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+      if (myboards[d] == null)
+        break;
+      if (myboards[d].isVisible()) {
+        return d;
+      }
+    }
+    return -1;
+  }
+
+  /****************************************************************************************/
+  class subPanel extends JPanel {
 JTextField Input;
 arrowManagement arrowManager;
 subPanel()
