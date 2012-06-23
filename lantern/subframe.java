@@ -15,6 +15,7 @@ package lantern;
 */
 
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
@@ -2398,550 +2399,488 @@ class subframe extends JInternalFrame
           }
         });
 
-Input.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-            if(e.isPopupTrigger())
-               menu2.show(e.getComponent(),e.getX(),e.getY());
+      Input.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger())
+              menu2.show(e.getComponent(),e.getX(),e.getY());
+          }
+          
+          public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger())
+              menu2.show(e.getComponent(),e.getX(),e.getY());
+          }
+
+          public void mouseEntered(MouseEvent me) {}
+          public void mouseExited(MouseEvent me) {}
+          public void mouseClicked(MouseEvent me) {
+
+          }
+        });
 
 
-         }
-         public void mouseReleased(MouseEvent e) {
-            if(e.isPopupTrigger())
-               menu2.show(e.getComponent(),e.getX(),e.getY());
-         }
-
-
-public void mouseEntered (MouseEvent me) {}
-
-
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {
-
-	}
-
-
-      });
-
-
-/*if(sharedVariables.consoleLayout==1)
+      /*
+      if (sharedVariables.consoleLayout==1)
 	setMyLayout1();
-else if(sharedVariables.consoleLayout==3)
-setMyLayout3();
-else
+      else if (sharedVariables.consoleLayout==3)
+        setMyLayout3();
+      else
 	setMyLayout2();
-*/
-recreate(sharedVariables.consolesTabLayout[consoleNumber]);
-}
-/*
-  // Andrey says: copied outside the class
-int getActiveGame() {
-  int games = -1;
-  for (int d=0; d<sharedVariables.maxGameTabs; d++) {
-    if (myboards[d] == null)
-      break;
-    if (myboards[d].isVisible()) {
-      games = d;
-      break;
+      */
+      recreate(sharedVariables.consolesTabLayout[consoleNumber]);
     }
-  }
-  return games;
-}
-*/
-void writeToConsole(String mes, Color col, boolean italic)
-{
-	  			try {
-				StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
-
-
-
-
-
-
-						Style styleQ = doc.addStyle(null, null);
-
-						StyleConstants.setForeground(styleQ, col);
-						//StyleConstants.setUnderline(attrs, true);
-						SimpleAttributeSet attrs = new SimpleAttributeSet();
-
-						if(italic == true)
-                                                StyleConstants.setItalic(attrs, true);
-
-                                        	StyleConstants.setForeground(attrs, col);
-					int SUBFRAME_CONSOLES=0;
-					int maxLinks =75;
-					myoutput printOut = new myoutput();
-                                        printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
-					queue.add(printOut);
-                                        //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
-
-
-
-
-				//	for(int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
-				//	if(sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
-				//	consoles[aa].setStyledDocument(doc);
-				}
-				catch(Exception E){ }
- }// end write to console
-
-
-
-
-int ctrlEnterSwitch(int console)
-{
-
-
-int a;
-int aa;
-
-for(a=console+1; a< sharedVariables.maxConsoleTabs; a++)
-{        boolean go = true;
-	for(aa=0; aa<400; aa++)
-	if(sharedVariables.console[a][aa] == 1)
-	{
-		go=false;
-	}
-        if(sharedVariables.tellTab == a)
-        go=false;
-
-        if(go== true)
-        return a;
-
-}
-
-for(a=1; a< console; a++)
-{        boolean go = true;
-	for(aa=0; aa<400; aa++)
-	if(sharedVariables.console[a][aa] == 1)
-	{
-		go=false;
-	}
-        if(sharedVariables.tellTab == a)
-        go=false;
-
-        if(go== true)
-        return a;
-
-}
-
-
-
- return -1;
-
-}
-void setMyLayout1()
-{
-
-   GroupLayout layout = new GroupLayout(getContentPane());
-   // GroupLayout layout = new GroupLayout(this);
-   //    setLayout(layout);
-       getContentPane().setLayout(layout);
-	int inputHeight=17;
-	try {
-	inputHeight=sharedVariables.inputFont.getSize();
-
-	}catch(Exception inputing){}
-
-
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-
-
-	SequentialGroup middle = layout.createSequentialGroup();
-	SequentialGroup h2 = layout.createSequentialGroup();
-	SequentialGroup h3 = layout.createSequentialGroup();
-
-	//Add a scroll pane and a label to the parallel group h2
-	h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber], GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-	h2.addComponent(listScroller, sharedVariables.nameListSize, sharedVariables.nameListSize, sharedVariables.nameListSize);
-	h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 105, 105);
-	h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
-    h3.addComponent(scrollbutton);
-
-
-		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-		{
-			middle.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		}
-			h3.addComponent(tellLabel);
-
-			h3.addComponent(tellCheckbox);
-
-
-
-
-
-h1.addGroup(h2);
-h1.addGroup(h3);
-h1.addGroup(middle);
-
-	//Add the group h1 to the hGroup
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-
-
-SequentialGroup v4 = layout.createSequentialGroup();
-
-ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-	ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-
-	ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-
-
-	v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber], GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
-	v2.addComponent(listScroller);
-		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-			vmiddle.addComponent(channelTabs[a]);
-
-
-		v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(scrollbutton);
-		v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(tellLabel);
-		v1.addComponent(tellCheckbox);
-
-if(sharedVariables.consolesTabLayout[consoleNumber]==4)
-v4.addGroup(vmiddle);
-v4.addGroup(v2);
-if(sharedVariables.consolesTabLayout[consoleNumber]!=4)
-v4.addGroup(vmiddle);
-v4.addGroup(v1);
-
-	vGroup.addGroup(v4);
-	//Create the vertical group
-	layout.setVerticalGroup(vGroup);
-//pack();
-}
-void setMyLayout2()
-{
-    GroupLayout layout = new GroupLayout(getContentPane());
-    //GroupLayout layout = new GroupLayout(this);
-     getContentPane().setLayout(layout);
-		//	setLayout(layout);
-	int inputHeight=17;
-	try {
-	inputHeight=sharedVariables.inputFont.getSize();
-
-	}catch(Exception inputing){}
-
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-
-
-	SequentialGroup middle = layout.createSequentialGroup();
-	SequentialGroup middle2 = layout.createSequentialGroup();
-	SequentialGroup h2 = layout.createSequentialGroup();
-
-	SequentialGroup h3 = layout.createSequentialGroup();
-
-	//Add a scroll pane and a label to the parallel group h2
-	h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-	h2.addComponent(listScroller, sharedVariables.nameListSize, sharedVariables.nameListSize, sharedVariables.nameListSize);
-
-	h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 105, 105);
-	h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
-    h3.addComponent(scrollbutton);
-
-int half = (int) sharedVariables.maxConsoleTabs/2;
-ParallelGroup [] middles = new ParallelGroup[half];
-
-for(int a=0; a<half; a++)
-middles[a]=layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-		int a;
-		for(a=0; a<half; a++)
-		{
-			middles[a].addComponent(channelTabs[a*2],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middles[a].addComponent(channelTabs[a*2+1],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middle.addGroup(middles[a]);
-			middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		}
-			//middle.addGroup(middles[a]);
-			h3.addComponent(tellLabel);
-
-			h3.addComponent(tellCheckbox);
-
-		/*for(int a=half; a<sharedVariables.maxConsoleTabs; a++)
-		{
-			middle2.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middle2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		}
-*/
-
-
-
-
-//h2.addGroup(middle2);
-h1.addGroup(h2);
-h1.addGroup(h3);
-h1.addGroup(middle);
-
-	//Add the group h1 to the hGroup
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-
-
-SequentialGroup v4 = layout.createSequentialGroup();
-
-ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-	ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-	ParallelGroup vmiddle2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-
-
-	ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-
-
-	v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber], GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
-	v2.addComponent(listScroller);
-
-		for( a=0; a<half; a++)
-			vmiddle.addComponent(channelTabs[a*2]);
-		//vmiddle.addComponent(tellLabel);
-		for( a=0; a<half; a++)
-			vmiddle2.addComponent(channelTabs[a*2+1]);
-
-
-
-		v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(scrollbutton);
-		v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-	v1.addComponent(tellLabel);
-
-	v1.addComponent(tellCheckbox);
-
-
-v4.addGroup(v2);
-v4.addGroup(vmiddle);
-v4.addGroup(vmiddle2);
-v4.addGroup(v1);
-
-	vGroup.addGroup(v4);
-	//Create the vertical group
-	layout.setVerticalGroup(vGroup);
-//pack();
-}
-
-
-void setMyLayout3()
-{
-
-    GroupLayout layout = new GroupLayout(getContentPane());
-   //GroupLayout layout = new GroupLayout(this);
-   getContentPane().setLayout(layout);
-	int inputHeight=17;
-	try {
-	inputHeight=sharedVariables.inputFont.getSize();
-
-	}catch(Exception inputing){}
-
-	initTabChooser();
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-	SequentialGroup h1 = layout.createSequentialGroup();
-ParallelGroup h4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-
-	//SequentialGroup middle = layout.createSequentialGroup();
-	SequentialGroup h2 = layout.createSequentialGroup();
-	SequentialGroup h3 = layout.createSequentialGroup();
-
-	//Add a scroll pane and a label to the parallel group h2
-	h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber], GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
-	h2.addComponent(listScroller, sharedVariables.nameListSize, sharedVariables.nameListSize, sharedVariables.nameListSize);
-
-	h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 95, 95);
-
-	h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
-	h3.addComponent(tellCheckbox,21,21,21);
-	h3.addComponent(tabChooser, GroupLayout.DEFAULT_SIZE, 75, 75);
-    //h3.addComponent(scrollbutton);
-
-
-	/*	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-		{
-			middle.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		}
-			middle.addComponent(tellLabel);
-
-			middle.addComponent(tellCheckbox);
-
-*/
-
-
-h4.addGroup(h2);
-h4.addGroup(h3);
-//h2.addGroup(middle);
-h1.addGroup(h4);
-
-	//Add the group h1 to the hGroup
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
-
-
-
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-
-
-SequentialGroup v4 = layout.createSequentialGroup();
-
-ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-//	ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-
-	ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-
-
-	v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber], GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
-	v2.addComponent(listScroller);
-
-/*		for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
-			vmiddle.addComponent(channelTabs[a]);
-		vmiddle.addComponent(tellLabel);
-		vmiddle.addComponent(tellCheckbox);
-*/
-		v1.addComponent(tellCheckbox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(tabChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		//v1.addComponent(scrollbutton);
-		v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-
-
-v4.addGroup(v2);
-//v4.addGroup(vmiddle);
-v4.addGroup(v1);
-
-	vGroup.addGroup(v4);
-	//Create the vertical group
-	layout.setVerticalGroup(vGroup);
-//pack();
-}
-
-
-void recreate(int n)
- {
-
- getContentPane().removeAll();
- if(sharedVariables.consolesNamesLayout[consoleNumber]==0)
+    /*
+    // Andrey says: copied outside the class
+    int getActiveGame() {
+      int games = -1;
+      for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+        if (myboards[d] == null)
+          break;
+        if (myboards[d].isVisible()) {
+          games = d;
+          break;
+        }
+      }
+      return games;
+    }
+    */
+    
+    void writeToConsole(String mes, Color col, boolean italic) {
+      try {
+        StyledDocument doc =
+          sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+        Style styleQ = doc.addStyle(null, null);
+
+        StyleConstants.setForeground(styleQ, col);
+        //StyleConstants.setUnderline(attrs, true);
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+
+        if (italic)
+          StyleConstants.setItalic(attrs, true);
+
+        StyleConstants.setForeground(attrs, col);
+        int SUBFRAME_CONSOLES = 0;
+        int maxLinks = 75;
+        myoutput printOut = new myoutput();
+        printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
+                             maxLinks, SUBFRAME_CONSOLES, attrs, null);
+        queue.add(printOut);
+        //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+
+        //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+        //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
+        //    consoles[aa].setStyledDocument(doc);
+
+      } catch (Exception E) {}
+    }// end write to console
+
+    int ctrlEnterSwitch(int console) {
+      int a;
+      int aa;
+
+      for (a=console+1; a<sharedVariables.maxConsoleTabs; a++) {
+        boolean go = true;
+	for (aa=0; aa<400; aa++) {
+          if (sharedVariables.console[a][aa] == 1) {
+            go = false;
+          }
+        }
+
+        if (sharedVariables.tellTab == a)
+          go = false;
+
+        if (go)
+          return a;
+      }
+
+      for (a=1; a<console; a++) {
+        boolean go = true;
+	for (aa=0; aa<400; aa++) {
+          if (sharedVariables.console[a][aa] == 1) {
+            go = false;
+          }
+        }
+
+        if (sharedVariables.tellTab == a)
+          go = false;
+
+        if (go)
+          return a;
+      }
+
+      return -1;
+    }
+    
+    void setMyLayout1() {
+      GroupLayout layout = new GroupLayout(getContentPane());
+      //GroupLayout layout = new GroupLayout(this);
+      //setLayout(layout);
+      getContentPane().setLayout(layout);
+      int inputHeight = 17;
+      try {
+	inputHeight = sharedVariables.inputFont.getSize();
+
+      } catch (Exception inputing) {}
+
+      ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+      ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+
+      SequentialGroup middle = layout.createSequentialGroup();
+      SequentialGroup h2 = layout.createSequentialGroup();
+      SequentialGroup h3 = layout.createSequentialGroup();
+
+      //Add a scroll pane and a label to the parallel group h2
+      h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+      h2.addComponent(listScroller, sharedVariables.nameListSize,
+                      sharedVariables.nameListSize, sharedVariables.nameListSize);
+      h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 105, 105);
+      h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
+      h3.addComponent(scrollbutton);
+
+      for (int a=0; a<sharedVariables.maxConsoleTabs; a++) {
+        middle.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+        middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+      }
+      h3.addComponent(tellLabel);
+
+      h3.addComponent(tellCheckbox);
+
+      h1.addGroup(h2);
+      h1.addGroup(h3);
+      h1.addGroup(middle);
+
+      //Add the group h1 to the hGroup
+      hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+      //Create the horizontal group
+      layout.setHorizontalGroup(hGroup);
+
+      ParallelGroup vGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
+
+      SequentialGroup v4 = layout.createSequentialGroup();
+
+      ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
+      ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
+      ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+
+      v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
+      v2.addComponent(listScroller);
+      for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+        vmiddle.addComponent(channelTabs[a]);
+
+      v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE,
+                      GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(scrollbutton);
+      v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE,
+                      GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(tellLabel);
+      v1.addComponent(tellCheckbox);
+
+      if (sharedVariables.consolesTabLayout[consoleNumber] == 4)
+        v4.addGroup(vmiddle);
+
+      v4.addGroup(v2);
+      
+      if (sharedVariables.consolesTabLayout[consoleNumber] != 4)
+        v4.addGroup(vmiddle);
+
+      v4.addGroup(v1);
+
+      vGroup.addGroup(v4);
+      //Create the vertical group
+      layout.setVerticalGroup(vGroup);
+      //pack();
+    }
+    
+    void setMyLayout2() {
+      GroupLayout layout = new GroupLayout(getContentPane());
+      //GroupLayout layout = new GroupLayout(this);
+      getContentPane().setLayout(layout);
+      //setLayout(layout);
+      int inputHeight = 17;
+      try {
+	inputHeight = sharedVariables.inputFont.getSize();
+
+      } catch (Exception inputing) {}
+
+      ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+      ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+
+      SequentialGroup middle = layout.createSequentialGroup();
+      SequentialGroup middle2 = layout.createSequentialGroup();
+      SequentialGroup h2 = layout.createSequentialGroup();
+
+      SequentialGroup h3 = layout.createSequentialGroup();
+
+      //Add a scroll pane and a label to the parallel group h2
+      h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
+      h2.addComponent(listScroller, sharedVariables.nameListSize,
+                      sharedVariables.nameListSize, sharedVariables.nameListSize);
+
+      h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 105, 105);
+      h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
+      h3.addComponent(scrollbutton);
+
+      int half = (int) sharedVariables.maxConsoleTabs/2;
+      ParallelGroup[] middles = new ParallelGroup[half];
+
+      for (int a=0; a<half; a++)
+        middles[a]=layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+
+      int a;
+      for (a=0; a<half; a++) {
+        middles[a].addComponent(channelTabs[a*2],GroupLayout.DEFAULT_SIZE,
+                                15, Short.MAX_VALUE);
+        middles[a].addComponent(channelTabs[a*2+1],GroupLayout.DEFAULT_SIZE,
+                                15, Short.MAX_VALUE);
+        middle.addGroup(middles[a]);
+        middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+      }
+      //middle.addGroup(middles[a]);
+      h3.addComponent(tellLabel);
+
+      h3.addComponent(tellCheckbox);
+
+      /*
+      for (int a=half; a<sharedVariables.maxConsoleTabs; a++) {
+        middle2.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+        middle2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+      }
+      */
+
+      //h2.addGroup(middle2);
+      h1.addGroup(h2);
+      h1.addGroup(h3);
+      h1.addGroup(middle);
+
+      //Add the group h1 to the hGroup
+      hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+      //Create the horizontal group
+      layout.setHorizontalGroup(hGroup);
+
+      ParallelGroup vGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
+
+      SequentialGroup v4 = layout.createSequentialGroup();
+
+      ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
+      ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+      ParallelGroup vmiddle2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+
+      ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+
+      v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
+      v2.addComponent(listScroller);
+
+      for (a=0; a<half; a++)
+        vmiddle.addComponent(channelTabs[a*2]);
+      //vmiddle.addComponent(tellLabel);
+      for (a=0; a<half; a++)
+        vmiddle2.addComponent(channelTabs[a*2+1]);
+
+      v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE,
+                      GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(scrollbutton);
+      v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE,
+                      GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(tellLabel);
+
+      v1.addComponent(tellCheckbox);
+
+      v4.addGroup(v2);
+      v4.addGroup(vmiddle);
+      v4.addGroup(vmiddle2);
+      v4.addGroup(v1);
+      
+      vGroup.addGroup(v4);
+      //Create the vertical group
+      layout.setVerticalGroup(vGroup);
+      //pack();
+    }
+
+    void setMyLayout3() {
+      GroupLayout layout = new GroupLayout(getContentPane());
+      //GroupLayout layout = new GroupLayout(this);
+      getContentPane().setLayout(layout);
+      int inputHeight = 17;
+      try {
+	inputHeight = sharedVariables.inputFont.getSize();
+
+      } catch (Exception inputing) {}
+
+      initTabChooser();
+      ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+      SequentialGroup h1 = layout.createSequentialGroup();
+      ParallelGroup h4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+
+      //SequentialGroup middle = layout.createSequentialGroup();
+      SequentialGroup h2 = layout.createSequentialGroup();
+      SequentialGroup h3 = layout.createSequentialGroup();
+
+      //Add a scroll pane and a label to the parallel group h2
+      h2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
+      h2.addComponent(listScroller, sharedVariables.nameListSize,
+                      sharedVariables.nameListSize, sharedVariables.nameListSize);
+
+      h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 95, 95);
+
+      h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
+      h3.addComponent(tellCheckbox,21,21,21);
+      h3.addComponent(tabChooser, GroupLayout.DEFAULT_SIZE, 75, 75);
+      //h3.addComponent(scrollbutton);
+
+      /*
+      for (int a=0; a<sharedVariables.maxConsoleTabs; a++) {
+        middle.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+        middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+      }
+      middle.addComponent(tellLabel);
+
+      middle.addComponent(tellCheckbox);
+      */
+
+      h4.addGroup(h2);
+      h4.addGroup(h3);
+      //h2.addGroup(middle);
+      h1.addGroup(h4);
+
+      //Add the group h1 to the hGroup
+      hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+      //Create the horizontal group
+      layout.setHorizontalGroup(hGroup);
+
+      ParallelGroup vGroup =
+        layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
+
+      SequentialGroup v4 = layout.createSequentialGroup();
+
+      ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
+      //ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
+      ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+
+      v2.addComponent(sharedVariables.ConsoleScrollPane[consoleNumber],
+                      GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
+      v2.addComponent(listScroller);
+
+      /*
+      for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+        vmiddle.addComponent(channelTabs[a]);
+      vmiddle.addComponent(tellLabel);
+      vmiddle.addComponent(tellCheckbox);
+      */
+      v1.addComponent(tellCheckbox, GroupLayout.PREFERRED_SIZE,
+                      GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(tabChooser, GroupLayout.PREFERRED_SIZE,
+                      GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE,
+                      GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      //v1.addComponent(scrollbutton);
+      v1.addComponent(Input, inputHeight, GroupLayout.DEFAULT_SIZE,
+                      GroupLayout.PREFERRED_SIZE);
+
+      v4.addGroup(v2);
+      //v4.addGroup(vmiddle);
+      v4.addGroup(v1);
+
+      vGroup.addGroup(v4);
+      //Create the vertical group
+      layout.setVerticalGroup(vGroup);
+      //pack();
+    }
+
+    void recreate(int n) {
+      getContentPane().removeAll();
+      if (sharedVariables.consolesNamesLayout[consoleNumber] == 0)
 	listScroller.setVisible(false);
 
- if(n==1 || n == 4)
+      if(n==1 || n == 4)
  	setMyLayout1();
- else if(n==2)
+      else if (n==2)
  	setMyLayout2();
-else
+      else
  	setMyLayout3();
 
+      // this.add(overall);
+      // this.setVisible(true);
+    }
 
+    class arrowManagement {
+      //ArrayList list;
+      List<String> list;
+      int head;
+      int index;
+      int max;
 
- // this.add(overall);
- // this.setVisible(true);
- }
+      arrowManagement() {
+        //list = new ArrayList();
+        list = new ArrayList<String>();
+        list.add("");
+        head = 0;
+        index = 0;
+        max = 20;
+      }
 
+      void down() {
+        int tail = list.size() - 1;
+        String curtext = Input.getText();
+        if (!list.contains(curtext)) {
+          list.set(tail, curtext);
+          index = 0;
+        } else {
+          index++;
+          if (index > tail)
+            index = 0;
+        }
+          //Input.setText((String)list.get(index));
+        Input.setText(list.get(index));
+        // if  input is empty do nothing
+        // otherwise if iterator is not at top iterate and grab command
+      }// end down
+      
+      void up() {
+        // if input is empty reset iterator and return tail
+        // otherwise iterate one and return item
+        int tail = list.size() - 1;
+        String curtext = Input.getText();
+        if (!list.contains(curtext)) {
+          list.set(tail, curtext);
+          index = (tail == 0 ? 0 : tail - 1);
+        } else {
+          // index is set to 1 more than tail when at initial position
+          index--;
+          if (index < 0)
+            index = tail;
+        }
+        //Input.setText((String)list.get(index));
+        Input.setText(list.get(index));
+      }// end up
+      
+      void add(String mes) {
+        int tail = list.size() - 1;
+        // add to queue, delete if more than 10 last of commands, reset iterator
+        list.set(tail, "");
+        if (mes.equals("")) return;
 
-class arrowManagement
-{
- ArrayList list;
- int head;
- int tail;
- int index;
- int max;
+        if (list.remove(mes)) tail--;
+        list.set(tail, mes);
 
-
- arrowManagement()
- {
-  list = new ArrayList();
- head=tail=index-1;
- max=10;
- }
-
-
-
- void down()
- {
-    if(Input.getText().equals(""))
-    return;
-    if(head == -1)
-    return;
-  if(index < tail)
-  {
-   index++;
-   Input.setText((String)list.get(index));
-
-  }
-    // if  input is empty do nothing
-    // otherwise if iterator is not at top iterate and grab command
- }// end down
- void up()
- {
-  // if input is empty reset iterator and return tail
-  // otherwise iterate one and return item
-  if(head == -1)
-  return;
-  if(Input.getText().equals(""))
-  index = tail;
-  else
-  {
-   // index is set to 1 more than tail when at initial position
-   index --;
-   if(index < 0)
-   index=tail;
-  }
-   Input.setText((String)list.get(index));
- }// end up
- void add(String mes)
- {
-   // add to queue, delete if more than 10 last of commands, reset iterator
-  if(mes.equals(""))
-  return;
-
-  list.add(mes);
-  if(head == -1)
-  {
-   head=tail=0;
-   index=1;
-   return;
-  }
-  else if(tail < max -1)
- {
-   tail++;
-   index=tail+1;
- }
- else
- {
-  list.remove(0);
-  index=tail+1;
- }
-
-
-   // add to queue, delete if more than 10 last of commands, reset iterator
- }// end add
-
-} // end arrow manager
-
-
-
-
-
-
-
-
-
-
- }// end panel
-
-
+        list.add("");
+        if (tail >= max) {
+          list.remove(0);
+        }
+        index = list.size() - 1;
+        // add to queue, delete if more than 10 last of commands, reset iterator
+      }// end add
+    } // end arrow manager
+  }// end panel
 }// end subframe
