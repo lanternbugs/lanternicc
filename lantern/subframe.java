@@ -197,7 +197,7 @@ class subframe extends JInternalFrame
     menu.add(item3);
     add(menu);
 
-    menu2=new JPopupMenu("Popup2");
+    menu2 = new JPopupMenu("Popup2");
 
     /*
     JMenuItem item3 = new JMenuItem("copy");
@@ -226,7 +226,7 @@ class subframe extends JInternalFrame
     add(menu2);
 
     scrollnow = 1; // we start off with auto scroll
-    wheelIsScrolling=true;
+    wheelIsScrolling = true;
     //addMouseListener(this);
 
     addInternalFrameListener(this);
@@ -1796,611 +1796,607 @@ class subframe extends JInternalFrame
 
   /****************************************************************************************/
   class subPanel extends JPanel {
-JTextField Input;
-arrowManagement arrowManager;
-subPanel()
-{
+    JTextField Input;
+    arrowManagement arrowManager;
 
+    subPanel() {
+      Input = new JTextField();
+      Input.setFont(sharedVariables.inputFont);
+      arrowManager = new arrowManagement();
 
-Input = new JTextField();
-Input.setFont(sharedVariables.inputFont);
-arrowManager = new arrowManagement();
+      //Input.addActionListener (this);
+      Input.addKeyListener(new KeyListener() {
+          public void keyPressed(KeyEvent e) {
+            int a = e.getKeyCode();
+            int gme = e.getModifiersEx();
 
-
-        // Input.addActionListener (this);
-Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
-{
-        int a=e.getKeyCode();
-
-		if(a == 33)
-			scrollnow=0;
-        String mytext =(String) prefixHandler.getSelectedItem();
-        if(mytext != null)
-        {
-
-        if(mytext.equals(">") || Input.getText().startsWith("/"))
-        overall.Input.setForeground(sharedVariables.inputCommandColor);
-        else
-        overall.Input.setForeground(sharedVariables.inputChatColor);
-		}
-
-if( e.getModifiersEx() == 128 || e.getModifiersEx() == 192) // 128 control 192 control + shift
-{
-int moveKeyType=e.getModifiersEx();
-           if(a == 61) // - 45 = 61
-            {
-              int games = getActiveGame();
-          if(games > -1)
-           {
-           int loc = sharedVariables.moveSliders[games].getValue();
-              int max = sharedVariables.moveSliders[games].getMaximum();
-              if (loc < max || moveKeyType == 192) {
-
-                if(moveKeyType == 192)
-                loc=max;
-                else
-                loc++;
-
-                sharedVariables.moveSliders[games].setValue(loc);
-                myboards[games].mycontrolspanel.adjustMoveList();
-                myboards[games].repaint();
-              }
-              giveFocus();
-
-              }
-
-              return;
-
-
+            //if (a == 33)
+            if (a == KeyEvent.VK_PAGE_UP)
+              scrollnow = 0;
+            
+            String mytext = (String) prefixHandler.getSelectedItem();
+            if (mytext != null) {
+              if (mytext.equals(">") || Input.getText().startsWith("/"))
+                overall.Input.setForeground(sharedVariables.inputCommandColor);
+              else
+                overall.Input.setForeground(sharedVariables.inputChatColor);
             }
 
+            //if (e.getModifiersEx() == 128 || e.getModifiersEx() == 192)
+            if ((gme & InputEvent.CTRL_DOWN_MASK) != 0) {
+              //int moveKeyType = gme;
+              //if (a == 61) {
+              if (a == KeyEvent.VK_EQUALS) {
+                int games = getActiveGame();
+                if (games > -1) {
+                  int loc = sharedVariables.moveSliders[games].getValue();
+                  int max = sharedVariables.moveSliders[games].getMaximum();
+                  //if (loc < max || moveKeyType == 192) {
+                  if (loc < max || (gme & InputEvent.SHIFT_DOWN_MASK) != 0) {
+                    //if (moveKeyType == 192)
+                    if ((gme & InputEvent.SHIFT_DOWN_MASK) != 0)
+                      loc = max;
+                    else
+                      loc++;
 
-            if(a == 45) // - 45 = 61
-            {
-              int games = getActiveGame();
-           if(games > -1)
-           {
-             int loc = sharedVariables.moveSliders[games].getValue();
-
-              if (loc > 0 || moveKeyType == 192) {
-
-                if(moveKeyType == 192)
-                loc=0;
-                else
-                loc--;
-
-                sharedVariables.moveSliders[games].setValue(loc);
-                myboards[games].mycontrolspanel.adjustMoveList();
-                myboards[games].repaint();
-              }
-              giveFocus();
-
-              }
-
-              return;
-            }
-
-}// if control or control + shift
-
-
-        if( e.getModifiersEx() == 128 )// ctrl + t
-        {
-
-            if(a == 70)// F
-            {
-
-             textSearcher ts = new textSearcher();
-             ts.find(Input.getText(), consoles[consoleNumber]);
-            }
-
-                if( a == 71) // ctrl + g
-                {
-  			String myurl =Input.getText();
-                        Input.setText("");
-
-			myurl=myurl.trim();
-                        myurl=myurl.replace(" ", "+");
-
-			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
+                    sharedVariables.moveSliders[games].setValue(loc);
+                    myboards[games].mycontrolspanel.adjustMoveList();
+                    myboards[games].repaint();
+                  }
+                  giveFocus();
                 }
-             if( a == 72) // bring history to front not needed now that its a top window
-             {
-              if(sharedVariables.myGameList != null)
-              if(sharedVariables.myGameList.isVisible())
-              {
-               try { sharedVariables.myGameList.setSelected(true); } catch(Exception gamedui){}
 
+                return;
               }
-             }
 
-              if( a == 77)// ctrl + M
-              {
+              //if (a == 45) {
+              if (a == KeyEvent.VK_MINUS) {
+                int games = getActiveGame();
+                if (games > -1) {
+                  int loc = sharedVariables.moveSliders[games].getValue();
 
+                  //if (loc > 0 || moveKeyType == 192) {
+                  if (loc > 0 || (gme & InputEvent.SHIFT_DOWN_MASK) != 0) {
+                    //if (moveKeyType == 192)
+                    if ((gme & InputEvent.SHIFT_DOWN_MASK) != 0)
+                      loc = 0;
+                    else
+                      loc--;
 
-               sharedVariables.tellsToTab = true;
-               sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
+                    sharedVariables.moveSliders[games].setValue(loc);
+                    myboards[games].mycontrolspanel.adjustMoveList();
+                    myboards[games].repaint();
+                  }
+                  giveFocus();
+                }
+
+                return;
+              }
+            }// if control or control + shift
+
+            //if (e.getModifiersEx() == 128)// ctrl + t
+            if (gme == InputEvent.CTRL_DOWN_MASK) {
+
+              //if (a == 70) {
+              if (a == KeyEvent.VK_F) {
+
+                textSearcher ts = new textSearcher();
+                ts.find(Input.getText(), consoles[consoleNumber]);
+              }
+
+              //if (a == 71) {
+              if (a == KeyEvent.VK_G) {
+                String myurl = Input.getText();
+                Input.setText("");
+
+                myurl = myurl.trim();
+                myurl = myurl.replace(" ", "+");
+
+                sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
+              }
+              
+              //if (a == 72) {
+              if (a == KeyEvent.VK_H) {
+                // bring history to front not needed now that its a top window
+                if (sharedVariables.myGameList != null &&
+                    sharedVariables.myGameList.isVisible()) {
+                  try {
+                    sharedVariables.myGameList.setSelected(true);
+                  } catch (Exception gamedui) {}
+                }
+              }
+
+              //if (a == 77) {
+              if (a == KeyEvent.VK_M) {
+                sharedVariables.tellsToTab = true;
+                sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
                 myoutput data = new myoutput();
-                 data.repaintTabBorders=1;
-                  queue.add(data);
+                data.repaintTabBorders = 1;
+                queue.add(data);
 
-               return;
+                return;
               }
-                        /*
-             	if( a == 90)// ctrl + z
-	 		{
+              /*
+              //if (a == 90) {
+              if (a == KeyEvent.VK_Z) {
+                switchConsoleWindows();
+                return;
+              }
 
-	 	  		switchConsoleWindows();
-	 	  		return;
-	 		 }
-			if(a == 84)// ctrl t
-			{
-				switchWindows();
-				return;
-			}
-			if(a == 49)
-			{
-				doToolBarCommand(1);
-				return;
-			}
-			if(a == 50)
-			{
-				doToolBarCommand(2);
-				return;
-			}
-			if(a == 51)
-			{
-				doToolBarCommand(3);
-				return;
-			}
-			if(a == 52)
-			{
-				doToolBarCommand(4);
-				return;
-			}
-			if(a == 53)
-			{
-				doToolBarCommand(5);
-				return;
-			}
-			if(a == 54)
-			{
-				doToolBarCommand(6);
-				return;
-			}
-			if(a == 55)
-			{
-				doToolBarCommand(7);
-				return;
-			}
-			if(a == 56)
-			{
-				doToolBarCommand(8);
-				return;
-			}
-			if(a == 57)
-			{
-				doToolBarCommand(9);
-				return;
-			}
-			if(a == 48)
-			{
-				doToolBarCommand(0);
-				return;
-			}
-                        */
+              //if (a == 84) {
+              if (a == KeyEvent.VK_T) {
+                switchWindows();
+                return;
+              }
 
+              //if (a == 49) {
+              if (a == KeyEvent.VK_1) {
+                doToolBarCommand(1);
+                return;
+              }
+              //if (a == 50) {
+              if (a == KeyEvent.VK_2) {
+                doToolBarCommand(2);
+                return;
+              }
+              //if (a == 51) {
+              if (a == KeyEvent.VK_3) {
+                doToolBarCommand(3);
+                return;
+              }
+              //if (a == 52) {
+              if (a == KeyEvent.VK_4) {
+                doToolBarCommand(4);
+                return;
+              }
+              //if (a == 53) {
+              if (a == KeyEvent.VK_5) {
+                doToolBarCommand(5);
+                return;
+              }
+              //if (a == 54) {
+              if (a == KeyEvent.VK_6) {
+                doToolBarCommand(6);
+                return;
+              }
+              //if (a == 55) {
+              if (a == KeyEvent.VK_7) {
+                doToolBarCommand(7);
+                return;
+              }
+              //if (a == 56) {
+              if (a == KeyEvent.VK_8) {
+                doToolBarCommand(8);
+                return;
+              }
+              //if (a == 57) {
+              if (a == KeyEvent.VK_9) {
+                doToolBarCommand(9);
+                return;
+              }
+              //if (a == 48) {
+              if (a == KeyEvent.VK_0) {
+                doToolBarCommand(0);
+                return;
+              }
+              */
 
+              //if (a == 68) {
+              if (a == KeyEvent.VK_D) {
+                String mess2 = sharedVariables.getChannelNotifyOnline();
+                mess2 += sharedVariables.getConnectNotifyOnline();
+                writeToConsole(mess2, sharedVariables.responseColor, false);
+                // false for not italic
+                return;
+              }
+            }
 
-                    if( a == 68)
-                    {
+            /*
+            //if (e.getModifiersEx() == 512) {
+            if (gme == InputEvent.ALT_DOWN_MASK &&
+              //if (a == 84) {
+                a == KeyEvent.VK_T) {
+              changeTellTab(true); // true for forward
+            }
 
-                      String mess2 = sharedVariables.getChannelNotifyOnline();
-                      mess2 += sharedVariables.getConnectNotifyOnline();
-                      writeToConsole(mess2, sharedVariables.responseColor, false);// false for not italic
-                      return;
-                    }
+            //if (e.getModifiersEx() == 576) {
+            if (gme == InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK &&
+              //if (a == 84) {
+                a == KeyEvent.VK_T) {
+              changeTellTab(false);// false for backward
+            }
+            */
+            if ((gme & InputEvent.ALT_DOWN_MASK) != 0 &&
+              //if (a == 84) {
+                a == KeyEvent.VK_T) {
+              changeTellTab((gme & InputEvent.SHIFT_DOWN_MASK) == 0);
+              // true for forward
+            }
+            
+            
+            //if (e.getModifiersEx() == 512) {
+            if (gme == InputEvent.ALT_DOWN_MASK) {
+              //if (a == 192) {
+              if (a == KeyEvent.VK_BACK_QUOTE) {
+                /*
+                if (sharedVariables.activitiesNeverOpen == true) {
+                  sharedVariables.activitiesNeverOpen = false;
+                  String mess2 = "Activities window enabled to open at login if " +
+                    "you leave it open on close and save settings. " +
+                    "Do 'save settings' to save this change.\n";
+                  writeToConsole(mess2, sharedVariables.responseColor, false);
+                } else {
+                  sharedVariables.activitiesNeverOpen = true;
+                  String mess2 = "Activities window disabled to open at login if " +
+                    "you leave it open on close and save settings. " +
+                    "Do 'save settings' to save this change.\n";
+                  writeToConsole(mess2, sharedVariables.responseColor, false);
+                }
+                */
+                sharedVariables.activitiesNeverOpen =
+                  !sharedVariables.activitiesNeverOpen;
+                String mess2 = "Activities window " +
+                  (sharedVariables.activitiesNeverOpen ? "disabled" : "enabled") +
+                  " to open at login if you leave it open on close and save settings." +
+                  "  Do 'save settings' to save this change.\n";
+                writeToConsole(mess2, sharedVariables.responseColor, false);
+                return;
+              }
+              /*
+              //if (a == 82) {// switch to right board tab
+              if (a == KeyEvent.VK_R) {
+                int games = getActiveGame();
+                if (games > -1) {
+                  myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(true));
+                  giveFocus();
+                }
+                return;
+              }
+              
+              //if (a == 76) {// switch to left board tab
+              if (a == KeyEvent.VK_L) {
+                int games = getActiveGame();
+                if (games > -1) {
+                  myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(false));
+                  giveFocus();
+                }
+                return;
+              }
+              */
+              
+              //if (a == 66) {// bring up board
+              if (a == KeyEvent.VK_B) {
+                /*
+                int games = -1;
+                for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+                  if (myboards[d] == null)
+                    break;
+                  if (myboards[d].isVisible()) {
+                    games = d;
+                    break;
+                  }
+                }
+                */
+                int games = getActiveGame();
+                
+                if (games > -1) {
+                  myboards[games].setSelected(true);
+                  giveFocus();
+                }
+                return;
+              }
+              
+              //if (a == 88) {// x close active game tab (first board)
+              if (a == KeyEvent.VK_X) {
+                /*
+                int games = -1;
+                for (int d=0; d<sharedVariables.maxGameTabs; d++) {
+                  if (myboards[d] == null)
+                    break;
+                  if (myboards[d].isVisible()) {
+                    games = d;
+                    break;
+                  }
+                }
+                */
+                int games = getActiveGame();
+                
+                if (games > -1) {
+                  myoutput data = new myoutput();
+                  data.closetab =
+                    myboards[games].myconsolepanel.getPhysicalTab(myboards[games].gameData.LookingAt);
 
+                  data.focusConsole = consoleNumber;
+
+                  queue.add(data);
+                }
+                return;
+              }
+            }   // end this alt section
+
+            //if (e.getModifiersEx() == 512) {
+            if (gme == InputEvent.ALT_DOWN_MASK) {
+              //if (a == 49) {
+              if (a == KeyEvent.VK_1) {
+                //sharedVariables.looking[consoleNumber]=0;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(0);
+                makeHappen(0);
+              }
+              //if (a == 50) {
+              if (a == KeyEvent.VK_2) {
+                //sharedVariables.looking[consoleNumber]=1;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(1);
+                makeHappen(1);
+              }
+              //if (a == 51) {
+              if (a == KeyEvent.VK_3) {
+                //sharedVariables.looking[consoleNumber]=2;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(2);
+                makeHappen(2);
+              }
+              //if (a == 52) {
+              if (a == KeyEvent.VK_4) {
+                //sharedVariables.looking[consoleNumber]=3;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(3);
+                makeHappen(3);
+              }
+              //if (a == 53) {
+              if (a == KeyEvent.VK_5) {
+                //sharedVariables.looking[consoleNumber]=4;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(4);
+                makeHappen(4);
+              }
+              //if (a == 54) {
+              if (a == KeyEvent.VK_6) {
+                //sharedVariables.looking[consoleNumber]=5;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(5);
+                makeHappen(5);
+              }
+              //if (a == 55) {
+              if (a == KeyEvent.VK_7) {
+                //sharedVariables.looking[consoleNumber]=6;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(6);
+                makeHappen(6);
+              }
+              //if (a == 56) {
+              if (a == KeyEvent.VK_8) {
+                //sharedVariables.looking[consoleNumber]=7;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(7);
+                makeHappen(7);
+              }
+              //if (a == 57) {
+              if (a == KeyEvent.VK_9) {
+                //sharedVariables.looking[consoleNumber]=8;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(8);
+                makeHappen(8);
+              }
+
+              //if (a == 48) {
+              if (a == KeyEvent.VK_0) {
+                //sharedVariables.looking[consoleNumber]=9;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(9);
+                makeHappen(9);
+              }
+              //if (a == 45) {
+              if (a == KeyEvent.VK_MINUS) {
+                //sharedVariables.looking[consoleNumber]=10;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(10);
+                makeHappen(10);
+              }
+              //if (a == 61) {
+              if (a == KeyEvent.VK_EQUALS) {
+                //sharedVariables.looking[consoleNumber]=11;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+                  tabChooser.setSelectedIndex(11);
+                makeHappen(11);
+              }
+
+              //if (a == 38) {
+              if (a == KeyEvent.VK_UP) {
+                int con = sharedVariables.looking[consoleNumber];
+
+                if (sharedVariables.tabStuff[con].tabFont != null) {
+                  float fontsize =
+                    (float) sharedVariables.tabStuff[con].tabFont.getSize();
+                  fontsize++;
+                  sharedVariables.tabStuff[con].tabFont =
+                    sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
+                  makeHappen(con);
+                  return;
+		} else {
+                  float fontsize = (float) sharedVariables.myFont.getSize();
+                  fontsize++;
+                  sharedVariables.myFont =
+                    sharedVariables.myFont.deriveFont(fontsize);
+                  makeHappen(con);
+                  return;
 		}
-                if( e.getModifiersEx() == 512)// alt
-{
- 
-                if(a == 84)// atl t
-                {
-                   changeTellTab(true); // true for forward
+              }
+              
+              //if (a == 40) {
+              if (a == KeyEvent.VK_DOWN) {
 
+                int con = sharedVariables.looking[consoleNumber];
+
+                if (sharedVariables.tabStuff[con].tabFont != null) {
+                  float fontsize =
+                    (float) sharedVariables.tabStuff[con].tabFont.getSize();
+                  fontsize--;
+                  sharedVariables.tabStuff[con].tabFont =
+                    sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
+                  makeHappen(con);
+                  return;
+		} else {
+                  float fontsize = (float) sharedVariables.myFont.getSize();
+                  fontsize--;
+                  sharedVariables.myFont=sharedVariables.myFont.deriveFont(fontsize);
+                  makeHappen(con);
+                  return;
                 }
-
-}
-
-                if( e.getModifiersEx() == 576)// shitft  + alt
-                if(a == 84) // shift alt t
-                {
-                   changeTellTab(false);// flase for backward
-
+              }
+            }
+            
+            //if (e.getModifiersEx() == 512) {
+            if (gme == InputEvent.ALT_DOWN_MASK) {
+              //if (a == 39) {
+              if (a == KeyEvent.VK_RIGHT) {
+                int con = sharedVariables.looking[consoleNumber] + 1;
+                if (con == sharedVariables.maxConsoleTabs)
+                  con = 0;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
                 }
-         if( e.getModifiersEx() == 512)
-       {
-      
-      if(a == 192) // '`'
-      {
-       if(sharedVariables.activitiesNeverOpen == true)
-       {
-         sharedVariables.activitiesNeverOpen = false;
-         String mess2 = "Activities window enabled to open at login if you leave it open on close and save settings. Do 'save settings' to save this change.\n";
-         writeToConsole(mess2, sharedVariables.responseColor, false);
-       }
-       else
-       {
-          sharedVariables.activitiesNeverOpen = true;
-         String mess2 = "Activities window disabled to open at login if you leave it open on close and save settings. Do 'save settings' to save this change.\n";
-         writeToConsole(mess2, sharedVariables.responseColor, false);
+                makeHappen(con);
+              }
+              
+              //if (a == 37) {
+              if (a == KeyEvent.VK_LEFT) {
+                int con = sharedVariables.looking[consoleNumber] - 1;
+                if (con == -1)
+                  con = sharedVariables.maxConsoleTabs - 1;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
+                }
+                makeHappen(con);
+              }
+            }
 
-         
-       }
-       return;
-      }
-      /*
-         if(a == 82  ) //  right on board R
-          {
+            //if (a == 27) {
+            if (a == KeyEvent.VK_ESCAPE) {
+              Input.setText("");
+            }
 
-           int games = getActiveGame();
-            if(games > -1)
-           {
-             myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(true));
-             giveFocus();
-           }
-           return;
+            //if (a == 10) {
+            if (a == KeyEvent.VK_ENTER) {
+              lastcommand = Input.getText();
+              arrowManager.add(lastcommand);
+
+              String mes = lastcommand + "\n";
+
+              int index = prefixHandler.getSelectedIndex();
+              String pre = "";
+              pre = prefixHandler.getItemAt(index).toString();
+
+              if (index > 0 && !Input.getText().startsWith("/"))
+                // we don't use tell channel prefix if starts with /
+                mes = pre + mes;
+
+              //if (e.getModifiersEx() == 128) {
+              if (gme == InputEvent.CTRL_DOWN_MASK) {
+                int changeTo =
+                  ctrlEnterSwitch(sharedVariables.looking[consoleNumber]);
+                if (changeTo != -1)
+                  makeHappen(changeTo);
+              }
+            
+              if (sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed) {
+                writeToConsole(mes, sharedVariables.typedColor , true);
+                // true for italic
+              }
+            
+              myoutput output = new myoutput();
+              if (sharedVariables.myServer.equals("ICC") &&
+                  sharedVariables.myname.length() > 0)
+                output.data = "`c" + sharedVariables.looking[consoleNumber] +
+                  "`" + mes;
+              // having a name means level 1 is on if on icc and this
+              // `phrase`mess will be used to direct output back to this
+              // console
+              else
+                output.data = mes;
+
+              output.consoleNumber = consoleNumber;
+              queue.add(output);
+              Input.setText("");
+            }// end enter
+          
+            /*
+            //if ((a == 120 || a == 119)  && e.getModifiersEx() != 64) {
+            if ((a == KeyEvent.VK_F9 || a == KeyEvent.VK_F8) &&
+                (gme & InputEvent.SHIFT_DOWN_MASK) == 0) {
+              String s = Input.getText();
+              String person;
+              if (s.length() == 0)
+                person = sharedVariables.F9Manager.getName(true);
+              else
+                person = sharedVariables.F9Manager.getName(false);
+              
+              if (person.length() > 0) {
+                Input.setText("/Tell " + person + "! ");
+                Input.setForeground(sharedVariables.inputCommandColor);
+              }
+            }
+
+            //if ((a == 120 || a == 119) && e.getModifiersEx() == 64) {
+            if ((a == KeyEvent.VK_F9 || a == KeyEvent.VK_F8) &&
+                (gme & InputEvent.SHIFT_DOWN_MASK) != 0) { 
+              String s = Input.getText();
+              String person;
+              if (s.length() == 0)
+                person = sharedVariables.F9Manager.getNameReverse(true);
+              else
+                person = sharedVariables.F9Manager.getNameReverse(false);
+
+              if (person.length() > 0) {
+                Input.setText("/Tell " + person + "! ");
+                Input.setForeground(sharedVariables.inputCommandColor);
+              }
+            }
+            */
+            if (a == KeyEvent.VK_F9 || a == KeyEvent.VK_F8) {
+              String s = Input.getText();
+              String person;
+              person =
+                ((gme & InputEvent.SHIFT_DOWN_MASK) == 0 ?
+                 sharedVariables.F9Manager.getName((s.length() == 0)) :
+                 sharedVariables.F9Manager.getNameReverse((s.length() == 0)));
+
+              if (person.length() > 0) {
+                Input.setText("/Tell " + person + "! ");
+                Input.setForeground(sharedVariables.inputCommandColor);
+              }
+            }
+
+            //if (a == 40) {
+            if (a == KeyEvent.VK_DOWN) {
+              arrowManager.down();
+            }
+              
+            //if (e.getModifiersEx() == 128  && a == 38 && !Input.getText().equals("")) {
+            if ((gme & InputEvent.CTRL_DOWN_MASK) != 0 &&
+                a == KeyEvent.VK_UP && !Input.getText().equals("")) {
+              arrowManager.add(Input.getText());
+              Input.setText("");
+
+              //} else if (a == 38) {
+            } else if (a == KeyEvent.VK_UP) {
+              arrowManager.up();
+              //if (lastcommand.length() > 0)
+              //  Input.setText(lastcommand);
+            }
+            // code here
           }
-         if(a == 76) // left on board L
-         {
-             int games = getActiveGame();
-           if(games > -1)
-        {
-          myboards[games].myconsolepanel.makehappen(myboards[games].myconsolepanel.getNextGame(false));
-          giveFocus();
-        }
-           return;
-         }
-      */
-        if(a == 66) // B bring board to front ( first board)
-         {
-             int games = -1;
-           for(int d=0; d<sharedVariables.maxGameTabs; d++)
-           {
-            if(myboards[d]==null)
-            break;
-            if(myboards[d].isVisible())
-            {
-             games =d;
-             break;
-            }
-           }
-           if(games > -1)
-        {
-          myboards[games].setSelected(true);
-          giveFocus();
-        }
-           return;
-         }
-        if(a == 88) // x close active game tab ( first board)
-         {
-             int games = -1;
-           for(int d=0; d<sharedVariables.maxGameTabs; d++)
-           {
-            if(myboards[d]==null)
-            break;
-            if(myboards[d].isVisible())
-            {
-             games =d;
-             break;
-            }
-           }
-           if(games > -1)
-        {
-            myoutput data = new myoutput();
-            data.closetab=myboards[games].myconsolepanel.getPhysicalTab(myboards[games].gameData.LookingAt);
 
-            data.focusConsole=consoleNumber;
+          public void keyTyped(KeyEvent e) {
 
-            queue.add(data);
+          }
 
+          /** Handle the key-released event from the text field. */
+          public void keyReleased(KeyEvent e) {
 
-        }
-           return;
-         }
-
-
-       }   // end this alt section
-
-
-
-
-      if( e.getModifiersEx() == 512)// alt
-      {
-
-                 if(a == 49  )
-		 {
-
-			 //sharedVariables.looking[consoleNumber]=0;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(0);
-			  makeHappen(0);
-		 }
-		 if(a == 50)
-		 {
-
-			 //sharedVariables.looking[consoleNumber]=1;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(1);
-			makeHappen(1);
-		}
-		 if(a == 51  )
-		 {
-			 ;
-			 //sharedVariables.looking[consoleNumber]=2;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(2);
-			 makeHappen(2);
-		 }
-		 if(a == 52)
-		 {
-
-			 //sharedVariables.looking[consoleNumber]=3;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(3);
-			 makeHappen(3);
-		 }
-		 if(a == 53  )
-		 {
-
-			 //sharedVariables.looking[consoleNumber]=4;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(4);
-			 makeHappen(4);
-		 }
-		 if(a == 54)
-		 {
-			//sharedVariables.looking[consoleNumber]=5;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(5);
-			makeHappen(5);
-		 }
-		 if(a == 55  )
-		 {
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(6);
-			 makeHappen(6);
-			// sharedVariables.looking[consoleNumber]=6;
-		 }
-		 if(a == 56)
-		 {
-			// sharedVariables.looking[consoleNumber]=7;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(7);
-			 makeHappen(7);
-
-		 }
-		 if(a == 57  )
-		 {
-			// sharedVariables.looking[consoleNumber]=8;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(8);
-			 makeHappen(8);
-		}
-		if(a == 48)
-		{
-			//sharedVariables.looking[consoleNumber]=9;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(9);
-			makeHappen(9);
-		}
-
-		 if(a == 45  )
-		 {
-			// sharedVariables.looking[consoleNumber]=10;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(10);
-			 makeHappen(10);
-		}
-		if(a == 61)
-		{
-			//sharedVariables.looking[consoleNumber]=11;
-			 if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-			 	tabChooser.setSelectedIndex(11);
-			makeHappen(11);
-		}
-
-         if(a == 38  ) // alt + up arrow
-         {    int con = sharedVariables.looking[consoleNumber] ;
-
-         if(sharedVariables.tabStuff[con].tabFont != null)
-         {
-         float fontsize =(float) sharedVariables.tabStuff[con].tabFont.getSize();
-         fontsize++;
-         sharedVariables.tabStuff[con].tabFont=sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
-         makeHappen(con);
-         return;
-		}else
-         {
-         float fontsize =(float) sharedVariables.myFont.getSize();
-         fontsize++;
-         sharedVariables.myFont=sharedVariables.myFont.deriveFont(fontsize);
-         makeHappen(con);
-         return;
-		}
-
-         }
-         if(a == 40  ) // alt + down arrow
-         {    int con = sharedVariables.looking[consoleNumber] ;
-
-         if(sharedVariables.tabStuff[con].tabFont != null)
-         {
-         float fontsize =(float) sharedVariables.tabStuff[con].tabFont.getSize();
-         fontsize --;
-         sharedVariables.tabStuff[con].tabFont=sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
-         makeHappen(con);
-         return;
-		}else
-
-		         {
-		         float fontsize =(float) sharedVariables.myFont.getSize();
-		         fontsize --;
-		         sharedVariables.myFont=sharedVariables.myFont.deriveFont(fontsize);
-		         makeHappen(con);
-		         return;
-				}
-
-         }
-
-
-	  }
-      if( e.getModifiersEx() == 512)
-       {
-         if(a == 39  ) // shift + right arrow
-         {    int con = sharedVariables.looking[consoleNumber] + 1;
-         if(con == sharedVariables.maxConsoleTabs)
-         con=0;
-         if(sharedVariables.consolesTabLayout[consoleNumber]== 3)
-        {
-			 tabChooser.setSelectedIndex(con);
-			 makeHappen(con);
-	 	  }
-           else
-         	makeHappen(con);
-
-
-         }
-         if(a == 37  ) // shift + left arrow
-         {    int con = sharedVariables.looking[consoleNumber] - 1;
-         if(con == -1)
-         con=sharedVariables.maxConsoleTabs-1;
-         if(sharedVariables.consolesTabLayout[consoleNumber] == 3)
-         {
-			 tabChooser.setSelectedIndex(con);
-			 makeHappen(con);
-	 	  }
-         else
-         	makeHappen(con);
-
-         }
-
-
-  }
-
-         if(a == 27) // esc
-         {
-			 Input.setText("");
-		 }
-
-
-         if(a == 10)
- {   lastcommand=Input.getText();
-     arrowManager.add(lastcommand);
-
-	 String mes = lastcommand + "\n";
-
-	 	int index = prefixHandler.getSelectedIndex();
-	 	String pre="";
-	 	pre = prefixHandler.getItemAt(index).toString();
-
-	 	if(index > 0 && !Input.getText().startsWith("/")) // we done use tell channel prefix if starts with /
-	 	mes = pre + mes;
-
-      if( e.getModifiersEx() == 128)
-       {
-         int changeTo=ctrlEnterSwitch(sharedVariables.looking[consoleNumber] );
-         if(changeTo!= -1)
-         makeHappen(changeTo);
-       }
-if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
-{
- writeToConsole(mes, sharedVariables.typedColor , true); // true for italic
-}
-      myoutput output = new myoutput();
-      if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
-      output.data="`c" + sharedVariables.looking[consoleNumber] + "`" + mes;// having a name means level 1 is on if on icc and this `phrase`mess will be used to direct output back to this console
-      else
-      output.data=mes;
-
-      output.consoleNumber=consoleNumber;
-      queue.add(output);
-      Input.setText("");
-
-
-
-
-        }// end enter
-        if((a == 120 || a == 119)  && e.getModifiersEx() != 64)// f9
-        {
-                String s=Input.getText();
-                String person;
-                if(s.length() == 0)
-                	person = sharedVariables.F9Manager.getName(true);
-                else
-                	person = sharedVariables.F9Manager.getName(false);
-
-                if(person.length()>0)
-                {
-					Input.setText("/Tell " + person + " ");
-					Input.setForeground(sharedVariables.inputCommandColor);
-				}
-        }
-
-       if((a == 120 || a == 119) && e.getModifiersEx() == 64)// shift f9
-        {
-                String s=Input.getText();
-                String person;
-                if(s.length() == 0)
-                	person = sharedVariables.F9Manager.getNameReverse(true);
-                else
-                	person = sharedVariables.F9Manager.getNameReverse(false);
-
-                if(person.length()>0)
-                {
-					Input.setText("/Tell " + person + " ");
-					Input.setForeground(sharedVariables.inputCommandColor);
-				}
-
-	 	}
-
-        if(a == 40)// down
-        {
-          arrowManager.down();
-        }
-       
-       
-        if( e.getModifiersEx() == 128  && a == 38 && !Input.getText().equals(""))
-        {
-          arrowManager.add(Input.getText());
-          Input.setText("");
-        }
-        else if(a == 38)// up
-        {
-                 arrowManager.up();
-
-               // if(lastcommand.length() >0)
-               // Input.setText(lastcommand);
-        }
-// code here
-    }
-
-   public void keyTyped(KeyEvent e) {;
-
-    }
-
-
-
-    /** Handle the key-released event from the text field. */
-    public void keyReleased(KeyEvent e) {;
-
-    }
-
-
-
-
-}
-
-);
+          }
+        });
 
 Input.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
