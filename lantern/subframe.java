@@ -2358,10 +2358,11 @@ class subframe extends JInternalFrame
             if (a == KeyEvent.VK_F9 || a == KeyEvent.VK_F8) {
               String s = Input.getText();
               String person;
+              boolean resetcycle = !s.startsWith("/Tell ");
               person =
                 ((gme & InputEvent.SHIFT_DOWN_MASK) == 0 ?
-                 sharedVariables.F9Manager.getName((s.length() == 0)) :
-                 sharedVariables.F9Manager.getNameReverse((s.length() == 0)));
+                 sharedVariables.F9Manager.getName(resetcycle) :
+                 sharedVariables.F9Manager.getNameReverse(resetcycle));
 
               if (person.length() > 0) {
                 Input.setText("/Tell " + person + "! ");
@@ -2817,7 +2818,7 @@ class subframe extends JInternalFrame
     class arrowManagement {
       //ArrayList list;
       List<String> list;
-      int head;
+      //int head;
       int index;
       int max;
 
@@ -2825,7 +2826,7 @@ class subframe extends JInternalFrame
         //list = new ArrayList();
         list = new ArrayList<String>();
         list.add("");
-        head = 0;
+        //head = 0;
         index = 0;
         max = 20;
       }
