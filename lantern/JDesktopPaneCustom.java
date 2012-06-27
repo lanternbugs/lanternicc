@@ -71,8 +71,8 @@ class JDesktopPaneCustom extends JDesktopPane {
     for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
       if (consoleSubframes[a] != null &&
           consoleSubframes[a].isVisible())
-        //if(consoleSubframes[a].isSelected())
-        if (consoleSubframes[a].overall.Input.hasFocus())
+        if (consoleSubframes[a].isSelected())
+          //if (consoleSubframes[a].overall.Input.hasFocus())
           return a;
 
     for (int b=0; b<sharedVariables.maxGameTabs; b++)
@@ -242,7 +242,7 @@ class JDesktopPaneCustom extends JDesktopPane {
     }
 
     if (next == n) {
-      for (int a=sharedVariables.maxConsoleTabs -1; a>n; a--) {
+      for (int a=sharedVariables.maxConsoleTabs-1; a>n; a--) {
         if (consoleSubframes[a]!=null &&
           consoleSubframes[a].isVisible()) {
           next = a;
