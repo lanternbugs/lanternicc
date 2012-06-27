@@ -235,44 +235,75 @@ class subframe extends JInternalFrame
     consoleMenu = new JMenuBar();
     setJMenuBar(consoleMenu);
 
-    /******************** Console Menu ********************/
-    JMenu mywindows = new JMenu("Menu");
-    // Menu / 
-    JMenuItem selectall = new JMenuItem("Select All");
-    JMenuItem copyit = new JMenuItem("Copy");
-    // .. / (separator)
+    /******************** Layout ********************/
+    JMenu mywindows = new JMenu("Layout");
+    // Layout / 
     JMenuItem consoleLayout1 = new JMenuItem("Single Rows of Tabs");
     JMenuItem consoleLayout2 = new JMenuItem("Two Rows of Tabs");
     JMenuItem consoleLayout3 = new JMenuItem("No Visible Tabs");
     JMenuItem consoleLayout4 = new JMenuItem("Tabs on Top");
-    // .. / (separator)
-    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
     
     // add to menu bar
     consoleMenu.add(mywindows);
-    // Menu /
-    mywindows.add(selectall);
-    mywindows.add(copyit);
-    mywindows.addSeparator();
+    // Layout /
     mywindows.add(consoleLayout1);
     mywindows.add(consoleLayout2);
     mywindows.add(consoleLayout3);
     mywindows.add(consoleLayout4);
-    mywindows.addSeparator();
-    mywindows.add(listChoice);
 
-    // special settings
-    listChoice.setSelected((sharedVariables.consolesNamesLayout[consoleNumber] == 1));
 
     // add listeners
-    selectall.addActionListener(this);
-    copyit.addActionListener(this);
     consoleLayout1.addActionListener(this);
     consoleLayout2.addActionListener(this);
     consoleLayout3.addActionListener(this);
     consoleLayout4.addActionListener(this);
-    listChoice.addActionListener(this);
 
+    /******************** Edit ********************/
+    JMenu editmenu = new JMenu("Edit");
+    // Edit /
+    JMenuItem selectall = new JMenuItem("Select All");
+    JMenuItem copyit = new JMenuItem("Copy");
+
+    // add to menu bar
+    consoleMenu.add(editmenu);
+    // Edit /
+    editmenu.add(selectall);
+    editmenu.add(copyit);
+
+    // add listeners
+    selectall.addActionListener(this);
+    copyit.addActionListener(this);
+
+    /******************** View ********************/
+    JMenu viewmenu = new JMenu("View");
+    // View /
+    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
+    // .. / (separator)
+    JMenuItem incfont = new JMenuItem("Increase font size");
+    JMenuItem decfont = new JMenuItem("Decrease font size");
+
+    // add accelerators
+    incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+                                                  ActionEvent.ALT_MASK));
+    decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
+                                                  ActionEvent.ALT_MASK));
+
+    // special settings
+    listChoice.setSelected((sharedVariables.consolesNamesLayout[consoleNumber] == 1));
+
+    // add to menu bar
+    consoleMenu.add(viewmenu);
+    // View
+    viewmenu.add(listChoice);
+    viewmenu.addSeparator();
+    viewmenu.add(incfont);
+    viewmenu.add(decfont);
+
+    // add listeners
+    listChoice.addActionListener(this);
+    incfont.addActionListener(this);
+    decfont.addActionListener(this);
+    
     /******************** User Buttons ********************/
     JMenu buttonmenu = new JMenu("User Buttons");
     // User Buttons /
@@ -473,6 +504,25 @@ class subframe extends JInternalFrame
           giveFocus();
         }
 
+      } else if (action.equals("Increase font size") ||
+                 action.equals("Decrease font size")) {
+        boolean incdec = action.equals("Increase font size");
+        int con = sharedVariables.looking[consoleNumber];
+
+        if (sharedVariables.tabStuff[con].tabFont != null) {
+          float fontsize =
+            (float) sharedVariables.tabStuff[con].tabFont.getSize();
+          fontsize += (incdec ? 1 : -1);
+          sharedVariables.tabStuff[con].tabFont =
+            sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
+        } else {
+          float fontsize = (float) sharedVariables.myFont.getSize();
+          fontsize += (incdec ? 1 : -1);
+          sharedVariables.myFont =
+            sharedVariables.myFont.deriveFont(fontsize);
+        }
+        makeHappen(con);
+        
       }
     } catch (Exception badEvent) {}
   }// end method action performed
@@ -2226,6 +2276,7 @@ class subframe extends JInternalFrame
                 makeHappen(11);
               }
 
+              /*
               //if (a == 38) {
               if (a == KeyEvent.VK_UP) {
                 int con = sharedVariables.looking[consoleNumber];
@@ -2269,6 +2320,7 @@ class subframe extends JInternalFrame
                   return;
                 }
               }
+              */
             }
             
             //if (e.getModifiersEx() == 512) {
