@@ -318,6 +318,9 @@ class subframe extends JInternalFrame
     JMenuItem nextconsole = new JMenuItem("Next console");
     JMenuItem nextchat = new JMenuItem("Next chat console");
     // .. / (separator)
+    JMenuItem nexttab = new JMenuItem("Next tab");
+    JMenuItem prevtab = new JMenuItem("Previous tab");
+    // .. / (separator)
     JMenuItem nextbtab = new JMenuItem("Next board tab");
     JMenuItem prevbtab = new JMenuItem("Previous board tab");
 
@@ -326,6 +329,10 @@ class subframe extends JInternalFrame
                                                       ActionEvent.CTRL_MASK));
     nextchat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                                                    ActionEvent.CTRL_MASK));
+    nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
+                                                  ActionEvent.ALT_MASK));
+    prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
+                                                  ActionEvent.ALT_MASK));
     nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
                                                    ActionEvent.ALT_MASK));
     prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
@@ -337,12 +344,17 @@ class subframe extends JInternalFrame
     consolenav.add(nextconsole);
     consolenav.add(nextchat);
     consolenav.addSeparator();
+    consolenav.add(nexttab);
+    consolenav.add(prevtab);
+    consolenav.addSeparator();
     consolenav.add(nextbtab);
     consolenav.add(prevbtab);
 
     // add listeners
     nextconsole.addActionListener(this);
     nextchat.addActionListener(this);
+    nexttab.addActionListener(this);
+    prevtab.addActionListener(this);
     nextbtab.addActionListener(this);
     prevbtab.addActionListener(this);
 
@@ -439,6 +451,17 @@ class subframe extends JInternalFrame
         
       } else if (action.equals("Next chat console")) {
         switchConsoleWindows();
+
+      } else if (action.equals("Next tab") ||
+                 action.equals("Previous tab")) {
+        boolean nextprev = action.equals("Next tab");
+        int mct = sharedVariables.maxConsoleTabs;
+        int con = (sharedVariables.looking[consoleNumber] +
+                   (nextprev ? 1 : mct - 1))%mct;
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+          tabChooser.setSelectedIndex(con);
+        }
+        makeHappen(con);
 
       } else if (action.equals("Next board tab") ||
                  action.equals("Previous board tab")) {
@@ -2250,6 +2273,7 @@ class subframe extends JInternalFrame
             
             //if (e.getModifiersEx() == 512) {
             if (gme == InputEvent.ALT_DOWN_MASK) {
+              /*
               //if (a == 39) {
               if (a == KeyEvent.VK_RIGHT) {
                 int con = sharedVariables.looking[consoleNumber] + 1;
@@ -2271,6 +2295,7 @@ class subframe extends JInternalFrame
                 }
                 makeHappen(con);
               }
+              */
             }
 
             //if (a == 27) {
