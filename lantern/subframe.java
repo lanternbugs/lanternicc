@@ -366,6 +366,7 @@ class subframe extends JInternalFrame
     JMenuItem nexttab = new JMenuItem("Next tab");
     JMenuItem prevtab = new JMenuItem("Previous tab");
     // .. / (separator)
+    JMenuItem showboard = new JMenuItem("Show board");
     JMenuItem nextbtab = new JMenuItem("Next board tab");
     JMenuItem prevbtab = new JMenuItem("Previous board tab");
     // .. / (separator)
@@ -383,6 +384,8 @@ class subframe extends JInternalFrame
                                                   ActionEvent.ALT_MASK));
     prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
                                                   ActionEvent.ALT_MASK));
+    showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+                                                    ActionEvent.ALT_MASK));
     nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
                                                    ActionEvent.ALT_MASK));
     prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
@@ -407,6 +410,7 @@ class subframe extends JInternalFrame
     consolenav.add(nexttab);
     consolenav.add(prevtab);
     consolenav.addSeparator();
+    consolenav.add(showboard);
     consolenav.add(nextbtab);
     consolenav.add(prevbtab);
     consolenav.addSeparator();
@@ -420,6 +424,7 @@ class subframe extends JInternalFrame
     nextchat.addActionListener(this);
     nexttab.addActionListener(this);
     prevtab.addActionListener(this);
+    showboard.addActionListener(this);
     nextbtab.addActionListener(this);
     prevbtab.addActionListener(this);
     prevmoves.addActionListener(this);
@@ -562,6 +567,14 @@ class subframe extends JInternalFrame
           tabChooser.setSelectedIndex(con);
         }
         makeHappen(con);
+
+      } else if (action.equals("Show board")) {
+        int games = getActiveGame();
+                
+        if (games > -1) {
+          myboards[games].setSelected(true);
+          giveFocus();
+        }
 
       } else if (action.equals("Next board tab") ||
                  action.equals("Previous board tab")) {
@@ -2244,21 +2257,10 @@ class subframe extends JInternalFrame
                 }
                 return;
               }
-              */
               
               //if (a == 66) {// bring up board
               if (a == KeyEvent.VK_B) {
-                /*
-                int games = -1;
-                for (int d=0; d<sharedVariables.maxGameTabs; d++) {
-                  if (myboards[d] == null)
-                    break;
-                  if (myboards[d].isVisible()) {
-                    games = d;
-                    break;
-                  }
-                }
-                */
+
                 int games = getActiveGame();
                 
                 if (games > -1) {
@@ -2267,6 +2269,7 @@ class subframe extends JInternalFrame
                 }
                 return;
               }
+              */
               
               //if (a == 88) {// x close active game tab (first board)
               if (a == KeyEvent.VK_X) {
