@@ -354,6 +354,11 @@ class subframe extends JInternalFrame
     // .. / (separator)
     JMenuItem nextbtab = new JMenuItem("Next board tab");
     JMenuItem prevbtab = new JMenuItem("Previous board tab");
+    // .. / (separator)
+    JMenuItem prevmoves = new JMenuItem("Move to start of game");
+    JMenuItem prevmove = new JMenuItem("Previous move");
+    JMenuItem nextmove = new JMenuItem("Next move");
+    JMenuItem nextmoves = new JMenuItem("Move to end of game");
 
     // add accelerators
     nextconsole.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
@@ -368,6 +373,16 @@ class subframe extends JInternalFrame
                                                    ActionEvent.ALT_MASK));
     prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
                                                    ActionEvent.ALT_MASK));
+    prevmoves.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
+                                                    ActionEvent.CTRL_MASK |
+                                                    ActionEvent.SHIFT_MASK));
+    prevmove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
+                                                   ActionEvent.CTRL_MASK));
+    nextmove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,
+                                                   ActionEvent.CTRL_MASK));
+    nextmoves.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,
+                                                    ActionEvent.CTRL_MASK |
+                                                    ActionEvent.SHIFT_MASK));
 
     // add to menu bar
     consoleMenu.add(consolenav);
@@ -380,6 +395,11 @@ class subframe extends JInternalFrame
     consolenav.addSeparator();
     consolenav.add(nextbtab);
     consolenav.add(prevbtab);
+    consolenav.addSeparator();
+    consolenav.add(prevmoves);
+    consolenav.add(prevmove);
+    consolenav.add(nextmove);
+    consolenav.add(nextmoves);
 
     // add listeners
     nextconsole.addActionListener(this);
@@ -388,6 +408,10 @@ class subframe extends JInternalFrame
     prevtab.addActionListener(this);
     nextbtab.addActionListener(this);
     prevbtab.addActionListener(this);
+    prevmoves.addActionListener(this);
+    prevmove.addActionListener(this);
+    nextmove.addActionListener(this);
+    nextmoves.addActionListener(this);
 
     /******************** end of menus ********************/
     
@@ -522,7 +546,32 @@ class subframe extends JInternalFrame
             sharedVariables.myFont.deriveFont(fontsize);
         }
         makeHappen(con);
+
+      } else if (action.equals("Move to start of game") ||
+                 action.equals("Previous move") ||
+                 action.equals("Next move") ||
+                 action.equals("Move to end of game")) {
+        int games = getActiveGame();
+        if (games > -1) {
+          JSlider js = sharedVariables.moveSliders[games];
+          int loc = js.getValue();
+          int max = js.getMaximum();
+          if (action.equals("Move to start of game"))
+            loc = 0;
+          else if (action.equals("Previous move"))
+            loc -= (loc == 0 ? 0 : 1);
+          else if (action.equals("Next move"))
+            loc += (loc == max ? 0 : 1);
+          else // if (action.equals("Move to end of game"))
+            loc = max;
+          
+          js.setValue(loc);
+          myboards[games].mycontrolspanel.adjustMoveList();
+          myboards[games].repaint();
+        }
         
+        giveFocus();
+
       }
     } catch (Exception badEvent) {}
   }// end method action performed
@@ -1896,6 +1945,7 @@ class subframe extends JInternalFrame
                 overall.Input.setForeground(sharedVariables.inputChatColor);
             }
 
+            /*
             //if (e.getModifiersEx() == 128 || e.getModifiersEx() == 192)
             if ((gme & InputEvent.CTRL_DOWN_MASK) != 0) {
               //int moveKeyType = gme;
@@ -1947,6 +1997,7 @@ class subframe extends JInternalFrame
                 return;
               }
             }// if control or control + shift
+            */
 
             //if (e.getModifiersEx() == 128)// ctrl + t
             if (gme == InputEvent.CTRL_DOWN_MASK) {
