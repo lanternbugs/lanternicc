@@ -263,16 +263,25 @@ class subframe extends JInternalFrame
     // Edit /
     JMenuItem selectall = new JMenuItem("Select All");
     JMenuItem copyit = new JMenuItem("Copy");
+    // .. / (separator)
+    JMenuItem telltab = new JMenuItem("Make tell tab");
+
+    // add accelerators
+    telltab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+                                                  ActionEvent.CTRL_MASK));
 
     // add to menu bar
     consoleMenu.add(editmenu);
     // Edit /
     editmenu.add(selectall);
     editmenu.add(copyit);
+    editmenu.addSeparator();
+    editmenu.add(telltab);
 
     // add listeners
     selectall.addActionListener(this);
     copyit.addActionListener(this);
+    telltab.addActionListener(this);
 
     /******************** View ********************/
     JMenu viewmenu = new JMenu("View");
@@ -470,6 +479,13 @@ class subframe extends JInternalFrame
           consoles[consoleNumber].getTransferHandler();
         transferHandler.exportToClipboard(consoles[consoleNumber],
                                           clipboard, TransferHandler.COPY);
+
+      } else if (action.equals("Make tell tab")) {
+        sharedVariables.tellsToTab = true;
+        sharedVariables.tellTab = sharedVariables.looking[consoleNumber];
+        myoutput data = new myoutput();
+        data.repaintTabBorders = 1;
+        queue.add(data);
 
       } else if (action.equals("Button 1")) {
         doToolBarCommand(1);
@@ -2030,7 +2046,8 @@ class subframe extends JInternalFrame
                   } catch (Exception gamedui) {}
                 }
               }
-
+              
+              /*
               //if (a == 77) {
               if (a == KeyEvent.VK_M) {
                 sharedVariables.tellsToTab = true;
@@ -2041,7 +2058,7 @@ class subframe extends JInternalFrame
 
                 return;
               }
-              /*
+
               //if (a == 90) {
               if (a == KeyEvent.VK_Z) {
                 switchConsoleWindows();
