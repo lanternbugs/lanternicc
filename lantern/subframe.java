@@ -369,6 +369,7 @@ class subframe extends JInternalFrame
     JMenuItem showboard = new JMenuItem("Show board");
     JMenuItem nextbtab = new JMenuItem("Next board tab");
     JMenuItem prevbtab = new JMenuItem("Previous board tab");
+    JMenuItem closebtab = new JMenuItem("Close board tab");
     // .. / (separator)
     JMenuItem prevmoves = new JMenuItem("Move to start of game");
     JMenuItem prevmove = new JMenuItem("Previous move");
@@ -390,6 +391,8 @@ class subframe extends JInternalFrame
                                                    ActionEvent.ALT_MASK));
     prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
                                                    ActionEvent.ALT_MASK));
+    closebtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+                                                    ActionEvent.ALT_MASK));
     prevmoves.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
                                                     ActionEvent.CTRL_MASK |
                                                     ActionEvent.SHIFT_MASK));
@@ -413,6 +416,7 @@ class subframe extends JInternalFrame
     consolenav.add(showboard);
     consolenav.add(nextbtab);
     consolenav.add(prevbtab);
+    consolenav.add(closebtab);
     consolenav.addSeparator();
     consolenav.add(prevmoves);
     consolenav.add(prevmove);
@@ -427,6 +431,7 @@ class subframe extends JInternalFrame
     showboard.addActionListener(this);
     nextbtab.addActionListener(this);
     prevbtab.addActionListener(this);
+    closebtab.addActionListener(this);
     prevmoves.addActionListener(this);
     prevmove.addActionListener(this);
     nextmove.addActionListener(this);
@@ -584,6 +589,18 @@ class subframe extends JInternalFrame
           myboards[games].myconsolepanel.makehappen
             (myboards[games].myconsolepanel.getNextGame(nextprev));
           giveFocus();
+        }
+
+      } else if (action.equals("Close board tab")) {
+        int games = getActiveGame();
+                
+        if (games > -1) {
+          myoutput data = new myoutput();
+          data.closetab = myboards[games].myconsolepanel.getPhysicalTab
+            (myboards[games].gameData.LookingAt);
+          data.focusConsole = consoleNumber;
+
+          queue.add(data);
         }
 
       } else if (action.equals("Move to start of game") ||
@@ -2269,21 +2286,9 @@ class subframe extends JInternalFrame
                 }
                 return;
               }
-              */
               
               //if (a == 88) {// x close active game tab (first board)
               if (a == KeyEvent.VK_X) {
-                /*
-                int games = -1;
-                for (int d=0; d<sharedVariables.maxGameTabs; d++) {
-                  if (myboards[d] == null)
-                    break;
-                  if (myboards[d].isVisible()) {
-                    games = d;
-                    break;
-                  }
-                }
-                */
                 int games = getActiveGame();
                 
                 if (games > -1) {
@@ -2297,6 +2302,7 @@ class subframe extends JInternalFrame
                 }
                 return;
               }
+              */
             }   // end this alt section
 
             //if (e.getModifiersEx() == 512) {
