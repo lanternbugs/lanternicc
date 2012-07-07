@@ -322,7 +322,7 @@ class subframe extends JInternalFrame
     JMenu buttonmenu = new JMenu("User Buttons");
     // User Buttons /
     JMenuItem[] buttonlist = new JMenuItem[10];
-    for (int i=0; i<10; i++)
+    for (int i=0; i<buttonlist.length; i++)
       buttonlist[i] = new JMenuItem("Button "+i);
 
     // add accelerators
@@ -365,6 +365,11 @@ class subframe extends JInternalFrame
     // .. / (separator)
     JMenuItem nexttab = new JMenuItem("Next tab");
     JMenuItem prevtab = new JMenuItem("Previous tab");
+    JMenu selecttab = new JMenu("Select tab");
+    // .. / Select tab /
+    JMenuItem[] tabarray = new JMenuItem[12];
+    for (int i=1; i<=tabarray.length; i++)
+      tabarray[i-1] = new JMenuItem("Tab " + i);
     // .. / (separator)
     JMenuItem showboard = new JMenuItem("Show board");
     JMenuItem nextbtab = new JMenuItem("Next board tab");
@@ -385,6 +390,30 @@ class subframe extends JInternalFrame
                                                   ActionEvent.ALT_MASK));
     prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
                                                   ActionEvent.ALT_MASK));
+    tabarray[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[3].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[4].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[5].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[6].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_7,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[7].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_8,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[8].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_9,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[9].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[10].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
+                                                      ActionEvent.ALT_MASK));
+    tabarray[11].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,
+                                                      ActionEvent.ALT_MASK));
     showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
                                                     ActionEvent.ALT_MASK));
     nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
@@ -412,6 +441,11 @@ class subframe extends JInternalFrame
     consolenav.addSeparator();
     consolenav.add(nexttab);
     consolenav.add(prevtab);
+    consolenav.add(selecttab);
+    // .. / Select tab
+    for (int i=0; i<tabarray.length; i++)
+      selecttab.add(tabarray[i]);
+    // .. /
     consolenav.addSeparator();
     consolenav.add(showboard);
     consolenav.add(nextbtab);
@@ -428,6 +462,8 @@ class subframe extends JInternalFrame
     nextchat.addActionListener(this);
     nexttab.addActionListener(this);
     prevtab.addActionListener(this);
+    for (int i=0; i<tabarray.length; i++)
+      tabarray[i].addActionListener(this);
     showboard.addActionListener(this);
     nextbtab.addActionListener(this);
     prevbtab.addActionListener(this);
@@ -572,6 +608,66 @@ class subframe extends JInternalFrame
           tabChooser.setSelectedIndex(con);
         }
         makeHappen(con);
+
+      } else if (action.equals("Tab 1")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(0);
+        makeHappen(0);
+
+      } else if (action.equals("Tab 2")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(1);
+        makeHappen(1);
+
+      } else if (action.equals("Tab 3")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(2);
+        makeHappen(2);
+
+      } else if (action.equals("Tab 4")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(3);
+        makeHappen(3);
+
+      } else if (action.equals("Tab 5")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(4);
+        makeHappen(4);
+
+      } else if (action.equals("Tab 6")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(5);
+        makeHappen(5);
+
+      } else if (action.equals("Tab 7")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(6);
+        makeHappen(6);
+
+      } else if (action.equals("Tab 8")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(7);
+        makeHappen(7);
+
+      } else if (action.equals("Tab 9")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(8);
+        makeHappen(8);
+
+      } else if (action.equals("Tab 10")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(9);
+        makeHappen(9);
+
+      } else if (action.equals("Tab 11")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(10);
+        makeHappen(10);
+
+      } else if (action.equals("Tab 12")) {
+        if (sharedVariables.consolesTabLayout[consoleNumber] == 3)
+          tabChooser.setSelectedIndex(11);
+        makeHappen(11);
 
       } else if (action.equals("Show board")) {
         int games = getActiveGame();
@@ -2307,6 +2403,7 @@ class subframe extends JInternalFrame
 
             //if (e.getModifiersEx() == 512) {
             if (gme == InputEvent.ALT_DOWN_MASK) {
+              /*
               //if (a == 49) {
               if (a == KeyEvent.VK_1) {
                 //sharedVariables.looking[consoleNumber]=0;
@@ -2393,7 +2490,6 @@ class subframe extends JInternalFrame
                 makeHappen(11);
               }
 
-              /*
               //if (a == 38) {
               if (a == KeyEvent.VK_UP) {
                 int con = sharedVariables.looking[consoleNumber];
