@@ -287,11 +287,14 @@ class subframe extends JInternalFrame
     JMenu viewmenu = new JMenu("View");
     // View /
     listChoice = new JCheckBoxMenuItem("Show Channel Names List");
+   JMenuItem chnotify = new JMenuItem("Show online players on channel notify");
     // .. / (separator)
     JMenuItem incfont = new JMenuItem("Increase font size");
     JMenuItem decfont = new JMenuItem("Decrease font size");
 
     // add accelerators
+    chnotify.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                                                   ActionEvent.CTRL_MASK));
     incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
                                                   ActionEvent.ALT_MASK));
     decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
@@ -304,12 +307,14 @@ class subframe extends JInternalFrame
     consoleMenu.add(viewmenu);
     // View
     viewmenu.add(listChoice);
+    viewmenu.add(chnotify);
     viewmenu.addSeparator();
     viewmenu.add(incfont);
     viewmenu.add(decfont);
 
     // add listeners
     listChoice.addActionListener(this);
+    chnotify.addActionListener(this);
     incfont.addActionListener(this);
     decfont.addActionListener(this);
     
@@ -487,6 +492,30 @@ class subframe extends JInternalFrame
         data.repaintTabBorders = 1;
         queue.add(data);
 
+      } else if (action.equals("Show online players on channel notify")) {
+        String mess2 = sharedVariables.getChannelNotifyOnline()
+          + sharedVariables.getConnectNotifyOnline();
+        writeToConsole(mess2, sharedVariables.responseColor, false);
+
+      } else if (action.equals("Increase font size") ||
+                 action.equals("Decrease font size")) {
+        boolean incdec = action.equals("Increase font size");
+        int con = sharedVariables.looking[consoleNumber];
+
+        if (sharedVariables.tabStuff[con].tabFont != null) {
+          float fontsize =
+            (float) sharedVariables.tabStuff[con].tabFont.getSize();
+          fontsize += (incdec ? 1 : -1);
+          sharedVariables.tabStuff[con].tabFont =
+            sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
+        } else {
+          float fontsize = (float) sharedVariables.myFont.getSize();
+          fontsize += (incdec ? 1 : -1);
+          sharedVariables.myFont =
+            sharedVariables.myFont.deriveFont(fontsize);
+        }
+        makeHappen(con);
+
       } else if (action.equals("Button 1")) {
         doToolBarCommand(1);
 
@@ -543,25 +572,6 @@ class subframe extends JInternalFrame
             (myboards[games].myconsolepanel.getNextGame(nextprev));
           giveFocus();
         }
-
-      } else if (action.equals("Increase font size") ||
-                 action.equals("Decrease font size")) {
-        boolean incdec = action.equals("Increase font size");
-        int con = sharedVariables.looking[consoleNumber];
-
-        if (sharedVariables.tabStuff[con].tabFont != null) {
-          float fontsize =
-            (float) sharedVariables.tabStuff[con].tabFont.getSize();
-          fontsize += (incdec ? 1 : -1);
-          sharedVariables.tabStuff[con].tabFont =
-            sharedVariables.tabStuff[con].tabFont.deriveFont(fontsize);
-        } else {
-          float fontsize = (float) sharedVariables.myFont.getSize();
-          fontsize += (incdec ? 1 : -1);
-          sharedVariables.myFont =
-            sharedVariables.myFont.deriveFont(fontsize);
-        }
-        makeHappen(con);
 
       } else if (action.equals("Move to start of game") ||
                  action.equals("Previous move") ||
@@ -1933,6 +1943,36 @@ class subframe extends JInternalFrame
     return -1;
   }
 
+  void writeToConsole(String mes, Color col, boolean italic) {
+    try {
+      StyledDocument doc =
+        sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+      Style styleQ = doc.addStyle(null, null);
+      
+      StyleConstants.setForeground(styleQ, col);
+      //StyleConstants.setUnderline(attrs, true);
+      SimpleAttributeSet attrs = new SimpleAttributeSet();
+
+      if (italic)
+        StyleConstants.setItalic(attrs, true);
+
+      StyleConstants.setForeground(attrs, col);
+      int SUBFRAME_CONSOLES = 0;
+      int maxLinks = 75;
+      myoutput printOut = new myoutput();
+      printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
+                           maxLinks, SUBFRAME_CONSOLES, attrs, null);
+      queue.add(printOut);
+      //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+      
+      //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+      //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
+      //    consoles[aa].setStyledDocument(doc);
+
+    } catch (Exception E) {}
+  }// end write to console
+
   /****************************************************************************************/
   class subPanel extends JPanel {
     JTextField Input;
@@ -2121,7 +2161,6 @@ class subframe extends JInternalFrame
                 doToolBarCommand(0);
                 return;
               }
-              */
 
               //if (a == 68) {
               if (a == KeyEvent.VK_D) {
@@ -2131,6 +2170,7 @@ class subframe extends JInternalFrame
                 // false for not italic
                 return;
               }
+              */
             }
 
             /*
@@ -2588,7 +2628,6 @@ class subframe extends JInternalFrame
       }
       return games;
     }
-    */
     
     void writeToConsole(String mes, Color col, boolean italic) {
       try {
@@ -2619,6 +2658,7 @@ class subframe extends JInternalFrame
 
       } catch (Exception E) {}
     }// end write to console
+    */
 
     int ctrlEnterSwitch(int console) {
       int a;
