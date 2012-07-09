@@ -39,12 +39,14 @@ import layout.TableLayout;
 public class customizeChannelsDialog extends JDialog
   implements ActionListener {
 
+  private List<Integer> qtellchannels;
+
   private int tab;
   private channels sVars;
   private subframe[] subs;
 
-  private int width = 350;
-  private int height = 325;
+  private int width = 450;
+  private int height;
 
   private JTextField name;
   private JCheckBox setname;
@@ -52,15 +54,27 @@ public class customizeChannelsDialog extends JDialog
   private JCheckBox shouts;
   private JCheckBox sshouts;
 
+  private JButton addbutton;
+  
+  private JButton save;
+  private JButton cancel;
+  private JButton apply;
+  private JPanel buttons;
+
+  private JLabel tells;
+  private JLabel qtells;
+  private JLabel maintab;
+  private JLabel othertabs;
+  
   private JList list;
   private DefaultListModel listmodel;
+  private JScrollPane listpane;
+  
 
   private List<JCheckBox> showtab;
+  private List<JCheckBox> showqt;
   private List<JCheckBox> showmain;
   private List<Integer> tabchan;
-
-  private JCheckBox alltab;
-  private JCheckBox allmain;
 
   private TableLayout layout;
 
@@ -74,6 +88,8 @@ public class customizeChannelsDialog extends JDialog
     this.sVars = sVars;
     this.subs = subs;
 
+    qtellchannels = qtellchannels();
+    
     name = new JTextField(30);
     setname = new JCheckBox("Name tab");
     setname.setActionCommand("name");
@@ -99,74 +115,101 @@ public class customizeChannelsDialog extends JDialog
     if (sVars.shoutRouter.sshoutsConsole == tab)
       sshouts.setSelected(true);
 
-    showtab = new ArrayList<JCheckBox>();
-    showmain = new ArrayList<JCheckBox>();
-    tabchan = new ArrayList<Integer>();
-
     listmodel = myChannels();
     list = new JList(listmodel);
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    JScrollPane listpane = new JScrollPane(list);
+    listpane = new JScrollPane(list);
     // always going to have at least ch. 1 in the list
     list.setSelectedIndex(0);
     
-    JButton addbutton = new JButton("Add");
+    addbutton = new JButton("Add");
     addbutton.setActionCommand("add");
     addbutton.addActionListener(this);
 
-    JButton save = new JButton("Save");
+    save = new JButton("Save");
     save.setActionCommand("save");
     save.addActionListener(this);
     
-    JButton cancel = new JButton("Cancel");
+    cancel = new JButton("Cancel");
     cancel.setActionCommand("cancel");
     cancel.addActionListener(this);
 
-    JPanel buttons = new JPanel();
+    apply = new JButton("Apply");
+    apply.setActionCommand("apply");
+    apply.addActionListener(this);
+
+    buttons = new JPanel();
     buttons.add(save);
     buttons.add(cancel);
-    
-    alltab = new JCheckBox();
-    alltab.setActionCommand("alltab");
-    alltab.addActionListener(this);
-    
-    allmain = new JCheckBox();
-    allmain.setActionCommand("allmain");
-    allmain.addActionListener(this);
+    buttons.add(apply);
 
+    tells = new JLabel("This tab");
+    qtells = new JLabel("(qtells)");
+    maintab = new JLabel("Main tab");
+    othertabs = new JLabel("Other tabs");
+
+    buildLayout();
+
+    setVisible(true);
+  }
+
+  private List<Integer> qtellchannels() {
+    List<Integer> qtc = new ArrayList<Integer>();
+    qtc.add(46);
+    qtc.add(47);
+    qtc.add(49);
+    qtc.add(123);
+    qtc.add(147);
+    
+    for (int i=221; i<229; i++)
+      qtc.add(i);
+
+    qtc.add(230);
+    qtc.add(232);
+    qtc.add(280);
+
+    return qtc;
+  }
+  
+  private void buildLayout() {
+    height = 300;
+    
     int border = 10;
     int space = 5;
     int ht = 20;
     double tf = TableLayout.FILL;
 
-    double[][] size = {{border, 100, space, 100, space, 100, tf},
-                       {border, ht, space, ht, space, ht, space, ht, 75,
-                        space, ht, space, ht, space, tf, border}};
+    double[][] size = {{border, 100, space, 60, space, 60, space,
+                        60, space, tf, border},
+                       {border, ht, space, ht, space, ht, space, ht, 55,
+                        space, ht, space, tf, 30, border}};
 
     layout = new TableLayout(size);
     setLayout(layout);
 
-    add(name, "1, 1, 3, 1");
-    add(setname, "5, 1, l, f");
-    add(listpane, "1, 3, 1, 8");
+    add(name, "3, 1, 7, 1");
+    add(setname, "9, 1, l, f");
+    add(listpane, "1, 1, 1, 8");
     add(gamenotify, "3, 3, 5, 3");
-    add(shouts, "3, 5, l, f");
-    add(sshouts, "3, 7, l, f");
+    add(shouts, "3, 5, 5, 5");
+    add(sshouts, "3, 7, 5, 7");
     add(addbutton, "1, 10");
-    add(new JLabel("This tab"), "3, 10, c, f");
-    add(new JLabel("Main tab"), "5, 10, c, f");
-    add(new JLabel("All channels"), "1, 12, l, f");
-    add(alltab, "3, 12, c, f");
-    add(allmain, "5, 12, c, f");
-    add(buttons, "1, 14, 5, 14");
+    add(tells, "3, 10, c, f");
+    add(qtells, "5, 10, c, f");
+    add(maintab, "7, 10, c, f");
+    add(othertabs, "9, 10, l, f");
+    add(buttons, "1, 13, 9, 13");
+
+    showtab = new ArrayList<JCheckBox>();
+    showqt = new ArrayList<JCheckBox>();
+    showmain = new ArrayList<JCheckBox>();
+    tabchan = new ArrayList<Integer>();
 
     setSize(width, height);
 
     getChannels();
-
-    setVisible(true);
   }
-
+  
   private void getChannels() {
     // add all the channels in this tab
     for (int i=399; i>=0; i--) {
@@ -184,25 +227,51 @@ public class customizeChannelsDialog extends JDialog
     }
 
     // add the space for the layout
-    layout.insertRow(14, 5);
-    layout.insertRow(14, 20);
-    
+    layout.insertRow(12, 20);
+
     JCheckBox ctab = new JCheckBox();
-    ctab.setSelected(true);
+    JCheckBox cqtell = new JCheckBox();
+
+    if (qtellchannels.contains(chan)) {
+      int qtellval = sVars.qtellController[tab][chan];
+      ctab.setSelected((qtellval != 2));
+      cqtell.setSelected((qtellval != 1));
+    } else {
+      ctab.setSelected(true);
+      cqtell.setEnabled(false);
+    }
     
     JCheckBox cmain = new JCheckBox();
     if (sVars.mainAlso[chan])
       cmain.setSelected(true);
 
+    String others = "";
+    boolean first = true;
+    for (int i=1; i<sVars.maxConsoleTabs; i++) {
+      if (sVars.console[i][chan] == 1) {
+        if (i != tab) {
+          if (first) first = false;
+          else others += ", ";
+
+          others += i;
+        }
+      }
+    }
+    
+    if (others.equals("")) others = "None";
+
     tabchan.add(chan);
     showtab.add(ctab);
+    showqt.add(cqtell);
     showmain.add(cmain);
 
-    add(new JLabel("" + chan), "1, 14, r, f");
-    add(ctab, "3, 14, c, f");
-    add(cmain, "5, 14, c, f");
-
-    height += 25;
+    add(new JLabel("" + chan), "1, 12, r, f");
+    add(ctab, "3, 12, c, f");
+    add(cqtell, "5, 12, c, f");
+    add(cmain, "7, 12, c, f");
+    add(new JLabel(others), "9, 12, l, f");
+    
+    height += 20;
 
     setSize(width, height);
   }
@@ -226,6 +295,72 @@ public class customizeChannelsDialog extends JDialog
     return slm;
   }
 
+  private void saveChannels() {
+    int len = tabchan.size();
+      
+    if (len == showtab.size() &&
+        len == showmain.size() &&
+        len == showqt.size()) {
+      // these should always be equal and correlated
+      for (int i=0; i<len; i++) {
+        int chan = tabchan.get(i);
+        boolean st = showtab.get(i).isSelected();
+        boolean sq = showqt.get(i).isSelected();
+        
+        sVars.console[tab][chan] = (st || sq ? 1 : 0);
+        if (qtellchannels.contains(chan))
+          sVars.qtellController[tab][chan] =
+            ((st && !sq) ? 1 :
+             ((sq && !st) ? 2 : 0));
+
+        sVars.mainAlso[chan] = showmain.get(i).isSelected();
+      }
+    }
+
+    if (gamenotify.isSelected()) {
+      sVars.gameNotifyConsole = tab;
+    } else {
+      if (sVars.gameNotifyConsole == tab)
+        sVars.gameNotifyConsole = 0;
+    }
+
+    setConsoleTabTitles asetter = new setConsoleTabTitles();
+    int oldshout;
+      
+    // not implementing shouts also in main for now
+    if (shouts.isSelected()) {
+      oldshout = sVars.shoutRouter.shoutsConsole;
+      sVars.shoutRouter.shoutsConsole = tab;
+      if (oldshout > 0)
+        asetter.createConsoleTabTitle(sVars, oldshout, subs,
+                                      sVars.consoleTabCustomTitles[oldshout]);
+    } else {
+      if (sVars.shoutRouter.shoutsConsole == tab)
+        sVars.shoutRouter.shoutsConsole = 0;
+    }
+
+    if (sshouts.isSelected()) {
+      oldshout = sVars.shoutRouter.sshoutsConsole;
+      sVars.shoutRouter.sshoutsConsole = tab;
+      if (oldshout > 0)
+        asetter.createConsoleTabTitle(sVars, oldshout, subs,
+                                      sVars.consoleTabCustomTitles[oldshout]);
+    } else {
+      if (sVars.shoutRouter.sshoutsConsole == tab)
+        sVars.shoutRouter.sshoutsConsole = 0;
+    }
+
+    String tabname = "";
+    if (setname.isSelected())
+      tabname = name.getText();
+
+    asetter.createConsoleTabTitle(sVars, tab, subs, tabname);
+
+    if (sVars.consoleLayout == 3)
+      for (int i=0; i<sVars.openConsoleCount; i++)
+        subs[i].updateTabChooserCombo();
+  }
+
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
 
@@ -234,75 +369,14 @@ public class customizeChannelsDialog extends JDialog
       addChannel(number, true);
 
     } else if (action.equals("save")) {
-      int len = tabchan.size();
-      
-      if (len == showtab.size() && len == showmain.size()) {
-        // these should always be equal and correlated
-        for (int i=0; i<len; i++) {
-          int chan = tabchan.get(i);
-          sVars.console[tab][chan] =
-            (showtab.get(i).isSelected() ? 1 : 0);
-          sVars.mainAlso[chan] = showmain.get(i).isSelected();
-        }
-      }
-
-      if (gamenotify.isSelected()) {
-        sVars.gameNotifyConsole = tab;
-      } else {
-        if (sVars.gameNotifyConsole == tab)
-          sVars.gameNotifyConsole = 0;
-      }
-
-      setConsoleTabTitles asetter = new setConsoleTabTitles();
-      int oldshout;
-      
-      // not implementing shouts also in main for now
-      if (shouts.isSelected()) {
-        oldshout = sVars.shoutRouter.shoutsConsole;
-        sVars.shoutRouter.shoutsConsole = tab;
-        if (oldshout > 0)
-          asetter.createConsoleTabTitle(sVars, oldshout, subs,
-                                        sVars.consoleTabCustomTitles[oldshout]);
-      } else {
-        if (sVars.shoutRouter.shoutsConsole == tab)
-          sVars.shoutRouter.shoutsConsole = 0;
-      }
-
-      if (sshouts.isSelected()) {
-        oldshout = sVars.shoutRouter.sshoutsConsole;
-        sVars.shoutRouter.sshoutsConsole = tab;
-        if (oldshout > 0)
-          asetter.createConsoleTabTitle(sVars, oldshout, subs,
-                                        sVars.consoleTabCustomTitles[oldshout]);
-      } else {
-        if (sVars.shoutRouter.sshoutsConsole == tab)
-          sVars.shoutRouter.sshoutsConsole = 0;
-      }
-
-      String tabname = "";
-      if (setname.isSelected())
-        tabname = name.getText();
-
-      asetter.createConsoleTabTitle(sVars, tab, subs, tabname);
-
-      if (sVars.consoleLayout == 3)
-        for (int i=0; i<sVars.openConsoleCount; i++)
-          subs[i].updateTabChooserCombo();
-        
+      saveChannels();
       dispose();
 
     } else if (action.equals("cancel")) {
       dispose();
 
-    } else if (action.equals("alltab")) {
-      boolean selected = alltab.isSelected();
-      for (int i=0; i<showtab.size(); i++)
-        showtab.get(i).setSelected(selected);
-
-    } else if (action.equals("allmain")) {
-      boolean selected = allmain.isSelected();
-      for (int i=0; i<showmain.size(); i++)
-        showmain.get(i).setSelected(selected);
+    } else if (action.equals("apply")) {
+      saveChannels();
 
     } else if (action.equals("name")) {
       name.setEnabled(setname.isSelected());
