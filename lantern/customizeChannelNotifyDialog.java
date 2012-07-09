@@ -38,8 +38,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -197,7 +195,7 @@ public class customizeChannelNotifyDialog extends JDialog
         channelNotifyClass cnc = sVars.channelNotifyList.get(i);
         if (cnc.channel.equals(text)) {
           boolean found = false;
-          for (int j=0; j<cnc.nameList.size(); j++)
+          for (int j=0; j<cnc.nameList.size(); j++) {
             if (cnc.nameList.get(j).toLowerCase().equals(lname)) {
               if (action.equals("remove")) {
                 cnc.nameList.remove(j);
@@ -221,6 +219,7 @@ public class customizeChannelNotifyDialog extends JDialog
               found = true;
               break;
             }
+          }
 
           if (!found) {// found should always be true on remove
             // we have channel but he is not on list so we add him

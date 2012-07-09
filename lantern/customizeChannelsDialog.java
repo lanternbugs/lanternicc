@@ -14,6 +14,303 @@ package lantern;
 *  General Public License for more details.
 */
 
+/**/
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import javax.swing.JScrollPane;
+import javax.swing.JDialog;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import layout.TableLayout;
+
+public class customizeChannelsDialog extends JDialog
+  implements ActionListener {
+
+  private int tab;
+  private channels sVars;
+  private subframe[] subs;
+
+  private int width = 350;
+  private int height = 325;
+
+  private JTextField name;
+  private JCheckBox setname;
+  private JCheckBox gamenotify;
+  private JCheckBox shouts;
+  private JCheckBox sshouts;
+
+  private JList list;
+  private DefaultListModel listmodel;
+
+  private List<JCheckBox> showtab;
+  private List<JCheckBox> showmain;
+  private List<Integer> tabchan;
+
+  private JCheckBox alltab;
+  private JCheckBox allmain;
+
+  private TableLayout layout;
+
+  public customizeChannelsDialog(JFrame frame, boolean mybool, int tab,
+                                 channels sVars, subframe[] subs) {
+    super(frame, "Customize Tab " + tab, mybool);
+
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    this.tab = tab;
+    this.sVars = sVars;
+    this.subs = subs;
+
+    name = new JTextField(30);
+    setname = new JCheckBox("Name tab");
+    setname.setActionCommand("name");
+    setname.addActionListener(this);
+    
+    String namestring = sVars.consoleTabCustomTitles[tab];
+    if (!namestring.equals("")) {
+      name.setText(namestring);
+      setname.setSelected(true);
+    } else {
+      name.setEnabled(false);
+    }
+
+    gamenotify = new JCheckBox("Game notifications");
+    if (sVars.gameNotifyConsole == tab)
+      gamenotify.setSelected(true);
+    
+    shouts = new JCheckBox("Shouts");
+    if (sVars.shoutRouter.shoutsConsole == tab)
+      shouts.setSelected(true);
+    
+    sshouts = new JCheckBox("S-shouts");
+    if (sVars.shoutRouter.sshoutsConsole == tab)
+      sshouts.setSelected(true);
+
+    showtab = new ArrayList<JCheckBox>();
+    showmain = new ArrayList<JCheckBox>();
+    tabchan = new ArrayList<Integer>();
+
+    listmodel = myChannels();
+    list = new JList(listmodel);
+    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    JScrollPane listpane = new JScrollPane(list);
+    // always going to have at least ch. 1 in the list
+    list.setSelectedIndex(0);
+    
+    JButton addbutton = new JButton("Add");
+    addbutton.setActionCommand("add");
+    addbutton.addActionListener(this);
+
+    JButton save = new JButton("Save");
+    save.setActionCommand("save");
+    save.addActionListener(this);
+    
+    JButton cancel = new JButton("Cancel");
+    cancel.setActionCommand("cancel");
+    cancel.addActionListener(this);
+
+    JPanel buttons = new JPanel();
+    buttons.add(save);
+    buttons.add(cancel);
+    
+    alltab = new JCheckBox();
+    alltab.setActionCommand("alltab");
+    alltab.addActionListener(this);
+    
+    allmain = new JCheckBox();
+    allmain.setActionCommand("allmain");
+    allmain.addActionListener(this);
+
+    int border = 10;
+    int space = 5;
+    int ht = 20;
+    double tf = TableLayout.FILL;
+
+    double[][] size = {{border, 100, space, 100, space, 100, tf},
+                       {border, ht, space, ht, space, ht, space, ht, 75,
+                        space, ht, space, ht, space, tf, border}};
+
+    layout = new TableLayout(size);
+    setLayout(layout);
+
+    add(name, "1, 1, 3, 1");
+    add(setname, "5, 1, l, f");
+    add(listpane, "1, 3, 1, 8");
+    add(gamenotify, "3, 3, 5, 3");
+    add(shouts, "3, 5, l, f");
+    add(sshouts, "3, 7, l, f");
+    add(addbutton, "1, 10");
+    add(new JLabel("This tab"), "3, 10, c, f");
+    add(new JLabel("Main tab"), "5, 10, c, f");
+    add(new JLabel("All channels"), "1, 12, l, f");
+    add(alltab, "3, 12, c, f");
+    add(allmain, "5, 12, c, f");
+    add(buttons, "1, 14, 5, 14");
+
+    setSize(width, height);
+
+    getChannels();
+
+    setVisible(true);
+  }
+
+  private void getChannels() {
+    // add all the channels in this tab
+    for (int i=399; i>=0; i--) {
+      if (sVars.console[tab][i] == 1) {
+        addChannel(i, false);
+      }
+    }
+  }
+
+  private void addChannel(int chan, boolean containsCheck) {
+    if (containsCheck) {
+      // we can do more, but this will suffice for now
+      if (tabchan.contains(chan))
+        return;
+    }
+
+    // add the space for the layout
+    layout.insertRow(14, 5);
+    layout.insertRow(14, 20);
+    
+    JCheckBox ctab = new JCheckBox();
+    ctab.setSelected(true);
+    
+    JCheckBox cmain = new JCheckBox();
+    if (sVars.mainAlso[chan])
+      cmain.setSelected(true);
+
+    tabchan.add(chan);
+    showtab.add(ctab);
+    showmain.add(cmain);
+
+    add(new JLabel("" + chan), "1, 14, r, f");
+    add(ctab, "3, 14, c, f");
+    add(cmain, "5, 14, c, f");
+
+    height += 25;
+
+    setSize(width, height);
+  }
+
+  private DefaultListModel myChannels() {
+    List<nameListClass> cnl = sVars.channelNamesList;
+    List<Integer> sl = new ArrayList<Integer>();
+
+    // we will add 1 for all people
+    sl.add(1);
+
+    for (int i=0; i<cnl.size(); i++)
+      sl.add(Integer.valueOf(cnl.get(i).channel));
+
+    Collections.sort(sl);
+    DefaultListModel slm = new DefaultListModel();
+
+    for (int i=0; i<sl.size(); i++)
+      slm.addElement(sl.get(i));
+
+    return slm;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    String action = e.getActionCommand();
+
+    if (action.equals("add")) {
+      int number = (Integer)list.getSelectedValue();
+      addChannel(number, true);
+
+    } else if (action.equals("save")) {
+      int len = tabchan.size();
+      
+      if (len == showtab.size() && len == showmain.size()) {
+        // these should always be equal and correlated
+        for (int i=0; i<len; i++) {
+          int chan = tabchan.get(i);
+          sVars.console[tab][chan] =
+            (showtab.get(i).isSelected() ? 1 : 0);
+          sVars.mainAlso[chan] = showmain.get(i).isSelected();
+        }
+      }
+
+      if (gamenotify.isSelected()) {
+        sVars.gameNotifyConsole = tab;
+      } else {
+        if (sVars.gameNotifyConsole == tab)
+          sVars.gameNotifyConsole = 0;
+      }
+
+      setConsoleTabTitles asetter = new setConsoleTabTitles();
+      int oldshout;
+      
+      // not implementing shouts also in main for now
+      if (shouts.isSelected()) {
+        oldshout = sVars.shoutRouter.shoutsConsole;
+        sVars.shoutRouter.shoutsConsole = tab;
+        if (oldshout > 0)
+          asetter.createConsoleTabTitle(sVars, oldshout, subs,
+                                        sVars.consoleTabCustomTitles[oldshout]);
+      } else {
+        if (sVars.shoutRouter.shoutsConsole == tab)
+          sVars.shoutRouter.shoutsConsole = 0;
+      }
+
+      if (sshouts.isSelected()) {
+        oldshout = sVars.shoutRouter.sshoutsConsole;
+        sVars.shoutRouter.sshoutsConsole = tab;
+        if (oldshout > 0)
+          asetter.createConsoleTabTitle(sVars, oldshout, subs,
+                                        sVars.consoleTabCustomTitles[oldshout]);
+      } else {
+        if (sVars.shoutRouter.sshoutsConsole == tab)
+          sVars.shoutRouter.sshoutsConsole = 0;
+      }
+
+      String tabname = "";
+      if (setname.isSelected())
+        tabname = name.getText();
+
+      asetter.createConsoleTabTitle(sVars, tab, subs, tabname);
+
+      if (sVars.consoleLayout == 3)
+        for (int i=0; i<sVars.openConsoleCount; i++)
+          subs[i].updateTabChooserCombo();
+        
+      dispose();
+
+    } else if (action.equals("cancel")) {
+      dispose();
+
+    } else if (action.equals("alltab")) {
+      boolean selected = alltab.isSelected();
+      for (int i=0; i<showtab.size(); i++)
+        showtab.get(i).setSelected(selected);
+
+    } else if (action.equals("allmain")) {
+      boolean selected = allmain.isSelected();
+      for (int i=0; i<showmain.size(); i++)
+        showmain.get(i).setSelected(selected);
+
+    } else if (action.equals("name")) {
+      name.setEnabled(setname.isSelected());
+    }
+  }
+}
+
+/*
 import java.awt.*;
 import java.awt.Window.*;
 import java.awt.event.*;
@@ -250,13 +547,11 @@ class customizeChannelsDialog extends JDialog {
               sharedVariables.shoutRouter.sshoutsConsole == conNumber)
             sharedVariables.shoutRouter.sshoutsConsole=0;
 
-          /*
-          if (announcements.isSelected())
-            sharedVariables.shoutRouter.announcementsConsole=conNumber;
-          if (!sshouts.isSelected() &&
-              sharedVariables.shoutRouter.announcementsConsole == conNumber)
-            sharedVariables.shoutRouter.announcementsConsole=0;
-          */
+          //if (announcements.isSelected())
+          //  sharedVariables.shoutRouter.announcementsConsole=conNumber;
+          //if (!sshouts.isSelected() &&
+          //    sharedVariables.shoutRouter.announcementsConsole == conNumber)
+          //  sharedVariables.shoutRouter.announcementsConsole=0;
 
           myTabName = nameField.getText();
           int foundChannel=0;
@@ -490,8 +785,4 @@ class customizeChannelsDialog extends JDialog {
     }
   }// end flag class
 }// end class
-
-
-
-
-
+/**/
