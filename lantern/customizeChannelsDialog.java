@@ -52,10 +52,11 @@ public class customizeChannelsDialog extends JDialog
   private JCheckBox setname;
   private JCheckBox gamenotify;
   private JCheckBox shouts;
+  private JCheckBox mainshouts;
   private JCheckBox sshouts;
 
   private JButton addbutton;
-  
+
   private JButton save;
   private JButton cancel;
   private JButton apply;
@@ -107,9 +108,18 @@ public class customizeChannelsDialog extends JDialog
     if (sVars.gameNotifyConsole == tab)
       gamenotify.setSelected(true);
     
+    mainshouts = new JCheckBox("(in main tab)");
+    if (sVars.shoutsAlso)
+      mainshouts.setSelected(true);
+
     shouts = new JCheckBox("Shouts");
     if (sVars.shoutRouter.shoutsConsole == tab)
       shouts.setSelected(true);
+    else
+      mainshouts.setEnabled(false);
+
+    shouts.setActionCommand("shouts");
+    shouts.addActionListener(this);
     
     sshouts = new JCheckBox("S-shouts");
     if (sVars.shoutRouter.sshoutsConsole == tab)
@@ -155,6 +165,8 @@ public class customizeChannelsDialog extends JDialog
 
   private List<Integer> qtellchannels() {
     List<Integer> qtc = new ArrayList<Integer>();
+    qtc.add(3);
+    qtc.add(4);
     qtc.add(46);
     qtc.add(47);
     qtc.add(49);
@@ -191,7 +203,8 @@ public class customizeChannelsDialog extends JDialog
     add(setname, "9, 1, l, f");
     add(listpane, "1, 1, 1, 8");
     add(gamenotify, "3, 3, 5, 3");
-    add(shouts, "3, 5, 5, 5");
+    add(shouts, "3, 5, l, f");
+    add(mainshouts, "5, 5, 7, 5");
     add(sshouts, "3, 7, 5, 7");
     add(addbutton, "1, 10");
     add(tells, "3, 10, c, f");
@@ -334,6 +347,8 @@ public class customizeChannelsDialog extends JDialog
       if (oldshout > 0)
         asetter.createConsoleTabTitle(sVars, oldshout, subs,
                                       sVars.consoleTabCustomTitles[oldshout]);
+      sVars.shoutsAlso = (mainshouts.isSelected());
+
     } else {
       if (sVars.shoutRouter.shoutsConsole == tab)
         sVars.shoutRouter.shoutsConsole = 0;
@@ -380,6 +395,9 @@ public class customizeChannelsDialog extends JDialog
 
     } else if (action.equals("name")) {
       name.setEnabled(setname.isSelected());
+
+    } else if (action.equals("shouts")) {
+      mainshouts.setEnabled(shouts.isSelected());
     }
   }
 }
