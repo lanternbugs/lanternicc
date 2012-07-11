@@ -202,9 +202,9 @@ public class customizeChannelsDialog extends JDialog
     add(name, "3, 1, 7, 1");
     add(setname, "9, 1, l, f");
     add(listpane, "1, 1, 1, 8");
-    add(gamenotify, "3, 3, 5, 3");
-    add(shouts, "3, 5, l, f");
-    add(mainshouts, "5, 5, 7, 5");
+    add(gamenotify, "3, 3, 7, 3");
+    add(shouts, "3, 5, 5, 5");
+    add(mainshouts, "7, 5, 9, 5");
     add(sshouts, "3, 7, 5, 7");
     add(addbutton, "1, 10");
     add(tells, "3, 10, c, f");
