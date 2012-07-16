@@ -1906,7 +1906,7 @@ items[m].addActionListener(new ActionListener() {
       if(menuEntry.equals("Stored"))// now add edit list sub menu
       {
        JMenu LMenu = new JMenu("Edit List");
-       sharedVariables.setUpListMenu(LMenu, handle, queue);
+       sharedVariables.setUpListMenu(LMenu, handle, queue, "`g" + gameData.LookingAt +  "`");
        menu3.addSeparator();
        menu3.add(LMenu);
        menu3.addSeparator();

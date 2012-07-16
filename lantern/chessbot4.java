@@ -2936,7 +2936,66 @@ else
 	channelcolor=sharedVariables.tabStuff[cindex].qtellcolor;
 
 		processLink(doc, thetell.replaceAll("\\\\n", "\n"), channelcolor, cindex, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+
+// we check if this bot has a channel then send it to every tab this channel is on additionally.  if cindex equals this channel we pass. we use the color of the tab or the qtell color for each send
+try {
+int botsChannel=-1;
+String botname = dg.getArg(1);
+
+if(botname.equals("Tomato"))
+botsChannel=46;
+if(botname.equals("Flash"))
+botsChannel=49;
+if(botname.equals("Cooly"))
+botsChannel=224;
+if(botname.equals("WildOne"))
+botsChannel=223;
+if(botname.equals("Olive"))
+botsChannel=230;
+if(botname.equals("Ketchup"))
+botsChannel=228;
+if(botname.equals("Slomato"))
+botsChannel=222;
+if(botname.equals("LittlePer"))
+botsChannel=225;
+if(botsChannel > -1)
+{
+
+for(int b=0; b< sharedVariables.maxConsoleTabs; b++)
+{
+
+if(b == 0)
+{
+if(sharedVariables.mainAlso[botsChannel] == true && cindex != 0)
+{
+if(sharedVariables.tabStuff[b].qtellcolor == null)
+	channelcolor=sharedVariables.qtellcolor;
+else
+	channelcolor=sharedVariables.tabStuff[b].qtellcolor;
+doc=sharedVariables.mydocs[b];
+
+processLink(doc, thetell.replaceAll("\\\\n", "\n"), channelcolor, b, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+
+}// if main also and that is not cindex (0)
+} // if b == 0
+else if(sharedVariables.console[b][botsChannel]==1 && cindex != b)
+{
+if(sharedVariables.tabStuff[b].qtellcolor == null)
+	channelcolor=sharedVariables.qtellcolor;
+else
+	channelcolor=sharedVariables.tabStuff[b].qtellcolor;
+doc=sharedVariables.mydocs[b];
+
+processLink(doc, thetell.replaceAll("\\\\n", "\n"), channelcolor, b, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+
 }
+
+}// end for
+}//bots channel > -1
+}// end try
+
+catch(Exception baddup){}
+}// end personal qtell
 
 
 

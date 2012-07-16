@@ -1802,7 +1802,7 @@ class subframe extends JInternalFrame
           String menuEntry = sharedVariables.rightClickMenu.get(m);
           if (menuEntry.equals("Stored")) {// now add edit list sub menu
             JMenu LMenu = new JMenu("Edit List");
-            sharedVariables.setUpListMenu(LMenu, handle, queue);
+            sharedVariables.setUpListMenu(LMenu, handle, queue, "`c" + sharedVariables.looking[consoleNumber] + "`");
             menu3.addSeparator();
             menu3.add(LMenu);
             menu3.addSeparator();

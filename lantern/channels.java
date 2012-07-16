@@ -335,7 +335,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.88";
+version = "v4.89";
 newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
@@ -815,14 +815,14 @@ void setupMenu()
         rightClickListMenu.add("Remove from NoPlay");
         rightClickListMenu.add("Remove from Censor");
 }
-void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue<myoutput> queue)
+void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue<myoutput> queue, final String prefix)
 {
      JMenuItem item0 = new JMenuItem(rightClickListMenu.get(0) + " " + handle);
      item0.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "+Notify " + handle + "\n";
+           data.data = prefix  + "+Notify " + handle + "\n";
            queue.add(data);
                    }
       });
@@ -833,7 +833,7 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "+NoPlay " + handle + "\n";
+           data.data = prefix  + "+NoPlay " + handle + "\n";
            queue.add(data);
                    }
       });
@@ -844,7 +844,7 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "+Censor " + handle + "\n";
+           data.data = prefix  + "+Censor " + handle + "\n";
            queue.add(data);
                    }
       });
@@ -855,7 +855,7 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "-Notify " + handle + "\n";
+           data.data = prefix  + "-Notify " + handle + "\n";
            queue.add(data);
                    }
       });
@@ -866,7 +866,7 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "-NoPlay " + handle + "\n";
+           data.data = prefix  + "-NoPlay " + handle + "\n";
            queue.add(data);
                    }
       });
@@ -877,7 +877,7 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
          public void actionPerformed(ActionEvent e) {
 
            myoutput data = new myoutput();
-           data.data = "-Censor " + handle + "\n";
+           data.data = prefix  +  "-Censor " + handle + "\n";
            queue.add(data);
                    }
       });

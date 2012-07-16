@@ -449,6 +449,16 @@ import layout.TableLayout;
 
             menu2.add(item4);
 
+             JMenuItem item44 = new JMenuItem("History  " + nameF);
+            item44.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("History " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item44);
+
+
             JMenuItem item5 = new JMenuItem("Pstat  " + nameF);
             item5.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -566,6 +576,16 @@ import layout.TableLayout;
               });
 
             menu2.add(item4);
+
+            JMenuItem item44 = new JMenuItem("History  " + nameF);
+            item44.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("History " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item44);
+
 
             JMenuItem item5 = new JMenuItem("Pstat  " + nameF);
             item5.addActionListener(new ActionListener() {
