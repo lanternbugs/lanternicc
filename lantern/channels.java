@@ -97,7 +97,7 @@ boolean showRatings;
 boolean showFlags;
 boolean showPallette;
 boolean notifyMainAlso = false;
-
+  boolean dontReuseGameTabs=false;
   boolean andreysFonts = false;
 boolean sideways;
 boolean showButtonTitle;

@@ -500,6 +500,14 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneActivitiesOnTop] ";
 
+	// dontReuseGameTabs
+	set_string = set_string + "[dontReuseGameTabs] ";
+	if(sharedVariables.dontReuseGameTabs == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[dontReuseGameTabs] ";
 
 
 	// newObserveGameSwitch
@@ -1931,6 +1939,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 						sharedVariables.ActivitiesOnTop=true;
 					else
 						sharedVariables.ActivitiesOnTop=false;
+					}
+					catch(Exception zzz){}
+				}
+				if (temp.equals("[dontReuseGameTabs]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.dontReuseGameTabs=true;
+					else
+						sharedVariables.dontReuseGameTabs=false;
 					}
 					catch(Exception zzz){}
 				}

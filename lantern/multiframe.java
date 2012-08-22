@@ -231,6 +231,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem checkLegality;
   JCheckBoxMenuItem useTopGame;
   JCheckBoxMenuItem notifyMainAlso;
+  JCheckBoxMenuItem dontReuseGameTabs;
 
   /* Andrey edits:
      make an array for the aspects
@@ -476,6 +477,7 @@ class mymultiframe extends JFrame
     highlight.           setSelected(sharedVariables.highlightMoves);
     gameend.             setSelected(sharedVariables.gameend);
     notifyMainAlso.      setSelected(sharedVariables.notifyMainAlso);
+    dontReuseGameTabs.   setSelected(sharedVariables.dontReuseGameTabs);
     useTopGame.          setSelected(sharedVariables.useTopGames);
     materialCount.       setSelected(sharedVariables.showMaterialCount);
     drawCoordinates.     setSelected(sharedVariables.drawCoordinates);
@@ -1096,6 +1098,7 @@ class mymultiframe extends JFrame
     autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
     useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
     notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
+    dontReuseGameTabs = new JCheckBoxMenuItem("Don't Reuse Game Tabs");
     autopopup = new JCheckBoxMenuItem("Auto Name Popup");
     autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
     basketballFlag = new JCheckBoxMenuItem("Use Basketball Logo ICC Flag");
@@ -1203,6 +1206,7 @@ class mymultiframe extends JFrame
     advancedOptions.add(autobufferchat);
     advancedOptions.add(useTopGame);
     advancedOptions.add(notifyMainAlso);
+    advancedOptions.add(dontReuseGameTabs);
     advancedOptions.add(autopopup);
     advancedOptions.add(autoHistoryPopup);
     advancedOptions.add(basketballFlag);
@@ -1273,6 +1277,7 @@ class mymultiframe extends JFrame
     compactNameList.addActionListener(this);
     useTopGame.addActionListener(this);
     notifyMainAlso.addActionListener(this);
+    dontReuseGameTabs.addActionListener(this);
     autobufferchat.addActionListener(this);
     autopopup.addActionListener(this);
     autoHistoryPopup.addActionListener(this);
@@ -3431,6 +3436,10 @@ class mymultiframe extends JFrame
     } else if (action.equals("Print Channel Notify for Main Also")) {
       sharedVariables.notifyMainAlso = !sharedVariables.notifyMainAlso;
       notifyMainAlso.setSelected(sharedVariables.notifyMainAlso);
+
+    } else if (action.equals("Don't Reuse Game Tabs")) {
+      sharedVariables.dontReuseGameTabs = !sharedVariables.dontReuseGameTabs;
+      dontReuseGameTabs.setSelected(sharedVariables.dontReuseGameTabs);
 
     } else if (action.equals("Auto Name Popup")) {
       sharedVariables.autopopup = !sharedVariables.autopopup;

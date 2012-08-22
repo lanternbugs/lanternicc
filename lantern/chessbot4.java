@@ -5537,7 +5537,8 @@ if(sharedVariables.tabsOnly == true)
 
 			if(myboards[a] != null)
 			{
-				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  && (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
+				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  && (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER
+                                       && sharedVariables.dontReuseGameTabs == false))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
 				{
 				writeToConsole("Reusing board.");
 				// make board go to front with tabs only.
@@ -5590,7 +5591,7 @@ if(sharedVariables.tabsOnly == true)
 					//{
 						if(sharedVariables.mygame[a] == null)
 						last=a;
-						else if(sharedVariables.mygame[a].state == sharedVariables.STATE_OVER)
+						else if(sharedVariables.mygame[a].state == sharedVariables.STATE_OVER && sharedVariables.dontReuseGameTabs == false)
 						 last=a;
 
 
