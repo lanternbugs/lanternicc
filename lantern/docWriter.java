@@ -505,9 +505,9 @@ if(italic1 > -1 && italic2 > -1)
 {
 
 
+patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
 
-
-doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
+//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
 
 if(sharedVariables.italicsBehavior == 2)
 	StyleConstants.setForeground(attrs, myStyles.colors[a].brighter());
@@ -528,7 +528,9 @@ fram.setSize(300,300);
 else
 {
  // insert end
-doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
+
+//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
 
  dd=-1;
 }
@@ -538,7 +540,9 @@ doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, my
 
 }  // end if
 else
-doc.insertString(doc.getEndPosition().getOffset(), myStrings[a], attrs);
+//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a], attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a], attrs);
+
 }// if start > blocks[a]
 }//end for
 
@@ -554,4 +558,20 @@ if(underline == true)
 catch(Exception dui){}
 
 }// end method
+
+
+void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
+{
+  try {
+  for(int a=0; a<mystring.length(); a++)
+  {
+  if(a%2==0)
+  attrs.addAttribute("A", "B");
+  else
+  attrs.removeAttribute("A");
+    doc.insertString(end+a, mystring.substring(a, a+1), attrs);
+  }// end for
+  }
+  catch(Exception dui){}
+}// end method patched
 }// end class
