@@ -5590,7 +5590,10 @@ if(sharedVariables.tabsOnly == true)
 					//if(sharedVariables.tabTitle[a].startsWith("G"))
 					//{
 						if(sharedVariables.mygame[a] == null)
-						last=a;
+						//last=a;
+						continue;
+                                                else if(sharedVariables.mygame[a].state == sharedVariables.NOT_FOUND_NUMBER)
+						last =a;
 						else if(sharedVariables.mygame[a].state == sharedVariables.STATE_OVER && sharedVariables.dontReuseGameTabs == false)
 						 last=a;
                                                 else if(sharedVariables.openBoardCount == 0 && a==0)
