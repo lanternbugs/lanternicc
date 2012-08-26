@@ -5579,14 +5579,13 @@ if(sharedVariables.tabsOnly == true)
 			*/
 			}
 		}
-
 		writeToConsole("Creating game board." );
 		for(int a=0; myboards[a] != null && a < sharedVariables.maxGameTabs; a++)
 		{
 
 			if(myboards[a] != null)
 			{
-				if(myboards[a].isVisible() == false && (sharedVariables.mygame[a].imclosed == true || (a == 0 && sharedVariables.openBoardCount == 0)))
+				if((myboards[a].isVisible() == false || sharedVariables.openBoardCount == 0) && (sharedVariables.mygame[a].imclosed == true || (a == 0 && sharedVariables.openBoardCount == 0)))
 				{
 					//if(sharedVariables.tabTitle[a].startsWith("G"))
 					//{
@@ -5594,6 +5593,8 @@ if(sharedVariables.tabsOnly == true)
 						last=a;
 						else if(sharedVariables.mygame[a].state == sharedVariables.STATE_OVER && sharedVariables.dontReuseGameTabs == false)
 						 last=a;
+                                                else if(sharedVariables.openBoardCount == 0 && a==0)
+                                                 last=0;
 
 
 
