@@ -2905,7 +2905,7 @@ else if(dg.getArg(3).equals("3"))
 if(dg.getArg(0).equals("83"))// personal qtell
 {
 			String thetell= dg.getArg(3) + "\n";
-                        boolean multiLine =thetell.contains("\\\\n");
+                        boolean multiLine =thetell.contains("\\n");
 
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 	if(sharedVariables.qtellStyle == 1 || sharedVariables.qtellStyle == 3)
