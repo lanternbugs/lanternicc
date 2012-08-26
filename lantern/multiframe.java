@@ -141,6 +141,11 @@ public class multiframe {
       frame.myConnection.setVisible(true);
 
     } catch (Exception bfocus) {}
+    
+    try {
+      frame.sharedVariables.setDefaultWebBoardSize();
+    }
+    catch(Exception duiii){}
   }
 }// end main class
 

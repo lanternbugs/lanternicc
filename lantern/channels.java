@@ -124,7 +124,7 @@ boolean lowTimeColors = false;
 boolean newObserveGameSwitch = true;
 boolean saveNamePass = false;
 boolean drawCoordinates = true;
-boolean ActivitiesOnTop=true;
+boolean ActivitiesOnTop=false;
 boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 int maxUserButtons=10;
@@ -336,7 +336,7 @@ channels()
 {
 myServer = "ICC";
 version = "v4.93";
-newUserMessage="Welcome to Lantern Chess! You will stop seeing this message when you go to file/ save settings or save settings on exit. Be sure to check out the Windows Menu for items like Activities Window ( has the Lantern event list), and also in the Windows Menu, the Seek Graph. Check out the Help Menu for the Lantern Manual menu item to learn more about this program. Inputing from the game console Alt + C, toggles the game console size.\n";
+newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
@@ -403,18 +403,8 @@ try {
         Dimension dim = toolkit.getScreenSize();
         int screenW = dim.width;
         int screenH = dim.height;
-if(screenW > 1100 && screenH > 650)
-{
-webframeWidth=1000;
-webframeHeight=700;
+setDefaultWebBoardSize();
 
-}
-if(screenW > 900 && screenH > 700)
-{
-	defaultBoardWide=850;
-	defaultBoardHigh=700;
-
-}
 
 }
 catch(Exception sizing1){}
@@ -667,7 +657,7 @@ onMoveBoardBackgroundColor = new Color(205, 205, 205);
 inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
 chatTimestampColor = new Color(40,200,40);
-listColor = new Color(204, 204, 204);
+listColor = new Color(255, 255, 255);
 lightcolor= new Color(255, 255, 255);
 darkcolor = new Color(71,203,211);
 tellcolor = new Color(255,255,0);
@@ -884,7 +874,25 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
       LMenu.add(item5);
 
 }
+void setDefaultWebBoardSize()
+{
+	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+        Dimension dim = toolkit.getScreenSize();
+        int screenW = dim.width;
+        int screenH = dim.height;
+if(screenW > 1100 && screenH > 700)
+{
+webframeWidth=1000;
+webframeHeight=650;
 
+}
+if(screenW > 900 && screenH > 700)
+{
+	defaultBoardWide=850;
+	defaultBoardHigh=650;
+
+}
+}
 void openUrl(String myurl)
 {
 // mac fix replace %0D at end with empty
