@@ -2905,6 +2905,7 @@ else if(dg.getArg(3).equals("3"))
 if(dg.getArg(0).equals("83"))// personal qtell
 {
 			String thetell= dg.getArg(3) + "\n";
+                        boolean multiLine =thetell.contains("\\\\n");
 
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 	if(sharedVariables.qtellStyle == 1 || sharedVariables.qtellStyle == 3)
@@ -2958,7 +2959,7 @@ if(botname.equals("Slomato"))
 botsChannel=222;
 if(botname.equals("LittlePer"))
 botsChannel=225;
-if(botsChannel > -1)
+if(botsChannel > -1 && multiLine == false)
 {
 
 for(int b=0; b< sharedVariables.maxConsoleTabs; b++)
