@@ -1055,7 +1055,7 @@ class subframe extends JInternalFrame
       channelTabs[con].addMouseListener(new MouseAdapter() {
           public void mousePressed(MouseEvent e) {
             if (e.getButton() == MouseEvent.BUTTON3 || e.getClickCount() == 2) {
-              makerightclickhappen(e, con);
+              JMenu dummyMenu = makerightclickhappen(e, con, true);
             } else {
               makeHappen(con);
             }
@@ -1074,134 +1074,11 @@ class subframe extends JInternalFrame
           public void mouseEntered(MouseEvent me) {}
           public void mouseExited(MouseEvent me) {}
           public void mouseClicked(MouseEvent me) {}
-          
-          public void makerightclickhappen(MouseEvent e, final int n) {
-            JPopupMenu menu2 = new JPopupMenu("Popup2");
-            JMenuItem item11 = new JMenuItem("trim tab chat");
-            item11.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  myoutput data = new myoutput();
-                  data.trimconsole = n;
-                  queue.add(data);
-                }
-              });
-            
-            JMenu submenu  = new JMenu("Advanced");
 
-            submenu.add(item11);
-            JMenuItem item2 = new JMenuItem("set tab channels and name");
-            item2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  customizeTab(n);
-                }
-              });
-            if (n != 0)
-              menu2.add(item2);
 
-            JMenuItem item3 = new JMenuItem("set tab font");
-            item3.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  setTabFont(n);
-                }
-              });
-            menu2.add(item3);
-
-            JMenuItem item4 = new JMenuItem("set tab colors");
-            item4.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  setTabColors(n);
-                }
-              });
-            menu2.add(item4);
-
-            JMenuItem item1 = new JMenuItem("clear tab chat");
-            item1.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  myoutput data = new myoutput();
-                  data.clearconsole = n;
-                  queue.add(data);
-                }
-              });
-            menu2.add(item1);
-
-            final JCheckBoxMenuItem item5 = new JCheckBoxMenuItem("show typed text");
-            item5.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  /*
-                  if (sharedVariables.tabStuff[n].typed) {
-                    sharedVariables.tabStuff[n].typed = false;
-                    item5.setSelected(false);
-                  } else {
-                    sharedVariables.tabStuff[n].typed = true;
-                    item5.setSelected(true);
-                  }
-                  */
-                  sharedVariables.tabStuff[n].typed = !sharedVariables.tabStuff[n].typed;
-                  item5.setSelected(sharedVariables.tabStuff[n].typed);
-                }
-              });
-            /*
-            if (sharedVariables.tabStuff[n].typed)
-              item5.setSelected(true);
-            else
-              item5.setSelected(false);
-            */
-            item5.setSelected(sharedVariables.tabStuff[n].typed);
-            
-            submenu.add(item5);
-
-            final JCheckBoxMenuItem item6 = new JCheckBoxMenuItem("suppress (told ...)");
-            item6.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  /*
-                  if (!sharedVariables.tabStuff[n].told) {
-                    sharedVariables.tabStuff[n].told = true;
-                    item6.setSelected(true);
-                  } else {
-                    sharedVariables.tabStuff[n].told = false;
-                    item6.setSelected(false);
-                  }
-                  */
-                  sharedVariables.tabStuff[n].told = !sharedVariables.tabStuff[n].told;
-                  item6.setSelected(!sharedVariables.tabStuff[n].told);
-                }
-              });
-            /*
-            if (!sharedVariables.tabStuff[n].told)
-              item6.setSelected(true);
-            else
-              item6.setSelected(false);
-            */
-            item6.setSelected(!sharedVariables.tabStuff[n].told);
-            submenu.add(item6);
-
-            JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
-            item7.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  changeTellTab(n);
-                }
-              });
-
-            if (sharedVariables.tellsToTab && sharedVariables.tellTab == n)
-              item7.setSelected(true);
-            //if (sharedVariables.tellconsole == consoleNumber)
-            menu2.add(item7);
-
-            JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
-            itemQ.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  customizeTabQtells(n);
-                }
-              });
-
-            menu2.add(itemQ);
-
-            menu2.add(submenu);
-
-            add(menu2);
-            menu2.show(e.getComponent(),e.getX(),e.getY());
-          }
         });
+        
+
     }
 
     nameListClass listclasstype = new nameListClass();
@@ -1836,6 +1713,170 @@ class subframe extends JInternalFrame
 
     add(menu3);
   }// end menu setup
+
+
+            public JMenu makerightclickhappen(MouseEvent e, final int n, boolean mypopup) {
+
+            JPopupMenu menu2 = new JPopupMenu();
+            JMenu menu3=null;
+            if(mypopup == false)
+            menu3= new JMenu();
+
+            JMenuItem item11 = new JMenuItem("trim tab chat");
+            item11.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  myoutput data = new myoutput();
+                  data.trimconsole = n;
+                  queue.add(data);
+                }
+              });
+
+            JMenu submenu  = new JMenu("Advanced");
+
+            submenu.add(item11);
+            JMenuItem item2 = new JMenuItem("set tab channels and name");
+            item2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  customizeTab(n);
+                }
+              });
+            if (n != 0)
+            {
+              if(menu3 == null)
+              menu2.add(item2);
+              else
+              menu3.add(item2);
+
+            }
+
+            JMenuItem item3 = new JMenuItem("set tab font");
+            item3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  setTabFont(n);
+                }
+              });
+                       if(menu3 == null)
+                       menu2.add(item3);
+                       else
+                       menu3.add(item3);
+
+            JMenuItem item4 = new JMenuItem("set tab colors");
+            item4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  setTabColors(n);
+                }
+              });
+                      if(menu3 == null)
+                       menu2.add(item4);
+                       else
+                       menu3.add(item4);
+
+            JMenuItem item1 = new JMenuItem("clear tab chat");
+            item1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  myoutput data = new myoutput();
+                  data.clearconsole = n;
+                  queue.add(data);
+                }
+              });
+                      if(menu3 == null)
+                       menu2.add(item1);
+                       else
+                       menu3.add(item1);
+
+            final JCheckBoxMenuItem item5 = new JCheckBoxMenuItem("show typed text");
+            item5.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  /*
+                  if (sharedVariables.tabStuff[n].typed) {
+                    sharedVariables.tabStuff[n].typed = false;
+                    item5.setSelected(false);
+                  } else {
+                    sharedVariables.tabStuff[n].typed = true;
+                    item5.setSelected(true);
+                  }
+                  */
+                  sharedVariables.tabStuff[n].typed = !sharedVariables.tabStuff[n].typed;
+                  item5.setSelected(sharedVariables.tabStuff[n].typed);
+                }
+              });
+            /*
+            if (sharedVariables.tabStuff[n].typed)
+              item5.setSelected(true);
+            else
+              item5.setSelected(false);
+            */
+            item5.setSelected(sharedVariables.tabStuff[n].typed);
+
+            submenu.add(item5);
+
+            final JCheckBoxMenuItem item6 = new JCheckBoxMenuItem("suppress (told ...)");
+            item6.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  /*
+                  if (!sharedVariables.tabStuff[n].told) {
+                    sharedVariables.tabStuff[n].told = true;
+                    item6.setSelected(true);
+                  } else {
+                    sharedVariables.tabStuff[n].told = false;
+                    item6.setSelected(false);
+                  }
+                  */
+                  sharedVariables.tabStuff[n].told = !sharedVariables.tabStuff[n].told;
+                  item6.setSelected(!sharedVariables.tabStuff[n].told);
+                }
+              });
+            /*
+            if (!sharedVariables.tabStuff[n].told)
+              item6.setSelected(true);
+            else
+              item6.setSelected(false);
+            */
+            item6.setSelected(!sharedVariables.tabStuff[n].told);
+            submenu.add(item6);
+
+            JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
+            item7.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  changeTellTab(n);
+                }
+              });
+
+            if (sharedVariables.tellsToTab && sharedVariables.tellTab == n)
+              item7.setSelected(true);
+            //if (sharedVariables.tellconsole == consoleNumber)
+           if(menu3 == null)
+             menu2.add(item7);
+           else
+           menu3.add(item7);
+
+            JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
+            itemQ.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  customizeTabQtells(n);
+                }
+              });
+
+            if(menu3 == null)
+            menu2.add(itemQ);
+            else
+            menu3.add(itemQ);
+
+           if(menu3 == null)
+             menu2.add(submenu);
+           else
+           menu3.add(submenu);
+
+            if(mypopup == true)
+            {
+            add(menu2);
+            menu2.show(e.getComponent(),e.getX(),e.getY());
+
+            }// end mypopup !null
+
+          return menu3;
+          }
+
 
   void doCommand(String mycommand) {
     myoutput output = new myoutput();
