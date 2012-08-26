@@ -74,6 +74,7 @@ class subframe extends JInternalFrame
   
   String consoleTitle;
   JMenuBar consoleMenu;
+  JMenu tabOptionsMenu;
   JList myNameList;
   JScrollPane listScroller;
   JCheckBoxMenuItem listChoice;
@@ -474,7 +475,8 @@ class subframe extends JInternalFrame
     nextmoves.addActionListener(this);
 
     /******************** end of menus ********************/
-    
+    tabOptionsMenu = makerightclickhappen(null, 0, false);
+    consoleMenu.add(tabOptionsMenu);
     consoleMenu.setVisible(sharedVariables.showConsoleMenu);
     initComponents();
   }
@@ -902,6 +904,10 @@ class subframe extends JInternalFrame
     myHighlighter.removeAllHighlights();
     channelTabs[sharedVariables.looking[consoleNumber]].setBackground(sharedVariables.tabBackground);
     sharedVariables.looking[consoleNumber] = con;
+    consoleMenu.remove(tabOptionsMenu);
+    tabOptionsMenu = makerightclickhappen(null, 0, false);
+    consoleMenu.add(tabOptionsMenu);
+
     consoles[consoleNumber].setStyledDocument(sharedVariables.mydocs[con]);
     Color my = new Color(193,153,153);
     setActiveTabForeground(con);
@@ -1715,18 +1721,21 @@ class subframe extends JInternalFrame
   }// end menu setup
 
 
-            public JMenu makerightclickhappen(MouseEvent e, final int n, boolean mypopup) {
+            public JMenu makerightclickhappen(MouseEvent e, final int n, final boolean mypopup) {
 
             JPopupMenu menu2 = new JPopupMenu();
             JMenu menu3=null;
             if(mypopup == false)
-            menu3= new JMenu();
+            menu3= new JMenu("Management");
 
             JMenuItem item11 = new JMenuItem("trim tab chat");
             item11.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   myoutput data = new myoutput();
+                  if(mypopup == true)
                   data.trimconsole = n;
+                  else
+                  data.trimconsole=sharedVariables.looking[consoleNumber];
                   queue.add(data);
                 }
               });
@@ -1737,10 +1746,13 @@ class subframe extends JInternalFrame
             JMenuItem item2 = new JMenuItem("set tab channels and name");
             item2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                  if(mypopup == true)
                   customizeTab(n);
+                  else
+                  customizeTab(sharedVariables.looking[consoleNumber]);
                 }
               });
-            if (n != 0)
+            if ((n != 0 && mypopup == true) || (sharedVariables.looking[consoleNumber]!=0 && mypopup == false))
             {
               if(menu3 == null)
               menu2.add(item2);
@@ -1752,7 +1764,10 @@ class subframe extends JInternalFrame
             JMenuItem item3 = new JMenuItem("set tab font");
             item3.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                  if(mypopup == true)
                   setTabFont(n);
+                  else
+                  setTabFont(sharedVariables.looking[consoleNumber]);
                 }
               });
                        if(menu3 == null)
@@ -1763,7 +1778,10 @@ class subframe extends JInternalFrame
             JMenuItem item4 = new JMenuItem("set tab colors");
             item4.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                  if(mypopup == true)
                   setTabColors(n);
+                  else
+                  setTabColors(sharedVariables.looking[consoleNumber]);
                 }
               });
                       if(menu3 == null)
@@ -1775,7 +1793,10 @@ class subframe extends JInternalFrame
             item1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                   myoutput data = new myoutput();
+                  if(mypopup == true)
                   data.clearconsole = n;
+                  else
+                  data.clearconsole=sharedVariables.looking[consoleNumber];
                   queue.add(data);
                 }
               });
@@ -1796,8 +1817,17 @@ class subframe extends JInternalFrame
                     item5.setSelected(true);
                   }
                   */
-                  sharedVariables.tabStuff[n].typed = !sharedVariables.tabStuff[n].typed;
+                  if(mypopup == true)
+                  {
+                   sharedVariables.tabStuff[n].typed = !sharedVariables.tabStuff[n].typed;
                   item5.setSelected(sharedVariables.tabStuff[n].typed);
+                  }
+                  else
+                  {
+                   sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed = !sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed;
+                  item5.setSelected(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed);
+
+                  }// end else
                 }
               });
             /*
@@ -1806,7 +1836,10 @@ class subframe extends JInternalFrame
             else
               item5.setSelected(false);
             */
-            item5.setSelected(sharedVariables.tabStuff[n].typed);
+            if(mypopup == true)
+           item5.setSelected(sharedVariables.tabStuff[n].typed);
+            else
+            item5.setSelected(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed);
 
             submenu.add(item5);
 
@@ -1822,8 +1855,17 @@ class subframe extends JInternalFrame
                     item6.setSelected(false);
                   }
                   */
-                  sharedVariables.tabStuff[n].told = !sharedVariables.tabStuff[n].told;
+                  if(mypopup == true)
+                  {
+                    sharedVariables.tabStuff[n].told = !sharedVariables.tabStuff[n].told;
                   item6.setSelected(!sharedVariables.tabStuff[n].told);
+                  }
+                  else
+                  {
+                    sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].told = !sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].told;
+                  item6.setSelected(!sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].told);
+
+                  }// end else
                 }
               });
             /*
@@ -1832,18 +1874,28 @@ class subframe extends JInternalFrame
             else
               item6.setSelected(false);
             */
+            if(mypopup == true)
             item6.setSelected(!sharedVariables.tabStuff[n].told);
+            else
+           item6.setSelected(!sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].told);
+
             submenu.add(item6);
 
             JCheckBoxMenuItem item7 = new JCheckBoxMenuItem("make tell tab");
             item7.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                  if(mypopup == true)
                   changeTellTab(n);
+                  else
+                  changeTellTab(sharedVariables.looking[consoleNumber]);
                 }
               });
 
-            if (sharedVariables.tellsToTab && sharedVariables.tellTab == n)
+            if (sharedVariables.tellsToTab && sharedVariables.tellTab == n && mypopup == true)
               item7.setSelected(true);
+              else if(sharedVariables.tellsToTab && sharedVariables.tellTab == sharedVariables.looking[consoleNumber] && mypopup == false)
+                item7.setSelected(true);
+
             //if (sharedVariables.tellconsole == consoleNumber)
            if(menu3 == null)
              menu2.add(item7);
@@ -1853,7 +1905,10 @@ class subframe extends JInternalFrame
             JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
             itemQ.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                  if(mypopup == true)
                   customizeTabQtells(n);
+                  else
+                  customizeTabQtells(sharedVariables.looking[consoleNumber]);
                 }
               });
 
