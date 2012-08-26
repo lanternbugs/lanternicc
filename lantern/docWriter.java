@@ -105,7 +105,9 @@ int x = consoleSubframes[0].getFontMetrics(font).stringWidth("asdf");
 */
 if(attrs == null)
 	attrs = new SimpleAttributeSet();
+	attrs.addAttribute("D", "E");// a default if there is nothing there
 SimpleAttributeSet  style = new SimpleAttributeSet();// = doc.addStyle(null, null);
+style.addAttribute("D", "E");// a default if there is nothing there
 if(sharedVariables.indent == true)
 {
 StyleConstants.setLeftIndent(style, 12);
@@ -150,7 +152,7 @@ if(myStyles!=null)
 else if(sharedVariables.leftTimestamp == true && hasTimestamp(thetell))
 	insertWithTimeColor(doc, thetell, attrs, col);
 else
-	doc.insertString(doc.getEndPosition().getOffset(), thetell, attrs);
+	patchedInsertString(doc, doc.getEndPosition().getOffset(), thetell, attrs);
 
 }
 else
@@ -162,7 +164,7 @@ if(attempt == 1)
 if(myStyles!=null)
 	insertWithStyles(doc, mine.text1, attrs, myStyles,mine.start1, mine.stop1, false);
 else
-doc.insertString(doc.getEndPosition().getOffset(), mine.text1, attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text1, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -178,7 +180,7 @@ attrs.addAttribute(javax.swing.text.html.HTML.Attribute.HREF, mine.text2);
 if(myStyles!=null)
 	insertWithStyles(doc, mine.text2, attrs, myStyles,mine.start2, mine.stop2, true);
 else
-doc.insertString(doc.getEndPosition().getOffset(), mine.text2, attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text2, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -195,7 +197,7 @@ if(myStyles!=null)
 	insertWithStyles(doc, mine.text3, attrs, myStyles,mine.start3, mine.stop3, false);
 else
 
-	doc.insertString(doc.getEndPosition().getOffset(), mine.text3, attrs);
+	patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text3, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -418,7 +420,7 @@ try {
 int index = thetell.indexOf(" ");
 if(index==-1)
 {
-doc.insertString(doc.getEndPosition().getOffset(), thetell, attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), thetell, attrs);
 }
 else
 {
@@ -427,9 +429,9 @@ StyleConstants.setForeground(attrs, sharedVariables.chatTimestampColor);
 String subtell1=thetell.substring(0, index);
 String subtell2=thetell.substring(index,thetell.length());
 
-	doc.insertString(doc.getEndPosition().getOffset(), subtell1, attrs);
+	patchedInsertString(doc, doc.getEndPosition().getOffset(), subtell1, attrs);
 StyleConstants.setForeground(attrs, col);
-	doc.insertString(doc.getEndPosition().getOffset(), subtell2, attrs);
+	patchedInsertString(doc, doc.getEndPosition().getOffset(), subtell2, attrs);
 
 }
 }
@@ -507,13 +509,13 @@ if(italic1 > -1 && italic2 > -1)
 
 patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
 
-//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
+//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
 
 if(sharedVariables.italicsBehavior == 2)
 	StyleConstants.setForeground(attrs, myStyles.colors[a].brighter());
 if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, true);
-doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(italic1, italic2+1), attrs);
+patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(italic1, italic2+1), attrs);
 if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, false);
 if(sharedVariables.italicsBehavior == 2)
@@ -530,7 +532,7 @@ else
  // insert end
 patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
 
-//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
+//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
 
  dd=-1;
 }
@@ -540,7 +542,7 @@ patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substrin
 
 }  // end if
 else
-//doc.insertString(doc.getEndPosition().getOffset(), myStrings[a], attrs);
+//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a], attrs);
 patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a], attrs);
 
 }// if start > blocks[a]
@@ -563,14 +565,29 @@ catch(Exception dui){}
 void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
 {
   try {
-  for(int a=0; a<mystring.length(); a++)
+    if(attrs == null)
+	attrs = new SimpleAttributeSet();
+	attrs.addAttribute("D", "E");// a default if there is nothing there
+	if(doc==null)
+	return;
+	if(mystring == null)
+	return;
+	if(end < 0)
+	end=0;
+	if(mystring.equals(""))
+	return;
+
+       int a;
+  for(a=0; a<mystring.length(); a++)
   {
   if(a%2==0)
   attrs.addAttribute("A", "B");
   else
   attrs.removeAttribute("A");
-    doc.insertString(end+a, mystring.substring(a, a+1), attrs);
+  doc.insertString(end+a, mystring.substring(a, a+1), attrs);
   }// end for
+  if(a%2 == 1)
+   attrs.removeAttribute("A");
   }
   catch(Exception dui){}
 }// end method patched
