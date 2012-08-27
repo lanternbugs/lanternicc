@@ -564,6 +564,16 @@ catch(Exception dui){}
 
 void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
 {
+  
+  if(!sharedVariables.operatingSystem.equals("unix"))
+  {
+  try {
+    doc.insertString(end, mystring, attrs);
+  }
+  catch(Exception dummy){}
+   return;
+  }
+
   try {
     if(attrs == null)
 	attrs = new SimpleAttributeSet();
