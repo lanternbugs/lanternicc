@@ -1121,7 +1121,7 @@ catch(Exception logging){}
         setTitle(sharedVariables.mygame[gameData.BoardIndex].title);
       mypanel.editable=1;
       sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
-        sharedVariables.NOT_FOUND_NUMBER;
+        sharedVariables.STATE_OVER;
       //turn=0;
       try {
         if (isVisible() == false)

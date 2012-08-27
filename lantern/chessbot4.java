@@ -4728,11 +4728,14 @@ void proccessGameInfo(newBoardData temp)
 						newGameTab(gamenum);
 					repaintBoards(gamenum);
 
-
+                                        try {
 					selectBoard();
 
                                         if(sharedVariables.autoChat == true)
                                         setComboMemory(sharedVariables.mygame[gamenum].state, gamenum);
+                                        }
+                                        catch(Exception repainter){}
+
                                         if(sharedVariables.tabsOnly == true)
                                          {
                                            boolean go=true;
@@ -4749,23 +4752,56 @@ void proccessGameInfo(newBoardData temp)
                                         if(sharedVariables.newObserveGameSwitch == false && sharedVariables.mygame[gamenum].state != sharedVariables.STATE_PLAYING)
                                             go=false;
 
-                                          if(go == true && first == -1)
+                                          if(go == true && first == -1 && myboards[ccc].isVisible())
                                           first =ccc;
 
 			                }
-                                        else
-			                break;
+
+
 
 
 			                  if(go== true && first > -1)
-                                          { myboards[first].myconsolepanel.makehappen(gamenum);
+                                          {
+
+                                            for(int xy=0; xy<sharedVariables.maxGameTabs; xy++)
+                                            if(sharedVariables.tabLooking[xy]==gamenum)
+                                            {
+                                              
+                                              final int first2 = first;
+                                              final int xy2 = xy;
+                                              SwingUtilities.invokeLater(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                              try { myboards[first2].myconsolepanel.makehappen(xy2);
+                                              }catch(Exception duiiii){}
+                                              }// end run
+                                              }// end runnable
+                                              );
+
+                                              break;
+
+                                            }
+
                                           } // i need this to happen on new board
 
                                          }// end if tabs only
                                          else
-                                         myboards[gamenum].myconsolepanel.makehappen(gamenum); // new board opened we make that board happen
-
-
+                                        {
+                                         for(int xy=0; xy<sharedVariables.maxGameTabs; xy++)
+                                            if(sharedVariables.tabLooking[xy]==gamenum)
+                                            {
+                                          final int gamenum33= gamenum;
+                                          final int xy33 = xy;
+                                        SwingUtilities.invokeLater(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                              try { myboards[gamenum33].myconsolepanel.makehappen(xy33); // new board opened we make that board happen
+                                              }catch(Exception duiiii){}
+                                              }// end run
+                                              }// end runnable
+                                              );
+                                        }// end for
+                                        }// end else
                         	}// end try
 				catch(Exception foc){}
 
@@ -5538,12 +5574,27 @@ if(sharedVariables.tabsOnly == true)
 
 			if(myboards[a] != null)
 			{
-				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  && (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER
-                                       && sharedVariables.dontReuseGameTabs == false))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
+				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  && 
+                                (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER ||
+                                    ( sharedVariables.mygame[a].myGameNumber == sharedVariables.STATE_OVER  && sharedVariables.dontReuseGameTabs == false)))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
 				{
-				writeToConsole("Reusing board.");
-				// make board go to front with tabs only.
                                  boolean closed = true;
+                                if((sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER || sharedVariables.mygame[a].imclosed == true) && sharedVariables.dontReuseGameTabs == false)
+                                {
+                                 for(int aaa=a+1; aaa<sharedVariables.maxGameTabs; aaa++)
+                                 if(sharedVariables.mygame[aaa]!=null)
+                                 if( sharedVariables.mygame[aaa].myGameNumber == sharedVariables.STATE_OVER)
+                                 {
+                                  a=aaa;
+                                  closed = false;
+                                  break;
+
+                                 }
+                                }
+
+                                writeToConsole("Reusing board.");
+				// make board go to front with tabs only.
+
                                  for(int m=0; m<sharedVariables.openBoardCount; m++)
                                    if(sharedVariables.tabLooking[m]==a)
                                    closed = false;
