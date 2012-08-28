@@ -1454,7 +1454,8 @@ void stopTheEngine()
       // mike remove
 
       if (sharedVariables.mygame[gameData.BoardIndex].myGameNumber ==
-          sharedVariables.NOT_FOUND_NUMBER) {
+          sharedVariables.NOT_FOUND_NUMBER || sharedVariables.mygame[gameData.LookingAt].myGameNumber ==
+              sharedVariables.STATE_OVER) {
         // we dont want to do updates to time if the game is over
         paintClocks();
         return;
