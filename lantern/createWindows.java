@@ -128,7 +128,7 @@ protected void createConsoleFrame() {
 	}
 }
 
-protected void createWebFrame(String url) {
+protected void createWebFrame(final String url) {
 
 
 
@@ -136,7 +136,12 @@ protected void createWebFrame(String url) {
 
    	/*webframe mywebframe = new webframe(sharedVariables,  queue, url);
 	*/
-	if(!mywebframe.isVisible())
+ SwingUtilities.invokeLater(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                              try { 
+                                                
+if(!mywebframe.isVisible())
 	{       sharedVariables.setDefaultWebBoardSize();
 		mywebframe = new webframe(sharedVariables,  queue, url);
 		sharedVariables.desktop.add(mywebframe);
@@ -171,7 +176,13 @@ protected void createWebFrame(String url) {
     }
     catch (Exception e)
     {}
-	}
+	} // end else
+	
+	
+}catch(Exception duiiii){}
+                                              }// end run
+                                              }// end runnable
+                                              );
 }
 
 
