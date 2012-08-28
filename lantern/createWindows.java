@@ -136,8 +136,8 @@ protected void createWebFrame(String url) {
 
    	/*webframe mywebframe = new webframe(sharedVariables,  queue, url);
 	*/
-	if(mywebframe.isVisible() == false)
-	{
+	if(!mywebframe.isVisible())
+	{       sharedVariables.setDefaultWebBoardSize();
 		mywebframe = new webframe(sharedVariables,  queue, url);
 		sharedVariables.desktop.add(mywebframe);
 		try {
@@ -164,9 +164,10 @@ protected void createWebFrame(String url) {
 
     try
     {
-        mywebframe.setSelected(true);
+
         mywebframe.consoles[0].setPage(url);
 
+        mywebframe.setSelected(true);
     }
     catch (Exception e)
     {}
