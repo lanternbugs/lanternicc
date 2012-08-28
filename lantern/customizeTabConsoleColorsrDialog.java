@@ -211,6 +211,7 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		    {
 				sharedVariables.tabStuff[consoleNumber].ForColor =newColor;
 			    nonResponseTextLabel.setForeground(sharedVariables.tabStuff[consoleNumber].ForColor);
+			    backgroundLabel.setForeground(sharedVariables.tabStuff[consoleNumber].ForColor);
 
 			}
 		}// end try
@@ -352,6 +353,6 @@ qtellLabel.setBackground(c);
 backgroundLabel.setBackground(c);
 responseTextLabel.setBackground(c);
 nonResponseTextLabel.setBackground(c);
-
+timestampLabel.setBackground(c);
 }
 }// end class
