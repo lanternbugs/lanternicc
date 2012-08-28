@@ -1433,7 +1433,8 @@ void stopTheEngine()
       try {
         if (isVisible() == true)
           if (sharedVariables.mygame[gameData.LookingAt].myGameNumber !=
-              sharedVariables.NOT_FOUND_NUMBER)
+              sharedVariables.NOT_FOUND_NUMBER && sharedVariables.mygame[gameData.LookingAt].myGameNumber !=
+              sharedVariables.STATE_OVER)
             if(sharedVariables.mygame[gameData.LookingAt].becameExamined ==
                false) {
 
