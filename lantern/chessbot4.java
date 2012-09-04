@@ -3771,6 +3771,10 @@ try {
 
 					temp.arg11=dg.getArg(11);
 					temp.dg=18;
+					if(dg.getArg(0).equals("40"))
+					temp.arg18="isolated";
+					else
+					temp.arg18="!";
 						gamequeue.add(temp);
 
 
@@ -4145,6 +4149,16 @@ int getGameNumber(String icsGameNumber)
 }
 	int getGameBoard(String s)
 	{
+		if(getGameNumber(s) == sharedVariables.STATE_OVER)/// for sposition, returns game over for spostion, wtih this it uses last spostion board with game over as game number
+                for(int a=0; a<sharedVariables.maxGameTabs; a++)
+				{
+					if(myboards[a]!=null)
+					{
+					int j=getGameNumber(s);
+					if(sharedVariables.mygame[a].myGameNumber ==j && a == sharedVariables.lastSpositionBoard)
+					return a;
+					}
+				}
 		for(int a=0; a<sharedVariables.maxGameTabs; a++)
 				{
 					if(myboards[a]!=null)
@@ -4711,7 +4725,8 @@ void proccessGameInfo(newBoardData temp)
 					myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, temp.arg17, temp.type); // pass game number
 					else // fics
 					myboards[gamenum].gameStartedFics(temp.arg1);
-					
+					if(temp.arg18.equals("isolated"))
+					sharedVariables.lastSpositionBoard=gamenum;
 					if(temp.dg == 18) // for when we auto unoberve games
                                         {
                                          if(temp.arg11.equals("1"))

@@ -253,6 +253,7 @@ JButton [] mybuttons;
 URL [] songs;
 URL [] poweroutSounds;
 int andreysLayout = 2; // Andrey's layout variable
+int lastSpositionBoard=-1;
 int chatBufferSize=100000;
 int chatBufferExtra=1000;
 int showTenths;
