@@ -5555,7 +5555,9 @@ if(sharedVariables.tabsOnly == true)
 					myboards[bb].setSelected(true);
 					if(maximum == true)
 						myboards[bb].setMaximum(true);
-					bb=sharedVariables.openBoardCount;
+					else if(myboards[bb].isIcon())
+					myboards[bb].setIcon(false);
+                                        bb=sharedVariables.openBoardCount;
 				}
 				catch(Exception e){}
 			}
