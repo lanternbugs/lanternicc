@@ -1350,6 +1350,10 @@ class mymultiframe extends JFrame
     channelnotifymap.setMnemonic(KeyEvent.VK_M);
     channelnotifyonline.setMnemonic(KeyEvent.VK_O);
 
+    // add keystrokes
+    eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+                                                    ActionEvent.CTRL_MASK));
+
     // add to menu bar
     menu.add(sharedVariables.myWindows);
     // Windows /
