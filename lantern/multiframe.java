@@ -358,6 +358,7 @@ class mymultiframe extends JFrame
     gamequeue = new ConcurrentLinkedQueue<newBoardData>();
 
     sharedVariables = new channels();
+    loadGraphicsStandAlone();
     sharedVariables.useTopGames = getOnTopSetting();
     queue = new ConcurrentLinkedQueue<myoutput>();
 
@@ -451,7 +452,7 @@ class mymultiframe extends JFrame
     repaint();
     client.enabletimestamp();
 
-    loadGraphicsStandAlone();
+
     loadSoundsStandAlone();
     //loadGraphicsApplet();
     //loadSoundsApplet();
@@ -4425,7 +4426,10 @@ class mymultiframe extends JFrame
       });
 
     //activitesLabel.setIcon(sharedVariables.activitiesIcon);
-    activitesLabel.setText("<html><Center><B>A</b></center></html>");
+    activitesLabel.setText("<html><center><b>A</b></center></html>");
+    activitesLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    activitesLabel.setOpaque(true);
+    activitesLabel.setBackground(new Color(245,245,250));
     activitesLabel.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
@@ -4864,6 +4868,13 @@ class mymultiframe extends JFrame
       graphics.multiPieces[graphics.maxPieces-2][aa][10] = graphics.multiPieces[spatial][aa][10];
       graphics.multiPieces[graphics.maxPieces-2][aa][11] = graphics.multiPieces[spatial][aa][11];
     }
+
+        myurl = this.getClass().getResource("join_event.gif");
+        sharedVariables.eventsImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
+        myurl = this.getClass().getResource("watch_event.gif");
+        sharedVariables.eventsImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
+        myurl = this.getClass().getResource("info_event.gif");
+        sharedVariables.eventsImages.add(Toolkit.getDefaultToolkit().getImage(myurl));
 
     boolean flagger=true;
     int index11=-1;

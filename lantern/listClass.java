@@ -18,7 +18,9 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import javax.swing.table.*;
+import java.util.Vector;
+import javax.swing.event.TableModelEvent;
 class listClass {
 JList theList;
 List eventList;
@@ -33,6 +35,14 @@ DefaultListModel modelwatch;
 // type used in game list, type1 is history search etc. type2 is argument
 String type1;
 String type2;
+// for events table
+public myDefaultTableModel eventsTable;
+ImageIcon joinIcon;
+ImageIcon watchIcon;
+ImageIcon infoIcon;
+
+
+
 
 listClass(String type){
 eventList = new ArrayList<String>();
@@ -61,8 +71,19 @@ modelwatch = new DefaultListModel();
 
   }
 
+// we are storing events in both a table and list
 
+if(type.equals("Events"))
+{
+joinIcon = new ImageIcon(channels.eventsImages.get(0));
+watchIcon = new ImageIcon(channels.eventsImages.get(1));
+infoIcon = new ImageIcon(channels.eventsImages.get(2));
 
+Object [][] tableData = {{joinIcon, watchIcon, infoIcon, "Click the icon on events below for Join, Watch and Info"}};
+String [] tableCollumns = {"Join", "Watch", "Info", "Listing"};
+
+eventsTable = new myDefaultTableModel(tableCollumns, tableData);
+}
 /* for(int ii=i; ii<200; ii++)
  model.add(ii, "" + ii);
 */
@@ -90,7 +111,7 @@ void removeFromList(String index)
 void addToEvents(String entry, String number, String join, String watch, String info)
 {
 	int add=1;
-	
+
         int spot = -1;
         if(join.equals("") && info.equals("") && (watch.toLowerCase().startsWith("observe ")&& !entry.startsWith("LIVE")))
         spot=1;  // we place high rated games to watch at top
@@ -115,6 +136,22 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	  modeljoin.set(i,  join);
 	  modelinfo.set(i,  info);
 	  modelwatch.set(i,  watch);
+  	  if(join.equals("!!!"))
+            eventsTable.setValueAt(null, i, 0);
+	  else
+	  eventsTable.setValueAt(joinIcon, i, 0);
+
+  	  if(watch.equals("!!!"))
+            eventsTable.setValueAt(null, i, 1);
+	  else
+	  eventsTable.setValueAt(watchIcon, i, 1);
+
+            if(info.equals("!!!"))
+            eventsTable.setValueAt(null, i, 2);
+	  else
+	  eventsTable.setValueAt(infoIcon, i, 2);
+
+	  eventsTable.setValueAt(entry, i, 3);
 		return;
 	}
         }// end for
@@ -127,16 +164,60 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	modelinfo.add(spot, info);
 	modelwatch.add(spot, watch);
 	modeldata.add(spot, number);
+         Object [] tempo = new Object[4];
+         if(join.equals("!!!"))
+         tempo[0]=null;
+         else
+         tempo[0] = joinIcon;
+
+         if(watch.equals("!!!"))
+         tempo[1]=null;
+         else
+         tempo[1] = watchIcon;
+
+         if(info.equals("!!!"))
+         tempo[2]=null;
+         else
+         tempo[2] = infoIcon;
+
+         tempo[3] = entry;
+
+         eventsTable.insertRow(spot, tempo);
 
          }
          else
          {
+           if(entry.equals(""))
+           return;
+
         model.add(model.size(), entry);
 	modeljoin.add(modeljoin.size(), join);
 	modelinfo.add(modelinfo.size(), info);
 	modelwatch.add(modelwatch.size(), watch);
 	modeldata.add(modeldata.size(), number);
-         }
+
+
+
+         Object [] tempo = new Object[4];
+         if(join.equals("!!!"))
+         tempo[0]=null;
+         else
+         tempo[0] = joinIcon;
+
+         if(watch.equals("!!!"))
+         tempo[1]=null;
+         else
+         tempo[1] = watchIcon;
+
+         if(info.equals("!!!"))
+         tempo[2]=null;
+         else
+         tempo[2] = infoIcon;
+
+         tempo[3] = entry;
+
+         eventsTable.insertRow(eventsTable.getRowCount(), tempo);
+           }// end else
 }
 void removeFromEvents(String index)
 {
@@ -151,6 +232,14 @@ void removeFromEvents(String index)
 	  modeljoin.set(i,  "!!!");
 	  modelinfo.set(i,  "!!!");
 	  modelwatch.set(i,  "!!!");
+	  // setValueAt(object, row, column);
+	  eventsTable.setValueAt(null, i, 0);
+	  eventsTable.setValueAt(null, i, 1);
+	  eventsTable.setValueAt(null, i, 2);
+	  eventsTable.setValueAt("-", i, 3);
+
+
+
            break;
 
           }
@@ -160,6 +249,8 @@ void removeFromEvents(String index)
 	modeljoin.remove(i);
 	modelwatch.remove(i);
 	 modeldata.remove(i);
+	 eventsTable.removeRow(i);
+	 eventsTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
  	}
 
 
@@ -272,7 +363,30 @@ String getEventListing(int index)
 	return command;
 
 }
+class myDefaultTableModel extends DefaultTableModel
+{
+	boolean done;
+	int count;
 
+	public boolean isCellEditable(int row, int collumn)
+	{
+
+		return false;
+
+	}
+	myDefaultTableModel(String [] a1, Object [][] a2)
+	{
+		super(a2,a1);
+		count=0;
+		done=false;
+
+	}
+	void addTableRow(Object [] a1)
+	{
+		super.addRow(a1);
+	}
+
+}// end my default table model
 
 
 }// end class

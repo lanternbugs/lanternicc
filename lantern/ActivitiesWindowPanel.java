@@ -34,10 +34,12 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.swing.table.*;
+
 
 class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 {
-	JList theEventsList;
+	JTable theEventsList;
 	JList theSeeksList;
 	JList theComputerSeeksList;
 	JList theChannelList;
@@ -57,7 +59,7 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JLabel computerSeeksLabel;
 	JLabel notifyLabel;
 	JLabel channelLabel;
-
+        int iconWidth = 42;
 //JScrollPane seeklistScroller;
 //JScrollPane computerseeklistScroller;
 JScrollPane listScroller;
@@ -70,6 +72,10 @@ notifyPanel notifylistScrollerPanel;
 int currentChannel = -1;
 int currentChannel2 = -1;
 int currentChannel3 = -1;
+int JOIN_COL = 0;
+int WATCH_COL = 1;
+int INFO_COL = 2;
+int ENTRY_COL = 3;
 
 JPanel channelPanel=new JPanel();
 seekPanel myseeks1;
@@ -139,10 +145,37 @@ notifyLabel = new JLabel(" Notify List    ");
 channelLabel = new JLabel(" Channel List    ");
 
 //list = new JList(data); //data has type Object[]
-theEventsList = new JList(eventsList.model);
-theEventsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+theEventsList = new JTable(eventsList.eventsTable)
+{
+            //  Returning the Class of each column will allow different
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+};
+/*theEventsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 theEventsList.setLayoutOrientation(JList.VERTICAL);
 theEventsList.setVisibleRowCount(-1);
+*/
+
+theEventsList.setShowVerticalLines(false);
+theEventsList.setShowHorizontalLines(false);
+TableColumn col0 = theEventsList.getColumnModel().getColumn(JOIN_COL);
+col0.setPreferredWidth(iconWidth);
+col0.setMaxWidth(iconWidth);
+TableColumn col1 = theEventsList.getColumnModel().getColumn(WATCH_COL);
+col1.setPreferredWidth(iconWidth);
+col1.setMaxWidth(iconWidth);
+
+TableColumn col2 = theEventsList.getColumnModel().getColumn(INFO_COL);
+col2.setPreferredWidth(iconWidth);
+col2.setMaxWidth(iconWidth);
+
+TableColumn col3 = theEventsList.getColumnModel().getColumn(ENTRY_COL);
+col3.setPreferredWidth(200);
+col3.setMaxWidth(10000);
+
 listScroller = new JScrollPane(theEventsList);
 listScrollerPanel = new EventsPanel();
 listScrollerPanel.add(listScroller);
@@ -325,6 +358,7 @@ MouseListener mouseListenerSeeks = new MouseAdapter() {
 
 
 MouseListener mouseListenerComputerSeeks = new MouseAdapter() {
+
      public void mouseClicked(MouseEvent e) {
          if (e.getClickCount() == 2) {
              int index = theComputerSeeksList.locationToIndex(e.getPoint());
@@ -346,25 +380,136 @@ MouseListener mouseListenerComputerSeeks = new MouseAdapter() {
      }
  };
  theComputerSeeksList.addMouseListener(mouseListenerComputerSeeks);
-
-
-MouseListener mouseListenerEvents = new MouseAdapter() {
+ MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
+  JTable target = (JTable)e.getSource();
+      int row = target.getSelectedRow();
+ TableColumnModel colModel = target.getColumnModel();
+ // get column index
+ int  col = colModel.getColumnIndexAtX(e.getX());
+
+ if(row == 0)
+ return;
+if(col == ENTRY_COL)
+return;
+String join1;
+String join2;
+
+String listing = eventsList.getEventListing(row);
+String join = eventsList.getJoinCommand(row);
+String info = eventsList.getInfoCommand(row);
+String watch = eventsList.getWatchCommand(row);
+/*JFrame framer = new JFrame("join is: " + join + " and watch is: " + watch + " and info is: " + info + " and col is: " + col);
+framer.setSize(1000,100);
+framer.setVisible(true);
+*/
+if(col == JOIN_COL && join.equals("!!!"))
+return;
+if(col == WATCH_COL && watch.equals("!!!"))
+return;
+if(col == INFO_COL && info.equals("!!!"))
+return;
+
+
+             if(listing.equals("-"))
+             return;
+             boolean go=false;
+
+             if(listing.contains("[VIDEO]"))
+             {
+                if(!info.equals(""))
+                if(info.startsWith("http://"))
+                {
+
+                if(!join.equals(""))
+                if(join.toLowerCase().contains(" webcast"))
+                {
+                 go=true;
+                 sharedVariables.openUrl(info);
+                }
+                }
+              if(!join.equals(""))
+                if(join.startsWith("https://"))
+                {
+
+                if(!join.equals(""))
+                if(join.toLowerCase().contains("gotd"))
+                {
+                 go=true;
+                 sharedVariables.openUrl(join);
+                }
+                }
+             }
+              if(join.equals("!!!") && info.equals("!!!") && (watch.toLowerCase().startsWith("observe ") && !listing.startsWith("LIVE")))
+             {
+                myoutput data = new myoutput();
+                data.consoleNumber = 0;
+                data.data=watch + "\n";
+                queue.add(data);
+                go=true;
+
+             }
+             if(watch.equals("!!!") && info.equals("!!!") && join.toLowerCase().startsWith("examine "))
+             {
+                myoutput data = new myoutput();
+                data.consoleNumber = 0;
+                data.data=join + "\n";
+                queue.add(data);
+                go=true;
+
+             }
+             if(go == false)
+             {
+join1=join;
+join2="";
+
+if(join.indexOf(" & ")!=-1)
+{
+        int spot = join.indexOf(" & ");
+	try {
+	join1=join.substring(0, spot);
+	join2=join.substring(spot + 3, join.length() );
+	}catch(Exception f){}
+}// if join has &
+
+if(col == JOIN_COL)
+{
+joinMethod(join1, join2);
+} // if join
+else if(col == WATCH_COL)
+{
+  watchMethod(watch);
+}// if watch
+else if(col == INFO_COL)
+{
+infoMethod(info);
+}// if info
+
+
+
+             } // if go equals false
+
+/* JFrame framer = new JFrame("row is " + row + " and collumn is " + col);
+ framer.setVisible(true);
+ framer.setSize(500,100);
+ */
+ }// end method
+ };// end class
+
+
+
+//old list listener
+/*MouseListener mouseListenerEvents = new MouseAdapter() {
+     public void mouseClicked(MouseEvent e) {
+
+
          if (e.getClickCount() == 2) {
              int index = theEventsList.locationToIndex(e.getPoint());
 			String listing = eventsList.getEventListing(index);
              String join = eventsList.getJoinCommand(index);
              String info = eventsList.getInfoCommand(index);
              String watch = eventsList.getWatchCommand(index);
-             /*if(!play.equals("-1"))
-             {
-				 myoutput output = new myoutput();
-				 output.data="play " + play + "\n";
 
-				 output.consoleNumber=0;
-      			 queue.add(output);
-		 	 }*/
-             
              boolean go=false;
              if(listing.equals("-"))
              return;
@@ -373,7 +518,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                 if(!info.equals(""))
                 if(info.startsWith("http://"))
                 {
-                
+
                 if(!join.equals(""))
                 if(join.toLowerCase().contains(" webcast"))
                 {
@@ -400,7 +545,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                 data.data=watch + "\n";
                 queue.add(data);
                 go=true;
-               
+
              }
              if(watch.equals("!!!") && info.equals("!!!") && join.toLowerCase().startsWith("examine "))
              {
@@ -409,7 +554,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                 data.data=join + "\n";
                 queue.add(data);
                 go=true;
-               
+
              }
              if(go == false)
              {
@@ -422,7 +567,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
           }
      }
- };
+ };     */
  theEventsList.addMouseListener(mouseListenerEvents);
 channelScroller = new JScrollPane(theChannelList);
 channelScroller2 = new JScrollPane(theChannelList2);
@@ -836,6 +981,43 @@ if(join.indexOf(" & ")!=-1)
                                  return;
                                 }
                                 */
+
+                                joinMethod(join1, join2);
+
+						dispose();
+			}});
+
+	buttoninfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event)
+			{
+
+
+                                         infoMethod(info);
+						dispose();
+			}});
+	buttonwatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event)
+			{
+
+                         watchMethod(watch);
+
+						dispose();
+			}});
+
+	cancelButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent event)
+					{
+
+						dispose();
+				}});
+
+
+	pane.add(buttonPane);
+
+}//end dialog constructor
+}// end dialog class
+void joinMethod(String join1, String join2)
+{
                                 if(join1.startsWith("http"))
                                 {
                                  sharedVariables.openUrl(join1);
@@ -859,14 +1041,10 @@ if(join.indexOf(" & ")!=-1)
 
 				 }
 
-						dispose();
-			}});
+}// end join method
 
-	buttoninfo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event)
-			{
-				
-                                
+void infoMethod(String info)
+{
                                 if(info.startsWith("http"))
                                 {
                                  sharedVariables.openUrl(info);
@@ -878,34 +1056,19 @@ if(join.indexOf(" & ")!=-1)
 				 output.consoleNumber=0;
       			 queue.add(output);
 
-						dispose();
-			}});
-	buttonwatch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event)
-			{
+}// end info method
+
+
+
+void watchMethod(String watch)
+{
 				 myoutput output = new myoutput();
 				 output.data=watch + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);
 
-						dispose();
-			}});
-
-	cancelButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent event)
-					{
-
-						dispose();
-				}});
-
-
-	pane.add(buttonPane);
-
-}//end dialog constructor
-}// end dialog class
-
-
+}//end watch method
 /*void sharedVariables.openUrl(String myurl)
 {
 
