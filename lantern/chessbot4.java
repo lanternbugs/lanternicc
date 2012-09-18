@@ -2121,13 +2121,15 @@ if(dg.getArg(0).equals("27"))
 		 sendMessage("multi set-quietly style 13\n");
 		sendMessage("multi Set-2 46 1\n");// dg  channels shared
                  sendMessage("multi Set-2 27 1\n");// dg people in channel
+                try {
                  String OS = "Linux";
                  if(sharedVariables.operatingSystem.equals("mac"))
                  OS = "Mac";
                  else if(sharedVariables.operatingSystem.equals("win"))
                  OS = "Windows";
-		sendMessage("multi set-quietly interface Lantern Chess on " + OS + " " + sharedVariables.version + "\n");
-
+		sendMessage("multi set-quietly interface Lantern Chess " + sharedVariables.version + " on " + OS + "\n");
+                }// end try
+                catch(Exception badvar){}
 		sendMessage("SeT-QuietlY level1 5\n");
 
 				sendMessage("multi Set-2 81 1; Set-2 64 1; Set-2 65 1; Set-2 81 1\n");// notify

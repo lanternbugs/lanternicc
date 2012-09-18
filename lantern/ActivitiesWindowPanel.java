@@ -160,7 +160,7 @@ theEventsList.setVisibleRowCount(-1);
 */
 
 theEventsList.setShowVerticalLines(false);
-theEventsList.setShowHorizontalLines(false);
+theEventsList.setShowHorizontalLines(true);
 TableColumn col0 = theEventsList.getColumnModel().getColumn(JOIN_COL);
 col0.setPreferredWidth(iconWidth);
 col0.setMaxWidth(iconWidth);

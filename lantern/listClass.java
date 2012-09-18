@@ -284,6 +284,18 @@ void resetList()
 }
 catch(Exception e){}
 
+if(eventsTable !=null)
+{
+try {
+	for(int i=eventsTable.getRowCount()-1; i >0; i--)
+	{eventsTable.removeRow(i);
+
+ 	}
+
+}
+catch(Exception duiii){}
+  
+}// if events
 
 }
 

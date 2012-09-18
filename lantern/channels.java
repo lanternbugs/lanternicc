@@ -337,7 +337,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v4.98";
+version = "v4.99";
 newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
