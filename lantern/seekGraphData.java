@@ -53,7 +53,7 @@ seekInfo [] standardGrid;
 int bulletW=6;
 int blitzW=18; // was 40
 int standardW=6;
-int height=30;
+static int height=30;
 
 
 
@@ -64,6 +64,12 @@ seekGraphData()
 	blitzGrid = new seekInfo[blitzW + height * blitzW];
 	standardGrid = new seekInfo[standardW + height * standardW];
 
+}
+
+static int getHeightAt(int x)
+{
+return (int) (x * height / 2750) - 1;
+  
 }
 
 
@@ -89,7 +95,7 @@ if(newInfo.eTimeType == 0) // bullet
 		 x =(int)( etime * (double)bulletW / 3 - 1);
 		if(x<0)
 		x=0;
-		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType);
+		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType, rating);
 		bulletGrid[newInfo.gridSpot]=newInfo;
 	}
 	else if(newInfo.eTimeType == 1) // blitz
@@ -97,7 +103,7 @@ if(newInfo.eTimeType == 0) // bullet
 		 x =(int)( (etime-3) * (double)blitzW / 12 );
 		if(x<0)
 		x=0;
-		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType);
+		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType, rating);
 		blitzGrid[newInfo.gridSpot]=newInfo;
 
 	}
@@ -108,7 +114,7 @@ if(newInfo.eTimeType == 0) // bullet
 		x =(int)( (etime-15)/4);
 		if(x >= standardW)
 		x=standardW -1;
-		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType);
+		newInfo.gridSpot=getSpot(x,y, newInfo.eTimeType, rating);
 		standardGrid[newInfo.gridSpot]=newInfo;
 
 	}
@@ -126,16 +132,20 @@ seekList.add(newInfo);
 
 
 
-int getSpot(int x, int y, int type)
+int getSpot(int x, int y, int type, int rating)
 {
 int spot=0;
+int occupiedRating=0;
+
 if(type == 0) // bullet
 {
 spot=x + y * bulletW;
 if(bulletGrid[spot]!=null)
 {
 	boolean go=false;
-	for(int a=1; spot + bulletW * a < bulletW * height; a++)
+	try { occupiedRating = Integer.parseInt(bulletGrid[spot].rating); } catch(Exception duii){}
+	if(occupiedRating < rating)
+        for(int a=1; spot + bulletW * a < bulletW * height; a++)
 	{
 		if(bulletGrid[spot + a * bulletW] == null)
 		{
@@ -149,6 +159,14 @@ if(bulletGrid[spot]!=null)
 		if(bulletGrid[spot - a * bulletW] == null)
 		{
 			spot=spot-a*bulletW;
+			return spot;
+		}
+	}
+	for(int a=1; spot + bulletW * a < bulletW * height; a++)
+	{
+		if(bulletGrid[spot + a * bulletW] == null)
+		{
+			spot=spot+a*bulletW;
 			return spot;
 		}
 	}
@@ -166,6 +184,8 @@ spot=x + y * blitzW;
 if(blitzGrid[spot]!=null)
 {
 	boolean go=false;
+	try { occupiedRating = Integer.parseInt(blitzGrid[spot].rating); } catch(Exception duii){}
+	if(occupiedRating < rating)
 	for(int a=1; spot + blitzW * a < blitzW * height; a++)
 	{
 		if(blitzGrid[spot + a * blitzW] == null)
@@ -180,6 +200,14 @@ if(blitzGrid[spot]!=null)
 		if(blitzGrid[spot - a * blitzW] == null)
 		{
 			spot=spot-a*blitzW;
+			return spot;
+		}
+	}
+	for(int a=1; spot + blitzW * a < blitzW * height; a++)
+	{
+		if(blitzGrid[spot + a * blitzW] == null)
+		{
+			spot=spot+a*blitzW;
 			return spot;
 		}
 	}
@@ -198,6 +226,8 @@ spot=x + y * standardW;
 if(standardGrid[spot]!=null)
 {
 	boolean go=false;
+	try { occupiedRating = Integer.parseInt(standardGrid[spot].rating); } catch(Exception duii){}
+	if(occupiedRating < rating)
 	for(int a=1; spot + standardW * a < standardW * height; a++)
 	{
 		if(standardGrid[spot + a * standardW] == null)
@@ -212,6 +242,14 @@ if(standardGrid[spot]!=null)
 		if(standardGrid[spot - a * standardW] == null)
 		{
 			spot=spot-a*standardW;
+			return spot;
+		}
+	}
+	for(int a=1; spot + standardW * a < standardW * height; a++)
+	{
+		if(standardGrid[spot + a * standardW] == null)
+		{
+			spot=spot+a*standardW;
 			return spot;
 		}
 	}

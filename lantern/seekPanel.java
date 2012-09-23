@@ -89,18 +89,18 @@ displayType=displayType1;
 
 void setDimensions()
 {
-	bulletBaseX=0;
-	blitzBaseX=(int)width/6;
+	bulletBaseX=55;// was 0
+	blitzBaseX=(int)width/6 + bulletBaseX;
 	standardBaseX=(int)width*5/6;
 
-	baseHeightBottom= height -40;
+	baseHeightBottom= height -60;// was -40
 	baseHeightTop=20;
 	if(baseHeightBottom<150)
 	baseHeightBottom =150;
 
-	if(blitzBaseX < 30)
+	if(blitzBaseX < 60)// was < 30
 	{
-		blitzBaseX=30;
+		blitzBaseX=60;  // was 30
 		standardBaseX=150;
 	}
 
@@ -108,7 +108,7 @@ void setDimensions()
 	bulletSeekW = (int) (blitzBaseX - bulletBaseX) / sharedVariables.graphData.bulletW;
 	blitzSeekW = (int) (standardBaseX - blitzBaseX) / sharedVariables.graphData.blitzW;
 	standardSeekW = (int) (width - standardBaseX) / sharedVariables.graphData.standardW;
-        
+
         drawWidth = bulletSeekW;
         if(seekHeight < drawWidth)
         drawWidth = seekHeight;
@@ -147,16 +147,34 @@ void setDimensions()
 		Graphics2D g2 = (Graphics2D) g;
 
 		setBackground(backColor);
-		width=getWidth();
+		width=getWidth() - bulletBaseX;
 		height=getHeight();
 		setDimensions();
+
+final  float dash1[] = {10.0f};
+    final BasicStroke dashed =
+        new BasicStroke(1.0f,
+                        BasicStroke.CAP_BUTT,
+                        BasicStroke.JOIN_MITER,
+                        10.0f, dash1, 0.0f);
 Color lineColor=new Color(0,0,0);
 		// draw your lines no seeks yet
 g2.setColor(lineColor);
 // x y width height
-g2.fill(new Rectangle2D.Double(0, (double) baseHeightBottom, (double) getWidth(), (double) 2));
-g2.fill(new Rectangle2D.Double((double) blitzBaseX,  0, 2, (double) baseHeightBottom));
-g2.fill(new Rectangle2D.Double((double) standardBaseX,  0, 2, (double) baseHeightBottom));
+g2.fill(new Rectangle2D.Double(0, (double) baseHeightBottom, (double) width, (double) 2));
+g2.fill(new Rectangle2D.Double((double) bulletBaseX,  0, 2, (double) baseHeightBottom));
+g2.setStroke(dashed);
+//g2.fill(new Rectangle2D.Double((double) blitzBaseX,  0, 2, (double) baseHeightBottom));
+g2.drawLine(blitzBaseX, 0, blitzBaseX, baseHeightBottom);
+//g2.fill(new Rectangle2D.Double((double) standardBaseX,  0, 2, (double) baseHeightBottom));
+g2.drawLine(standardBaseX, 0, standardBaseX, baseHeightBottom);
+g2.setFont(seekTextFont);
+g2.drawString("Rating", 0, 30);
+g2.drawString("Time", getWidth() - 50, baseHeightBottom + 20);
+g2.drawString(" 1000", 0, baseHeightBottom - seekGraphData.getHeightAt(1000) * seekHeight + (seekTextFont.getSize()/ 2));
+g2.drawString(" 1500", 0, baseHeightBottom - seekGraphData.getHeightAt(1500) * seekHeight + seekTextFont.getSize()/ 2);
+g2.drawString(" 2000", 0, baseHeightBottom - seekGraphData.getHeightAt(2000) * seekHeight + seekTextFont.getSize()/2);
+g2.drawString(" 2500", 0, baseHeightBottom - seekGraphData.getHeightAt(2500) * seekHeight + seekTextFont.getSize()/2);
 
 // draw bullet seeks
 int a=0;
@@ -210,7 +228,7 @@ g2.setFont(seekTextFont);
 int local = 75;
 if(local < 0)
 local=0;
-g.drawString(seekText, local, baseHeightBottom+30);
+g.drawString(seekText, local, baseHeightBottom+50);
 		}// end try
 		catch(Exception badPaint){}
 }// end method paint components
@@ -296,11 +314,11 @@ return null;
 try{
 if(mx<blitzBaseX)
 {
-	int x=(int)mx/bulletSeekW;
+	int x=(int)(mx - bulletBaseX) /bulletSeekW  ;
 	int y=(int)(baseHeightBottom-my)/seekHeight + 1;
 	if(my > baseHeightBottom)
 	y=0;
-	if(x * bulletSeekW + drawWidth < mx)
+	if(x * bulletSeekW + drawWidth + bulletBaseX < mx)
         return null;
         return sharedVariables.graphData.bulletGrid[x + y * sharedVariables.graphData.bulletW];
 }

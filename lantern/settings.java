@@ -507,7 +507,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	else
 		set_string = set_string + "0" + " ";
 	// closing
-		set_string = set_string + "[dontReuseGameTabs] ";
+		set_string = set_string + "[donedontReuseGameTabs] ";
 
 
 	// newObserveGameSwitch
@@ -1059,7 +1059,7 @@ catch(Exception badboard){}
 	set_string = set_string + aFontStyle + " ";
 	aFontSize="" + sharedVariables.analysisFont.getSize();
 	set_string = set_string + aFontSize + " ";
-	set_string = set_string + "[analysisFont] ";
+	set_string = set_string + "[doneanalysisFont] ";
 
 
 	set_string = set_string + "[eventsFont] ";

@@ -36,6 +36,8 @@ DefaultListModel modelwatch;
 String type1;
 String type2;
 // for events table
+
+String thisListType="";
 public myDefaultTableModel eventsTable;
 ImageIcon joinIcon;
 ImageIcon watchIcon;
@@ -49,7 +51,7 @@ eventList = new ArrayList<String>();
     eventList.add(type);
 eventListData = new ArrayList<String>();
     eventListData.add(type);
-
+thisListType = type;
 type1="none";
 type2="none";
 
@@ -92,8 +94,10 @@ eventsTable = new myDefaultTableModel(tableCollumns, tableData);
 
 void addToList(String entry, String number)
 {
-	model.add(model.size(), entry);
+
+        model.add(model.size(), entry);
 	modeldata.add(modeldata.size(), number);
+
 }
 
 void removeFromList(String index)
@@ -316,8 +320,8 @@ void notifyStateChanged(String name, String state)
 		return;
 	}
 
-	model.add(model.size(), notify_string);
-	modeldata.add(modeldata.size(), name);
+	model.add(1, notify_string);
+	modeldata.add(1, name);
 
 
 
