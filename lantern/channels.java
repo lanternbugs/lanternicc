@@ -337,7 +337,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.00";
+version = "v5.01";
 newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();
@@ -381,10 +381,15 @@ for(int excl = 0; excl < dummyUse.maxPieces - 1; excl++)
 
 noidle=false;
 standAlone = true;
+try {
+chessclubIP = java.net.InetAddress.getByName("www.chessclub.com").getHostAddress();
+}
+catch(Exception efy){
 chessclubIP = "207.99.83.228";
+}
 notifyControllerFile = "lantern_notify_controler.ini";
 boardType=2;
-pieceType=1;
+pieceType=4;
 NOT_FOUND_NUMBER = -100;
 
 STATE_EXAMINING = 2;

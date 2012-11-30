@@ -2367,7 +2367,7 @@ class mymultiframe extends JFrame
         sharedVariables.myServer = "ICC";
         sharedVariables.chessclubIP =
           (action.equals("Reconnect to Queen") ? "207.99.83.231" :
-           (action.equals("Reconnect to ICC") ? "207.99.83.228" :
+           (action.equals("Reconnect to ICC") ? java.net.InetAddress.getByName("www.chessclub.com").getHostAddress() :
             "207.99.83.239"));
         sharedVariables.doreconnect=true;
         //if (myConnection == null)
@@ -4683,6 +4683,8 @@ class mymultiframe extends JFrame
       sharedVariables.songs[6]=songPath;
       songPath = this.getClass().getResource("fitbell.au"); // Geturl of sound was wav
       sharedVariables.songs[7]=songPath;
+      songPath = this.getClass().getResource("alert.au"); // Geturl of sound was wav
+      sharedVariables.songs[8]=songPath;
 
       songPath = this.getClass().getResource("BEEP_FM.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[0]=songPath;

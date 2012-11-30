@@ -3368,6 +3368,10 @@ if(sharedVariables.showQsuggest == true)
 qsuggestDialog=new qsuggest(masterFrame, false, queue);
 qsuggestDialog.suggestion(dg.getArg(2), dg.getArg(1), dg.getArg(6), dg.getArg(4));// text command id (2,1,6)
 qsuggestDialog.setVisible(true);
+Sound movesound= null;
+if(sharedVariables.makeSounds == true)
+movesound = new Sound(sharedVariables.songs[8]);
+
 }// if show qsuggest == true
 
 
