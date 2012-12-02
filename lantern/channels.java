@@ -180,6 +180,7 @@ String myopponent;
 String myServer; // FICS or ICC
 String version; // current version of this build i.e. v1.48
 String chessclubIP;
+String chessclubPort;
 String operatingSystem;
 String notifyControllerFile;
 String defaultpgn;
@@ -382,10 +383,22 @@ for(int excl = 0; excl < dummyUse.maxPieces - 1; excl++)
 noidle=false;
 standAlone = true;
 try {
-chessclubIP = java.net.InetAddress.getByName("www.chessclub.com").getHostAddress();
+chessclubIP = java.net.InetAddress.getByName("chessclub.com").getHostAddress();
+chessclubPort = "5000";
+/*
+JFrame dot = new JFrame("pass, chessclub. ip is " + chessclubIP);
+dot.setSize(700,100);
+dot.setVisible(true);
+*/
 }
 catch(Exception efy){
 chessclubIP = "207.99.83.228";
+chessclubPort = "5000";
+/*
+JFrame dot = new JFrame("failed. static ip");
+dot.setSize(700,100);
+dot.setVisible(true);
+*/ 
 }
 notifyControllerFile = "lantern_notify_controler.ini";
 boardType=2;

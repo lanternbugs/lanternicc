@@ -2365,10 +2365,63 @@ class mymultiframe extends JFrame
                action.equals("Reconnect to ICC (alternate)")) {
       try {
         sharedVariables.myServer = "ICC";
-        sharedVariables.chessclubIP =
+       
+       if (action.equals("Reconnect to Queen"))
+      {
+        try {
+        sharedVariables.chessclubIP = java.net.InetAddress.getByName("queen.chessclub.com").getHostAddress();
+        sharedVariables.chessclubPort = "5000";
+/*
+JFrame dot = new JFrame("pass, queen.chessclub. ip is " + sharedVariables.chessclubIP);
+dot.setSize(700,100);
+dot.setVisible(true);
+*/
+      }
+        catch(Exception efy){
+          sharedVariables.chessclubIP = "207.99.83.231";
+        sharedVariables.chessclubPort = "5000";
+        }// end catch
+        }// end if
+       else if(action.equals("Reconnect to ICC"))
+      {
+        try {
+        sharedVariables.chessclubIP = java.net.InetAddress.getByName("chessclub.com").getHostAddress();
+        sharedVariables.chessclubPort = "5000";
+/*
+JFrame dot = new JFrame("pass, chessclub.com ip is " + sharedVariables.chessclubIP);
+dot.setSize(700,100);
+dot.setVisible(true);
+*/
+        }
+        catch(Exception efy){
+          sharedVariables.chessclubIP = "207.99.83.228";
+          sharedVariables.chessclubPort  = "5000";
+        }// end catch
+        }// end if
+
+       else if(action.equals("Reconnect to ICC (alternate)"))
+       {
+        try {
+        sharedVariables.chessclubIP = java.net.InetAddress.getByName("alt1.chessclub.com").getHostAddress();
+        sharedVariables.chessclubPort = "443";
+/*
+JFrame dot = new JFrame("pass, alt1.chessclub. ip is " + sharedVariables.chessclubIP);
+dot.setSize(700,100);
+dot.setVisible(true);
+*/
+       }
+        catch(Exception efy){
+          sharedVariables.chessclubIP = "207.99.83.239";
+          sharedVariables.chessclubPort = "443";
+        }// end catch
+        }// end if
+
+       /* sharedVariables.chessclubIP =
           (action.equals("Reconnect to Queen") ? "207.99.83.231" :
            (action.equals("Reconnect to ICC") ? java.net.InetAddress.getByName("www.chessclub.com").getHostAddress() :
             "207.99.83.239"));
+         */
+
         sharedVariables.doreconnect=true;
         //if (myConnection == null)
         if (myConnection == null || !myConnection.isVisible())
