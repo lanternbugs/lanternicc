@@ -565,7 +565,7 @@ catch(Exception dui){}
 void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
 {
   
-  if(!sharedVariables.operatingSystem.equals("unix"))
+ /* if(!sharedVariables.operatingSystem.equals("unix"))
   {
   try {
     doc.insertString(end, mystring, attrs);
@@ -573,7 +573,7 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
   catch(Exception dummy){}
    return;
   }
-
+   */
   try {
     if(attrs == null)
 	attrs = new SimpleAttributeSet();
@@ -588,7 +588,39 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
 	return;
 
        int a;
-  for(a=0; a<mystring.length(); a++)
+int bufferamount=35;
+int maxsegs = 0;
+maxsegs = (int) mystring.length()/bufferamount;
+if(mystring.length()%bufferamount != 0)
+maxsegs++;
+
+
+
+for(a=0; a<maxsegs; a++)
+{
+ if(a < maxsegs -1)
+ {
+   if(a%2==0)
+  attrs.addAttribute("A", "B");
+  else
+  attrs.removeAttribute("A");
+  doc.insertString(end+ a * bufferamount, mystring.substring(a * bufferamount, (a+1) * bufferamount), attrs);
+
+   
+ }
+ else
+ {
+   
+   if(a%2==0)
+  attrs.addAttribute("A", "B");
+  else
+  attrs.removeAttribute("A");
+   doc.insertString(end+ a * bufferamount, mystring.substring(a * bufferamount, mystring.length()), attrs);
+
+ }// end else
+}
+
+/*  for(a=0; a<mystring.length(); a++)
   {
   if(a%2==0)
   attrs.addAttribute("A", "B");
@@ -596,9 +628,11 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
   attrs.removeAttribute("A");
   doc.insertString(end+a, mystring.substring(a, a+1), attrs);
   }// end for
+*/
   if(a%2 == 1)
    attrs.removeAttribute("A");
   }
   catch(Exception dui){}
+
 }// end method patched
 }// end class
