@@ -592,7 +592,7 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
 	return;
 
        int a;
-int bufferamount=25;
+int bufferamount=15;
 int maxsegs = 0;
 maxsegs = (int) mystring.length()/bufferamount;
 if(mystring.length()%bufferamount != 0)
