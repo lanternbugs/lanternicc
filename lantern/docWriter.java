@@ -565,15 +565,19 @@ catch(Exception dui){}
 void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
 {
   
- /* if(!sharedVariables.operatingSystem.equals("unix"))
+  if (System.getProperty("java.version").startsWith("1.6."))
   {
   try {
     doc.insertString(end, mystring, attrs);
   }
   catch(Exception dummy){}
+ /* JFrame ff = new JFrame(System.getProperty("java.version"));
+  ff.setSize(500,500);
+  ff.setVisible(true);
+  */
    return;
   }
-   */
+
   try {
     if(attrs == null)
 	attrs = new SimpleAttributeSet();
@@ -588,7 +592,7 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
 	return;
 
        int a;
-int bufferamount=35;
+int bufferamount=25;
 int maxsegs = 0;
 maxsegs = (int) mystring.length()/bufferamount;
 if(mystring.length()%bufferamount != 0)
