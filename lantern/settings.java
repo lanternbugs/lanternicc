@@ -1230,6 +1230,17 @@ set_string = set_string + "[doneuserbutton] ";
 } // done for
 /************* end save userbuttons ***********/
 
+// moveInputType
+		set_string = set_string + "[moveInputType] ";
+		if(sharedVariables.moveInputType == 1)
+		set_string = set_string + "1" + " ";
+		else
+		set_string = set_string + "0" + " ";
+
+
+		set_string = set_string + "[donemoveInputType] ";
+
+
 // checkLegality
 		set_string = set_string + "[checkLegality] ";
 		if(sharedVariables.checkLegality == true)
@@ -2643,6 +2654,16 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 // **********************************************************************************
 
 
+					if (temp.equals("[moveInputType]"))
+					{
+					try {
+						if(tokens.nextToken().equals("0"))
+						sharedVariables.moveInputType =  0;
+						else
+						sharedVariables.moveInputType = 1;
+						}
+						catch(Exception zzz){}
+					}
 
 					if (temp.equals("[checkLegality]"))
 					{

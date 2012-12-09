@@ -254,6 +254,9 @@ JButton [] mybuttons;
 
 URL [] songs;
 URL [] poweroutSounds;
+int moveInputType=0;
+static int DRAG_DROP = 0;
+static int CLICK_CLICK = 1;
 int andreysLayout = 2; // Andrey's layout variable
 int lastSpositionBoard=-1;
 int chatBufferSize=100000;
@@ -338,7 +341,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.02";
+version = "v5.03";
 newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();

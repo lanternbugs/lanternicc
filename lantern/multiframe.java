@@ -313,6 +313,11 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem qsuggestPopup;
   JCheckBoxMenuItem autopopup;
   JCheckBoxMenuItem basketballFlag;
+  
+  JMenu moveInputMenu;
+  JCheckBoxMenuItem dragMoveInput;
+  JCheckBoxMenuItem clickMoveInput;
+
 
   JCheckBoxMenuItem pgnlogging;
   JCheckBoxMenuItem pgnObservedLogging;
@@ -498,7 +503,16 @@ class mymultiframe extends JFrame
     
     setPieces(sharedVariables.pieceType);
     setBoard(sharedVariables.boardType);
-      
+    if(sharedVariables.moveInputType == 0)
+    {
+     dragMoveInput.setSelected(true);
+     clickMoveInput.setSelected(false);
+    }
+    else
+    {
+     dragMoveInput.setSelected(false);
+     clickMoveInput.setSelected(true);
+    }
     pgnObservedLogging.  setSelected(sharedVariables.pgnObservedLogging);
     pgnlogging.          setSelected(sharedVariables.pgnLogging);
     tellswitch.          setSelected(sharedVariables.switchOnTell);
@@ -1496,6 +1510,16 @@ class mymultiframe extends JFrame
     JMenuItem autoset = new JMenuItem("AutoExam Dialog");
     JMenuItem whatexaminereplay = new JMenuItem("What's Examine Game Replay Quick Help");
     // .. /
+    
+    JMenu moveInputMenu = new JMenu("Move Input");
+    // ../ Move Input /
+     dragMoveInput =  new JCheckBoxMenuItem("Drag Move");
+     clickMoveInput = new JCheckBoxMenuItem("Click Click");
+     moveInputMenu.add(dragMoveInput);
+     moveInputMenu.add(clickMoveInput);
+    // .. /
+   
+
     JMenu PgnMenu = new JMenu("PGN");
     // .. / PGN /
     pgnlogging = new JCheckBoxMenuItem("Log Pgn");
@@ -1564,6 +1588,7 @@ class mymultiframe extends JFrame
     myboardmenu.add(nseek);
     myboardmenu.add(flipSent);
     myboardmenu.add(withdrawSent);
+     myboardmenu.add(moveInputMenu);
     myboardmenu.add(boardDesign);
     // .. / Board Design /
     for (int i=0; i<boarddesignarray.length; i++)
@@ -1760,6 +1785,8 @@ class mymultiframe extends JFrame
     //useLightBackground.addActionListener(this);
     whatexaminereplay.addActionListener(this);
     autoset.addActionListener(this);
+   dragMoveInput.addActionListener(this);
+   clickMoveInput.addActionListener(this);
     pgnlogging.addActionListener(this);
     pgnObservedLogging.addActionListener(this);
     openpgn.addActionListener(this);
@@ -2685,6 +2712,15 @@ dot.setVisible(true);
     } else if (action.equals("Log Pgn")) {
       sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
       pgnlogging.setSelected(sharedVariables.pgnLogging);
+
+    }else if (action.equals("Drag Move")) {
+      sharedVariables.moveInputType = channels.DRAG_DROP;
+      dragMoveInput.setSelected(true);
+      clickMoveInput.setSelected(false);
+    }else if (action.equals("Click Click")) {
+      sharedVariables.moveInputType= channels.CLICK_CLICK;
+      dragMoveInput.setSelected(false);
+      clickMoveInput.setSelected(true);
 
     } else if (action.equals("Log Observed Games To Pgn")) {
       sharedVariables.pgnObservedLogging = !sharedVariables.pgnObservedLogging;

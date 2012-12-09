@@ -129,6 +129,7 @@ addMouseListener(this);
 	    int squarey;
 		int width;
 		int height;
+		boolean inTheAir = false;
 
 
 /* sets stuff like what width are we drawing the board. where do we start and end drawing. used both to draw the board
@@ -927,6 +928,13 @@ void repaintPiece()
 
 		if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() < sharedVariables.moveSliders[gameData.BoardIndex].getMaximum())
 		return;
+		
+		if(inTheAir == true && sharedVariables.moveInputType == channels.CLICK_CLICK)
+		{
+                   inTheAir = false;
+                    mouseReleasedMoveMade (e);
+                   return;
+                }
 		if(movingpiece == 0 && movingexaminepiece==0)
 				{
 					int piece = getPiece();
@@ -936,6 +944,7 @@ void repaintPiece()
 						{
 						movingpiece=1;
 						piecemoving=piece;
+						inTheAir = true;
 						}
 					}
 					else if(piece != -100)
@@ -943,6 +952,7 @@ void repaintPiece()
 
 						movingexaminepiece=1;
 						examinepiecemoving=-piece;
+						inTheAir= true;
 
 					}
 
@@ -959,6 +969,16 @@ void repaintPiece()
 
 
 	 public void mouseReleased (MouseEvent me) {
+
+          if(sharedVariables.moveInputType == channels.CLICK_CLICK && inTheAir == true)
+          return;
+
+          mouseReleasedMoveMade (me);
+           
+  }
+  
+	 public void mouseReleasedMoveMade (MouseEvent me) {
+
      boolean iLocked=false;
      int ipremoving;
 	 int capture=0;
