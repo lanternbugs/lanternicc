@@ -171,6 +171,7 @@ String [] userButtonCommands = new String[maxUserButtons];
 String [] tabTitle;
 String [] consoleTabTitles;
 String [] consoleTabCustomTitles;
+static String gameOverTitle = "W";
 String wallpaperFileName;
 String lasttell;
 String myname;// my login on the server
@@ -341,7 +342,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.03";
+version = "v5.04";
 newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
 
 F9Manager = new F9Management();

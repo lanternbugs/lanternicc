@@ -1113,7 +1113,7 @@ catch(Exception logging){}
           sharedVariables.ISOLATED_NUMBER)
         sharedVariables.tabTitle[gameData.BoardIndex] = "SP";
       else
-        sharedVariables.tabTitle[gameData.BoardIndex] = "W";
+        sharedVariables.tabTitle[gameData.BoardIndex] = channels.gameOverTitle;
 
       sharedVariables.tabChanged = gameData.BoardIndex;
 

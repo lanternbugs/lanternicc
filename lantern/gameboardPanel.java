@@ -993,9 +993,9 @@ void repaintPiece()
 
 			int pieceToMove=sharedVariables.mygame[gameData.LookingAt].board[piecemoving];
 			 int wildtype = sharedVariables.mygame[gameData.LookingAt].wild;
-			 if((wildtype != 16 && wildtype != 23 && wildtype != 24 && wildtype != 28) && sharedVariables.checkLegality == true && sharedVariables.mygame[gameData.LookingAt].myturn())
+			 if((wildtype != 16 && wildtype != 23 && wildtype != 24 && wildtype != 28) && sharedVariables.checkLegality == true && (sharedVariables.mygame[gameData.LookingAt].myturn() || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING))
 			 {
-			 if(pieceToMove==2 || pieceToMove==3 || pieceToMove==4 || pieceToMove==5 || pieceToMove==8 || pieceToMove==9 || pieceToMove==10 || pieceToMove==11) // a biship rook or queen
+			 if(pieceToMove==1 || pieceToMove==2 || pieceToMove==3 || pieceToMove==4 || pieceToMove==5 || pieceToMove==7 || pieceToMove==8 || pieceToMove==9 || pieceToMove==10 || pieceToMove==11) // a biship rook or queen
 			 {
 				 boolean legalmove=checkLegality(piecemoving, piece);
 				 if(legalmove==false)
@@ -1003,7 +1003,7 @@ void repaintPiece()
 				 repaint();
 
 				Sound movesound;
-				if(sharedVariables.makeSounds == true)
+				if(sharedVariables.makeSounds == true && piecemoving != piece)
 				if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
 				{
 
@@ -1369,7 +1369,8 @@ int amPlayingBug()
 boolean checkLegality(int from, int to)
 {
 
-	moveGenerator generator = new moveGenerator();
+try {
+        moveGenerator generator = new moveGenerator();
 	int piece=sharedVariables.mygame[gameData.LookingAt].board[from];
 	int top=0;
 	int [] fromList = new int[256];
@@ -1381,9 +1382,11 @@ boolean checkLegality(int from, int to)
 		color=1;
 
 
-   if(piece == 2 || piece == 3 || piece == 4 || piece == 5 || piece == 8 || piece == 9 || piece == 10 || piece == 11) // bishop rooke or queen
+   if(piece == 1 || piece == 2 || piece == 3 || piece == 4 || piece == 5 || piece == 7 || piece == 8 || piece == 9 || piece == 10 || piece == 11) // bishop rooke or queen
  {
-	  if(piece == 3 || piece == 9)
+	  if(piece == 1 || piece == 7)
+	   	top=generator.generatePawnMoves(fromList, toList, sharedVariables.mygame[gameData.LookingAt].board, top, color, piece, sharedVariables.mygame[gameData.LookingAt].iflipped);// the 0 is top , this is first call
+	  else if(piece == 3 || piece == 9)
 	   	top=generator.generateBishopMoves(fromList, toList, sharedVariables.mygame[gameData.LookingAt].board, top, color, piece );// the 0 is top , this is first call
 	  else if(piece == 4 || piece == 10)
 	   	top=generator.generateRookMoves(fromList, toList, sharedVariables.mygame[gameData.LookingAt].board, top, color, piece );// the 0 is top , this is first call
@@ -1398,7 +1401,7 @@ boolean checkLegality(int from, int to)
 		int count=0;
 
 		for(int z=0; z<top; z++)
-				if(toList[z]==to)
+				if(toList[z]==to && fromList[z]== from)
 					count++;
 
 	if(count == 0)
@@ -1408,7 +1411,9 @@ boolean checkLegality(int from, int to)
 	}
 
 	return true;
-
+}// end try
+catch(Exception dui){ }
+return true;
 }
 
 int getPieceType(int piece)

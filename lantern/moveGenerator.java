@@ -32,6 +32,119 @@ from is where it places from moves, and to same.
 board is current board to generate from, this gets called by current postion but also engine lines
 */
 
+int generatePawnMoves(int [] from, int [] to, int [] board, int top, int color, int type, int iflipped)
+{
+ // this method only does pseudo legality and is only used to check legality
+ for(int a=0; a<64; a++)
+{
+
+	if(board[a] == type) // a pawn
+	{
+        
+        if((color == 1 && iflipped == 0) || (color == 0 && iflipped == 1))
+        {
+          // up 2
+          if(a > 7 && a < 16)
+          {
+             if(board[a+8] == 0 && board[a+16] == 0)
+             {
+                top=addMove(a, a + 16, from, to, top);
+
+             } // if 2 forward squares clear
+          }// if 7 16
+
+          if(board[a+8] == 0)
+          {
+              top=addMove(a, a + 8, from, to, top);
+
+          } // if foward square is clear
+          if(a+9 < 64)
+          if(board[a+9] > 0)
+          {
+              if(!compare(board[a + 9], color))
+              top=addMove(a, a + 9, from, to, top);
+
+          } // capture diagonal
+
+
+          if(board[a+7] > 0)
+          {
+              if(!compare(board[a + 7], color))
+              top=addMove(a, a + 7, from, to, top);
+
+          } //  capture diagonal
+
+
+          if(a+9 < 64)
+          if(board[a+9] == 0 && a > 31 && a < 40)
+          {
+              if((!compare(board[a + 1], color) && (board[a+1] == 1 || board[a+1] == 7)))
+              top=addMove(a, a + 9, from, to, top);
+
+          } // capture diagonal enpassant
+
+          if(board[a+7] == 0 && a > 31 && a < 40)
+          {
+               if((!compare(board[a -1], color) && (board[a-1] == 1 || board[a-1] == 7)))
+              top=addMove(a, a + 7, from, to, top);
+
+          } // capture diagonal enpassant
+
+          }// end if foward moving piece
+          else
+        {
+          // up 2
+          if(a > 47 && a < 56)
+          {
+             if(board[a-8] == 0 && board[a-16] == 0)
+             {
+                top=addMove(a, a - 16, from, to, top);
+
+             } // if 2 forward squares clear
+          }// if 7 16
+          if(board[a-8] == 0)
+          {
+              top=addMove(a, a - 8, from, to, top);
+
+          } // if foward square is clear
+
+          if(a-9 >=0)
+          if(board[a-9] > 0)
+          {
+              if(!compare(board[a - 9], color))
+              top=addMove(a, a - 9, from, to, top);
+
+          } // capture diagonal
+
+          if(board[a-7] > 0)
+          {
+              if(!compare(board[a - 7], color))
+              top=addMove(a, a - 7, from, to, top);
+
+          } //  capture diagonal
+
+          if(a-9 >= 0)
+          if(board[a-9] == 0 && a > 23 && a < 32)
+          {
+               if((!compare(board[a -1], color) && (board[a-1] == 1 || board[a-1] == 7)))
+              top=addMove(a, a - 9, from, to, top);
+
+          } // capture diagonal enpassant
+
+          if(board[a-7] == 0 && a > 23 && a < 32)
+          {
+              if((!compare(board[a + 1], color) && (board[a+1] == 1 || board[a+1] == 7)))
+              top=addMove(a, a - 7, from, to, top);
+
+          } // capture diagonal enpassant
+          }// end else
+	}// end pawn
+
+}// end loop through board
+
+  return top;
+
+}
 int generateBishopMoves(int [] from, int [] to, int [] board, int top, int color, int type)
 {
 for(int a=0; a<64; a++)

@@ -141,7 +141,9 @@ public void makehappen(int i)
  			//if(sharedVariables.mygame[gameData.LookingAt].title.length() >0)
  			//setTitle(sharedVariables.mygame[gameData.LookingAt].title);
 
-
+                        mypanel.movingpiece=0;
+                        mypanel.movingexaminepiece=0;
+                        mypanel.inTheAir=false;
  			super.repaint();
  			if(sharedVariables.useTopGames == true)
  			 if(topGame != null);
