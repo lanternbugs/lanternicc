@@ -795,6 +795,14 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing
 		set_string = set_string + "[doneautobufferchat] ";
 
+	// disable Name Lists
+	set_string = set_string + "[disableNameLists] ";
+	if(sharedVariables.disableNameLists == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donedisableNameLists] ";
 	// channel Number left
 	set_string = set_string + "[numberchannelleft] ";
 	if(sharedVariables.channelNumberLeft == true)
@@ -2304,6 +2312,19 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+				
+                                	if (temp.equals("[disableNameLists]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.disableNameLists=true;
+					else
+						sharedVariables.disableNameLists=false;
+					}
+					catch(Exception zzz){}
+				}
+
 
 					if (temp.equals("[numberchannelleft]"))
 				{

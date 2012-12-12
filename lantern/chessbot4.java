@@ -497,7 +497,7 @@ try {
       Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
 
         requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
-     
+
     } catch(Exception d){ }
 }
 	if(requestSocket== null)
@@ -2117,8 +2117,11 @@ if(dg.getArg(0).equals("27"))
 		{sendMessage("multi set-quietly prompt 0\n");
 
 		 sendMessage("multi set-quietly style 13\n");
-		sendMessage("multi Set-2 46 1\n");// dg  channels shared
+	       if(sharedVariables.disableNameLists == false)
+	       {
+        	sendMessage("multi Set-2 46 1\n");// dg  channels shared
                  sendMessage("multi Set-2 27 1\n");// dg people in channel
+                }         
                 try {
                  String OS = "Linux";
                  if(sharedVariables.operatingSystem.equals("mac"))

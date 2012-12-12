@@ -113,6 +113,7 @@ boolean leftTimestamp;
 boolean reconnectTimestamp;
 boolean qtellTimestamp;
 boolean channelNumberLeft;
+boolean disableNameLists;
 boolean checkLegality;
 boolean compactNameList=false;
 boolean useTopGames=false;
@@ -342,8 +343,8 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.04";
-newUserMessage="Welcome to Lantern Chess! Check out the Help Menu for the Lantern Manual. Inputing from the game console Alt + C, toggles the game console size.\n";
+version = "v5.05";
+newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
@@ -474,6 +475,7 @@ shoutTimestamp=true;
 channelTimestamp=true;
 qtellTimestamp=true;
 channelNumberLeft=true;
+disableNameLists=false;
 checkLegality=true;
 
 if(operatingSystem.equals("mac"))

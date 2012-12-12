@@ -185,6 +185,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem hearsound;
   JCheckBoxMenuItem gameend;
   JCheckBoxMenuItem channelNumberLeft;
+  JCheckBoxMenuItem disableNameLists;
   JCheckBoxMenuItem tabbing;
   /* Andrey edits:
      make an array for the board designs
@@ -519,6 +520,7 @@ class mymultiframe extends JFrame
     toolbarvisible.      setSelected(sharedVariables.toolbarVisible);
     autobufferchat.      setSelected(sharedVariables.autoBufferChat);
     channelNumberLeft.   setSelected(sharedVariables.channelNumberLeft);
+    disableNameLists.    setSelected(sharedVariables.disableNameLists);
     channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
     qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
@@ -1114,6 +1116,7 @@ class mymultiframe extends JFrame
     userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
     consolemenu = new JCheckBoxMenuItem("Show Console Menu");
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
+    disableNameLists = new JCheckBoxMenuItem("Disable Name Lists To Reduce Bandwidth");
     compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
     autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
     useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
@@ -1222,6 +1225,7 @@ class mymultiframe extends JFrame
     advancedOptions.add(userbuttons);
     advancedOptions.add(consolemenu);
     advancedOptions.add(channelNumberLeft);
+    advancedOptions.add(disableNameLists);
     advancedOptions.add(compactNameList);
     advancedOptions.add(autobufferchat);
     advancedOptions.add(useTopGame);
@@ -1294,6 +1298,7 @@ class mymultiframe extends JFrame
     userbuttons.addActionListener(this);
     consolemenu.addActionListener(this);
     channelNumberLeft.addActionListener(this);
+    disableNameLists.addActionListener(this);
     compactNameList.addActionListener(this);
     useTopGame.addActionListener(this);
     notifyMainAlso.addActionListener(this);
@@ -1337,7 +1342,7 @@ class mymultiframe extends JFrame
     JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     JMenuItem mynotify = new JMenuItem("Notify Window");
     // .. / (separator)
-    JMenuItem nboard = new JMenuItem("New Board");
+    JMenuItem nboard = new JMenuItem("New Board"); // we are not going to add this one anymore due to bugs
     JMenuItem rconsole = new JMenuItem("New Chat Console");
     JMenuItem detachedconsole = new JMenuItem("New Detached Chat Console");
     // .. / (separator)
@@ -1376,7 +1381,7 @@ class mymultiframe extends JFrame
     sharedVariables.myWindows.add(seekingGraph);
     sharedVariables.myWindows.add(mynotify);
     sharedVariables.myWindows.addSeparator();
-    sharedVariables.myWindows.add(nboard);
+    //sharedVariables.myWindows.add(nboard);
     sharedVariables.myWindows.add(rconsole);
     sharedVariables.myWindows.add(detachedconsole);
     sharedVariables.myWindows.addSeparator();
@@ -1419,7 +1424,7 @@ class mymultiframe extends JFrame
     boarddesignarray[1] = new JCheckBoxMenuItem("Modern");
     boarddesignarray[2] = new JCheckBoxMenuItem("Mixed");
     // .. /
-    tabbing = new JCheckBoxMenuItem("Tabs Only");
+   
     JMenu selectboards = new JMenu("Boards");
     // .. / Boards /
     boardarray[0] = new JCheckBoxMenuItem("Solid Color Board");
@@ -1538,6 +1543,7 @@ class mymultiframe extends JFrame
     checkLegality = new JCheckBoxMenuItem("Check Move Legality");
     unobserveGoExamine = new JCheckBoxMenuItem("Unobserve Games Gone Examine");
     newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
+     tabbing = new JCheckBoxMenuItem("Tabs Only");
     // .. / .. / Board Aspect Ratio /
     JMenu aspect = new JMenu("Board Aspect Ratio");
     aspectarray[0] = new JCheckBoxMenuItem("1:1");
@@ -1594,7 +1600,7 @@ class mymultiframe extends JFrame
     for (int i=0; i<boarddesignarray.length; i++)
       boardDesign.add(boarddesignarray[i]);
     // .. /
-    myboardmenu.add(tabbing);
+
     myboardmenu.add(selectboards);
     // .. / Boards /
     for (int i=0; i<boardarray.length; i++) 
@@ -1684,6 +1690,7 @@ class mymultiframe extends JFrame
     AdvancedGameMenu.add(checkLegality);
     AdvancedGameMenu.add(unobserveGoExamine);
     AdvancedGameMenu.add(newObserveGameSwitch);
+     AdvancedGameMenu.add(tabbing);
     AdvancedGameMenu.add(aspect);
     // .. / .. / Board Aspect Ratio /
     for (int i=0; i<aspectarray.length; i++)
@@ -1982,6 +1989,10 @@ class mymultiframe extends JFrame
     } else if (action.equals("Channel Number On Left")) {
       sharedVariables.channelNumberLeft = !sharedVariables.channelNumberLeft;
       channelNumberLeft.setSelected(sharedVariables.channelNumberLeft);
+      
+    } else if (action.equals("Disable Name Lists To Reduce Bandwidth")) {
+      sharedVariables.disableNameLists = !sharedVariables.disableNameLists;
+      disableNameLists.setSelected(sharedVariables.disableNameLists);
       
     } else if (action.equals("Show Console Menu")) {
       sharedVariables.showConsoleMenu = !sharedVariables.showConsoleMenu;
