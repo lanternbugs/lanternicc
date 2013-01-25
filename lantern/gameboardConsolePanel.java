@@ -1890,6 +1890,11 @@ items[m].addActionListener(new ActionListener() {
          {
 			sharedVariables.openUrl(name);
        }
+             else if (sharedVariables.rightClickMenu.get(mfinal).equals("Match")) {
+               JFrame framer =  new JFrame();
+                sharedVariables.challengeCreator(name, framer, queue);
+
+              }
    else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
    {
 			sharedVariables.openUrl("http://www.google.com//search?q=" + name);

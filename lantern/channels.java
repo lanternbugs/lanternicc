@@ -343,7 +343,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.05";
+version = "v5.06";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 
 F9Manager = new F9Management();
@@ -899,6 +899,35 @@ void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue
                    }
       });
       LMenu.add(item5);
+
+}
+
+void challengeCreator(String opponent, JFrame framer, ConcurrentLinkedQueue queue)
+{
+      challengeDialog mychallenger = new challengeDialog(framer, false, this, queue, opponent);
+      int defaultWidth = 425;
+      int defaultHeight = 260;
+      mychallenger.setSize(defaultWidth,defaultHeight);
+
+      try {
+	Toolkit toolkit =  Toolkit.getDefaultToolkit();
+        Dimension dim = toolkit.getScreenSize();
+        int screenW = dim.width;
+        int screenH = dim.height;
+        int px = (int) ((screenW - defaultWidth) / 2);
+        if (px < 50)
+          px = 50;
+        int py = (int) ((screenH - defaultHeight) / 2);
+        if (py < 50)
+          py=50;
+
+        mychallenger.setLocation(px, py);
+      } catch (Exception centerError) {}
+
+      mychallenger.setTitle("Challenge");
+
+      mychallenger.setVisible(true);
+
 
 }
 void setDefaultWebBoardSize()

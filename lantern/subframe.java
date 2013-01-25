@@ -1626,7 +1626,13 @@ class subframe extends JInternalFrame
                 if (sharedVariables.looking[consoleNumber] != 0)
                   addNameToCombo(name);
 
-              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {
+              }
+              else if (sharedVariables.rightClickMenu.get(mfinal).equals("Match")) {
+               JFrame framer =  new JFrame();
+                sharedVariables.challengeCreator(name, framer, queue);
+
+              }
+               else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {
                 sharedVariables.openUrl(name);
 
               } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Google")) {

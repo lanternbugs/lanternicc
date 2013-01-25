@@ -2121,7 +2121,7 @@ if(dg.getArg(0).equals("27"))
 	       {
         	sendMessage("multi Set-2 46 1\n");// dg  channels shared
                  sendMessage("multi Set-2 27 1\n");// dg people in channel
-                }         
+                }
                 try {
                  String OS = "Linux";
                  if(sharedVariables.operatingSystem.equals("mac"))
@@ -4652,9 +4652,10 @@ else if(cindex2[z]==1)
 
        void loginChannelNotify()
        {
-         
+
          String mess2 = sharedVariables.getChannelNotifyOnline();
          mess2 += sharedVariables.getConnectNotifyOnline();
+         if(!mess2.trim().equals("People on channel notify online:"))
          writeToSubConsole(mess2, 0);
 
        }

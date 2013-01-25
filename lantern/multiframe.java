@@ -1416,6 +1416,7 @@ class mymultiframe extends JFrame
     JMenu myboardmenu = new JMenu("Game");
     // Game /
     JMenuItem nseek = new JMenuItem("Get a Game");
+    JMenuItem nchallenge = new JMenuItem("Challenge");
     JMenuItem flipSent = new JMenuItem("Flip");
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
     JMenu boardDesign = new JMenu("Board Design");
@@ -1592,6 +1593,7 @@ class mymultiframe extends JFrame
     menu.add(myboardmenu);
     // Game /
     myboardmenu.add(nseek);
+    myboardmenu.add(nchallenge);
     myboardmenu.add(flipSent);
     myboardmenu.add(withdrawSent);
      myboardmenu.add(moveInputMenu);
@@ -1715,6 +1717,7 @@ class mymultiframe extends JFrame
 
     // add listeners
     nseek.addActionListener(this);
+    nchallenge.addActionListener(this);
     flipSent.addActionListener(this);
     withdrawSent.addActionListener(this);
     for (int i=0; i<boarddesignarray.length; i++)
@@ -2719,6 +2722,9 @@ dot.setVisible(true);
       myseeker.setTitle("Get a Game");
 
       myseeker.setVisible(true);
+
+    } else if (action.equals("Challenge")) {
+        sharedVariables.challengeCreator("", this, queue);
 
     } else if (action.equals("Log Pgn")) {
       sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
