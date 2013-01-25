@@ -35,6 +35,9 @@ JButton Okbutton;
 JButton Cancelbutton;
 
 JComboBox wildComboBox;
+JComboBox colorComboBox;
+JLabel colorLabel;
+
 JLabel prompt;
 
 JCheckBox ratedBox;
@@ -45,7 +48,7 @@ channels sharedVariables;
 
 int wildarray[]= {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16,17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29};
 String [] wildnames;
-
+String colorarray[]={"auto", "white", "black"};
 JLabel opponentLabel;
 JTextField opponentfield;
 ConcurrentLinkedQueue<myoutput> queue;
@@ -56,7 +59,7 @@ queue=queue1;
 sharedVariables=sharedVariables1;
 
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-         
+
          opponentLabel = new JLabel("Name");
          opponentfield  = new JTextField(15);
          opponentfield.setText(opponent);
@@ -96,6 +99,16 @@ for(int a=0; a< wildarray.length; a++)
 wildComboBox = new JComboBox(wildnames);
 wildComboBox.setSelectedIndex(wildIndex);
 
+int colorIndex=0;
+for(int a=0; a< 3; a++)
+{
+
+	if(colorarray[a].equals(sharedVariables.myseek.color))
+		colorIndex=a;
+}
+colorComboBox = new JComboBox(colorarray);
+colorComboBox.setSelectedIndex(colorIndex);
+colorLabel = new JLabel("Color");
 // end wilds and combo box
 
 ratedBox = new JCheckBox();
@@ -115,6 +128,7 @@ ratedLabel = new JLabel("rated");
                                  String rated = "r";
                                  String opponent;
                                  String mytext;
+                                 String color;
 				public void actionPerformed(ActionEvent event)
 				{
                                  opponent = opponentfield.getText();
@@ -146,6 +160,17 @@ ratedLabel = new JLabel("rated");
 							showErrorMessage("Error parsing wild");
 							return;
 							}
+                                try {
+									int choice =colorComboBox.getSelectedIndex();
+                                                                        color = colorarray[choice];
+                                                                        if(color.equals("auto"))
+                                                                        color = "";
+                                                	}
+							catch(Exception d)
+							{
+							showErrorMessage("Error parsing color");
+							return;
+							}
 
                             // now read check boxes.
 
@@ -157,7 +182,7 @@ ratedLabel = new JLabel("rated");
 
 
 
-							String matchString = "match " + opponent + " " + time + " " + inc + " w" + wild + " " + rated;
+							String matchString = "match " + opponent + " " + time + " " + inc + " w" + wild + " " + rated + " " + color;
 
 
                             // dialouge success
@@ -265,6 +290,8 @@ row2.add(saveSettingsCheckBox);
 
 
 row3.add(wildComboBox);
+row3.add(colorLabel);
+row3.add(colorComboBox);
 row3.add(ratedLabel);
 row3.add(ratedBox);
 
@@ -290,6 +317,7 @@ void saveToICC()
                               	sendToIcs("multi set-quietly time " + sharedVariables.myseek.time + "\n");
                               	sendToIcs("multi set-quietly inc " + sharedVariables.myseek.inc + "\n");
                               	sendToIcs("multi set-quietly wild " + sharedVariables.myseek.wild + "\n");
+                                sendToIcs("multi set-quietly color " + sharedVariables.myseek.color + "\n");
                                 if(sharedVariables.myseek.rated==true)
                              	  sendToIcs("multi set-quietly rated 1" +  "\n");
                                 else
