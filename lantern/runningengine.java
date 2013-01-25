@@ -49,6 +49,7 @@ channels sharedVariables;
 int BoardIndex;
 JTextPane [] gameconsoles;
 gamestuff gameData;
+String pretext="";
 runningengine(channels sharedVariables1, int board, JTextPane [] gameconsoles1, gamestuff gameData1)
 {
 	gameconsoles=gameconsoles1;
@@ -474,8 +475,7 @@ if(text.startsWith("info") && (text.contains("pv") && !text.contains("info currm
 	line2 = text.substring(text.indexOf("pv") + 3, text.length());
          }
         line2=pgnGetter.getPgn(line2, sharedVariables.mygame[gameData.BoardIndex].iflipped, sharedVariables.mygame[gameData.BoardIndex].board);
-	writeOut(line1);
-	writeOut(line2);
+	writeOut2( line1 + "\n" + line2 + "\n");
 }
 else
 writeOut(text);
@@ -511,6 +511,7 @@ try {
 // text+="\n" + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen  + "\n";
 //StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
  StyledDocument doc = sharedVariables.engineDoc;
+
 doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
@@ -527,6 +528,35 @@ catch(Exception e)
 {}
 
 }// end writeout method
+void writeOut2(String text)
+{
+try {
+
+// if(!sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen.equals(""))
+// text+="\n" + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen  + "\n";
+//StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
+ //JTextPane me = new JTextPane();
+  StyledDocument doc = sharedVariables.engineDoc;
+ doc.remove(0, doc.getLength());
+ // doc.remove(0,doc.toString().length());
+doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
+for(int a=0; a<sharedVariables.openBoardCount; a++)
+if(sharedVariables.gamelooking[a]==BoardIndex)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+setEngineDoc(doc, a);
+
+//gameconsoles[a].setStyledDocument(doc);
+}
+
+}
+catch(Exception e)
+{}
+
+}// end writeout2 method
+
+
 
 }// end run time class
 
