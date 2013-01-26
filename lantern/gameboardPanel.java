@@ -937,6 +937,16 @@ void repaintPiece()
                 }
 		if(movingpiece == 0 && movingexaminepiece==0)
 				{
+                                      // first check for right click to ignore as move and cancel a premove
+                                       if(e.getButton() == MouseEvent.BUTTON3)
+                                       {
+						sharedVariables.mygame[gameData.LookingAt].premove="";
+						repaint();
+						return;
+					}
+
+
+
 					int piece = getPiece();
 					if(piece > -1)
 					{
@@ -957,7 +967,14 @@ void repaintPiece()
 					}
 
 				}
-
+                                else if(e.getButton() == MouseEvent.BUTTON3)
+                                       {
+						sharedVariables.mygame[gameData.LookingAt].premove="";
+						movingpiece = 0;
+                                                movingexaminepiece=0;
+                                                repaint();
+						return;
+					}
 
 
 	    }

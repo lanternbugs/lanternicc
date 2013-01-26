@@ -136,7 +136,7 @@ void showSeekDialog()
 JFrame mytempframe = new JFrame();
 seekGameDialog myseeker = new seekGameDialog(mytempframe, false, sharedVariables, queue);
 int defaultWidth = 425;
-int defaultHeight = 260;
+int defaultHeight = 310;
 myseeker.setSize(defaultWidth,defaultHeight);
 
 try {

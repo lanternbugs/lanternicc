@@ -46,7 +46,7 @@ JCheckBox saveSettingsCheckBox;
 JLabel ratedLabel;
 channels sharedVariables;
 
-int wildarray[]= {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16,17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29};
+int wildarray[]= {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29};
 String [] wildnames;
 String colorarray[]={"auto", "white", "black"};
 JLabel opponentLabel;
@@ -98,6 +98,7 @@ for(int a=0; a< wildarray.length; a++)
 
 wildComboBox = new JComboBox(wildnames);
 wildComboBox.setSelectedIndex(wildIndex);
+// end wilds and combo box
 
 int colorIndex=0;
 for(int a=0; a< 3; a++)
@@ -109,7 +110,7 @@ for(int a=0; a< 3; a++)
 colorComboBox = new JComboBox(colorarray);
 colorComboBox.setSelectedIndex(colorIndex);
 colorLabel = new JLabel("Color");
-// end wilds and combo box
+// end color and combo box
 
 ratedBox = new JCheckBox();
 if(sharedVariables.myseek.rated == true)

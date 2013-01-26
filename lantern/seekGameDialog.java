@@ -43,6 +43,8 @@ JButton button960;
 JButton button15;
 
 JComboBox wildComboBox;
+JComboBox colorComboBox;
+JLabel colorLabel;
 JLabel prompt;
 
 JCheckBox ratedBox;
@@ -55,8 +57,9 @@ JLabel formulaLabel;
 JLabel manualLabel;
 channels sharedVariables;
 
-int wildarray[]= {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16,17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29};
+int wildarray[]= {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29};
 String [] wildnames;
+String colorarray[]={"auto", "white", "black"};
 ConcurrentLinkedQueue<myoutput> queue;
 seekGameDialog(final JFrame frame, boolean mybool, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
 {
@@ -110,6 +113,17 @@ wildComboBox = new JComboBox(wildnames);
 wildComboBox.setSelectedIndex(wildIndex);
 
 // end wilds and combo box
+int colorIndex=0;
+for(int a=0; a< 3; a++)
+{
+
+	if(colorarray[a].equals(sharedVariables.myseek.color))
+		colorIndex=a;
+}
+colorComboBox = new JComboBox(colorarray);
+colorComboBox.setSelectedIndex(colorIndex);
+colorLabel = new JLabel("Color");
+// end color and combo box
 
 ratedBox = new JCheckBox();
 if(sharedVariables.myseek.rated == true)
@@ -136,6 +150,7 @@ formulaLabel = new JLabel("formula");
                                  int time=0;
                                  int inc=0;
                                  int wild=0;
+                                 String color;
                                  String rated = "r";
                                  String manual = "";
                                  String formula = "";
@@ -181,6 +196,18 @@ formulaLabel = new JLabel("formula");
 							showErrorMessage("Error parsing wild");
 							return;
 							}
+                               try {
+									int choice =colorComboBox.getSelectedIndex();
+                                                                        color = colorarray[choice];
+                                                                        if(color.equals("auto"))
+                                                                        color = "";
+                                                	}
+							catch(Exception d)
+							{
+							showErrorMessage("Error parsing color");
+							return;
+							}
+
 
                             // now read check boxes.
 
@@ -201,7 +228,7 @@ formulaLabel = new JLabel("formula");
 
 
 
-							String seekString = "seek " + time + " " + inc + " w" + wild + " " + rated + " " + minseek + "-" + maxseek + " " + formula + " " + manual;
+							String seekString = "seek " + time + " " + inc + " w" + wild + " " + rated + " " + minseek + "-" + maxseek + " " + formula + " " + manual + " " + color;
 
 
                             // dialouge success
@@ -365,6 +392,7 @@ class overallPanel extends JPanel {
 JPanel row1 = new JPanel();
 JPanel row2 = new JPanel();
 JPanel row3 = new JPanel();
+JPanel row34 = new JPanel();
 JPanel row4 = new JPanel();
 JPanel row5 = new JPanel();
 JPanel row6 = new JPanel();
@@ -383,13 +411,16 @@ row2.add(saveSettingsLabel);
 row2.add(saveSettingsCheckBox);
 
 
-row3.add(wildComboBox);
 row3.add(ratedLabel);
 row3.add(ratedBox);
 row3.add(formulaLabel);
 row3.add(formulaBox);
 row3.add(manualLabel);
 row3.add(manualBox);
+
+row34.add(wildComboBox);
+row34.add(colorLabel);
+row34.add(colorComboBox);
 
 row4.add(Okbutton);
 row4.add(Cancelbutton);
@@ -404,10 +435,11 @@ row7.add(button15);
 row7.add(button45);
 row7.add(button960);
 
-setLayout(new GridLayout(7,1));
+setLayout(new GridLayout(8,1));
 add(row1);
 add(row2);
 add(row3);
+add(row34);
 add(row4);
 add(row5);
 add(row6);

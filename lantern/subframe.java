@@ -1627,7 +1627,7 @@ class subframe extends JInternalFrame
                   addNameToCombo(name);
 
               }
-              else if (sharedVariables.rightClickMenu.get(mfinal).equals("Match")) {
+              else if (sharedVariables.rightClickMenu.get(mfinal).equals("Challenge")) {
                JFrame framer =  new JFrame();
                 sharedVariables.challengeCreator(name, framer, queue);
 

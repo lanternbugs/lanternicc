@@ -61,7 +61,7 @@ return "w13 Queen Odds";
 if(wild == 14)
 return "w14 Rook Odds";
 if(wild == 15)
-return "w15 Bishop/Knight";
+return "w15 Bishop/Knight Mate";
 if(wild == 16)
 return "w16 Kriegspiel";
 if(wild == 17)

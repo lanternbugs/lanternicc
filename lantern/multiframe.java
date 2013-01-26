@@ -2701,7 +2701,7 @@ dot.setVisible(true);
 
       seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
       int defaultWidth = 425;
-      int defaultHeight = 260;
+      int defaultHeight = 310;
       myseeker.setSize(defaultWidth,defaultHeight);
 
       try {

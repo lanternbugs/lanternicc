@@ -1890,7 +1890,7 @@ items[m].addActionListener(new ActionListener() {
          {
 			sharedVariables.openUrl(name);
        }
-             else if (sharedVariables.rightClickMenu.get(mfinal).equals("Match")) {
+             else if (sharedVariables.rightClickMenu.get(mfinal).equals("Challenge")) {
                JFrame framer =  new JFrame();
                 sharedVariables.challengeCreator(name, framer, queue);
 
