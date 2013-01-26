@@ -2054,12 +2054,16 @@ class mymultiframe extends JFrame
         go=true;
         try {
           JFileChooser fc = new JFileChooser();
+          if(sharedVariables.engineDirectory != null)
+           fc.setCurrentDirectory(sharedVariables.engineDirectory);
+          else
           fc.setCurrentDirectory(new File("."));
 
           int returnVal = fc.showOpenDialog(this);
 
           if (returnVal == JFileChooser.APPROVE_OPTION) {
             sharedVariables.engineFile = fc.getSelectedFile();
+            sharedVariables.engineDirectory = fc.getCurrentDirectory();
             sharedVariables.uci = (action.equals("Load UCI Engine"));
 
             startTheEngine();

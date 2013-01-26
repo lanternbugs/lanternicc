@@ -40,7 +40,7 @@ class settings {
 	subframe [] consoleSubframes;
 	String aFile;
 	String aFileLinux;
-
+        String engineFile;
 
 
 	settings(channels sharedVariables){
@@ -78,6 +78,22 @@ class settings {
 	*/
 
 	//  number = color.getRGB()
+
+
+	// write engine out if possible
+	if(sharedVariables.engineDirectory!= null)
+	{
+        try {
+        engineFile = "lantern_engine_directory.ini";
+
+        FileWriter efstream = new FileWriter(engineFile);
+	FileWrite out = new FileWrite();
+
+	out.write2(efstream, sharedVariables.engineDirectory.getPath());
+        }
+        catch(Exception easy){}
+
+        }
 	int zz;
 	String aFont;
 	String aFontStyle;
@@ -1320,7 +1336,20 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				int zz;
 				String mystring="";
 				String entry = "";
-		try {
+	
+        
+                try {
+        engineFile = "lantern_engine_directory.ini";
+	FileRead in = new FileRead();
+
+       String engineString = in.read2(engineFile);
+       if(engineString.length() > 2)
+       sharedVariables.engineDirectory = new File(engineString);
+	//write2(efstream, sharedVariables.engineDirectory.getPath());
+        }
+        catch(Exception easy){}
+
+        	try {
 			FileRead in = new  FileRead();
 
 			StringTokenizer tokens = new StringTokenizer(in.read(), " ");
@@ -3171,8 +3200,12 @@ void write2(FileWriter fstream, String s)
 
 class FileRead
 {
-
    String read()
+   {
+    return read2(aFile);
+
+   }
+   String read2(String aFile)
    {String s = "";
 		try {
       //use buffering, reading one line at a time

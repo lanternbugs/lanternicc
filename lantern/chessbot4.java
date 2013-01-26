@@ -832,7 +832,14 @@ else
 	}
 	else
 	{
-writeLevel1(new routing(), myinput);
+try {
+ // JFrame framer = new JFrame(myinput);
+ // framer.setSize(500,100);
+  //framer.setVisible(true);
+  writeLevel1(new routing(), myinput);
+}catch(Exception dummy2){}
+
+
 	}
 	}
 	else
@@ -930,11 +937,14 @@ if(slashN1 > -1)
    {
     writeLevel1(console, thetell.substring(0, slashN1 + 1));
     thetell=thetell.substring(slashN1 + 1, thetell.length());
+  // if(thetell.equals("\n") || thetell.equals("\r\n") || thetell.equals("\n\r") || thetell.equals("\r"))
+  // return;
     slashN1=thetell.indexOf("\n");
     slashN2=thetell.indexOf("\n", slashN1 + 1);
    //  writeToSubConsole("double tell and slashN2  = " + slashN2 + "\n", 0);
    }
  }// end if
+
 }
 try {
 

@@ -334,6 +334,7 @@ channelTabInfo [] tabStuff = new channelTabInfo[maxConsoleTabs];
 ConcurrentLinkedQueue<myoutput> engineQueue;
 OutputStream engineOut;
 File engineFile;
+File engineDirectory;
 File wallpaperFile;
 preselectedBoards preselectBoards;
 
@@ -343,9 +344,9 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.09";
+version = "v5.11";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
-
+engineDirectory = null;
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -626,7 +627,7 @@ try {
 }
 catch(Exception badEventsFont){}
 try {
-analysisFont = new Font("Times New Roman", Font.PLAIN, 12);
+analysisFont = new Font("Times New Roman", Font.PLAIN, 16);
 
 }
 catch(Exception badanalysisfont){}

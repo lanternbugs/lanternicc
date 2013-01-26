@@ -444,7 +444,7 @@ return;
              {
                 myoutput data = new myoutput();
                 data.consoleNumber = 0;
-                data.data=watch + "\n";
+                data.data= "`c0`" + watch + "\n";
                 queue.add(data);
                 go=true;
 
@@ -453,7 +453,7 @@ return;
              {
                 myoutput data = new myoutput();
                 data.consoleNumber = 0;
-                data.data=join + "\n";
+                data.data= "`c0`" + join + "\n";
                 queue.add(data);
                 go=true;
 
@@ -1026,7 +1026,7 @@ void joinMethod(String join1, String join2)
 
 
 				 myoutput output = new myoutput();
-				 output.data=join1 + "\n";
+				 output.data= "`c0`" + join1 + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1034,7 +1034,7 @@ void joinMethod(String join1, String join2)
       			 if(!join2.equals(""))
       			 {
 				 output = new myoutput();
-				 output.data=join2 + "\n";
+				 output.data= "`c0`" + join2 + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1051,7 +1051,7 @@ void infoMethod(String info)
                                  return;
                                 }
                                  myoutput output = new myoutput();
-				 output.data=info + "\n";
+				 output.data= "`c0`" + info + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1063,7 +1063,7 @@ void infoMethod(String info)
 void watchMethod(String watch)
 {
 				 myoutput output = new myoutput();
-				 output.data=watch + "\n";
+				 output.data= "`c0`" + watch + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);

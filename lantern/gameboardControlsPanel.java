@@ -468,6 +468,14 @@ import layout.TableLayout;
 
             menu2.add(item5);
 
+            JMenuItem item56 = new JMenuItem("Vars  " + nameF);
+            item56.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("vars " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item56);
             JMenuItem item6 = new JMenuItem("Notify  " + nameF);
             item6.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -595,6 +603,17 @@ import layout.TableLayout;
               });
 
             menu2.add(item5);
+
+            JMenuItem item56 = new JMenuItem("Vars  " + nameF);
+            item56.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("vars " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item56);
+
+
 
             JMenuItem item6 = new JMenuItem("Notify  " + nameF);
             item6.addActionListener(new ActionListener() {
@@ -1206,7 +1225,7 @@ adjustMoveList();
 
     void sendCommand(String command) {
       myoutput output = new myoutput();
-      output.data=command;
+      output.data="`c0`" + command;
       output.consoleNumber=0;
       output.game=1;
       queue.add(output);
