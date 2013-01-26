@@ -5260,7 +5260,7 @@ else
                                                         if(sharedVariables.unobserveGoExamine == true && sharedVariables.mygame[gamenum].played_game == 1)
                                                         {
                                                          myoutput tempo = new myoutput();
-                                                         tempo.data = "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
+                                                         tempo.data = "`c0`" +  "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
                                                          queue.add(tempo);
                                                         }
                                                 	myboards[gamenum].gameEndedExamined(temp.arg1); // pass game number
@@ -6617,7 +6617,7 @@ try {
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
 		}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_OBSERVING)
-		{	data.data = "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
+		{	data.data =  "`c0`" + "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
 			data.consoleNumber = 0;
 			data.game=1;
 			if(myboards[tabNumber]!=null)
