@@ -978,8 +978,8 @@ void repaintPiece()
                                 else if(e.getButton() == MouseEvent.BUTTON3)
                                        {
 						sharedVariables.mygame[gameData.LookingAt].premove="";
-						movingpiece = 0;
-                                                movingexaminepiece=0;
+						//movingpiece = 0;
+                                                //movingexaminepiece=0;
                                                 repaint();
 						return;
 					}
@@ -997,6 +997,8 @@ void repaintPiece()
 
           if(sharedVariables.moveInputType == channels.CLICK_CLICK && inTheAir == true)
           return;
+           if(me.getButton() == MouseEvent.BUTTON3)
+           return;
 
           mouseReleasedMoveMade (me);
            
