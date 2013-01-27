@@ -2150,7 +2150,7 @@ if(dg.getArg(0).equals("27"))
 
 				sendMessage("multi Set-2 81 1; Set-2 64 1; Set-2 65 1; Set-2 81 1\n");// notify
 					sendMessage("multi Set-2 103 1\n");// dg tourney events list
-				sendMessage("multi set bell 0\n");
+				sendMessage("`c0`" + "multi set bell 0\n");
 								if(sharedVariables.iloggedon == true)
 								sendMessage("`c0`" + "iloggedon\n");
 
