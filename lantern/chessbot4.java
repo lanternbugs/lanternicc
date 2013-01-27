@@ -404,6 +404,7 @@ catch(Exception e)
                         channelLogin=false;
 			startedParsing = false;
 			fullyConnected = -1;
+
 			if(sharedVariables.myServer.equals("ICC"))
 			{
 
@@ -821,6 +822,7 @@ if(level2 == 1)
 else
 { // not level 2
 	int go=0;
+
 	if(icc_num>0)
 	{
 
@@ -836,6 +838,9 @@ try {
  // JFrame framer = new JFrame(myinput);
  // framer.setSize(500,100);
   //framer.setVisible(true);
+  if(bellSet == false)
+  writeToSubConsole(myinput, 0);
+  else
   writeLevel1(new routing(), myinput);
 }catch(Exception dummy2){}
 
