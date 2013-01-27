@@ -839,7 +839,22 @@ try {
  // framer.setSize(500,100);
   //framer.setVisible(true);
   if(bellSet == false && !sharedVariables.myname.equals(""))
-  writeToSubConsole(myinput, 0);
+ { 
+   
+   if(myinput.startsWith("http://www.chessclub.com/activities/events.html"))
+    writeLevel1(new routing(), myinput);
+   else
+ {
+   writeToSubConsole(myinput, 0);
+   if(myinput.startsWith("**********************") ||
+   myinput.startsWith("For a list of events, click here:") || 
+   myinput.startsWith("________________________"))
+   writeToSubConsole("\n", 0);
+   else if(myinput.startsWith(" ________________"))
+   writeToSubConsole("\n\n", 0);
+ }
+ }// end if bellSet false
+
   else
   writeLevel1(new routing(), myinput);
 }catch(Exception dummy2){}
