@@ -81,6 +81,8 @@ randomPieces randomObj;
 
 boolean becameExamined;
 boolean sentGameEnd;
+boolean mugshot1=false;
+boolean mugshot2=false;
 String whiteTimeDisplay;
 String blackTimeDisplay;
 String myColor;

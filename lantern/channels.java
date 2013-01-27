@@ -128,6 +128,7 @@ boolean drawCoordinates = true;
 boolean ActivitiesOnTop=false;
 boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
+boolean showMugshots = true;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();
@@ -344,7 +345,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.12";
+version = "v5.13";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();

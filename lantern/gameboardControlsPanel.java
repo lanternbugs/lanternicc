@@ -83,6 +83,8 @@ import layout.TableLayout;
     String oldcountry2="";
     JLabel flagTop = new JLabel("");
     JLabel flagBottom = new JLabel("");
+    JLabel mugshotTop = new JLabel("");
+    JLabel mugshotBottom = new JLabel("");
 
     JScrollPane listScroller;
 
@@ -179,6 +181,8 @@ import layout.TableLayout;
         }
         flagTop.setBackground(sharedVariables.boardBackgroundColor);
         flagBottom.setBackground(sharedVariables.boardBackgroundColor);
+        mugshotTop.setBackground(sharedVariables.boardBackgroundColor);
+        mugshotBottom.setBackground(sharedVariables.boardBackgroundColor);
 
 
         if (oldLooking != gameData.LookingAt ||
@@ -196,6 +200,10 @@ import layout.TableLayout;
           flagBottom.setVisible(false);
 
         }// end no game
+
+          mugshotTop.setVisible(sharedVariables.mygame[gameData.LookingAt].mugshot1);
+          mugshotBottom.setVisible(sharedVariables.mygame[gameData.LookingAt].mugshot2);
+
 
         //sliderArrows.setBackground(sharedVariables.boardBackgroundColor);
         //topClock.setBackground(sharedVariables.boardBackgroundColor);
@@ -1093,6 +1101,7 @@ adjustMoveList();
       int flagnum=105;
 
       hflagtop.addComponent(topClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      hflagtop.addComponent(mugshotTop, flagnum, GroupLayout.DEFAULT_SIZE, flagnum);
       hflagtop.addComponent(flagTop, flagnum, GroupLayout.DEFAULT_SIZE, flagnum);
       h1.addGroup(hflagtop);
       h1.addComponent(topNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
@@ -1113,6 +1122,7 @@ adjustMoveList();
 
       h1.addComponent(botNameDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
       hflagbottom.addComponent(botClockDisplay, 0, GroupLayout.DEFAULT_SIZE, num);
+      hflagbottom.addComponent(mugshotBottom, 0, GroupLayout.DEFAULT_SIZE, flagnum);
       hflagbottom.addComponent(flagBottom, 0, GroupLayout.DEFAULT_SIZE, flagnum);
       h1.addGroup(hflagbottom);
 
@@ -1142,6 +1152,7 @@ adjustMoveList();
       int num5 = 45;
       int num6 = 24;
       vflagtop.addComponent(topClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+      vflagtop.addComponent(mugshotTop, num4, GroupLayout.DEFAULT_SIZE, num);
       vflagtop.addComponent(flagTop, num4, GroupLayout.DEFAULT_SIZE, num);
       v1.addGroup(vflagtop);
 
@@ -1161,6 +1172,7 @@ adjustMoveList();
       v1.addComponent(botNameDisplay, num2, GroupLayout.DEFAULT_SIZE, num);
 
       vflagbottom.addComponent(botClockDisplay, num3, GroupLayout.DEFAULT_SIZE, num);
+      vflagbottom.addComponent(mugshotBottom, num4, GroupLayout.DEFAULT_SIZE, num);
       vflagbottom.addComponent(flagBottom, num4, GroupLayout.DEFAULT_SIZE, num);
       v1.addGroup(vflagbottom);
 

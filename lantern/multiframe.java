@@ -181,6 +181,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem autonoidle;
   JCheckBoxMenuItem autobufferchat;
   JCheckBoxMenuItem autoHistoryPopup;
+  JCheckBoxMenuItem showMugshots;
   JCheckBoxMenuItem makeObserveSounds;
   JCheckBoxMenuItem hearsound;
   JCheckBoxMenuItem gameend;
@@ -560,6 +561,7 @@ class mymultiframe extends JFrame
     basketballFlag.      setSelected(sharedVariables.basketballFlag);
     autoHistoryPopup.    setSelected(sharedVariables.autoHistoryPopup);
     makeObserveSounds.   setSelected(sharedVariables.makeObserveSounds);
+    showMugshots.        setSelected(sharedVariables.showMugshots);
     hearsound.           setSelected(sharedVariables.makeSounds);
     consolemenu.         setSelected(sharedVariables.showConsoleMenu);
 
@@ -1092,6 +1094,8 @@ class mymultiframe extends JFrame
     /****************************** Options ******************************/
     JMenu optionsmenu = new JMenu("Options");
     // Options /
+    showMugshots = new JCheckBoxMenuItem("Show Profile Mugshots");
+    
     JMenu soundmenu = new JMenu("Sound");
     // .. / Sounds /
     hearsound = new JCheckBoxMenuItem("Sounds");
@@ -1204,6 +1208,7 @@ class mymultiframe extends JFrame
     soundmenu.add(hearsound);
     soundmenu.add(makeObserveSounds);
     soundmenu.add(notifysound);
+    optionsmenu.add(showMugshots);
     // .. /
     optionsmenu.addSeparator();
     optionsmenu.add(winanalysis);
@@ -1283,6 +1288,7 @@ class mymultiframe extends JFrame
     compactNameList.setSelected(false);
 
     // add listeners    
+   showMugshots.addActionListener(this);
     makeObserveSounds.addActionListener(this);
     hearsound.addActionListener(this);
     notifysound.addActionListener(this);
@@ -3617,7 +3623,12 @@ dot.setVisible(true);
       sharedVariables.randomBoardTiles = !sharedVariables.randomBoardTiles;
       randomTiles.setSelected(sharedVariables.randomBoardTiles);
 
-    } else if (action.equals("Sounds for Notifications")) {
+    }else if(action.equals("Show Profile Mugshots"))
+    {
+     sharedVariables.showMugshots = !sharedVariables.showMugshots;
+     showMugshots.setSelected(sharedVariables.showMugshots);
+    }
+    else if (action.equals("Sounds for Notifications")) {
       sharedVariables.specificSounds[4] = !sharedVariables.specificSounds[4];
       notifysound.setSelected(sharedVariables.specificSounds[4]);
 

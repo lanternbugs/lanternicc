@@ -67,7 +67,7 @@ CancelButton = new JButton("Cancel");
 			 try
 			 	{
 				 myoutput output = new myoutput();
-				 output.data=command + "\n";
+				 output.data="`c0`" + command + "\n";
 
 				 output.consoleNumber=0;
       			 queue.add(output);

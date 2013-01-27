@@ -547,13 +547,14 @@ try {
 			if(sharedVariables.myServer.equals("ICC"))
 			{
 			sharedVariables.myname="";// reset our name at reconnect.  having a name means we can use level1
-			String  dgs= "0000000000000100101000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+			String  dgs= "00000000000001001010000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 			// turn on 0 ( who am i ) and 32 ( shout)
 			String dgs2="";
 			String newdgs="";
 			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
-			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132 && a!= 152)
+			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
+			 && a!= 152 )
                         dgs2= dgs2 + "0";
 			else
 			{
@@ -2004,14 +2005,45 @@ sendMessage("`c" + blockConsoleNumber + "`say [automatic Lantern Interface Messa
 return true;
 }
 
+class mugShot implements Runnable
+{
+  String ImageUrl;
+ mugShot(String ImageUrl1)
+ {
+  ImageUrl=ImageUrl1;
+ }
+ 
+public void run()
+ {
+                        try {
+                          if(getResponseCode(ImageUrl) != 404)
+                          mycreator.createWebFrame("<img src=" + ImageUrl + ">");
+                        }catch(Exception dd){}
+ }
+}
+public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+    URL u = new URL(urlString); 
+    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection(); 
+    huc.setRequestMethod("GET"); 
+    huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+    huc.connect();
+    return huc.getResponseCode();
+}
 
 void processDatagram(Datagram1 dg, routing console)
 {
 try {
 int gamenum=0;
-
+/*if(dg.getArg(0).equals("153") || dg.getArg(0).equals("154") || dg.getArg(0).equals("155"))
+{
+ writeToSubConsole(dg.getArg(0) + " arg1: " + dg.getArg(1) + " arg2: " + dg.getArg(2) + " arg3: " + dg.getArg(3) + " arg4: " + dg.getArg(4), 0);
+ return;
+}
+*/
 if( dg.getArg(0).equals("152"))
 {
+ //writeToSubConsole(dg.getArg(0) + " arg1: " + dg.getArg(1) + " arg2: " + dg.getArg(2) + " arg3: " + dg.getArg(3) + " arg4: " + dg.getArg(4), 0);
+
  // dg.getArg(0).equals("58") || // ip doenst do anything found out its 152
   String arg58="";
         for(int a= 0; a < dg.argc; a++)
@@ -2035,13 +2067,13 @@ if( dg.getArg(0).equals("152"))
                        if(console.type==0)
                          {if(console.number >=0 && console.number <sharedVariables.maxConsoleTabs)
                         {
-                         
+
                          String uniqueName="";
 
                          String countryString = dg.getArg(3);
                          if (!countryString.equals("icc"))
                            countryString = countryString.toUpperCase();
-                         
+
                          //int bb=sharedVariables.countryNames.indexOf(";" + dg.getArg(3) + ";");
                          int bb = sharedVariables.countryNames.indexOf(";" + countryString + ";");
                          if(bb > -1)
@@ -2055,7 +2087,13 @@ if( dg.getArg(0).equals("152"))
                           writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);
                           else
                            writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + " " + uniqueName + "\n",console.number);
-
+                          // code for mug shot
+                        if(sharedVariables.showMugshots)
+                        {  String ImageUrl = "http://www.chessclub.com/mugshots/" + dg.getArg(1) + ".jpg";
+                         mugShot imageClient = new mugShot(ImageUrl);
+                         Thread t_image = new Thread(imageClient);
+                         t_image.start();
+                        }// if show mugshots
                         }
 
                         }

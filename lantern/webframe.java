@@ -120,6 +120,12 @@ item3.addActionListener(new ActionListener() {
 			if(go == 0)
 			return;
 
+			if(myurl.startsWith("<"))
+			{
+                         consoles[consoleNumber].setContentType("text/html");
+                          consoles[consoleNumber].setText(myurl);
+			}
+                        else
 			consoles[consoleNumber].setPage(myurl);
 
 
@@ -319,7 +325,13 @@ public void mouseClicked (MouseEvent me) {
         consoles[consoleNumber].setEditable(false);
 
 		try {
-			consoles[consoleNumber].setPage(incomingUrl);
+			if(incomingUrl.startsWith("<"))
+			{
+                         consoles[consoleNumber].setContentType("text/html");
+                         consoles[consoleNumber].setText(incomingUrl);
+			}
+                        else
+                        consoles[consoleNumber].setPage(incomingUrl);
 		}
 		catch(Exception e2){}
 

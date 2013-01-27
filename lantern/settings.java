@@ -431,6 +431,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donenotifyMainAlso] ";
 
+	// showMugshots
+	set_string = set_string + "[showMugshots] ";
+	if(sharedVariables.showMugshots == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+
+
 	// makeSounds
 	set_string = set_string + "[makeSounds] ";
 	if(sharedVariables.makeSounds == true)
@@ -1913,7 +1922,19 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
-				if (temp.equals("[makeSounds]"))
+
+                       	if (temp.equals("[showMugshots]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.showMugshots=true;
+					else
+						sharedVariables.showMugshots=false;
+					}
+					catch(Exception zzz){}
+				}
+                        	if (temp.equals("[makeSounds]"))
 				{
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
