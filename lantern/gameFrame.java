@@ -206,7 +206,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Examine " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data=examineString + "\n";
+				 	output.data="`c0`" + examineString + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -229,7 +229,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Sposition " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data=examineString + "\n";
+				 	output.data="`c0`" + examineString + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -249,7 +249,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Libappend " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data=examineString + "\n";
+				 	output.data="`c0`" + examineString + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -270,7 +270,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	examineString = "Libdelete" + " %" + gameIndex;
 
 				 	myoutput output = new myoutput();
-				 	output.data=examineString + "\n";
+				 	output.data="`c0`" + examineString + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -304,7 +304,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
           		public void actionPerformed(ActionEvent e) {
 
 				 	myoutput output = new myoutput();
-				 	output.data="Finger " + historyOpponent + "\n";
+				 	output.data="`c0`" + "Finger " + historyOpponent + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -322,7 +322,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
           		public void actionPerformed(ActionEvent e) {
 
 				 	myoutput output = new myoutput();
-				 	output.data="History " + historyOpponent + "\n";
+				 	output.data="`c0`" + "History " + historyOpponent + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
