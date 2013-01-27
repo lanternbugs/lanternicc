@@ -2147,7 +2147,7 @@ if(dg.getArg(0).equals("27"))
 					sendMessage("multi Set-2 103 1\n");// dg tourney events list
 				sendMessage("multi set bell 0\n");
 								if(sharedVariables.iloggedon == true)
-								sendMessage("iloggedon\n");
+								sendMessage("`c0`" + "iloggedon\n");
 
 		 sharedVariables.myname=dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
@@ -6607,7 +6607,7 @@ try {
 
         	}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_EXAMINING)
-		{	data.data = "Unexamine\n";
+		{	data.data = "`c0`" + "Unexamine\n";
 			data.consoleNumber = 0;
 			data.game=1;
 			// now call game over this ensures any engines shut down
