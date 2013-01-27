@@ -838,7 +838,7 @@ try {
  // JFrame framer = new JFrame(myinput);
  // framer.setSize(500,100);
   //framer.setVisible(true);
-  if(bellSet == false)
+  if(bellSet == false && !sharedVariables.myname.equals(""))
   writeToSubConsole(myinput, 0);
   else
   writeLevel1(new routing(), myinput);
