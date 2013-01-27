@@ -141,8 +141,13 @@ protected void createWebFrame(final String url) {
                                               public void run() {
                                               try { 
                                                 
-if(!mywebframe.isVisible())
-	{       sharedVariables.setDefaultWebBoardSize();
+if(!mywebframe.isVisible() || url.startsWith("<"))
+	{      
+          
+                 if(mywebframe.isVisible())
+                    mywebframe.dispose();
+          
+               sharedVariables.setDefaultWebBoardSize();
 		mywebframe = new webframe(sharedVariables,  queue, url);
 		sharedVariables.desktop.add(mywebframe);
 		try {
@@ -169,8 +174,13 @@ if(!mywebframe.isVisible())
 
     try
     {
-
-        mywebframe.consoles[0].setPage(url);
+ 		/*	if(url.startsWith("<"))
+			{
+                         consoles[0].setContentType("text/html");
+                         consoles[0].setText(url);
+			}
+                        else
+                */         mywebframe.consoles[0].setPage(url);
 
         mywebframe.setSelected(true);
     }
