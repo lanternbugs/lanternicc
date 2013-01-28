@@ -438,7 +438,7 @@ return null;
                               else
                               {
 
-                                        String play = "play " + over.index + "\n";
+                                        String play = "`c0`" + "play " + over.index + "\n";
 					myoutput temp =new myoutput();
 					temp.data=play;
 					temp.consoleNumber=0;
@@ -458,7 +458,7 @@ JMenuItem item1= new JMenuItem("Finger " + Name);
  item1.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
 
-         String action = "Finger " + Name + "\n";
+         String action = "`c0`" + "Finger " + Name + "\n";
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -470,7 +470,7 @@ JMenuItem item2= new JMenuItem("History " + Name);
  item2.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
 
-         String action = "History " + Name + "\n";
+         String action = "`c0`" + "History " + Name + "\n";
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -482,7 +482,7 @@ JMenuItem item3= new JMenuItem("Vars " + Name);
  item3.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
 
-         String action = "Vars " + Name + "\n";
+         String action = "`c0`" + "Vars " + Name + "\n";
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -495,7 +495,7 @@ JMenuItem item4= new JMenuItem("Ping " + Name);
  item4.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
 
-         String action = "Ping " + Name + "\n";
+         String action = "`c0`" + "Ping " + Name + "\n";
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -507,7 +507,7 @@ JMenuItem item5= new JMenuItem("Assess " + Name);
  item5.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
 
-         String action = "Assess " + Name + "\n";
+         String action = "`c0`" + "Assess " + Name + "\n";
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
