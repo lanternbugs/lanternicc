@@ -381,7 +381,7 @@ formulaLabel = new JLabel("formula");
 void sendToIcs(String mess)
 {
 	myoutput data = new myoutput();
-	data.data=mess;
+	data.data= "`c0`" + mess;
 	queue.add(data);
 
 }

@@ -113,7 +113,7 @@ class toolbarCommands
 
       }
       else
-      output.data=mes;
+      output.data= "`c0`" + mes;
 
       output.consoleNumber=con;
       queue.add(output);
