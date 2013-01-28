@@ -263,7 +263,7 @@ ratedLabel = new JLabel("rated");
 void sendToIcs(String mess)
 {
 	myoutput data = new myoutput();
-	data.data=mess;
+	data.data= "`c0`" + mess;
 	queue.add(data);
 
 }
