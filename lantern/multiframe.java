@@ -4576,7 +4576,7 @@ dot.setVisible(true);
              ;
            else {
              myoutput data = new myoutput();
-             data.data="1-Minute\n";
+             data.data= "`c0`" + "1-Minute\n";
              data.consoleNumber=0;
              queue.add(data);
            }// end else
@@ -4594,7 +4594,7 @@ dot.setVisible(true);
             ;
           else {
             myoutput data = new myoutput();
-            data.data="3-Minute\n";
+            data.data= "`c0`" + "3-Minute\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -4612,7 +4612,7 @@ dot.setVisible(true);
             ;
           else {
             myoutput data = new myoutput();
-            data.data="5-Minute\n";
+            data.data= "`c0`" + "5-Minute\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -4630,7 +4630,7 @@ dot.setVisible(true);
             ;
           else {
             myoutput data = new myoutput();
-            data.data="15-Minute\n";
+            data.data= "`c0`" + "15-Minute\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -4648,7 +4648,7 @@ dot.setVisible(true);
             ;
           else {
             myoutput data = new myoutput();
-            data.data="45\n";
+            data.data= "`c0`" + "45\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -4666,7 +4666,7 @@ dot.setVisible(true);
             ;
           else {
             myoutput data = new myoutput();
-            data.data="960\n";
+            data.data= "`c0`" + "960\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -4694,7 +4694,7 @@ dot.setVisible(true);
       if (a != 0)
         toolBar.add(sharedVariables.mybuttons[a]);
     }
-    
+
     toolBar.add(sharedVariables.mybuttons[0]);
     toolBar.add(seeksLabel);
     toolBar.add(activitesLabel);
