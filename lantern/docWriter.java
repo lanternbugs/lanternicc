@@ -562,19 +562,30 @@ catch(Exception dui){}
 }// end method
 
 
-void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
+void patchedInsertString(final StyledDocument doc, int end, String mystring, SimpleAttributeSet attrs)
 {
-  
+
   if (System.getProperty("java.version").startsWith("1.6."))
   {
-  try {
-    doc.insertString(end, mystring, attrs);
-  }
-  catch(Exception dummy){}
- /* JFrame ff = new JFrame(System.getProperty("java.version"));
-  ff.setSize(500,500);
-  ff.setVisible(true);
-  */
+
+      final int arg1=end;
+      final String arg2 = mystring;
+      final SimpleAttributeSet fattrs=attrs;
+     try { doc.insertString(arg1, arg2, fattrs);
+   } catch(Exception e){}
+    SwingUtilities.invokeLater(new Runnable() {
+   @Override
+          public void run() {
+
+          try {
+
+           // doc.insertString(arg1, arg2, fattrs);
+      } catch (Exception e1) {
+            //ignore
+        }}
+        }
+      );
+
    return;
   }
 
@@ -592,7 +603,7 @@ void patchedInsertString(StyledDocument doc, int end, String mystring, SimpleAtt
 	return;
 
        int a;
-int bufferamount=15;
+int bufferamount=8;
 int maxsegs = 0;
 maxsegs = (int) mystring.length()/bufferamount;
 if(mystring.length()%bufferamount != 0)
@@ -604,38 +615,65 @@ for(a=0; a<maxsegs; a++)
 {
  if(a < maxsegs -1)
  {
-   if(a%2==0)
-  attrs.addAttribute("A", "B");
-  else
-  attrs.removeAttribute("A");
-  doc.insertString(end+ a * bufferamount, mystring.substring(a * bufferamount, (a+1) * bufferamount), attrs);
-
-   
- }
- else
- {
-   
-   if(a%2==0)
-  attrs.addAttribute("A", "B");
-  else
-  attrs.removeAttribute("A");
-   doc.insertString(end+ a * bufferamount, mystring.substring(a * bufferamount, mystring.length()), attrs);
-
- }// end else
-}
-
-/*  for(a=0; a<mystring.length(); a++)
-  {
   if(a%2==0)
   attrs.addAttribute("A", "B");
   else
   attrs.removeAttribute("A");
-  doc.insertString(end+a, mystring.substring(a, a+1), attrs);
-  }// end for
-*/
+
+   final int arg1=end+ a * bufferamount;
+   final String arg2 = mystring.substring(a * bufferamount, (a+1) * bufferamount);
+   final SimpleAttributeSet fattrs = attrs;
+    try { doc.insertString(arg1, arg2, fattrs);
+   } catch(Exception e){}
+
+   SwingUtilities.invokeLater(new Runnable() {
+   @Override
+          public void run() {
+          try {
+ // doc.insertString(arg1,arg2, fattrs);
+     } catch (Exception e1) {
+            //ignore
+        }  }
+        }
+      );
+
+ }// end if
+ else
+ {
+
+  if(a%2==0)
+  attrs.addAttribute("A", "B");
+  else
+  attrs.removeAttribute("A");
+
+  final int arg1= end+ a * bufferamount;
+  final String arg2 = mystring.substring(a * bufferamount, mystring.length());
+   final SimpleAttributeSet fattrs = attrs;
+    try { doc.insertString(arg1, arg2, fattrs);
+   } catch(Exception e){}
+
+   SwingUtilities.invokeLater(new Runnable() {
+   @Override
+          public void run() {
+          try {
+   //doc.insertString(arg1, arg2, fattrs);
+     } catch (Exception e1) {
+            //ignore
+          }
+        }
+      });
+
+
+
+ }// end else
+
+          }// end for
+
   if(a%2 == 1)
    attrs.removeAttribute("A");
-  }
+
+
+  } // end try
   catch(Exception dui){}
 
 }// end method patched

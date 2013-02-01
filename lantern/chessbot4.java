@@ -1871,7 +1871,7 @@ void normalLineProcessing(String myinput)
 								if(myinput.contains(")"))
 								{
 									StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[lastConsoleNumber]];
-									doc.insertString(doc.getEndPosition().getOffset(), myinput, null);
+									myDocWriter.patchedInsertString(doc,doc.getEndPosition().getOffset(), myinput, null);
 									special=1;
 									myDocWriter.writeToConsole(doc, sharedVariables.looking[lastConsoleNumber]);
 
@@ -1931,10 +1931,10 @@ void writedg(String mydg)
 
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
-								doc.insertString(doc.getEndPosition().getOffset(), mydg + "\n", null);
+								myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mydg + "\n", null);
 
 
-							consoles[0].setStyledDocument(doc);
+							//consoles[0].setStyledDocument(doc);
 							}
 							catch(Exception e)
 							{
@@ -1965,7 +1965,7 @@ StyleConstants.setForeground(attrs, sharedVariables.ForColor);
 doc.insertString(doc.getEndPosition().getOffset(), s1, attrs);
 StyleConstants.setUnderline(attrs, true);
 attrs.addAttribute(javax.swing.text.html.HTML.Attribute.HREF, "games *-r-T-e");
-doc.insertString(doc.getEndPosition().getOffset(), s2, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), s2, attrs);
 myDocWriter.writeToConsole(doc, 0);// o for main console
 }
 catch(Exception e)
@@ -4331,7 +4331,9 @@ if(myboards[gamenum]== null)
 
 void writeToConsole(String s)
 {
-
+  
+  writeToSubConsole(s, 0);
+         /*
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
 								doc.insertString(doc.getEndPosition().getOffset(), s + "\n", null);
@@ -4342,14 +4344,22 @@ void writeToConsole(String s)
 							catch(Exception e)
 							{
 							}
-
+        */
 }
 void writeToSubConsole(String s, int n)
 {
 
 	StyledDocument doc=consoles[n].getStyledDocument();
 							try {
-								doc.insertString(doc.getEndPosition().getOffset(), s, null);
+
+                                                        SimpleAttributeSet attrs = new SimpleAttributeSet();
+                                                        	Color mycolor=sharedVariables.ForColor;
+                                                                StyleConstants.setForeground(attrs, mycolor);
+
+	
+                                                        myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), s, attrs);
+
+                                                        	//doc.insertString(doc.getEndPosition().getOffset(), s, null);
 
 
 							consoles[n].setStyledDocument(doc);
@@ -4392,7 +4402,7 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 	else
 		StyleConstants.setForeground(attrs, sharedVariables.tabStuff[z].ForColor);
 
-		doc.insertString(doc.getEndPosition().getOffset(), theNotifyTell, attrs);
+		myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), theNotifyTell, attrs);
 
 } // end try
 catch(Exception dui){}
@@ -4602,20 +4612,20 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 if(z == 0 && goTab == false)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc,doc.getEndPosition().getOffset(), chatTime2, attrs);
 break;
 }
 else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), chatTime2, attrs);
 
   
 }
 else if(cindex2[z]==1)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-doc.insertString(doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), chatTime2, attrs);
 } // end else
 } // end for
 
@@ -4637,18 +4647,18 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 if(z == 0 && goTab == false)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
 break;
 }
 else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
 }
 else if(cindex2[z]==1)
 	{
 	StyledDocument doc = sharedVariables.mydocs[z];
-	doc.insertString(doc.getEndPosition().getOffset(), mess, attrs);
+	myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
 
 	}
 }
@@ -6984,7 +6994,7 @@ StyledDocument doc=sharedVariables.mydocs[mydocs];
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 
 StyleConstants.setForeground(attrs, sharedVariables.chatTimestampColor);
-doc.insertString(doc.getEndPosition().getOffset(), dateStamp, attrs);
+myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), dateStamp, attrs);
 }// end for
 }// end try
 catch(Exception badWrite){}

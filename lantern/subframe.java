@@ -1548,7 +1548,7 @@ class subframe extends JInternalFrame
       StyledDocument doc =
         sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
 
-      doc.insertString(doc.getEndPosition().getOffset(), mycommand, null);
+      myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mycommand, null);
 
 
       for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
@@ -1969,7 +1969,7 @@ class subframe extends JInternalFrame
     StyleConstants.setItalic(attrs, true);
     StyleConstants.setForeground(attrs, sharedVariables.typedColor);
     try {
-      doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+      myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mes, attrs);
     } catch (Exception mydoc) {}
   }
 
