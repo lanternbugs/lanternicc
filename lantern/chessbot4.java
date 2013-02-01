@@ -104,6 +104,7 @@ int blockConsoleNumber=81;
 newListAdder client3;
 listFrame myfirstlist;
 listInternalFrame mysecondlist;
+newBoardCreator client;
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
@@ -132,7 +133,7 @@ consoleSubframes=consoleSubframes1;
 consoleChatframes=consoleChatframes1;
 gamequeue=gamequeue1;
 dummyResponse=false;
-newBoardCreator client = new newBoardCreator();
+client = new newBoardCreator();
 client3 = new newListAdder();
 eventsList = eventsList1;
 seeksList = seeksList1;
@@ -144,8 +145,8 @@ mycreator = mycreator1;
 myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles, gameconsoles, myboards, consoleChatframes);
 masterFrame=masterFrame1;
 
-Thread t = new Thread(client);
-t.start();
+//Thread t = new Thread(client);
+//t.start();
 sendToIcs client2 = new sendToIcs();
 
 //Thread t3 = new Thread(client3);
@@ -4214,6 +4215,8 @@ try {
 	}// end try
 	catch(Exception e)
 	{ }
+
+client.Run();
 	}
 
 int getGameNumber(String icsGameNumber)
@@ -4773,19 +4776,21 @@ else if(cindex2[z]==1)
 
 
 
-class newBoardCreator implements Runnable
+class newBoardCreator
 {
-public void run()
+public void Run()
 	{
 		int a=1;
-	while(a==1)
+newBoardData temp = new newBoardData();
+	while(temp!=null)
 	{
 		/*	if(sharedVariables.tabChanged != -1)
 	    updateTab();*/
 
-		newBoardData temp = new newBoardData();
-		temp=gamequeue.poll();
+
+
 		proccessGameInfo(temp);
+		temp=gamequeue.poll();
 
 	} // end while
 }// end run
@@ -4875,14 +4880,10 @@ void proccessGameInfo(newBoardData temp)
                                               
                                               final int first2 = first;
                                               final int xy2 = xy;
-                                              SwingUtilities.invokeLater(new Runnable() {
-                                              @Override
-                                              public void run() {
+                                              // was runnable
                                               try { myboards[first2].myconsolepanel.makehappen(xy2);
                                               }catch(Exception duiiii){}
-                                              }// end run
-                                              }// end runnable
-                                              );
+
 
                                               break;
 
@@ -4898,14 +4899,10 @@ void proccessGameInfo(newBoardData temp)
                                             {
                                           final int gamenum33= gamenum;
                                           final int xy33 = xy;
-                                        SwingUtilities.invokeLater(new Runnable() {
-                                              @Override
-                                              public void run() {
+                                          // was Runnable
                                               try { myboards[gamenum33].myconsolepanel.makehappen(xy33); // new board opened we make that board happen
                                               }catch(Exception duiiii){}
-                                              }// end run
-                                              }// end runnable
-                                              );
+
                                         }// end for
                                         }// end else
                         	}// end try
