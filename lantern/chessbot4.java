@@ -4335,7 +4335,7 @@ if(myboards[gamenum]== null)
 void writeToConsole(String s)
 {
   
-  writeToSubConsole(s, 0);
+  writeToSubConsole(s + "\n", 0);
          /*
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
