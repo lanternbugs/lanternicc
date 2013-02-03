@@ -105,6 +105,7 @@ newListAdder client3;
 listFrame myfirstlist;
 listInternalFrame mysecondlist;
 newBoardCreator client;
+sendToIcs client2;
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
@@ -147,15 +148,14 @@ masterFrame=masterFrame1;
 
 //Thread t = new Thread(client);
 //t.start();
-sendToIcs client2 = new sendToIcs();
+client2 = new sendToIcs();
 
 //Thread t3 = new Thread(client3);
 //t3.start();
 
 
 lastMoveGame=-1;
-Thread t1 = new Thread(client2);
-t1.start();
+
 }
 
 
@@ -248,6 +248,7 @@ t.start();
                                           myDocWriter.patchedInsertString(printObj.doc, printObj.end, printObj.mystring, printObj.attrs);
                                           printObj=sharedVariables.printQueue.poll();
                                         }
+                                         client2.runSendToIcs();// job processing
                                         updateBoardMenuText();
 
 					if(sharedVariables.doreconnect==true) // this would forcibly be set by user in menu if he chose reconnect to fics or icc
@@ -6027,13 +6028,11 @@ String parseValueSet(String thetell)
 	return "";
 }
 
-class sendToIcs implements Runnable  // this method checks the queue which other classes in the program use to send data
+class sendToIcs // this method checks the queue which other classes in the program use to send data
 {
-public void run()
+public void runSendToIcs()
 	{
-		int a=1;
-	while(a==1)
-	{
+
 	try{
 					myoutput tosend = new myoutput();
 					tosend=queue.poll();
@@ -6044,8 +6043,7 @@ public void run()
                                                 }
                                                 catch(Exception nolook){}
 
-					if(tosend != null)
-					{
+				
 					while(tosend != null)
 					{
 
@@ -6053,19 +6051,19 @@ public void run()
                                         if(tosend.soundBoard > -1)
 					{
                                                 sharedVariables.soundBoard=tosend.soundBoard;
-                                                tosend=queue.poll();
+
 					}
 					else if(tosend.printing == true)
 					{
                                         processLink(tosend.mywriter.doc, tosend.mywriter.thetell, tosend.mywriter.col, tosend.mywriter.index, tosend.mywriter.attempt, tosend.mywriter.game, tosend.mywriter.attrs, tosend.mywriter.myStyles);
-                                        tosend = queue.poll();
+
                                         }
                                         else if(tosend.gameConsoleSide > -1)
 					{
                                                   theMainFrame.sideConsole();
    						if(tosend.gameFocusConsole > -1)
 						myboards[tosend.gameFocusConsole].giveFocus();
-                                              tosend=queue.poll();
+
 					}
 					else if(tosend.gameConsoleSize > -1)
 					{
@@ -6078,12 +6076,12 @@ public void run()
 
  						if(tosend.gameFocusConsole > -1)
 						myboards[tosend.gameFocusConsole].giveFocus();
-                                                 tosend=queue.poll();
+
 					}
                                         else if(tosend.repaint64 > -1)
                                         {
                                          theMainFrame.repaintboards();
-                                          tosend=queue.poll();
+
 
                                         }
 					else if(tosend.closetab > -1)
@@ -6094,57 +6092,57 @@ public void run()
                                                 closeGameTab(tosend.closetab, false);
 						if(tosend.focusConsole > -1)
 						consoleSubframes[tosend.focusConsole].giveFocus();
-                                                tosend=queue.poll();
+
  					}
 
                                         else if(tosend.boardClosing > -1) // board actualyl closed not just tab
                                         {
                                           mycreator.updateBoardsMenuClosing(tosend.boardClosing);
-                                          tosend=queue.poll();
+
                                         }
                                        else if(tosend.swapActivities > -1)// make activities on top or not , swap frames
                                         {
                                         swapActivities();
-                                          tosend=queue.poll();
+
                                         }
 
 					else if(tosend.reconnectTry > -1)
 					{
                                                // detectDisconnect();
-						tosend=queue.poll();
+
 					}
 
 					else if(tosend.repaintTabBorders > -1)
 					{
 						theMainFrame.repaintTabBorders();
-						tosend=queue.poll();
+
 					}
 					else if(tosend.clearconsole > -1)
 					{
 						clearConsole(tosend.clearconsole, 0);
-						tosend=queue.poll();
+
 					}
 					else if(tosend.trimconsole > -1)
 					{
 						trimConsole(tosend.trimconsole, 0);
-						tosend=queue.poll();
+
 					}
 					else if(tosend.trimboard > -1)
 					{
 							trimConsole(tosend.trimboard, 1); // 0/1 console or board
-							tosend=queue.poll();
+
 					}
 
 
 					else if(tosend.clearboard > -1)
 					{
 							clearConsole(tosend.clearboard, 1); // 0/1 console or board
-							tosend=queue.poll();
+
 					}
 					else if(tosend.startengine > -1)
 					{
 							initializeEngine(); // 0/1 console or board
-							tosend=queue.poll();
+
 					}
 
 					else if(tosend.tab > -1)
@@ -6164,14 +6162,11 @@ public void run()
 
 
 						sendMessage(tosend.data);
-						tosend=queue.poll();
+
 					}
-					}
-				}// end if not null
-				else
-				{
-					try { Thread.sleep(5); } catch(Exception e){}
-				}
+					tosend=queue.poll();
+                                	}// end while
+
 
 
 	}
@@ -6179,8 +6174,7 @@ public void run()
 	{
 	}
 
-}// end while
-}// end run
+}// end runsendtoics
 void swapActivities()
 {
  if(sharedVariables.ActivitiesOnTop == true)
