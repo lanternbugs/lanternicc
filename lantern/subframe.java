@@ -1969,7 +1969,9 @@ class subframe extends JInternalFrame
     StyleConstants.setItalic(attrs, true);
     StyleConstants.setForeground(attrs, sharedVariables.typedColor);
     try {
-      myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mes, attrs);
+      myprintoutput printObj = new myprintoutput();
+      printObj.patchedInsertString(doc, doc.getEndPosition().getOffset(), mes, attrs);
+      sharedVariables.printQueue.add(printObj);
     } catch (Exception mydoc) {}
   }
 

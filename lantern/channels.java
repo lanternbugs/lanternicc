@@ -333,6 +333,8 @@ int italicsBehavior=1; // for what ` ` does
 int playersInMyGame=2; // playing and examining
 channelTabInfo [] tabStuff = new channelTabInfo[maxConsoleTabs];
 ConcurrentLinkedQueue<myoutput> engineQueue;
+ConcurrentLinkedQueue<myprintoutput> printQueue;
+
 OutputStream engineOut;
 File engineFile;
 File engineDirectory;
@@ -463,6 +465,7 @@ aspect=0;
 highlightMoves=true;
 uci=false;
 engineQueue = new ConcurrentLinkedQueue<myoutput>();
+printQueue = new ConcurrentLinkedQueue<myprintoutput>();
 doreconnect=false;
 engineBoard=-1;
 engineOn=false;

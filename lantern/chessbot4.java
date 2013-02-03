@@ -225,8 +225,11 @@ t.start();
 					else
 					got = getIccData();
 					if(got==0)
-                                        Thread.sleep(8);
-					if(got==1)
+                                        {
+                                          Thread.sleep(10);
+
+                                        }
+                                        if(got==1)
 					{
                                         Thread.sleep(1);
 					int istell=isitatell();
@@ -237,7 +240,14 @@ t.start();
 					}
 
 					}// end if got=1, got data
-
+                                        //print text
+                                        myprintoutput printObj = new myprintoutput();
+                                        printObj=sharedVariables.printQueue.poll();
+                                        while(printObj!=null)
+                                        {
+                                          myDocWriter.patchedInsertString(printObj.doc, printObj.end, printObj.mystring, printObj.attrs);
+                                          printObj=sharedVariables.printQueue.poll();
+                                        }
                                         updateBoardMenuText();
 
 					if(sharedVariables.doreconnect==true) // this would forcibly be set by user in menu if he chose reconnect to fics or icc
@@ -5697,7 +5707,7 @@ if(sharedVariables.tabsOnly == true)
                                  }
                                 }
 
-                                writeToConsole("Reusing board.");
+                                //writeToConsole("Reusing board.");
 				// make board go to front with tabs only.
 
                                  for(int m=0; m<sharedVariables.openBoardCount; m++)
@@ -5735,7 +5745,7 @@ if(sharedVariables.tabsOnly == true)
 			*/
 			}
 		}
-		writeToConsole("Creating game board." );
+		//writeToConsole("Creating game board." );
 		for(int a=0; myboards[a] != null && a < sharedVariables.maxGameTabs; a++)
 		{
 
