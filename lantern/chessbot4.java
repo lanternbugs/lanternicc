@@ -563,9 +563,9 @@ try {
 			// turn on 0 ( who am i ) and 32 ( shout)
 			String dgs2="";
 			String newdgs="";
-			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
+			for(int a = 0; a< dgs.length() && a < 153; a++)// 79 80 string list
 			{// 50 and 51 seeks
-			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 12 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
+			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 /* && a != 12 */ && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
 			 && a!= 152 )
                         dgs2= dgs2 + "0";
 			else
@@ -3840,10 +3840,12 @@ try {
 	}catch(Exception loge){writeToConsole("Exception in pgn");}
 }
 		/******************************* game events ***************************************/
-		if(dg.getArg(0).equals("18") || dg.getArg(0).equals("40"))// 12 DG_GAME_STARTED  18/ observing
+
+        	if(dg.getArg(0).equals("18") || dg.getArg(0).equals("40"))// 12 DG_GAME_STARTED  18/ observing
 		{
 
-					newBoardData temp = new newBoardData();
+
+                                	newBoardData temp = new newBoardData();
 					temp.type=0;
 					temp.arg1=dg.getArg(1);
 					temp.arg2=dg.getArg(2);
@@ -3868,7 +3870,7 @@ try {
 					else
 					temp.arg18="!";
 						gamequeue.add(temp);
-
+   
 
 		}
 		if(dg.getArg(0).equals("12"))// 12 DG_GAME_STARTED  18/ observing
@@ -4754,7 +4756,10 @@ else if(cindex2[z]==1)
 
 	void sendMessage(String msg)
 	{
-			try{
+		
+                
+               
+                	try{
 
 			// this is changed to add + '\n' not + "\n" dont know if it matters but its neater. i add a char not a string that contains a char
 
