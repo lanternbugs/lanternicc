@@ -332,7 +332,7 @@ void updateBoardMenuText()
   {
      if(myboards[a] == null)
      break;
-     
+
      if(myboards[a].isVisible())
      {
 
@@ -563,9 +563,9 @@ try {
 			// turn on 0 ( who am i ) and 32 ( shout)
 			String dgs2="";
 			String newdgs="";
-			for(int a = 0; a< dgs.length() && a < 153; a++)// 79 80 string list
+			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
-			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 /* && a != 12 */ && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
+			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
 			 && a!= 152 )
                         dgs2= dgs2 + "0";
 			else
@@ -852,15 +852,15 @@ try {
  // framer.setSize(500,100);
   //framer.setVisible(true);
   if(bellSet == false && !sharedVariables.myname.equals(""))
- { 
-   
+ {
+
    if(myinput.startsWith("http://www.chessclub.com/activities/events.html"))
     writeLevel1(new routing(), myinput);
    else
  {
    writeToSubConsole(myinput, 0);
    if(myinput.startsWith("**********************") ||
-   myinput.startsWith("For a list of events, click here:") || 
+   myinput.startsWith("For a list of events, click here:") ||
    myinput.startsWith("________________________"))
    writeToSubConsole("\n", 0);
    else if(myinput.startsWith(" ________________"))
@@ -1017,7 +1017,7 @@ else if(thetell.length() > 2 || (thetell.equals("\r\n") || thetell.equals("\n"))
         ;
         else
         thetell=thetell.substring(0, thetell.length()-2);
-	
+
        /* if(thetell.indexOf("\n") > -1)
         {
         JFrame framer = new JFrame("" + thetell.indexOf("\n") + " and " + thetell.indexOf("\r") + " and " +  thetell.length());
@@ -2024,7 +2024,7 @@ class mugShot implements Runnable
  {
   ImageUrl=ImageUrl1;
  }
- 
+
 public void run()
  {
                         try {
@@ -2034,9 +2034,9 @@ public void run()
  }
 }
 public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
-    URL u = new URL(urlString); 
-    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection(); 
-    huc.setRequestMethod("GET"); 
+    URL u = new URL(urlString);
+    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+    huc.setRequestMethod("GET");
     huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
     huc.connect();
     return huc.getResponseCode();
@@ -2657,7 +2657,7 @@ try
 	{
 		if(myboards[z]!=null)
 		if(sharedVariables.boardConsoleType != 0)// dont send tell to board if console disabled, would have later caused it to print twice in main
-		if(sharedVariables.mygame[z].realname1.equals(dg.getArg(1)) || sharedVariables.mygame[z].realname2.equals(dg.getArg(1)) || 
+		if(sharedVariables.mygame[z].realname1.equals(dg.getArg(1)) || sharedVariables.mygame[z].realname2.equals(dg.getArg(1)) ||
                 (dg.getArg(4).equals("2") && sharedVariables.mygame[z].wild == 24))
 		{
 
@@ -3840,12 +3840,10 @@ try {
 	}catch(Exception loge){writeToConsole("Exception in pgn");}
 }
 		/******************************* game events ***************************************/
-
-        	if(dg.getArg(0).equals("18") || dg.getArg(0).equals("40"))// 12 DG_GAME_STARTED  18/ observing
+		if(dg.getArg(0).equals("18") || dg.getArg(0).equals("40"))// 12 DG_GAME_STARTED  18/ observing
 		{
 
-
-                                	newBoardData temp = new newBoardData();
+					newBoardData temp = new newBoardData();
 					temp.type=0;
 					temp.arg1=dg.getArg(1);
 					temp.arg2=dg.getArg(2);
@@ -3870,7 +3868,7 @@ try {
 					else
 					temp.arg18="!";
 						gamequeue.add(temp);
-   
+
 
 		}
 		if(dg.getArg(0).equals("12"))// 12 DG_GAME_STARTED  18/ observing
@@ -4280,7 +4278,7 @@ if(myboards[gamenum]== null)
 
  if(sharedVariables.mygame[gamenum].state == sharedVariables.STATE_PLAYING && sharedVariables.mygame[gamenum].sentGameEnd == false)
  {
-   
+
    String myname = sharedVariables.myname;
    if(result.equals("0-1"))
    {
@@ -4324,7 +4322,7 @@ if(myboards[gamenum]== null)
           }
           else
           break;
-         
+
        }
 
 	public void repaintBoards(int num)
@@ -4347,7 +4345,7 @@ if(myboards[gamenum]== null)
 
 void writeToConsole(String s)
 {
-  
+
   writeToSubConsole(s + "\n", 0);
          /*
 	StyledDocument doc=consoles[0].getStyledDocument();
@@ -4372,7 +4370,7 @@ void writeToSubConsole(String s, int n)
                                                         	Color mycolor=sharedVariables.ForColor;
                                                                 StyleConstants.setForeground(attrs, mycolor);
 
-	
+
                                                         myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), s, attrs);
 
                                                         	//doc.insertString(doc.getEndPosition().getOffset(), s, null);
@@ -4437,16 +4435,16 @@ catch(Exception notifysound){}
 }// end method
 
 
-class newListAdder 
+class newListAdder
 {
 newListAdder()
 	{
-          
-        
-        
+
+
+
         }
-	
-        
+
+
 void processListData(newBoardData temp)
 {
 
@@ -4636,7 +4634,7 @@ else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.main
 StyledDocument doc = sharedVariables.mydocs[z];
 myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), chatTime2, attrs);
 
-  
+
 }
 else if(cindex2[z]==1)
 {
@@ -4756,10 +4754,7 @@ else if(cindex2[z]==1)
 
 	void sendMessage(String msg)
 	{
-		
-                
-               
-                	try{
+			try{
 
 			// this is changed to add + '\n' not + "\n" dont know if it matters but its neater. i add a char not a string that contains a char
 
@@ -4893,7 +4888,7 @@ void proccessGameInfo(newBoardData temp)
                                             for(int xy=0; xy<sharedVariables.maxGameTabs; xy++)
                                             if(sharedVariables.tabLooking[xy]==gamenum)
                                             {
-                                              
+
                                               final int first2 = first;
                                               final int xy2 = xy;
                                               // was runnable
@@ -5201,7 +5196,7 @@ else
    if(temp.dg == 20)// player in my game
   {
 
- 
+
 	if(sharedVariables.playersInMyGame == 0)// i dont have this on
 	return;
 
@@ -5212,10 +5207,10 @@ else
         return;
         else if(state != sharedVariables.STATE_OBSERVING && state != sharedVariables.STATE_EXAMINING  && state != sharedVariables.STATE_PLAYING)
         return;
-        
+
         if(sharedVariables.mygame[gamenum].realname1.startsWith("*"))
         return;
-        
+
                 			// gamenum can be -1 if no board has this game
                                                  StyledDocument doc;
 						if(gamenum != sharedVariables.NOT_FOUND_NUMBER)
@@ -5314,7 +5309,7 @@ else
 							if(!temp.arg3.equals(""))
 								thetell = temp.arg2 + "(" + temp.arg3 + ")" + "(" + temp.arg1 + ")" + " whispers: " + temp.arg5 + "\n";
 						}
-						
+
 						if(sharedVariables.channelTimestamp == true)
 						thetell = chatTime2 + thetell;
 
@@ -5695,7 +5690,7 @@ if(sharedVariables.tabsOnly == true)
 
 			if(myboards[a] != null)
 			{
-				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  && 
+				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  &&
                                 (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER ||
                                     ( sharedVariables.mygame[a].myGameNumber == sharedVariables.STATE_OVER  && sharedVariables.dontReuseGameTabs == false)))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
 				{
@@ -5813,7 +5808,7 @@ if(sharedVariables.tabsOnly == true)
 
 		protected void createGameFrame(int last, boolean visible) {
 
-	    
+
             boolean usingClosed=false;
             int reuse = last;
 	    if(last == -1)
@@ -5832,12 +5827,12 @@ if(sharedVariables.tabsOnly == true)
 		}
 	    //writeToConsole("about to execute new game board command");
 	if(last!= sharedVariables.openBoardCount)
-       {  
+       {
          boolean go=true;
         for(int m=0; m<sharedVariables.openBoardCount; m++)
         if(sharedVariables.tabLooking[m]==last)
         go=false;
-        
+
         if(go== true)
         {
 
@@ -5917,7 +5912,7 @@ if(sharedVariables.tabsOnly == true)
                         }
                         else
 			{
-                          
+
                           if(usingClosed == true)
                            sharedVariables.openBoardCount++;
 
@@ -5946,7 +5941,7 @@ if(sharedVariables.tabsOnly == true)
 			}
 			else// tabs only false
 				myboards[last].myconsolepanel.makehappen(last);
-		
+
                 */
                 }
 
@@ -6048,7 +6043,7 @@ public void runSendToIcs()
                                                 }
                                                 catch(Exception nolook){}
 
-				
+
 					while(tosend != null)
 					{
 
@@ -6648,18 +6643,18 @@ try {
 
 
 	void closeGameTab(int tabNumber, boolean reconnecting)
-	{ 
+	{
           int physicalTab=tabNumber;
           tabNumber=sharedVariables.tabLooking[tabNumber];
-          
+
           try {
         StyledDocument doc=sharedVariables.mygamedocs[physicalTab];// 0 for main console
 	doc.remove(0, doc.getLength());
 	myDocWriter.writeToGameConsole(doc, physicalTab);
           } catch(Exception cleartext){
           }
-          
-          
+
+
         	try {
 
 			myoutput data = new myoutput();
@@ -6672,7 +6667,7 @@ try {
 			data.game=1;
 			queue.add(data);
                         */
-                        
+
                         if(reconnecting == false)
                         return;
 
@@ -6715,7 +6710,7 @@ try {
 
 readLock.lock();
 		sharedVariables.mygame[tabNumber] = new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
-		
+
                 //if(physicalTab != 0)
                 sharedVariables.mygame[tabNumber].imclosed = true;
 

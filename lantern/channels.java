@@ -347,7 +347,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.16b";
+version = "v5.16c";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -957,7 +957,7 @@ if(screenW > 900 && screenH > 700)
 void openUrl(String myurl)
 {
 // mac fix replace %0D at end with empty
-if(myurl.endsWith("\r")) 
+if(myurl.endsWith("\r"))
 myurl=myurl.trim();
 				try {
 
@@ -1399,7 +1399,7 @@ void write2(FileWriter fstream, String s)
 }// end class
 
 class lanternNotifyClass {
- 
+
  String name="";
  boolean sound = false;
 
