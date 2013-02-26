@@ -603,7 +603,7 @@ void patchedInsertString(final StyledDocument doc, int end, String mystring, Sim
 	return;
 
        int a;
-int bufferamount=8;
+int bufferamount=16;
 int maxsegs = 0;
 maxsegs = (int) mystring.length()/bufferamount;
 if(mystring.length()%bufferamount != 0)

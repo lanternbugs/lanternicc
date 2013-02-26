@@ -492,6 +492,8 @@ if(myboards[i] != null)
 }
 */
 closeAllGameTabs(true);
+for(int gtab=0; gtab < sharedVariables.maxGameTabs; gtab++)
+sharedVariables.tabLooking[gtab]=gtab;
 }// end try
 catch(Exception badgameclose)
 {// do nothing
@@ -4827,7 +4829,15 @@ void proccessGameInfo(newBoardData temp)
 
 					focusOwner whohasit= new focusOwner();
 					int gamenum=getNewGameBoard(temp.type);
-					try {
+                                        if(gamenum == -1)
+                                        gamenum = 0;
+                                        if(sharedVariables.openBoardCount == 1 && sharedVariables.tabLooking[0] == -1)
+                                        {
+                                          sharedVariables.tabLooking[0] =0;
+                                          sharedVariables.mygame[0]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+                                        }
+
+                                        try {
 					if(sharedVariables.myServer.equals("ICC"))
 					myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, temp.arg17, temp.type); // pass game number
 					else // fics
@@ -5690,7 +5700,9 @@ if(sharedVariables.tabsOnly == true)
 
 			if(myboards[a] != null)
 			{
-				if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  &&
+			
+
+                        	if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  &&
                                 (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER ||
                                     ( sharedVariables.mygame[a].myGameNumber == sharedVariables.STATE_OVER  && sharedVariables.dontReuseGameTabs == false)))// || ((sharedVariables.mygame[a].state == 1 || sharedVariables.mygame[a].state==2) && type==1)))
 				{
@@ -5898,7 +5910,7 @@ if(sharedVariables.tabsOnly == true)
 
 		//	writeToConsole("done setting any channel tabs that need to be set to visible");
 			try {
-				Thread.sleep(15);
+			//	Thread.sleep(15);
 			}
 			catch(Exception e){}
 
@@ -5925,7 +5937,7 @@ if(sharedVariables.tabsOnly == true)
 			}
 		//	writeToConsole("open board count is now " + sharedVariables.openBoardCount + " and last is " + last + " and reuse is " + reuse);
 			try {
-				Thread.sleep(15);
+			//	Thread.sleep(15);
 			}
 			catch(Exception e){}
 

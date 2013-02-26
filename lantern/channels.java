@@ -347,7 +347,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.16c";
+version = "v5.17";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -355,13 +355,16 @@ mineScores = new mineScoresGroup();
 Looking = new int[100];
 try { engineDoc=engineField.getStyledDocument(); } catch(Exception enginestuff){}
 mydocs = new StyledDocument[maxConsoleTabs];
-String os = System.getProperty("os.name").toLowerCase();
+try {
+  String os = System.getProperty("os.name").toLowerCase();
 if (os.indexOf( "win" ) >= 0)
 	operatingSystem = "win";
 else if(os.indexOf( "mac" ) >= 0)
 	operatingSystem = "mac";
 else
 	operatingSystem = "unix";
+}
+catch(Exception duiiii){}
 setupMenu();
 toolboxListData = new listClass("Scripts");
 
