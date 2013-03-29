@@ -957,7 +957,56 @@ void setPingTab(String name, routing console)
 
 
 }
+void setMyChannelsLogin(String temp1, String temp2, String temp3)
+{
+			newBoardData temp = new newBoardData();
+			temp.dg=27;
+			temp.arg1=temp1;
+			temp.arg2=temp2;
+			temp.arg3=temp3;
 
+
+			client3.processListData(temp);
+
+
+
+
+}
+
+void checkForChannelAdd(String thetell)
+{
+   thetell = thetell.trim();
+    StringTokenizer tokens = new StringTokenizer(thetell, " ");
+
+   int i=0;
+    String chan;
+    String added;
+    int num;
+    try {
+       chan =   tokens.nextToken();
+
+        num = Integer.parseInt(chan);
+      if(num < 0 || num > 399)
+      return;
+      //  writeToConsole("num is " + num + "\n");
+
+    }
+    catch(Exception dui){ return;} //not a number
+
+ try {
+       added =   tokens.nextToken();
+
+      if(added.equals("added."))
+      {
+       setMyChannelsLogin(chan, sharedVariables.myname, "1");
+      }
+
+    }
+    catch(Exception dui){ return;} //not a number
+
+
+
+}
 
 void writeLevel1(routing console, String thetell)
 {
@@ -982,7 +1031,40 @@ if(slashN1 > -1)
 
 }
 try {
+ checkForChannelAdd(thetell);
+ if(console.type == 4)// in channel we did
+ {
+   
+   try {
+ // writeToConsole("got inchannel and it's " + thetell + "\n");
+  if(thetell.startsWith("Your"))
+  return;
+    thetell = thetell.trim();
+    StringTokenizer tokens = new StringTokenizer(thetell, " ");
+   boolean go = true;
+    while(go = true)
+    { try {
+       String chan =   tokens.nextToken();
+        int num = Integer.parseInt(chan);
+      //  writeToConsole("num is " + num + "\n");
+      setMyChannelsLogin(chan, sharedVariables.myname, "1");
+    }
+    catch(Exception dui){
+        if(sharedVariables.hasSettings == false)
+                          {
+                          //  writeToConsole(sharedVariables.newUserMessage);
+                           for(int bb=1; bb< sharedVariables.maxConsoleTabs; bb++)
+                           for(int aa=0; aa<400; aa++)
+                              sharedVariables.console[bb][aa]=0;
+                            setUpNewUserTabs();
+                          }
+      return;} // no such element or not a number
+    }// end while
+  return;
 
+   }
+   catch(Exception dui){}
+ }
 // Mike is averaging
 int firstSpace = -1;
 firstSpace=thetell.indexOf(" is averaging");
@@ -1176,7 +1258,8 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=2;// logpgn
 						if(consoleChar == 's')
 						console.type=3;// save pgn
-
+                                                if(consoleChar == 'u')
+						console.type=4;// save pgn
                                                 String myConNumber="";
 
 						// we assume its c now. could be g for game, c is subframe console
@@ -2220,7 +2303,7 @@ if(dg.getArg(0).equals("27"))
 				sendMessage("`c0`" + "multi set bell 0\n");
 								if(sharedVariables.iloggedon == true)
 								sendMessage("`c0`" + "iloggedon\n");
-
+                                sendMessage("`u1`" + "multi =chan\n");
 		 sharedVariables.myname=dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
 

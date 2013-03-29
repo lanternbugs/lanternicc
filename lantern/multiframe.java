@@ -2550,8 +2550,17 @@ dot.setVisible(true);
       String consoleWithFocus = "No console has focus";
       if (hasfocus > 0) {
 	customizeChannelsDialog frame =
+
+
           new customizeChannelsDialog((JFrame) this, false, hasfocus,
-                                      sharedVariables, consoleSubframes);
+                                 sharedVariables, consoleSubframes);
+
+
+       String actionmess = "`m1`" + "multi =chan\n";
+
+      myoutput data = new myoutput();
+      data.data=actionmess;
+      queue.add(data);
       } else {
         String swarning = "The currently selected window is looking at the " +
           "main console tab, this can't be customized, click C1, C2, etc., first.";

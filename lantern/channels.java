@@ -347,7 +347,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.17";
+version = "v5.18";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -611,7 +611,7 @@ for(int a=0; a<maxConsoleTabs; a++)
 {looking[a]=a;
 tabStuff[a]=new channelTabInfo();
 consolesTabLayout[a]=4;
-consolesNamesLayout[a]=1;
+consolesNamesLayout[a]=0;
 }
 
 

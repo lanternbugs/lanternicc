@@ -1880,7 +1880,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					while(!tabtype.equals("donemynameslayouts") && iii < sharedVariables.maxConsoleTabs)
 					{
 						int truth = Integer.parseInt(tabtype);
-						sharedVariables.consolesNamesLayout[iii]=truth;
+					//	sharedVariables.consolesNamesLayout[iii]=truth;
 						tabtype = tokens.nextToken();
 						iii++;
 
