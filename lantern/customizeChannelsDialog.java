@@ -299,11 +299,15 @@ public class customizeChannelsDialog extends JDialog
     for (int i=0; i<cnl.size(); i++)
       sl.add(Integer.valueOf(cnl.get(i).channel));
 
+    // To avoid an empty list
+    if (sl.isEmpty()) sl.add(1);
+    
     Collections.sort(sl);
     DefaultListModel slm = new DefaultListModel();
 
     for (int i=0; i<sl.size(); i++)
       slm.addElement(sl.get(i));
+
 
     return slm;
   }
