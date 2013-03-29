@@ -294,7 +294,7 @@ public class customizeChannelsDialog extends JDialog
     List<Integer> sl = new ArrayList<Integer>();
 
     // we will add 1 for all people
-    sl.add(1);
+    //sl.add(1); // not anymore
 
     for (int i=0; i<cnl.size(); i++)
       sl.add(Integer.valueOf(cnl.get(i).channel));
