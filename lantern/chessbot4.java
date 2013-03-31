@@ -65,6 +65,7 @@ import java.util.StringTokenizer;
 	seekGraphFrame seekGraph;
 	int SUBFRAME_CONSOLES;
 	int GAME_CONSOLES;
+	int SUBFRAME_NOTIFY;
 	String DG_GAME_NOTIFY;
 	gameFrame myGameList;
 	boolean dummyResponse;
@@ -111,6 +112,7 @@ sendToIcs client2;
 
 SUBFRAME_CONSOLES=0;
 GAME_CONSOLES=1;
+SUBFRAME_NOTIFY=2;
 DG_GAME_NOTIFY = "3000";
 startedParsing= false;
 icc_num= 0;
@@ -1034,7 +1036,7 @@ try {
  checkForChannelAdd(thetell);
  if(console.type == 4)// in channel we did
  {
-   
+   channelLogin=true;
    try {
  // writeToConsole("got inchannel and it's " + thetell + "\n");
   if(thetell.startsWith("Your"))
@@ -3770,14 +3772,27 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 		StyleConstants.setBold(attrs, true);
 
 
-	doc=sharedVariables.mydocs[0];
+
 
 if(supressLogins == false)
-{
-	if(sharedVariables.tabStuff[0].ForColor == null)
-	processLink(doc, theNotifyTell, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+{        for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+         for(int znumber =0; znumber < 400; znumber++)
+           {
+             
+        if((sharedVariables.console[ztab][znumber]==1 && channelLogin == true) || ztab == 0)
+        {
+        int subframe_type = SUBFRAME_CONSOLES;
+        if(ztab > 0)
+        subframe_type = SUBFRAME_NOTIFY;
+         doc=sharedVariables.mydocs[ztab];
+	if(sharedVariables.tabStuff[ztab].ForColor == null)
+	processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
 else
-	processLink(doc, theNotifyTell, sharedVariables.tabStuff[0].ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+	processLink(doc, theNotifyTell, sharedVariables.tabStuff[ztab].ForColor, ztab, maxLinks, subframe_type, attrs, null);
+        break;
+        }// end if print
+
+           } //end for
 
 try {
 	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true && channelLogin == true)
@@ -3804,7 +3819,7 @@ chatTime2=getATimestamp();
 String theNotifyTell = chatTime2 + dg.getArg(1) + " has departed.\n";
 	StyledDocument doc;
 // we use main console now for notifications -- 0
-	doc=sharedVariables.mydocs[0];
+
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 	if(sharedVariables.nonResponseStyle == 1 || sharedVariables.nonResponseStyle == 3)
 		StyleConstants.setItalic(attrs, true);
@@ -3814,12 +3829,24 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 notifyList.removeFromList(dg.getArg(1));
 
 if(supressLogins == false)
-{
-	if(sharedVariables.tabStuff[0].ForColor == null)
-		processLink(doc, theNotifyTell, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
-	else
-		processLink(doc, theNotifyTell, sharedVariables.tabStuff[0].ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+{    int tempmax = 400;
+    for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+         for(int znumber =0; znumber < tempmax; znumber++)
+           {
 
+        if(sharedVariables.console[ztab][znumber]==1 || ztab == 0)
+        {   // writeToConsole("ztab is " + ztab + "\n");
+        int subframe_type = SUBFRAME_CONSOLES;
+        if(ztab > 0)
+        subframe_type = SUBFRAME_NOTIFY;
+                  doc=sharedVariables.mydocs[ztab];
+	if(sharedVariables.tabStuff[ztab].ForColor == null)
+		processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
+	else
+		processLink(doc, theNotifyTell, sharedVariables.tabStuff[ztab].ForColor, ztab, maxLinks, subframe_type, attrs, null);
+        znumber = tempmax;
+        }// end if print
+        }// end for
 
 try {
 	if(dummyResponse == false)
