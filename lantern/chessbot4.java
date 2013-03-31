@@ -3776,6 +3776,8 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 
 if(supressLogins == false)
 {  
+boolean wePrinted = false;
+
   notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(dg.getArg(1));
   for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
   {
@@ -3791,9 +3793,10 @@ if(supressLogins == false)
         if(ztab > 0)
         subframe_type = SUBFRAME_NOTIFY;
          doc=sharedVariables.mydocs[ztab];
-	if(sharedVariables.tabStuff[ztab].ForColor == null)
+	wePrinted = true;
+        if(sharedVariables.tabStuff[ztab].ForColor == null)
 	processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
-else
+        else
 	processLink(doc, theNotifyTell, sharedVariables.tabStuff[ztab].ForColor, ztab, maxLinks, subframe_type, attrs, null);
         break;
         }// end if print
@@ -3804,7 +3807,12 @@ else
 try {
 	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true && channelLogin == true)
 {
-	Sound nsound=new Sound(sharedVariables.songs[4]);
+
+
+        if(wePrinted == true)
+	{
+          Sound nsound=new Sound(sharedVariables.songs[4]);
+        }
 }
 }
 catch(Exception notifysound){}
@@ -3837,10 +3845,11 @@ notifyList.removeFromList(dg.getArg(1));
 
 if(supressLogins == false)
 {    int tempmax = 400;
+  boolean wePrinted = false;
   notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(dg.getArg(1));
   for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
   {
-    
+
     if(tabsNotify.notifyControllerTabs.get(ztab).equals("F"))
     continue;
          for(int znumber =0; znumber < tempmax; znumber++)
@@ -3851,8 +3860,9 @@ if(supressLogins == false)
         int subframe_type = SUBFRAME_CONSOLES;
         if(ztab > 0)
         subframe_type = SUBFRAME_NOTIFY;
-                  doc=sharedVariables.mydocs[ztab];
-	if(sharedVariables.tabStuff[ztab].ForColor == null)
+        doc=sharedVariables.mydocs[ztab];
+	wePrinted = true;
+        if(sharedVariables.tabStuff[ztab].ForColor == null)
 		processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
 	else
 		processLink(doc, theNotifyTell, sharedVariables.tabStuff[ztab].ForColor, ztab, maxLinks, subframe_type, attrs, null);
@@ -3865,7 +3875,11 @@ try {
 	if(dummyResponse == false)
 	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true)
 {
-	Sound nsound=new Sound(sharedVariables.songs[4]);
+
+        if(wePrinted == true)
+	{
+          Sound nsound=new Sound(sharedVariables.songs[4]);
+        }
 }
 }
 catch(Exception notifysound){}
