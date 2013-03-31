@@ -141,6 +141,58 @@ for(int z=0; z< tabsNotify.notifyControllerTabs.size(); z++)
        });
   tabsnot.add(tempo);
 }// end for
+
+
+
+
+
+
+  final JMenuItem tempo2 = new JMenuItem("Deselect All");
+
+
+  tempo2.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+                    for(int c=0; c< tabsNotify.notifyControllerTabs.size(); c++)
+                    tabsNotify.notifyControllerTabs.set(c, "F");
+                    sharedVariables.setNotifyOnTabsState();
+
+        }
+       });
+  tabsnot.add(tempo2);
+
+ final JMenuItem tempo3 = new JMenuItem("Select All");
+
+
+  tempo3.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+                    for(int c=0; c< tabsNotify.notifyControllerTabs.size(); c++)
+                    tabsNotify.notifyControllerTabs.set(c, "T");
+                    sharedVariables.setNotifyOnTabsState();
+
+        }
+       });
+  tabsnot.add(tempo3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } // end if supress logins false
 else
 {
