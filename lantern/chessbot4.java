@@ -3775,10 +3775,16 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 
 
 if(supressLogins == false)
-{        for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
-         for(int znumber =0; znumber < 400; znumber++)
+{  
+  notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(dg.getArg(1));
+  for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+  {
+    
+    if(tabsNotify.notifyControllerTabs.get(ztab).equals("F"))
+    continue;
+    for(int znumber =0; znumber < 400; znumber++)
            {
-             
+
         if((sharedVariables.console[ztab][znumber]==1 && channelLogin == true) || ztab == 0)
         {
         int subframe_type = SUBFRAME_CONSOLES;
@@ -3793,6 +3799,7 @@ else
         }// end if print
 
            } //end for
+        }// end outer for
 
 try {
 	if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true && channelLogin == true)
@@ -3830,7 +3837,12 @@ notifyList.removeFromList(dg.getArg(1));
 
 if(supressLogins == false)
 {    int tempmax = 400;
-    for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+  notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(dg.getArg(1));
+  for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+  {
+    
+    if(tabsNotify.notifyControllerTabs.get(ztab).equals("F"))
+    continue;
          for(int znumber =0; znumber < tempmax; znumber++)
            {
 
@@ -3847,6 +3859,7 @@ if(supressLogins == false)
         znumber = tempmax;
         }// end if print
         }// end for
+           }//end outer for
 
 try {
 	if(dummyResponse == false)

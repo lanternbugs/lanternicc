@@ -97,6 +97,7 @@ if (e.getButton() == MouseEvent.BUTTON3)
 {
 // determine their state
 boolean supressLogins=sharedVariables.getNotifyControllerState(watchName);
+final notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(watchName);
 
 JPopupMenu menu2=new JPopupMenu("Popup2");
 JMenuItem item1;
@@ -112,7 +113,35 @@ item1= new JMenuItem("Suppress Login Logout Messages");
        });
        menu2.add(item1);
 
-}
+JMenu tabsnot = new  JMenu("Tabs To Show Notify On If Channels On Tab");
+menu2.add(tabsnot);
+for(int z=0; z< tabsNotify.notifyControllerTabs.size(); z++)
+{
+  final JCheckBoxMenuItem tempo = new JCheckBoxMenuItem("Show Notifications on Tab " + z);
+  if(tabsNotify.notifyControllerTabs.get(z).equals("T"))
+  tempo.setSelected(true);
+  else
+  tempo.setSelected(false);
+  final int num = z;
+  tempo.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            if(tabsNotify.notifyControllerTabs.get(num).equals("T"))
+            {
+                    tempo.setSelected(false);
+                    tabsNotify.notifyControllerTabs.set(num, "F");
+                    sharedVariables.setNotifyOnTabsState();
+            }
+            else
+            {
+                    tempo.setSelected(true);
+                    tabsNotify.notifyControllerTabs.set(num, "T");
+                    sharedVariables.setNotifyOnTabsState();
+            }
+        }
+       });
+  tabsnot.add(tempo);
+}// end for
+} // end if supress logins false
 else
 {
 item1= new JMenuItem("Enable Login Logout Messages");

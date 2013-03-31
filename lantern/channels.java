@@ -135,6 +135,7 @@ ArrayList<String> rightClickListMenu = new ArrayList();
 ArrayList<String> iccLoginScript = new ArrayList();
 ArrayList<String> ficsLoginScript = new ArrayList();
 ArrayList<String> notifyControllerScript = new ArrayList();
+ArrayList<notifyOnTabs> notifyControllerTabs = new ArrayList();
 ArrayList<String> iccChannelList = new ArrayList();
 ArrayList<channelNotifyClass> channelNotifyList = new ArrayList();
 ArrayList<lanternNotifyClass> lanternNotifyList = new ArrayList();
@@ -347,7 +348,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.19";
+version = "v5.20";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -807,6 +808,8 @@ for(int a=0; a<maxChannels; a++)
 	autoexam=0;
 	autoexamnoshow=1;
 	password=0;
+	
+	loadNotifyOnTabs();
 }
 
 
@@ -1154,6 +1157,120 @@ return mess + "\n";
 
 } // end channel notify online
 
+   String read(String aFile)
+   {String s = "";
+		try {
+      //use buffering, reading one line at a time
+      //FileReader always assumes default encoding is OK!
+      BufferedReader input=null;
+
+      try {
+		  	input=  new BufferedReader(new FileReader(aFile));
+		  }
+      catch(Exception ee)
+      {
+		   return("");
+  	   }  // end outer catch
+
+
+
+      try {
+        String line = null; //not declared within while loop
+        /*
+        * readLine is a bit quirky :
+        * it returns the content of a line MINUS the newline.
+        * it returns null only for the END of the stream.
+        * it returns an empty String if two newlines appear in a row.
+        */
+        while (( line = input.readLine()) != null){
+         s+=line;
+
+        }
+      }
+    catch (IOException ex){     }
+    finally
+    {
+        input.close();
+    }// end finally
+}// overall try
+catch(Exception eeee)
+{ }// overall catch
+
+    return s.toString();
+
+  }// end method  read
+
+void loadNotifyOnTabs()
+{
+   String s = read("notifyontabs.ini");
+   boolean go= true;
+   StringTokenizer tokens = new StringTokenizer(s, "###");
+   while(go == true)
+   {
+   try {
+     String allString =   tokens.nextToken();
+    StringTokenizer tokens2 = new StringTokenizer(allString, " ");
+   boolean go2 = true;
+
+
+  notifyOnTabs temp = new notifyOnTabs();
+   while(go2 == true)
+   {
+    try {
+    String s2 =   tokens2.nextToken();
+    if(s2.length()> 1)
+     temp.watchName=s2;
+     else
+     {
+       if(s2.equals("T") || s2.equals("F"))
+       temp.notifyControllerTabs.add(s2);
+       else
+       temp.notifyControllerTabs.add("T");
+     }
+    }
+    catch(Exception dui2){
+      if(temp.notifyControllerTabs.size() == maxConsoleTabs)
+      notifyControllerTabs.add(temp);
+       go2=false;}
+
+   }// end while
+   }// end outer try
+   catch(Exception dui){return;}
+   }// end outer while
+}
+
+
+notifyOnTabs getNotifyOnTabs(String watchName)
+{
+        watchName =  watchName.toLowerCase();
+	for(int a=0; a<notifyControllerTabs.size(); a++)
+	if(notifyControllerTabs.get(a).watchName.equals(watchName))
+		return notifyControllerTabs.get(a);
+
+        notifyOnTabs temp =  new notifyOnTabs();
+        temp.watchName =watchName;
+        for(int b=0; b< maxConsoleTabs; b++)
+          temp.notifyControllerTabs.add("T");
+	notifyControllerTabs.add(temp);
+        return temp;
+
+}
+void setNotifyOnTabsState()
+{
+	FileWrite writer = new FileWrite();
+
+	String s="";
+	for(int a=0; a<notifyControllerTabs.size(); a++)
+	{
+          s= s + notifyControllerTabs.get(a).watchName;
+          for(int b=0; b< notifyControllerTabs.get(a).notifyControllerTabs.size(); b++)
+           s = s + " " + notifyControllerTabs.get(a).notifyControllerTabs.get(b);
+
+           s = s + "###";
+        }
+	writer.write(s, "notifyontabs.ini");
+
+}
 
 boolean getNotifyControllerState(String watchName)
 {
@@ -1407,5 +1524,16 @@ class lanternNotifyClass {
  boolean sound = false;
 
 
+}
+
+class notifyOnTabs {
+ArrayList<String> notifyControllerTabs = new ArrayList();
+String watchName = "";
+
+
+notifyOnTabs()
+{
+
+}// end constructor
 }
 
