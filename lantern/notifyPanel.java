@@ -93,13 +93,27 @@ MouseListener mouseListenerNotify = new MouseAdapter() {
 
 
  // if right click
-if (e.getButton() == MouseEvent.BUTTON3)
+if (e.getButton() == MouseEvent.BUTTON3 || (sharedVariables.autoHistoryPopup == true && e.getClickCount() == 2))
 {
 // determine their state
 boolean supressLogins=sharedVariables.getNotifyControllerState(watchName);
 final notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(watchName);
 
 JPopupMenu menu2=new JPopupMenu("Popup2");
+JMenuItem itemobserve= new JMenuItem("Observe " + watchName);
+ itemobserve.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+         String action = "`c0`" + "Observe " + watchName + "\n";
+         myoutput output = new myoutput();
+         output.data=action;
+         output.consoleNumber=0;
+         queue.add(output);
+            }
+       });
+       menu2.add(itemobserve);
+
+
 JMenuItem item1;
 if(supressLogins == false)
 {
@@ -174,24 +188,6 @@ for(int z=0; z< tabsNotify.notifyControllerTabs.size(); z++)
         }
        });
   tabsnot.add(tempo3);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 } // end if supress logins false
 else
