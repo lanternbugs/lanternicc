@@ -518,8 +518,10 @@ try {
     } catch(Exception d){ }
 }
 	if(requestSocket== null)
-	requestSocket = new Socket("207.99.83.228", 23);// 127.0.0.1 or
-
+	{
+	
+		requestSocket = new Socket("207.99.83.228", 23);// 127.0.0.1 or
+	}
 
 
 
@@ -3775,13 +3777,13 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 
 
 if(supressLogins == false)
-{  
+{
 boolean wePrinted = false;
 
   notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(dg.getArg(1));
   for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
   {
-    
+
     if(tabsNotify.notifyControllerTabs.get(ztab).equals("F"))
     continue;
     for(int znumber =0; znumber < 400; znumber++)
@@ -5837,7 +5839,7 @@ if(sharedVariables.tabsOnly == true)
 
 			if(myboards[a] != null)
 			{
-			
+
 
                         	if((myboards[a].isVisible() == true || (sharedVariables.tabsOnly == true && visibleBoardExists == true))  &&
                                 (sharedVariables.mygame[a].myGameNumber == sharedVariables.NOT_FOUND_NUMBER ||

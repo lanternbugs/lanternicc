@@ -632,6 +632,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           }// end if
         }// end for
         resetMoveList();
+       
+
       }// end try
       catch(Exception e) {}
     }
@@ -669,7 +671,20 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
   void fenSent(String icsGameNumber, String fen) {
     int tempnumber=getGameNumber(icsGameNumber);
-
+    //JFrame framer = new JFrame("fen: " + fen);
+    //framer.setSize(500,100);
+    //framer.setVisible(true);
+      // check if black on the move
+      int i = fen.indexOf(" ");
+      if(i > -1)
+      {
+       try {
+        if(fen.substring(i+1, i+2).equals("b"))
+          moveSent(icsGameNumber, "e2e2",
+                "e2e2", false);
+       }
+       catch(Exception e){}
+      } // if i > -1
     return; // currently parsing initial postions not fens
     /*
     if(tempnumber ==

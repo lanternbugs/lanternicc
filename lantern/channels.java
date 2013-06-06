@@ -348,7 +348,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.20";
+version = "v5.21";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -965,6 +965,15 @@ void openUrl(String myurl)
 // mac fix replace %0D at end with empty
 if(myurl.endsWith("\r"))
 myurl=myurl.trim();
+final String myurl2=myurl;
+      SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run()
+          {
+            String myurl = myurl2;
+
+
+
 				try {
 
 				String os = System.getProperty("os.name").toLowerCase();
@@ -1034,7 +1043,8 @@ myurl=myurl.trim();
 			}// end try
 			catch(Exception e)
 			{}
-
+ }
+      });
 
 }
 
