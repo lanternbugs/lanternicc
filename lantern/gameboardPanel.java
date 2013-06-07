@@ -418,14 +418,19 @@ the slider is on. otherwise it draws the curernt in play board*/
 		{
 			sliding=1;
 			sharedVariables.mygame[gameData.LookingAt].getSliderBoard(sharedVariables.moveSliders[gameData.BoardIndex].getValue(), slidingBoard);
-		        if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 0)
+		        if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 0 || 
+                        (sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 1 && 
+                        (sharedVariables.mygame[gameData.LookingAt].moveListTo[0] == sharedVariables.mygame[gameData.LookingAt].moveListFrom[0] 
+                        && sharedVariables.mygame[gameData.LookingAt].moveListFrom[0] > 0)))
 		        startPosition =true;
                 }
 		else if(sharedVariables.mygame[gameData.LookingAt].currentLastto >= 0)
 		{
                    sharedVariables.mygame[gameData.LookingAt].lastfrom=sharedVariables.mygame[gameData.LookingAt].currentLastfrom;
                    sharedVariables.mygame[gameData.LookingAt].lastto = sharedVariables.mygame[gameData.LookingAt].currentLastto;
-                    if(sharedVariables.mygame[gameData.LookingAt].movetop == 0)
+                    if(sharedVariables.mygame[gameData.LookingAt].movetop == 0 || 
+                    (sharedVariables.mygame[gameData.LookingAt].currentLastto == sharedVariables.mygame[gameData.LookingAt].currentLastfrom
+                    && sharedVariables.mygame[gameData.LookingAt].movetop == 1))
                     startPosition = true;
                  sharedVariables.mygame[gameData.LookingAt].setMaterialCount(sharedVariables.mygame[gameData.LookingAt].board);
                 }

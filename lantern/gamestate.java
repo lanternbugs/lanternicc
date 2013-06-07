@@ -744,7 +744,8 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 			makeAtomicCaptures(board, from, to);
 
 	    board[to]=board[from];
-	    board[from]=0;
+	    if(from != to)// so we can send dummy moves like black first
+            board[from]=0;
 
 	}
 	else if(reload == 1)
@@ -755,6 +756,7 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 		type=0;
 
 	board[to]=board[from];
+        if(from != to)// so we can send dummy moves like black first
 	board[from]=0;
 
 	}
@@ -957,12 +959,14 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 		if(wild == 27 && board[to]!=0)
 			makeAtomicCaptures(board, from, to);
 	board[to]=board[from];
+        if(from != to)// so we can send dummy moves like black first
 	board[from]=0;
 
 	}
 	else if(reload == 1)
 	{
 	board[to]=board[from];
+        if(from != to)// so we can send dummy moves like black first
 	board[from]=0;
 
 	}

@@ -681,7 +681,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
        try {
         if(fen.substring(i+1, i+2).equals("b"))
           moveSent(icsGameNumber, "e2e2",
-                "e2e2", false);
+                "-", false);
+        sharedVariables.mygame[gameData.BoardIndex].currentLastto = 0;
+        sharedVariables.mygame[gameData.BoardIndex].currentLastfrom = 0;
+
        }
        catch(Exception e){}
       } // if i > -1
