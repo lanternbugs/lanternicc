@@ -38,7 +38,65 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.filechooser.FileFilter;
 
+/*
+public class toolboxDialog extends JDialog
+  implements ActionListener {
 
+  private JList toolboxList;
+  private JScrollPane toolboxListScroller;
+  private Timer timer;
+  private DataInputStream in;
+
+  private int count = 0;
+  private int conNumber = 0;
+  private String myprefix;
+  private double delay = 0;
+  private BufferedReader br;
+
+  private JLabel headerLabel;
+  private JTextField myprefixField;
+  private JTextField myoutputTabField;
+  private JTextField mydelayField;
+  private JLabel myprefixLabel;
+  private JLabel myoutputLabel;
+  private JLabel mydelayLabel;
+  private JButton loaderButton;
+  private JButton cancelButton;
+  private Queue<myoutput> queue;
+  private channels svars;
+
+  public toolboxDialog(final JFrame frame, boolean mybool,
+                       Queue<myoutput> queue, channels svars) {
+    super(frame, mybool);
+    setTitle("Run a Script");
+    this.queue = queue;
+    this.svars = svars;
+
+    headerLabel = new JLabel("Header label");
+
+    toolboxList = new JList(svars.toolboxListData.model);
+    toolboxList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    toolboxListScroller = new JScrollPane(toolboxList);
+
+    myprefixLabel = new JLabel("Prefix label");
+    myprefixField = new JTextField(20);
+    mydelayLabel = new JLabel("Delay label");
+    mydelayField = new JTextField(2);
+    myoutputTabLabel = new JLabel("Output tab label");
+    myoutputTabField = new JTextField(2);
+    
+    loaderButton = new JButton("Load Script File");
+    loaderButton.setActionCommand("load");
+    loaderButton.addActionListener(this);
+    
+    cancelButton = new JButton("Cancel");
+    cancelButton.setActionCommand("cancel");
+    cancelButton.addActionListener(this);
+  }
+  
+}
+
+/**/
 class toolboxDialog extends JDialog {
   JList toolboxList;
   JScrollPane toolboxListScroller;
@@ -52,7 +110,7 @@ class toolboxDialog extends JDialog {
   double delay=0;
   BufferedReader br;
   int onLine=0;
-  /* controls */
+  // controls
   JLabel headerLabel;
   JTextField myprefixField;
   JTextField myoutputTabField;
@@ -73,19 +131,19 @@ class toolboxDialog extends JDialog {
     queue=queue1;
     sharedVariables=sharedVariables1;
 
-    /* now define controls */
+    // now define controls
     headerLabel = new JLabel("<html>Load a script then right click on "+
                              "it to run.<br>Add an optional prefix or "+
                              "timer command before running it.</html>");
 
-    /* the list */
+    // the list
     toolboxList = new JList(sharedVariables.toolboxListData.model);
     toolboxList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     toolboxList.setLayoutOrientation(JList.VERTICAL);
     toolboxList.setVisibleRowCount(-1);
     //toolboxList.setBackground(listColor);
     toolboxListScroller = new JScrollPane(toolboxList);
-    /* end list initializtion */
+    // end list initializtion
 
     myprefixLabel = new JLabel("Enter an optional prefix to script commands");
     myprefixField = new JTextField(20);
@@ -98,7 +156,7 @@ class toolboxDialog extends JDialog {
     myoutputTabField = new JTextField(2);
     loaderButton = new JButton("Load Script File");
     cancelButton = new JButton("Cancel");
-    /************ now listeners *******************/
+    // now listeners
     cancelButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent event) {
           dispose();
@@ -125,12 +183,12 @@ class toolboxDialog extends JDialog {
                 }
 
                 public String getDescription() {
-                  /*
-                  if (f.getName().toLowerCase().endsWith(".b2s"))
-                    return "*.b2s";
-                  if (f.getName().toLowerCase().endsWith(".b2a"))
-                    return "*.b2a";
-                  */
+
+//                   if (f.getName().toLowerCase().endsWith(".b2s"))
+//                     return "*.b2s";
+//                   if (f.getName().toLowerCase().endsWith(".b2a"))
+//                     return "*.b2a";
+
 
                   return "Scripter Files";
                 }
@@ -163,14 +221,14 @@ class toolboxDialog extends JDialog {
 
             String play = sharedVariables.toolboxListData.getOfferNumber(index);
             if (!play.equals("-1")) {
-              /*
-              JFrame myframe = new JFrame();
-              JDialog mydi = new JDialog(myframe, true);
-              mydi.setTitle((String)toolboxListData.model.elementAt(index));
 
-              mydi.setSize(500,50);
-              mydi.setVisible(true);
-              */
+//               JFrame myframe = new JFrame();
+//               JDialog mydi = new JDialog(myframe, true);
+//               mydi.setTitle((String)toolboxListData.model.elementAt(index));
+
+//               mydi.setSize(500,50);
+//               mydi.setVisible(true);
+
               String outputTab = myoutputTabField.getText();
               try {
                 int num1 = Integer.parseInt(outputTab);
@@ -187,15 +245,14 @@ class toolboxDialog extends JDialog {
               } catch (Exception de) {}
 
               myprefix = myprefixField.getText();
-              runFile((String)sharedVariables.toolboxListData.model.elementAt
-                      (index));
+              runFile((String)sharedVariables.toolboxListData.model.elementAt(index));
             }
           }
         }
       };
     toolboxList.addMouseListener(mouseListenerScripts);
 
-    /********* now layout *************************/
+    // now layout
 
     JPanel pane = new JPanel();
     pane.setLayout(new GridLayout(6,1));
@@ -296,3 +353,4 @@ class toolboxDialog extends JDialog {
   }// end class
 
 }// end class
+/**/
