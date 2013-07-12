@@ -4516,7 +4516,7 @@ dot.setVisible(true);
   {
     toolboxDialog mybox = new toolboxDialog(this, false, queue,
                                               sharedVariables);
-    mybox.setSize(500,450);
+    mybox.setSize(350,250);
     mybox.setLocation(200,250);
     mybox.setVisible(true);
 

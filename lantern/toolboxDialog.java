@@ -134,7 +134,7 @@ public class toolboxDialog extends JDialog
     int space = 5;
     int ht = 20;
 
-    double[][] size = {{border, TableLayout.FILL, 100, 50, 100, 50, border},
+    double[][] size = {{border, TableLayout.FILL, 80, 40, 80, 40, border},
                        {border, ht, TableLayout.FILL, space, ht, ht,
                         space, ht, space, 30, border}};
 
