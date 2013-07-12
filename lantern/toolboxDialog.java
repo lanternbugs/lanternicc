@@ -112,7 +112,6 @@ public class toolboxDialog extends JDialog
     myprefixField = new JTextField(20);
     mydelay = new JSpinner(smodel);
     
-    
     int mct = svars.maxConsoleTabs;
     Integer[] outputTab = new Integer[mct];
     for (int i=0; i<mct; i++) outputTab[i] = i;
@@ -152,6 +151,10 @@ public class toolboxDialog extends JDialog
     add(myoutputTabLabel, "4, 7, r, f");
     add(myoutputTab, "5, 7");
     add(buttons, "1, 9, 5, 9");
+
+    if (toolboxList.isSelectionEmpty())
+      runButton.setEnabled(false);
+    else  toolboxList.setSelectedIndex(0);
   }
 
   private void cleanScripts(DefaultListModel lm) {
@@ -190,6 +193,9 @@ public class toolboxDialog extends JDialog
 
           String myFilename = scriptFile.getAbsolutePath();
           lmodel.addElement(myFilename);
+
+          runButton.setEnabled(true);
+          toolboxList.setSelectedIndex(lmodel.getSize()-1);
         }// end if
       // end try
       } catch (Exception d) {}
