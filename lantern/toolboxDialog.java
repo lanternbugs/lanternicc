@@ -14,38 +14,63 @@ package lantern;
 *  General Public License for more details.
 */
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+// import java.awt.*;
+// import java.awt.event.*;
+// import javax.swing.*;
 import javax.swing.JDialog;
-import java.io.*;
-import java.net.*;
-import java.lang.Thread.*;
-import java.applet.*;
-import javax.swing.GroupLayout.*;
-import javax.swing.colorchooser.*;
-import javax.swing.event.*;
-import java.lang.Integer;
-import javax.swing.text.*;
-import java.awt.geom.*;
-import java.awt.image.BufferedImage;
-import java.applet.*;
-import java.awt.event.*;
-import java.awt.image.*;
+// import java.io.*;
+// import java.net.*;
+// import java.lang.Thread.*;
+// import java.applet.*;
+// import javax.swing.GroupLayout.*;
+// import javax.swing.colorchooser.*;
+// import javax.swing.event.*;
+// import java.lang.Integer;
+// import javax.swing.text.*;
+// import java.awt.geom.*;
+// import java.awt.image.BufferedImage;
+// import java.applet.*;
+// import java.awt.event.*;
+// import java.awt.image.*;
 import javax.imageio.ImageIO;
-import java.util.concurrent.ConcurrentLinkedQueue;
+//import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.filechooser.FileFilter;
 
-/*
+import layout.TableLayout;
+//import java.io.DataInputStream;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+
+import java.util.Queue;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JFrame;
+import javax.swing.ListSelectionModel;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
+import javax.swing.JFileChooser;
+
+/**/
 public class toolboxDialog extends JDialog
   implements ActionListener {
 
   private JList toolboxList;
   private JScrollPane toolboxListScroller;
   private Timer timer;
-  private DataInputStream in;
+  private SpinnerNumberModel smodel;
+  private DefaultListModel lmodel;
 
   private int count = 0;
   private int conNumber = 0;
@@ -55,48 +80,188 @@ public class toolboxDialog extends JDialog
 
   private JLabel headerLabel;
   private JTextField myprefixField;
-  private JTextField myoutputTabField;
-  private JTextField mydelayField;
-  private JLabel myprefixLabel;
-  private JLabel myoutputLabel;
-  private JLabel mydelayLabel;
+  private JComboBox myoutputTab;
+  private JSpinner mydelay;
   private JButton loaderButton;
-  private JButton cancelButton;
+  private JButton runButton;
+  
   private Queue<myoutput> queue;
   private channels svars;
+  final private JFrame frame;
 
   public toolboxDialog(final JFrame frame, boolean mybool,
                        Queue<myoutput> queue, channels svars) {
     super(frame, mybool);
     setTitle("Run a Script");
+    this.frame = frame;
     this.queue = queue;
     this.svars = svars;
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    headerLabel = new JLabel("Header label");
+    smodel = new SpinnerNumberModel(0, 0, 10, .1);
 
-    toolboxList = new JList(svars.toolboxListData.model);
+    headerLabel = new JLabel("Scripts");
+
+    lmodel = svars.toolboxListData.model;
+    cleanScripts(lmodel);
+
+    toolboxList = new JList(lmodel);
     toolboxList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     toolboxListScroller = new JScrollPane(toolboxList);
 
-    myprefixLabel = new JLabel("Prefix label");
     myprefixField = new JTextField(20);
-    mydelayLabel = new JLabel("Delay label");
-    mydelayField = new JTextField(2);
-    myoutputTabLabel = new JLabel("Output tab label");
-    myoutputTabField = new JTextField(2);
+    mydelay = new JSpinner(smodel);
     
-    loaderButton = new JButton("Load Script File");
+    
+    int mct = svars.maxConsoleTabs;
+    Integer[] outputTab = new Integer[mct];
+    for (int i=0; i<mct; i++) outputTab[i] = i;
+    myoutputTab = new JComboBox(outputTab);
+    
+    loaderButton = new JButton("Load");
     loaderButton.setActionCommand("load");
     loaderButton.addActionListener(this);
-    
-    cancelButton = new JButton("Cancel");
-    cancelButton.setActionCommand("cancel");
-    cancelButton.addActionListener(this);
+
+    runButton = new JButton("Run");
+    runButton.setActionCommand("run");
+    runButton.addActionListener(this);
+
+    JPanel buttons = new JPanel();
+    buttons.add(loaderButton);
+    buttons.add(runButton);
+
+    int border = 10;
+    int space = 5;
+    int ht = 20;
+
+    double[][] size = {{border, TableLayout.FILL, 100, 50, 100, 50, border},
+                       {border, ht, TableLayout.FILL, space, ht, ht,
+                        space, ht, space, 30, border}};
+
+    setLayout(new TableLayout(size));
+
+    add(headerLabel, "1, 1, 5, 1");
+    add(toolboxListScroller, "1, 2, 5, 2");
+    JLabel myprefixLabel = new JLabel("Optional prefix");
+    add(myprefixLabel, "1, 4, 5, 4");
+    add(myprefixField, "1, 5, 5, 5");
+    JLabel mydelayLabel = new JLabel("Delay");
+    add(mydelayLabel, "2, 7, r, f");
+    add(mydelay, "3, 7");
+    JLabel myoutputTabLabel = new JLabel("Output tab");
+    add(myoutputTabLabel, "4, 7, r, f");
+    add(myoutputTab, "5, 7");
+    add(buttons, "1, 9, 5, 9");
   }
+
+  private void cleanScripts(DefaultListModel lm) {
+    if (lm.isEmpty()) return;
+    String scripts = (String)lm.firstElement();
+    if (scripts.equals("Scripts"))
+      lm.removeElementAt(0);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    String action = e.getActionCommand();
+    if (action.equals("load")) {
+      try {
+        JFileChooser fc = new JFileChooser();
+
+        fc.setCurrentDirectory(new File("."));
+        fc.setFileFilter(new FileFilter() {
+            public boolean accept(File f) {
+              String fname = f.getName().toLowerCase();
+              return (fname.endsWith(".b2s") || fname.endsWith(".b2a") ||
+                      f.isDirectory());
+            }  
+
+            public String getDescription() {
+              return "Scripter Files (*.b2s, *.b2a)";
+            }
+          });
+
+        int returnVal = fc.showOpenDialog(frame);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+          File scriptFile = fc.getSelectedFile();
+          String fname = scriptFile.getName().toLowerCase();
+          if (!fname.endsWith(".b2s") && !fname.endsWith(".b2a"))
+            return;
+
+          String myFilename = scriptFile.getAbsolutePath();
+          lmodel.addElement(myFilename);
+        }// end if
+      // end try
+      } catch (Exception d) {}
+
+    } else if (action.equals("run")) {
+      String filename = (String)toolboxList.getSelectedValue();
+      if (filename == null) return;
+
+      delay = (Double)mydelay.getValue();
+
+      conNumber = (Integer)myoutputTab.getSelectedItem();
+
+      if (filename.toLowerCase().endsWith(".b2a")) {
+        myprefix = myprefixField.getText() + " ";
+      } else {
+        myprefix = "";
+      }
+
+      try {
+        FileInputStream fstream = new FileInputStream(filename);
+        // Get the object of DataInputStream
+        br = new BufferedReader(new InputStreamReader(fstream));
+        String strLine;
+        //Read File Line By Line
+        if (delay == 0) {
+
+          while ((strLine = br.readLine()) != null) {
+            runCommand(strLine, myprefix);
+          }
+
+          br.close();
+        
+        } else {
+          timer = new Timer();
+          timer.schedule(new ToDoTask(), (int)(delay * 1000));
+        }
+        //Close the input stream
+
+      } catch (Exception ex) {//Catch exception if any
+        // do nothing
+      }
+    }
+  }
+
+  private void runCommand(String command, String prefix) {
+    myoutput output = new myoutput();
+    output.data= "`c" + conNumber + "`" + prefix + command + "\n";
+    output.consoleNumber = conNumber;
+    queue.add(output);
+  }
+
+  private class ToDoTask extends TimerTask {
+
+    public void run () {
+      String strLine;
+      try {
+        if ((strLine = br.readLine()) != null) {
+          runCommand(strLine, myprefix);
+          timer.schedule(new ToDoTask(), (int)(delay * 1000));
+
+        } else {
+	  br.close();
+        }
+      } catch (Exception d) {}
+    }// end run
+
+  }// end class
   
+
 }
 
-/**/
+/*
 class toolboxDialog extends JDialog {
   JList toolboxList;
   JScrollPane toolboxListScroller;
