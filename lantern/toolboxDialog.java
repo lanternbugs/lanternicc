@@ -142,7 +142,7 @@ public class toolboxDialog extends JDialog
 
     add(headerLabel, "1, 1, 5, 1");
     add(toolboxListScroller, "1, 2, 5, 2");
-    JLabel myprefixLabel = new JLabel("Optional prefix");
+    JLabel myprefixLabel = new JLabel("Optional prefix (for *.ba2 files)");
     add(myprefixLabel, "1, 4, 5, 4");
     add(myprefixField, "1, 5, 5, 5");
     JLabel mydelayLabel = new JLabel("Delay");
