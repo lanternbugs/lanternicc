@@ -1113,6 +1113,7 @@ class mymultiframe extends JFrame
     JMenuItem ananback = new JMenuItem("Analysis Background Color");
     // .. / (separator)
     JMenuItem customizetools = new JMenuItem("Customize User Buttons");
+    JMenuItem toolbox = new JMenuItem("Run a Script");
     // .. / (separator)
     JMenu advancedOptions = new JMenu("Advanced");
     // .. / Advanced /
@@ -1175,6 +1176,8 @@ class mymultiframe extends JFrame
     // add shortcuts
     optionsmenu.setMnemonic(KeyEvent.VK_O);
     soundmenu.setMnemonic(KeyEvent.VK_S);
+    customizetools.setMnemonic(KeyEvent.VK_U);
+    toolbox.setMnemonic(KeyEvent.VK_P);
     advancedOptions.setMnemonic(KeyEvent.VK_A);
     featuresMenu.setMnemonic(KeyEvent.VK_F);
     observeOptions.setMnemonic(KeyEvent.VK_O);
@@ -1223,6 +1226,7 @@ class mymultiframe extends JFrame
     // .. /
     optionsmenu.addSeparator();
     optionsmenu.add(customizetools);
+    optionsmenu.add(toolbox);
     optionsmenu.addSeparator();
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
@@ -1288,7 +1292,7 @@ class mymultiframe extends JFrame
     compactNameList.setSelected(false);
 
     // add listeners    
-   showMugshots.addActionListener(this);
+    showMugshots.addActionListener(this);
     makeObserveSounds.addActionListener(this);
     hearsound.addActionListener(this);
     notifysound.addActionListener(this);
@@ -1300,6 +1304,7 @@ class mymultiframe extends JFrame
     ananfore.addActionListener(this);
     ananback.addActionListener(this);
     customizetools.addActionListener(this);
+    toolbox.addActionListener(this);
     qsuggestPopup.addActionListener(this);
     userbuttons.addActionListener(this);
     consolemenu.addActionListener(this);
@@ -1358,7 +1363,7 @@ class mymultiframe extends JFrame
     JMenuItem channelmap = new JMenuItem("Channel Map");
     JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
     JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
-    JMenuItem toolbox = new JMenuItem("ToolBox");
+    //JMenuItem toolbox = new JMenuItem("ToolBox");
     JMenuItem cascading = new JMenuItem("Cascade");
     // .. / (separator)
     //dynamic list of windows
@@ -1397,7 +1402,7 @@ class mymultiframe extends JFrame
     sharedVariables.myWindows.add(channelmap);
     sharedVariables.myWindows.add(channelnotifymap);
     sharedVariables.myWindows.add(channelnotifyonline);
-    sharedVariables.myWindows.add(toolbox);
+    //sharedVariables.myWindows.add(toolbox);
     sharedVariables.myWindows.add(cascading);
     sharedVariables.myWindows.addSeparator();
 
@@ -1416,7 +1421,7 @@ class mymultiframe extends JFrame
     cascading.addActionListener(this);
     //webopener.addActionListener(this);
     toolbarvisible.addActionListener(this);
-    toolbox.addActionListener(this);
+    //toolbox.addActionListener(this);
 
     /****************************** Game ******************************/
     JMenu myboardmenu = new JMenu("Game");
@@ -2504,7 +2509,7 @@ dot.setVisible(true);
       // it's checked on close
       sharedVariables.seeksOpen = false;
 
-    } else if (action.equals("ToolBox")) {
+    } else if (action.equals("Run a Script")) {
       toolboxDialog mybox = new toolboxDialog(this, false, queue,
                                               sharedVariables);
       mybox.setSize(500,450);
