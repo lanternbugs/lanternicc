@@ -712,13 +712,17 @@ class mymultiframe extends JFrame
       // position windows. MA 9-19-10
       try {
         if (sharedVariables.screenW > 100 && sharedVariables.screenH > 100) {
-          int px = 30;
+         mycreator.restoreConsoleFrame();
+         int px = 30;
           int py = 30;
           int cw = (int) (sharedVariables.screenW/2 - px - 1/10*sharedVariables.screenW/2);
-          int ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
+          int ch = (int) ((sharedVariables.screenH / 2) - py - (sharedVariables.screenH/ 2)/6);
 
           consoleSubframes[0].setLocation(px, py);
           consoleSubframes[0].setSize(cw, ch);
+          consoleSubframes[1].setLocation(px, py + py/2 + ch);
+          consoleSubframes[1].setSize(cw, ch);
+
           px = px + px + cw;
           py = 30;
           cw = (int) (sharedVariables.screenW/2 - 30 - (sharedVariables.screenW/2) / 10);

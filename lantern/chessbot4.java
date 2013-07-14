@@ -519,7 +519,7 @@ try {
 }
 	if(requestSocket== null)
 	{
-	
+
 		requestSocket = new Socket("207.99.83.228", 23);// 127.0.0.1 or
 	}
 
@@ -7227,7 +7227,7 @@ return new Color(red,green,blue);
 void setUpNewUserTabs()
 {
 
-if(sharedVariables.channelNamesList.size() < sharedVariables.maxConsoleTabs) {
+if(sharedVariables.channelNamesList.size() < sharedVariables.maxConsoleTabs - 1) {
   // condition that there are enough channels to be one per tab
 for(int li=0; li<sharedVariables.channelNamesList.size(); li++)
 sharedVariables.console[li + 1][Integer.parseInt(sharedVariables.channelNamesList.get(li).channel)]= 1;
@@ -7312,51 +7312,7 @@ sharedVariables.console[tabNumber][44]= 1;
 }// end for
 
 // ********************** stage 4
-go=false;
-for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
-if(sharedVariables.channelNamesList.get(li).channel.equals("24")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][24]= 1;
-}
-if(sharedVariables.channelNamesList.get(li).channel.equals("25")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][25]= 1;
-}
-if(sharedVariables.channelNamesList.get(li).channel.equals("26")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][26]= 1;
-}
-if(sharedVariables.channelNamesList.get(li).channel.equals("27")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][27]= 1;
-}
-if(sharedVariables.channelNamesList.get(li).channel.equals("28")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][28]= 1;
-}
-if(sharedVariables.channelNamesList.get(li).channel.equals("117")) {
-if(go == false) {
-go = true;
-tabNumber++;
-}// go = false
-sharedVariables.console[tabNumber][117]= 1;
-}
-}// end for
+// pass we need a tell tab
 
 // ********************* Stage 5
 go=false;
@@ -7523,7 +7479,7 @@ sharedVariables.console[tabNumber][280]= 1;
 
 setConsoleTabTitles asetter = new setConsoleTabTitles();
 
-for(int z=1; z<sharedVariables.openConsoleCount; z++)
+for(int z=1; z<sharedVariables.openConsoleCount - 1; z++)
 if(sharedVariables.console[z][221]== 1)
 asetter.createConsoleTabTitle(sharedVariables, z, consoleSubframes, "Tomato");
 else

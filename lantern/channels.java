@@ -559,10 +559,14 @@ consoleFonts = new Font[maxConsoleTabs];
 for(int a=0; a<maxConsoleTabs; a++)
 {if(a==0)
 consoleTabTitles[a]= "M" + a;
-  else
+else if(a == maxConsoleTabs - 1)
+consoleTabTitles[a]= "Tells";
+else
 consoleTabTitles[a]= "C" + a;
 if(a==1)
 consoleTabCustomTitles[a]="doubleclick to name tab";
+else if(a == maxConsoleTabs -1)
+consoleTabCustomTitles[a]="Tells";
 else
 consoleTabCustomTitles[a]="";
 consoleFonts[a]=null;
@@ -599,8 +603,8 @@ openConsoleCount=0;
 lasttell="";
 defaultpgn="";
 tellconsole=0;
-tellTab=0;
-tellsToTab=false;
+tellTab=11;
+tellsToTab=true;
 updateTellConsole=0;
 tabBorderColor = new Color(235,0,0);
 tellTabBorderColor = new Color(0, 235, 0);
@@ -808,7 +812,7 @@ for(int a=0; a<maxChannels; a++)
 	autoexam=0;
 	autoexamnoshow=1;
 	password=0;
-	
+
 	loadNotifyOnTabs();
 }
 
