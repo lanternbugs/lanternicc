@@ -4512,8 +4512,8 @@ dot.setVisible(true);
   }
 
   void setButtonTitle(int a) {
-    String buttonTitle="" + a;
-    if (!sharedVariables.userButtonCommands[a].equals("") &&
+    String buttonTitle=" " + a + " ";
+  /*  if (!sharedVariables.userButtonCommands[a].equals("") &&
         sharedVariables.showButtonTitle) {
       buttonTitle = "" + a + " - ";
       if (sharedVariables.userButtonCommands[a].length() > 11)
@@ -4521,7 +4521,7 @@ dot.setVisible(true);
       else
         buttonTitle += sharedVariables.userButtonCommands[a];
     }
-
+*/
     sharedVariables.mybuttons[a].setText(buttonTitle);
   }
   void launchScripterDialog()
@@ -4547,22 +4547,93 @@ dot.setVisible(true);
 	  myTopGamesFrame.setVisible(true);
 
   }
+  class toolBarPanelClass extends JPanel
+  {
+
+	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure45, JButton pure960,
+	 JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JToolBar toolBar)
+ 	{
+	GroupLayout layout = new GroupLayout(toolBar);
+	SequentialGroup hgroup = layout.createSequentialGroup();
+	hgroup.addComponent(sharedVariables.mybuttons[0]);
+	for(int a=1; a<10; a++)
+	  hgroup.addComponent(sharedVariables.mybuttons[a]);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(userbuttonLabel);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(scripterLabel);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(topGamesLabel);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(seeksLabel, 100, 100, 100);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(activitesLabel);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure1);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure3);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure5);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure15);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure45);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(pure960);
+    layout.setHorizontalGroup(hgroup);
+	ParallelGroup vgroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+	vgroup.addComponent(sharedVariables.mybuttons[0]);
+	for(int a=1; a<10; a++)
+	  vgroup.addComponent(sharedVariables.mybuttons[a]);
+    vgroup.addComponent(userbuttonLabel);
+    vgroup.addComponent(scripterLabel);
+    vgroup.addComponent(topGamesLabel);
+    vgroup.addComponent(seeksLabel);
+    vgroup.addComponent(activitesLabel);
+    vgroup.addComponent(pure1);
+    vgroup.addComponent(pure3);
+    vgroup.addComponent(pure5);
+    vgroup.addComponent(pure15);
+    vgroup.addComponent(pure45);
+    vgroup.addComponent(pure960);
+    layout.setVerticalGroup(vgroup);
+
+	}
+  }
+
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
-    toolBar.setLayout(new GridLayout(1,18));
-
-    JButton pure1 = new JButton("1-min");
-    JButton pure3 = new JButton("3-min");
-    JButton pure5 = new JButton("5-min");
-    JButton pure15 = new JButton("15-min");
-    JButton pure45 = new JButton("45 45");
-    JButton pure960 = new JButton("Chess960");
+    //toolBar.setLayout(new BorderLayout());
+    JButton pure1 = new JButton("  1-minute  ");
+    JButton pure3 = new JButton("  3-minute  ");
+    JButton pure5 = new JButton("  5-minute  ");
+    JButton pure15 = new JButton("  15-minute  ");
+    JButton pure45 = new JButton("  45 45  ");
+    JButton pure960 = new JButton("  Chess960  ");
     JLabel seeksLabel = new JLabel();
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
     JLabel  scripterLabel = new JLabel();
     JLabel  topGamesLabel = new JLabel();
+   for (int a=0; a<10; a++) {
+      sharedVariables.mybuttons[a] = new JButton("" + a);
+      setButtonTitle(a);
+      sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
+      final int con = a;
+
+      sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            toolbarCommands commander = new toolbarCommands(myboards);
+            commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
+          }
+        });
+
+
+    }
+
+    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure45, pure960,
+	 seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, toolBar);
 
  /*
     pure1.setIcon(sharedVariables.pure1);
@@ -4580,7 +4651,7 @@ dot.setVisible(true);
     pure960.setBackground(new Color(255,255,255));
 
     seeksLabel.setIcon(sharedVariables.seekIcon);
-    seeksLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    //seeksLabel.setHorizontalAlignment( SwingConstants.CENTER );
     seeksLabel.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
@@ -4597,8 +4668,8 @@ dot.setVisible(true);
       });
 
     //activitesLabel.setIcon(sharedVariables.activitiesIcon);
-    activitesLabel.setText("<html><center><b>A</b></center></html>");
-    activitesLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    activitesLabel.setText("   Activities   ");
+   // activitesLabel.setHorizontalAlignment( SwingConstants.CENTER );
     activitesLabel.setOpaque(true);
     activitesLabel.setBackground(new Color(245,245,250));
     activitesLabel.addMouseListener(new MouseAdapter() {
@@ -4615,8 +4686,8 @@ dot.setVisible(true);
         public void mouseExited(MouseEvent me) {}
         public void mouseClicked(MouseEvent me) {}
       });
-    userbuttonLabel.setText("Set User Buttons");
-    userbuttonLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    userbuttonLabel.setText("   Set User Buttons   ");
+  //  userbuttonLabel.setHorizontalAlignment( SwingConstants.CENTER );
     userbuttonLabel.setOpaque(true);
     userbuttonLabel.setBackground(new Color(245,245,250));
     userbuttonLabel.addMouseListener(new MouseAdapter() {
@@ -4634,8 +4705,8 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    scripterLabel.setText("Run a Script");
-    scripterLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    scripterLabel.setText("   Run a Script   ");
+   // scripterLabel.setHorizontalAlignment( SwingConstants.CENTER );
     scripterLabel.setOpaque(true);
     scripterLabel.setBackground(new Color(245,245,250));
     scripterLabel.addMouseListener(new MouseAdapter() {
@@ -4653,8 +4724,8 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    topGamesLabel.setText("Top Games");
-    topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    topGamesLabel.setText("   Top Games   ");
+   // topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
     topGamesLabel.setOpaque(true);
     topGamesLabel.setBackground(new Color(245,245,250));
     topGamesLabel.addMouseListener(new MouseAdapter() {
@@ -4780,37 +4851,9 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    for (int a=0; a<10; a++) {
-      sharedVariables.mybuttons[a] = new JButton("" + a);
-      setButtonTitle(a);
-      sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
-      final int con = a;
 
-      sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            toolbarCommands commander = new toolbarCommands(myboards);
-            commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
-          }
-        });
+    toolBar.add(toolBarPanel);
 
-      if (a != 0)
-        toolBar.add(sharedVariables.mybuttons[a]);
-    }
-
-    toolBar.add(sharedVariables.mybuttons[0]);
-    toolBar.add(userbuttonLabel);
-    toolBar.add(scripterLabel);
-    toolBar.add(topGamesLabel);
-    toolBar.add(seeksLabel);
-    toolBar.add(activitesLabel);
-    toolBar.add(pure1);
-    toolBar.add(pure3);
-    toolBar.add(pure5);
-    toolBar.add(pure15);
-    toolBar.add(pure45);
-    toolBar.add(pure960);
-    JLabel spacer = new JLabel("");
-    //toolBar.add(spacer);
   }
 
   void sendToEngine(String output) {

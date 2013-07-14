@@ -26,7 +26,7 @@ import javax.swing.JLabel;
 import layout.TableLayout;
 /**/
 class userButtonsDialog extends JDialog implements ActionListener {
-  
+
   channels sVars;
   JTextField[] mypanes;
 
@@ -37,11 +37,11 @@ class userButtonsDialog extends JDialog implements ActionListener {
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
     mypanes = new JTextField[10];
-    
+
     JButton ok = new JButton("OK");
     ok.setActionCommand("Submit");
     ok.addActionListener(this);
-    
+
     JButton cancel = new JButton("Cancel");
     cancel.setActionCommand("Cancel");
     cancel.addActionListener(this);
@@ -85,15 +85,15 @@ class userButtonsDialog extends JDialog implements ActionListener {
       for (int i=0; i<10; i++) {
         String bcommand = mypanes[i].getText();
         sVars.userButtonCommands[i] = bcommand;
-        String buttontitle = "" + i;
-        if (!bcommand.equals("") && sVars.showButtonTitle) {
+        //String buttontitle = "" + i;
+        /*if (!bcommand.equals("") && sVars.showButtonTitle) {
           buttontitle += " - ";
           if (bcommand.length() > 11)
             buttontitle += bcommand.substring(0, 11);
           else
             buttontitle += bcommand;
-        }
-        sVars.mybuttons[i].setText(buttontitle);
+        }*/
+        //sVars.mybuttons[i].setText(buttontitle);
       }
       dispose();
     }
