@@ -4569,9 +4569,9 @@ dot.setVisible(true);
  	{
 	GroupLayout layout = new GroupLayout(toolBar);
 	SequentialGroup hgroup = layout.createSequentialGroup();
-	hgroup.addComponent(sharedVariables.mybuttons[0]);
 	for(int a=1; a<10; a++)
 	  hgroup.addComponent(sharedVariables.mybuttons[a]);
+    hgroup.addComponent(sharedVariables.mybuttons[0]);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(userbuttonLabel);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
