@@ -564,6 +564,7 @@ class mymultiframe extends JFrame
     autoHistoryPopup.    setSelected(sharedVariables.autoHistoryPopup);
     makeObserveSounds.   setSelected(sharedVariables.makeObserveSounds);
     showMugshots.        setSelected(sharedVariables.showMugshots);
+    autonoidle.        setSelected(sharedVariables.noidle);
     hearsound.           setSelected(sharedVariables.makeSounds);
     consolemenu.         setSelected(sharedVariables.showConsoleMenu);
 
@@ -1355,7 +1356,7 @@ class mymultiframe extends JFrame
     sharedVariables.myWindows = new JMenu("Windows");
     // Windows /
     //JMenuItem nconsole = new JMenuItem("New Console");
-    JMenuItem eventlist = new JMenuItem("Activities Window");
+    JMenuItem eventlist = new JMenuItem("Activities Window/Events");
     JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     JMenuItem mynotify = new JMenuItem("Notify Window");
     JMenuItem mytopgames = new JMenuItem("Top Games Window");
@@ -1367,7 +1368,7 @@ class mymultiframe extends JFrame
     // .. / (separator)
     JMenuItem rconsole2 = new JMenuItem("Customize Tab");
     //JMenuItem  webopener = new JMenuItem("Open Web");
-    toolbarvisible = new JCheckBoxMenuItem("Toolbar");
+    toolbarvisible = new JCheckBoxMenuItem("Show Toolbar");
     JMenuItem channelmap = new JMenuItem("Channel Map");
     JMenuItem channelnotifymap = new JMenuItem("Channel Notify Map");
     JMenuItem channelnotifyonline = new JMenuItem("Channel Notify Online");
@@ -1378,7 +1379,7 @@ class mymultiframe extends JFrame
 
     // add shortcuts
     sharedVariables.myWindows.setMnemonic(KeyEvent.VK_W);
-    eventlist.setMnemonic(KeyEvent.VK_A);
+    //eventlist.setMnemonic(KeyEvent.VK_A);
     seekingGraph.setMnemonic(KeyEvent.VK_S);
     mynotify.setMnemonic(KeyEvent.VK_N);
     nboard.setMnemonic(KeyEvent.VK_B);
@@ -1409,8 +1410,8 @@ class mymultiframe extends JFrame
     //sharedVariables.myWindows.add(webopener);
     sharedVariables.myWindows.add(toolbarvisible);
     sharedVariables.myWindows.add(channelmap);
-    sharedVariables.myWindows.add(channelnotifymap);
-    sharedVariables.myWindows.add(channelnotifyonline);
+    //sharedVariables.myWindows.add(channelnotifymap);
+    //sharedVariables.myWindows.add(channelnotifyonline);
     //sharedVariables.myWindows.add(toolbox);
     sharedVariables.myWindows.add(cascading);
     sharedVariables.myWindows.addSeparator();
@@ -2248,7 +2249,7 @@ class mymultiframe extends JFrame
       if (!sharedVariables.engineOn)
 	startTheEngine();
 
-    } else if (action.equals("Activities Window")) {
+    } else if (action.equals("Activities Window/Events")) {
       openActivities();
 
     } else if (action.equals("Notify Window")) {
@@ -2529,7 +2530,7 @@ dot.setVisible(true);
     } else if (action.equals("Customize User Buttons")) {
 		launchUserButtonDialog();
 
-    } else if (action.equals("Toolbar")) {
+    } else if (action.equals("Show Toolbar")) {
       sharedVariables.toolbarVisible = !sharedVariables.toolbarVisible;
       toolbarvisible.setSelected(sharedVariables.toolbarVisible);
       toolBar.setVisible(sharedVariables.toolbarVisible);

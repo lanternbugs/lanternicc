@@ -438,6 +438,17 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	else
 		set_string = set_string + "0" + " ";
 	// closing
+		set_string = set_string + "[doneshowMugshots] ";
+
+
+	// noidle
+	set_string = set_string + "[no-idle] ";
+	if(sharedVariables.noidle == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneno-idle] ";
 
 
 	// makeSounds
@@ -1345,8 +1356,8 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 				int zz;
 				String mystring="";
 				String entry = "";
-	
-        
+
+
                 try {
         engineFile = "lantern_engine_directory.ini";
 	FileRead in = new FileRead();
@@ -1934,6 +1945,17 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
+                      	if (temp.equals("[no-idle]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.noidle=true;
+					else
+						sharedVariables.noidle=false;
+					}
+					catch(Exception zzz){}
+				}
                         	if (temp.equals("[makeSounds]"))
 				{
 				try {
@@ -1985,7 +2007,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
- 
+
 
 				if (temp.equals("[drawCoordinates]"))
 				{
@@ -2362,7 +2384,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					}
 					catch(Exception zzz){}
 				}
-				
+
                                 	if (temp.equals("[disableNameLists]"))
 				{
 				try {

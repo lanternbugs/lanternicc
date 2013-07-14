@@ -348,7 +348,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.23";
+version = "v5.24";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -414,7 +414,7 @@ dot.setVisible(true);
 */
 }
 notifyControllerFile = "lantern_notify_controler.ini";
-boardType=2;
+boardType=0;
 pieceType=4;
 NOT_FOUND_NUMBER = -100;
 
@@ -698,8 +698,10 @@ inputCommandColor = new Color(0,0,0);
 inputChatColor= new Color(130,57,0);
 chatTimestampColor = new Color(40,200,40);
 listColor = new Color(255, 255, 255);
-lightcolor= new Color(255, 255, 255);
-darkcolor = new Color(71,203,211);
+lightcolor=new Color(240, 240, 224);
+darkcolor= new Color(0,160,128);
+
+
 tellcolor = new Color(255,255,0);
 qtellcolor= new Color(220, 110, 0);
 shoutcolor= new Color(240,0,0);
