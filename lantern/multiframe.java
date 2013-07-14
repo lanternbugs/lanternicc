@@ -160,6 +160,7 @@ class mymultiframe extends JFrame
   listFrame myfirstlist;
   listInternalFrame mysecondlist;
   notifyFrame myNotifyFrame;
+  topGamesFrame myTopGamesFrame;
   gameFrame myGameList;
   listClass eventsList;
   listClass seeksList;
@@ -423,6 +424,7 @@ class mymultiframe extends JFrame
     mysecondlist = new listInternalFrame(this, sharedVariables, queue);
     sharedVariables.desktop.add(mysecondlist);
     myNotifyFrame = new notifyFrame(this, sharedVariables, queue,  notifyList);
+    myTopGamesFrame = new topGamesFrame(this, sharedVariables, queue,  eventsList);
     gameList = new tableClass();
     myGameList = new gameFrame(sharedVariables, queue, gameList);
     sharedVariables.myGameList=myGameList;
@@ -1352,6 +1354,8 @@ class mymultiframe extends JFrame
     JMenuItem eventlist = new JMenuItem("Activities Window");
     JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     JMenuItem mynotify = new JMenuItem("Notify Window");
+    JMenuItem mytopgames = new JMenuItem("Top Games Window");
+
     // .. / (separator)
     JMenuItem nboard = new JMenuItem("New Board"); // we are not going to add this one anymore due to bugs
     JMenuItem rconsole = new JMenuItem("New Chat Console");
@@ -1391,6 +1395,7 @@ class mymultiframe extends JFrame
     sharedVariables.myWindows.add(eventlist);
     sharedVariables.myWindows.add(seekingGraph);
     sharedVariables.myWindows.add(mynotify);
+    sharedVariables.myWindows.add(mytopgames);
     sharedVariables.myWindows.addSeparator();
     //sharedVariables.myWindows.add(nboard);
     sharedVariables.myWindows.add(rconsole);
@@ -1411,6 +1416,7 @@ class mymultiframe extends JFrame
     eventlist.addActionListener(this);
     seekingGraph.addActionListener(this);
     mynotify.addActionListener(this);
+    mytopgames.addActionListener(this);
     nboard.addActionListener(this);
     rconsole.addActionListener(this);
     detachedconsole.addActionListener(this);
@@ -2245,6 +2251,10 @@ class mymultiframe extends JFrame
 
       myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
       myNotifyFrame.setVisible(true);
+
+    }  else if (action.equals("Top Games Window")) {
+
+		launchTopGames();
 
     } else if (action.equals("Seek Graph")) {
       openSeekGraph();
@@ -3719,6 +3729,8 @@ dot.setVisible(true);
         sharedVariables.listColor = newColor;
       if (sharedVariables.activitiesPanel != null)
         sharedVariables.activitiesPanel.setColors();
+      if (myTopGamesFrame != null)
+        myTopGamesFrame.theEventsList.setBackground(sharedVariables.listColor);
       if (myNotifyFrame != null)
         myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 
@@ -4529,7 +4541,12 @@ dot.setVisible(true);
     mydialog.setSize(400,400);
     mydialog.setVisible(true);
   }
+  void launchTopGames()
+  {
+      myTopGamesFrame.setBackground(sharedVariables.listColor);
+	  myTopGamesFrame.setVisible(true);
 
+  }
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
@@ -4545,6 +4562,7 @@ dot.setVisible(true);
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
     JLabel  scripterLabel = new JLabel();
+    JLabel  topGamesLabel = new JLabel();
 
  /*
     pure1.setIcon(sharedVariables.pure1);
@@ -4626,6 +4644,25 @@ dot.setVisible(true);
             ;
           else {
             launchScripterDialog();
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
+    topGamesLabel.setText("Top Games");
+    topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    topGamesLabel.setOpaque(true);
+    topGamesLabel.setBackground(new Color(245,245,250));
+    topGamesLabel.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            launchTopGames();
           }// end else
         }
 
@@ -4763,6 +4800,7 @@ dot.setVisible(true);
     toolBar.add(sharedVariables.mybuttons[0]);
     toolBar.add(userbuttonLabel);
     toolBar.add(scripterLabel);
+    toolBar.add(topGamesLabel);
     toolBar.add(seeksLabel);
     toolBar.add(activitesLabel);
     toolBar.add(pure1);

@@ -39,6 +39,7 @@ String type2;
 
 String thisListType="";
 public myDefaultTableModel eventsTable;
+public myDefaultTableModel topGamesTable;
 ImageIcon joinIcon;
 ImageIcon watchIcon;
 ImageIcon infoIcon;
@@ -85,6 +86,10 @@ Object [][] tableData = {{joinIcon, watchIcon, infoIcon, "Click the icon on even
 String [] tableCollumns = {"Join", "Watch", "Info", "Listing"};
 
 eventsTable = new myDefaultTableModel(tableCollumns, tableData);
+
+Object [][] tableData2 = {{"", watchIcon, "", "Click the eyeball to watch a top game."}};
+
+topGamesTable = new myDefaultTableModel(tableCollumns, tableData2);
 }
 /* for(int ii=i; ii<200; ii++)
  model.add(ii, "" + ii);
@@ -141,21 +146,36 @@ void addToEvents(String entry, String number, String join, String watch, String 
 	  modelinfo.set(i,  info);
 	  modelwatch.set(i,  watch);
   	  if(join.equals("!!!"))
-            eventsTable.setValueAt(null, i, 0);
-	  else
+       {
+		   eventsTable.setValueAt(null, i, 0);
+	     if(spot == 1)
+	     topGamesTable.setValueAt(null, i, 0);
+	  }
+ 	  else
 	  eventsTable.setValueAt(joinIcon, i, 0);
 
   	  if(watch.equals("!!!"))
             eventsTable.setValueAt(null, i, 1);
 	  else
-	  eventsTable.setValueAt(watchIcon, i, 1);
-
+	  {
+		  eventsTable.setValueAt(watchIcon, i, 1);
+	     if(spot == 1)
+	     topGamesTable.setValueAt(watchIcon, i, 1);
+	  }
             if(info.equals("!!!"))
-            eventsTable.setValueAt(null, i, 2);
-	  else
+           {
+			   eventsTable.setValueAt(null, i, 2);
+	     if(spot == 1)
+	     topGamesTable.setValueAt(null, i, 2);
+	  }
+ 	  else
 	  eventsTable.setValueAt(infoIcon, i, 2);
 
 	  eventsTable.setValueAt(entry, i, 3);
+	  if(spot == 1)
+	  	  topGamesTable.setValueAt(entry, i, 3);
+
+
 		return;
 	}
         }// end for
@@ -187,6 +207,7 @@ void addToEvents(String entry, String number, String join, String watch, String 
          tempo[3] = entry;
 
          eventsTable.insertRow(spot, tempo);
+         topGamesTable.insertRow(spot, tempo);
 
          }
          else
@@ -241,6 +262,10 @@ void removeFromEvents(String index)
 	  eventsTable.setValueAt(null, i, 1);
 	  eventsTable.setValueAt(null, i, 2);
 	  eventsTable.setValueAt("-", i, 3);
+	  topGamesTable.setValueAt(null, i, 0);
+	  topGamesTable.setValueAt(null, i, 1);
+	  topGamesTable.setValueAt(null, i, 2);
+	  topGamesTable.setValueAt("-", i, 3);
 
 
 
@@ -255,7 +280,10 @@ void removeFromEvents(String index)
 	 modeldata.remove(i);
 	 eventsTable.removeRow(i);
 	 eventsTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
- 	}
+ 	 topGamesTable.removeRow(i);
+ 	 topGamesTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
+
+ }
 
 
 }
@@ -298,9 +326,20 @@ try {
 
 }
 catch(Exception duiii){}
-  
-}// if events
 
+}// if events
+if(topGamesTable !=null)
+{
+try {
+	for(int i=topGamesTable.getRowCount()-1; i >0; i--)
+	{topGamesTable.removeRow(i);
+
+ 	}
+
+}
+catch(Exception duiii){}
+
+}// if events
 }
 
 void notifyStateChanged(String name, String state)
