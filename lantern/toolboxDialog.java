@@ -37,6 +37,8 @@ import javax.imageio.ImageIO;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.event.*;
+import java.awt.event.*;
 
 import layout.TableLayout;
 //import java.io.DataInputStream;
@@ -61,6 +63,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.JFileChooser;
+import java.applet.*;
 
 /**/
 public class toolboxDialog extends JDialog
@@ -84,7 +87,7 @@ public class toolboxDialog extends JDialog
   private JSpinner mydelay;
   private JButton loaderButton;
   private JButton runButton;
-  
+
   private Queue<myoutput> queue;
   private channels svars;
   final private JFrame frame;
@@ -96,8 +99,13 @@ public class toolboxDialog extends JDialog
     this.frame = frame;
     this.queue = queue;
     this.svars = svars;
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+ addWindowListener(new WindowAdapter() {
+    public void windowClosing(WindowEvent we) {
 
+         setVisible(false);
+    }
+});
     smodel = new SpinnerNumberModel(0, 0, 10, .1);
 
     headerLabel = new JLabel("Scripts");
@@ -111,12 +119,12 @@ public class toolboxDialog extends JDialog
 
     myprefixField = new JTextField(20);
     mydelay = new JSpinner(smodel);
-    
+
     int mct = svars.maxConsoleTabs;
     Integer[] outputTab = new Integer[mct];
     for (int i=0; i<mct; i++) outputTab[i] = i;
     myoutputTab = new JComboBox(outputTab);
-    
+
     loaderButton = new JButton("Load");
     loaderButton.setActionCommand("load");
     loaderButton.addActionListener(this);
@@ -155,6 +163,9 @@ public class toolboxDialog extends JDialog
     if (toolboxList.isSelectionEmpty())
       runButton.setEnabled(false);
     else  toolboxList.setSelectedIndex(0);
+
+    setSize(350,250);
+    setLocation(200,250);
   }
 
   private void cleanScripts(DefaultListModel lm) {
@@ -176,7 +187,7 @@ public class toolboxDialog extends JDialog
               String fname = f.getName().toLowerCase();
               return (fname.endsWith(".b2s") || fname.endsWith(".b2a") ||
                       f.isDirectory());
-            }  
+            }
 
             public String getDescription() {
               return "Scripter Files (*.b2s, *.b2a)";
@@ -227,7 +238,7 @@ public class toolboxDialog extends JDialog
           }
 
           br.close();
-        
+
         } else {
           timer = new Timer();
           timer.schedule(new ToDoTask(), (int)(delay * 1000));
@@ -263,7 +274,7 @@ public class toolboxDialog extends JDialog
     }// end run
 
   }// end class
-  
+
 
 }
 
@@ -486,7 +497,7 @@ class toolboxDialog extends JDialog {
           }
           in.close();
         }
-        
+
       } else {
         timer = new Timer (  ) ;
         timer.schedule( new ToDoTask (  ) , (int)(delay * 1000));

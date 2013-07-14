@@ -2621,7 +2621,7 @@ if(dg.getArg(0).equals("31"))// tell
         if(dg.getArg(4).equals("2"))
 		tellType= " ptells: ";
 	if(dg.getArg(4).equals("4"))
-		tellType= " atells: ";
+		tellType= " ATELLS: ";
 
 	// debug for type -- tellType = tellType + " (" + dg.getArg(4) + ") ";
 
@@ -2770,6 +2770,9 @@ if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true &&
 }catch(Exception donthave){}
 Sound ptell;
 if(sharedVariables.makeSounds == true && makeASound == true)
+if(tellType.contains("ATELLS"))
+ptell=new Sound(sharedVariables.songs[8]);
+else
 ptell=new Sound(sharedVariables.songs[0]);
 if(sharedVariables.rotateAways == true)
 {

@@ -165,7 +165,7 @@ class mymultiframe extends JFrame
   listClass eventsList;
   listClass seeksList;
   listClass computerSeeksList;
-
+  toolboxDialog mybox;
   saveScores mineScores;
 
   listClass notifyList;
@@ -4530,10 +4530,16 @@ dot.setVisible(true);
   }
   void launchScripterDialog()
   {
-    toolboxDialog mybox = new toolboxDialog(this, false, queue,
+
+    if(mybox == null)
+    {
+		mybox = new toolboxDialog(this, false, queue,
                                               sharedVariables);
-    mybox.setSize(350,250);
-    mybox.setLocation(200,250);
+	    mybox.setVisible(true);
+	}
+	else if(mybox.isVisible())
+	mybox.setVisible(false);
+	else
     mybox.setVisible(true);
 
 
@@ -4548,6 +4554,9 @@ dot.setVisible(true);
   void launchTopGames()
   {
       myTopGamesFrame.setBackground(sharedVariables.listColor);
+	  if(myTopGamesFrame.isVisible())
+	  myTopGamesFrame.setVisible(false);
+	  else
 	  myTopGamesFrame.setVisible(true);
 
   }
