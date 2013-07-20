@@ -4968,6 +4968,8 @@ dot.setVisible(true);
       sharedVariables.songs[7]=songPath;
       songPath = this.getClass().getResource("alert.au"); // Geturl of sound was wav
       sharedVariables.songs[8]=songPath;
+      songPath = this.getClass().getResource("draw.au"); // Geturl of sound was wav
+      sharedVariables.songs[9]=songPath;
 
       songPath = this.getClass().getResource("BEEP_FM.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[0]=songPath;

@@ -4298,6 +4298,29 @@ try {
 					temp.dg=77;
 					temp.arg1=dg.getArg(1);
 					temp.arg2=dg.getArg(2);
+					try {
+					if(temp.arg2.startsWith("Your opponent offers you a draw."))
+					{
+						if (sharedVariables.makeSounds == true )
+
+
+							SwingUtilities.invokeLater(new Runnable() {
+						            @Override
+						              public void run() {
+						              try {
+
+						                Sound movesound=new Sound(sharedVariables.songs[9]);
+
+						              } catch (Exception e1) {
+						                //ignore
+						              }
+						            }
+          });
+          }// draw sound
+	  }// end try
+	  catch(Exception drawsound){}
+
+
 					gamequeue.add(temp);
 
 		}
