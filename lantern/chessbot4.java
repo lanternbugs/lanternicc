@@ -2117,18 +2117,48 @@ class mugShot implements Runnable
 public void run()
  {
                         try {
-                          if(getResponseCode(ImageUrl) != 404)
+
+						//	JFrame framer = new JFrame("response code " + getResponseCode(ImageUrl));
+						//	framer.setSize(700,200);
+						//	framer.setVisible(true);
+                         // isNotADummyMugshot(ImageUrl);
+                          if(willShowMugshot(ImageUrl) )
                           mycreator.createWebFrame("<img src=" + ImageUrl + ">");
                         }catch(Exception dd){}
  }
 }
-public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+
+/*boolean isNotADummyMugshot(String urlString)
+{
+ URL u = new URL(urlString);
+        URLConnection yc = u.openConnection();
+
+
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+        String line;
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+        }
+}*/
+
+public static boolean willShowMugshot(String urlString) throws MalformedURLException, IOException {
     URL u = new URL(urlString);
     HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
     huc.setRequestMethod("GET");
     huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
     huc.connect();
-    return huc.getResponseCode();
+   // System.out.println("Connected URL: " + huc.getURL());
+
+   // InputStream is = huc.getInputStream();
+	//System.out.println("Redirected URL: " + huc.getURL() + " and len " + huc.getContentLength());
+   // is.close();
+	if(huc.getResponseCode() == 404)
+	return false;
+	 if(huc.getContentLength() == 14199)
+	 return false;
+
+  return true;
 }
 
 void processDatagram(Datagram1 dg, routing console)
@@ -2191,7 +2221,9 @@ if( dg.getArg(0).equals("152"))
                           // code for mug shot
                         if(sharedVariables.showMugshots)
                         {  String ImageUrl = "http://www.chessclub.com/mugshots/" + dg.getArg(1) + ".jpg";
-                         mugShot imageClient = new mugShot(ImageUrl);
+
+                        // String ImageUrl = "http://www6.chessclub.com/activities/popup.html?/mugshots/" + dg.getArg(1) + ".jpg";
+                        mugShot imageClient = new mugShot(ImageUrl);
                          Thread t_image = new Thread(imageClient);
                          t_image.start();
                         }// if show mugshots
