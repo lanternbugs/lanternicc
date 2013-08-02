@@ -29,6 +29,9 @@ void addHistoryRow(String index, String whiteName, String blackName, String whit
 
 {
 Vector<String> data = new Vector();
+if(index.length() == 1)
+data.add("0" + index);
+else
 data.add(index);
 
 String myName = myTable.type2;
@@ -110,7 +113,11 @@ void addSearchLiblistRow(String index, String whiteName, String blackName, Strin
 
 {
 Vector<String> data = new Vector();
+if(index.length() == 1)
+data.add("0" + index);
+else
 data.add(index);
+
 data.add(whiteName);
 data.add(whiteRating);
 data.add(blackName);
@@ -264,7 +271,7 @@ if(status == 2) // status 2 clause
 		mode 4:  (?)   Game adjourned by an administrator
 		mode 5:  (?)   Game adjourned when Black got disconnected
 
-                  */ 
+                  */
         String dqcolor = "W";
         if(color == 0)
         dqcolor = "B";
