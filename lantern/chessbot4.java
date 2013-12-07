@@ -2479,6 +2479,17 @@ else
 			if(!dg.getArg(3).equals(""))
 				thetell= chatTime2  + extraSpacing  + dg.getArg(1) + " " + dg.getArg(2) + chatTime + "(" + dg.getArg(3) + ")"  + ": " + dg.getArg(4) + "\n";
 }
+int blockdirection =-1;
+for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
+{
+	if(sharedVariables.toldTabNames.get(ab).name.equals(dg.getArg(2)))
+	{
+		blockdirection=sharedVariables.toldTabNames.get(ab).tab;
+
+		break;
+	}
+}
+
 
 	int [] cindex2 = new int[sharedVariables.maxConsoleTabs];
 		cindex2[0]=0; // default till we know more is its not going to main
@@ -2488,14 +2499,27 @@ else
 		for(int b=1; b< sharedVariables.maxConsoleTabs; b++)
 		{
 
-			if(sharedVariables.console[b][tempInt]==1)
-			{	cindex2[b]=1;
+			// block direction is people we are directing if we are
+			if(blockdirection == b)
+			{
+
+				cindex2[b]=1;
 
 				goTab=true;
 			}
+
+			else if(blockdirection < 1)
+			{
+		     	 if(sharedVariables.console[b][tempInt]==1)
+		    	{	cindex2[b]=1;
+
+		     		goTab=true;
+		    	}
+		    	else
+		    		cindex2[b]=0;
+			}
 			else
 				cindex2[b]=0;
-
 
 		}
 
@@ -2590,7 +2614,7 @@ if(sharedVariables.channelNumberLeft == false)
 myStyles=null;
 
 
-if(goTab==true && sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true)
+if(goTab==true && sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true && blockdirection < 1)
 	cindex2[0]=1;// its going to main and tab. we set this so we can pass cindex2 to docwriter letting it know all tabs things go to for new info updates
 
 for(int b=1; b<sharedVariables.maxConsoleTabs; b++)
@@ -2608,7 +2632,7 @@ myStyles.colors[0]=sharedVariables.chatTimestampColor;
 
 }
 
-if((goTab==false || sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true) && sharedVariables.qtellController[0][num1]!= 2)
+if((goTab==false || (sharedVariables.mainAlso[Integer.parseInt(dg.getArg(1))] == true && blockdirection < 1)) && sharedVariables.qtellController[0][num1]!= 2)
 {
 if(chatTime2.length() > 0 && myStyles !=null && sharedVariables.tabStuff[0].timestampColor!=null)
 myStyles.colors[0]=sharedVariables.tabStuff[0].timestampColor;
