@@ -447,9 +447,15 @@ class mymultiframe extends JFrame
     getContentPane().add(sharedVariables.desktop, "Center");
 
     getSettings();
+    
+    String [][] settingsComboMemory = new String[sharedVariables.maxConsoleTabs][sharedVariables.maxConsoleTabs];
+    for(int seta = 0; seta < sharedVariables.maxConsoleTabs; seta++)
+     for(int setb = 0; setb < sharedVariables.maxConsoleTabs; setb++)
+     settingsComboMemory[seta][setb] = ">";
+
     sharedVariables.hasSettings =
       mysettings.readNow(myboards, consoleSubframes,
-                         sharedVariables, consoles, gameconsoles);
+                         sharedVariables, consoles, gameconsoles, settingsComboMemory);
     // read  for any saved settings don't know what get settings is doing MA 5-30-10
     mineScores.readNow(sharedVariables);
 
@@ -791,8 +797,53 @@ class mymultiframe extends JFrame
 
 
     mycreator.updateBoardsMenu(0);  // first board
+    
+    updateTabPrefixesToSettings(settingsComboMemory);
   }
 
+  void updateTabPrefixesToSettings(String settingsComboMemory[][])
+  {
+     
+     for(int cona = 0; cona < sharedVariables.maxConsoleTabs; cona++)
+     for(int conb =1; conb < sharedVariables.maxConsoleTabs; conb++)
+     if(!settingsComboMemory[cona][conb].equals(">"))
+     {
+       
+
+     if(sharedVariables.looking[cona] == conb)
+                                     {
+
+
+                                       // they are on that tab. update the prefix
+                                       boolean go = false;
+                                       for(int zb = 0; zb < consoleSubframes[cona].prefixHandler.getItemCount(); zb++)
+                                       {
+                                         String tempo = (String) consoleSubframes[cona].prefixHandler.getItemAt(zb);
+
+                                         if(tempo.trim().equals(settingsComboMemory[cona][conb].trim()))
+                                           {    consoleSubframes[cona].prefixHandler.setSelectedIndex(zb);
+                                            break;
+                                           }
+
+                                       }// end for
+
+                                     }
+                                     else
+                                     {
+
+
+
+                                                 consoleSubframes[cona].comboMemory[conb] = settingsComboMemory[cona][conb];
+                                                 /*  JFrame framer = new JFrame(" cona is " + cona + " and conb is " + conb + " and pre is " + pre + " and aitem is " + aItem);
+                                   framer.setSize(500,100);
+                                   framer.setVisible(true); */
+
+                                    }
+                                    
+                                    
+     }
+
+  }
 
   public void parseCountries() {
     /*

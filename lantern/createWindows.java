@@ -218,8 +218,9 @@ protected void restoreConsoleFrame() {
 
 
 	consoleSubframes[sharedVariables.openConsoleCount].madeTextPane=1;
-   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
 
+ 
+   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
 
 try {
 // patch routine to restore board to same size if its first  board

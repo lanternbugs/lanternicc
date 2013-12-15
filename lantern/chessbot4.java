@@ -266,7 +266,7 @@ t.start();
 										notifyList.resetList();
 										Thread.sleep(1000);
 										sharedVariables.timestamp=null;
-										enabletimestamp();
+
 										connect();
 										sharedVariables.doreconnect=false;
 
@@ -505,10 +505,10 @@ try {
 }catch(Exception timedOut){}
 
     Socket result = null;
- 			if(sharedVariables.timestamp!=null)
+ 		/*	if(sharedVariables.timestamp!=null)
 			requestSocket = new Socket("127.0.0.1", 5500);// 127.0.0.1 or 207.99.83.228
 	else
-{
+*/
 	try{
       Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
       Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
@@ -516,7 +516,7 @@ try {
         requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
 
     } catch(Exception d){ }
-}
+
 	if(requestSocket== null)
 	{
 
@@ -6638,7 +6638,9 @@ void initializeEngine()
 } // end class
 
 void enabletimestamp()
-{Runtime rt;
+{
+	/*
+Runtime rt;
 
 
 
@@ -6658,82 +6660,7 @@ sharedVariables.timestamp = rt.exec(myurl);
 }
 catch(Exception e)
 {}
-/*if(sharedVariables.timestamp == null)
-{
-try {
 
-
-//Process timestamp;
-String myurl="\\multiframe\\timestamp 207.99.83.228 5000 -p 5500"; // was -p 5000 &
-
-	rt = Runtime.getRuntime();
-sharedVariables.timestamp = rt.exec(myurl);
-
-
-}
-catch(Exception e)
-{}
-}
-if(sharedVariables.timestamp == null)
-{
-	try {
-
-	//Process timestamp;
-	String myurl="/multiframe/timestamp 207.99.83.228 5000 -p 5500"; // was -p 5000 &
-
-		rt = Runtime.getRuntime();
-	sharedVariables.timestamp = rt.exec(myurl);
-
-
-	}
-	catch(Exception e)
-{}
-}
-
-if(sharedVariables.timestamp == null)
-{
-	try {
-
-	//Process timestamp;
-	String myurl="\"\\Program Files\\WinBoard-4.2.7\\timestamp\" 207.99.83.228 5000 -p 5500"; // was -p 5000 &
-
-
-
-	}
-catch(Exception e){}
-}
-if(sharedVariables.timestamp == null)
-{
-	try {
-
-	//Process timestamp;
-	String myurl="\"\\Program Files\\WinBoard\\timestamp\" 207.99.83.228 5000 -p 5500"; // was -p 5000 &
-
-		rt = Runtime.getRuntime();
-	sharedVariables.timestamp = rt.exec(myurl);
-
-
-	}
-catch(Exception e){}
-}
-
-
-if(sharedVariables.timestamp == null)
-{
-	try {
-
-	//Process timestamp;
-	String myurl="\"\\Program Files\\WinBoard-4.4.1\\WinBoard\\timestamp\" 207.99.83.228 5000 -p 5500"; // was -p 5000 &
-
-		rt = Runtime.getRuntime();
-	sharedVariables.timestamp = rt.exec(myurl);
-
-
-	}
-
-catch(Exception e){}
-}
-*/
 
 }// end if icc
 else // we are on fics
@@ -6755,7 +6682,7 @@ catch(Exception e)
 
 }// end if fics
 
-
+*/
 }// end method
 
 

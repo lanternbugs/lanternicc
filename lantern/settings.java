@@ -1073,6 +1073,8 @@ for(int boar=0; boar< sharedVariables.openBoardCount; boar++)
 
 }// end try
 catch(Exception badboard){}
+
+
 	set_string = set_string + "[ActivitiesSizes] ";
 			set_string = set_string + "" + sharedVariables.myActivitiesSizes.point0.x + " " + sharedVariables.myActivitiesSizes.point0.y + " ";
 			set_string = set_string + "" + sharedVariables.myActivitiesSizes.con0x + " " + sharedVariables.myActivitiesSizes.con0y + " ";
@@ -1340,6 +1342,34 @@ for(int ab=0; ab<sharedVariables.maxConsoleTabs; ab++)
 
 set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibleConsoles] ";
 
+for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
+{
+        for(int conb = 0; conb < sharedVariables.maxConsoleTabs; conb++)
+        {
+         // check if channel prefix is set then if so log it
+         // log format [con-format-<consoleNumber>-<tabNumber>]#i.e 34[done_con_format]
+            try {
+               String pre = consoleSubframes[cona].comboMemory[conb];
+
+
+              if (pre != null && pre.length() > 1)
+              {
+               set_string = set_string + "[con-format-" + cona + "-" + conb + "] ";
+               int t = pre.indexOf(" ");
+               if(t > -1)
+               {
+                 pre = pre.substring( t+1, pre.length());
+                 pre = pre.trim();
+               set_string = set_string +  pre + " [donecon-format] ";
+               }
+              }
+              
+            }// end try
+            catch(Exception dui){}
+         // scroll through these and set the selector on read settings.  our consoles are allready created
+        }       // end for
+
+}
 
 
 	FileWrite out = new FileWrite();
@@ -1348,7 +1378,7 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 	}//  end  method
 
 
-	boolean readNow(gameboard boards[], subframe frames[], channels sharedVariables, JTextPane consoles[], JTextPane gameconsoles[])
+	boolean readNow(gameboard boards[], subframe frames[], channels sharedVariables, JTextPane consoles[], JTextPane gameconsoles[], String settingsComboMemory[][])
 	{
 				String fontStyle;
 				String fontSize;
@@ -2617,7 +2647,58 @@ set_string = set_string + "[visibleConsoles] " + visibleConsoles + " [doneVisibl
 					catch(Exception zzz){}
 				}
 
+                                if(temp.startsWith("[con-format-"))
+                                {
+                                 try {
+                                   
+                                   // get console and tab numbers
+                                    int cona=0, conb=0;
+                                    String pre="";
+                                    pre = temp;
+                                    pre = pre.substring(12, pre.length()); // everything after [con-format-
+                                    int j = pre.indexOf("-");
+                                    if( j > -1)
+                                    {
+                                      cona = Integer.parseInt(pre.substring(0, j));
+                                         conb = Integer.parseInt(pre.substring(j+1, pre.length()-1));
 
+                                   pre = (String) tokens.nextToken().trim();
+
+                                    }// end if j
+                                   // end get console tab numbers
+
+
+
+                                      // add it to console memory if it's legal.
+                                          for (int aaa=0; aaa<400; aaa++)
+                                          {
+                                            if (sharedVariables.console[conb][aaa] == 1 )
+                                            {
+
+
+                                                if(Integer.parseInt(pre.trim()) == aaa)
+                                                {
+
+                                                   String aItem = "Tell " + aaa + " ";
+
+
+
+
+                                                 settingsComboMemory[cona][conb]= aItem;
+                                                 /*  JFrame framer = new JFrame(" cona is " + cona + " and conb is " + conb + " and pre is " + pre + " and aitem is " + aItem);
+                                   framer.setSize(500,100);
+                                   framer.setVisible(true); */
+                                                 break;
+                                                }
+                                            }
+
+                                     }
+
+
+                                 }
+                                 catch(Exception dui){}
+
+                                } // end if
 
 
 
