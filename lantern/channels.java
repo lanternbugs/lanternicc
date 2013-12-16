@@ -348,7 +348,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.26-a";
+version = "v5.27";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -837,8 +837,7 @@ void setupMenu()
 	rightClickMenu.add("Pstat");
 	rightClickMenu.add("Games");
 	rightClickMenu.add("Hyperlink");
-	rightClickMenu.add("Direct tells of");
-	rightClickMenu.add("Channel Notify");
+	rightClickMenu.add("Quarantine");
 	rightClickMenu.add("Tell");
 
 

@@ -1868,7 +1868,7 @@ v4.addGroup(v1);
 
 
 
-void setupLargeMenu(String handle)
+void setupLargeMenu(final String handle)
 {
 
 menu3=new JPopupMenu("Popup");
@@ -1895,7 +1895,25 @@ items[m].addActionListener(new ActionListener() {
                 sharedVariables.challengeCreator(name, framer, queue);
 
               }
-   else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
+else if (sharedVariables.rightClickMenu.get(mfinal).equals("Quarantine")) {
+               JFrame tripper = new JFrame();
+               boolean soundof = true;
+                boolean channelof = false;
+                for (int i=0; i<sharedVariables.toldTabNames.size(); i++) {
+                  if (sharedVariables.toldTabNames.get(i).name.equals(handle))
+                  { 
+                    soundof = sharedVariables.toldTabNames.get(i).sound;
+                    channelof = sharedVariables.toldTabNames.get(i).blockChannels;
+
+                  }
+                }
+
+                tellMasterDialog frame =
+                  new tellMasterDialog(tripper, false,
+                                       sharedVariables, handle, soundof, channelof);
+
+
+              }   else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
    {
 			sharedVariables.openUrl("http://www.google.com//search?q=" + name);
    }

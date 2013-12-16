@@ -50,12 +50,14 @@ JButton OkButton;
 JButton cancelButton;
 JComboBox tabChoices;
 JCheckBox sound;
+JCheckBox qchannels;
 JLabel soundLabel;
+JLabel channelLabel;
 JLabel preamble;
 JLabel preamble2;
 JLabel preamble3;
 
-tellMasterDialog(JFrame frame, boolean mybool, channels sharedVariables1, final String handle, boolean soundOn)
+tellMasterDialog(JFrame frame, boolean mybool, channels sharedVariables1, final String handle, boolean soundOn, boolean channelsOn)
 {
 super(frame, mybool);
 sharedVariables=sharedVariables1;
@@ -73,6 +75,15 @@ if(soundOn)
 	sound.setSelected(true);
 
 soundLabel = new JLabel("Check if you want to hear sound for this person's tells.");
+
+qchannels = new JCheckBox();
+
+if(channelsOn)
+	qchannels.setSelected(true);
+
+channelLabel = new JLabel("Check if you want to quarantine channel tells as well to this.");
+
+
 String [] stuff = { "M0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"};
 
 tabChoices= new JComboBox(stuff);
@@ -108,6 +119,10 @@ OkButton.addActionListener(new ActionListener() {
 					sharedVariables.toldTabNames.get(i).sound=true;
 					else
 					sharedVariables.toldTabNames.get(i).sound=false;
+					if(qchannels.isSelected() == true)
+					sharedVariables.toldTabNames.get(i).blockChannels=true;
+					else
+					sharedVariables.toldTabNames.get(i).blockChannels=false;
 
 					found=true;
 					break;
@@ -123,6 +138,11 @@ OkButton.addActionListener(new ActionListener() {
 			 	 him.sound=true;
 			 	 else
 			 	 him.sound=false;
+			 	 if(qchannels.isSelected() == true)
+			 	 him.blockChannels=true;
+			 	 else
+			 	 him.blockChannels=false;
+
 			 	 sharedVariables.toldTabNames.add(him);
 			 }
 
@@ -134,7 +154,7 @@ OkButton.addActionListener(new ActionListener() {
 			{}
 		}
 });
-mypanel.setLayout(new GridLayout(4,1)); // rows collums
+mypanel.setLayout(new GridLayout(5,1)); // rows collums
 
 JPanel preamblePanel = new JPanel();
 preamblePanel.setLayout(new GridLayout(3,1));
@@ -147,6 +167,11 @@ JPanel SoundPanel=new JPanel();
 SoundPanel.add(sound);
 SoundPanel.add(soundLabel);
 mypanel.add(SoundPanel);
+
+JPanel ChannelPanel=new JPanel();
+ChannelPanel.add(qchannels);
+ChannelPanel.add(channelLabel);
+mypanel.add(ChannelPanel);
 
 JPanel tabPanel = new JPanel();
 JLabel choiceLabel = new JLabel("Select tab tells of " + handle + " go.");

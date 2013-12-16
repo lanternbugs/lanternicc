@@ -1645,18 +1645,22 @@ class subframe extends JInternalFrame
                                                    sharedVariables, handle);
                 frame.setVisible(true);
 
-              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Direct tells of")) {
+              } else if (sharedVariables.rightClickMenu.get(mfinal).equals("Quarantine")) {
                 JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
                 boolean soundof = true;
-
+                boolean channelof = false;
                 for (int i=0; i<sharedVariables.toldTabNames.size(); i++) {
                   if (sharedVariables.toldTabNames.get(i).name.equals(handle))
+                  {
                     soundof = sharedVariables.toldTabNames.get(i).sound;
+                    channelof = sharedVariables.toldTabNames.get(i).blockChannels;
+
+                  }
                 }
 
                 tellMasterDialog frame =
                   new tellMasterDialog((JFrame) myself.myframe, false,
-                                       sharedVariables, handle, soundof);
+                                       sharedVariables, handle, soundof, channelof);
 
                 /*
                 boolean found = false;

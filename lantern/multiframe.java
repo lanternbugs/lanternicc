@@ -1954,6 +1954,7 @@ class mymultiframe extends JFrame
     /****************************** Help ******************************/
     JMenu helpmenu = new JMenu("Help");
     // Help /
+    JMenuItem askaquestion = new JMenuItem("Ask A Question");
     JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
     JMenuItem changelog = new JMenuItem("Change Log");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
@@ -1975,6 +1976,7 @@ class mymultiframe extends JFrame
     // add to menu bar
     menu.add(helpmenu);
     // Help /
+    helpmenu.add(askaquestion);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
     helpmenu.add(infohelp);
@@ -1989,6 +1991,7 @@ class mymultiframe extends JFrame
     poweroutmenu.add(startfour);
 
     // add listener
+    askaquestion.addActionListener(this);
     lanternmanual.addActionListener(this);
     changelog.addActionListener(this);
     infohelp.addActionListener(this);
@@ -2089,6 +2092,11 @@ class mymultiframe extends JFrame
     } else if (action.equals("Qsuggest Popups")) {
       sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
       qsuggestPopup.setSelected(sharedVariables.showQsuggest);
+
+    } else if(action.equals("Ask A Question")) {
+      AskAQuestionDialog mypopper = new AskAQuestionDialog(this, false, queue);
+      mypopper.setSize(500,140);
+      mypopper.setVisible(true);
 
     } else if (action.equals("Lantern Manual")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.html");

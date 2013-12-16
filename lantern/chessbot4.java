@@ -2482,7 +2482,7 @@ else
 int blockdirection =-1;
 for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
 {
-	if(sharedVariables.toldTabNames.get(ab).name.equals(dg.getArg(2)))
+	if(sharedVariables.toldTabNames.get(ab).name.equals(dg.getArg(2)) && sharedVariables.toldTabNames.get(ab).blockChannels == true)// this is true ( channel) if they are directing channel tells
 	{
 		blockdirection=sharedVariables.toldTabNames.get(ab).tab;
 
@@ -7238,9 +7238,13 @@ void setUpNewUserTabs()
 
 if(sharedVariables.channelNamesList.size() < sharedVariables.maxConsoleTabs - 1) {
   // condition that there are enough channels to be one per tab
-for(int li=0; li<sharedVariables.channelNamesList.size(); li++)
-sharedVariables.console[li + 1][Integer.parseInt(sharedVariables.channelNamesList.get(li).channel)]= 1;
-} else {
+  for(int li=0; li<sharedVariables.channelNamesList.size(); li++)
+  {
+   sharedVariables.console[li + 1][Integer.parseInt(sharedVariables.channelNamesList.get(li).channel)]= 1;
+  setConsoleSendPrefixes(sharedVariables.channelNamesList.get(li).channel, li + 1);
+  }
+}// end if
+else {
 
 
 int tabNumber=0;
@@ -7254,6 +7258,8 @@ go = true;
 tabNumber++;
 }// go = false
 sharedVariables.console[tabNumber][1]= 1;
+
+
 }
 if(sharedVariables.channelNamesList.get(li).channel.equals("2")) {
 if(go == false) {
@@ -7261,6 +7267,7 @@ go = true;
 tabNumber++;
 }// go = false
 sharedVariables.console[tabNumber][2]= 1;
+
 }
 
 if(sharedVariables.channelNamesList.get(li).channel.equals("100")) {
@@ -7269,6 +7276,7 @@ go = true;
 tabNumber++;
 }// go = false
 sharedVariables.console[tabNumber][100]= 1;
+
 }
 if(sharedVariables.channelNamesList.get(li).channel.equals("300")) {
 if(go == false) {
@@ -7278,7 +7286,11 @@ tabNumber++;
 sharedVariables.console[tabNumber][300]= 1;
 }
 }
-
+ if(sharedVariables.console[tabNumber][1] == 1 &&
+ sharedVariables.console[tabNumber][2] != 1 &&
+ sharedVariables.console[tabNumber][100] != 1 &&
+ sharedVariables.console[tabNumber][300] != 1)
+  setConsoleSendPrefixes("1", tabNumber);
 // *************** Stage 2
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7299,7 +7311,9 @@ sharedVariables.console[tabNumber][4]= 1;
 
 }// end for
 
-
+ if(sharedVariables.console[tabNumber][3] == 1 &&
+ sharedVariables.console[tabNumber][4] != 1)
+  setConsoleSendPrefixes("3", tabNumber);
 // *********************** Stage 3
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7319,7 +7333,9 @@ sharedVariables.console[tabNumber][44]= 1;
 }
 
 }// end for
-
+ if(sharedVariables.console[tabNumber][43] == 1 &&
+ sharedVariables.console[tabNumber][44] != 1)
+  setConsoleSendPrefixes("43", tabNumber);
 // ********************** stage 4
 // pass we need a tell tab
 
@@ -7336,7 +7352,8 @@ sharedVariables.console[tabNumber][34]= 1;
 
 
 }// end for
-
+ if(sharedVariables.console[tabNumber][34] == 1 )
+  setConsoleSendPrefixes("34", tabNumber);
 // ******************* Stage 6
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7350,7 +7367,8 @@ sharedVariables.console[tabNumber][97]= 1;
 
 
 }// end for
-
+ if(sharedVariables.console[tabNumber][97] == 1)
+  setConsoleSendPrefixes("97", tabNumber);
 // ************** Stage 7
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7364,6 +7382,8 @@ sharedVariables.console[tabNumber][103]= 1;
 
 
 }// end for
+ if(sharedVariables.console[tabNumber][103] == 1 )
+  setConsoleSendPrefixes("103", tabNumber);
 // ******************** Stage 8
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7376,7 +7396,8 @@ sharedVariables.console[tabNumber][71]= 1;
 }
 }// end for
 
-
+ if(sharedVariables.console[tabNumber][71] == 1 )
+  setConsoleSendPrefixes("71", tabNumber);
 
 //******************** Stage 9
 // *********************** tomato
@@ -7470,6 +7491,8 @@ sharedVariables.console[tabNumber][272]= 1;
 
 
 }// end for
+ if(sharedVariables.console[tabNumber][272] == 1 )
+  setConsoleSendPrefixes("272", tabNumber);
 // ******************** Stage 11
 go=false;
 for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
@@ -7482,7 +7505,8 @@ sharedVariables.console[tabNumber][280]= 1;
 }
 }// end for
 
-
+ if(sharedVariables.console[tabNumber][280] == 1 )
+  setConsoleSendPrefixes("280", tabNumber);
 } // end else
 
 
@@ -7496,4 +7520,10 @@ asetter.createConsoleTabTitle(sharedVariables, z, consoleSubframes, "");// last 
 
 }// end  method set up new user tabs
 
+
+void setConsoleSendPrefixes(String channel, int tabNumber)
+{
+for(int a = 0; a< sharedVariables.openConsoleCount; a++)
+consoleSubframes[a].comboMemory[tabNumber] = "Tell " + channel + " ";
+}
 }// end chessbot
