@@ -1649,18 +1649,19 @@ class subframe extends JInternalFrame
                 JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
                 boolean soundof = true;
                 boolean channelof = false;
+                 String theName =  handle;
                 for (int i=0; i<sharedVariables.toldTabNames.size(); i++) {
-                  if (sharedVariables.toldTabNames.get(i).name.equals(handle))
+                  if (sharedVariables.toldTabNames.get(i).name.toLowerCase().equals(handle.toLowerCase()))
                   {
                     soundof = sharedVariables.toldTabNames.get(i).sound;
                     channelof = sharedVariables.toldTabNames.get(i).blockChannels;
-
+                    theName = sharedVariables.toldTabNames.get(i).name;
                   }
                 }
 
                 tellMasterDialog frame =
                   new tellMasterDialog((JFrame) myself.myframe, false,
-                                       sharedVariables, handle, soundof, channelof);
+                                       sharedVariables, theName, soundof, channelof);
 
                 /*
                 boolean found = false;

@@ -2482,7 +2482,7 @@ else
 int blockdirection =-1;
 for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
 {
-	if(sharedVariables.toldTabNames.get(ab).name.equals(dg.getArg(2)) && sharedVariables.toldTabNames.get(ab).blockChannels == true)// this is true ( channel) if they are directing channel tells
+	if(sharedVariables.toldTabNames.get(ab).name.toLowerCase().equals(dg.getArg(2).toLowerCase()) && sharedVariables.toldTabNames.get(ab).blockChannels == true)// this is true ( channel) if they are directing channel tells
 	{
 		blockdirection=sharedVariables.toldTabNames.get(ab).tab;
 
@@ -2700,7 +2700,7 @@ boolean him = false;
 boolean makeASound=true;
 for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
 {
-	if(sharedVariables.toldTabNames.get(ab).name.equals(dg.getArg(1)))
+	if(sharedVariables.toldTabNames.get(ab).name.toLowerCase().equals(dg.getArg(1).toLowerCase()))
 	{
 		direction=sharedVariables.toldTabNames.get(ab).tab;
 		doc=sharedVariables.mydocs[direction];

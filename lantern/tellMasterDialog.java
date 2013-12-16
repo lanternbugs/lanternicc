@@ -81,12 +81,25 @@ qchannels = new JCheckBox();
 if(channelsOn)
 	qchannels.setSelected(true);
 
-channelLabel = new JLabel("Check if you want to quarantine channel tells as well to this.");
+channelLabel = new JLabel("Check if you want to quarantine channel tells as well to this tab.");
 
 
-String [] stuff = { "M0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"};
+//String [] stuff = { "M0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"};
+  String[] tabNames = new String[sharedVariables.maxConsoleTabs];
+    for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
+      if (a == 0)
+        tabNames[a] = "M0";
+      else
+        tabNames[a] = "C"+a;
+    try {
+      for (int ab=0; ab<sharedVariables.maxConsoleTabs; ab++)
+        if (!sharedVariables.consoleTabCustomTitles[ab].equals(""))
+          tabNames[ab] = sharedVariables.consoleTabCustomTitles[ab];
+        else
+          tabNames[ab] = sharedVariables.consoleTabTitles[ab];
 
-tabChoices= new JComboBox(stuff);
+    } catch (Exception d) {}
+tabChoices= new JComboBox(tabNames);
 
 
 

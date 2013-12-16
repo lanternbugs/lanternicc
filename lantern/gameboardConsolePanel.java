@@ -1899,18 +1899,20 @@ else if (sharedVariables.rightClickMenu.get(mfinal).equals("Quarantine")) {
                JFrame tripper = new JFrame();
                boolean soundof = true;
                 boolean channelof = false;
+               String theName =  handle;
+
                 for (int i=0; i<sharedVariables.toldTabNames.size(); i++) {
-                  if (sharedVariables.toldTabNames.get(i).name.equals(handle))
+                  if (sharedVariables.toldTabNames.get(i).name.toLowerCase().equals(handle.toLowerCase()))
                   { 
                     soundof = sharedVariables.toldTabNames.get(i).sound;
                     channelof = sharedVariables.toldTabNames.get(i).blockChannels;
-
+                    theName = sharedVariables.toldTabNames.get(i).name;
                   }
                 }
 
                 tellMasterDialog frame =
                   new tellMasterDialog(tripper, false,
-                                       sharedVariables, handle, soundof, channelof);
+                                       sharedVariables, theName, soundof, channelof);
 
 
               }   else if( sharedVariables.rightClickMenu.get(mfinal).equals("Google"))
