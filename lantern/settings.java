@@ -159,6 +159,10 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	set_string = set_string + "tellcolor ";
 	set_string = set_string + sharedVariables.tellcolor.getRGB() + " ";
 
+	// typed  color
+	set_string = set_string + "typedcolor ";
+	set_string = set_string + sharedVariables.typedColor.getRGB() + " ";
+
 // list  color
 	set_string = set_string + "listcolor ";
 	set_string = set_string + sharedVariables.listColor.getRGB() + " ";
@@ -176,6 +180,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		{
 				set_string = set_string + "tellcolor" + zz + " ";
 				set_string = set_string + sharedVariables.tabStuff[zz].tellcolor.getRGB() + " ";
+		}
+	}
+
+ 	for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
+	{
+		if(sharedVariables.tabStuff[zz].typedColor != null)
+		{
+				set_string = set_string + "typedcolor" + zz + " ";
+				set_string = set_string + sharedVariables.tabStuff[zz].typedColor.getRGB() + " ";
 		}
 	}
 
@@ -316,6 +329,10 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
         // TellStyle
 	set_string = set_string + "StyleTell ";
 	set_string = set_string + sharedVariables.tellStyle + " ";
+       
+        // TypedStyle
+	set_string = set_string + "StyleTyped ";
+	set_string = set_string + sharedVariables.typedStyle + " ";
 
         // QTellStyle
 	set_string = set_string + "StyleQTell ";
@@ -1317,6 +1334,15 @@ set_string = set_string + "[doneuserbutton] ";
 
 		set_string = set_string + "[doneTellswitch] ";
 
+// add name on switch
+		set_string = set_string + "[addnameonswitch] ";
+		if(sharedVariables.addNameOnSwitch == true)
+		set_string = set_string + "1" + " ";
+		else
+		set_string = set_string + "0" + " ";
+
+
+		set_string = set_string + "[doneaddnameonswitch] ";
 
 // shout console
 		set_string = set_string + "[ShoutConsole] ";
@@ -1638,7 +1664,13 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 
 					}
 
-					if(temp.equals("StyleQTell"))
+					if(temp.equals("StyleTyped"))
+					{
+						sharedVariables.typedStyle=Integer.parseInt(temp2);
+
+					}
+			
+                        		if(temp.equals("StyleQTell"))
 					{
 						sharedVariables.qtellStyle=Integer.parseInt(temp2);
 
@@ -1723,6 +1755,18 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					{
 						if(temp.equals("tellcolor" + zz))
 						sharedVariables.tabStuff[zz].tellcolor=new Color(Integer.parseInt(temp2));
+					}
+
+					if(temp.equals("typedcolor"))
+					{
+						sharedVariables.typedColor=new Color(Integer.parseInt(temp2));
+
+					}
+
+					for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
+					{
+						if(temp.equals("typedcolor" + zz))
+						sharedVariables.tabStuff[zz].typedColor=new Color(Integer.parseInt(temp2));
 					}
 
 					if(temp.startsWith("cn"))
@@ -2869,6 +2913,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 						sharedVariables.switchOnTell =  false;
 						else
 						sharedVariables.switchOnTell = true;
+						}
+						catch(Exception zzz){}
+					}
+
+					if (temp.equals("[addnameonswitch]"))
+					{
+					try {
+						if(tokens.nextToken().equals("0"))
+						sharedVariables.addNameOnSwitch =  false;
+						else
+						sharedVariables.addNameOnSwitch = true;
 						}
 						catch(Exception zzz){}
 					}

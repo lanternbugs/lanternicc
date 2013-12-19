@@ -32,7 +32,7 @@ JPaintedLabel responseTextLabel;
 JPaintedLabel nonResponseTextLabel;
 JPaintedLabel kibLabel;
 JPaintedLabel timestampLabel;
-
+JPaintedLabel typedLabel;
 
 
 JButton shoutButton;
@@ -46,6 +46,7 @@ JButton okButton;
 JButton cancelButton;
 JButton kibButton;
 JButton timestampButton;
+JButton typedButton;
 
 Color tellcolor;
 Color BackColor;
@@ -53,6 +54,7 @@ Color qtellcolor;
 Color responseColor;
 Color ForColor;
 Color timestampColor;
+Color typedColor;
 subframe me;
 
 private JTextPane [] consoles;
@@ -78,6 +80,10 @@ if(sharedVariables.tabStuff[consoleNumber].timestampColor==null)
 else
 	timestampColor=sharedVariables.tabStuff[consoleNumber].timestampColor;
 
+if(sharedVariables.tabStuff[consoleNumber].typedColor==null)
+	typedColor=sharedVariables.typedColor;
+else
+	typedColor=sharedVariables.tabStuff[consoleNumber].typedColor;
 
 
 if(sharedVariables.tabStuff[consoleNumber].BackColor==null)
@@ -248,6 +254,32 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		}
 });
 
+//  typed Text color
+	typedLabel = new JPaintedLabel("Typed Color", sharedVariables);
+	typedLabel.setForeground(typedColor);
+	typedLabel.fontType=0;
+	typedLabel.setOpaque(true);
+	typedLabel.setBackground(BackColor);
+	typedButton = new JButton("Colorize");
+	typedButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event)
+				{
+			 try
+			 	{
+				 JDialog frame = new JDialog();
+ 				Color defaultCol=typedColor;
+ 				Color newColor = JColorChooser.showDialog(frame, "Choose Typed Color", defaultCol);
+		    if(newColor != null)
+		    {
+				sharedVariables.tabStuff[consoleNumber].typedColor =newColor;
+			    typedLabel.setForeground(sharedVariables.tabStuff[consoleNumber].typedColor);
+
+			}
+		}// end try
+			catch(Exception e)
+			{}
+		}
+});
 
 //  background color
 	backgroundLabel = new JPaintedLabel("Background Color", sharedVariables);
@@ -311,7 +343,7 @@ cancelButton.setBackground(new Color(230, 220, 220));
 		}
 });
 
-pane.setLayout(new GridLayout(7,2)); // rows collums
+pane.setLayout(new GridLayout(8,2)); // rows collums
 
 
 pane.add(tellButton);
@@ -334,6 +366,9 @@ pane.add(backgroundLabel);
 pane.add(timestampButton);
 pane.add(timestampLabel);
 
+pane.add(typedButton);
+pane.add(typedLabel);
+
 
 pane.add(okButton);
 pane.add(cancelButton);
@@ -354,5 +389,6 @@ backgroundLabel.setBackground(c);
 responseTextLabel.setBackground(c);
 nonResponseTextLabel.setBackground(c);
 timestampLabel.setBackground(c);
+typedLabel.setBackground(c);
 }
 }// end class

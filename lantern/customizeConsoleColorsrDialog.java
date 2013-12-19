@@ -32,6 +32,7 @@ JPaintedLabel defaultChannelLabel;
 JPaintedLabel responseTextLabel;
 JPaintedLabel nonResponseTextLabel;
 JPaintedLabel kibLabel;
+JPaintedLabel typedLabel;
 
 JButton shoutButton;
 JButton sshoutButton;
@@ -44,7 +45,7 @@ JButton nonResponseTextButton;
 JButton okButton;
 JButton cancelButton;
 JButton kibButton;
-
+JButton typedButton;
 
 JCheckBox shoutItalic;
 JCheckBox shoutBold;
@@ -60,6 +61,8 @@ JCheckBox nonResponseItalic;
 JCheckBox nonResponseBold;
 JCheckBox kibItalic;
 JCheckBox kibBold;
+JCheckBox typedItalic;
+JCheckBox typedBold;
 
 
 
@@ -101,6 +104,9 @@ JLabel italicLabel6 = new JLabel("Italic");
 
 JLabel boldLabel7 = new JLabel("Bold");
 JLabel italicLabel7 = new JLabel("Italic");
+
+JLabel boldLabel8 = new JLabel("Bold");
+JLabel italicLabel8 = new JLabel("Italic");
 
 
 shoutItalic = new JCheckBox();
@@ -162,6 +168,13 @@ kibBold = new JCheckBox();
 if(sharedVariables.kibStyle == 2 || sharedVariables.kibStyle == 3)
 kibBold.setSelected(true);
 
+typedItalic = new JCheckBox();
+if(sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+typedItalic.setSelected(true);
+
+typedBold = new JCheckBox();
+if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+typedBold.setSelected(true);
 
 
 	sshoutLabel = new JPaintedLabel("S-Shout Color", sharedVariables);
@@ -386,6 +399,36 @@ kibBold.setSelected(true);
 		}
 });
 
+// typed color
+	typedLabel = new JPaintedLabel("Typed Color", sharedVariables);
+	typedLabel.setForeground(sharedVariables.typedColor);
+	typedLabel.fontType=0;
+	typedLabel.setOpaque(true);
+	typedLabel.setBackground(sharedVariables.BackColor);
+
+	typedButton = new JButton("Colorize");
+	typedButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event)
+				{
+			 try
+			 	{
+				 JDialog frame = new JDialog();
+ 				Color defaultCol=sharedVariables.typedColor;
+ 				Color newColor = JColorChooser.showDialog(frame, "Choose Typed Color", defaultCol);
+		    if(newColor != null)
+		    {
+				sharedVariables.typedColor=newColor;
+				typedLabel.setForeground(sharedVariables.typedColor);
+			}
+		}// end try
+			catch(Exception e)
+			{}
+		}
+});
+
+
+
+
 //  background color
 	backgroundLabel = new JPaintedLabel("Background Color", sharedVariables);
 	backgroundLabel.setForeground(sharedVariables.ForColor);
@@ -507,6 +550,14 @@ cancelButton.setBackground(new Color(230, 220, 220));
 				else
 					sharedVariables.kibStyle=0;
 
+				if(typedItalic.isSelected() == true && typedBold.isSelected() == true)
+					sharedVariables.typedStyle=3;
+				else if(typedItalic.isSelected() == true)
+					sharedVariables.typedStyle=1;
+				else if(typedBold.isSelected() == true)
+					sharedVariables.typedStyle=2;
+				else
+					sharedVariables.typedStyle=0;
 
 
 
@@ -529,7 +580,7 @@ cancelButton.setBackground(new Color(230, 220, 220));
 		}
 });
 
-pane.setLayout(new GridLayout(10,2)); // rows collums
+pane.setLayout(new GridLayout(11,2)); // rows collums
 JPanel shoutPanel = new JPanel();
 shoutPanel.add(shoutButton);
 shoutPanel.add(italicLabel1);
@@ -586,6 +637,17 @@ kibPanel.add(kibBold);
 pane.add(kibPanel);
 pane.add(kibLabel);
 
+JPanel typedPanel = new JPanel();
+typedPanel.add(typedButton);
+typedPanel.add(italicLabel8);
+typedPanel.add(typedItalic);
+typedPanel.add(boldLabel8);
+typedPanel.add(typedBold);
+
+
+pane.add(typedPanel);
+pane.add(typedLabel);
+
 
 JPanel responsePanel = new JPanel();
 responsePanel.add(responseTextButton);
@@ -634,6 +696,6 @@ defaultChannelLabel.setBackground(c);
 responseTextLabel.setBackground(c);
 nonResponseTextLabel.setBackground(c);
 kibLabel.setBackground(c);
-
+typedLabel.setBackground(c);
 }
 }// end class

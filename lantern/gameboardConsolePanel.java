@@ -1533,7 +1533,13 @@ else
 
 
 						SimpleAttributeSet attrs = new SimpleAttributeSet();
-						StyleConstants.setItalic(attrs, true);
+						
+     	                                          if(sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+		                                     StyleConstants.setItalic(attrs, true);
+                                               	if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+	                                        	StyleConstants.setBold(attrs, true);
+
+    
 						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
 					int GAME_CONSOLES=1;// game
 					int maxLinks =75;

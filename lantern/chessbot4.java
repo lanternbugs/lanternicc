@@ -2822,6 +2822,8 @@ if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true &&
 
 	if(xxx != sharedVariables.tellconsole || !sharedVariables.operatingSystem.equals("mac"))
         giveFocus(whohasit);
+        if(sharedVariables.addNameOnSwitch == true)
+        consoleSubframes[sharedVariables.tellconsole].addNameToCombo(dg.getArg(1));
 }
 }catch(Exception donthave){}
 Sound ptell;

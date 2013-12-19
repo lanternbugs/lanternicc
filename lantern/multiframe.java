@@ -197,6 +197,7 @@ class mymultiframe extends JFrame
   */
   JCheckBoxMenuItem[] boarddesignarray = new JCheckBoxMenuItem[3];
   JCheckBoxMenuItem tellswitch;
+  JCheckBoxMenuItem addnameontellswitch;
   JCheckBoxMenuItem highlight;
   JCheckBoxMenuItem materialCount;
   JCheckBoxMenuItem drawCoordinates;
@@ -526,6 +527,7 @@ class mymultiframe extends JFrame
     pgnObservedLogging.  setSelected(sharedVariables.pgnObservedLogging);
     pgnlogging.          setSelected(sharedVariables.pgnLogging);
     tellswitch.          setSelected(sharedVariables.switchOnTell);
+    addnameontellswitch. setSelected(sharedVariables.addNameOnSwitch);
     toolbarvisible.      setSelected(sharedVariables.toolbarVisible);
     autobufferchat.      setSelected(sharedVariables.autoBufferChat);
     channelNumberLeft.   setSelected(sharedVariables.channelNumberLeft);
@@ -639,8 +641,6 @@ class mymultiframe extends JFrame
       consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
 
 
-    if (sharedVariables.channelColor[0]!=null)
-      sharedVariables.typedColor=sharedVariables.channelColor[0];
 
     /****************** we do these next few in gui thread *****************************/
     SwingUtilities.invokeLater(new Runnable() {
@@ -1198,6 +1198,7 @@ class mymultiframe extends JFrame
     JMenu featuresMenu = new JMenu("Features");
     // .. / Features /
     tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
+    addnameontellswitch = new JCheckBoxMenuItem("Add Name On Tell Switch");
     autonoidle = new JCheckBoxMenuItem("No Idle");
     rotateaways = new JCheckBoxMenuItem("Rotate Away Message");
     iloggedon = new JCheckBoxMenuItem("Send iloggedon");
@@ -1311,6 +1312,7 @@ class mymultiframe extends JFrame
     optionsmenu.add(featuresMenu);
     // .. / Features /
     featuresMenu.add(tellswitch);
+    featuresMenu.add(addnameontellswitch);
     featuresMenu.add(autonoidle);
     featuresMenu.add(rotateaways);
     featuresMenu.add(iloggedon);
@@ -1381,6 +1383,7 @@ class mymultiframe extends JFrame
     italicsBehavior[1].addActionListener(this);
     italicsBehavior[2].addActionListener(this);
     tellswitch.addActionListener(this);
+    addnameontellswitch.addActionListener(this);
     autonoidle.addActionListener(this);
     iloggedon.addActionListener(this);
     rotateaways.addActionListener(this);
@@ -3611,7 +3614,11 @@ dot.setVisible(true);
       sharedVariables.switchOnTell = !sharedVariables.switchOnTell;
       tellswitch.setSelected(sharedVariables.switchOnTell);
 
-    } else if (action.equals("Timestamp To Left Of Name")) {
+    }else if (action.equals("Add Name On Tell Switch")) {
+      sharedVariables.addNameOnSwitch = !sharedVariables.addNameOnSwitch;
+      addnameontellswitch.setSelected(sharedVariables.addNameOnSwitch);
+
+    }  else if (action.equals("Timestamp To Left Of Name")) {
       sharedVariables.leftTimestamp = !sharedVariables.leftTimestamp;
       leftNameTimestamp.setSelected(sharedVariables.leftTimestamp);
 

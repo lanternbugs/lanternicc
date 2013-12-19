@@ -1201,12 +1201,18 @@ void doToolBarCommand(int n)
 
 						Style styleQ = doc.addStyle(null, null);
 
-						StyleConstants.setForeground(styleQ, sharedVariables.typedColor );
 						//StyleConstants.setUnderline(attrs, true);
 						SimpleAttributeSet attrs = new SimpleAttributeSet();
 
-						StyleConstants.setItalic(attrs, true);
-						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+     	                                          if(sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+		                                     StyleConstants.setItalic(attrs, true);
+                                               	if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+	                                        	StyleConstants.setBold(attrs, true);
+                                    	if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor == null)
+                                           	StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+
+                                       	else
+                                             	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
 	try {
 		doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
 		}catch(Exception mydoc){}

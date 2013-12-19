@@ -543,7 +543,7 @@ class subframe extends JInternalFrame
       } else if (action.equals("Show online players on channel notify")) {
         String mess2 = sharedVariables.getChannelNotifyOnline()
           + sharedVariables.getConnectNotifyOnline();
-        writeToConsole(mess2, sharedVariables.responseColor, false);
+        writeToConsole(mess2, sharedVariables.responseColor, false, null);
 
       } else if (action.equals("Increase font size") ||
                  action.equals("Decrease font size")) {
@@ -1966,13 +1966,23 @@ class subframe extends JInternalFrame
       sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
 
     Style styleQ = doc.addStyle(null, null);
-    
-    StyleConstants.setForeground(styleQ, sharedVariables.typedColor);
+
+
+
+
+
     //StyleConstants.setUnderline(attrs, true);
     SimpleAttributeSet attrs = new SimpleAttributeSet();
+      if(sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+	StyleConstants.setItalic(attrs, true);
+    	if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+	 StyleConstants.setBold(attrs, true);
 
-    StyleConstants.setItalic(attrs, true);
-    StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+  	if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor == null)
+	StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+
+	else
+	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
     try {
       myprintoutput printObj = new myprintoutput();
       printObj.patchedInsertString(doc, doc.getEndPosition().getOffset(), mes, attrs);
@@ -2061,8 +2071,18 @@ class subframe extends JInternalFrame
     try {
       for (int z=0; z<sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].size(); z++)
         if (sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].get(z).equals(name))
+        {   // set selected
+           String aItem = "Tell " + name + " ";
+           for(int zz=0; zz < prefixHandler.getItemCount(); zz++)
+            {
+              if(prefixHandler.getItemAt(zz).equals(aItem))
+              {
+            prefixHandler.setSelectedIndex(zz);
+            break;
+              }
+            }
           return;
-
+        }
       String aItem = "Tell " + name + " ";
       prefixHandler.addItem(aItem);
       sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].add(name);
@@ -2178,7 +2198,7 @@ class subframe extends JInternalFrame
     return -1;
   }
 
-  void writeToConsole(String mes, Color col, boolean italic) {
+  void writeToConsole(String mes, Color col, boolean italic, SimpleAttributeSet attrs) {
     try {
       StyledDocument doc =
         sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
@@ -2187,12 +2207,14 @@ class subframe extends JInternalFrame
       
       StyleConstants.setForeground(styleQ, col);
       //StyleConstants.setUnderline(attrs, true);
-      SimpleAttributeSet attrs = new SimpleAttributeSet();
+      if(attrs == null)
+      { attrs = new SimpleAttributeSet();
 
       if (italic)
         StyleConstants.setItalic(attrs, true);
 
       StyleConstants.setForeground(attrs, col);
+      }
       int SUBFRAME_CONSOLES = 0;
       int maxLinks = 75;
       myoutput printOut = new myoutput();
@@ -2456,7 +2478,7 @@ class subframe extends JInternalFrame
                   (sharedVariables.activitiesNeverOpen ? "disabled" : "enabled") +
                   " to open at login if you leave it open on close and save settings." +
                   "  Do 'save settings' to save this change.\n";
-                writeToConsole(mess2, sharedVariables.responseColor, false);
+                writeToConsole(mess2, sharedVariables.responseColor, false, null);
                 return;
               }
               /*
@@ -2699,10 +2721,29 @@ class subframe extends JInternalFrame
                 if (changeTo != -1)
                   makeHappen(changeTo);
               }
-            
+
               if (sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed) {
-                writeToConsole(mes, sharedVariables.typedColor , true);
+              { 
+                    SimpleAttributeSet attrs = new SimpleAttributeSet();
+                   if(sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+                       	StyleConstants.setItalic(attrs, true);
+                  	if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+                  	 StyleConstants.setBold(attrs, true);
+
+                 	if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor == null)
+       	               {    
+                         StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+                        writeToConsole(mes, sharedVariables.typedColor , true, attrs);
+                       }
+          	else
+	         { 
+                   StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
+                   writeToConsole(mes,  sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor , true, attrs);
+                 }
+
                 // true for italic
+              }// end if typed true
+
               }
             
               myoutput output = new myoutput();
