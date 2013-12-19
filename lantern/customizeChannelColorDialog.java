@@ -91,8 +91,7 @@ italicLabel = new JLabel("Italic");
 				{
 					sharedVariables.channelOn[num1]=1; // channelOn accepts numbers up to 500 and indicates it is colorized, not a default color
 				sharedVariables.channelColor[num1]=newColor; // channelColor accepts channel numbers up to 500 and gives their color. you wouldnt need to look at this unless channelOn for that channel number was set to 1
-				if(num1 == 0)
-					sharedVariables.typedColor=newColor;
+				
 				}// end if new color not null
 
 				if(italicCheckBox.isSelected() == true && boldCheckBox.isSelected())

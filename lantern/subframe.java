@@ -2077,6 +2077,7 @@ class subframe extends JInternalFrame
             {
               if(prefixHandler.getItemAt(zz).equals(aItem))
               {
+            if(overall.Input.getText().length() == 0)
             prefixHandler.setSelectedIndex(zz);
             break;
               }
@@ -2086,6 +2087,7 @@ class subframe extends JInternalFrame
       String aItem = "Tell " + name + " ";
       prefixHandler.addItem(aItem);
       sharedVariables.comboNames[sharedVariables.looking[consoleNumber]].add(name);
+      if(overall.Input.getText().length() == 0)
       prefixHandler.setSelectedIndex(prefixHandler.getItemCount()-1);
 
     } catch (Exception d) {}
