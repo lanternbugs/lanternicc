@@ -730,7 +730,8 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 		        board[to]=0;
 	        }
 	}
-
+        if(wild == 30)
+         captureCheckers(from, to ,board);
 	int type =-1; // no sound
 	if(from >=0)// not crazyhouse drop
 	{
@@ -912,7 +913,21 @@ String getUciMoves()
 	return s + "\n";
 
 }
+void captureCheckers(int from, int to , int board[])
+{
+  if(from - to == 18)
+  board[from - 9] = 0;
+  else if(from - to == 14)
+  board[from - 7] = 0;
+  else if(to - from  ==  18)
+  board[to  - 9] = 0;
+  else if(to - from  == 14)
+  board[to - 7] = 0;
 
+
+
+
+}
 void makeslidermove(int from, int to, char prom, int reload, int castleCapture, int movetop, int board[])
 {
 
@@ -947,6 +962,8 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 	        }
 
 	}
+        if(wild == 30)
+         captureCheckers(from, to ,board);
 
 	int check =0;
 	if(myColor.equals("W"))

@@ -1200,6 +1200,7 @@ if(gameornot == 0)
 {
 	if(!(thetell.startsWith("(told ") && sharedVariables.tabStuff[index].told == false))// surpress typed text ability
 	processLink(doc, thetell, mycolor, index, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+//        processLink(doc, thetell, mycolor, index, 0, SUBFRAME_CONSOLES, attrs, null);
 }
 else
 processLink(doc, thetell, mycolor, index, maxLinks, GAME_CONSOLES, attrs, null);

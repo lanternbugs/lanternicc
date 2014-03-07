@@ -103,6 +103,19 @@ font=sharedVariables.myFont;
 
 int x = consoleSubframes[0].getFontMetrics(font).stringWidth("asdf");
 */
+
+/************** new djlogan code *********************
+if(attempt == 0 &&  game == 0)
+{
+         try { doc.insertString(doc.getEndPosition().getOffset(, thetell, attrs);
+   } catch(Exception e){}
+
+	return;
+}
+
+************* end djlogan code ***********************/
+
+
 if(attrs == null)
 	attrs = new SimpleAttributeSet();
 	attrs.addAttribute("D", "E");// a default if there is nothing there
@@ -125,6 +138,9 @@ StyleConstants.setForeground(attrs, col);
 //StyleConstants.setBold(attrs, true);
 //StyleConstants.setFirstLineIndent(attrs, -20);
 //StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_RIGHT);
+
+
+
 
 parseString mine;
 
