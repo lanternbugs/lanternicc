@@ -659,6 +659,14 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[doneshowconsolemenu] ";
 
 
+	// autopromote
+	set_string = set_string + "[autopromote] ";
+	if(sharedVariables.autoPromote == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneautoPromote] ";
 
 	// autopopup
 	set_string = set_string + "[autopopup] ";
@@ -2345,7 +2353,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
-
+					if(temp.equals("[autopromote]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.autoPromote=true;
+					else
+						sharedVariables.autoPromote=false;
+					}
+					catch(Exception zzz){}
+				}
 					if(temp.equals("[autopopup]"))
 				{
 				try {

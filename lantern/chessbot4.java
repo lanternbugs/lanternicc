@@ -6289,6 +6289,10 @@ public void runSendToIcs()
                                                 sharedVariables.soundBoard=tosend.soundBoard;
 
 					}
+					else if(tosend.promotion == true)
+					{
+                                          MakePromoDialog(tosend);
+                                        }
 					else if(tosend.printing == true)
 					{
                                         processLink(tosend.mywriter.doc, tosend.mywriter.thetell, tosend.mywriter.col, tosend.mywriter.index, tosend.mywriter.attempt, tosend.mywriter.game, tosend.mywriter.attrs, tosend.mywriter.myStyles);
@@ -6411,6 +6415,18 @@ public void runSendToIcs()
 	}
 
 }// end runsendtoics
+
+void MakePromoDialog(myoutput tosend)
+{
+promotionDialog temp = new  promotionDialog(masterFrame, true,  tosend, graphics, queue);
+temp.setSize(400,100);
+int x = 100;
+int y = 100;
+x = masterFrame.getWidth() / 2 - 200;
+y = masterFrame.getHeight() / 2 - 50;
+temp.setLocation(x,y);
+temp.setVisible(true);
+}
 void swapActivities()
 {
  if(sharedVariables.ActivitiesOnTop == true)

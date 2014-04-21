@@ -66,6 +66,7 @@ boolean autoKetchup;
 boolean autoSlomato;
 boolean autoOlive;
 boolean autoLittlePer;
+boolean autoPromote;
 static boolean firstSound=true;
 boolean [] pointedToMain = new boolean[100];
 boolean [] excludedPiecesBlack;
@@ -350,7 +351,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.28";
+version = "v5.29";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -490,7 +491,7 @@ qtellTimestamp=true;
 channelNumberLeft=true;
 disableNameLists=false;
 checkLegality=true;
-
+autoPromote = true;
 if(operatingSystem.equals("mac"))
 	indent=true;
 autopopup=true;

@@ -1170,6 +1170,14 @@ void repaintPiece()
 							{
 
 							sharedVariables.mygame[gameData.LookingAt].madeMove=1;
+							if(prom == 1 && sharedVariables.autoPromote == false)
+							{amove.promotion = true;
+                                                         amove.wildNumber = sharedVariables.mygame[gameData.LookingAt].wild;
+                                                         if(sharedVariables.mygame[gameData.LookingAt].board[piece] > 6)
+                                                         amove.iAmWhite = false;
+
+                                                         }
+
                                                         queue.add(amove);
 
 							}

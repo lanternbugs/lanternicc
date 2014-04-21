@@ -59,11 +59,17 @@ class myoutput {
 	 int repaintTabBorders;
 	 int swapActivities;
          boolean printing;
+         boolean promotion;
+         boolean iAmWhite; // for promotion
+         int wildNumber; // for promotion
          writer mywriter;
 myoutput(){
 
 	data = "";
 	printing = false;
+	promotion = false;
+	iAmWhite=true;
+	wildNumber = 0;
 	boardClosing=-1;
 	repaintTabBorders=-1;
 	gameFocusConsole=-1;

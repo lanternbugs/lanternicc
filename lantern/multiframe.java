@@ -317,7 +317,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem qsuggestPopup;
   JCheckBoxMenuItem autopopup;
   JCheckBoxMenuItem basketballFlag;
-
+  JCheckBoxMenuItem autoPromote;
   JMenu moveInputMenu;
   JCheckBoxMenuItem dragMoveInput;
   JCheckBoxMenuItem clickMoveInput;
@@ -524,6 +524,7 @@ class mymultiframe extends JFrame
      dragMoveInput.setSelected(false);
      clickMoveInput.setSelected(true);
     }
+    autoPromote.         setSelected(sharedVariables.autoPromote);
     pgnObservedLogging.  setSelected(sharedVariables.pgnObservedLogging);
     pgnlogging.          setSelected(sharedVariables.pgnLogging);
     tellswitch.          setSelected(sharedVariables.switchOnTell);
@@ -1592,7 +1593,7 @@ class mymultiframe extends JFrame
     JMenuItem autoset = new JMenuItem("AutoExam Dialog");
     JMenuItem whatexaminereplay = new JMenuItem("What's Examine Game Replay Quick Help");
     // .. /
-
+    autoPromote =  new JCheckBoxMenuItem("Auto Promote");
     JMenu moveInputMenu = new JMenu("Move Input");
     // ../ Move Input /
      dragMoveInput =  new JCheckBoxMenuItem("Drag Move");
@@ -1672,6 +1673,7 @@ class mymultiframe extends JFrame
     myboardmenu.add(nchallenge);
     myboardmenu.add(flipSent);
     myboardmenu.add(withdrawSent);
+    myboardmenu.add(autoPromote);
      myboardmenu.add(moveInputMenu);
     myboardmenu.add(boardDesign);
     // .. / Board Design /
@@ -1871,6 +1873,7 @@ class mymultiframe extends JFrame
     //useLightBackground.addActionListener(this);
     whatexaminereplay.addActionListener(this);
     autoset.addActionListener(this);
+    autoPromote.addActionListener(this);
    dragMoveInput.addActionListener(this);
    clickMoveInput.addActionListener(this);
     pgnlogging.addActionListener(this);
@@ -2824,7 +2827,18 @@ dot.setVisible(true);
       sharedVariables.pgnLogging = !sharedVariables.pgnLogging;
       pgnlogging.setSelected(sharedVariables.pgnLogging);
 
-    }else if (action.equals("Drag Move")) {
+    }else if (action.equals("Auto Promote")) {
+       sharedVariables.autoPromote = !sharedVariables.autoPromote;
+      pgnlogging.setSelected(sharedVariables.autoPromote);
+      if(!sharedVariables.autoPromote)
+      {
+       String s = "A promotion dialog will appear on promotion.  For premoves no dialog will appear and it will be auto promote.";
+        Popup temp = new Popup(this, false, s);
+        temp.setVisible(true);
+      }
+    }
+
+    else if (action.equals("Drag Move")) {
       sharedVariables.moveInputType = channels.DRAG_DROP;
       dragMoveInput.setSelected(true);
       clickMoveInput.setSelected(false);
@@ -4680,7 +4694,7 @@ dot.setVisible(true);
 
 	}
   }
-
+  
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
