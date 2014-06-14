@@ -1018,14 +1018,14 @@ void repaintPiece()
 		 if(movingpiece == 1)
 		 {
 			 int piece=getPiece();
-
+                         int wildtype = sharedVariables.mygame[gameData.LookingAt].wild;
 
 		if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING)// if playing
 			{
 
 			int pieceToMove=sharedVariables.mygame[gameData.LookingAt].board[piecemoving];
-			 int wildtype = sharedVariables.mygame[gameData.LookingAt].wild;
-			 if((wildtype != 16 && wildtype != 23 && wildtype != 24 && wildtype != 28) && sharedVariables.checkLegality == true && (sharedVariables.mygame[gameData.LookingAt].myturn() || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING))
+
+			 if((wildtype != 16 && wildtype != 23 && wildtype != 24 && wildtype != 28 && wildtype != 30) && sharedVariables.checkLegality == true && (sharedVariables.mygame[gameData.LookingAt].myturn() || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING))
 			 {
 			 if(pieceToMove==1 || pieceToMove==2 || pieceToMove==3 || pieceToMove==4 || pieceToMove==5 || pieceToMove==7 || pieceToMove==8 || pieceToMove==9 || pieceToMove==10 || pieceToMove==11) // a biship rook or queen
 			 {
@@ -1076,7 +1076,7 @@ void repaintPiece()
 							 // determine if premoving
 							 // state 1 is playing.  on move 1 movetop is 0 i.e. as you go to make move 1
 							 ipremoving=0;
-							if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING && !sharedVariables.mygame[gameData.LookingAt].myturn())
+							if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING && !sharedVariables.mygame[gameData.LookingAt].myturn() )
 							 {
 								 ipremoving=1;
 							 sharedVariables.mygame[gameData.LookingAt].premovefrom=piecemoving;
@@ -1099,7 +1099,9 @@ void repaintPiece()
 							 sharedVariables.mygame[gameData.LookingAt].lastfrom=piecemoving;
 							 sharedVariables.mygame[gameData.LookingAt].currentLastto=piece;
 							 sharedVariables.mygame[gameData.LookingAt].currentLastfrom=piecemoving;
-							 movingpiece=0;
+							 if( wildtype == 30)
+							    deleteCheckersJumpPieceAsNeeded(piece, piecemoving);
+                                                         movingpiece=0;
 							 repaint();
 
 
@@ -1169,8 +1171,9 @@ void repaintPiece()
 							if(ipremoving == 0)
 							{
 
-							sharedVariables.mygame[gameData.LookingAt].madeMove=1;
-							if(prom == 1 && sharedVariables.autoPromote == false)
+							if(wildtype != 30)
+                                                        sharedVariables.mygame[gameData.LookingAt].madeMove=1;
+							if(prom == 1 && sharedVariables.autoPromote == false && wildtype != 30)
 							{amove.promotion = true;
                                                          amove.wildNumber = sharedVariables.mygame[gameData.LookingAt].wild;
                                                          if(sharedVariables.mygame[gameData.LookingAt].board[piece] > 6)
@@ -1285,6 +1288,18 @@ void repaintPiece()
 
 
 }// end method
+
+       void deleteCheckersJumpPieceAsNeeded(int to, int from)
+       {
+            if(from - to == 14)
+               sharedVariables.mygame[gameData.LookingAt].board[from - 7]=0;
+            if(from - to == 18)
+               sharedVariables.mygame[gameData.LookingAt].board[from - 9]=0;
+            if(from - to == -14)
+               sharedVariables.mygame[gameData.LookingAt].board[from + 7]=0;
+            if(from - to == -18)
+               sharedVariables.mygame[gameData.LookingAt].board[from + 9]=0;
+       }
 
 	String getMove(int from, int to)
 	{

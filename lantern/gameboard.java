@@ -968,6 +968,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     if (isVisible() == true)
       mypanel.repaint();
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
+
   try {
     timer = new Timer (  ) ;
     timer.scheduleAtFixedRate( new ToDoTask (  ) , 300 ,300) ;
@@ -1857,11 +1858,11 @@ void stopTheEngine()
 
         if (xfrom >= 0) // not @ drop
           type=sharedVariables.mygame[gameData.BoardIndex].makemove
-            (xfrom + yfrom * 8, xto + yto * 8, prom, 0, castleCapture);
+            (xfrom + yfrom * 8, xto + yto * 8, prom, 0, castleCapture, algabraicMove);
         // second to last field is reload
         else
           type=sharedVariables.mygame[gameData.BoardIndex].makemove
-            (xfrom, xto + yto * 8, prom, 0, castleCapture);
+            (xfrom, xto + yto * 8, prom, 0, castleCapture, algabraicMove);
         // second to last field is reload
       } else {
         type=0;
@@ -2016,10 +2017,14 @@ void stopTheEngine()
     }// end if my game
   }// end method
 
-  
-  void illegalMove(String icsGameNumber) {
+
+  void illegalMove(String icsGameNumber, String moveString, String reason) {
     int tempnumber=getGameNumber(icsGameNumber);
     if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+
+     
+    if( sharedVariables.mygame[gameData.BoardIndex].wild == 30 && reason.equals("11")) // checkers illegal move means they have another move to jump
+    return;
 
       ReentrantReadWriteLock rwl2 = new ReentrantReadWriteLock();
       Lock readLock2 = rwl2.readLock();

@@ -4130,6 +4130,8 @@ try {
 			newBoardData temp = new newBoardData();
 			temp.dg=42;
 			temp.arg1=dg.getArg(1);
+			temp.arg2=dg.getArg(2);
+			temp.arg3=dg.getArg(3);
 			gamequeue.add(temp);
 
 
@@ -5041,8 +5043,7 @@ void proccessGameInfo(newBoardData temp)
 		try{
 			if(temp != null)
 				{
-
-
+                                               
 					if(temp.dg == 12 || temp.dg == 15 || temp.dg == 18)
 					{
 					//writeToConsole("in dg 12 15 18");
@@ -5168,7 +5169,7 @@ void proccessGameInfo(newBoardData temp)
 							return;
 							if(myboards[gamenum]== null)
 							return;
-							myboards[gamenum].illegalMove(temp.arg1);
+							myboards[gamenum].illegalMove(temp.arg1, temp.arg2, temp.arg3);
 							repaintBoards(gamenum);
 
 					}
@@ -5248,7 +5249,7 @@ void proccessGameInfo(newBoardData temp)
 							return;
 
 							lastMoveGame = gamenum;
-							//writeToConsole("in dg 24 send move and lastMoveGame is " + lastMoveGame);
+							
 							if(temp.arg4.equals("false"))
                                                         myboards[gamenum].moveSent(temp.arg1, temp.arg2, temp.arg3, false);
                                                         else

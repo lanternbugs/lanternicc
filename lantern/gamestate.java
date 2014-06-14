@@ -43,6 +43,7 @@ class gamestate {
 
 	int [] moveListTo = new int[6000];
 	int [] moveListFrom = new int[6000];
+	String [] algabraicMoves = new String[6000];
 	String [] engineMoves;
 	int engineTop;
 	char [] movePromote = new char[6000];
@@ -563,7 +564,7 @@ writeLock.lock();
 	{
 		movetop=a;
 		if(wild != 16 || moveListFrom[a] != -1)
-		makemove(moveListFrom[a], moveListTo[a], movePromote[a], 1, castleCaptures[a]);
+		makemove(moveListFrom[a], moveListTo[a], movePromote[a], 1, castleCaptures[a], algabraicMoves[a]);
 		else
 		{
 			if(moveListTo[a] == -1)
@@ -602,15 +603,20 @@ void clearShapes()
 }
 boolean myturn()
 {
-	int check =0;
+	boolean value = false;
+        int check =0;
 	if(myColor.equals("W"))
 	check=1;
 
 	if((turn+madeMove)%2 != check)
-	return true;
+	value =  true;
 
-	return false;
+	value = false;
 
+        if(wild == 30)
+        return !value;
+
+        return value;
 }
 
 void kriegSliderCapture(int square, int reload, int [] board)
@@ -687,10 +693,10 @@ void kriegMove(int reload)
 // normal castle is detected as king move 2 but fr castle of course that doesnt work but icc sends i think a "c" and it looks like i'm feeding
 // numbers in like if castleCapture == 3 for enpassant.
 // prom is any promotion character, i.e 'Q'. i think type that is returnerd is for sound.
-int makemove(int from, int to, char prom, int reload, int castleCapture)
+int makemove(int from, int to, char prom, int reload, int castleCapture, String algabraicMove)// h8 = 1 in checkers
 {
 
-
+        algabraicMoves[movetop] = algabraicMove;
 
 	if((castleCapture == 1 || castleCapture == 2) && wild==22)
 	{
@@ -731,7 +737,7 @@ int makemove(int from, int to, char prom, int reload, int castleCapture)
 	        }
 	}
         if(wild == 30)
-         captureCheckers(from, to ,board);
+         captureCheckers(from, to, algabraicMove ,board);
 	int type =-1; // no sound
 	if(from >=0)// not crazyhouse drop
 	{
@@ -913,8 +919,14 @@ String getUciMoves()
 	return s + "\n";
 
 }
-void captureCheckers(int from, int to , int board[])
+void makeCheckerCapture(int from, int to, int board[])
 {
+      // h8 = 1 in  checkers and 63 on board
+      from = 63 - (from -1) * 2;
+      to = 63 - (to-1) * 2;
+      if(from < 0 || to < 0 || from > 63 || to > 63)
+      return;
+      
   if(from - to == 18)
   board[from - 9] = 0;
   else if(from - to == 14)
@@ -923,6 +935,40 @@ void captureCheckers(int from, int to , int board[])
   board[to  - 9] = 0;
   else if(to - from  == 14)
   board[to - 7] = 0;
+
+}
+void captureCheckers(int from, int to, String algabraicMove, int board[])
+{
+  boolean go=true;
+  if(algabraicMove != "")
+  {
+
+ try {
+   while(go)
+   {
+     int a = algabraicMove.indexOf("-");
+     if(a == -1)
+     go=false;
+     else
+     {
+      from = Integer.parseInt(algabraicMove.substring(0, a));
+      algabraicMove = algabraicMove.substring(a+1, algabraicMove.length());
+      a = algabraicMove.indexOf("-");
+      if(a >= -1)
+      {
+        to  = Integer.parseInt(algabraicMove.substring(0, a));
+      }
+      else
+      {
+         to  = Integer.parseInt(algabraicMove.substring(0, algabraicMove.length()));
+      }  // end else
+
+      makeCheckerCapture(from, to, board);
+     }// end else
+   }// end while
+     }// end try
+     catch(Exception dui){}
+  }
 
 
 
@@ -963,7 +1009,7 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 
 	}
         if(wild == 30)
-         captureCheckers(from, to ,board);
+         captureCheckers(from, to, algabraicMoves[movetop] ,board);
 
 	int check =0;
 	if(myColor.equals("W"))
