@@ -611,7 +611,7 @@ boolean myturn()
 
 	if((turn+madeMove)%2 != check)
 	value =  true;
-
+        else
 	value = false;
 
         if(wild == 30)
