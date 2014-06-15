@@ -825,7 +825,17 @@ int makemove(int from, int to, char prom, int reload, int castleCapture, String 
 
 
 	 }
-
+           if(wild == 30)
+           {
+              if(board[to] == 1 && to > 55)
+              board[to]=6;
+             if(board[to] == 1 && to < 8)
+              board[to]=6;
+             if(board[to] == 7 && to < 8)
+              board[to]=12;
+             if(board[to] == 7 && to > 55)
+              board[to]=12;
+           }
 	 if(prom == 'K')
 	 {
 		 if(board[to]<7)
@@ -1115,6 +1125,17 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 
 
 	 }
+            if(wild == 30)
+           {
+             if(board[to] == 1 && to > 55)
+              board[to]=6;
+             if(board[to] == 1 && to < 8)
+              board[to]=6;
+             if(board[to] == 7 && to < 8)
+              board[to]=12;
+             if(board[to] == 7 && to > 55)
+              board[to]=12;
+           }
 
 	 if(prom == 'K')
 	 {

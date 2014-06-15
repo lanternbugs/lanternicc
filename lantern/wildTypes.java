@@ -88,6 +88,8 @@ if(wild == 27)
 return "w27 Atomic";
 if(wild == 28)
 return "w28 Shatranj";
+if(wild == 30)
+return "w30 Checkers";
 
 return "w" + wild;
 
