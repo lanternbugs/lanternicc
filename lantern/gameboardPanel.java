@@ -412,13 +412,14 @@ the slider is on. otherwise it draws the curernt in play board*/
         {
                   g.setColor(Color.RED);
                   g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
-                   g.setColor(Color.BLACK);
+                  // g.setColor(Color.BLACK);
                  /*
                  circle indented in a bit
                   drawCheckersCircles(g, a + xOff * 2 , b + yOff * 2 ,  squarex - (xOff * 4), squarey - (yOff * 4) );
                   drawCheckersCircles(g, a + xOff * 2  + 1, b + yOff * 2  + 1,  squarex - (xOff * 4) - 2, squarey - (yOff * 4) - 2 );
                   drawCheckersCircles(g, a + xOff * 2  + 2, b + yOff * 2  + 2,  squarex - (xOff * 4) - 4, squarey - (yOff * 4) - 4 );
-               */
+               */ 
+               g.setColor(new Color(35,0,0));
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
                   //drawCheckersCircles(g, a + xOff  + 2, b + yOff  + 2,  squarex - (xOff * 2) - 4, squarey - (yOff * 2) - 4 );
@@ -426,7 +427,7 @@ the slider is on. otherwise it draws the curernt in play board*/
          }
          else if(piece == 7)
          {
-                  g.setColor(Color.BLACK);
+                  g.setColor(new Color(35,0,0));
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                   g.setColor(Color.RED);
                  /*
@@ -451,7 +452,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
                  */
-                 g.setColor(Color.BLACK);
+                 g.setColor(new Color(35,0,0));
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
                   // inner
@@ -464,7 +465,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 
        if(piece == 12)
         {
-                  g.setColor(Color.BLACK);
+                  g.setColor(new Color(35,0,0));
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
 
                  /* int fsize =(int) ((double) squarey * .55);
