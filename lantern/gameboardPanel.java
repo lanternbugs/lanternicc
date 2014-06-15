@@ -404,39 +404,43 @@ the slider is on. otherwise it draws the curernt in play board*/
            // mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2)
         public void  drawCheckersPiece(Graphics g, int a, int b, int piece)
         {
+          
+          int yOff = squarey/12;
+          int xOff = squarex / 12;
+
         if(piece == 1)
         {
                   g.setColor(Color.RED);
-                  g.fillOval( a  ,  b , squarex - 4, squarey - 4);
+                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
 
 
          }
          else if(piece == 7)
          {
                   g.setColor(Color.BLACK);
-                   g.fillOval( a  ,  b , squarex - 4, squarey - 4);
+                 g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
 
           }
           if(piece == 6)
         {
                   g.setColor(Color.RED);
-                   g.fillOval(a ,  b, squarex - 4, squarey - 4);
+                 g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                   g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .7);
+                  int fsize =(int) ((double) squarey * .6);
 	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
-                 g.drawString("K",a +squarex/6 , b +  (3 * squarey)/4);
+                g.drawString("K",a +squarex/4 , b +  (5 * squarey)/7);
         }
 
        if(piece == 12)
         {
                   g.setColor(Color.BLACK);
-                   g.fillOval(a , b, squarex - 4, squarey - 4);
+                 g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                    g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .7);
+                  int fsize =(int) ((double) squarey * .6);
 	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
-                 g.drawString("K",a +squarex/6 , b +  (3 * squarey)/4);
+                 g.drawString("K",a +squarex/4 , b +  (5 * squarey)/7);
 
 
         }
