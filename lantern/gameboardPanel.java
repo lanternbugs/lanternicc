@@ -413,7 +413,8 @@ the slider is on. otherwise it draws the curernt in play board*/
                   g.setColor(Color.RED);
                   g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                    g.setColor(Color.BLACK);
-                  drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                  drawCheckersCircles(g, a + xOff * 2, b + yOff * 2,  squarex - (xOff * 4), squarey - (yOff * 4) );
+
                 //  drawCheckersCircles(g, a + xOff * 4, b + yOff * 4,  squarex - (xOff * 8), squarey - (yOff * 8) );
 
          }
@@ -422,7 +423,8 @@ the slider is on. otherwise it draws the curernt in play board*/
                   g.setColor(Color.BLACK);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                   g.setColor(Color.WHITE);
-                  drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                  drawCheckersCircles(g, a + xOff * 2, b + yOff * 2,  squarex - (xOff * 4), squarey - (yOff * 4) );
+
                  // drawCheckersCircles(g, a + xOff * 4, b + yOff * 4,  squarex - (xOff * 8), squarey - (yOff * 8) );
 
           }
@@ -435,8 +437,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
-                g.setColor(Color.BLACK);
-                drawCheckersCircles(g, a + xOff * 2, b + yOff * 2,  squarex - (xOff * 4), squarey - (yOff * 4) );
+
 
         }
 
@@ -449,8 +450,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
-                          g.setColor(Color.WHITE);
-                  drawCheckersCircles(g, a + xOff * 2, b + yOff * 2,  squarex - (xOff * 4), squarey - (yOff * 4) );
+                        
 
 
         }
