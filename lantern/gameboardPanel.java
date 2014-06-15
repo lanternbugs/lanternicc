@@ -410,7 +410,10 @@ the slider is on. otherwise it draws the curernt in play board*/
 
         if(piece == 1)
         {
+                 if(sharedVariables.checkersPieceType == 1)
                   g.setColor(Color.RED);
+                  else
+                   g.setColor(new Color(240, 240, 240));
                   g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                   // g.setColor(Color.BLACK);
                  /*
@@ -420,7 +423,10 @@ the slider is on. otherwise it draws the curernt in play board*/
                   drawCheckersCircles(g, a + xOff * 2  + 2, b + yOff * 2  + 2,  squarex - (xOff * 4) - 4, squarey - (yOff * 4) - 4 );
                */ 
               // g.setColor(new Color(35,0,0));
+                 if(sharedVariables.checkersPieceType == 1)
                 g.setColor(Color.RED.darker().darker());
+                else
+                g.setColor((new Color(240, 240, 240)).darker().darker());
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
                       drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
@@ -447,7 +453,11 @@ the slider is on. otherwise it draws the curernt in play board*/
           }
           if(piece == 6)
         {
+                 if(sharedVariables.checkersPieceType == 1)
                   g.setColor(Color.RED);
+                  else
+                   g.setColor(new Color(240, 240, 240));
+
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
 
                 /*  int fsize =(int) ((double) squarey * .55);
@@ -455,14 +465,18 @@ the slider is on. otherwise it draws the curernt in play board*/
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
                  */
+                if(sharedVariables.checkersPieceType == 1)
                  g.setColor(Color.RED.darker().darker());
-                  drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
+                else
+                g.setColor((new Color(240, 240, 240)).darker().darker());
+
+                 drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
                   // inner
-                   drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                    drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
                   drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
-                    drawCheckersCircles(g, a + xOff * 5 , b + yOff * 5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
-                  drawCheckersCircles(g, a + xOff * 5 + 1, b + yOff * 5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
+                 drawCheckersCircles(g, a + xOff * 9 / 2 , b + yOff *  9 / 2 ,  squarex - (xOff * 9), squarey - (yOff * 9) );
+                  drawCheckersCircles(g, a + xOff *  9 / 2 + 1, b + yOff *  9 / 2  + 1,  squarex - (xOff * 9) - 2, squarey - (yOff * 9) - 2 );
 
 
         }
@@ -482,10 +496,10 @@ the slider is on. otherwise it draws the curernt in play board*/
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
                   // inner
-                  drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                    drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
                   drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
-                    drawCheckersCircles(g, a + xOff * 5 , b + yOff * 5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
-                  drawCheckersCircles(g, a + xOff * 5 + 1, b + yOff * 5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
+                 drawCheckersCircles(g, a + xOff * 9 / 2 , b + yOff *  9 / 2 ,  squarex - (xOff * 9), squarey - (yOff * 9) );
+                  drawCheckersCircles(g, a + xOff *  9 / 2 + 1, b + yOff *  9 / 2  + 1,  squarex - (xOff * 9) - 2, squarey - (yOff * 9) - 2 );
 
 
 

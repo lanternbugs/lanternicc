@@ -313,6 +313,7 @@ int webframeWidth;
 int webframeHeight;
 int boardType;
 int pieceType;
+int checkersPieceType;
 int maxGameTabs;
 int maxGameConsoles;
 int maxConsoles;
@@ -351,7 +352,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.31";
+version = "v5.32";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -419,6 +420,7 @@ dot.setVisible(true);
 notifyControllerFile = "lantern_notify_controler.ini";
 boardType=0;
 pieceType=4;
+checkersPieceType = 1;
 NOT_FOUND_NUMBER = -100;
 
 STATE_EXAMINING = 2;

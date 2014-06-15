@@ -425,6 +425,12 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 	set_string = set_string + "[donepieces] ";
 
+	// checker pieces opening
+	set_string = set_string + "[checkerspieces] ";
+	set_string = set_string + sharedVariables.checkersPieceType + " ";
+	// closing
+	set_string = set_string + "[donecheckerspieces] ";
+
 	// board opening
 	set_string = set_string + "[boards] ";
 	set_string = set_string + sharedVariables.boardType + " ";
@@ -2001,6 +2007,13 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				{
 				try {
 					sharedVariables.pieceType = Integer.parseInt(tokens.nextToken());
+					}
+					catch(Exception zzz){}
+				}
+				if (temp.equals("[checkerspieces]"))
+				{
+				try {
+					sharedVariables.checkersPieceType = Integer.parseInt(tokens.nextToken());
 					}
 					catch(Exception zzz){}
 				}

@@ -305,7 +305,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem pieces24;
   */
   JCheckBoxMenuItem[] piecesarray = new JCheckBoxMenuItem[24];
-
+  JCheckBoxMenuItem[] checkerspiecesarray = new JCheckBoxMenuItem[2];
   JCheckBoxMenuItem[] italicsBehavior = new JCheckBoxMenuItem[3];
 
   JCheckBoxMenuItem randomArmy;
@@ -513,6 +513,7 @@ class mymultiframe extends JFrame
     useLightBackground.  setSelected(sharedVariables.useLightBackground);
 
     setPieces(sharedVariables.pieceType);
+    setCheckersPieces(sharedVariables.checkersPieceType);
     setBoard(sharedVariables.boardType);
     if(sharedVariables.moveInputType == 0)
     {
@@ -1558,6 +1559,12 @@ class mymultiframe extends JFrame
     piecesarray[21] = new JCheckBoxMenuItem("CCube");
     piecesarray[23] = new JCheckBoxMenuItem("Random Pieces");
     // .. /
+    
+        JMenu checkersselectpieces = new JMenu("Checkers Pieces");
+    // .. / Pieces /
+    checkerspiecesarray[0] = new JCheckBoxMenuItem("Black-Red");
+    checkerspiecesarray[1] = new JCheckBoxMenuItem("Black-White");
+
     JMenu boardSquareColors = new JMenu("Board Squares Colors");
     // .. / Board Squares Colors /
     JMenuItem lcolor = new JMenuItem("Light Square Color");
@@ -1692,6 +1699,7 @@ class mymultiframe extends JFrame
       preset.add(presetarray[i]);
     // .. /
     myboardmenu.add(selectpieces);
+    myboardmenu.add(checkersselectpieces);
     // .. / Pieces /
     for (int i=0; i<6; i++)
       selectpieces.add(piecesarray[i]);
@@ -1716,6 +1724,9 @@ class mymultiframe extends JFrame
     // .. / .. /
     selectpieces.add(piecesarray[21]);
     selectpieces.add(piecesarray[23]);
+    
+    checkersselectpieces.add(checkerspiecesarray[0]);
+    checkersselectpieces.add(checkerspiecesarray[1]);
     // .. /
     myboardmenu.add(boardSquareColors);
     // .. / Board Squares Colors /
@@ -1819,6 +1830,8 @@ class mymultiframe extends JFrame
 
     for (int i=0; i<piecesarray.length; i++)
       piecesarray[i].addActionListener(this);
+    for (int i=0; i<checkerspiecesarray.length; i++)
+      checkerspiecesarray[i].addActionListener(this);
     /*
     pieces1.addActionListener(this);
     pieces2.addActionListener(this);
@@ -3346,7 +3359,15 @@ dot.setVisible(true);
       sharedVariables.pieceType=23;
       setPieces(sharedVariables.pieceType);
 
-    } else if (action.equals("Line")) {
+    }  else if (action.equals("Black-Red")) {
+      sharedVariables.checkersPieceType=1;
+      setCheckersPieces(sharedVariables.checkersPieceType);
+
+    } else if (action.equals("Black-White")) {
+      sharedVariables.checkersPieceType=2;
+      setCheckersPieces(sharedVariables.checkersPieceType);
+
+    }else if (action.equals("Line")) {
       sharedVariables.pieceType=15;
       setPieces(sharedVariables.pieceType);
 
@@ -4360,7 +4381,24 @@ dot.setVisible(true);
         //if(myboards[a].isVisible() == true)
         myboards[a].mypanel.repaint();
   }
+   void setCheckersPieces(int type) {
+       if (type == 1)
+      checkerspiecesarray[0].setSelected(true);
+    else
+      checkerspiecesarray[0].setSelected(false);
+      if (type == 2)
+      checkerspiecesarray[1].setSelected(true);
+    else
+      checkerspiecesarray[1].setSelected(false);
 
+
+
+
+    for (int a=0; a<sharedVariables.maxGameTabs; a++)
+      if (myboards[a] != null)
+        //if(myboards[a].isVisible() == true)
+        myboards[a].mypanel.repaint();
+  }
   void generateRandomPieces(int type) {
     Random randomGenerator = new Random();
 
