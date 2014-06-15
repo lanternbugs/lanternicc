@@ -1773,6 +1773,7 @@ void stopTheEngine()
             (sharedVariables.mygame[gameData.BoardIndex].realname2.equals
              (sharedVariables.myname) && movetop%2==0)) {
           makePremove();
+          if(sharedVariables.mygame[gameData.BoardIndex].wild !=30)
           sharedVariables.mygame[gameData.BoardIndex].madeMove=1;
         } else
           sharedVariables.mygame[gameData.BoardIndex].madeMove=0;

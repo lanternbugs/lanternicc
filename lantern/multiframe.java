@@ -4644,7 +4644,7 @@ dot.setVisible(true);
   class toolBarPanelClass extends JPanel
   {
 
-	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure45, JButton pure960,
+	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure45, JButton pure960, JButton checkers,
 	 JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JToolBar toolBar)
  	{
 	GroupLayout layout = new GroupLayout(toolBar);
@@ -4674,6 +4674,8 @@ dot.setVisible(true);
     hgroup.addComponent(pure45);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(pure960);
+     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(checkers);
     layout.setHorizontalGroup(hgroup);
 	ParallelGroup vgroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 	vgroup.addComponent(sharedVariables.mybuttons[0]);
@@ -4690,6 +4692,7 @@ dot.setVisible(true);
     vgroup.addComponent(pure15);
     vgroup.addComponent(pure45);
     vgroup.addComponent(pure960);
+    vgroup.addComponent(checkers);
     layout.setVerticalGroup(vgroup);
 
 	}
@@ -4705,6 +4708,7 @@ dot.setVisible(true);
     JButton pure15 = new JButton(" 15-min ");
     JButton pure45 = new JButton(" 45 45 ");
     JButton pure960 = new JButton(" Chess960 ");
+     JButton checkers = new JButton(" Checkers ");
     JLabel seeksLabel = new JLabel();
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
@@ -4726,7 +4730,7 @@ dot.setVisible(true);
 
     }
 
-    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure45, pure960,
+    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure45, pure960, checkers,
 	 seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, toolBar);
 
  /*
@@ -4743,7 +4747,7 @@ dot.setVisible(true);
     pure15.setBackground(new Color(255,255,255));
     pure45.setBackground(new Color(255,255,255));
     pure960.setBackground(new Color(255,255,255));
-
+    checkers.setBackground(new Color(255,255,255));
     seeksLabel.setIcon(sharedVariables.seekIcon);
     //seeksLabel.setHorizontalAlignment( SwingConstants.CENTER );
     seeksLabel.addMouseListener(new MouseAdapter() {
@@ -4945,7 +4949,23 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
+    checkers.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+            myoutput data = new myoutput();
+            data.data= "`c0`" + "checkers\n";
+            data.consoleNumber=0;
+            queue.add(data);
+          }// end else
+        }
 
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
     toolBar.add(toolBarPanel);
 
   }

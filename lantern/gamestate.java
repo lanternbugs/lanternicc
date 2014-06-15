@@ -29,7 +29,7 @@ When gamestate is changed there needs to be a repaint to draw the new board on t
 ****************/
 import java.util.concurrent.locks.*;
 import java.util.ArrayList;
-
+import javax.swing.*;
 class gamestate {
 
 	int [] crazypieces = new int[13];
@@ -43,7 +43,7 @@ class gamestate {
 
 	int [] moveListTo = new int[6000];
 	int [] moveListFrom = new int[6000];
-	String [] algabraicMoves = new String[6000];
+	String [] algabraicMoves;
 	String [] engineMoves;
 	int engineTop;
 	char [] movePromote = new char[6000];
@@ -178,6 +178,7 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2)
     turn=0;
     engineTop=0;
      engineMoves = new String[2000];
+     algabraicMoves = new String[6000];
 	premove="";
 	premovefrom=0;
 	premoveto=0;
@@ -696,8 +697,10 @@ void kriegMove(int reload)
 int makemove(int from, int to, char prom, int reload, int castleCapture, String algabraicMove)// h8 = 1 in checkers
 {
 
-        algabraicMoves[movetop] = algabraicMove;
-
+        if(reload == 0)
+       { algabraicMoves[movetop] = algabraicMove;
+        
+       }
 	if((castleCapture == 1 || castleCapture == 2) && wild==22)
 	{
 
@@ -919,30 +922,57 @@ String getUciMoves()
 	return s + "\n";
 
 }
-void makeCheckerCapture(int from, int to, int board[])
+void makeCheckerCapture(int from, int to, int board2[])
 {
       // h8 = 1 in  checkers and 63 on board
+      
+
+      
+
       from = 63 - (from -1) * 2;
       to = 63 - (to-1) * 2;
+      int fromCol = from / 8 + 1;
+      if(from %8 == 0)
+      fromCol --;
+      int toCol = to / 8 + 1;
+      if(to %8 == 0)
+      toCol --;
+    /*  
+    // works with me white on bottom not black
+    if((fromCol %2 == 0 && iflipped == 0) ||(fromCol %2 == 1 && iflipped == 1) )
+      from--;
+      if((toCol %2 == 0 && iflipped == 0) ||(toCol %2 == 1 && iflipped == 1))
+      to--;
+      */
+       if(fromCol %2 == 0 )
+      from--;
+      if(toCol %2 == 0)
+      to--;
+      if(iflipped == 1)
+      {
+       from = 63 - from;
+       to = 63 - to;
+      }
       if(from < 0 || to < 0 || from > 63 || to > 63)
       return;
       
   if(from - to == 18)
-  board[from - 9] = 0;
+  board2[from - 9] = 0;
   else if(from - to == 14)
-  board[from - 7] = 0;
+  board2[from - 7] = 0;
   else if(to - from  ==  18)
-  board[to  - 9] = 0;
+  board2[to  - 9] = 0;
   else if(to - from  == 14)
-  board[to - 7] = 0;
+  board2[to - 7] = 0;
 
 }
-void captureCheckers(int from, int to, String algabraicMove, int board[])
+void captureCheckers(int from, int to, String move, int board2[])
 {
-  boolean go=true;
-  if(algabraicMove != "")
-  {
 
+          boolean go=true;
+  if(!move.equals(""))
+  {
+      String algabraicMove = move;
  try {
    while(go)
    {
@@ -952,9 +982,9 @@ void captureCheckers(int from, int to, String algabraicMove, int board[])
      else
      {
       from = Integer.parseInt(algabraicMove.substring(0, a));
-      algabraicMove = algabraicMove.substring(a+1, algabraicMove.length());
+     algabraicMove  = algabraicMove.substring(a+1, algabraicMove.length());
       a = algabraicMove.indexOf("-");
-      if(a >= -1)
+      if(a > -1)
       {
         to  = Integer.parseInt(algabraicMove.substring(0, a));
       }
@@ -963,12 +993,13 @@ void captureCheckers(int from, int to, String algabraicMove, int board[])
          to  = Integer.parseInt(algabraicMove.substring(0, algabraicMove.length()));
       }  // end else
 
-      makeCheckerCapture(from, to, board);
+      makeCheckerCapture(from, to, board2);
      }// end else
    }// end while
      }// end try
      catch(Exception dui){}
-  }
+  }  // end initial if
+
 
 
 
@@ -1009,8 +1040,9 @@ void makeslidermove(int from, int to, char prom, int reload, int castleCapture, 
 
 	}
         if(wild == 30)
-         captureCheckers(from, to, algabraicMoves[movetop] ,board);
-
+        { captureCheckers(from, to, algabraicMoves[movetop], board);
+         
+        }
 	int check =0;
 	if(myColor.equals("W"))
 	check=1;
@@ -1501,6 +1533,8 @@ void setMaterialCount(int [] board)
 			whiteMaterialCount+=5;
 		if(board[a] == 5)
 			whiteMaterialCount+=9;
+		if(board[a] == 6 && wild == 30)
+			whiteMaterialCount+=2;
 
 		if(board[a] == 7)
 			blackMaterialCount+=1;
@@ -1512,6 +1546,8 @@ void setMaterialCount(int [] board)
 			blackMaterialCount+=5;
 		if(board[a] == 11)
 			blackMaterialCount+=9;
+		if(board[a] == 12 && wild == 30)
+			blackMaterialCount+=2;
 
 
 

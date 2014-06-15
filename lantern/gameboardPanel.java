@@ -401,8 +401,46 @@ the slider is on. otherwise it draws the curernt in play board*/
 
 		}
 	}
+           // mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2)
+        public void  drawCheckersPiece(Graphics g, int a, int b, int piece)
+        {
+        if(piece == 1)
+        {
+                  g.setColor(Color.RED);
+                  g.fillOval( a  ,  b , squarex - 4, squarey - 4);
 
 
+         }
+         else if(piece == 7)
+         {
+                  g.setColor(Color.BLACK);
+                   g.fillOval( a  ,  b , squarex - 4, squarey - 4);
+
+          }
+          if(piece == 6)
+        {
+                  g.setColor(Color.RED);
+                   g.fillOval(a ,  b, squarex - 4, squarey - 4);
+                  g.setColor(Color.WHITE);
+                  int fsize =(int) ((double) squarey * .7);
+	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
+                 g.setFont(checkersFont);
+                 g.drawString("K",a +squarex/6 , b +  (3 * squarey)/4);
+        }
+
+       if(piece == 12)
+        {
+                  g.setColor(Color.BLACK);
+                   g.fillOval(a , b, squarex - 4, squarey - 4);
+                   g.setColor(Color.WHITE);
+                  int fsize =(int) ((double) squarey * .7);
+	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
+                 g.setFont(checkersFont);
+                 g.drawString("K",a +squarex/6 , b +  (3 * squarey)/4);
+
+
+        }
+        }// end function
 	public void paintComponent(Graphics g)
 		{
 
@@ -622,11 +660,21 @@ the slider is on. otherwise it draws the curernt in play board*/
 				//g.drawImage(img[piece-1], boardx +  b * squarex + 2 , boardy + aa * squarey + 2 , squarex - 4, squarey-4, this);
 				// above assumes x goes from the squares x + 2 to the squares x -2 or width is x-4 same with y
 				// we now use an additional value for decreasing x and y of piece ( one or other) based on if we truncated the x or y width or height to match the opposing parameter ( with or height)
-				if(piece > 6)
+			{	
+                          if(sharedVariables.mygame[gameData.LookingAt].wild == 30)
+                          {
+                             drawCheckersPiece(g,  boardx + b * squarex,  boardy + aa * squarey,  piece);
+                            
+                          }
+                          else
+                          {
+                          if(piece > 6)
                                     drawMyPiece(g, boardx, boardy, difx, dify, b, aa, piece, blackChoice);
                                else
                                     drawMyPiece(g, boardx, boardy, difx, dify, b, aa, piece, choice);
-				else if(piece > 0)
+			   }
+                          }
+                        	else if(piece > 0)
 				{
 					mpa=a;
 					mpb=b;
@@ -785,7 +833,12 @@ void drawPiecePallete(int piece, int OriginX, int OriginY, int Looking, Graphics
 
 void drawMySlidingPiece(Graphics g, int squarex, int squarey, int difx, int dify, int mx, int my, int piece, int choice)
 {
-			if(difx == 0 && dify == 0 && graphics.resizable[sharedVariables.pieceType] == false && graphics.multiPieces[sharedVariables.pieceType][choice][piece-1]!=null)
+		 if(sharedVariables.mygame[gameData.LookingAt].wild == 30){
+
+                     drawCheckersPiece( g, mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2),  piece);
+                   return;
+                   }
+                	if(difx == 0 && dify == 0 && graphics.resizable[sharedVariables.pieceType] == false && graphics.multiPieces[sharedVariables.pieceType][choice][piece-1]!=null)
 			{
 				// piece size goes from squarex + 2 to 2*squarex-4
 				// and squarey + 2 to 2*squarey -4;
@@ -795,7 +848,7 @@ void drawMySlidingPiece(Graphics g, int squarex, int squarey, int difx, int dify
 
 				int idealSize = (squarex -6);
 
-				if(realSize<=idealSize)
+				 if(realSize<=idealSize)
 			g.drawImage(graphics.multiPieces[sharedVariables.pieceType][choice][piece-1], mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2), realSize, realSize, this);
 				else
 			g.drawImage(graphics.pieces[getPieceType(piece-1)][piece-1], mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2), squarex - 4, squarey-4, this);
