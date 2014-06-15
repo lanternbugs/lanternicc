@@ -1487,7 +1487,8 @@ void stopTheEngine()
       int newminute=0;
       int newsecond=0;
       int newtenth=0;
-      if ((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 1) {
+      if (((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 1 &&  sharedVariables.mygame[gameData.BoardIndex].wild != 30)
+      || ((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 0 && sharedVariables.mygame[gameData.BoardIndex].wild == 30)) {
         // white on the move
         ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
         Lock writeLock = rwl.writeLock();
