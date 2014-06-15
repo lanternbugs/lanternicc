@@ -428,8 +428,8 @@ the slider is on. otherwise it draws the curernt in play board*/
          {
                   g.setColor(Color.BLACK);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
-                  g.setColor(Color.WHITE);
-                 /* 
+                  g.setColor(Color.RED);
+                 /*
                  circle indented in a bit
                  drawCheckersCircles(g, a + xOff * 2 , b + yOff * 2 ,  squarex - (xOff * 4), squarey - (yOff * 4) );
                   drawCheckersCircles(g, a + xOff * 2  + 1, b + yOff * 2  + 1,  squarex - (xOff * 4) - 2, squarey - (yOff * 4) - 2 );
@@ -445,14 +445,18 @@ the slider is on. otherwise it draws the curernt in play board*/
         {
                   g.setColor(Color.RED);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
-                  g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .55);
+
+                /*  int fsize =(int) ((double) squarey * .55);
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
-                       g.setColor(Color.BLACK);
+                 */
+                 g.setColor(Color.BLACK);
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
+                  // inner
+                   drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                  drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
                  // drawCheckersCircles(g, a + xOff  + 2, b + yOff  + 2,  squarex - (xOff * 2) - 4, squarey - (yOff * 2) - 4 );
 
 
@@ -462,15 +466,18 @@ the slider is on. otherwise it draws the curernt in play board*/
         {
                   g.setColor(Color.BLACK);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
-                   g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .55);
+
+                 /* int fsize =(int) ((double) squarey * .55);
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
                 g.drawString("K",a +squarex/3 , b +  (14 * squarey)/20);
-                        g.setColor(Color.WHITE);
+                   */
+                   g.setColor(Color.RED);
                   drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
-                 // drawCheckersCircles(g, a + xOff  + 2, b + yOff  + 2,  squarex - (xOff * 2) - 4, squarey - (yOff * 2) - 4 );
+                  // inner
+                  drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                  drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
 
 
 
