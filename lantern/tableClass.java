@@ -116,15 +116,21 @@ gamedata = new myDefaultTableModel(data, collumns);
 
 
 
-void createMoveListColumns()
+void createMoveListColumns(int wild)
 {
 Vector<String> data = new Vector();
 Vector<String> collumns = new Vector();
 
 collumns.add("Move No.");
-collumns.add("White");
+if(wild == 30)
+{collumns.add("Black");
+collumns.add("Red");
+}
+else
+{
+  collumns.add("White");
 collumns.add("Black");
-
+}
 
 
 

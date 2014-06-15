@@ -1198,7 +1198,10 @@ void stopTheEngine()
           if (sharedVariables.gamelooking[d] == gameData.BoardIndex) {
             sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
             sharedVariables.mygametable
-              [gameData.BoardIndex].createMoveListColumns();
+              [gameData.BoardIndex].createMoveListColumns(
+
+               sharedVariables.mygame[gameData.BoardIndex].wild
+              );
             sharedVariables.gametable[gameData.BoardIndex].setModel
               (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
           }

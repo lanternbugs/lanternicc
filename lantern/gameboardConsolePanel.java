@@ -153,6 +153,8 @@ public void makehappen(int i)
  			sharedVariables.lastButton=gameData.BoardIndex;
  			sharedVariables.moveSliders[gameData.BoardIndex].setMaximum(sharedVariables.mygame[gameData.LookingAt].turn);
  			sharedVariables.moveSliders[gameData.BoardIndex].setValue(sharedVariables.mygame[gameData.LookingAt].turn);
+ 			
+
  			sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
  			
                          if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true)
@@ -1539,7 +1541,7 @@ else
                                                	if(sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
 	                                        	StyleConstants.setBold(attrs, true);
 
-    
+
 						StyleConstants.setForeground(attrs, sharedVariables.typedColor);
 					int GAME_CONSOLES=1;// game
 					int maxLinks =75;

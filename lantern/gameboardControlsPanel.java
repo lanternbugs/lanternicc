@@ -835,7 +835,7 @@ import layout.TableLayout;
       }
       if (sharedVariables.mygametable[gameData.BoardIndex] == null) {
 	sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
-        sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns();
+        sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns(sharedVariables.mygame[gameData.BoardIndex].wild);
         sharedVariables.gametable[gameData.BoardIndex] =
           new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
       }
