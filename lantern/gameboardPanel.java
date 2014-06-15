@@ -407,7 +407,7 @@ the slider is on. otherwise it draws the curernt in play board*/
           
           int yOff = squarey/12;
           int xOff = squarex / 12;
-
+          double fxOff = (double) squarex/12;
         if(piece == 1)
         {
                  if(sharedVariables.checkersPieceType == 1)
@@ -479,13 +479,13 @@ the slider is on. otherwise it draws the curernt in play board*/
                  drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
 
-                    drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
-                  drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
+                    drawCheckersCircles(g, a + ((int) (fxOff * 3)) , b + ((int) (fxOff * 3)) ,  squarex - ((int) (fxOff * 6)), squarey - ((int) (fxOff * 6)) );
+                  drawCheckersCircles(g, a +((int) (fxOff * 3)) + 1, b + ((int) (fxOff * 3))  + 1,  squarex - ((int) (fxOff * 6)) - 2, squarey - ((int) (fxOff  * 6)) - 2 );
                //  drawCheckersCircles(g, a + xOff * 5 , b + yOff *  5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
                 //  drawCheckersCircles(g, a + xOff *  5 + 1, b + yOff *  5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
-               for(int i =  xOff * 5; i <=  squarex/2 ; i++)
+               for(double i =  fxOff * 4.5; i <=  squarex/2 ; i++)
                  {
-                   drawCheckersCircles(g, a+i , b + i ,  squarex - i * 2, squarey - i * 2 );
+                   drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
 
 
@@ -513,13 +513,13 @@ the slider is on. otherwise it draws the curernt in play board*/
                  drawCheckersCircles(g, a + xOff , b + yOff ,  squarex - (xOff * 2), squarey - (yOff * 2) );
                   drawCheckersCircles(g, a + xOff  + 1, b + yOff  + 1,  squarex - (xOff * 2) - 2, squarey - (yOff * 2) - 2 );
 
-                    drawCheckersCircles(g, a + xOff * 3 , b + yOff * 3 ,  squarex - (xOff * 6), squarey - (yOff * 6) );
-                  drawCheckersCircles(g, a + xOff * 3 + 1, b + yOff * 3  + 1,  squarex - (xOff * 6) - 2, squarey - (yOff * 6) - 2 );
+                    drawCheckersCircles(g, a + ((int) (fxOff * 3)) , b + ((int) (fxOff * 3)) ,  squarex - ((int) (fxOff * 6)), squarey - ((int) (fxOff * 6)) );
+                  drawCheckersCircles(g, a +((int) (fxOff * 3)) + 1, b + ((int) (fxOff * 3))  + 1,  squarex - ((int) (fxOff * 6)) - 2, squarey - ((int) (fxOff  * 6)) - 2 );
                //  drawCheckersCircles(g, a + xOff * 5 , b + yOff *  5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
                 //  drawCheckersCircles(g, a + xOff *  5 + 1, b + yOff *  5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
-                for(int i =  xOff * 5; i <=  squarex/2 ; i++)
+               for(double i =  fxOff * 4.5; i <=  squarex/2 ; i++)
                  {
-                   drawCheckersCircles(g, a+i , b + i ,  squarex - i * 2, squarey - i * 2 );
+                   drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
 
 
