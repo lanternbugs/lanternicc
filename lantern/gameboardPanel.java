@@ -412,13 +412,18 @@ the slider is on. otherwise it draws the curernt in play board*/
         {
                   g.setColor(Color.RED);
                   g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
-
+                   g.setColor(Color.BLACK);
+                  drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                //  drawCheckersCircles(g, a + xOff * 4, b + yOff * 4,  squarex - (xOff * 8), squarey - (yOff * 8) );
 
          }
          else if(piece == 7)
          {
                   g.setColor(Color.BLACK);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
+                  g.setColor(Color.WHITE);
+                  drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
+                 // drawCheckersCircles(g, a + xOff * 4, b + yOff * 4,  squarex - (xOff * 8), squarey - (yOff * 8) );
 
           }
           if(piece == 6)
@@ -426,10 +431,13 @@ the slider is on. otherwise it draws the curernt in play board*/
                   g.setColor(Color.RED);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                   g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .6);
+                  int fsize =(int) ((double) squarey * .45);
 	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
-                g.drawString("K",a +squarex/4 , b +  (5 * squarey)/7);
+                g.drawString("K",a +squarex/3 , b +  (13 * squarey)/20);
+                g.setColor(Color.BLACK);
+                drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
+
         }
 
        if(piece == 12)
@@ -437,14 +445,30 @@ the slider is on. otherwise it draws the curernt in play board*/
                   g.setColor(Color.BLACK);
                  g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
                    g.setColor(Color.WHITE);
-                  int fsize =(int) ((double) squarey * .6);
+                  int fsize =(int) ((double) squarey * .45);
 	          Font checkersFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
                  g.setFont(checkersFont);
-                 g.drawString("K",a +squarex/4 , b +  (5 * squarey)/7);
+                g.drawString("K",a +squarex/3 , b +  (13 * squarey)/20);
+                          g.setColor(Color.WHITE);
+                  drawCheckersCircles(g, a + xOff * 3, b + yOff * 3,  squarex - (xOff * 6), squarey - (yOff * 6) );
 
 
         }
         }// end function
+        
+        
+        public void drawCheckersCircles(Graphics g, int x, int y,  int width, int height )
+        {
+           Graphics2D g2d = (Graphics2D) g;
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+    Ellipse2D.Double hole = new Ellipse2D.Double();
+    hole.width = width;
+    hole.height = height;
+    hole.x = x;
+    hole.y = y;
+    g2d.draw(hole);
+        }
 	public void paintComponent(Graphics g)
 		{
 
