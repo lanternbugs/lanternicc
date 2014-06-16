@@ -489,6 +489,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                    drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
                */
+               drawCheckersCircles(g, a + ((int) (fxOff * 3)) , b + ((int) (fxOff * 3)) ,  squarex - ((int) (fxOff * 6)), squarey - ((int) (fxOff * 6)) );
                g.fillOval( a + ((int)(fxOff * 3))  ,  b + ((int)(fxOff * 3)) , squarex - ((int)(6*fxOff)), squarey - ((int)(6*fxOff)));
 
 
@@ -524,6 +525,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                    drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
                */
+               drawCheckersCircles(g, a + ((int) (fxOff * 3)) , b + ((int) (fxOff * 3)) ,  squarex - ((int) (fxOff * 6)), squarey - ((int) (fxOff * 6)) );
                g.fillOval( a + ((int)(fxOff * 3))  ,  b + ((int)(fxOff * 3)) , squarex - ((int)(6*fxOff)), squarey - ((int)(6*fxOff)));
 
         }
