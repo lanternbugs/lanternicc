@@ -484,11 +484,12 @@ the slider is on. otherwise it draws the curernt in play board*/
                   //drawCheckersCircles(g, a +((int) (fxOff * 3)) + 1, b + ((int) (fxOff * 3))  + 1,  squarex - ((int) (fxOff * 6)) - 2, squarey - ((int) (fxOff  * 6)) - 2 );
                //  drawCheckersCircles(g, a + xOff * 5 , b + yOff *  5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
                 //  drawCheckersCircles(g, a + xOff *  5 + 1, b + yOff *  5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
-               for(double i =  fxOff * 3; i <=  squarex/2 ; i++)
+             /*  for(double i =  fxOff * 3; i <=  squarex/2 ; i++)
                  {
                    drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
-
+               */
+               g.fillOval( a + ((int)(fxOff * 3))  ,  b + ((int)(fxOff * 3)) , squarex - ((int)(6*fxOff)), squarey - ((int)(6*fxOff)));
 
 
         }
@@ -518,11 +519,12 @@ the slider is on. otherwise it draws the curernt in play board*/
                   //drawCheckersCircles(g, a +((int) (fxOff * 3)) + 1, b + ((int) (fxOff * 3))  + 1,  squarex - ((int) (fxOff * 6)) - 2, squarey - ((int) (fxOff  * 6)) - 2 );
                //  drawCheckersCircles(g, a + xOff * 5 , b + yOff *  5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
                 //  drawCheckersCircles(g, a + xOff *  5 + 1, b + yOff *  5  + 1,  squarex - (xOff * 10) - 2, squarey - (yOff * 10) - 2 );
-               for(double i =  fxOff * 3; i <=  squarex/2 ; i++)
+              /*  for(double i =  fxOff * 3; i <=  squarex/2 ; i++)
                  {
                    drawCheckersCircles(g, ((int)(a+i)) ,((int)( b + i)) ,  squarex - ((int)(i * 2)), squarey - ((int)(i * 2)) );
                  }
-
+               */
+               g.fillOval( a + ((int)(fxOff * 3))  ,  b + ((int)(fxOff * 3)) , squarex - ((int)(6*fxOff)), squarey - ((int)(6*fxOff)));
 
         }
         }// end function
