@@ -458,7 +458,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                   else
                    g.setColor(new Color(240, 240, 240));
 
-                 g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
+                 g.fillOval( a + ((int)fxOff)  ,  b + ((int)fxOff) , squarex - ((int)(2*fxOff)), squarey - ((int)(2*fxOff)));
 
                 /*  int fsize =(int) ((double) squarey * .55);
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
@@ -496,7 +496,7 @@ the slider is on. otherwise it draws the curernt in play board*/
        if(piece == 12)
         {
                   g.setColor(new Color(35,0,0));
-                 g.fillOval( a + xOff  ,  b + yOff , squarex - (2*xOff), squarey - (2*yOff));
+                 g.fillOval( a + ((int)fxOff)  ,  b + ((int)fxOff) , squarex - ((int)(2*fxOff)), squarey - ((int)(2*fxOff)));
 
                  /* int fsize =(int) ((double) squarey * .55);
 	          Font checkersFont = new Font("Arial", Font.BOLD, fsize); // "Times New Roman"
