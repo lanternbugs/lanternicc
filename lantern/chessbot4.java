@@ -175,12 +175,16 @@ t.start();
 	{
 		try{
 
-			// System.out.println("trying to connect");
+			System.out.println("trying to connect");
 
 
 			lastConsoleNumber=0;
-			connect();
+		try {
+                
 
+                	connect();
+                 }
+                 catch(Exception dui){}
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			String myText= null;
@@ -193,7 +197,8 @@ t.start();
 				int keepgoing=1;
 				do{
 				try{
-					//System.out.println("trying to read");
+
+                               	//System.out.println("trying to read");
 					int message2 = 0;
 
 					// we may call getICCdata more than once before we finish a level 1 event
@@ -305,12 +310,12 @@ t.start();
 					updateBoard();
 
 				}
-				catch(Exception classNot){
+				catch(Exception classNot){writeToConsole("1");
 					try {Thread.sleep(50);}catch(Exception d){}
 				}
 			}while(keepgoing==1);
 		}
-		catch(Exception e){
+		catch(Exception e){ writeToConsole("2");
 		try {Thread.sleep(50);}catch(Exception d){}
 		}
 				finally{
@@ -5043,7 +5048,7 @@ void proccessGameInfo(newBoardData temp)
 		try{
 			if(temp != null)
 				{
-                                               
+
 					if(temp.dg == 12 || temp.dg == 15 || temp.dg == 18)
 					{
 					//writeToConsole("in dg 12 15 18");
@@ -5249,7 +5254,7 @@ void proccessGameInfo(newBoardData temp)
 							return;
 
 							lastMoveGame = gamenum;
-							
+
 							if(temp.arg4.equals("false"))
                                                         myboards[gamenum].moveSent(temp.arg1, temp.arg2, temp.arg3, false);
                                                         else

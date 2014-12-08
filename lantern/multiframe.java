@@ -5221,8 +5221,8 @@ dot.setVisible(true);
 
       // now load multi pieces
       if (!graphics.resizable[a]) {
-        for (int aa=0; aa<graphics.numberPiecePaths[a]; aa++) {
-
+     for (int aa=0; aa<graphics.numberPiecePaths[a]; aa++) {
+           try {
           myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
                                               graphics.multiPiecePaths[a][aa] + "/wp." + ext);
           graphics.multiPieces[a][aa][0] = Toolkit.getDefaultToolkit().getImage(myurl);
@@ -5269,7 +5269,17 @@ dot.setVisible(true);
           myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" +
                                               graphics.multiPiecePaths[a][aa] + "/bk." + ext);
           graphics.multiPieces[a][aa][11] = Toolkit.getDefaultToolkit().getImage(myurl);
-        }// end aa loop
+         }// end try
+      catch(Exception ee) {
+     //  System.out.println("error my url is " + myurl +  " a is " + a + " and aa is " + aa );
+
+        }// end catch
+
+      }
+
+
+
+
       }// end multi piece if
     }// end for
     // make monge mix pieces
