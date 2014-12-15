@@ -195,6 +195,8 @@ if(sManual.equals("m"))
 seekText = seekText + " " + sManual;
 if(sFormula.equals("f"))
 seekText =seekText + " " + sFormula;
+if(sColor.equals("black") || sColor.equals("white"))
+   seekText = seekText + " " + sColor;
 
 index=sIndex;
 name=sName;
