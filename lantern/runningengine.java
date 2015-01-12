@@ -40,11 +40,28 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 //import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 //import javax.swing.event.ChangeEvent.*;
-
-
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 class runningengine implements Runnable
 {
+  
+  class PrincipalVariation {
+ String line;
+ String depth;
+ String score;
+ String multipv;
+PrincipalVariation()
+ {
+   line = "";
+   depth = "";
+   score = "";
+   multipv = "";
+} // end constructor
+ }// end inner class
+ArrayList<PrincipalVariation> multiLines = new ArrayList();
+ArrayList<String> scriptList = new ArrayList();
+scriptLoader scripter = new scriptLoader();
 channels sharedVariables;
 int BoardIndex;
 JTextPane [] gameconsoles;
@@ -323,6 +340,15 @@ if(stage == 2 && text.contains("readyok"))
 
 
 	sendToEngine("setoption name UCI_AnalyseMode value true\n");
+	//sendToEngine("setoption name MultiPV value 3\n");
+
+        scripter.loadScript(scriptList, "lantern_uci_script.txt");
+        for(int scripts = 0; scripts < scriptList.size(); scripts++)
+        {
+        String scriptLine = scriptList.get(scripts).trim();
+	sendToEngine(scriptLine + "\n");
+        }
+
 if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
 {
 
@@ -357,7 +383,7 @@ else
 	writeOut("position startpos" + sharedVariables.mygame[BoardIndex].getUciMoves());
 }
 
-
+        multiLines.clear();
 	sendToEngine("go infinite\n");
 	writeOut("go infinite\n");
 	writeOut("engine fen is " + sharedVariables.mygame[BoardIndex].engineFen + " and board index is " + BoardIndex + " \n");
@@ -405,43 +431,7 @@ tosend=sharedVariables.engineQueue.poll();// we look for data from other areas o
 
 
 
-/*if(!sharedVariables.engineQueue.isEmpty())
 
-{
-	tosend = new myoutput();
-	tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
-	String lastsent="";
-
-
-
-
-	while(tosend != null) // check if we are forwarding a bunch of moves and get last one
-	{
-
-
-			if(tosend.data.contains("quit"))
-			{sendToEngine(tosend.data);
-			go=0;
-			lastsent = tosend.data;
-			break;
-			}
-
-	        lastsent=tosend.data.substring(0, tosend.data.length());
-	        if(!sharedVariables.engineQueue.isEmpty())
-	        {
-				tosend = new myoutput();
-	        	tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
-			}
-			else
-			break;
-
-			}// end while
-
-
-sendToEngine(lastsent);
-writeOut("last sent is " + lastsent);
-}// end if not empty
-*/
 
 }// end if tosent not null first time
 
@@ -450,32 +440,42 @@ writeOut("last sent is " + lastsent);
 catch(Exception e) {}
 }//end if stage 3
 
-if(text.length() > 0 && ((text.contains("pv") && stage ==3) || stage<3))
+if(text.length() > 0 && ((text.contains(" pv") && stage ==3) || stage<3))
 {
 try {
-if(text.startsWith("info") && (text.contains("pv") && !text.contains("info currmove") && stage ==3))
+if(text.startsWith("info") && (text.contains(" pv") && !text.contains("info currmove") && stage ==3))
 {
 	
         // routine for those who print pv twice
-        int tryone=text.indexOf("pv");
-        int trytwo = text.indexOf("pv", tryone + 1);
+        int tryone=text.indexOf(" pv");
+        int trytwo = text.indexOf(" pv", tryone + 1);
 
         String line1="";
         String line2="";
         if(trytwo != -1)
         {
        line1 = text.substring(0, trytwo);
-       line2 = text.substring(trytwo + 3, text.length());
+       line2 = text.substring(trytwo + 4, text.length());
 
 
         }
         else
         {
-        line1 = text.substring(0, text.indexOf("pv"));
-	line2 = text.substring(text.indexOf("pv") + 3, text.length());
+        line1 = text.substring(0, text.indexOf(" pv"));
+	line2 = text.substring(text.indexOf(" pv") + 4, text.length());
          }
         line2=pgnGetter.getPgn(line2, sharedVariables.mygame[gameData.BoardIndex].iflipped, sharedVariables.mygame[gameData.BoardIndex].board);
-	writeOut2( line1 + "\n" + line2 + "\n");
+	if(text.contains("multipv"))
+	{
+          parseMultiPV(text, line2, true);
+        }
+         else
+         {
+           parseMultiPV(text, line2, false);
+         }
+
+
+
 }
 else
 writeOut(text);
@@ -537,7 +537,7 @@ try {
 //StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
  //JTextPane me = new JTextPane();
   StyledDocument doc = sharedVariables.engineDoc;
- doc.remove(0, doc.getLength());
+doc.remove(0, doc.getLength());
  // doc.remove(0,doc.toString().length());
 doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
@@ -555,6 +555,139 @@ catch(Exception e)
 {}
 
 }// end writeout2 method
+
+void parseMultiPV(String text, String pvLine, boolean multi)
+{
+
+   PrincipalVariation p = new PrincipalVariation();
+   int i =0;
+   int max = 2;
+   try {
+
+
+          StringTokenizer tokens = new StringTokenizer(text, " ");
+          String temp = "j";
+          if(multi)
+          {
+            max = 3;   // we search for three arguments
+          }
+          while(!temp.equals(""))
+         {
+             temp = tokens.nextToken();
+             if(temp.equals("multipv"))
+             {
+                p.multipv = tokens.nextToken();
+                i++;
+             }
+             if(temp.equals("depth"))
+             {
+                p.depth = tokens.nextToken();
+                i++;
+             }
+             if(temp.equals("score"))
+             {  temp = tokens.nextToken();
+                if(temp.equals("cp"))
+                {
+                p.score = tokens.nextToken();
+                i++;
+             }
+             }
+             if(i == max)// we got all components
+             {
+               break;
+             }
+         } // end while
+         }// end try
+         catch(Exception e)
+         {
+         }
+       p.line = pvLine;
+       if(i == max)
+       {
+         addSwapLine(p);
+         printMultiPv();
+       }
+
+        }            // end function
+
+void addSwapLine(PrincipalVariation p)
+{
+  boolean found = false;
+  for(int i=0; i< multiLines.size(); i++)
+  {
+    PrincipalVariation temp = multiLines.get(i);
+    if(temp.multipv.equals(p.multipv))
+    {
+      found = true;
+      multiLines.set(i,p);
+      break;
+    }
+  }  // end for
+
+  if(!found)
+  {
+    multiLines.add(p);
+    sortMultiLines();
+  }
+} // end function
+
+void sortMultiLines()
+{
+
+  for(int a = 0; a<multiLines.size() - 1; a++)
+  {
+
+    PrincipalVariation i = multiLines.get(a);
+    for(int b = a+1; b < multiLines.size(); b++)
+    {
+      PrincipalVariation j = multiLines.get(b);
+      try  {
+        int m = Integer.parseInt(i.multipv);
+        int n = Integer.parseInt( j.multipv);
+
+        if(n < m)
+      {
+        multiLines.set(a,j);
+        multiLines.set(b,i);
+      }
+      }
+      catch(Exception dui){}
+    }
+  }
+}
+void printMultiPv()
+{
+  
+  try {
+
+
+  StyledDocument doc = sharedVariables.engineDoc;
+doc.remove(0, doc.getLength());
+for(int i=0; i < multiLines.size(); i++)
+{
+PrincipalVariation p = multiLines.get(i);
+String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi: " + p.multipv + "\n";
+if(multiLines.size() == 1) //  no multipv
+{
+  line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
+}
+String line2 = p.line + "\n";
+doc.insertString(doc.getEndPosition().getOffset(), line1 + line2, null);
+}
+for(int a=0; a<sharedVariables.openBoardCount; a++)
+if(sharedVariables.gamelooking[a]==BoardIndex)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+setEngineDoc(doc, a);
+
+//gameconsoles[a].setStyledDocument(doc);
+}
+
+}
+catch(Exception e)
+{}
+}
 
 
 
