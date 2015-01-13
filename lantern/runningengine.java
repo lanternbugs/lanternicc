@@ -589,6 +589,7 @@ void parseMultiPV(String text, String pvLine, boolean multi)
                 if(temp.equals("cp"))
                 {
                 p.score = tokens.nextToken();
+                p.score = formatScore(p.score);
                 i++;
              }
              }
@@ -609,7 +610,18 @@ void parseMultiPV(String text, String pvLine, boolean multi)
        }
 
         }            // end function
+String formatScore(String score)
+{
+ try {
+     int n = Integer.parseInt(score);
+     double num =  ((double) n * .01);
+     return String.format("%.2f", num);
+ }
+ catch(Exception dui){}
 
+
+ return score;
+}
 void addSwapLine(PrincipalVariation p)
 {
   boolean found = false;
