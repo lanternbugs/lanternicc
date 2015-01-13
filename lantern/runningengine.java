@@ -61,7 +61,11 @@ PrincipalVariation()
  }// end inner class
 ArrayList<PrincipalVariation> multiLines = new ArrayList();
 ArrayList<String> scriptList = new ArrayList();
-scriptLoader scripter = new scriptLoader();
+scriptLoader scripter = new scriptLoader(); 
+double lastSendTime;
+double priorSendTime;
+double lastCheckTime;
+int movesInTenSeconds;
 channels sharedVariables;
 int BoardIndex;
 JTextPane [] gameconsoles;
@@ -297,6 +301,10 @@ void runUci()
 try {
 
 int go=1;
+lastSendTime = 0;
+priorSendTime = 0;
+lastCheckTime = 0;
+movesInTenSeconds = 0;
 InputStream is= engine.getInputStream();
 
 byte [] b = new byte[15000];
@@ -341,12 +349,13 @@ if(stage == 2 && text.contains("readyok"))
 
 	sendToEngine("setoption name UCI_AnalyseMode value true\n");
 	//sendToEngine("setoption name MultiPV value 3\n");
-
+        scriptList.clear();
         scripter.loadScript(scriptList, "lantern_uci_script.txt");
         for(int scripts = 0; scripts < scriptList.size(); scripts++)
         {
         String scriptLine = scriptList.get(scripts).trim();
 	sendToEngine(scriptLine + "\n");
+
         }
 
 if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
@@ -418,14 +427,73 @@ finalStuff=tosend.data;
 	}
 if(finalStuff.length() > 0)
 {
-	try {
-		writeOut("final stuff lenght > 0 and sending " + finalStuff);
+
+	tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
+	
+        if(tosend != null && tosend.data.contains("stop") && tosend.data.contains("go infinite") &&
+        finalStuff.contains("stop") && finalStuff.contains("go infinite"))
+        {
+          ;  // do nothing current data is redundant to next data i.e. stop start stop start
+        }
+        else 
+        {
+        	try {
+		
+                if(finalStuff.contains("stop") && finalStuff.contains("go infinite"))
+                {
+                  writeOut("sending new move to Engine\n");
+                }
+                else 
+                {
+                writeOut("final stuff lenght > 0 and sending" + finalStuff);
+                }
 
 	}
 	catch(Exception badright){}
-	sendToEngine(finalStuff);
+
+        try {
+         
+         if(System.currentTimeMillis()> lastSendTime + 3000 && System.currentTimeMillis()> priorSendTime + 7000)
+          Thread.sleep(1500);
+          else
+            Thread.sleep(3500);
+
+
+        
+        if(System.currentTimeMillis()> lastCheckTime + 10000)
+        {
+          lastCheckTime = System.currentTimeMillis();
+          movesInTenSeconds = 0;
+        }
+        
+        movesInTenSeconds ++;
+        if(movesInTenSeconds > 10)
+        {
+          lastCheckTime = System.currentTimeMillis();
+          movesInTenSeconds = 0;
+           Thread.sleep(3000);
+
+        }
+         } catch(Exception E5){}
+        if(tosend == null)
+        {
+         tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
+	
+        if(tosend != null && tosend.data.contains("stop") && tosend.data.contains("go infinite") &&
+        finalStuff.contains("stop") && finalStuff.contains("go infinite"))
+        {
+          continue;
+        }
+
+        }// to send null
+
+
+        sendToEngine(finalStuff);
+        priorSendTime = lastSendTime;
+        lastSendTime = System.currentTimeMillis();
+        }
 }
-tosend=sharedVariables.engineQueue.poll();// we look for data from other areas of the program
+
 
 
 
@@ -437,7 +505,9 @@ tosend=sharedVariables.engineQueue.poll();// we look for data from other areas o
 
 
 }
-catch(Exception e) {}
+catch(Exception e) {
+writeOut("Excption in state 3\n");
+}
 }//end if stage 3
 
 if(text.length() > 0 && ((text.contains(" pv") && stage ==3) || stage<3))
@@ -480,7 +550,9 @@ if(text.startsWith("info") && (text.contains(" pv") && !text.contains("info curr
 else
 writeOut(text);
 }
-catch(Exception badone){}
+catch(Exception badone){
+writeOut("Excption bad one\n");
+}
 }// end if
 
 
@@ -498,8 +570,9 @@ catch(Exception E5){}
 
 }
 while(go==1);
+writeOut("go no longer 1\n");
 }// end try
-catch(Exception e){}
+catch(Exception e){writeOut("exception terminated loop");}
 }// end run uci
 
 
@@ -558,6 +631,8 @@ catch(Exception e)
 
 void parseMultiPV(String text, String pvLine, boolean multi)
 {
+  if(!multi && multiLines.size() > 1)
+     return;  // extraneous pv
 
    PrincipalVariation p = new PrincipalVariation();
    int i =0;
@@ -605,7 +680,7 @@ void parseMultiPV(String text, String pvLine, boolean multi)
        p.line = pvLine;
        if(i == max)
        {
-         addSwapLine(p);
+         if(addSwapLine(p))// if its a duplicate line we would not reprint
          printMultiPv();
        }
 
@@ -622,7 +697,7 @@ String formatScore(String score)
 
  return score;
 }
-void addSwapLine(PrincipalVariation p)
+boolean addSwapLine(PrincipalVariation p)
 {
   boolean found = false;
   for(int i=0; i< multiLines.size(); i++)
@@ -631,6 +706,8 @@ void addSwapLine(PrincipalVariation p)
     if(temp.multipv.equals(p.multipv))
     {
       found = true;
+      if(compareLine(temp,p))// lines are equal we dont need to do anything redundancy
+       return false;
       multiLines.set(i,p);
       break;
     }
@@ -641,8 +718,25 @@ void addSwapLine(PrincipalVariation p)
     multiLines.add(p);
     sortMultiLines();
   }
+  return true;
 } // end function
-
+ boolean compareLine(PrincipalVariation i, PrincipalVariation j)
+ {
+ if(i.depth.equals(j.depth))
+ {
+     if(i.score.equals(j.score))
+     {
+       if(i.multipv.equals(j.multipv))
+       {
+         if(i.line.equals(j.line))
+         {
+           return true;
+         }// line ==
+       }// multipv equal
+     }// score =-
+ }// depth ==
+ return false;
+ }
 void sortMultiLines()
 {
 

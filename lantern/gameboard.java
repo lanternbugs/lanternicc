@@ -2184,8 +2184,12 @@ void stopTheEngine()
   }
 
   void sendUciMoves() {
+
+
+      
+
     myoutput outgoing = new myoutput();
-    outgoing.data= "stop\n";
+    outgoing.data="stop\n";
     //sharedVariables.engineQueue.add(outgoing);
 
     //myoutput outgoing2 = new myoutput();
