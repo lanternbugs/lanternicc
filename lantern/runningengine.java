@@ -66,6 +66,7 @@ double lastSendTime;
 double priorSendTime;
 double lastCheckTime;
 int movesInTenSeconds;
+String lastWinboardLine;
 channels sharedVariables;
 int BoardIndex;
 JTextPane [] gameconsoles;
@@ -201,6 +202,7 @@ sendToEngine("xboard\nprotover 2\n");
 //sendToEngine("move e2e4\n");
 //sendToEngine("move d7d5\n");
 String text="";
+lastWinboardLine = "";
 do {
 
 if(in.ready())
@@ -245,6 +247,7 @@ tosend=sharedVariables.engineQueue.poll();// we look for data from other areas o
 if(tosend!=null)
 {
 	sendToEngine(tosend.data);
+	lastWinboardLine = "";
 	if(tosend.data.contains("quit"))
 	go=0;
 }
@@ -252,6 +255,7 @@ if(tosend!=null)
 catch(Exception e) {
 
 }
+/*
 if(text.length() > 0 && !text.startsWith("#") && !text.startsWith("stat"))
 {
 
@@ -263,7 +267,7 @@ doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
-  
+
  if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
  if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
 setEngineDoc(doc, a);
@@ -273,7 +277,9 @@ setEngineDoc(doc, a);
 catch(Exception e)
 {}
 }// end if
-
+ */
+ 
+ writeOutWinboard(text);
 
 
 
@@ -575,7 +581,6 @@ writeOut("go no longer 1\n");
 catch(Exception e){writeOut("exception terminated loop");}
 }// end run uci
 
-
 void writeOut(String text)
 {
 try {
@@ -596,6 +601,83 @@ setEngineDoc(doc, a);
 //gameconsoles[a].setStyledDocument(doc);
 }
 
+}
+catch(Exception e)
+{}
+
+}// end writeout method
+void writeOutWinboard(String text)
+{
+text = text.trim();
+text = text.replace("          ", " ");
+text = text.replace("         ", " ");
+text = text.replace("        ", " ");
+text = text.replace("       ", " ");
+text = text.replace("      ", " ");
+text = text.replace("     ", " ");
+text = text.replace("    ", " ");
+text = text.replace("   ", " ");
+text = text.replace("  ", " ");
+
+String depth = "";
+String score = "";
+int i = 0;
+try {
+
+          StringTokenizer tokens = new StringTokenizer(text, " ");
+          String temp;
+
+
+             int num;
+             depth = tokens.nextToken();
+             i++;
+             num = Integer.parseInt(depth);
+             score = tokens.nextToken();
+             i++;
+             num = Integer.parseInt(score);
+             score = formatScore(score);
+             temp = tokens.nextToken();
+             i++;
+             num = Integer.parseInt(temp);
+
+             temp = tokens.nextToken();
+             i++;
+             num = Integer.parseInt(temp);
+             temp = tokens.nextToken();
+             i++;
+}
+catch(Exception dui){}
+try {
+if(i == 5)
+{
+
+int space = text.indexOf(" ");
+space = text.indexOf(" ", space+1);
+space = text.indexOf(" ", space+1);
+space = text.indexOf(" ", space+1);
+String line = text.substring(space, text.length());
+String scoreLine = "Depth: " + depth + " Score: " + score + "\n";
+String winboardLine = scoreLine + line + "\n";
+
+
+if(!winboardLine.equals(lastWinboardLine) && !winboardLine.equals(""))
+{
+lastWinboardLine = winboardLine;
+StyledDocument doc = sharedVariables.engineDoc;
+
+doc.remove(0, doc.getLength());
+//doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
+doc.insertString(doc.getEndPosition().getOffset(), winboardLine, null);
+for(int a=0; a<sharedVariables.openBoardCount; a++)
+if(sharedVariables.gamelooking[a]==BoardIndex)
+{
+ if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING) && sharedVariables.engineOn == true)
+ if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 1)
+setEngineDoc(doc, a);
+}// if winboard line
+//gameconsoles[a].setStyledDocument(doc);
+}
+}// end if i == 5
 }
 catch(Exception e)
 {}
