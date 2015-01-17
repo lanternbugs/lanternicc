@@ -857,15 +857,27 @@ void setupMenu()
 }
 
 void addWallPaper()
-{       
+{
   try {
   wallpaperFileName = wallpaperFile.getPath();
+  if(new File(wallpaperFileName).exists())
+  {
             URL wallpaperURL = wallpaperFile.toURL();
+
           wallpaperImage =
             Toolkit.getDefaultToolkit().getImage(wallpaperURL);
+           
+  }// if exists
+  else 
+  {
+      wallpaperFileName = "";
+  wallpaperImage = null;
+
+  }
   }
   catch(Exception dui){
-  // mall formed url exception
+  wallpaperFileName = "";
+  wallpaperImage = null;
   }
 }
 void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue<myoutput> queue, final String prefix)
