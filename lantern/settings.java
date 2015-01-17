@@ -2822,12 +2822,15 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					if(!entry.equals("[doneWallpaper]"))
 					mystring+= entry;
 					}// end while
-				if(mystring.equals("none"))
+				if(mystring.trim().equals("none"))
 				sharedVariables.wallpaperFileName = "";
 				else
-				sharedVariables.wallpaperFileName = mystring;
-
- 						}catch(Exception badWAll){}
+				{
+                                
+                                sharedVariables.wallpaperFileName = mystring;
+				sharedVariables.wallpaperFile = new File(sharedVariables.wallpaperFileName);
+                                sharedVariables.addWallPaper();
+                                } } catch(Exception badWAll){}
 
 
 				}

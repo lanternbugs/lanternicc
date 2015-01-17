@@ -352,7 +352,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.37";
+version = "v5.38";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -854,6 +854,19 @@ void setupMenu()
         rightClickListMenu.add("Remove from Notify");
         rightClickListMenu.add("Remove from NoPlay");
         rightClickListMenu.add("Remove from Censor");
+}
+
+void addWallPaper()
+{       
+  try {
+  wallpaperFileName = wallpaperFile.getPath();
+            URL wallpaperURL = wallpaperFile.toURL();
+          wallpaperImage =
+            Toolkit.getDefaultToolkit().getImage(wallpaperURL);
+  }
+  catch(Exception dui){
+  // mall formed url exception
+  }
 }
 void setUpListMenu(JMenu LMenu, final String handle, final ConcurrentLinkedQueue<myoutput> queue, final String prefix)
 {

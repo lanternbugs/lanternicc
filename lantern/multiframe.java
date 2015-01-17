@@ -2182,6 +2182,7 @@ class mymultiframe extends JFrame
         if (newColor != null) {
           sharedVariables.MainBackColor=newColor;
           sharedVariables.wallpaperImage=null;
+          sharedVariables.wallpaperFileName = "";
           repaint();
         }
       } catch (Exception e) {}
@@ -2241,14 +2242,8 @@ class mymultiframe extends JFrame
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
           sharedVariables.wallpaperFile = fc.getSelectedFile();
-          URL wallpaperURL = sharedVariables.wallpaperFile.toURL();
-          //applet
-          //sharedVariables.wallpaperImage=getImage(wallpaperURL);
-          // end applet
-          // stand alone
-          sharedVariables.wallpaperImage =
-            Toolkit.getDefaultToolkit().getImage(wallpaperURL);
-          // end stand alone
+         sharedVariables.addWallPaper();
+                   // end stand alone
         }
 
         repaint();
