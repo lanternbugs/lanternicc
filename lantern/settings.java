@@ -2826,8 +2826,8 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				sharedVariables.wallpaperFileName = "";
 				else
 				{
-                                
-                                sharedVariables.wallpaperFileName = mystring;
+
+                                sharedVariables.wallpaperFileName = mystring.trim();
 				sharedVariables.wallpaperFile = new File(sharedVariables.wallpaperFileName);
                                 sharedVariables.addWallPaper();
                                 } } catch(Exception badWAll){}

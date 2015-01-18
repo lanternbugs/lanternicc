@@ -227,7 +227,7 @@ if(b==5 || b==8)// alpha
 if(b==21)// ccube
 {
 	multiPiecePaths[b][0]=8;
-	multiPiecePaths[b][1]=10;
+	multiPiecePaths[b][1]=8;// we just use 8 for both to fix a bug
 	multiPiecePaths[b][2]=12;
 	multiPiecePaths[b][3]=14;
 	multiPiecePaths[b][4]=16;
@@ -265,7 +265,7 @@ if(b==21)// ccube
 	multiPiecePaths[b][35]=78;
 	multiPiecePaths[b][36]=80;
 	multiPiecePaths[b][37]=82;
-	multiPiecePaths[b][37]=84;
+	multiPiecePaths[b][38]=84;
 	multiPiecePaths[b][39]=86;
 	multiPiecePaths[b][40]=88;
 	multiPiecePaths[b][41]=90;
