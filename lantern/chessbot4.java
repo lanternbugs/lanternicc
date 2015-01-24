@@ -1027,12 +1027,18 @@ if(console.type == 5)
   {
   fingerPopup = new Popup(theMainFrame, false, thetell);
   fingerPopup.setSize(800,600);
+  fingerPopup.field.setFont(sharedVariables.myFont);
+  fingerPopup.field.setBackground(Color.WHITE);
+  fingerPopup.field.setForeground(Color.BLACK);
   fingerPopup.setVisible(true);
   }
   else  if(!fingerPopup.isVisible())
   {
   fingerPopup = new Popup(theMainFrame, false, thetell);
   fingerPopup.setSize(800,600);
+  fingerPopup.field.setFont(sharedVariables.myFont);
+  fingerPopup.field.setBackground(Color.WHITE);
+  fingerPopup.field.setForeground(Color.BLACK);
   fingerPopup.setVisible(true);
   }
 
