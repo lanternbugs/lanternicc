@@ -1026,7 +1026,7 @@ if(console.type == 5)
   if(fingerPopup == null)
   {
   fingerPopup = new Popup(theMainFrame, false, thetell);
-  fingerPopup.setSize(800,600);
+  fingerPopup.setSize(950,600);
   fingerPopup.field.setFont(sharedVariables.myFont);
   fingerPopup.field.setBackground(Color.WHITE);
   fingerPopup.field.setForeground(Color.BLACK);
@@ -1037,7 +1037,7 @@ if(console.type == 5)
   else  if(!fingerPopup.isVisible())
   {
   fingerPopup = new Popup(theMainFrame, false, thetell);
-  fingerPopup.setSize(800,600);
+  fingerPopup.setSize(950,600);
   fingerPopup.field.setFont(sharedVariables.myFont);
   fingerPopup.field.setBackground(Color.WHITE);
   fingerPopup.field.setForeground(Color.BLACK);
