@@ -61,9 +61,10 @@ pgnData mygame= new pgnData();
       {return; }  // end outer catch
 
 
+              String moveLine = null;
 
       try {
-        String line = null; //not declared within while loop
+        String line = null; //not declared within while loop 
         /*
         * readLine is a bit quirky :
         * it returns the content of a line MINUS the newline.
@@ -79,7 +80,11 @@ pgnData mygame= new pgnData();
 			 if(line.startsWith("[") && state != STATE_TAGS)
 			 {
 				 if(state == STATE_MOVES)
-				 games.add(mygame);
+				 {
+                                  addMoves(moveLine, mygame);
+                                  moveLine = null;
+                                   games.add(mygame);
+				 }
 
 				 mygame= new pgnData();
 				 state=STATE_TAGS;
@@ -112,7 +117,12 @@ pgnData mygame= new pgnData();
 			 	state=STATE_MOVES;
 
 			if(state == STATE_MOVES)
-				addMoves(line, mygame);
+			{	
+                          if(moveLine == null)
+                          moveLine = line;
+                          else
+                          moveLine = moveLine + " " + line;
+                        }
 		 }
 
         }
@@ -121,7 +131,11 @@ pgnData mygame= new pgnData();
     finally
     {
 		if(state == STATE_MOVES)// to catch the last game, since we normally add game in above loop when next game starts
-		   games.add(mygame);
+		 {
+                                  addMoves(moveLine, mygame);
+                                  moveLine = null;
+                                   games.add(mygame);
+		 }
         input.close();
     }// end finally
 }// overall try
@@ -154,6 +168,31 @@ void addMoves(String line, pgnData mygame){
 
 boolean go = true;
    do {
+ 	int a=line.indexOf("(");
+	try {
+
+		if(a >=0)
+	{
+
+		int b=line.indexOf(")");
+		if(b>=0)
+		{
+			String temp = line.substring(a, b+1);
+			line = line.replace(temp, "");
+			go=true;
+			continue;
+		}
+	}
+
+}catch(Exception d){}
+go=false;
+}
+
+while(go==true);
+
+// now second trim
+go = true;
+   do {
  	int a=line.indexOf("{");
 	try {
 
@@ -176,6 +215,10 @@ go=false;
 
 while(go==true);
 
+
+
+
+
    StringTokenizer tokens = new StringTokenizer(line, " ");
 
     String item = "Start";
@@ -187,8 +230,18 @@ while(go==true);
 	{
 		if(item.startsWith("{"))
 			continue;
-		if(item.contains("."))
+		if(item.contains(".") && item.indexOf(".") == item.length() - 1)
 			continue;
+		else if(item.contains(".") && item.indexOf(".") != item.length() - 1)
+		{
+                  while(item.contains(".") && item.indexOf(".") != item.length() - 1)
+                  item = item.substring(item.indexOf(".") + 1, item.length());
+                  if(item.contains("."))
+                  continue;
+                }
+                if(item.contains("$"))
+			continue;
+
 		mygame.moves.add(item);
 	}// end if
 	}// end while
