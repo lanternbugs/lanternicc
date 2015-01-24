@@ -1030,6 +1030,8 @@ if(console.type == 5)
   fingerPopup.field.setFont(sharedVariables.myFont);
   fingerPopup.field.setBackground(Color.WHITE);
   fingerPopup.field.setForeground(Color.BLACK);
+  //fingerPopup.pack();
+  fingerPopup.setLocationRelativeTo(theMainFrame);
   fingerPopup.setVisible(true);
   }
   else  if(!fingerPopup.isVisible())
@@ -1039,6 +1041,9 @@ if(console.type == 5)
   fingerPopup.field.setFont(sharedVariables.myFont);
   fingerPopup.field.setBackground(Color.WHITE);
   fingerPopup.field.setForeground(Color.BLACK);
+ //   fingerPopup.pack();
+  fingerPopup.setLocationRelativeTo(theMainFrame);
+
   fingerPopup.setVisible(true);
   }
 
