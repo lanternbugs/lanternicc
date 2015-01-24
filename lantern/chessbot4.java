@@ -1038,6 +1038,9 @@ if(console.type == 5)
 
   else
   {
+   if(thetell.trim().startsWith("Information about ") || thetell.trim().startsWith("Statistics for "))
+   fingerPopup.field.setText(thetell);
+   else
    fingerPopup.field.setText(fingerPopup.field.getText() + thetell);
   }
  return;

@@ -1909,11 +1909,11 @@ class mymultiframe extends JFrame
     /****************************** Actions ******************************/
     JMenu actionsmenu = new JMenu("Actions");
     // Actions /
-     JMenuItem lookupuser = new JMenuItem("Lookup User");
     JMenuItem showhistory = new JMenuItem("Show My Recent Games");
     JMenuItem showlib = new JMenuItem("Show My Game Library");
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
     // .. / (separator)
+    JMenuItem lookupuser = new JMenuItem("Lookup User");
     JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
     JMenuItem showexam = new JMenuItem("Enter Examination Mode");
     JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
@@ -1935,11 +1935,11 @@ class mymultiframe extends JFrame
 
     menu.add(actionsmenu);
     // Actions /
-    actionsmenu.add(lookupuser);
     actionsmenu.add(showhistory);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
     actionsmenu.addSeparator();
+    actionsmenu.add(lookupuser);
     actionsmenu.add(showfinger);
     actionsmenu.add(showexam);
     actionsmenu.add(showexamlast);
