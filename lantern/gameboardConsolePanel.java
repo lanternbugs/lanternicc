@@ -1898,7 +1898,11 @@ items[m].addActionListener(new ActionListener() {
          {
 			sharedVariables.openUrl(name);
        }
-             else if (sharedVariables.rightClickMenu.get(mfinal).equals("Challenge")) {
+                    else if (sharedVariables.rightClickMenu.get(mfinal).equals("Lookup")) {
+
+                 doCommand("`f1`Finger" + " " + name + "\n");
+              }
+       else if (sharedVariables.rightClickMenu.get(mfinal).equals("Challenge")) {
                JFrame framer =  new JFrame();
                 sharedVariables.challengeCreator(name, framer, queue);
 
@@ -2187,6 +2191,9 @@ int getPhysicalTab(int look)
 void doCommand(String mycommand)
 {
 	myoutput output = new myoutput();
+   if(mycommand.startsWith("`"))
+    output.data = mycommand;
+    else
 	output.data="`g" + gameData.LookingAt +  "`" + mycommand;
 	//output.data=mycommand;
 	output.game=1;

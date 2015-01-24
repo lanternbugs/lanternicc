@@ -1632,6 +1632,11 @@ class subframe extends JInternalFrame
                 sharedVariables.challengeCreator(name, framer, queue);
 
               }
+              else if (sharedVariables.rightClickMenu.get(mfinal).equals("Lookup")) {
+
+                 doCommand("`f1`Finger" + " " + name + "\n");
+              }
+
                else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {
                 sharedVariables.openUrl(name);
 
@@ -1946,6 +1951,10 @@ class subframe extends JInternalFrame
 
   void doCommand(String mycommand) {
     myoutput output = new myoutput();
+   
+   if(mycommand.startsWith("`"))
+    output.data = mycommand;
+    else
     output.data = "`c" + sharedVariables.looking[consoleNumber] +
       "`" + mycommand;
     

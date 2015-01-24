@@ -832,6 +832,7 @@ void setupMenu()
 
 	rightClickMenu.add("Finger");
 	rightClickMenu.add("Finger -n");
+	rightClickMenu.add("Lookup");
 	rightClickMenu.add("Vars");
 	rightClickMenu.add("Google");
 	rightClickMenu.add("History");
