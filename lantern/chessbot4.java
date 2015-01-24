@@ -47,7 +47,8 @@ import java.util.StringTokenizer;
 
  class chessbot4 implements Runnable
 {
-	Socket requestSocket;
+	Popup fingerPopup;
+        Socket requestSocket;
 	InputStream tempinput;
  	OutputStream outStream;
 	String message;
@@ -1019,6 +1020,29 @@ void checkForChannelAdd(String thetell)
 
 void writeLevel1(routing console, String thetell)
 {
+// if console type is 5 , finger special
+if(console.type == 5)
+{
+  if(fingerPopup == null)
+  {
+  fingerPopup = new Popup(theMainFrame, false, thetell);
+  fingerPopup.setSize(800,600);
+  fingerPopup.setVisible(true);
+  }
+  else  if(!fingerPopup.isVisible())
+  {
+  fingerPopup = new Popup(theMainFrame, false, thetell);
+  fingerPopup.setSize(800,600);
+  fingerPopup.setVisible(true);
+  }
+
+  else
+  {
+   fingerPopup.field.setText(fingerPopup.field.getText() + thetell);
+  }
+ return;
+}
+
 int slashN1=thetell.indexOf("\n");
 int slashN2=-1;
 if(slashN1 > -1)
@@ -1270,6 +1294,8 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=3;// save pgn
                                                 if(consoleChar == 'u')
 						console.type=4;// save pgn
+						if(consoleChar == 'f')
+						console.type=5;// lookup user
                                                 String myConNumber="";
 
 						// we assume its c now. could be g for game, c is subframe console
@@ -2282,11 +2308,18 @@ if(dg.getArg(0).equals("46"))
  catch(Exception dui){}
 
 }
-
+/*if(dg.getArg(0).equals("153") || dg.getArg(0).equals("154"))
+{
+ try {
+  writeToConsole(dg.getArg(0) + "  with arg 1 " + dg.getArg(1));
+ }
+ catch(Exception noarg1){}
+}
+*/
 if(dg.getArg(0).equals("27"))
 {
 	// (channel playername come/go)
-
+              // writeToConsole("channel 27 incoming " + dg.getArg(1) + " " + dg.getArg(2) + " " + dg.getArg(3) );
 			newBoardData temp = new newBoardData();
 			temp.dg=27;
 			temp.arg1=dg.getArg(1);
@@ -2326,8 +2359,10 @@ if(dg.getArg(0).equals("27"))
 		 sendMessage("multi set-quietly style 13\n");
 	       if(sharedVariables.disableNameLists == false)
 	       {
-        	sendMessage("multi Set-2 46 1\n");// dg  channels shared
+        	//sendMessage("multi Set-2 46 1\n");// dg  channels shared
                  sendMessage("multi Set-2 27 1\n");// dg people in channel
+                // sendMessage("multi Set-2 153 1\n");
+                //  sendMessage("multi Set-2 154 1\n");
                 }
                 try {
                  String OS = "Linux";

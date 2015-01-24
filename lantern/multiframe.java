@@ -1909,6 +1909,7 @@ class mymultiframe extends JFrame
     /****************************** Actions ******************************/
     JMenu actionsmenu = new JMenu("Actions");
     // Actions /
+     JMenuItem lookupuser = new JMenuItem("Lookup User");
     JMenuItem showhistory = new JMenuItem("Show My Recent Games");
     JMenuItem showlib = new JMenuItem("Show My Game Library");
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
@@ -1934,6 +1935,7 @@ class mymultiframe extends JFrame
 
     menu.add(actionsmenu);
     // Actions /
+    actionsmenu.add(lookupuser);
     actionsmenu.add(showhistory);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
@@ -1954,6 +1956,7 @@ class mymultiframe extends JFrame
     actionsmenu.add(unfollowBroadcast);
     actionsmenu.add(showfm);
 
+    lookupuser.addActionListener(this);
     showhistory.addActionListener(this);
     showlib.addActionListener(this);
     showstored.addActionListener(this);
@@ -3155,6 +3158,9 @@ dot.setVisible(true);
 
     } else if (action.equals("Add a Friend")) {
       addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
+
+    } else if (action.equals("Lookup User")) {
+      LookupUserDialog frame = new LookupUserDialog(this, false, queue);
 
     } else if (action.equals("Open ChessFM")) {
 
