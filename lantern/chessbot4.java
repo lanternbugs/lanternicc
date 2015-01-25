@@ -2241,7 +2241,9 @@ if( dg.getArg(0).equals("152"))
                         gamequeue.add(temp);
                         else
                         {
-                       if(console.type==0)
+                       
+
+                       if(console.type==0 || console.type == 5)
                          {if(console.number >=0 && console.number <sharedVariables.maxConsoleTabs)
                         {
 
@@ -2260,12 +2262,28 @@ if( dg.getArg(0).equals("152"))
                           uniqueName=sharedVariables.countryNames.substring(bb+ dg.getArg(3).length() + 2, bbb);
                           uniqueName=uniqueName.replace("_", " ");
                          }
+                          
+                          if(console.type == 0)
+                        {
                           if(uniqueName.equals(""))
                           writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + "\n",console.number);
                           else
                            writeToSubConsole(dg.getArg(1) + " " + dg.getArg(3) + " " + uniqueName + "\n",console.number);
+                        }
+                        else if(console.type == 5)
+                       {
+                        if(fingerPopup != null && fingerPopup.isVisible())
+                        {
+                        String countryPrint = "";
+                        if(uniqueName.equals(""))
+                        countryPrint = dg.getArg(1) + " " + dg.getArg(3) + "\n";
+                          else
+                        countryPrint = dg.getArg(1) + " " + dg.getArg(3) + " " + uniqueName + "\n";
+                        fingerPopup.field.setText(fingerPopup.field.getText() + countryPrint);
+                        }
+                       }
                           // code for mug shot
-                        if(sharedVariables.showMugshots)
+                        if(sharedVariables.showMugshots && console.type == 0)
                         {  String ImageUrl = "http://www.chessclub.com/mugshots/" + dg.getArg(1) + ".jpg";
 
                         // String ImageUrl = "http://www6.chessclub.com/activities/popup.html?/mugshots/" + dg.getArg(1) + ".jpg";
