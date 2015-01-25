@@ -126,9 +126,27 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          
          if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.myname.startsWith("guest"))
          {
-            
+            String event = myLoader.games.get(row).event;
+            if(event.startsWith("ICC tourney") && event.contains("(w9 "))
+             send("multi Match " + sharedVariables.myname + " w9\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w17 "))
+             send("multi Match " + sharedVariables.myname + " w17\n");
+             else if(event.startsWith("ICC tourney") && event.contains("(w22 "))
+             send("multi Match " + sharedVariables.myname + " w22\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w23 "))
+             send("multi Match " + sharedVariables.myname + " w23\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w25 "))
+             send("multi Match " + sharedVariables.myname + " w25\n");
+              else if(event.startsWith("ICC tourney") && event.contains("(w26 "))
+             send("multi Match " + sharedVariables.myname + " w26\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w27 "))
+             send("multi Match " + sharedVariables.myname + " w27\n");
+             else if(event.startsWith("ICC tourney") && event.contains("(w28 "))
+             send("multi Match " + sharedVariables.myname + " w28\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w30 "))
+             send("multi Match " + sharedVariables.myname + " w30\n");
 
-            if(myLoader.games.get(row).event.startsWith("ICC w9"))
+            else if(myLoader.games.get(row).event.startsWith("ICC w9"))
              send("multi Match " + sharedVariables.myname + " w9\n");
             else if(myLoader.games.get(row).event.startsWith("ICC w17"))
              send("multi Match " + sharedVariables.myname + " w17\n");
