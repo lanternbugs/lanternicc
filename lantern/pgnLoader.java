@@ -114,6 +114,8 @@ pgnData mygame= new pgnData();
 				 	mygame.eco=getPgnArg(line);
                                  if(line.startsWith("[ICCResult"))
 				 	mygame.iccResult=getPgnArg(line);
+                                 if(line.startsWith("[FEN"))
+				 	mygame.iccFen=getPgnArg(line);
 
 			 }
 
@@ -273,6 +275,7 @@ while(go==true);
 		String date;
 		String gameData;
 		String iccResult;
+		String iccFen;
 
 }
 

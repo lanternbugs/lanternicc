@@ -516,6 +516,7 @@ try {
 	else
 */
 	try{
+
       Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
       Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
 
@@ -525,9 +526,13 @@ try {
 
 	if(requestSocket== null)
 	{
-
+                try {
+                 
 		requestSocket = new Socket("207.99.83.228", 23);// 127.0.0.1 or
-	}
+
+                }
+                catch(Exception secondbad) { }
+        }
 
 
 

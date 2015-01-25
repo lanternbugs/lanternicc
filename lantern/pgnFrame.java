@@ -121,10 +121,48 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
          }
 
-	 void examine(int row)
+	void enterExamineMode(int row)
+	{
+         
+         if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.myname.startsWith("guest"))
+         {
+            
+
+            if(myLoader.games.get(row).event.startsWith("ICC w9"))
+             send("multi Match " + sharedVariables.myname + " w9\n");
+            else if(myLoader.games.get(row).event.startsWith("ICC w17"))
+             send("multi Match " + sharedVariables.myname + " w17\n");
+            else if(myLoader.games.get(row).event.startsWith("ICC w22"))
+             send("multi Match " + sharedVariables.myname + " w22\n");
+            else if(myLoader.games.get(row).event.startsWith("ICC w23"))
+             send("multi Match " + sharedVariables.myname + " w23\n");
+           else if(myLoader.games.get(row).event.startsWith("ICC w25"))
+             send("multi Match " + sharedVariables.myname + " w25\n");
+           else if(myLoader.games.get(row).event.startsWith("ICC w26"))
+             send("multi Match " + sharedVariables.myname + " w26\n");
+           else if(myLoader.games.get(row).event.startsWith("ICC w27"))
+             send("multi Match " + sharedVariables.myname + " w27\n");
+           else if(myLoader.games.get(row).event.startsWith("ICC w28"))
+             send("multi Match " + sharedVariables.myname + " w28\n");
+           else if(myLoader.games.get(row).event.startsWith("ICC w30"))
+             send("multi Match " + sharedVariables.myname + " w30\n");
+           else
+            send("multi Examine\n");
+         }// if my name
+         else
+         {
+          send("Examine\n");
+         }
+
+
+        }
+
+         void examine(int row)
 	 {
 
-			send("Examine\n");
+                         enterExamineMode(row);
+			if(myLoader.games.get(row).iccFen != null)
+                          send("multi loadfen " + myLoader.games.get(row).iccFen + "\n");
 			send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
 			send("Setblackname " + myLoader.games.get(row).blackName + "\n");
 			if(myLoader.games.get(row).whiteElo != null)
