@@ -81,16 +81,19 @@ pgnData mygame= new pgnData();
 			 {
 				 if(state == STATE_MOVES)
 				 {
+                                 mygame.gameData +="\n\n" + moveLine;
                                   addMoves(moveLine, mygame);
                                   moveLine = null;
                                    games.add(mygame);
 				 }
 
 				 mygame= new pgnData();
+				 mygame.gameData = "";
 				 state=STATE_TAGS;
 			 }
 			 if(line.startsWith("[") && state == STATE_TAGS)
-			 {
+			 {       mygame.gameData += "\n" + line;
+
 				 if(line.startsWith("[White "))
 				 	mygame.whiteName=getPgnArg(line);
 				 if(line.startsWith("[Black "))
@@ -109,7 +112,8 @@ pgnData mygame= new pgnData();
 				 	mygame.blackElo=getPgnArg(line);
 				 if(line.startsWith("[ECO"))
 				 	mygame.eco=getPgnArg(line);
-
+                                 if(line.startsWith("[ICCResult"))
+				 	mygame.iccResult=getPgnArg(line);
 
 			 }
 
@@ -132,6 +136,7 @@ pgnData mygame= new pgnData();
     {
 		if(state == STATE_MOVES)// to catch the last game, since we normally add game in above loop when next game starts
 		 {
+                                 mygame.gameData +="\n\n" + moveLine;
                                   addMoves(moveLine, mygame);
                                   moveLine = null;
                                    games.add(mygame);
@@ -266,6 +271,8 @@ while(go==true);
 		String event;
 		String site;
 		String date;
+		String gameData;
+		String iccResult;
 
 }
 

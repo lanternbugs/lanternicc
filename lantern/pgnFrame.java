@@ -65,6 +65,7 @@ listColor = new Color(255, 255, 255);
 mygametable=mygametable1;
 myLoader=myLoader1;
 queue=queue1;
+sharedVariables = sharedVariables1;
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 initComponents();
 }// end constructor
@@ -105,14 +106,31 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 		 queue.add(x);
 	 }
 
+         void showGameData(int row)
+         {
+          String text = myLoader.games.get(row).gameData;
+           Color dataBackground = new Color(235,235,235);
+
+          Popup dataPopup = new Popup((JFrame) getDesktopPane().getTopLevelAncestor()  , false, text);
+          dataPopup.setSize(650,500);
+          dataPopup.field.setFont(sharedVariables.myFont);
+          dataPopup.field.setBackground(dataBackground);
+          dataPopup.field.setForeground(Color.BLACK);
+          dataPopup.setVisible(true);
+
+
+         }
+
 	 void examine(int row)
 	 {
 
 			send("Examine\n");
 			send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
 			send("Setblackname " + myLoader.games.get(row).blackName + "\n");
-			send("Tag WhiteElo " + myLoader.games.get(row).whiteElo + "\n");
-			send("Tag BlackElo " + myLoader.games.get(row).blackElo + "\n");
+			if(myLoader.games.get(row).whiteElo != null)
+                          send("Tag WhiteElo " + myLoader.games.get(row).whiteElo + "\n");
+			if(myLoader.games.get(row).blackElo != null)
+                          send("Tag BlackElo " + myLoader.games.get(row).blackElo + "\n");
 			send("Tag Event " + myLoader.games.get(row).event + "\n");
 			send("Tag Site " + myLoader.games.get(row).site + "\n");
 			send("Tag Date " + myLoader.games.get(row).date + "\n");
@@ -123,8 +141,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 			for(int a=0; a<myLoader.games.get(row).moves.size() - 1; a++)// size - 1 since last thing is result we got there
 				send(myLoader.games.get(row).moves.get(a) + "\n");
-			send("Tag result " + myLoader.games.get(row).result + "\n");
 
+                        if(myLoader.games.get(row).iccResult != null)
+                             send("Tag ICCResult " + myLoader.games.get(row).iccResult + "\n");
+                       	else
+                             send("Tag result " + myLoader.games.get(row).result + "\n");
 	 }
 
 
@@ -196,6 +217,17 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				menu2.add(item2);
 
 
+
+	JMenuItem item3 = new JMenuItem("Show Game Data");
+				 item3.addActionListener(new ActionListener() {
+          		public void actionPerformed(ActionEvent e) {
+						// to do add libappend
+					showGameData(row);
+				}
+
+       });
+
+				menu2.add(item3);
 
 
 				add(menu2);
