@@ -1022,13 +1022,13 @@ void writeLevel1(routing console, String thetell)
 {
 // if console type is 5 , finger special
 if(console.type == 5)
-{
+{  Color fingerBackground = new Color(235,235,235);
   if(fingerPopup == null)
   {
   fingerPopup = new Popup(theMainFrame, false, thetell);
   fingerPopup.setSize(950,600);
   fingerPopup.field.setFont(sharedVariables.myFont);
-  fingerPopup.field.setBackground(Color.WHITE);
+  fingerPopup.field.setBackground(fingerBackground);
   fingerPopup.field.setForeground(Color.BLACK);
   //fingerPopup.pack();
   fingerPopup.setLocationRelativeTo(theMainFrame);
@@ -1039,7 +1039,7 @@ if(console.type == 5)
   fingerPopup = new Popup(theMainFrame, false, thetell);
   fingerPopup.setSize(950,600);
   fingerPopup.field.setFont(sharedVariables.myFont);
-  fingerPopup.field.setBackground(Color.WHITE);
+  fingerPopup.field.setBackground(fingerBackground);
   fingerPopup.field.setForeground(Color.BLACK);
  //   fingerPopup.pack();
   fingerPopup.setLocationRelativeTo(theMainFrame);
