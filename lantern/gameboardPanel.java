@@ -102,6 +102,7 @@ gameboardPanel(Image img1[], channels sharedVariables1, gamestuff gameData1, Con
 	mx=oldmx=my=oldmy=100;
 	movingpiece=0;
 	movingexaminepiece=0;
+	arrowSquare = -1;
 
 img=img1;
 queue=queue1;
@@ -239,7 +240,34 @@ void setValues()
       }
 
 }
+	int getArrowSquare()
+	{
+		setValues();
 
+		for(int a = 0; a < 8; a++)
+		{
+
+
+			for(int b=0; b < 8; b++)
+			{
+
+
+				if(mx > boardx +  b * squarex && mx < boardx +  b * squarex + squarex)
+				{
+					if(my > boardy + a * squarey && my < boardy + a * squarey + squarey)
+					{
+						int aa=a;
+
+						int gameslot = 63 - (aa * 8 + b);
+
+
+							return gameslot;
+					}
+		    	}
+		    }
+		}
+             return -100;
+ }
 
 /* returns i think -100 for not a click on square, and negative piece value if they click
 on examine mode pallete, which you can easily turn on or off as you see fit, i think i turn it on if wild = 23 or state is STATE_EXAMINING
@@ -479,7 +507,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                   drawCheckersCircles(g, a + ((int)fxOff) , b + ((int) fxOff) ,  squarex - ((int)(fxOff * 2)), squarey - ((int)(fxOff * 2)) );
                   drawCheckersCircles(g, a + ((int) (xOff  + 1)), b + ((int) (fxOff  + 1)),  squarex - ((int)(xOff * 2)) - 2, squarey - ((int)(fxOff * 2)) - 2 );
 
- 
+
                    // drawCheckersCircles(g, a + ((int) (fxOff * 3)) , b + ((int) (fxOff * 3)) ,  squarex - ((int) (fxOff * 6)), squarey - ((int) (fxOff * 6)) );
                   //drawCheckersCircles(g, a +((int) (fxOff * 3)) + 1, b + ((int) (fxOff * 3))  + 1,  squarex - ((int) (fxOff * 6)) - 2, squarey - ((int) (fxOff  * 6)) - 2 );
                //  drawCheckersCircles(g, a + xOff * 5 , b + yOff *  5 ,  squarex - (xOff * 10), squarey - (yOff * 10) );
@@ -530,8 +558,8 @@ the slider is on. otherwise it draws the curernt in play board*/
 
         }
         }// end function
-        
-        
+
+
         public void drawCheckersCircles(Graphics g, int x, int y,  int width, int height )
         {
            Graphics2D g2d = (Graphics2D) g;
@@ -559,9 +587,9 @@ the slider is on. otherwise it draws the curernt in play board*/
 		{
 			sliding=1;
 			sharedVariables.mygame[gameData.LookingAt].getSliderBoard(sharedVariables.moveSliders[gameData.BoardIndex].getValue(), slidingBoard);
-		        if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 0 || 
-                        (sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 1 && 
-                        (sharedVariables.mygame[gameData.LookingAt].moveListTo[0] == sharedVariables.mygame[gameData.LookingAt].moveListFrom[0] 
+		        if(sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 0 ||
+                        (sharedVariables.moveSliders[gameData.BoardIndex].getValue() == 1 &&
+                        (sharedVariables.mygame[gameData.LookingAt].moveListTo[0] == sharedVariables.mygame[gameData.LookingAt].moveListFrom[0]
                         && sharedVariables.mygame[gameData.LookingAt].moveListFrom[0] > 0)))
 		        startPosition =true;
                 }
@@ -569,7 +597,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 		{
                    sharedVariables.mygame[gameData.LookingAt].lastfrom=sharedVariables.mygame[gameData.LookingAt].currentLastfrom;
                    sharedVariables.mygame[gameData.LookingAt].lastto = sharedVariables.mygame[gameData.LookingAt].currentLastto;
-                    if(sharedVariables.mygame[gameData.LookingAt].movetop == 0 || 
+                    if(sharedVariables.mygame[gameData.LookingAt].movetop == 0 ||
                     (sharedVariables.mygame[gameData.LookingAt].currentLastto == sharedVariables.mygame[gameData.LookingAt].currentLastfrom
                     && sharedVariables.mygame[gameData.LookingAt].movetop == 1))
                     startPosition = true;
@@ -763,11 +791,11 @@ the slider is on. otherwise it draws the curernt in play board*/
 				//g.drawImage(img[piece-1], boardx +  b * squarex + 2 , boardy + aa * squarey + 2 , squarex - 4, squarey-4, this);
 				// above assumes x goes from the squares x + 2 to the squares x -2 or width is x-4 same with y
 				// we now use an additional value for decreasing x and y of piece ( one or other) based on if we truncated the x or y width or height to match the opposing parameter ( with or height)
-			{	
+			{
                           if(sharedVariables.mygame[gameData.LookingAt].wild == 30)
                           {
                              drawCheckersPiece(g,  boardx + b * squarex,  boardy + aa * squarey,  piece);
-                            
+
                           }
                           else
                           {
@@ -785,7 +813,7 @@ the slider is on. otherwise it draws the curernt in play board*/
 			}
 			catch(Exception e)
 			{ }
-			
+
                          if(bugging > -1)
                          {
 				piece=sharedVariables.mygame[bugging].board[gameslot];
@@ -861,7 +889,7 @@ paintShapes(g, boardx, boardy, squarex, squarey);
 
 
  }// end if bugging > -1
- 
+
  if(sharedVariables.drawCoordinates == true)
  drawCoordinates(g, boardx, boardy, squarex, squarey);
 }
@@ -1030,6 +1058,7 @@ else
 		int piecemoving;
 		int movingexaminepiece;
 		int examinepiecemoving;
+		int arrowSquare;
 
 void repaintPiece()
 {
@@ -1111,6 +1140,10 @@ void repaintPiece()
                                        {
 						sharedVariables.mygame[gameData.LookingAt].premove="";
 						repaint();
+						if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+						{
+                                                   arrowSquare = getArrowSquare();
+                                                }
 						return;
 					}
 
@@ -1159,12 +1192,51 @@ void repaintPiece()
           if(sharedVariables.moveInputType == channels.CLICK_CLICK && inTheAir == true)
           return;
            if(me.getButton() == MouseEvent.BUTTON3)
+           {
+             if(arrowSquare > -1 && sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+             {
+               mouseReleasedCircleArrowDrawn(me);
+             }
+           arrowSquare = -1;
            return;
-
+           }
           mouseReleasedMoveMade (me);
-           
+
   }
-  
+
+       public void mouseReleasedCircleArrowDrawn(MouseEvent me) {
+
+            try {
+              int arrowToSquare = getArrowSquare();
+              if(arrowToSquare < 0)
+                return;
+
+              String arrowFrom = getSubMove(arrowSquare);
+              String arrowTo = getSubMove(arrowToSquare);
+              String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
+
+              String prefixcommand="";
+             // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
+            // this will get any text back from server to go to right console
+            if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
+               prefixcommand="`g" + gameData.LookingAt + "`";
+
+            String themove = primary  + prefixcommand;
+            if(arrowFrom.equals(arrowTo))// circle
+            themove += "Circle " + arrowTo + "\n";
+            else
+            themove += "Arrow " + arrowFrom + " " + arrowTo + "\n";
+            myoutput amove = new myoutput();
+            amove.game=1;
+            amove.consoleNumber=0;
+            amove.data=themove;
+             queue.add(amove);
+
+            }
+            catch(Exception badArrow){}
+
+       }
+
 	 public void mouseReleasedMoveMade (MouseEvent me) {
 
      boolean iLocked=false;
