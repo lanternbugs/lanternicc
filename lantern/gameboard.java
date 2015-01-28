@@ -1711,7 +1711,8 @@ void stopTheEngine()
             @Override
               public void run() {
               try {
-                Sound movesound=new Sound(sharedVariables.songs[7]);
+                
+                Sound movesound=new Sound(sharedVariables.songs[5]);
 
               } catch (Exception e1) {
                 //ignore
@@ -2237,7 +2238,9 @@ void stopTheEngine()
 
       // remove from move list.  we dont have to call all boards
       // because all boards share same data object
-
+      if (sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING)
+            sharedVariables.mygame[gameData.BoardIndex].clearShapes();
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_OBSERVING) {

@@ -108,6 +108,7 @@ listFrame myfirstlist;
 listInternalFrame mysecondlist;
 newBoardCreator client;
 sendToIcs client2;
+long lastBlockSaysTime;
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
@@ -118,6 +119,7 @@ DG_GAME_NOTIFY = "3000";
 startedParsing= false;
 icc_num= 0;
 fullyConnected=-1;// set to 0 on prompt set to 1 message after prompt
+lastBlockSaysTime = System.currentTimeMillis();
 theMainFrame=theMainFrame1;
 myConnection= myConnection1;
 channelLogin = false;
@@ -2152,8 +2154,12 @@ for(int a=0; a < sharedVariables.maxGameTabs; a++)
 if(sharedVariables.mygame[a]!=null)
 if(sharedVariables.mygame[a].state == sharedVariables.STATE_PLAYING)
 return false;
-
-sendMessage("`c" + blockConsoleNumber + "`say [automatic Lantern Interface Message] " + sharedVariables.myname + " does not receive opponents says when not playing.\n");
+long nowTime = System.currentTimeMillis();
+if(nowTime > lastBlockSaysTime + 5000)
+{
+    sendMessage("`c" + blockConsoleNumber + "`say [automatic Lantern Interface Message] " + sharedVariables.myname + " does not receive opponents says when not playing.\n");
+    lastBlockSaysTime =  System.currentTimeMillis();
+}
 return true;
 }
 
