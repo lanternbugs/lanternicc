@@ -266,7 +266,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem board6;
   JCheckBoxMenuItem board7;
   */
-  JCheckBoxMenuItem[] boardarray = new JCheckBoxMenuItem[11];
+  JCheckBoxMenuItem[] boardarray;
 
   /* Andrey edits:
      make an array for the presets
@@ -988,6 +988,7 @@ class mymultiframe extends JFrame
 
   public void createMenu() {
 
+    boardarray = new JCheckBoxMenuItem[graphics.maxBoards];
     // the whole menu bar
     JMenuBar menu = new JMenuBar();
     setJMenuBar(menu);
@@ -1517,7 +1518,9 @@ class mymultiframe extends JFrame
     boardarray[8] = new JCheckBoxMenuItem("Olive Board");
     boardarray[9] = new JCheckBoxMenuItem("Cherry Board");
     boardarray[10] = new JCheckBoxMenuItem("Purple Board");
-    // .. / .. / (separator)
+    boardarray[11] = new JCheckBoxMenuItem("Wood-4");
+    boardarray[12] = new JCheckBoxMenuItem("Wood-5");
+  // .. / .. / (separator)
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
     presetarray[0] = new JMenuItem("Default Board");
@@ -1658,9 +1661,10 @@ class mymultiframe extends JFrame
       boarddesigngroup.add(boarddesignarray[i]);
 
     ButtonGroup boardgroup = new ButtonGroup();
-    for (int i=0; i<boardarray.length; i++)
-      boardgroup.add(boardarray[i]);
 
+    for (int i=0; i<boardarray.length; i++)
+    {  boardgroup.add(boardarray[i]);
+    }
     ButtonGroup piecesgroup = new ButtonGroup();
     for (int i=0; i<piecesarray.length; i++)
       piecesgroup.add(piecesarray[i]);
@@ -1690,8 +1694,15 @@ class mymultiframe extends JFrame
 
     myboardmenu.add(selectboards);
     // .. / Boards /
-    for (int i=0; i<boardarray.length; i++)
-      selectboards.add(boardarray[i]);
+    for (int i=0; i<boardarray.length - 2; i++)
+    {  selectboards.add(boardarray[i]);
+              if(i == 3) // dark wood
+       {
+          selectboards.add(boardarray[11]);
+           selectboards.add(boardarray[12]);
+       }
+
+    }
     selectboards.addSeparator();
     selectboards.add(preset);
     // .. / .. / Preset Color Boards /
@@ -3257,6 +3268,14 @@ dot.setVisible(true);
 
     } else if (action.equals("Purple Board")) {
       sharedVariables.boardType=10;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Wood-4")) {
+      sharedVariables.boardType=11;
+      setBoard(sharedVariables.boardType);
+
+    } else if (action.equals("Wood-5")) {
+      sharedVariables.boardType=12;
       setBoard(sharedVariables.boardType);
 
     } else if (action.equals("Dyche1")) {

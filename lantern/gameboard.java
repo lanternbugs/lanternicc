@@ -1498,7 +1498,16 @@ void stopTheEngine()
         try {
           writeLock.lock();
 
+
           double time=System.currentTimeMillis();
+          if (sharedVariables.mygame[gameData.LookingAt].state ==
+              sharedVariables.STATE_EXAMINING)
+              {
+                sharedVariables.mygame[gameData.LookingAt].whitenow = (long) time;
+                sharedVariables.mygame[gameData.LookingAt].blacknow = (long) time;
+
+               }
+
           time =
             (double)(time-sharedVariables.mygame[gameData.BoardIndex].whitenow);
           sharedVariables.mygame[gameData.BoardIndex].wtime =
@@ -1660,7 +1669,6 @@ void stopTheEngine()
           sharedVariables.NOT_FOUND_NUMBER)
         // the game i'm looking at doesnt have a clock
 	return;
-
       if (isVisible() == true)
         repaintClocks();
     }

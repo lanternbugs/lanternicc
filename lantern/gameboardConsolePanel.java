@@ -128,6 +128,15 @@ public void makehappen(int i)
             //	channelTabs[physicalTab].setVisible(true);
             gameData.LookingAt=i;
             sharedVariables.Looking[gameData.BoardIndex]=i;
+            if (sharedVariables.mygame[gameData.LookingAt] != null && sharedVariables.mygame[gameData.LookingAt].state ==
+            sharedVariables.STATE_EXAMINING)
+            {
+                double time=System.currentTimeMillis();
+                sharedVariables.mygame[gameData.LookingAt].whitenow = (long) time;
+                sharedVariables.mygame[gameData.LookingAt].blacknow = (long) time;
+
+            }
+
             if(lastTabNumber > -1)
             channelTabs[lastTabNumber].setBackground(sharedVariables.tabBackground);
             setActiveTabForeground(physicalTab);
