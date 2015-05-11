@@ -89,6 +89,17 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   gameboardTop topGame;
   int oldDif=0;
 
+ public void timerSafeCancel()
+ {
+      if(timer != null)
+      {
+        try {
+          timer.cancel();
+        }
+        catch(Exception e) { }
+      }
+ }
+
   public boolean superIsVisible() {
     return super.isVisible();
   }
@@ -970,8 +981,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
 
   try {
+    timerSafeCancel();
     timer = new Timer (  ) ;
-    timer.scheduleAtFixedRate( new ToDoTask (  ) , 300 ,300) ;
+    timer.scheduleAtFixedRate( new ToDoTask (  ) , 155 ,155) ;
     resetMoveList();
   }
        catch(Exception duty){ 
@@ -2486,6 +2498,10 @@ void stopTheEngine()
 
     if (myconsolepanel.Input.hasFocus() && myconsolepanel.myself!=null)
       myconsolepanel.myself.switchConsoleWindows();
+    
+    if(isVisible() && sharedVariables.engineOn) {
+        stopTheEngine();
+      }
 
     setVisible(false);
     if (sharedVariables.mygame[gameData.LookingAt].state !=
@@ -2495,7 +2511,7 @@ void stopTheEngine()
       queue.add(data);
 
     }
-    
+      timerSafeCancel();
       myoutput data2 = new myoutput();
       data2.boardClosing= gameData.BoardIndex;
       queue.add(data2);

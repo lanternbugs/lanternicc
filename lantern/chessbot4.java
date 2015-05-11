@@ -6164,7 +6164,10 @@ if(sharedVariables.tabsOnly == true)
       else
         sharedVariables.tabLooking[sharedVariables.openBoardCount]=last;
 
-	    myboards[last] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, last, sharedVariables.img, queue, sharedVariables, graphics, myDocWriter);
+	    if(myboards[last] != null) {
+              myboards[last].timerSafeCancel();
+            }
+            myboards[last] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, last, sharedVariables.img, queue, sharedVariables, graphics, myDocWriter);
 
         	//writeToConsole("success in making new game board");
 		if(sharedVariables.useTopGames == false)

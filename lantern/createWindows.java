@@ -393,6 +393,9 @@ break;
 
 
    sharedVariables.tabLooking[boardNumber1]=boardNumber1;
+   if(myboards[boardNumber1] != null) {
+     myboards[boardNumber1].timerSafeCancel();
+   }  
    myboards[boardNumber1] = new gameboard(consoles, consoleSubframes, gameconsoles, gamequeue, boardNumber1, img, queue, sharedVariables, graphics, myDocWriter);
 
 
