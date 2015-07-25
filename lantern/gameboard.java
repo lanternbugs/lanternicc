@@ -1916,7 +1916,8 @@ void stopTheEngine()
       // send to engine if we are anlyzing
     if ((sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_OBSERVING)) {
+          sharedVariables.STATE_OBSERVING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_PLAYING)) {
 	//sendToEngine("time 1000000");
         //sendToEngine("otime 1000000");
         myoutput outgoing = new myoutput();
@@ -2263,7 +2264,8 @@ void stopTheEngine()
             sharedVariables.mygame[gameData.BoardIndex].clearShapes();
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_OBSERVING) {
+          sharedVariables.STATE_OBSERVING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_PLAYING) {
 	sharedVariables.mygame[gameData.BoardIndex].engineTop -=num;
         if (sharedVariables.mygame[gameData.BoardIndex].engineTop < 0)
           sharedVariables.mygame[gameData.BoardIndex].engineTop = 0;

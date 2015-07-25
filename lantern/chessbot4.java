@@ -2389,10 +2389,10 @@ if(dg.getArg(0).equals("27"))
 }
 
 		if(dg.getArg(0).equals("91")){
-		if(dg.getArg(1).startsWith("https") || dg.getArg(1).contains("tryicc/register"))
+	//	if(dg.getArg(1).startsWith("https") || dg.getArg(1).contains("tryicc/register"))
 		 sharedVariables.openUrl(dg.getArg(1));
-		else
-                mycreator.createWebFrame(dg.getArg(1));
+	//	else
+        //        mycreator.createWebFrame(dg.getArg(1));
 
 		}
 

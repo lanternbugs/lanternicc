@@ -2138,10 +2138,10 @@ class mymultiframe extends JFrame
       mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
 
     } else if (action.equals("ICC Information Help Files")) {
-      mycreator.createWebFrame("http://www.chessclub.com/help/info-list");
+      openUrl("http://www.chessclub.com/help/info-list");
 
     } else if (action.equals("ICC Command Help Files")) {
-      mycreator.createWebFrame("http://www.chessclub.com/help/help-list");
+      openUrl("http://www.chessclub.com/help/help-list");
 
     } else if (action.equals("Join/Renew")) {
       openUrl("http://www.chessclub.com/tryicc/purchase.html");
@@ -4732,7 +4732,7 @@ dot.setVisible(true);
     hgroup.addComponent(pure45);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(pure960);
-     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(checkers);
     layout.setHorizontalGroup(hgroup);
 	ParallelGroup vgroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
@@ -4755,7 +4755,7 @@ dot.setVisible(true);
 
 	}
   }
-  
+
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
@@ -4766,7 +4766,7 @@ dot.setVisible(true);
     JButton pure15 = new JButton(" 15-min ");
     JButton pure45 = new JButton(" 45 45 ");
     JButton pure960 = new JButton(" Chess960 ");
-     JButton checkers = new JButton(" Checkers ");
+    JButton checkers = new JButton(" Checkers ");
     JLabel seeksLabel = new JLabel();
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
@@ -5024,6 +5024,7 @@ dot.setVisible(true);
         public void mouseExited(MouseEvent me) {}
         public void mouseClicked(MouseEvent me) {}
       });
+
     toolBar.add(toolBarPanel);
 
   }

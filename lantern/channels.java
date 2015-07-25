@@ -352,7 +352,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.48";
+version = "v5.49";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
