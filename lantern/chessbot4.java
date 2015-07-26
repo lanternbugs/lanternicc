@@ -7566,6 +7566,22 @@ tabNumber++;
 sharedVariables.console[tabNumber][225]= 1;
 }
 
+if(sharedVariables.channelNamesList.get(li).channel.equals("226")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][226]= 1;
+}
+
+if(sharedVariables.channelNamesList.get(li).channel.equals("227")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][227]= 1;
+}
+
 if(sharedVariables.channelNamesList.get(li).channel.equals("228")) {
 if(go == false) {
 go = true;
@@ -7581,7 +7597,13 @@ tabNumber++;
 }// go = false
 sharedVariables.console[tabNumber][230]= 1;
 }
-
+if(sharedVariables.channelNamesList.get(li).channel.equals("232")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][232]= 1;
+}
 }// end for
 
 // ************** Stage 10
