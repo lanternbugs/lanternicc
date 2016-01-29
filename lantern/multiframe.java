@@ -448,7 +448,7 @@ class mymultiframe extends JFrame
     getContentPane().add(sharedVariables.desktop, "Center");
 
     getSettings();
-    
+
     String [][] settingsComboMemory = new String[sharedVariables.maxConsoleTabs][sharedVariables.maxConsoleTabs];
     for(int seta = 0; seta < sharedVariables.maxConsoleTabs; seta++)
      for(int setb = 0; setb < sharedVariables.maxConsoleTabs; setb++)
@@ -799,18 +799,18 @@ class mymultiframe extends JFrame
 
 
     mycreator.updateBoardsMenu(0);  // first board
-    
+
     updateTabPrefixesToSettings(settingsComboMemory);
   }
 
   void updateTabPrefixesToSettings(String settingsComboMemory[][])
   {
-     
+
      for(int cona = 0; cona < sharedVariables.maxConsoleTabs; cona++)
      for(int conb =1; conb < sharedVariables.maxConsoleTabs; conb++)
      if(!settingsComboMemory[cona][conb].equals(">"))
      {
-       
+
 
      if(sharedVariables.looking[cona] == conb)
                                      {
@@ -841,8 +841,8 @@ class mymultiframe extends JFrame
                                    framer.setVisible(true); */
 
                                     }
-                                    
-                                    
+
+
      }
 
   }
@@ -1562,7 +1562,7 @@ class mymultiframe extends JFrame
     piecesarray[21] = new JCheckBoxMenuItem("CCube");
     piecesarray[23] = new JCheckBoxMenuItem("Random Pieces");
     // .. /
-    
+
         JMenu checkersselectpieces = new JMenu("Checkers Pieces");
     // .. / Pieces /
     checkerspiecesarray[0] = new JCheckBoxMenuItem("Black-Red");
@@ -1735,7 +1735,7 @@ class mymultiframe extends JFrame
     // .. / .. /
     selectpieces.add(piecesarray[21]);
     selectpieces.add(piecesarray[23]);
-    
+
     checkersselectpieces.add(checkerspiecesarray[0]);
     checkersselectpieces.add(checkerspiecesarray[1]);
     // .. /
@@ -1933,6 +1933,7 @@ class mymultiframe extends JFrame
     JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
     JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
     // .. / (separator)
+    JMenuItem showtitled = new JMenuItem("Show Titled Players Online");
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
     JMenuItem addfriend = new JMenuItem("Add a Friend");
@@ -1959,6 +1960,7 @@ class mymultiframe extends JFrame
     actionsmenu.add(showobs5);
     actionsmenu.add(showobs15);
     actionsmenu.addSeparator();
+    actionsmenu.add(showtitled);
     actionsmenu.add(showrelay);
     actionsmenu.add(ratinggraph);
     actionsmenu.add(addfriend);
@@ -1977,6 +1979,7 @@ class mymultiframe extends JFrame
     showobs.addActionListener(this);
     showobs5.addActionListener(this);
     showobs15.addActionListener(this);
+    showtitled.addActionListener(this);
     showrelay.addActionListener(this);
     ratinggraph.addActionListener(this);
     addfriend.addActionListener(this);
@@ -3136,11 +3139,13 @@ dot.setVisible(true);
                action.equals("Observe High Rated 15-Minute Game") ||
                action.equals("Stop Following") ||
                action.equals("Follow Broadcast- When On") ||
+               action.equals("Show Titled Players Online") ||
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
         client.writeToSubConsole("Be sure to turn on the radio by opening ChessFM, " +
                                  "Actions - Open ChessFM in the menu.\n", 0);
-
+      if (action.equals("Show Titled Players Online"))
+	          client.writeToSubConsole("For a context menu with observe, finger etc - double click on a name or highlight a name and right click. ^ next to a name means they are playing.\n", 0);
       //String actionmess = "History\n";
       String actionmess =
         (action.equals("Show My Recent Games") ? "History" :
@@ -3148,13 +3153,14 @@ dot.setVisible(true);
           (action.equals("Show My Adjourned Games") ? "Stored" :
            (action.equals("Show My Profile and Ratings") ? "Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
+            (action.equals("Show Titled Players Online") ? "Who T" :
              (action.equals("Examine My Last Game") ? "Examine -1" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match"))))))))))) + "\n";
+                                 "Match")))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC"))
@@ -3167,7 +3173,9 @@ dot.setVisible(true);
     } else if (action.equals("Show Relay Schedule")) {
       openUrl("http://www.chessclub.com/activities/relays.html");
 
-    } else if (action.equals("Add a Friend")) {
+    }
+
+    else if (action.equals("Add a Friend")) {
       addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
 
     } else if (action.equals("Lookup User")) {
@@ -4702,7 +4710,7 @@ dot.setVisible(true);
   class toolBarPanelClass extends JPanel
   {
 
-	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure45, JButton pure960, JButton checkers,
+	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
 	 JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JToolBar toolBar)
  	{
 	GroupLayout layout = new GroupLayout(toolBar);
@@ -4729,11 +4737,10 @@ dot.setVisible(true);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(pure15);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure45);
+    hgroup.addComponent(pure25);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(pure960);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(checkers);
+
     layout.setHorizontalGroup(hgroup);
 	ParallelGroup vgroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
 	vgroup.addComponent(sharedVariables.mybuttons[0]);
@@ -4748,9 +4755,8 @@ dot.setVisible(true);
     vgroup.addComponent(pure3);
     vgroup.addComponent(pure5);
     vgroup.addComponent(pure15);
-    vgroup.addComponent(pure45);
+    vgroup.addComponent(pure25);
     vgroup.addComponent(pure960);
-    vgroup.addComponent(checkers);
     layout.setVerticalGroup(vgroup);
 
 	}
@@ -4764,9 +4770,8 @@ dot.setVisible(true);
     JButton pure3 = new JButton(" 3-min ");
     JButton pure5 = new JButton(" 5-min ");
     JButton pure15 = new JButton(" 15-min ");
-    JButton pure45 = new JButton(" 45 45 ");
+    JButton pure25 = new JButton(" 25-min ");
     JButton pure960 = new JButton(" Chess960 ");
-    JButton checkers = new JButton(" Checkers ");
     JLabel seeksLabel = new JLabel();
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
@@ -4788,7 +4793,7 @@ dot.setVisible(true);
 
     }
 
-    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure45, pure960, checkers,
+    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure25, pure960,
 	 seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, toolBar);
 
  /*
@@ -4803,9 +4808,8 @@ dot.setVisible(true);
     pure3.setBackground(new Color(255,255,255));
     pure5.setBackground(new Color(255,255,255));
     pure15.setBackground(new Color(255,255,255));
-    pure45.setBackground(new Color(255,255,255));
+    pure25.setBackground(new Color(255,255,255));
     pure960.setBackground(new Color(255,255,255));
-    checkers.setBackground(new Color(255,255,255));
     seeksLabel.setIcon(sharedVariables.seekIcon);
     //seeksLabel.setHorizontalAlignment( SwingConstants.CENTER );
     seeksLabel.addMouseListener(new MouseAdapter() {
@@ -4971,13 +4975,13 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    pure45.addMouseListener(new MouseAdapter() {
+    pure25.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
             ;
           else {
             myoutput data = new myoutput();
-            data.data= "`c0`" + "45\n";
+            data.data= "`c0`" + "25\n";
             data.consoleNumber=0;
             queue.add(data);
           }// end else
@@ -5007,23 +5011,7 @@ dot.setVisible(true);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    checkers.addMouseListener(new MouseAdapter() {
-        public void mousePressed(MouseEvent e) {
-          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
-            ;
-          else {
-            myoutput data = new myoutput();
-            data.data= "`c0`" + "checkers\n";
-            data.consoleNumber=0;
-            queue.add(data);
-          }// end else
-        }
 
-        public void mouseReleased(MouseEvent e) {}
-        public void mouseEntered(MouseEvent me) {}
-        public void mouseExited(MouseEvent me) {}
-        public void mouseClicked(MouseEvent me) {}
-      });
 
     toolBar.add(toolBarPanel);
 

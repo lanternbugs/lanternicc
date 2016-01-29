@@ -183,7 +183,7 @@ t.start();
 
 			lastConsoleNumber=0;
 		try {
-                
+
 
                 	connect();
                  }
@@ -524,12 +524,23 @@ try {
 
         requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
 
-    } catch(Exception d){ }
+    } catch(Exception d){
+
+		sharedVariables.chessclubIP = java.net.InetAddress.getByName("alt1.chessclub.com").getHostAddress();
+        sharedVariables.chessclubPort = "443";
+		Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
+		      Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
+
+        requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
+
+
+
+		}
 
 	if(requestSocket== null)
 	{
                 try {
-                 
+
 		requestSocket = new Socket("207.99.83.228", 23);// 127.0.0.1 or
 
                 }
@@ -2252,7 +2263,7 @@ if( dg.getArg(0).equals("152"))
                         gamequeue.add(temp);
                         else
                         {
-                       
+
 
                        if(console.type==0 || console.type == 5)
                          {if(console.number >=0 && console.number <sharedVariables.maxConsoleTabs)
@@ -2273,7 +2284,7 @@ if( dg.getArg(0).equals("152"))
                           uniqueName=sharedVariables.countryNames.substring(bb+ dg.getArg(3).length() + 2, bbb);
                           uniqueName=uniqueName.replace("_", " ");
                          }
-                          
+
                           if(console.type == 0)
                         {
                           if(uniqueName.equals(""))

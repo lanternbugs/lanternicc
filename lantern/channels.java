@@ -352,7 +352,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.49";
+version = "v5.50";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
 F9Manager = new F9Management();
@@ -869,7 +869,7 @@ void addWallPaper()
             Toolkit.getDefaultToolkit().getImage(wallpaperURL);
 
   }// if exists
-  else 
+  else
   {
       wallpaperFileName = "";
   wallpaperImage = null;
