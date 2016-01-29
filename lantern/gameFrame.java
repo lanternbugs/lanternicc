@@ -49,10 +49,13 @@ JScrollPane listScroller;
 Color listColor;
 TableRowSorter<TableModel> sorter;
 
+gameFrame myself;
+    JDialog adjudicateDialog;
+
 void setSelected(boolean home)
 {
  return;
-  
+
 }
 	//subframe [] consoleSubframes;
 
@@ -75,10 +78,11 @@ queue=queue1;
 sharedVariables = sharedVariables1;
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 initComponents();
+    myself = this;
 }// end constructor
 
 
-void initComponents(){       
+void initComponents(){
 
 
 //list = new JList(data); //data has type Object[]
@@ -126,7 +130,7 @@ else // library search
 MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
          if ((e.getClickCount() == 2 && (e.getButton() != MouseEvent.BUTTON3 ||  mygametable.type1.equals("stored") ))
-         && (sharedVariables.autoHistoryPopup == false || mygametable.type1.equals("stored"))) {
+         && (sharedVariables.autoHistoryPopup == false || (mygametable.type1.equals("stored") && e.getClickCount() == 2))) {
 
              JTable target = (JTable)e.getSource();
       int row = target.getSelectedRow();
@@ -189,7 +193,41 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 String examineString="";
 				 final String type1 = mygametable.type1;
 				 final String type2=mygametable.type2;
-				if(type1.equals("history") || type1.equals("liblist") || type1.equals("search"))
+
+				if(type1.equals("stored") && type2.equals(sharedVariables.myname)) {
+
+                    
+                    final String StoredOpponent = (String)gametable.getModel().getValueAt(row,4);
+                    JPopupMenu menu2=new JPopupMenu("Popup2");
+									JMenuItem item1 = new JMenuItem("adjudicate");
+									 item1.addActionListener(new ActionListener() {
+					          		public void actionPerformed(ActionEvent e) {
+										String examineString = "";
+
+
+									 	adjudicateDialog = new JDialog(myself, "Adjudicate Against " + StoredOpponent);
+									 	
+                                        
+									 	AjudicatePanel panel = new AjudicatePanel();
+                                        panel.adjudicteQueue = queue;
+                                        panel.myOpponent = StoredOpponent;
+									 	adjudicateDialog.add(panel);
+									 	panel.setLayout();
+                                        panel.setupListeners();
+									 	adjudicateDialog.setSize(500,150);
+									 	adjudicateDialog.setVisible(true);
+                                        adjudicateDialog.setModal(true);
+									 	
+
+									}
+
+					       });
+								    menu2.add(item1);
+								    add(menu2);
+				menu2.show(e.getComponent(),e.getX(),e.getY());
+
+				}
+				else if(type1.equals("history") || type1.equals("liblist") || type1.equals("search"))
 				{
 
 				JPopupMenu menu2=new JPopupMenu("Popup2");
@@ -420,7 +458,7 @@ return "Pgn";
 
 			  String myFilename=scriptFile.getAbsolutePath();
 			{
-                          
+
                           if(!myFilename.toLowerCase().endsWith(".pgn"))
                           return myFilename + ".pgn";
                           return myFilename;
@@ -432,6 +470,189 @@ return "Pgn";
 		return "";
 }// end method
 
+class AjudicatePanel extends JPanel
+{
+    JCheckBox checkWin;
+    JCheckBox checkDraw;
+    JCheckBox checkAbort;
+    JLabel checkboxLabel;
+    JLabel  winLabel;
+    JLabel drawLabel;
+    JLabel abortLabel;
+    JLabel reasonLabel;
+    JTextArea reasonField;
+    JButton submitButton;
+    JButton cancelButton;
+    
+    
+    
+    ConcurrentLinkedQueue<myoutput> adjudicteQueue;
+    String myOpponent;
+    
+    AjudicatePanel() {
+        checkWin = new JCheckBox();
+        checkDraw = new JCheckBox();
+        checkAbort = new JCheckBox();
+        checkboxLabel = new JLabel("Select a Result     ");
+        reasonLabel = new JLabel("  Input reason below");
+        winLabel = new JLabel("win");
+        drawLabel = new JLabel("draw");
+        abortLabel = new JLabel("abort");
+        reasonField = new JTextArea();
+        reasonField.setEditable(true);
+        reasonField.setLineWrap(true);
+        reasonField.setWrapStyleWord(true);
+        submitButton = new JButton("Submit");
+        cancelButton = new JButton("Cancel");
+    }
+    
+    
+	void setLayout() {
+			//mypane.add(listScroller);
+	 GroupLayout layout = new GroupLayout(adjudicateDialog.getContentPane());
+	        adjudicateDialog.getContentPane().setLayout(layout);
+
+		//Create a parallel group for the horizontal axis
+		ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+		ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+
+
+
+		SequentialGroup row1 = layout.createSequentialGroup();
+
+		row1.addComponent(checkboxLabel);
+		row1.addComponent(winLabel);
+		row1.addComponent(checkWin);
+        row1.addComponent(drawLabel);
+        row1.addComponent(checkDraw);
+        row1.addComponent(abortLabel);
+		row1.addComponent(checkAbort);
+        row1.addComponent(reasonLabel);
+
+
+
+
+	h1.addGroup(row1);
+
+	SequentialGroup row2 = layout.createSequentialGroup();
+
+		row2.addComponent(reasonField);
+		h1.addGroup(row2);
+
+		SequentialGroup row3 = layout.createSequentialGroup();
+		row3.addComponent(cancelButton);
+		row3.addComponent(submitButton);
+		h1.addGroup(row3);
+
+
+
+		hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+		//Create the horizontal group
+		layout.setHorizontalGroup(hGroup);
+
+
+		//Create a parallel group for the vertical axis
+		ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+
+		ParallelGroup col1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+		col1.addComponent(checkboxLabel);
+		col1.addComponent(winLabel);
+        col1.addComponent(checkWin);
+        col1.addComponent(drawLabel);
+		col1.addComponent(checkDraw);
+        col1.addComponent(abortLabel);
+		col1.addComponent(checkAbort);
+        col1.addComponent(reasonLabel);
+
+	SequentialGroup v1 = layout.createSequentialGroup();
+
+
+
+			v1.addGroup(col1);
+			v1.addComponent(reasonField);
+			ParallelGroup col3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+					col3.addComponent(submitButton);
+					col3.addComponent(cancelButton);
+		v1.addGroup(col3);
+
+		vGroup.addGroup(v1);
+
+	layout.setVerticalGroup(vGroup);
+}
+    
+    void setupListeners() {
+        
+        ActionListener actionWin = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
+        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+        if(abstractButton.getModel().isSelected()) {
+            checkDraw.setSelected(false);
+            checkAbort.setSelected(false);
+        }
+        
+    }
+};
+    checkWin.addActionListener(actionWin);
+    
+    ActionListener actionDraw = new ActionListener() {
+    public void actionPerformed(ActionEvent actionEvent) {
+    AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+    if(abstractButton.getModel().isSelected()) {
+        checkWin.setSelected(false);
+        checkAbort.setSelected(false);
+    }
+    
+}
+};
+checkDraw.addActionListener(actionDraw);
+
+ActionListener actionAbort = new ActionListener() {
+public void actionPerformed(ActionEvent actionEvent) {
+AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+if(abstractButton.getModel().isSelected()) {
+checkDraw.setSelected(false);
+checkWin.setSelected(false);
+}
+
+}
+};
+checkAbort.addActionListener(actionAbort);
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String toSend = "";
+                if(checkWin.isSelected()) {
+                    toSend = "request-win ";
+                } else if(checkDraw.isSelected()) {
+                    toSend = "request-draw";
+                } else if(checkAbort.isSelected()) {
+                    toSend = "request-abort";
+                } else return;
+                
+                toSend += " " + myOpponent + " ";
+                String reasonText = reasonField.getText();
+                reasonText = reasonText.replace("\n", " ");
+                reasonText = reasonText.trim();
+                if(reasonText.length() < 1) {
+                    return;
+                } else {
+                    toSend += reasonText;
+                }
+                myoutput output = new myoutput();
+                output.data="`c0`" + toSend + "\n";
+                
+                output.consoleNumber=0;
+                adjudicteQueue.add(output);
+                adjudicateDialog.dispose();
+            } 
+        } );
+        
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                adjudicateDialog.dispose();;
+            } 
+        } );
+    } // end function
+}// end class
 class overall extends JPanel
 {
 
@@ -450,12 +671,12 @@ class overall extends JPanel
 
 
 
-	h2.addComponent(listScroller);
+			h2.addComponent(listScroller);
 
 
 
 
-h1.addGroup(h2);
+	h1.addGroup(h2);
 
 
 

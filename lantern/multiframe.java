@@ -1002,6 +1002,7 @@ class mymultiframe extends JFrame
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
     JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
     JMenuItem settings2 = new JMenuItem("Save Settings");
+    JMenuItem quitItem = new JMenuItem("Quit");
 
     // add shortcuts
     myfiles.setMnemonic(KeyEvent.VK_F);
@@ -1020,6 +1021,7 @@ class mymultiframe extends JFrame
     //myfiles.add(reconnect2);
     myfiles.add(wallpaper1);
     myfiles.add(settings2);
+    myfiles.add(quitItem);
 
     // add listeners
     settings2.addActionListener(this);
@@ -1028,6 +1030,7 @@ class mymultiframe extends JFrame
     //reconnect2.addActionListener(this);
     reconnect3.addActionListener(this);
     wallpaper1.addActionListener(this);
+    quitItem.addActionListener(this);
 
     /****************************** Colors ******************************/
     JMenu mywindowscolors = new JMenu("Colors");
@@ -3139,6 +3142,7 @@ dot.setVisible(true);
                action.equals("Observe High Rated 15-Minute Game") ||
                action.equals("Stop Following") ||
                action.equals("Follow Broadcast- When On") ||
+               action.equals("Quit") ||
                action.equals("Show Titled Players Online") ||
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
@@ -3154,13 +3158,14 @@ dot.setVisible(true);
            (action.equals("Show My Profile and Ratings") ? "Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online") ? "Who T" :
+            (action.equals("Quit") ? "Quit" :
              (action.equals("Examine My Last Game") ? "Examine -1" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match")))))))))))) + "\n";
+                                 "Match"))))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC"))
