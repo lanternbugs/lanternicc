@@ -129,8 +129,8 @@ else // library search
 
 MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
-         if ((e.getClickCount() == 2 && (e.getButton() != MouseEvent.BUTTON3 ||  mygametable.type1.equals("stored") ))
-         && (sharedVariables.autoHistoryPopup == false || (mygametable.type1.equals("stored") && e.getClickCount() == 2))) {
+         if (e.getClickCount() == 2 && e.getButton() != MouseEvent.BUTTON3
+         && sharedVariables.autoHistoryPopup == false ) {
 
              JTable target = (JTable)e.getSource();
       int row = target.getSelectedRow();
@@ -194,9 +194,9 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 final String type1 = mygametable.type1;
 				 final String type2=mygametable.type2;
 
-				if(type1.equals("stored") && type2.equals(sharedVariables.myname)) {
+				if(type1.equals("stored")) {
 
-                    
+
                     final String StoredOpponent = (String)gametable.getModel().getValueAt(row,4);
                     JPopupMenu menu2=new JPopupMenu("Popup2");
 									JMenuItem item1 = new JMenuItem("adjudicate");
@@ -206,8 +206,8 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 									 	adjudicateDialog = new JDialog(myself, "Adjudicate Against " + StoredOpponent);
-									 	
-                                        
+
+
 									 	AjudicatePanel panel = new AjudicatePanel();
                                         panel.adjudicteQueue = queue;
                                         panel.myOpponent = StoredOpponent;
@@ -217,13 +217,50 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 									 	adjudicateDialog.setSize(500,150);
 									 	adjudicateDialog.setVisible(true);
                                         adjudicateDialog.setModal(true);
-									 	
+
 
 									}
 
 					       });
-								    menu2.add(item1);
-								    add(menu2);
+
+					       if(type2.equals(sharedVariables.myname)) {
+						   										menu2.add(item1);
+							}
+
+					       JMenuItem item2 = new JMenuItem("examine");
+						   									 item2.addActionListener(new ActionListener() {
+						   					          		public void actionPerformed(ActionEvent e) {
+																String examineString = "Examine " + StoredOpponent + " " + type2;
+
+				 	                                      myoutput output = new myoutput();
+				 	                                      output.data=examineString + "\n";
+
+				 	                                     output.consoleNumber=0;
+      			 	                                     queue.add(output);
+
+						   									}
+
+					       });
+
+						   menu2.add(item2);
+
+						   JMenuItem item3 = new JMenuItem("sposition");
+						   					item3.addActionListener(new ActionListener() {
+						   				   public void actionPerformed(ActionEvent e) {
+                                                String sposString = "Spos " + StoredOpponent + " " + type2;
+
+						                     myoutput output = new myoutput();
+					                          output.data=sposString + "\n";
+
+							                 output.consoleNumber=0;
+										    queue.add(output);
+
+						   				}
+
+						   					       });
+
+						   menu2.add(item3);
+						   add(menu2);
 				menu2.show(e.getComponent(),e.getX(),e.getY());
 
 				}
@@ -483,12 +520,12 @@ class AjudicatePanel extends JPanel
     JTextArea reasonField;
     JButton submitButton;
     JButton cancelButton;
-    
-    
-    
+
+
+
     ConcurrentLinkedQueue<myoutput> adjudicteQueue;
     String myOpponent;
-    
+
     AjudicatePanel() {
         checkWin = new JCheckBox();
         checkDraw = new JCheckBox();
@@ -505,8 +542,8 @@ class AjudicatePanel extends JPanel
         submitButton = new JButton("Submit");
         cancelButton = new JButton("Cancel");
     }
-    
-    
+
+
 	void setLayout() {
 			//mypane.add(listScroller);
 	 GroupLayout layout = new GroupLayout(adjudicateDialog.getContentPane());
@@ -579,9 +616,9 @@ class AjudicatePanel extends JPanel
 
 	layout.setVerticalGroup(vGroup);
 }
-    
+
     void setupListeners() {
-        
+
         ActionListener actionWin = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
         AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -589,11 +626,11 @@ class AjudicatePanel extends JPanel
             checkDraw.setSelected(false);
             checkAbort.setSelected(false);
         }
-        
+
     }
 };
     checkWin.addActionListener(actionWin);
-    
+
     ActionListener actionDraw = new ActionListener() {
     public void actionPerformed(ActionEvent actionEvent) {
     AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -601,7 +638,7 @@ class AjudicatePanel extends JPanel
         checkWin.setSelected(false);
         checkAbort.setSelected(false);
     }
-    
+
 }
 };
 checkDraw.addActionListener(actionDraw);
@@ -627,7 +664,7 @@ checkAbort.addActionListener(actionAbort);
                 } else if(checkAbort.isSelected()) {
                     toSend = "request-abort";
                 } else return;
-                
+
                 toSend += " " + myOpponent + " ";
                 String reasonText = reasonField.getText();
                 reasonText = reasonText.replace("\n", " ");
@@ -639,17 +676,17 @@ checkAbort.addActionListener(actionAbort);
                 }
                 myoutput output = new myoutput();
                 output.data="`c0`" + toSend + "\n";
-                
+
                 output.consoleNumber=0;
                 adjudicteQueue.add(output);
                 adjudicateDialog.dispose();
-            } 
+            }
         } );
-        
+
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adjudicateDialog.dispose();;
-            } 
+            }
         } );
     } // end function
 }// end class

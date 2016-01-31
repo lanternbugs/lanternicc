@@ -50,7 +50,7 @@ import javax.swing.filechooser.FileFilter;
 
 
 //public class multiframe  extends JApplet
-public class multiframe {
+public class Lantern {
 
   public static void createFrame() {
     Frame frame = new Frame();
@@ -695,7 +695,60 @@ class mymultiframe extends JFrame
       Image myIconImage = null;
       URL myurl = this.getClass().getResource("lantern.png");
       myIconImage = Toolkit.getDefaultToolkit().getImage(myurl);
-      setIconImage(myIconImage);
+
+      Image myIconImage16 = null;
+	        URL myurl16 = this.getClass().getResource("lantern-16.png");
+      myIconImage16 = Toolkit.getDefaultToolkit().getImage(myurl16);
+
+       Image myIconImage24 = null;
+	  	        URL myurl24 = this.getClass().getResource("lantern-24.png");
+	        myIconImage24 = Toolkit.getDefaultToolkit().getImage(myurl24);
+
+
+      Image myIconImage32 = null;
+	        URL myurl32 = this.getClass().getResource("lantern-32.png");
+      myIconImage32 = Toolkit.getDefaultToolkit().getImage(myurl32);
+
+       Image myIconImage48 = null;
+	  	        URL myurl48 = this.getClass().getResource("lantern-48.png");
+	        myIconImage48 = Toolkit.getDefaultToolkit().getImage(myurl48);
+
+
+      Image myIconImage64 = null;
+	        URL myurl64 = this.getClass().getResource("lantern-64.png");
+      myIconImage64 = Toolkit.getDefaultToolkit().getImage(myurl64);
+
+      Image myIconImage128 = null;
+	        URL myurl128 = this.getClass().getResource("lantern-128.png");
+      myIconImage128 = Toolkit.getDefaultToolkit().getImage(myurl128);
+
+       Image myIconImage256 = null;
+	  	        URL myurl256 = this.getClass().getResource("lantern-256.png");
+	        myIconImage256 = Toolkit.getDefaultToolkit().getImage(myurl256);
+
+	    Image myIconImage512 = null;
+	        URL myurl512 = this.getClass().getResource("lantern-512.png");
+      myIconImage512 = Toolkit.getDefaultToolkit().getImage(myurl512);
+
+
+
+       final java.util.List<Image> icons = new ArrayList<Image>();
+       icons.add(myIconImage16);
+       icons.add(myIconImage24);
+       icons.add(myIconImage32);
+       icons.add(myIconImage48);
+       icons.add(myIconImage64);
+	   icons.add(myIconImage128);
+	   icons.add(myIconImage256);
+       icons.add(myIconImage512);
+        SwingUtilities.invokeLater( new Runnable() {
+	               public void run() {
+
+	                   setIconImages(icons);
+
+	               }
+        });
+      //setIconImage(myIconImage);
       // need a package for this
       /*
       if (sharedVariables.operatingSystem.equals("mac")) {
@@ -1498,8 +1551,11 @@ class mymultiframe extends JFrame
     // Game /
     JMenuItem nseek = new JMenuItem("Seek a Game");
     JMenuItem nchallenge = new JMenuItem("Challenge");
+    JMenuItem dorematch = new JMenuItem("Rematch");
     JMenuItem flipSent = new JMenuItem("Flip");
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
+    JMenuItem showexam = new JMenuItem("Enter Examination Mode");
+    JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
     JMenu boardDesign = new JMenu("Board Design");
     // .. / Board Design /
     boarddesignarray[0] = new JCheckBoxMenuItem("Original");
@@ -1690,8 +1746,12 @@ class mymultiframe extends JFrame
 
     myboardmenu.add(nseek);
     myboardmenu.add(nchallenge);
+    myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
     myboardmenu.add(flipSent);
+    myboardmenu.addSeparator();
+     myboardmenu.add(showexam);
+    myboardmenu.add(showexamlast);
     myboardmenu.addSeparator();
     myboardmenu.add(autoPromote);
      myboardmenu.add(moveInputMenu);
@@ -1833,6 +1893,7 @@ myboardappearancemenu.add(consoleaspect);
     // add listeners
     nseek.addActionListener(this);
     nchallenge.addActionListener(this);
+    dorematch.addActionListener(this);
     flipSent.addActionListener(this);
     withdrawSent.addActionListener(this);
     for (int i=0; i<boarddesignarray.length; i++)
@@ -1893,6 +1954,8 @@ myboardappearancemenu.add(consoleaspect);
     preset2.addActionListener(this);
     preset3.addActionListener(this);
     */
+    showexam.addActionListener(this);
+    showexamlast.addActionListener(this);
     lcolor.addActionListener(this);
     dcolor.addActionListener(this);
     bbackcolor.addActionListener(this);
@@ -1941,8 +2004,8 @@ myboardappearancemenu.add(consoleaspect);
     // .. / (separator)
     JMenuItem lookupuser = new JMenuItem("Lookup User");
     JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
-    JMenuItem showexam = new JMenuItem("Enter Examination Mode");
-    JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
+     JMenuItem addfriend = new JMenuItem("Add a Friend");
+
     // .. / (separator)
     JMenuItem showobs = new JMenuItem("Observe High Rated Game");
     JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
@@ -1951,7 +2014,6 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showtitled = new JMenuItem("Show Titled Players Online");
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
-    JMenuItem addfriend = new JMenuItem("Add a Friend");
     // .. / (separator)
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
@@ -1968,8 +2030,7 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.addSeparator();
     actionsmenu.add(lookupuser);
     actionsmenu.add(showfinger);
-    actionsmenu.add(showexam);
-    actionsmenu.add(showexamlast);
+    actionsmenu.add(addfriend);
     actionsmenu.addSeparator();
     actionsmenu.add(showobs);
     actionsmenu.add(showobs5);
@@ -1978,7 +2039,6 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showtitled);
     actionsmenu.add(showrelay);
     actionsmenu.add(ratinggraph);
-    actionsmenu.add(addfriend);
     actionsmenu.addSeparator();
     actionsmenu.add(followBroadcast);
     actionsmenu.add(unfollowBroadcast);
@@ -1989,8 +2049,6 @@ myboardappearancemenu.add(consoleaspect);
     showlib.addActionListener(this);
     showstored.addActionListener(this);
     showfinger.addActionListener(this);
-    showexam.addActionListener(this);
-    showexamlast.addActionListener(this);
     showobs.addActionListener(this);
     showobs5.addActionListener(this);
     showobs15.addActionListener(this);
@@ -3155,6 +3213,7 @@ dot.setVisible(true);
                action.equals("Stop Following") ||
                action.equals("Follow Broadcast- When On") ||
                action.equals("Disconnect") ||
+               action.equals("Rematch") ||
                action.equals("Show Titled Players Online") ||
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
@@ -3171,13 +3230,14 @@ dot.setVisible(true);
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
+             (action.equals("Rematch") ? "Rematch" :
              (action.equals("Examine My Last Game") ? "Examine -1" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match"))))))))))))) + "\n";
+                                 "Match")))))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC"))
