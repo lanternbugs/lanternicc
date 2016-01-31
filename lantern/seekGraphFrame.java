@@ -42,13 +42,14 @@ import java.lang.reflect.Method;
 class seekGraphFrame extends JInternalFrame implements InternalFrameListener
 {
 channels sharedVariables;
+JFrame mymultiframe;
 seekPanel mypanel;
 ConcurrentLinkedQueue<myoutput> queue;
 final JCheckBoxMenuItem allSeeks;
 final JCheckBoxMenuItem humanSeeks;
 final JCheckBoxMenuItem computerSeeks;
 
-seekGraphFrame(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
+seekGraphFrame(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, JFrame mymultiframe1)
 {
  super("Seek Graph",
           true, //resizable
@@ -58,6 +59,7 @@ seekGraphFrame(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1
 
 sharedVariables=sharedVariables1;
 queue=queue1;
+mymultiframe = mymultiframe1;
 
 addInternalFrameListener(this);
 setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -133,8 +135,8 @@ add(mypanel);
 
 void showSeekDialog()
 {
-JFrame mytempframe = new JFrame();
-seekGameDialog myseeker = new seekGameDialog(mytempframe, false, sharedVariables, queue);
+//JFrame mytempframe = new JFrame();
+seekGameDialog myseeker = new seekGameDialog(mymultiframe, false, sharedVariables, queue);
 int defaultWidth = 425;
 int defaultHeight = 220;
 myseeker.setSize(defaultWidth,defaultHeight);

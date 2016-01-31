@@ -371,7 +371,7 @@ class mymultiframe extends JFrame
     sharedVariables.useTopGames = getOnTopSetting();
     queue = new ConcurrentLinkedQueue<myoutput>();
 
-    seekGraph = new seekGraphFrame(sharedVariables, queue);
+    seekGraph = new seekGraphFrame(sharedVariables, queue, (JFrame) this);
 
     try {
       seekGraph.setSize(sharedVariables.mySeekSizes.con0x,
