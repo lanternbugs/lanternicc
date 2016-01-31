@@ -1807,7 +1807,7 @@ myboardappearancemenu.add(consoleaspect);
     Communications.add(gameend);
     Communications.add(autoChat);
     // .. /
-    myboardmenu.add(AdvancedGameMenu);
+    myboardappearancemenu.add(AdvancedGameMenu);
     // .. / Advanced /
     AdvancedGameMenu.add(lowTimeColors);
     AdvancedGameMenu.add(checkLegality);
