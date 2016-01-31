@@ -1494,7 +1494,8 @@ class mymultiframe extends JFrame
     toolbarvisible.addActionListener(this);
     //toolbox.addActionListener(this);
 
-    /****************************** Game ******************************/
+    /****************************** Board and Game ******************************/
+    JMenu myboardappearancemenu = new JMenu("Board");
     JMenu myboardmenu = new JMenu("Game");
     // Game /
     JMenuItem nseek = new JMenuItem("Seek a Game");
@@ -1682,6 +1683,7 @@ class mymultiframe extends JFrame
       boardconsolegroup.add(boardconsolearray[i]);
 
     // add to menu bar
+    menu.add(myboardappearancemenu);
     menu.add(myboardmenu);
     // Game /
     myboardmenu.add(nseek);
@@ -1691,14 +1693,14 @@ class mymultiframe extends JFrame
     myboardmenu.addSeparator();
     myboardmenu.add(autoPromote);
      myboardmenu.add(moveInputMenu);
-     myboardmenu.addSeparator();
-    myboardmenu.add(boardDesign);
+
+    myboardappearancemenu.add(boardDesign);
     // .. / Board Design /
     for (int i=0; i<boarddesignarray.length; i++)
       boardDesign.add(boarddesignarray[i]);
     // .. /
 
-    myboardmenu.add(selectboards);
+    myboardappearancemenu.add(selectboards);
     // .. / Boards /
     for (int i=0; i<boardarray.length - 2; i++)
     {  selectboards.add(boardarray[i]);
@@ -1715,9 +1717,9 @@ class mymultiframe extends JFrame
     for (int i=0; i<presetarray.length; i++)
       preset.add(presetarray[i]);
     // .. /
-    myboardmenu.add(selectpieces);
-    myboardmenu.add(checkersselectpieces);
-    myboardmenu.addSeparator();
+    myboardappearancemenu.add(selectpieces);
+    myboardappearancemenu.add(checkersselectpieces);
+    myboardappearancemenu.addSeparator();
     // .. / Pieces /
     for (int i=0; i<6; i++)
       selectpieces.add(piecesarray[i]);
@@ -1746,7 +1748,7 @@ class mymultiframe extends JFrame
     checkersselectpieces.add(checkerspiecesarray[0]);
     checkersselectpieces.add(checkerspiecesarray[1]);
     // .. /
-        myboardmenu.add(theHideMenu);
+        myboardappearancemenu.add(theHideMenu);
 	    // .. / Things to Hide or Show /
 	    theHideMenu.add(highlight);
 	    theHideMenu.add(materialCount);
@@ -1756,19 +1758,19 @@ class mymultiframe extends JFrame
 	    theHideMenu.add(showRatings);
     theHideMenu.add(playersInMyGame);
 
-myboardmenu.add(consoleaspect);
+myboardappearancemenu.add(consoleaspect);
     // .. / Board Console /
     for (int i=0; i<boardconsolearray.length; i++)
       consoleaspect.add(boardconsolearray[i]);
     consoleaspect.addSeparator();
     consoleaspect.add(sidewaysconsole);
 
-    myboardmenu.add(boardSquareColors);
+    myboardappearancemenu.add(boardSquareColors);
     // .. / Board Squares Colors /
     boardSquareColors.add(lcolor);
     boardSquareColors.add(dcolor);
     // .. /
-    myboardmenu.add(boardColors);
+    myboardappearancemenu.add(boardColors);
     // .. / Board Colors /
     boardColors.add(bbackcolor);
     boardColors.add(bforcolor);
@@ -1777,7 +1779,7 @@ myboardmenu.add(consoleaspect);
     boardColors.add(highlightcolor);
     boardColors.add(scrollhighlightcolor);
     // .. /
-    myboardmenu.add(boardFonts9);
+    myboardappearancemenu.add(boardFonts9);
     // .. / Board Fonts /
     boardFonts9.add(gamefont);
     boardFonts9.add(gameclockfont);
