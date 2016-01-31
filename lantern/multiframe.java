@@ -1033,7 +1033,7 @@ class mymultiframe extends JFrame
     quitItem.addActionListener(this);
 
     /****************************** Colors ******************************/
-    JMenu mywindowscolors = new JMenu("Colors");
+    JMenu mywindowscolors = new JMenu("Appearance");
     // Colors /
     JMenuItem fontchange = new JMenuItem("Change Font");
     JMenuItem channelcol = new JMenuItem("Channel Colors");
@@ -1268,9 +1268,7 @@ class mymultiframe extends JFrame
     italicsBehaviorGroup.add(italicsBehavior[1]);
     italicsBehaviorGroup.add(italicsBehavior[2]);
 
-    // add to menu bar
-    menu.add(optionsmenu);
-    // Options /
+    // options is added to menu bar now by game and board
     optionsmenu.add(soundmenu);
     // .. / Sound /
     soundmenu.add(hearsound);
@@ -1686,6 +1684,10 @@ class mymultiframe extends JFrame
     menu.add(myboardappearancemenu);
     menu.add(myboardmenu);
     // Game /
+    // add to menu bar
+		menu.add(optionsmenu);
+	// Options /
+
     myboardmenu.add(nseek);
     myboardmenu.add(nchallenge);
     myboardmenu.add(withdrawSent);
