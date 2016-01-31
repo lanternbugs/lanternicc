@@ -1002,7 +1002,7 @@ class mymultiframe extends JFrame
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
     JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
     JMenuItem settings2 = new JMenuItem("Save Settings");
-    JMenuItem quitItem = new JMenuItem("Quit");
+    JMenuItem quitItem = new JMenuItem("Disconnect");
 
     // add shortcuts
     myfiles.setMnemonic(KeyEvent.VK_F);
@@ -1497,7 +1497,7 @@ class mymultiframe extends JFrame
     /****************************** Game ******************************/
     JMenu myboardmenu = new JMenu("Game");
     // Game /
-    JMenuItem nseek = new JMenuItem("Get a Game");
+    JMenuItem nseek = new JMenuItem("Seek a Game");
     JMenuItem nchallenge = new JMenuItem("Challenge");
     JMenuItem flipSent = new JMenuItem("Flip");
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
@@ -1571,6 +1571,15 @@ class mymultiframe extends JFrame
     checkerspiecesarray[0] = new JCheckBoxMenuItem("Black-Red");
     checkerspiecesarray[1] = new JCheckBoxMenuItem("Black-White");
 
+    JMenu consoleaspect = new JMenu("Board Console");
+	    // .. / Board Console /
+	    boardconsolearray[0] = new JCheckBoxMenuItem("Hide Board Console");
+	    boardconsolearray[1] = new JCheckBoxMenuItem("Compact Board Console");
+	    boardconsolearray[2] = new JCheckBoxMenuItem("Normal Board Console");
+	    boardconsolearray[3] = new JCheckBoxMenuItem("Larger Board Console");
+	    // .. / .. / (separator)
+	    sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
+
     JMenu boardSquareColors = new JMenu("Board Squares Colors");
     // .. / Board Squares Colors /
     JMenuItem lcolor = new JMenuItem("Light Square Color");
@@ -1642,14 +1651,6 @@ class mymultiframe extends JFrame
     aspectarray[2] = new JCheckBoxMenuItem("4:3");
     aspectarray[3] = new JCheckBoxMenuItem("3:2");
     // .. /
-    JMenu consoleaspect = new JMenu("Board Console");
-    // .. / Board Console /
-    boardconsolearray[0] = new JCheckBoxMenuItem("Hide Board Console");
-    boardconsolearray[1] = new JCheckBoxMenuItem("Compact Board Console");
-    boardconsolearray[2] = new JCheckBoxMenuItem("Normal Board Console");
-    boardconsolearray[3] = new JCheckBoxMenuItem("Larger Board Console");
-    // .. / .. / (separator)
-    sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
 
     // add shortcuts
     myboardmenu.setMnemonic(KeyEvent.VK_G);
@@ -1685,10 +1686,12 @@ class mymultiframe extends JFrame
     // Game /
     myboardmenu.add(nseek);
     myboardmenu.add(nchallenge);
-    myboardmenu.add(flipSent);
     myboardmenu.add(withdrawSent);
+    myboardmenu.add(flipSent);
+    myboardmenu.addSeparator();
     myboardmenu.add(autoPromote);
      myboardmenu.add(moveInputMenu);
+     myboardmenu.addSeparator();
     myboardmenu.add(boardDesign);
     // .. / Board Design /
     for (int i=0; i<boarddesignarray.length; i++)
@@ -1714,6 +1717,7 @@ class mymultiframe extends JFrame
     // .. /
     myboardmenu.add(selectpieces);
     myboardmenu.add(checkersselectpieces);
+    myboardmenu.addSeparator();
     // .. / Pieces /
     for (int i=0; i<6; i++)
       selectpieces.add(piecesarray[i]);
@@ -1742,6 +1746,23 @@ class mymultiframe extends JFrame
     checkersselectpieces.add(checkerspiecesarray[0]);
     checkersselectpieces.add(checkerspiecesarray[1]);
     // .. /
+        myboardmenu.add(theHideMenu);
+	    // .. / Things to Hide or Show /
+	    theHideMenu.add(highlight);
+	    theHideMenu.add(materialCount);
+	    theHideMenu.add(drawCoordinates);
+	    theHideMenu.add(showPallette);
+	    theHideMenu.add(showFlags);
+	    theHideMenu.add(showRatings);
+    theHideMenu.add(playersInMyGame);
+
+myboardmenu.add(consoleaspect);
+    // .. / Board Console /
+    for (int i=0; i<boardconsolearray.length; i++)
+      consoleaspect.add(boardconsolearray[i]);
+    consoleaspect.addSeparator();
+    consoleaspect.add(sidewaysconsole);
+
     myboardmenu.add(boardSquareColors);
     // .. / Board Squares Colors /
     boardSquareColors.add(lcolor);
@@ -1761,28 +1782,21 @@ class mymultiframe extends JFrame
     boardFonts9.add(gamefont);
     boardFonts9.add(gameclockfont);
     // .. /
-    myboardmenu.add(theHideMenu);
-    // .. / Things to Hide or Show /
-    theHideMenu.add(highlight);
-    theHideMenu.add(materialCount);
-    theHideMenu.add(drawCoordinates);
-    theHideMenu.add(showPallette);
-    theHideMenu.add(showFlags);
-    theHideMenu.add(showRatings);
-    theHideMenu.add(playersInMyGame);
+    myboardmenu.addSeparator();
     //myboardmenu.add(useLightBackground);   // disabled
+    // .. /
+   myboardmenu.add(PgnMenu);
+    // .. / PGN /
+    PgnMenu.add(pgnlogging);
+    PgnMenu.add(pgnObservedLogging);
+    PgnMenu.add(openpgn);
     // .. /
     myboardmenu.add(examReplay);
     // .. / Examine Game Replay /
     examReplay.add(autoset);
     examReplay.add(whatexaminereplay);
     // .. /
-    myboardmenu.add(PgnMenu);
-    // .. / PGN /
-    PgnMenu.add(pgnlogging);
-    PgnMenu.add(pgnObservedLogging);
-    PgnMenu.add(openpgn);
-    // .. /
+
     myboardmenu.add(Communications);
     // .. / Communications /
     Communications.add(blockSays);
@@ -1801,12 +1815,6 @@ class mymultiframe extends JFrame
     for (int i=0; i<aspectarray.length; i++)
       aspect.add(aspectarray[i]);
     // .. /
-    myboardmenu.add(consoleaspect);
-    // .. / Board Console /
-    for (int i=0; i<boardconsolearray.length; i++)
-      consoleaspect.add(boardconsolearray[i]);
-    consoleaspect.addSeparator();
-    consoleaspect.add(sidewaysconsole);
 
     // special settings
     //highlight.setSelected(true);
@@ -2822,11 +2830,11 @@ dot.setVisible(true);
       mypopper.setVisible(true);
       mywriter.write((ontop ? "false" : "true") + "\r\n", "lantern_board_on_top.txt");
 
-    } else if (action.equals("Get a Game")) {
+    } else if (action.equals("Seek a Game")) {
 
       seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
       int defaultWidth = 425;
-      int defaultHeight = 310;
+      int defaultHeight = 220;
       myseeker.setSize(defaultWidth,defaultHeight);
 
       try {
@@ -2844,7 +2852,7 @@ dot.setVisible(true);
         myseeker.setLocation(px, py);
       } catch (Exception centerError) {}
 
-      myseeker.setTitle("Get a Game");
+      myseeker.setTitle("Seek a Game");
 
       myseeker.setVisible(true);
 
@@ -3142,7 +3150,7 @@ dot.setVisible(true);
                action.equals("Observe High Rated 15-Minute Game") ||
                action.equals("Stop Following") ||
                action.equals("Follow Broadcast- When On") ||
-               action.equals("Quit") ||
+               action.equals("Disconnect") ||
                action.equals("Show Titled Players Online") ||
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
@@ -3158,7 +3166,7 @@ dot.setVisible(true);
            (action.equals("Show My Profile and Ratings") ? "Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online") ? "Who T" :
-            (action.equals("Quit") ? "Quit" :
+            (action.equals("Disconnect") ? "Quit" :
              (action.equals("Examine My Last Game") ? "Examine -1" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :

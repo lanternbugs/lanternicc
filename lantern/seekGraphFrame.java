@@ -136,7 +136,7 @@ void showSeekDialog()
 JFrame mytempframe = new JFrame();
 seekGameDialog myseeker = new seekGameDialog(mytempframe, false, sharedVariables, queue);
 int defaultWidth = 425;
-int defaultHeight = 310;
+int defaultHeight = 220;
 myseeker.setSize(defaultWidth,defaultHeight);
 
 try {
@@ -171,7 +171,7 @@ myseeker.setVisible(true);
      {
 		if(isVisible() && isMaximum() == false && isIcon() == false)
 	{
-          
+
           sharedVariables.mySeekSizes.point0=getLocation();
 		//set_string = set_string + "" + point0.x + " " + point0.y + " ";
 	sharedVariables.mySeekSizes.con0x=getWidth();

@@ -142,7 +142,7 @@ manualLabel = new JLabel("manual");
 formulaLabel = new JLabel("formula");
 
 
-	Okbutton = new JButton("Ok");
+	Okbutton = new JButton("Seek");
 	Okbutton.addActionListener(new ActionListener() {
 				 int BAD_VALUE = -10000;
                                  int minseek=0;
@@ -254,7 +254,7 @@ formulaLabel = new JLabel("formula");
 							   	sharedVariables.myseek.formula=true;
 							   else
 							    sharedVariables.myseek.formula=false;
-                                 
+
                                   if(saveSettingsCheckBox.isSelected() == true)
                                     sharedVariables.myseek.saveSettings=true;
                                   else
@@ -435,15 +435,15 @@ row7.add(button15);
 row7.add(button45);
 row7.add(button960);
 
-setLayout(new GridLayout(8,1));
+setLayout(new GridLayout(5,1));
 add(row1);
 add(row2);
 add(row3);
 add(row34);
 add(row4);
-add(row5);
-add(row6);
-add(row7);
+//add(row5);
+//add(row6);
+//add(row7);
     }
 }
 
