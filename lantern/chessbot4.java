@@ -2306,7 +2306,7 @@ if( dg.getArg(0).equals("152"))
                        }
                           // code for mug shot
                         if(sharedVariables.showMugshots && console.type == 0)
-                        {  String ImageUrl = "http://www.chessclub.com/mugshots/" + dg.getArg(1) + ".jpg";
+                        {  String ImageUrl = "https://mugshot.chessclub.com/mugshots/" + dg.getArg(1) + ".jpg";
 
                         // String ImageUrl = "http://www6.chessclub.com/activities/popup.html?/mugshots/" + dg.getArg(1) + ".jpg";
                         mugShot imageClient = new mugShot(ImageUrl);

@@ -746,6 +746,7 @@ class mymultiframe extends JFrame
 
 	                   setIconImages(icons);
 
+
 	               }
         });
       //setIconImage(myIconImage);
