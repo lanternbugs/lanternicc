@@ -2209,7 +2209,7 @@ myboardappearancemenu.add(consoleaspect);
       mypopper.setVisible(true);
 
     } else if (action.equals("Lantern Manual")) {
-      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.html");
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.php");
 
     } else if (action.equals("Change Log")) {
       mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
