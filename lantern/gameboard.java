@@ -609,7 +609,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                                gameconsoles, gameData);
     Thread t = new Thread(engine1);
     t.start();
-    sharedVariables.mygame[gameData.BoardIndex].clickCount=0;
+    sharedVariables.mygame[gameData.LookingAt].clickCount=0;
     myoutput data = new myoutput();
     data.startengine=1;
     queue.add(data);
@@ -2273,7 +2273,7 @@ void stopTheEngine()
       }
 
        if ((sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==                
           sharedVariables.STATE_OBSERVING) &&
           sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
         if (sharedVariables.uci == false) {

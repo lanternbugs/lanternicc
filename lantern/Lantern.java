@@ -4243,17 +4243,22 @@ dot.setVisible(true);
 
   void startTheEngine() {
     boolean go = false;
-
-    for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
+    int aa;
+    for (aa=0; aa< sharedVariables.openBoardCount; aa++) {
       if (sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING) {
         sharedVariables.engineOn = false;
         makeEngineWarning2();
         return;
       }
     }
-
-    for (int a=0; a< sharedVariables.openBoardCount; a++) {
-      if (myboards[a].isSelected()) {
+    int visibleBoardCount = 0;
+    for(aa = 0; aa < sharedVariables.openBoardCount; aa++) {
+       if(myboards[aa].isVisible()) {
+         visibleBoardCount++;
+       }
+    }
+    for(int a=0; a< sharedVariables.openBoardCount; a++) {
+      if (myboards[a].isSelected() || (myboards[a].isVisible() && visibleBoardCount == 1)) {
 	if (sharedVariables.mygame[myboards[a].gameData.LookingAt] != null &&
             (sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
              sharedVariables.STATE_EXAMINING ||

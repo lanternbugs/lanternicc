@@ -6616,22 +6616,27 @@ boolean isABoardVisible()
 
 void initializeEngine()
 {
-		int a = sharedVariables.engineBoard;
+		int a = sharedVariables.engineBoard; // engine board is actual board tab not neccesarily visible board
+
 		     if(myboards[a]!=null)
-		     if(myboards[a].isVisible())
 		     {
-				 if((sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[sharedVariables.gamelooking[a]].state == sharedVariables.STATE_OBSERVING ) && sharedVariables.pointedToMain[a] == false)
+				 if((sharedVariables.mygame[a].state == sharedVariables.STATE_EXAMINING || sharedVariables.mygame[a].state == sharedVariables.STATE_OBSERVING ) && sharedVariables.pointedToMain[a] == false)
 
 			{
 
                           boolean go=true;
                            if(sharedVariables.engineOn == true)
-                           if(sharedVariables.mygame[sharedVariables.gamelooking[a]].clickCount %2 == 0)
+                           if(sharedVariables.mygame[a].clickCount %2 == 0)
                            go=true;
 
                            if(go==true)
-                          {gameconsoles[a].setStyledDocument(sharedVariables.engineDoc);
-                          sharedVariables.mygame[a].clickCount++;
+                          {
+                            for(int boards = 0; boards < sharedVariables.openBoardCount; boards++) {
+                              if(myboards[boards].isVisible() && myboards[boards].gameData.LookingAt == a) {
+                            gameconsoles[boards].setStyledDocument(sharedVariables.engineDoc);
+                          sharedVariables.mygame[a].clickCount = 1;
+                              }
+                            }
 
                           }
                           }

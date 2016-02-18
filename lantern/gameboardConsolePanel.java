@@ -77,6 +77,7 @@ JDesktopPaneCustom myself;
 docWriter myDocWriter;
 int [] comboMemory;
 int blockInc=23;
+boolean tryOnce = true;
 gameboardControlsPanel mycontrolspanel;
 gameboardTop topGame;
 gameboardPanel mypanel;
@@ -126,6 +127,7 @@ public void makehappen(int i)
            // return;
           // if(channelTabs[physicalTab].isVisible()== false)
             //	channelTabs[physicalTab].setVisible(true);
+            int oldLookingAt = gameData.LookingAt;
             gameData.LookingAt=i;
             sharedVariables.Looking[gameData.BoardIndex]=i;
             if (sharedVariables.mygame[gameData.LookingAt] != null && sharedVariables.mygame[gameData.LookingAt].state ==
@@ -166,12 +168,24 @@ public void makehappen(int i)
 
  			sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
  			
-                         if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true)
+                         if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true )
                          {
+                           if(gameData.LookingAt != oldLookingAt) {
+                             sharedVariables.mygame[gameData.LookingAt].clickCount--;
+                           }
+
                            if(sharedVariables.mygame[gameData.LookingAt].clickCount %2 == 0)
                            setEngineDoc();
-                           else
+                           else {
                            setGameDoc();
+                            if(gameData.LookingAt == oldLookingAt && tryOnce == true) {
+                              tryOnce = false;
+                            try {
+                              String promptText = "Click tab to toggle analysis back on\n";
+                              sharedVariables.mygamedocs[gameData.LookingAt].insertString(sharedVariables.mygamedocs[gameData.LookingAt].getEndPosition().getOffset(), promptText, null);
+                            }catch(Exception ee){}
+                            }
+                           }
                             sharedVariables.mygame[gameData.LookingAt].clickCount++;
                          }
                          else
@@ -181,9 +195,8 @@ public void makehappen(int i)
                          sharedVariables.pointedToMain[gameData.BoardIndex]=false;// this tells us if the tab is on a game but console is on main
  			sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
 			adjustMoveList();
- 								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type something
- }
- 
+ 								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type somethi
+}
 void setEngineDoc()
 {
 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);

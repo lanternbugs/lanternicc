@@ -61,7 +61,7 @@ PrincipalVariation()
  }// end inner class
 ArrayList<PrincipalVariation> multiLines = new ArrayList();
 ArrayList<String> scriptList = new ArrayList();
-scriptLoader scripter = new scriptLoader(); 
+scriptLoader scripter = new scriptLoader();
 double lastSendTime;
 double priorSendTime;
 double lastCheckTime;
