@@ -860,6 +860,7 @@ if(multiLines.size() == 1) //  no multipv
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
 }
 String line2 = p.line + "\n";
+line2 = addMoveNumbers(line2);
 doc.insertString(doc.getEndPosition().getOffset(), line1 + line2, null);
 }
 for(int a=0; a<sharedVariables.openBoardCount; a++)
@@ -877,7 +878,35 @@ catch(Exception e)
 {}
 }
 
+String addMoveNumbers(String inputLine)
+{
+  int moveNumber =(int) (sharedVariables.mygame[BoardIndex].engineTop / 2);
+  moveNumber++;
+  boolean whiteMoving = true;
+  if(sharedVariables.mygame[BoardIndex].engineTop %2 == 1) {
+    whiteMoving = false;
+  }
+  String temp = "" +  moveNumber;
+  if(whiteMoving) {
+    temp = temp + ". ";
+  } else {
+    temp = temp + ".. ";
+  }
+  // now add this one at end later
+  moveNumber++;
+  int counter = 0;
 
+  for(int a = 1; a< inputLine.length(); a++) {
+    if(inputLine.charAt(a) == ' ')
+    counter++;
+      if(inputLine.charAt(a) == ' ' && ((counter %2 == 0 && whiteMoving ) || (counter % 2 == 1 && !whiteMoving)) && a != inputLine.length() - 1) {
+          String temp2 = " " +  moveNumber++ + ". ";
+          inputLine = inputLine.substring(0, a) + temp2  + inputLine.substring(a+1, inputLine.length());
+          a = a + 1 + temp2.length();
+      }
+  }
+    return temp + inputLine;
+}
 
 }// end run time class
 
