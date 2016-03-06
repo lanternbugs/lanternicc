@@ -1351,7 +1351,7 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
     advancedOptions.add(qsuggestPopup);
-   
+    advancedOptions.add(userbuttons);
 
     advancedOptions.add(channelNumberLeft);
     advancedOptions.add(disableNameLists);
