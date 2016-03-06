@@ -153,6 +153,7 @@ class mymultiframe extends JFrame
   implements ActionListener, ChangeListener, WindowListener {
                                             //WindowFocusListener,
                                            // WindowStateListene
+  mymultiframe ownerFrame = this;
   connectionDialog myConnection;
   seekGraphFrame seekGraph;
   JToolBar toolBar;
@@ -1089,6 +1090,7 @@ class mymultiframe extends JFrame
     /****************************** Colors ******************************/
     JMenu mywindowscolors = new JMenu("Appearance");
     // Colors /
+    consolemenu = new JCheckBoxMenuItem("Show Console Menu Bar");
     JMenuItem fontchange = new JMenuItem("Change Font");
     JMenuItem channelcol = new JMenuItem("Channel Colors");
     JMenuItem consoleColors = new JMenuItem("Console Colors");
@@ -1134,6 +1136,7 @@ class mymultiframe extends JFrame
     // add to menu bar
     menu.add(mywindowscolors);
     // Colors /
+     mywindowscolors.add(consolemenu);
     mywindowscolors.add(fontchange);
     mywindowscolors.add(channelcol);
     mywindowscolors.add(consoleColors);
@@ -1237,7 +1240,7 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
     userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
-    consolemenu = new JCheckBoxMenuItem("Show Console Menu");
+    
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
     disableNameLists = new JCheckBoxMenuItem("Disable Name Lists To Reduce Bandwidth");
     compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
@@ -1348,8 +1351,8 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
     advancedOptions.add(qsuggestPopup);
-    advancedOptions.add(userbuttons);
-    advancedOptions.add(consolemenu);
+   
+
     advancedOptions.add(channelNumberLeft);
     advancedOptions.add(disableNameLists);
     advancedOptions.add(compactNameList);
@@ -2183,7 +2186,7 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.disableNameLists = !sharedVariables.disableNameLists;
       disableNameLists.setSelected(sharedVariables.disableNameLists);
 
-    } else if (action.equals("Show Console Menu")) {
+    } else if (action.equals("Show Console Menu Bar")) {
       sharedVariables.showConsoleMenu = !sharedVariables.showConsoleMenu;
       consolemenu.setSelected(sharedVariables.showConsoleMenu);
 
@@ -4563,7 +4566,41 @@ dot.setVisible(true);
 	width = 800;
 	height = 800;
       }
-      setSize(width,height);
+
+      
+      
+      
+      
+      
+      ArrayList<String> myArray2 = new ArrayList();
+
+      myloader.loadScript(myArray2, "lantern_default_size.ini");
+
+      if(!valid) {
+      try {
+	if (myArray2.size() > 1) {
+          width = Integer.parseInt(myArray2.get(0));
+          height = Integer.parseInt(myArray2.get(1));
+          if (width > 200 && height > 200 &&
+              width < sharedVariables.screenW - 100 &&
+              height < sharedVariables.screenH - 50) {
+            valid = true;
+            sharedVariables.screenW = width;
+            sharedVariables.screenH = height;
+          } else {
+            width = (int) sharedVariables.screenW * 3/4;
+            height = (int) sharedVariables.screenH * 3/4;
+          }
+	}// end size of array
+        // end try
+      } catch (Exception wrongsize) {
+	width = (int) sharedVariables.screenW * 3/4;
+            height = (int) sharedVariables.screenH * 3/4;
+      }
+
+              }
+
+         setSize(width,height);
       if(!valid) {
         if (sharedVariables.operatingSystem.equals("unix")) {
           setVisible(true);
@@ -4662,6 +4699,21 @@ dot.setVisible(true);
               try {
                 mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
                 mineScores.saveNow(sharedVariables);
+                try {
+                   int screenW = 0;
+                   int screenH = 0;
+                  try {
+
+                         screenW = ownerFrame.getWidth();
+                         screenH = ownerFrame.getHeight();
+
+                      } catch (Exception badtool) {
+
+                         }
+                  FileWrite writer = new FileWrite();
+                  String outputSizes =  "" + screenW + "\n" + screenH + "\n";
+                  writer.write(outputSizes, "lantern_default_size.ini");
+                 } catch(Exception dumb) {}
 
               } catch (Exception d) {}
               System.exit(0);
