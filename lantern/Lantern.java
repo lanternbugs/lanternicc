@@ -644,9 +644,17 @@ class mymultiframe extends JFrame
       }
     }
 
-    for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
-      consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
-
+     try {
+	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
+          if( sharedVariables.showConsoleMenu) {
+             consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleMenu);
+             consoleSubframes[bam].consoleMenu.revalidate();
+          } else {
+            consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleEditMenu);
+            consoleSubframes[bam].consoleEditMenu.revalidate();
+          }
+         // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+      }	catch (Exception bal) {}
 
 
     /****************** we do these next few in gui thread *****************************/
@@ -2198,8 +2206,10 @@ myboardappearancemenu.add(consoleaspect);
 	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
           if( sharedVariables.showConsoleMenu) {
              consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleMenu);
+             consoleSubframes[bam].consoleMenu.revalidate();
           } else {
             consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleEditMenu);
+            consoleSubframes[bam].consoleEditMenu.revalidate();
           }
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
