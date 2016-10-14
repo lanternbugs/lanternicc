@@ -102,7 +102,7 @@ boolean notifyMainAlso = false;
   boolean dontReuseGameTabs=false;
   boolean andreysFonts = false;
 boolean sideways;
-boolean showButtonTitle;
+boolean alwaysShowEdit;
 boolean loadSizes;
 boolean showConsoleMenu;
 boolean autoBufferChat;
@@ -511,7 +511,7 @@ showFlags=true;
 showPallette=true;
 
 sideways=false;
-showButtonTitle=true;
+alwaysShowEdit=true;
 showConsoleMenu=false;
 autoBufferChat=true;
 rotateAways=false;

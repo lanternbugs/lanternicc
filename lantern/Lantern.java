@@ -226,7 +226,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem playersInMyGame;
   JCheckBoxMenuItem unobserveGoExamine;
 
-  JCheckBoxMenuItem userbuttons;
+  JCheckBoxMenuItem alwaysShowEdit;
   JCheckBoxMenuItem consolemenu;
 
   JCheckBoxMenuItem toolbarvisible;
@@ -573,7 +573,7 @@ class mymultiframe extends JFrame
 
     iloggedon.           setSelected(sharedVariables.iloggedon);
     sidewaysconsole.     setSelected(sharedVariables.sideways);
-    userbuttons.         setSelected(sharedVariables.showButtonTitle);
+    alwaysShowEdit.         setSelected(sharedVariables.alwaysShowEdit);
     autopopup.           setSelected(sharedVariables.autopopup);
     basketballFlag.      setSelected(sharedVariables.basketballFlag);
     autoHistoryPopup.    setSelected(sharedVariables.autoHistoryPopup);
@@ -1251,7 +1251,7 @@ class mymultiframe extends JFrame
     JMenu advancedOptions = new JMenu("Advanced");
     // .. / Advanced /
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
-    userbuttons = new JCheckBoxMenuItem("Show User Button Titles");
+    alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
     
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
     disableNameLists = new JCheckBoxMenuItem("Disable Name Lists To Reduce Bandwidth");
@@ -1363,7 +1363,7 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
     advancedOptions.add(qsuggestPopup);
-    advancedOptions.add(userbuttons);
+    advancedOptions.add(alwaysShowEdit);
 
     advancedOptions.add(channelNumberLeft);
     advancedOptions.add(disableNameLists);
@@ -1439,7 +1439,7 @@ class mymultiframe extends JFrame
     customizetools.addActionListener(this);
     toolbox.addActionListener(this);
     qsuggestPopup.addActionListener(this);
-    userbuttons.addActionListener(this);
+    alwaysShowEdit.addActionListener(this);
     consolemenu.addActionListener(this);
     channelNumberLeft.addActionListener(this);
     disableNameLists.addActionListener(this);
@@ -2214,9 +2214,9 @@ myboardappearancemenu.add(consoleaspect);
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
 
-    } else if (action.equals("Show User Button Titles")) {
-      sharedVariables.showButtonTitle = !sharedVariables.showButtonTitle;
-      userbuttons.setSelected(sharedVariables.showButtonTitle);
+    } else if (action.equals("Always Show Console Edit Menu")) {
+      sharedVariables.alwaysShowEdit = !sharedVariables.alwaysShowEdit;
+      alwaysShowEdit.setSelected(sharedVariables.alwaysShowEdit);
 
       for (int a=0; a<sharedVariables.maxUserButtons; a++)
         setButtonTitle(a);

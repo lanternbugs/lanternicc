@@ -972,15 +972,15 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing indent
 	set_string = set_string + "[doneindent] ";
 
-// show userbutton titles
-	set_string = set_string + "[showuserbuttontitles] ";
-	if(sharedVariables.showButtonTitle == true)
+// show edit menu
+	set_string = set_string + "[alwaysshoweditmenu] ";
+	if(sharedVariables.alwaysShowEdit == true)
 	set_string = set_string + "1" + " ";
 	else
 	set_string = set_string + "0" + " ";
 
 	// closing user button
-	set_string = set_string + "[doneshowuserbuttontitles] ";
+	set_string = set_string + "[donealwaysshoweditmenu] ";
 
 
 
@@ -2642,13 +2642,13 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				}
 
 
-				if (temp.equals("[showuserbuttontitles]"))
+				if (temp.equals("[alwaysshoweditmenu]"))
 				{
 				try {
 					if(tokens.nextToken().equals("0"))
-					sharedVariables.showButtonTitle =  false;
+					sharedVariables.alwaysShowEdit =  false;
 					else
-					sharedVariables.showButtonTitle = true;
+					sharedVariables.alwaysShowEdit = true;
 					}
 					catch(Exception zzz){}
 				}
