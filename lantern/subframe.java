@@ -507,6 +507,7 @@ class subframe extends JInternalFrame
        setJMenuBar(consoleMenu);
     } else {
      setJMenuBar(consoleEditMenu);
+     consoleEditMenu.setVisible(sharedVariables.alwaysShowEdit);
     }
     initComponents();
   }

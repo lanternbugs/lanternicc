@@ -652,6 +652,7 @@ class mymultiframe extends JFrame
           } else {
             consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleEditMenu);
             consoleSubframes[bam].consoleEditMenu.revalidate();
+            consoleSubframes[bam].consoleEditMenu.setVisible(sharedVariables.alwaysShowEdit);
           }
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
@@ -2210,6 +2211,7 @@ myboardappearancemenu.add(consoleaspect);
           } else {
             consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleEditMenu);
             consoleSubframes[bam].consoleEditMenu.revalidate();
+            consoleSubframes[bam].consoleEditMenu.setVisible(sharedVariables.alwaysShowEdit);
           }
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
@@ -2218,8 +2220,13 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.alwaysShowEdit = !sharedVariables.alwaysShowEdit;
       alwaysShowEdit.setSelected(sharedVariables.alwaysShowEdit);
 
-      for (int a=0; a<sharedVariables.maxUserButtons; a++)
-        setButtonTitle(a);
+       try {
+	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
+          if( !sharedVariables.showConsoleMenu) {
+             consoleSubframes[bam].consoleEditMenu.setVisible(sharedVariables.alwaysShowEdit);
+          }
+         // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+      }	catch (Exception bal) {}
 
     } else if (action.equals("Qsuggest Popups")) {
       sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
