@@ -418,8 +418,8 @@ dot.setVisible(true);
 */
 }
 notifyControllerFile = "lantern_notify_controler.ini";
-boardType=0;
-pieceType=4;
+boardType=12;
+pieceType=5;
 checkersPieceType = 1;
 NOT_FOUND_NUMBER = -100;
 
