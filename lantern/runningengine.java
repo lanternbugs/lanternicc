@@ -163,15 +163,36 @@ try {
 			 	engine = rt.exec(sharedVariables.engineFile.toString());
 
 			 	sharedVariables.engineOn = true;
+try {
+ StyledDocument doc = sharedVariables.engineDoc;
+doc.remove(0, doc.getLength());
+}
+catch(Exception ee) {
+}
+
 if(sharedVariables.uci == false)
-runWinboard();
+{
+
+  writeOut("Trying to run Winboard Engine. As a rule most engins like Rybka, Stockfish, Houdini and Komodo are UCI Engines. Crafty is an example of a Winboard Engine.\n");
+  runWinboard();
+}
 else
 runUci();
 
 
 } // end try
 catch(Exception e)
-{ }
+{ 
+try {
+if(sharedVariables.uci == false)
+writeOut("There was an error starting the engine. Is the file a valid engine executable? Is it a Winboard Engine?\n");
+else 
+writeOut("There was an error starting the engine. Is the file a valid engine executable? Is it a UCI Engine?\n");
+}
+catch(Exception ee) {
+}
+
+}
 
 
 

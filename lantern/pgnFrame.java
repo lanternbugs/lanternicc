@@ -264,7 +264,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 item2.addActionListener(new ActionListener() {
           		public void actionPerformed(ActionEvent e) {
 						// to do add libappend
-						examine(row);
+						try {
+                                                  examine(row);
+                                                } catch(Exception dui) {
+                                                  
+                                                }  
 						send("LibKeepExam\n");
 				}
 

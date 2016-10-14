@@ -74,6 +74,7 @@ class subframe extends JInternalFrame
   
   String consoleTitle;
   JMenuBar consoleMenu;
+  JMenuBar consoleEditMenu;
   JMenu tabOptionsMenu;
   JList myNameList;
   JScrollPane listScroller;
@@ -232,9 +233,9 @@ class subframe extends JInternalFrame
     //addMouseListener(this);
 
     addInternalFrameListener(this);
-
+    consoleEditMenu = new JMenuBar();
     consoleMenu = new JMenuBar();
-    setJMenuBar(consoleMenu);
+
 
     /******************** Layout ********************/
     JMenu mywindows = new JMenu("Layout");
@@ -266,10 +267,20 @@ class subframe extends JInternalFrame
     JMenuItem copyit = new JMenuItem("Copy");
     // .. / (separator)
     JMenuItem telltab = new JMenuItem("Make tell tab");
+    
+    JMenu editmenu2 = new JMenu("Edit");
+    // Edit /
+    JMenuItem selectall2 = new JMenuItem("Select All");
+    JMenuItem copyit2 = new JMenuItem("Copy");
+    // .. / (separator)
+    JMenuItem telltab2 = new JMenuItem("Make tell tab");
 
     // add accelerators
     telltab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
                                                   ActionEvent.CTRL_MASK));
+    telltab2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+                                                  ActionEvent.CTRL_MASK));
+
 
     // add to menu bar
     consoleMenu.add(editmenu);
@@ -278,11 +289,24 @@ class subframe extends JInternalFrame
     editmenu.add(copyit);
     editmenu.addSeparator();
     editmenu.add(telltab);
+    
+    // add to menu bar
+    consoleEditMenu.add(editmenu2);
+    // Edit /
+    editmenu2.add(selectall2);
+    editmenu2.add(copyit2);
+    editmenu2.addSeparator();
+    editmenu2.add(telltab2);
 
     // add listeners
     selectall.addActionListener(this);
     copyit.addActionListener(this);
     telltab.addActionListener(this);
+    
+    // add listeners
+    selectall2.addActionListener(this);
+    copyit2.addActionListener(this);
+    telltab2.addActionListener(this);
 
     /******************** View ********************/
     JMenu viewmenu = new JMenu("View");
@@ -477,7 +501,13 @@ class subframe extends JInternalFrame
     /******************** end of menus ********************/
     tabOptionsMenu = makerightclickhappen(null, 0, false);
     consoleMenu.add(tabOptionsMenu);
-    consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+    //consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+    //mywindows editmenu viewmenu buttonmenu  consolenav  selecttab tabOptionsMenu
+    if(sharedVariables.showConsoleMenu) {
+       setJMenuBar(consoleMenu);
+    } else {
+     setJMenuBar(consoleEditMenu);
+    }
     initComponents();
   }
 

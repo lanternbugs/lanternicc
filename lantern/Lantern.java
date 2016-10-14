@@ -71,6 +71,10 @@ public class Lantern {
     try {
 
       String os = System.getProperty("os.name").toLowerCase();
+      if (os.indexOf( "mac" ) >= 0) {
+        System.setProperty("apple.eawt.quitStrategy", "CLOSE_ALL_WINDOWS");
+        }
+
       if (os.indexOf( "win" ) >= 0)
 	UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 	// UIManager.setLookAndFeel( "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
@@ -2192,7 +2196,12 @@ myboardappearancemenu.add(consoleaspect);
 
       try {
 	for (int bam=0; bam<sharedVariables.openConsoleCount; bam++)
-          consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
+          if( sharedVariables.showConsoleMenu) {
+             consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleMenu);
+          } else {
+            consoleSubframes[bam].setJMenuBar(consoleSubframes[bam].consoleEditMenu);
+          }
+         // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
 
     } else if (action.equals("Show User Button Titles")) {
