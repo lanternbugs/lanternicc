@@ -321,13 +321,12 @@ class subframe extends JInternalFrame
     JMenuItem decfont = new JMenuItem("Decrease font size");
 
     // add accelerators
-    chnotify.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
-                                                   ActionEvent.CTRL_MASK));
+
     if(isMac) {
-         incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
-                                                  ActionEvent.CTRL_MASK));
-    decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
-                                                  ActionEvent.CTRL_MASK));
+         incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+                                                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                                                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     } else {
          incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
                                                   ActionEvent.ALT_MASK));
@@ -424,9 +423,9 @@ class subframe extends JInternalFrame
     nextchat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                                                    ActionEvent.CTRL_MASK));
     if(isMac) {
-        nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
+        nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
                                                   ActionEvent.CTRL_MASK));
-    prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
+    prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
                                                   ActionEvent.CTRL_MASK));
     } else {
        nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
@@ -460,13 +459,13 @@ class subframe extends JInternalFrame
                                                       ActionEvent.ALT_MASK));
     if(isMac) {
       showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
-                                                    ActionEvent.CTRL_MASK));
+                                                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
-                                                   ActionEvent.CTRL_MASK));
+                                                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
-                                                   ActionEvent.CTRL_MASK));
-    closebtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-                                                    ActionEvent.CTRL_MASK));
+                                                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    closebtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,
+                                                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     } else {
        showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
                                                     ActionEvent.ALT_MASK));
