@@ -1149,6 +1149,7 @@ class mymultiframe extends JFrame
     mywindowscolors.add(fontchange);
     mywindowscolors.add(channelcol);
     mywindowscolors.add(consoleColors);
+    mywindowscolors.addSeparator();
     mywindowscolors.add(listColor);
     mywindowscolors.add(tellNameColor);
     mywindowscolors.add(typingarea);
@@ -1183,6 +1184,7 @@ class mymultiframe extends JFrame
     tabsColorsMenu.add(tabborder2);
     tabsColorsMenu.add(tabfontchange);
     // .. /
+    mywindowscolors.addSeparator();
     mywindowscolors.add(wallpaper2);
 
     // add listeners
