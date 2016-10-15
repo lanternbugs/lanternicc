@@ -1083,6 +1083,7 @@ class mymultiframe extends JFrame
     myfiles.add(reconnect4);
     myfiles.add(reconnect3);
     //myfiles.add(reconnect2);
+    myfiles.addSeparator();
     myfiles.add(wallpaper1);
     myfiles.add(settings2);
     myfiles.add(quitItem);
@@ -2096,8 +2097,10 @@ myboardappearancemenu.add(consoleaspect);
     helpmenu.add(askaquestion);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
+    helpmenu.addSeparator();
     helpmenu.add(infohelp);
     helpmenu.add(commandhelp);
+    helpmenu.addSeparator();
     helpmenu.add(joinrenewhelp);
     helpmenu.add(passwordhelp);
     helpmenu.add(poweroutmenu);
