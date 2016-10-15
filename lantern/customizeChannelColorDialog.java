@@ -136,7 +136,12 @@ pane.add(button);
 //pane.add(checkboxes);
 //pane.add(button);
 //pane.add(done);
-setSize(200,100);
+if(sharedVariables.operatingSystem.equals("mac")) {
+   setSize(230,100);
+} else {
+  setSize(200,100);
+}
+
 
 }// end constructor
 }// end class
