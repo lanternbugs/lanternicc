@@ -192,7 +192,6 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem hearsound;
   JCheckBoxMenuItem gameend;
   JCheckBoxMenuItem channelNumberLeft;
-  JCheckBoxMenuItem disableNameLists;
   JCheckBoxMenuItem tabbing;
   /* Andrey edits:
      make an array for the board designs
@@ -244,7 +243,6 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem qtellTimestamp;
   JCheckBoxMenuItem checkLegality;
   JCheckBoxMenuItem useTopGame;
-  JCheckBoxMenuItem notifyMainAlso;
   JCheckBoxMenuItem dontReuseGameTabs;
 
   /* Andrey edits:
@@ -503,7 +501,6 @@ class mymultiframe extends JFrame
 
     highlight.           setSelected(sharedVariables.highlightMoves);
     gameend.             setSelected(sharedVariables.gameend);
-    notifyMainAlso.      setSelected(sharedVariables.notifyMainAlso);
     dontReuseGameTabs.   setSelected(sharedVariables.dontReuseGameTabs);
     useTopGame.          setSelected(sharedVariables.useTopGames);
     materialCount.       setSelected(sharedVariables.showMaterialCount);
@@ -538,7 +535,6 @@ class mymultiframe extends JFrame
     toolbarvisible.      setSelected(sharedVariables.toolbarVisible);
     autobufferchat.      setSelected(sharedVariables.autoBufferChat);
     channelNumberLeft.   setSelected(sharedVariables.channelNumberLeft);
-    disableNameLists.    setSelected(sharedVariables.disableNameLists);
     channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
     qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
@@ -1161,7 +1157,7 @@ class mymultiframe extends JFrame
     typingarea.add(inputcommand);
     typingarea.add(inputchat);
     // .. /
-    mywindowscolors.add(inChannelNamesMenu);
+    //mywindowscolors.add(inChannelNamesMenu);
     // .. / In Channel Names Menu /
     inChannelNamesMenu.add(nameForegroundColor);
     inChannelNamesMenu.add(nameBackgroundColor);
@@ -1255,11 +1251,9 @@ class mymultiframe extends JFrame
     alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
     
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
-    disableNameLists = new JCheckBoxMenuItem("Disable Name Lists To Reduce Bandwidth");
     compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
     autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
     useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
-    notifyMainAlso = new JCheckBoxMenuItem("Print Channel Notify for Main Also");
     dontReuseGameTabs = new JCheckBoxMenuItem("Don't Reuse Game Tabs");
     autopopup = new JCheckBoxMenuItem("Auto Name Popup");
     autoHistoryPopup = new JCheckBoxMenuItem("Auto History Popup");
@@ -1367,11 +1361,8 @@ class mymultiframe extends JFrame
     advancedOptions.add(alwaysShowEdit);
 
     advancedOptions.add(channelNumberLeft);
-    advancedOptions.add(disableNameLists);
-    advancedOptions.add(compactNameList);
     advancedOptions.add(autobufferchat);
     advancedOptions.add(useTopGame);
-    advancedOptions.add(notifyMainAlso);
     advancedOptions.add(dontReuseGameTabs);
     advancedOptions.add(autopopup);
     advancedOptions.add(autoHistoryPopup);
@@ -1443,10 +1434,8 @@ class mymultiframe extends JFrame
     alwaysShowEdit.addActionListener(this);
     consolemenu.addActionListener(this);
     channelNumberLeft.addActionListener(this);
-    disableNameLists.addActionListener(this);
     compactNameList.addActionListener(this);
     useTopGame.addActionListener(this);
-    notifyMainAlso.addActionListener(this);
     dontReuseGameTabs.addActionListener(this);
     autobufferchat.addActionListener(this);
     autopopup.addActionListener(this);
@@ -2195,11 +2184,7 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.channelNumberLeft = !sharedVariables.channelNumberLeft;
       channelNumberLeft.setSelected(sharedVariables.channelNumberLeft);
 
-    } else if (action.equals("Disable Name Lists To Reduce Bandwidth")) {
-      sharedVariables.disableNameLists = !sharedVariables.disableNameLists;
-      disableNameLists.setSelected(sharedVariables.disableNameLists);
-
-    } else if (action.equals("Show Console Menu Bar")) {
+    }  else if (action.equals("Show Console Menu Bar")) {
       sharedVariables.showConsoleMenu = !sharedVariables.showConsoleMenu;
       consolemenu.setSelected(sharedVariables.showConsoleMenu);
 
@@ -2817,8 +2802,7 @@ dot.setVisible(true);
             consoleSubframes[a].setSelected(true);
             count++;
           }
-
-	for (int a=0; a<sharedVariables.openBoardCount; a++)
+	for (int a=0; a<myboards.length; a++)
           if (myboards[a] != null && myboards[a].isVisible()) {
             if (!sharedVariables.useTopGames) {
               myboards[a].setSize(width,height);
@@ -2826,7 +2810,7 @@ dot.setVisible(true);
               myboards[a].setSelected(true);
             } else {
               if (myboards[a].topGame != null) {
-                myboards[a].topGame.setSize(width,height);
+                 myboards[a].topGame.setSize(width,height);
                 myboards[a].topGame.setLocation(x + count * dif, y + count * dif);
               }
             }
@@ -3816,10 +3800,6 @@ dot.setVisible(true);
     } else if (action.equals("Use Basketball Logo ICC Flag")) {
       sharedVariables.basketballFlag = !sharedVariables.basketballFlag;
       basketballFlag.setSelected(sharedVariables.basketballFlag);
-
-    } else if (action.equals("Print Channel Notify for Main Also")) {
-      sharedVariables.notifyMainAlso = !sharedVariables.notifyMainAlso;
-      notifyMainAlso.setSelected(sharedVariables.notifyMainAlso);
 
     } else if (action.equals("Don't Reuse Game Tabs")) {
       sharedVariables.dontReuseGameTabs = !sharedVariables.dontReuseGameTabs;

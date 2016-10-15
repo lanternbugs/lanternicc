@@ -445,14 +445,6 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "[doneactivitiesTabNumber] ";
 
 
-	// show notifyMainAlso
-	set_string = set_string + "[notifyMainAlso] ";
-	if(sharedVariables.notifyMainAlso == true)
-		set_string = set_string + "1" + " ";
-	else
-		set_string = set_string + "0" + " ";
-	// closing
-		set_string = set_string + "[donenotifyMainAlso] ";
 
 	// showMugshots
 	set_string = set_string + "[showMugshots] ";
@@ -862,14 +854,7 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing
 		set_string = set_string + "[doneautobufferchat] ";
 
-	// disable Name Lists
-	set_string = set_string + "[disableNameLists] ";
-	if(sharedVariables.disableNameLists == true)
-		set_string = set_string + "1" + " ";
-	else
-		set_string = set_string + "0" + " ";
-	// closing
-		set_string = set_string + "[donedisableNameLists] ";
+
 	// channel Number left
 	set_string = set_string + "[numberchannelleft] ";
 	if(sharedVariables.channelNumberLeft == true)
@@ -2017,18 +2002,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
-				if (temp.equals("[notifyMainAlso]"))
-				{
-				try {
-					int truth = Integer.parseInt(tokens.nextToken());
-					if(truth == 1)
-						sharedVariables.notifyMainAlso=true;
-					else
-						sharedVariables.notifyMainAlso=false;
-					}
-					catch(Exception zzz){}
-				}
-
+			
                        	if (temp.equals("[showMugshots]"))
 				{
 				try {
@@ -2490,17 +2464,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					catch(Exception zzz){}
 				}
 
-                                	if (temp.equals("[disableNameLists]"))
-				{
-				try {
-					int truth = Integer.parseInt(tokens.nextToken());
-					if(truth == 1)
-						sharedVariables.disableNameLists=true;
-					else
-						sharedVariables.disableNameLists=false;
-					}
-					catch(Exception zzz){}
-				}
+                                
 
 
 					if (temp.equals("[numberchannelleft]"))

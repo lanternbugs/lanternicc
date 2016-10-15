@@ -236,15 +236,18 @@ class subframe extends JInternalFrame
     consoleEditMenu = new JMenuBar();
     consoleMenu = new JMenuBar();
 
-
+    boolean isMac = false;
+    if (sharedVariables.operatingSystem.equals("mac")) {
+        isMac = true;
+    }
     /******************** Layout ********************/
     JMenu mywindows = new JMenu("Layout");
-    // Layout / 
+    // Layout /
     JMenuItem consoleLayout1 = new JMenuItem("Single Rows of Tabs");
     JMenuItem consoleLayout2 = new JMenuItem("Two Rows of Tabs");
     JMenuItem consoleLayout3 = new JMenuItem("No Visible Tabs");
     JMenuItem consoleLayout4 = new JMenuItem("Tabs on Top");
-    
+
     // add to menu bar
     consoleMenu.add(mywindows);
     // Layout /
@@ -267,7 +270,7 @@ class subframe extends JInternalFrame
     JMenuItem copyit = new JMenuItem("Copy");
     // .. / (separator)
     JMenuItem telltab = new JMenuItem("Make tell tab");
-    
+
     JMenu editmenu2 = new JMenu("Edit");
     // Edit /
     JMenuItem selectall2 = new JMenuItem("Select All");
@@ -320,10 +323,19 @@ class subframe extends JInternalFrame
     // add accelerators
     chnotify.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
                                                    ActionEvent.CTRL_MASK));
-    incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+    if(isMac) {
+         incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+                                                  ActionEvent.CTRL_MASK));
+    decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
+                                                  ActionEvent.CTRL_MASK));
+    } else {
+         incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
                                                   ActionEvent.ALT_MASK));
     decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
                                                   ActionEvent.ALT_MASK));
+    }
+
+
 
     // special settings
     listChoice.setSelected((sharedVariables.consolesNamesLayout[consoleNumber] == 1));
@@ -331,9 +343,9 @@ class subframe extends JInternalFrame
     // add to menu bar
     consoleMenu.add(viewmenu);
     // View
-    viewmenu.add(listChoice);
-    viewmenu.add(chnotify);
-    viewmenu.addSeparator();
+    //viewmenu.add(listChoice);
+    //viewmenu.add(chnotify);
+    //viewmenu.addSeparator();
     viewmenu.add(incfont);
     viewmenu.add(decfont);
 
@@ -411,10 +423,17 @@ class subframe extends JInternalFrame
                                                       ActionEvent.CTRL_MASK));
     nextchat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                                                    ActionEvent.CTRL_MASK));
-    nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
+    if(isMac) {
+        nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
+                                                  ActionEvent.CTRL_MASK));
+    prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
+                                                  ActionEvent.CTRL_MASK));
+    } else {
+       nexttab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
                                                   ActionEvent.ALT_MASK));
     prevtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
                                                   ActionEvent.ALT_MASK));
+    }
     tabarray[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
                                                       ActionEvent.ALT_MASK));
     tabarray[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
@@ -439,7 +458,17 @@ class subframe extends JInternalFrame
                                                       ActionEvent.ALT_MASK));
     tabarray[11].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,
                                                       ActionEvent.ALT_MASK));
-    showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+    if(isMac) {
+      showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+                                                    ActionEvent.CTRL_MASK));
+    nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+                                                   ActionEvent.CTRL_MASK));
+    prevbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,
+                                                   ActionEvent.CTRL_MASK));
+    closebtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+                                                    ActionEvent.CTRL_MASK));
+    } else {
+       showboard.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
                                                     ActionEvent.ALT_MASK));
     nextbtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
                                                    ActionEvent.ALT_MASK));
@@ -447,6 +476,7 @@ class subframe extends JInternalFrame
                                                    ActionEvent.ALT_MASK));
     closebtab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
                                                     ActionEvent.ALT_MASK));
+    }
     prevmoves.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
                                                     ActionEvent.CTRL_MASK |
                                                     ActionEvent.SHIFT_MASK));
@@ -466,7 +496,10 @@ class subframe extends JInternalFrame
     consolenav.addSeparator();
     consolenav.add(nexttab);
     consolenav.add(prevtab);
-    consolenav.add(selecttab);
+    if(!isMac) {
+       consolenav.add(selecttab);
+    }
+
     // .. / Select tab
     for (int i=0; i<tabarray.length; i++)
       selecttab.add(tabarray[i]);

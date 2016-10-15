@@ -2411,13 +2411,7 @@ if(dg.getArg(0).equals("27"))
 		{sendMessage("multi set-quietly prompt 0\n");
 
 		 sendMessage("multi set-quietly style 13\n");
-	       if(sharedVariables.disableNameLists == false)
-	       {
-        	//sendMessage("multi Set-2 46 1\n");// dg  channels shared
-                 sendMessage("multi Set-2 27 1\n");// dg people in channel
-                // sendMessage("multi Set-2 153 1\n");
-                //  sendMessage("multi Set-2 154 1\n");
-                }
+	      
                 try {
                  String OS = "Linux";
                  if(sharedVariables.operatingSystem.equals("mac"))

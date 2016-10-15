@@ -115,7 +115,6 @@ boolean leftTimestamp;
 boolean reconnectTimestamp;
 boolean qtellTimestamp;
 boolean channelNumberLeft;
-boolean disableNameLists;
 boolean checkLegality;
 boolean compactNameList=false;
 boolean useTopGames=false;
@@ -491,7 +490,6 @@ shoutTimestamp=true;
 channelTimestamp=true;
 qtellTimestamp=true;
 channelNumberLeft=true;
-disableNameLists=false;
 checkLegality=true;
 autoPromote = true;
 if(operatingSystem.equals("mac"))
