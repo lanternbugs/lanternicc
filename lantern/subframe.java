@@ -353,7 +353,7 @@ class subframe extends JInternalFrame
     chnotify.addActionListener(this);
     incfont.addActionListener(this);
     decfont.addActionListener(this);
-    
+
     /******************** User Buttons ********************/
     JMenu buttonmenu = new JMenu("User Buttons");
     // User Buttons /
