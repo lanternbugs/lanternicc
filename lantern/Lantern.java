@@ -1511,7 +1511,7 @@ class mymultiframe extends JFrame
 
     // add keystrokes
     if (sharedVariables.operatingSystem.equals("mac")) {
-        eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+        eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
                                                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     } else {
         eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
