@@ -242,6 +242,8 @@ generateFen(board);
 
 void generateFen(int board[])
 {
+  engineFen = "";
+  engineTop = 0;
 int spaces = 0;
 for(int a=7; a>=0; a--)
 {
