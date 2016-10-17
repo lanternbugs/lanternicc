@@ -73,7 +73,8 @@ pgnData mygame= new pgnData();
         */
         while (( line = input.readLine()) != null){
          {
-			 // read pgn here
+			 line = line.replace("\uFEFF", "");// remove any byte-order mark(s) BOM
+                         // read pgn here
 			 if(line == "")
 			 	continue;
 

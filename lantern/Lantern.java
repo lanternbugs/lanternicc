@@ -1510,8 +1510,14 @@ class mymultiframe extends JFrame
     channelnotifyonline.setMnemonic(KeyEvent.VK_O);
 
     // add keystrokes
-    eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+    if (sharedVariables.operatingSystem.equals("mac")) {
+        eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+                                                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    } else {
+        eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
                                                     ActionEvent.CTRL_MASK));
+    }
+
 
     // add to menu bar
     menu.add(sharedVariables.myWindows);

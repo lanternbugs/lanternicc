@@ -769,7 +769,17 @@ void parseMultiPV(String text, String pvLine, boolean multi)
                 p.score = tokens.nextToken();
                 p.score = formatScore(p.score);
                 i++;
-             }
+                }
+                if(temp.equals("mate")) {
+                    String tempo = tokens.nextToken();
+                    if(tempo.startsWith("-")) {  
+                      tempo = tempo.replace('-', ' ');
+                        p.score = "Mated in " + tempo;
+                    } else { 
+                      p.score = "Mate in " + tempo; 
+                    } 
+                      i++;
+                }
              }
              if(i == max)// we got all components
              {

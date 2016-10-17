@@ -127,7 +127,9 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.myname.startsWith("guest"))
          {
             String event = myLoader.games.get(row).event;
-            if(event.startsWith("ICC tourney") && event.contains("(w9 "))
+            if(event == null) 
+             send("multi Examine\n");
+            else if(event.startsWith("ICC tourney") && event.contains("(w9 "))
              send("multi Match " + sharedVariables.myname + " w9\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w17 "))
              send("multi Match " + sharedVariables.myname + " w17\n");
