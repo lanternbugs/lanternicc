@@ -186,6 +186,7 @@ class mymultiframe extends JFrame
   // organize these in an intuitive manner
   JCheckBoxMenuItem autonoidle;
   JCheckBoxMenuItem autobufferchat;
+  JCheckBoxMenuItem chatbufferlarge;
   JCheckBoxMenuItem autoHistoryPopup;
   JCheckBoxMenuItem showMugshots;
   JCheckBoxMenuItem makeObserveSounds;
@@ -534,6 +535,8 @@ class mymultiframe extends JFrame
     addnameontellswitch. setSelected(sharedVariables.addNameOnSwitch);
     toolbarvisible.      setSelected(sharedVariables.toolbarVisible);
     autobufferchat.      setSelected(sharedVariables.autoBufferChat);
+    chatbufferlarge.     setSelected(sharedVariables.chatBufferLarge);
+    chatbufferlarge.     setSelected(sharedVariables.chatBufferLarge);
     channelNumberLeft.   setSelected(sharedVariables.channelNumberLeft);
     channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
@@ -1252,10 +1255,11 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
     alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
-    
+
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
     compactNameList = new JCheckBoxMenuItem("Compact Channel Name List");
     autobufferchat = new JCheckBoxMenuItem("Auto Buffer Chat Length");
+    chatbufferlarge = new JCheckBoxMenuItem("Large Chat Buffer");
     useTopGame = new JCheckBoxMenuItem("Make Boards Always On Top");
     dontReuseGameTabs = new JCheckBoxMenuItem("Don't Reuse Game Tabs");
     autopopup = new JCheckBoxMenuItem("Auto Name Popup");
@@ -1365,6 +1369,7 @@ class mymultiframe extends JFrame
 
     advancedOptions.add(channelNumberLeft);
     advancedOptions.add(autobufferchat);
+    advancedOptions.add(chatbufferlarge);
     advancedOptions.add(useTopGame);
     advancedOptions.add(dontReuseGameTabs);
     advancedOptions.add(autopopup);
@@ -1441,6 +1446,7 @@ class mymultiframe extends JFrame
     useTopGame.addActionListener(this);
     dontReuseGameTabs.addActionListener(this);
     autobufferchat.addActionListener(this);
+    chatbufferlarge.addActionListener(this);
     autopopup.addActionListener(this);
     autoHistoryPopup.addActionListener(this);
     basketballFlag.addActionListener(this);
@@ -3771,7 +3777,13 @@ dot.setVisible(true);
       sharedVariables.autoBufferChat = !sharedVariables.autoBufferChat;
       autobufferchat.setSelected(sharedVariables.autoBufferChat);
 
-    } else if (action.equals("No Idle")) {
+    } else if (action.equals("Large Chat Buffer")) {
+      sharedVariables.chatBufferLarge = !sharedVariables.chatBufferLarge;
+      chatbufferlarge.setSelected(sharedVariables.chatBufferLarge);
+      sharedVariables.setChatBufferSize();
+
+    }
+    else if (action.equals("No Idle")) {
       sharedVariables.noidle = !sharedVariables.noidle;
       autonoidle.setSelected(sharedVariables.noidle);
 

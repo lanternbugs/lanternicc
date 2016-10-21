@@ -63,6 +63,33 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	 field.setRows(8);
 field.setText(warning);
 field.setEditable(false);
+field.addMouseListener(new MouseAdapter() {
+public void mousePressed(MouseEvent e) {
+//if(e.isPopupTrigger())
+try {
+
+if (e.getButton() == MouseEvent.BUTTON3 ) {
+{
+  if(field.getSelectedText()== null) {
+     return;
+  }
+//setupMenu(field.getSelectedText());
+  JPopupMenu menu3 = new JPopupMenu("Popup");
+  JMenuItem item = new JMenuItem("Copy");
+    item.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+    field.copy();
+    
+    }
+    });
+  menu3.add(item);
+  menu3.show(e.getComponent(),e.getX(),e.getY());
+  }
+  }
+  // end try
+  } catch (Exception mousebad) {}
+  }
+  });
 Color backcol= new Color(0,0,0);
 Color forcol = new Color(255,255,255);
 field.setBackground(backcol);

@@ -264,7 +264,8 @@ static int DRAG_DROP = 0;
 static int CLICK_CLICK = 1;
 int andreysLayout = 2; // Andrey's layout variable
 int lastSpositionBoard=-1;
-int chatBufferSize=100000;
+int chatBufferSize;
+boolean chatBufferLarge = false;
 int chatBufferExtra=1000;
 int showTenths;
 int maxChannels = 500;
@@ -351,9 +352,10 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.59";
+version = "v5.60";
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
+ setChatBufferSize();
 F9Manager = new F9Management();
 mineScores = new mineScoresGroup();
 Looking = new int[100];
@@ -824,7 +826,14 @@ for(int a=0; a<maxChannels; a++)
 }
 
 
-
+void setChatBufferSize()
+{
+  if(chatBufferLarge) {
+     chatBufferSize=100000;
+  }  else {
+    chatBufferSize=55000;
+  }
+}
 void setupMenu()
 {
 

@@ -854,6 +854,14 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing
 		set_string = set_string + "[doneautobufferchat] ";
 
+	// autobuffer
+	set_string = set_string + "[chatbufferlarge] ";
+	if(sharedVariables.chatBufferLarge == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donechatbufferlarge] ";
 
 	// channel Number left
 	set_string = set_string + "[numberchannelleft] ";
@@ -2460,6 +2468,22 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 						sharedVariables.autoBufferChat=true;
 					else
 						sharedVariables.autoBufferChat=false;
+					}
+					catch(Exception zzz){}
+				}
+
+                                
+
+					if (temp.equals("[chatbufferlarge]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1) {
+						sharedVariables.chatBufferLarge=true;
+					        sharedVariables.setChatBufferSize();
+					}
+					else
+						sharedVariables.chatBufferLarge=false;
 					}
 					catch(Exception zzz){}
 				}
