@@ -536,6 +536,7 @@ mysecondlist.setVisible(true);
 //sharedVariables.desktop.add(myfirstlist);
 try
     { //myfirstlist.setSelected(true);
+    sharedVariables.activitiesPanel.setLabelSelected(sharedVariables.activitiesTabNumber);
 if(sharedVariables.activitiesTabNumber != 0)
 	sharedVariables.activitiesPanel.listScrollerPanel.setVisible(false);
 else
