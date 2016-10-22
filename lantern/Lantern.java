@@ -418,7 +418,7 @@ class mymultiframe extends JFrame
     } catch(Exception d) {};
 
     /*************** trying list code *****************/
-    notifyList = new listClass("Notify List");
+    notifyList = new listClass("Notify Online");
     eventsList = new listClass("Events");
     seeksList = new listClass("Human Seeks");
     computerSeeksList = new listClass("Computer Seeks");
