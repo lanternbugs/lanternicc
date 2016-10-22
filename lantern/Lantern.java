@@ -2480,6 +2480,16 @@ myboardappearancemenu.add(consoleaspect);
     } else if (action.equals("Notify Window")) {
 
       myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
+      int notifyWidth = 130;
+int notifyHeight = 240;
+if(sharedVariables.notifyWindowWidth > 20) {
+    notifyWidth = sharedVariables.notifyWindowWidth;
+}
+
+if(sharedVariables.notifyWindowHeight > 20) {
+    notifyHeight = sharedVariables.notifyWindowHeight;
+}
+myNotifyFrame.setSize(notifyWidth,notifyHeight);
       myNotifyFrame.setVisible(true);
 
     }  else if (action.equals("Top Games Window")) {
@@ -2734,6 +2744,8 @@ dot.setVisible(true);
       sharedVariables.doreconnect=true;
 
     } else if (action.equals("Save Settings")) {
+      storeCurrentSizes();
+      saveMainApplicationWindowSize();
       sharedVariables.activitiesOpen =
         (myfirstlist != null && myfirstlist.isVisible() ||
          mysecondlist != null && mysecondlist.isVisible());
@@ -4758,21 +4770,7 @@ dot.setVisible(true);
               try {
                 mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
                 mineScores.saveNow(sharedVariables);
-                try {
-                   int screenW = 0;
-                   int screenH = 0;
-                  try {
-
-                         screenW = ownerFrame.getWidth();
-                         screenH = ownerFrame.getHeight();
-
-                      } catch (Exception badtool) {
-
-                         }
-                  FileWrite writer = new FileWrite();
-                  String outputSizes =  "" + screenW + "\n" + screenH + "\n";
-                  writer.write(outputSizes, "lantern_default_size.ini");
-                 } catch(Exception dumb) {}
+                saveMainApplicationWindowSize();
 
               } catch (Exception d) {}
               System.exit(0);
@@ -4798,7 +4796,16 @@ dot.setVisible(true);
       setLocation(400,300);
       setSize(200, 200);
 
-      for (int b=0; b<sharedVariables.maxGameTabs; b++) {
+      storeCurrentSizes();
+      setVisible(true);
+      setAlwaysOnTop(true);
+    }// end constructor
+  }//end class
+
+  void storeCurrentSizes()
+  {
+      try {
+         for (int b=0; b<sharedVariables.maxGameTabs; b++) {
 	if (myboards[b] != null) {
           if (myboards[b].isVisible() &&
               !myboards[b].isMaximum())
@@ -4834,13 +4841,33 @@ dot.setVisible(true);
         sharedVariables.seeksOpen = true;
         seekGraph.setBoardSize();
       }
+      if(myNotifyFrame != null && myNotifyFrame.isVisible()) {
+         myNotifyFrame.saveSize();
+      }
+      } catch(Exception dui) {
+      }
+      
 
-      setVisible(true);
-      setAlwaysOnTop(true);
-    }// end constructor
-  }//end class
+}
+  void saveMainApplicationWindowSize()
+  {
+    try {
+                   int screenW = 0;
+                   int screenH = 0;
+                  try {
 
+                         screenW = ownerFrame.getWidth();
+                         screenH = ownerFrame.getHeight();
 
+                      } catch (Exception badtool) {
+
+                         }
+                  FileWrite writer = new FileWrite();
+                  String outputSizes =  "" + screenW + "\n" + screenH + "\n";
+                  writer.write(outputSizes, "lantern_default_size.ini");
+                 } catch(Exception dumb) {}
+
+  }
   public void windowOpened(WindowEvent e) {
 
   }

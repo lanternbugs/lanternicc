@@ -61,7 +61,7 @@ notifyList=notifyList1;
 });
 
 setTitle("Notify Window");
-setSize(90,240);
+setSize(130,240);
  notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
 
  notifylistScrollerPanel.notifylistScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -73,7 +73,19 @@ setSize(90,240);
 }// end constructor
 
 
-
+void saveSize()
+{
+ int width  = getWidth();
+ int height = getHeight();
+ if(width > 40 && width < 600) {
+  sharedVariables.notifyWindowWidth = width;
+ }
+ 
+ if(height > 40 && height < 600)
+ {
+   sharedVariables.notifyWindowHeight = height;
+ }
+}
 
 
 

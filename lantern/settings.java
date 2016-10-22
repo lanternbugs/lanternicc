@@ -1020,7 +1020,19 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing tellstotab
 	set_string = set_string + "[donetellstotab] ";
 
+	// notify window width
+	set_string = set_string + "[notifywindowwidth] ";
+	if(sharedVariables.notifyWindowWidth > 20)
+	set_string = set_string + sharedVariables.notifyWindowWidth + " ";
+	// closingnotify window width
+	set_string = set_string + "[donenotifywindowwidth] ";
 
+	// notify window height
+	set_string = set_string + "[notifywindowheight] ";
+	if(sharedVariables.notifyWindowHeight > 20)
+	set_string = set_string + sharedVariables.notifyWindowHeight + " ";
+	// closingnotify window height
+	set_string = set_string + "[donenotifywindowheight] ";
 
 	// pgn loggingopening
 	set_string = set_string + "[pgnlogging] ";
@@ -2710,6 +2722,29 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					catch(Exception zzz){}
 				}
 
+				if (temp.equals("[notifywindowwidth]"))
+				{
+				try {
+					int notifyWidth  = Integer.parseInt(tokens.nextToken());
+					if(notifyWidth > 20) {
+                                           sharedVariables.notifyWindowWidth = notifyWidth;
+                                        }
+					}
+					catch(Exception zzz){}
+				}
+				if (temp.equals("[notifywindowheight]"))
+				{
+				try {
+					int notifyHeight  = Integer.parseInt(tokens.nextToken());
+					if(notifyHeight > 20) {
+                                           sharedVariables.notifyWindowHeight = notifyHeight;
+                                        }
+					}
+					catch(Exception zzz){}
+				}
+
+
+
                                 if(temp.startsWith("[con-format-"))
                                 {
                                  try {
@@ -2977,7 +3012,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 
 
 			if(temp.startsWith("[Con"))
-			{
+			{      
 				int boar=0;
 
 				try{

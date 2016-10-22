@@ -259,6 +259,8 @@ JButton [] mybuttons;
 
 URL [] songs;
 URL [] poweroutSounds;
+int notifyWindowWidth = -1;
+int notifyWindowHeight = -1;
 int moveInputType=0;
 static int DRAG_DROP = 0;
 static int CLICK_CLICK = 1;
