@@ -1238,8 +1238,9 @@ class mymultiframe extends JFrame
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     // .. / (separator)
-    JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
+    JMenuItem helpanalysis = new JMenuItem("Help With Engine Analysis");
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
+    JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
     JMenuItem enginerestart = new JMenuItem("Restart Engine");
     JMenuItem enginestop = new JMenuItem("Stop Engine");
     JMenu engineMenu = new JMenu("Analysis Display");
@@ -1253,6 +1254,7 @@ class mymultiframe extends JFrame
     // .. / (separator)
     JMenu advancedOptions = new JMenu("Advanced");
     // .. / Advanced /
+    JMenuItem advancedmenuhelp = new JMenuItem("Help With Advanced Menu");
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
     alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
 
@@ -1282,6 +1284,7 @@ class mymultiframe extends JFrame
     // .. /
     JMenu observeOptions = new JMenu("Observing Options");
     // .. / Observing Options /
+    JMenuItem observingmenuhelp = new JMenuItem("Help With Observing Menu");
     JMenu tournieFollow = new JMenu("Follow Tomato Tournament Games");
     // .. / .. / Follow Tomato Tournament Games /
     JCheckBoxMenuItem autoflash = new JCheckBoxMenuItem("Flash");
@@ -1348,8 +1351,10 @@ class mymultiframe extends JFrame
     optionsmenu.add(showMugshots);
     // .. /
     optionsmenu.addSeparator();
-    optionsmenu.add(winanalysis);
+    optionsmenu.add(helpanalysis);
+    optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
+    optionsmenu.add(winanalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
     optionsmenu.add(engineMenu);
@@ -1364,6 +1369,8 @@ class mymultiframe extends JFrame
     optionsmenu.addSeparator();
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
+    advancedOptions.add(advancedmenuhelp);
+    advancedOptions.addSeparator();
     advancedOptions.add(qsuggestPopup);
     advancedOptions.add(alwaysShowEdit);
 
@@ -1392,6 +1399,8 @@ class mymultiframe extends JFrame
     // .. /
     optionsmenu.add(observeOptions);
     // .. / Observing Options /
+    observeOptions.add(observingmenuhelp);
+    observeOptions.addSeparator();
     observeOptions.add(tournieFollow);
     // .. / .. / Follow Tomato Tournament Games /
     tournieFollow.add(autoflash);
@@ -1429,8 +1438,9 @@ class mymultiframe extends JFrame
     makeObserveSounds.addActionListener(this);
     hearsound.addActionListener(this);
     notifysound.addActionListener(this);
-    winanalysis.addActionListener(this);
+    helpanalysis.addActionListener(this);
     ucianalysis.addActionListener(this);
+    winanalysis.addActionListener(this);
     enginerestart.addActionListener(this);
     enginestop.addActionListener(this);
     ananfont.addActionListener(this);
@@ -1438,6 +1448,7 @@ class mymultiframe extends JFrame
     ananback.addActionListener(this);
     customizetools.addActionListener(this);
     toolbox.addActionListener(this);
+    advancedmenuhelp.addActionListener(this);
     qsuggestPopup.addActionListener(this);
     alwaysShowEdit.addActionListener(this);
     consolemenu.addActionListener(this);
@@ -1459,6 +1470,7 @@ class mymultiframe extends JFrame
     autonoidle.addActionListener(this);
     iloggedon.addActionListener(this);
     rotateaways.addActionListener(this);
+    observingmenuhelp.addActionListener(this);
     autoflash.addActionListener(this);
     autocooly.addActionListener(this);
     autotomato.addActionListener(this);
@@ -2230,7 +2242,18 @@ myboardappearancemenu.add(consoleaspect);
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
 
-    } else if (action.equals("Qsuggest Popups")) {
+    } else if (action.equals("Help With Advanced Menu")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/optionsadvanced.html");
+
+    } else if (action.equals("Help With Observing Menu")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/observingoptions.html");
+
+    }  else if (action.equals("Help With Engine Analysis")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/engine-analysis.html");
+
+    }
+
+    else if (action.equals("Qsuggest Popups")) {
       sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
       qsuggestPopup.setSelected(sharedVariables.showQsuggest);
 
@@ -2352,7 +2375,7 @@ myboardappearancemenu.add(consoleaspect);
           pgnFrame myPgnFrame = new pgnFrame(sharedVariables, queue,
                                              myTableClass, myLoader);
           sharedVariables.desktop.add(myPgnFrame);
-          myPgnFrame.setSize(600,400);
+          myPgnFrame.setSize(750,400);
           myPgnFrame.setVisible(true);
         }
       } catch (Exception nine) {}

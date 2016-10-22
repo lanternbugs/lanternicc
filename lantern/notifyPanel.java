@@ -75,6 +75,9 @@ theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
         c.setForeground(sharedVariables.channelColor[400]);
         else
         c.setForeground(Color.black);
+        if (isSelected) {
+           c.setBackground(new Color(135,206,250)); 
+        }
         
         return c;
     }
