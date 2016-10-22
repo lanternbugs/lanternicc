@@ -44,7 +44,7 @@ channels sharedVariables;
  ConcurrentLinkedQueue queue;
 JList theNotifyList;
 JScrollPane notifylistScroller;
-
+int lastSelectedIndex = -1;
 
 
 notifyPanel(channels sharedVariables1, ConcurrentLinkedQueue queue1,  listClass notifyList1)
@@ -76,7 +76,7 @@ theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
         else
         c.setForeground(Color.black);
         if (isSelected) {
-           c.setBackground(new Color(135,206,250)); 
+           c.setBackground(new Color(135,206,250));
         }
         
         return c;
@@ -284,7 +284,12 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
 			 //aDialog= new seekDialog(homeFrame, false,"Selected from " +  index );
 			 //aDialog.setVisible(true);
 
-          }
+          }  if(index == lastSelectedIndex && e.getButton() != MouseEvent.BUTTON3) {
+            theNotifyList.clearSelection();
+            lastSelectedIndex = -1;
+        }
+        else if(e.getButton() != MouseEvent.BUTTON3)
+        lastSelectedIndex = index;
      }
  };
  theNotifyList.addMouseListener(mouseListenerNotify);
