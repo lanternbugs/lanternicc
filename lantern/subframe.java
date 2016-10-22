@@ -269,59 +269,28 @@ class subframe extends JInternalFrame
     JMenuItem selectall = new JMenuItem("Select All");
     JMenuItem copyit = new JMenuItem("Copy");
     // .. / (separator)
+    JMenuItem incfont = new JMenuItem("Increase font size");
+    JMenuItem decfont = new JMenuItem("Decrease font size");
+    // .. / (separator)
     JMenuItem telltab = new JMenuItem("Make tell tab");
+
 
     JMenu editmenu2 = new JMenu("Edit");
     // Edit /
     JMenuItem selectall2 = new JMenuItem("Select All");
     JMenuItem copyit2 = new JMenuItem("Copy");
     // .. / (separator)
+    JMenuItem incfont2 = new JMenuItem("Increase font size");
+    JMenuItem decfont2 = new JMenuItem("Decrease font size");
+    // .. / (separator)
     JMenuItem telltab2 = new JMenuItem("Make tell tab");
+
 
     // add accelerators
     telltab.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
                                                   ActionEvent.CTRL_MASK));
     telltab2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
                                                   ActionEvent.CTRL_MASK));
-
-
-    // add to menu bar
-    consoleMenu.add(editmenu);
-    // Edit /
-    editmenu.add(selectall);
-    editmenu.add(copyit);
-    editmenu.addSeparator();
-    editmenu.add(telltab);
-    
-    // add to menu bar
-    consoleEditMenu.add(editmenu2);
-    // Edit /
-    editmenu2.add(selectall2);
-    editmenu2.add(copyit2);
-    editmenu2.addSeparator();
-    editmenu2.add(telltab2);
-
-    // add listeners
-    selectall.addActionListener(this);
-    copyit.addActionListener(this);
-    telltab.addActionListener(this);
-    
-    // add listeners
-    selectall2.addActionListener(this);
-    copyit2.addActionListener(this);
-    telltab2.addActionListener(this);
-
-    /******************** View ********************/
-    JMenu viewmenu = new JMenu("View");
-    // View /
-    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
-   JMenuItem chnotify = new JMenuItem("Show online players on channel notify");
-    // .. / (separator)
-    JMenuItem incfont = new JMenuItem("Increase font size");
-    JMenuItem decfont = new JMenuItem("Decrease font size");
-
-    // add accelerators
-
     if(isMac) {
          incfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
                                                   Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -333,6 +302,66 @@ class subframe extends JInternalFrame
     decfont.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
                                                   ActionEvent.ALT_MASK));
     }
+    
+    if(isMac) {
+         incfont2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+                                                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    decfont2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                                                  Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+    } else {
+         incfont2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP,
+                                                  ActionEvent.ALT_MASK));
+    decfont2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,
+                                                  ActionEvent.ALT_MASK));
+    }
+
+    // add to menu bar
+    consoleMenu.add(editmenu);
+    // Edit /
+    editmenu.add(selectall);
+    editmenu.add(copyit);
+    editmenu.addSeparator();
+    editmenu.add(incfont);
+    editmenu.add(decfont);
+    editmenu.addSeparator();
+    editmenu.add(telltab);
+    
+    // add to menu bar
+    consoleEditMenu.add(editmenu2);
+    // Edit /
+    editmenu2.add(selectall2);
+    editmenu2.add(copyit2);
+    editmenu2.addSeparator();
+    editmenu2.add(incfont2);
+    editmenu2.add(decfont2);
+    editmenu2.addSeparator();
+    editmenu2.add(telltab2);
+
+    // add listeners
+    selectall.addActionListener(this);
+    copyit.addActionListener(this);
+    telltab.addActionListener(this);
+    incfont.addActionListener(this);
+    decfont.addActionListener(this);
+    
+    // add listeners
+    selectall2.addActionListener(this);
+    copyit2.addActionListener(this);
+    telltab2.addActionListener(this);
+    incfont2.addActionListener(this);
+    decfont2.addActionListener(this);
+
+    /******************** View ********************/
+    JMenu viewmenu = new JMenu("View");
+    // View /
+    listChoice = new JCheckBoxMenuItem("Show Channel Names List");
+   JMenuItem chnotify = new JMenuItem("Show online players on channel notify");
+    // .. / (separator)
+
+
+    // add accelerators
+
+
 
 
 
@@ -340,19 +369,17 @@ class subframe extends JInternalFrame
     listChoice.setSelected((sharedVariables.consolesNamesLayout[consoleNumber] == 1));
 
     // add to menu bar
-    consoleMenu.add(viewmenu);
+    //consoleMenu.add(viewmenu);
     // View
     //viewmenu.add(listChoice);
     //viewmenu.add(chnotify);
     //viewmenu.addSeparator();
-    viewmenu.add(incfont);
-    viewmenu.add(decfont);
+
 
     // add listeners
     listChoice.addActionListener(this);
     chnotify.addActionListener(this);
-    incfont.addActionListener(this);
-    decfont.addActionListener(this);
+
 
     /******************** User Buttons ********************/
     JMenu buttonmenu = new JMenu("User Buttons");
@@ -1805,7 +1832,7 @@ class subframe extends JInternalFrame
             JPopupMenu menu2 = new JPopupMenu();
             JMenu menu3=null;
             if(mypopup == false)
-            menu3= new JMenu("Options");
+            menu3= new JMenu("Tab");
 
             JMenuItem item11 = new JMenuItem("trim tab chat");
             item11.addActionListener(new ActionListener() {
