@@ -2554,7 +2554,10 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				if(temp.equals("[activitiesTabNumber]"))
 				{
 				try {
-					sharedVariables.activitiesTabNumber = Integer.parseInt(tokens.nextToken());
+					int tabNumber = Integer.parseInt(tokens.nextToken());
+					if(tabNumber > -1 && tabNumber < 4) {
+                                           sharedVariables.activitiesTabNumber = tabNumber;  
+                                        }
 					}
 					catch(Exception zzz){}
 				}

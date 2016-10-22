@@ -825,13 +825,13 @@ channelPanel.add(channelScroller3);
 	h2.addComponent(computerSeeksLabel);
 	h2.addComponent(eventsLabel);
 	h2.addComponent(notifyLabel);
-	h2.addComponent(channelLabel);
+	//h2.addComponent(channelLabel);
 
 	h3.addComponent(myseeks1);
 	h4.addComponent(listScrollerPanel);
 	h5.addComponent(notifylistScrollerPanel);
 	h6.addComponent(myseeks2);
-	h7.addComponent(channelPanel);
+	//h7.addComponent(channelPanel);
 
 
 
@@ -841,7 +841,7 @@ h1.addGroup(h3);
 h1.addGroup(h4);
 h1.addGroup(h5);
 h1.addGroup(h6);
-h1.addGroup(h7);
+//h1.addGroup(h7);
 
 	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
 	//Create the horizontal group
@@ -869,7 +869,7 @@ v9.addComponent(eventsLabel);
 v9.addComponent(notifyLabel);
 v9.addComponent(seeksLabel);
 v9.addComponent(computerSeeksLabel);
-v9.addComponent(channelLabel);
+//v9.addComponent(channelLabel);
 		v1.addGroup(v9);
 		v1.addComponent(listScrollerPanel);
 
@@ -880,8 +880,8 @@ v9.addComponent(channelLabel);
 
 v3.addGroup(v9);
 v3.addComponent(notifylistScrollerPanel);
-v33.addGroup(v9);
-v33.addComponent(channelPanel);
+//v33.addGroup(v9);
+//v33.addComponent(channelPanel);
 v44.addGroup(v9);
 v44.addComponent(myseeks2);
 
@@ -890,7 +890,7 @@ v4.addGroup(v1);
 v4.addGroup(v2);
 v4.addGroup(v3);
 v4.addGroup(v44);
-v4.addGroup(v33);
+//v4.addGroup(v33);
 
 	vGroup.addGroup(v4);
 
