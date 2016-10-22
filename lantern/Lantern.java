@@ -1238,7 +1238,7 @@ class mymultiframe extends JFrame
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     // .. / (separator)
-    JMenuItem helpanalysis = new JMenuItem("Help With Engine Analysis");
+    JMenuItem helpanalysis = new JMenuItem("Engine Analysis Help");
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
     JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
     JMenuItem enginerestart = new JMenuItem("Restart Engine");
@@ -1254,7 +1254,7 @@ class mymultiframe extends JFrame
     // .. / (separator)
     JMenu advancedOptions = new JMenu("Advanced");
     // .. / Advanced /
-    JMenuItem advancedmenuhelp = new JMenuItem("Help With Advanced Menu");
+    JMenuItem advancedmenuhelp = new JMenuItem("Advanced Menu Help");
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
     alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
 
@@ -1276,6 +1276,7 @@ class mymultiframe extends JFrame
     // .. /
     JMenu featuresMenu = new JMenu("Features");
     // .. / Features /
+    JMenuItem featuresmenuhelp = new JMenuItem("Features Menu Help");
     tellswitch = new JCheckBoxMenuItem("Switch Tab On Tell");
     addnameontellswitch = new JCheckBoxMenuItem("Add Name On Tell Switch");
     autonoidle = new JCheckBoxMenuItem("No Idle");
@@ -1284,7 +1285,7 @@ class mymultiframe extends JFrame
     // .. /
     JMenu observeOptions = new JMenu("Observing Options");
     // .. / Observing Options /
-    JMenuItem observingmenuhelp = new JMenuItem("Help With Observing Menu");
+    JMenuItem observingmenuhelp = new JMenuItem("Observing Menu Help");
     JMenu tournieFollow = new JMenu("Follow Tomato Tournament Games");
     // .. / .. / Follow Tomato Tournament Games /
     JCheckBoxMenuItem autoflash = new JCheckBoxMenuItem("Flash");
@@ -1391,6 +1392,8 @@ class mymultiframe extends JFrame
     // .. /
     optionsmenu.add(featuresMenu);
     // .. / Features /
+    featuresMenu.add(featuresmenuhelp);
+    featuresMenu.addSeparator();
     featuresMenu.add(tellswitch);
     featuresMenu.add(addnameontellswitch);
     featuresMenu.add(autonoidle);
@@ -1466,6 +1469,7 @@ class mymultiframe extends JFrame
     italicsBehavior[1].addActionListener(this);
     italicsBehavior[2].addActionListener(this);
     tellswitch.addActionListener(this);
+    featuresmenuhelp.addActionListener(this);
     addnameontellswitch.addActionListener(this);
     autonoidle.addActionListener(this);
     iloggedon.addActionListener(this);
@@ -2242,13 +2246,16 @@ myboardappearancemenu.add(consoleaspect);
          // consoleSubframes[bam].consoleMenu.setVisible(sharedVariables.showConsoleMenu);
       }	catch (Exception bal) {}
 
-    } else if (action.equals("Help With Advanced Menu")) {
+    } else if (action.equals("Advanced Menu Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/optionsadvanced.html");
 
-    } else if (action.equals("Help With Observing Menu")) {
+    } else if (action.equals("Features Menu Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/options.html");
+
+    } else if (action.equals("Observing Menu Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/observingoptions.html");
 
-    }  else if (action.equals("Help With Engine Analysis")) {
+    }  else if (action.equals("Engine Analysis Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/engine-analysis.html");
 
     }
