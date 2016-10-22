@@ -59,6 +59,8 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JLabel computerSeeksLabel;
 	JLabel notifyLabel;
 	JLabel channelLabel;
+	Color defaultLabelColor = null;
+	Color selectedLabelColor = null;
         int iconWidth = 42;
 //JScrollPane seeklistScroller;
 //JScrollPane computerseeklistScroller;
@@ -137,13 +139,20 @@ displayList = new listClass();
 add(displayList.theList);
 }catch(Exception d) { }
 */
-eventsLabel = new JLabel("Events List    ");
+eventsLabel = new JLabel("Events List", SwingConstants.CENTER);
 
-seeksLabel = new JLabel("Human Seeks    ");
-computerSeeksLabel = new JLabel(" Computer Seeks    ");
-notifyLabel = new JLabel(" Notify List    ");
+seeksLabel = new JLabel("Human Seeks", SwingConstants.CENTER);
+computerSeeksLabel = new JLabel(" Computer Seeks", SwingConstants.CENTER);
+notifyLabel = new JLabel(" Notify List", SwingConstants.CENTER);
 channelLabel = new JLabel(" Channel List    ");
 
+eventsLabel.setOpaque(true);
+seeksLabel.setOpaque(true);
+computerSeeksLabel.setOpaque(true);
+notifyLabel.setOpaque(true);
+
+defaultLabelColor = this.getBackground();
+selectedLabelColor = new Color(176,196,222);
 //list = new JList(data); //data has type Object[]
 theEventsList = new JTable(eventsList.eventsTable)
 {
@@ -589,7 +598,7 @@ if(sharedVariables.activitiesTabNumber != 3)
 	notifylistScrollerPanel.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 4)
 	channelPanel.setVisible(false);
-
+setLabelSelected(sharedVariables.activitiesTabNumber);
 
 eventsLabel.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
@@ -604,6 +613,7 @@ eventsLabel.addMouseListener(new MouseAdapter() {
                                    listScrollerPanel.setVisible(true);
                                    listScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=0;
+				 setLabelSelected(sharedVariables.activitiesTabNumber);
 
 
 
@@ -645,6 +655,7 @@ seeksLabel.addMouseListener(new MouseAdapter() {
 				 channelPanel.setVisible(false);
 				  myseeks1.setVisible(true);
 				 sharedVariables.activitiesTabNumber=1;
+				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				 paintComponents(getGraphics()); repaint();
 
 
@@ -686,6 +697,7 @@ notifyLabel.addMouseListener(new MouseAdapter() {
 				  notifylistScrollerPanel.setVisible(true);
 				  notifylistScrollerPanel.notifylistScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=3;
+				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				   notifylistScrollerPanel.repaint();
                                    paintComponents(getGraphics());
                                     repaint();
@@ -730,6 +742,7 @@ computerSeeksLabel.addMouseListener(new MouseAdapter() {
 				 channelPanel.setVisible(false);
 				 myseeks2.setVisible(true);
 				 sharedVariables.activitiesTabNumber=2;
+				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				 paintComponents(getGraphics()); repaint();
 
             }
@@ -767,6 +780,7 @@ channelLabel.addMouseListener(new MouseAdapter() {
 				 myseeks2.setVisible(false);
 				 channelPanel.setVisible(true);
 				 sharedVariables.activitiesTabNumber=4;
+				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				 paintComponents(getGraphics()); repaint();
 
             }
@@ -795,7 +809,29 @@ public void mouseClicked (MouseEvent me) {}
 
 }// end inti components
 
+void setLabelSelected(int num)
+{
+   if(num != 0 )
+     eventsLabel.setBackground(defaultLabelColor);
+   else 
+     eventsLabel.setBackground(selectedLabelColor);
+     
+   if(num != 1 )
+     seeksLabel.setBackground(defaultLabelColor);
+   else 
+     seeksLabel.setBackground(selectedLabelColor);
 
+   if(num != 2 )
+     computerSeeksLabel.setBackground(defaultLabelColor);
+   else 
+     computerSeeksLabel.setBackground(selectedLabelColor);
+
+   if(num != 3 )
+     notifyLabel.setBackground(defaultLabelColor);
+   else 
+     notifyLabel.setBackground(selectedLabelColor);
+
+}
 void setLayout()
 {
 //add(listScroller);
@@ -821,10 +857,10 @@ channelPanel.add(channelScroller3);
 
 
 
-	h2.addComponent(seeksLabel);
-	h2.addComponent(computerSeeksLabel);
-	h2.addComponent(eventsLabel);
-	h2.addComponent(notifyLabel);
+	h2.addComponent(seeksLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+	h2.addComponent(computerSeeksLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+	h2.addComponent(eventsLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+	h2.addComponent(notifyLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	//h2.addComponent(channelLabel);
 
 	h3.addComponent(myseeks1);
