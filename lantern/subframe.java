@@ -1805,7 +1805,7 @@ class subframe extends JInternalFrame
             JPopupMenu menu2 = new JPopupMenu();
             JMenu menu3=null;
             if(mypopup == false)
-            menu3= new JMenu("Management");
+            menu3= new JMenu("Options");
 
             JMenuItem item11 = new JMenuItem("trim tab chat");
             item11.addActionListener(new ActionListener() {

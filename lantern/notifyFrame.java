@@ -60,7 +60,7 @@ notifyList=notifyList1;
     }
 });
 
-setTitle("Notify Window");
+setTitle("Notify");
 setSize(130,240);
  notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
 

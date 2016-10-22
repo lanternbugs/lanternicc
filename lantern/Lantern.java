@@ -2479,18 +2479,7 @@ myboardappearancemenu.add(consoleaspect);
 
     } else if (action.equals("Notify Window")) {
 
-      myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
-      int notifyWidth = 130;
-int notifyHeight = 240;
-if(sharedVariables.notifyWindowWidth > 20) {
-    notifyWidth = sharedVariables.notifyWindowWidth;
-}
-
-if(sharedVariables.notifyWindowHeight > 20) {
-    notifyHeight = sharedVariables.notifyWindowHeight;
-}
-myNotifyFrame.setSize(notifyWidth,notifyHeight);
-      myNotifyFrame.setVisible(true);
+      launchNotifyWindow();
 
     }  else if (action.equals("Top Games Window")) {
 
@@ -4928,11 +4917,28 @@ dot.setVisible(true);
 	  myTopGamesFrame.setVisible(true);
 
   }
+  
+void launchNotifyWindow()
+{
+    myNotifyFrame.notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
+      int notifyWidth = 130;
+int notifyHeight = 240;
+if(sharedVariables.notifyWindowWidth > 20) {
+    notifyWidth = sharedVariables.notifyWindowWidth;
+}
+
+if(sharedVariables.notifyWindowHeight > 20) {
+    notifyHeight = sharedVariables.notifyWindowHeight;
+}
+myNotifyFrame.setSize(notifyWidth,notifyHeight);
+      myNotifyFrame.setVisible(!myNotifyFrame.isVisible());
+
+}
   class toolBarPanelClass extends JPanel
   {
 
 	 toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
-	 JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JToolBar toolBar)
+	 JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JLabel notifyLabel, JToolBar toolBar)
  	{
 	GroupLayout layout = new GroupLayout(toolBar);
 	SequentialGroup hgroup = layout.createSequentialGroup();
@@ -4941,10 +4947,12 @@ dot.setVisible(true);
     hgroup.addComponent(sharedVariables.mybuttons[0]);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(userbuttonLabel);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(scripterLabel);
+    //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    //hgroup.addComponent(scripterLabel);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(topGamesLabel);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(notifyLabel);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(seeksLabel, 100, 100, 100);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
@@ -4968,8 +4976,9 @@ dot.setVisible(true);
 	for(int a=1; a<10; a++)
 	  vgroup.addComponent(sharedVariables.mybuttons[a]);
     vgroup.addComponent(userbuttonLabel);
-    vgroup.addComponent(scripterLabel);
+    //vgroup.addComponent(scripterLabel);
     vgroup.addComponent(topGamesLabel);
+    vgroup.addComponent(notifyLabel);
     vgroup.addComponent(seeksLabel);
     vgroup.addComponent(activitesLabel);
     vgroup.addComponent(pure1);
@@ -4998,6 +5007,7 @@ dot.setVisible(true);
     JLabel userbuttonLabel = new JLabel();
     JLabel  scripterLabel = new JLabel();
     JLabel  topGamesLabel = new JLabel();
+    JLabel notifyLabel = new JLabel();
    for (int a=0; a<10; a++) {
       sharedVariables.mybuttons[a] = new JButton("" + a);
       setButtonTitle(a);
@@ -5015,7 +5025,7 @@ dot.setVisible(true);
     }
 
     toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure25, pure960,
-	 seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, toolBar);
+	 seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, notifyLabel, toolBar);
 
  /*
     pure1.setIcon(sharedVariables.pure1);
@@ -5123,6 +5133,26 @@ dot.setVisible(true);
         public void mouseExited(MouseEvent me) {}
         public void mouseClicked(MouseEvent me) {}
       });
+
+    notifyLabel.setText("   Notify   ");
+   // topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
+    notifyLabel.setOpaque(true);
+    notifyLabel.setBackground(new Color(245,245,250));
+    notifyLabel.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+            ;
+          else {
+                  launchNotifyWindow();
+          }// end else
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+
 
     pure1.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
