@@ -694,10 +694,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     //framer.setSize(500,100);
     //framer.setVisible(true);
       // check if black on the move
+      try {
       int i = fen.indexOf(" ");
       if(i > -1)
       {
-       try {
+
         if(fen.substring(i+1, i+2).equals("b") && sharedVariables.mygame[gameData.BoardIndex].wild == 20 && 
         sharedVariables.mygame[gameData.BoardIndex].movetop == 0)
         {  moveSent(icsGameNumber, "e2e2",
@@ -709,9 +710,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     //framer.setVisible(true);
 
        }
+        } // if i > -1
+        sharedVariables.mygame[gameData.BoardIndex].engineFen = fen;
        }
        catch(Exception e){}
-      } // if i > -1
+
     return; // currently parsing initial postions not fens
     /*
     if(tempnumber ==
