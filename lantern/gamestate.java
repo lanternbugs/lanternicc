@@ -897,6 +897,10 @@ return type;
 
 void makeEngineMove(String move)
 {
+        if(move.contains("e2e2")) {
+          engineFen = engineFen.replace(" w - - 0", " b - - 0");
+          return;
+        }
 
 	engineMoves[engineTop]=move;
 	engineTop++;

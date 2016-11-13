@@ -643,6 +643,14 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           }// end if
         }// end for
         resetMoveList();
+        
+       if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_OBSERVING)&&
+          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
+            if (sharedVariables.uci)
+              sendUciMoves();
+        }// end if engine on true
        
 
       }// end try
@@ -2292,7 +2300,16 @@ void stopTheEngine()
       if (sharedVariables.mygame[gameData.BoardIndex].movetop < 0)
         sharedVariables.mygame[gameData.BoardIndex].movetop=0;
 
-      try {
+     try {
+
+                sharedVariables.mygametable[gameData.BoardIndex].removeMoves
+                  (sharedVariables.mygame[gameData.BoardIndex].movetop + num, num);
+
+              } catch (Exception e1) {
+                //ignore
+              }
+
+     /* try {
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -2309,7 +2326,7 @@ void stopTheEngine()
           });
       }//end try
       catch(Exception dumb) {}
-
+       */
       sharedVariables.mygame[gameData.BoardIndex].replay();
       if (isVisible() == true)
         repaintCustom();

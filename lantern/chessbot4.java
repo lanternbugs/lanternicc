@@ -5166,7 +5166,25 @@ void proccessGameInfo(newBoardData temp)
                                         }
 
                         	}// end try
-				catch(Exception ddd){}
+				catch(Exception ddd){
+                                if(sharedVariables.debug) {
+                                  writeToConsole("game creation exception 1 and gamenum is " + gamenum);
+                                  if(gamenum > -1 && gamenum < myboards.length -1) {
+                                        if(myboards[gamenum] == null)
+                                        {
+                                          writeToConsole("in game creation exception 1 myboards[gamenum] == null");
+                                        }
+                                        if(sharedVariables.mygame[gamenum] == null) {
+                                            writeToConsole("in game creation exception 1 mygame[gamenum] == null");
+                                        }
+                                  } else {
+                                      writeToConsole("in game creation exception 1 and there is a length exception with this gamenum " + gamenum);
+                                  }
+                                  
+                                  writeToConsole("end of game creation exception 1 and message is " + ddd.getMessage());
+
+                                }
+                                }
 
 
 					try {
@@ -5207,7 +5225,7 @@ void proccessGameInfo(newBoardData temp)
 
 			                  if(go== true && first > -1)
                                           {
-
+                                            boolean falseSign = true;
                                             for(int xy=0; xy<sharedVariables.maxGameTabs; xy++)
                                             if(sharedVariables.tabLooking[xy]==gamenum)
                                             {
@@ -5215,14 +5233,22 @@ void proccessGameInfo(newBoardData temp)
                                               final int first2 = first;
                                               final int xy2 = xy;
                                               // was runnable
-                                              try { myboards[first2].myconsolepanel.makehappen(xy2);
-                                              }catch(Exception duiiii){}
+                                              try {
+                                               falseSign = false;
+                                                myboards[first2].myconsolepanel.makehappen(xy2);
+                                              }catch(Exception duiiii){
+                                              if(sharedVariables.debug) {
+                                               writeToConsole("game creation exception 2 on makehappen, was tryhing to use board " + first2 + " and makehappen arg " + xy2);
+                                              }
+                                              }
 
 
                                               break;
 
                                             }
-
+                                            if(sharedVariables.debug && falseSign) {
+                                           writeToConsole("game creation exception 3 we did not make  happen");
+                                          }
                                           } // i need this to happen on new board
 
                                          }// end if tabs only

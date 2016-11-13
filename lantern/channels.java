@@ -51,6 +51,7 @@ tableClass [] mygametable;
 JTable [] gametable;
 JMenu myWindows;
 JMenuItem [] openBoards;
+boolean debug = false;
 boolean hasSettings=false;
 boolean randomArmy=false;
 boolean randomBoardTiles=false;
@@ -354,7 +355,8 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.61";
+version = "v5.62";
+debug = false;
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
  setChatBufferSize();
