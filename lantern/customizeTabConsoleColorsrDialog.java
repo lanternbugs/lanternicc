@@ -33,6 +33,7 @@ JPaintedLabel nonResponseTextLabel;
 JPaintedLabel kibLabel;
 JPaintedLabel timestampLabel;
 JPaintedLabel typedLabel;
+JPaintedLabel resetLabel;
 
 
 JButton shoutButton;
@@ -47,6 +48,7 @@ JButton cancelButton;
 JButton kibButton;
 JButton timestampButton;
 JButton typedButton;
+JButton resetButton;
 
 Color tellcolor;
 Color BackColor;
@@ -311,6 +313,38 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 });
 
 
+//  reset colors
+	resetLabel = new JPaintedLabel("Reset to Global", sharedVariables);
+	resetLabel.setForeground(ForColor);
+	resetLabel.fontType=0;
+
+
+	resetLabel.setOpaque(true);
+	resetLabel.setBackground(BackColor);
+	resetButton = new JButton("Reset");
+	resetButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event)
+				{
+			 try
+			 	{
+                                sharedVariables.tabStuff[consoleNumber].typedColor =null;
+				sharedVariables.tabStuff[consoleNumber].BackColor =null;
+				sharedVariables.tabStuff[consoleNumber].timestampColor =null;
+				sharedVariables.tabStuff[consoleNumber].ForColor =null;
+                                sharedVariables.tabStuff[consoleNumber].responseColor=null;
+                                sharedVariables.tabStuff[consoleNumber].qtellcolor=null;
+                                sharedVariables.tabStuff[consoleNumber].tellcolor=null;
+                                if(sharedVariables.looking[me.consoleNumber]==consoleNumber)
+						me.makeHappen(consoleNumber);
+			        dispose();
+
+
+		}// end try
+			catch(Exception e)
+			{}
+		}
+});
+
 okButton = new JButton("Ok");
 cancelButton = new JButton("Cancel");
 okButton.setBackground(new Color(230, 220, 220));
@@ -343,7 +377,7 @@ cancelButton.setBackground(new Color(230, 220, 220));
 		}
 });
 
-pane.setLayout(new GridLayout(8,2)); // rows collums
+pane.setLayout(new GridLayout(9,2)); // rows collums
 
 
 pane.add(tellButton);
@@ -369,12 +403,15 @@ pane.add(timestampLabel);
 pane.add(typedButton);
 pane.add(typedLabel);
 
+pane.add(resetButton);
+pane.add(resetLabel);
+
 
 pane.add(okButton);
 pane.add(cancelButton);
 
 
-setSize(470,300);
+setSize(470,320);
 setTitle("Tab " + consoleNumber + " Color Chooser");
 setLocation(75,70);
 setVisible(true);

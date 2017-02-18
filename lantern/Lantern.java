@@ -1066,6 +1066,7 @@ class mymultiframe extends JFrame
     JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
     JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
     JMenuItem reconnect4 = new JMenuItem("Reconnect to ICC (alternate)");
+    JMenuItem help_connecting = new JMenuItem("Anon and Guest Login Help");
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
     JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
     JMenuItem settings2 = new JMenuItem("Save Settings");
@@ -1085,6 +1086,8 @@ class mymultiframe extends JFrame
     myfiles.add(reconnect1);
     myfiles.add(reconnect4);
     myfiles.add(reconnect3);
+    myfiles.addSeparator();
+    myfiles.add(help_connecting);
     //myfiles.add(reconnect2);
     myfiles.addSeparator();
     myfiles.add(wallpaper1);
@@ -1095,6 +1098,7 @@ class mymultiframe extends JFrame
     settings2.addActionListener(this);
     reconnect1.addActionListener(this);
     reconnect4.addActionListener(this);
+    help_connecting.addActionListener(this);
     //reconnect2.addActionListener(this);
     reconnect3.addActionListener(this);
     wallpaper1.addActionListener(this);
@@ -1743,7 +1747,12 @@ class mymultiframe extends JFrame
     aspectarray[2] = new JCheckBoxMenuItem("4:3");
     aspectarray[3] = new JCheckBoxMenuItem("3:2");
     // .. /
-
+   
+    JMenuItem help_board_advanced = new JMenuItem("Board Advanced Menu Help");
+    JMenuItem help_pgn = new JMenuItem("PGN Menu Help");
+    JMenuItem help_game_communication = new JMenuItem("Game Communication Menu Help");
+    JMenuItem help_getting_game = new JMenuItem("Getting a Game Help");
+     JMenuItem help_customizing_board = new JMenuItem("Customizing Board Help");
     // add shortcuts
     myboardmenu.setMnemonic(KeyEvent.VK_G);
     flipSent.setMnemonic(KeyEvent.VK_F);
@@ -1785,8 +1794,10 @@ class mymultiframe extends JFrame
     myboardmenu.add(nchallenge);
     myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
-    myboardmenu.add(flipSent);
     myboardmenu.addSeparator();
+    myboardmenu.add(help_getting_game);
+    myboardmenu.addSeparator();
+    myboardmenu.add(flipSent);
      myboardmenu.add(showexam);
     myboardmenu.add(showexamlast);
     myboardmenu.addSeparator();
@@ -1882,12 +1893,19 @@ myboardappearancemenu.add(consoleaspect);
     // .. / Board Fonts /
     boardFonts9.add(gamefont);
     boardFonts9.add(gameclockfont);
+    myboardappearancemenu.addSeparator();
+    myboardappearancemenu.add(help_customizing_board);
+    myboardappearancemenu.addSeparator();
+    myboardappearancemenu.add(AdvancedGameMenu);
+
     // .. /
     myboardmenu.addSeparator();
     //myboardmenu.add(useLightBackground);   // disabled
     // .. /
    myboardmenu.add(PgnMenu);
     // .. / PGN /
+    PgnMenu.add(help_pgn);
+    PgnMenu.addSeparator();
     PgnMenu.add(pgnlogging);
     PgnMenu.add(pgnObservedLogging);
     PgnMenu.add(openpgn);
@@ -1900,11 +1918,14 @@ myboardappearancemenu.add(consoleaspect);
 
     myboardmenu.add(Communications);
     // .. / Communications /
+    Communications.add(help_game_communication);
+    Communications.addSeparator();
     Communications.add(blockSays);
     Communications.add(gameend);
     Communications.add(autoChat);
     // .. /
-    myboardappearancemenu.add(AdvancedGameMenu);
+    AdvancedGameMenu.add(help_board_advanced);
+    AdvancedGameMenu.addSeparator();
     // .. / Advanced /
     AdvancedGameMenu.add(lowTimeColors);
     AdvancedGameMenu.add(checkLegality);
@@ -1991,6 +2012,11 @@ myboardappearancemenu.add(consoleaspect);
     preset2.addActionListener(this);
     preset3.addActionListener(this);
     */
+    help_customizing_board.addActionListener(this);
+    help_pgn.addActionListener(this);
+    help_game_communication.addActionListener(this);
+    help_getting_game.addActionListener(this);
+    help_board_advanced.addActionListener(this);
     showexam.addActionListener(this);
     showexamlast.addActionListener(this);
     lcolor.addActionListener(this);
@@ -2101,7 +2127,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenu helpmenu = new JMenu("Help");
     // Help /
     JMenuItem askaquestion = new JMenuItem("Ask A Question");
-    JMenuItem lanternmanual = new JMenuItem("Lantern Manual");
+    JMenuItem lanternmanual = new JMenuItem("Lantern Help Index");
     JMenuItem changelog = new JMenuItem("Change Log");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
     JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
@@ -2258,7 +2284,33 @@ myboardappearancemenu.add(consoleaspect);
     }  else if (action.equals("Engine Analysis Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/engine-analysis.html");
 
+     }  else if (action.equals("Customizing Board Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/customizing-board.html");
+
     }
+  else if (action.equals("Board Advanced Menu Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/board-advanced.html");
+
+    }
+  else if (action.equals("PGN Menu Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/mygames.html");
+
+    }
+  else if (action.equals("Game Communication Menu Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/game-communications.html");
+
+
+    }  else if (action.equals("Anon and Guest Login Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/guestanonloginhelp.html");
+
+    }
+      else if (action.equals("Getting a Game Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/getting-games.html");
+
+    }
+
+
+
 
     else if (action.equals("Qsuggest Popups")) {
       sharedVariables.showQsuggest = !sharedVariables.showQsuggest;
@@ -2269,7 +2321,7 @@ myboardappearancemenu.add(consoleaspect);
       mypopper.setSize(500,140);
       mypopper.setVisible(true);
 
-    } else if (action.equals("Lantern Manual")) {
+    } else if (action.equals("Lantern Help Index")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/lantern-help.php");
 
     } else if (action.equals("Change Log")) {

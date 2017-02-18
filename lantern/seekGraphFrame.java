@@ -158,7 +158,7 @@ try {
 }
 catch(Exception centerError){}
 
-myseeker.setTitle("Get a Game");
+myseeker.setTitle("Seek a Game");
 
 myseeker.setVisible(true);
 
