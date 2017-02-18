@@ -1880,6 +1880,20 @@ class subframe extends JInternalFrame
                        menu2.add(item3);
                        else
                        menu3.add(item3);
+                       
+         JMenuItem item3reset = new JMenuItem("reset tab font to global");
+            item3reset.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].tabFont=null;
+                consoles[consoleNumber].setFont(sharedVariables.myFont);
+                sharedVariables.useConsoleFont[sharedVariables.looking[consoleNumber]]=false;
+                }
+              });
+                       if(menu3 == null)
+                       menu2.add(item3reset);
+                       else
+                       menu3.add(item3reset);
 
             JMenuItem item4 = new JMenuItem("set tab colors");
             item4.addActionListener(new ActionListener() {
