@@ -2046,6 +2046,9 @@ void stopTheEngine()
                 else
                   sharedVariables.lastSoundCount=0;
                 // limited to 2 sounds every 1200 ms
+               if(sharedVariables.mygame[gameData.BoardIndex].state !=
+                sharedVariables.STATE_PLAYING )
+                sharedVariables.lastSoundTime = System.currentTimeMillis();
                 makeASound(type);
               }
             }
