@@ -694,6 +694,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneobservesounds] ";
 
+	// tellsounds
+	set_string = set_string + "[tellsounds] ";
+	if(sharedVariables.makeTellSounds == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donetellsounds] ";
+
 
 
  	// tilesrandom
@@ -888,6 +897,14 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 		set_string = set_string + "0" + " ";
 	// closing
 	set_string = set_string + "[donelastMoveHighlight] ";
+
+	// uci multiple linesopening
+	set_string = set_string + "[ucimultiplelines] ";
+	set_string = set_string +  sharedVariables.uciMultipleLines + " ";
+	// closing uci multiple lines
+	set_string = set_string + "[doneucimultiplelines] ";
+
+
 
 	// game console type opening
 	set_string = set_string + "[boardconsoletype] ";
@@ -2406,6 +2423,18 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+					if(temp.equals("[tellsounds]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.makeTellSounds=true;
+					else
+						sharedVariables.makeTellSounds=false;
+					}
+					catch(Exception zzz){}
+				}
+
 
 
 				if (temp.equals("[time-shout]"))
@@ -2571,6 +2600,13 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					catch(Exception zzz){}
 				}
 
+				if (temp.equals("[ucimultiplelines]"))
+				{
+				try {
+					sharedVariables.uciMultipleLines = Integer.parseInt(tokens.nextToken());
+					}
+					catch(Exception zzz){}
+				}
 
 				if (temp.equals("[subconsoletype]"))
 				{

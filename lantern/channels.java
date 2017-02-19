@@ -75,6 +75,7 @@ boolean [] excludedPiecesWhite;
 boolean highlightMoves;
 boolean makeSounds;
 boolean makeObserveSounds;
+boolean makeTellSounds;
 boolean engineOn;
 boolean tabsOnly;
 boolean standAlone;
@@ -279,6 +280,7 @@ int maxConsoleTabs=12;
 int soundBoard=0;
 int soundGame=0;
 int consoleLayout;
+int uciMultipleLines = 1;
 long autoexamspeed;
 long lastSoundTime;// used to not send multiple sounds in say one second when forwarding through games
 int lastSoundCount;
@@ -355,7 +357,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.65";
+version = "v5.66";
 debug = false;
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
@@ -487,6 +489,7 @@ engineBoard=-1;
 engineOn=false;
 makeSounds=true;
 makeObserveSounds=true;
+makeTellSounds = true;
 pgnLogging=true;
 indent=false;
 tellTimestamp=true;

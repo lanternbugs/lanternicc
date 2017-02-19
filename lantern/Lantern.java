@@ -202,6 +202,12 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem BoardDesign3;
   */
   JCheckBoxMenuItem[] boarddesignarray = new JCheckBoxMenuItem[3];
+  
+  JCheckBoxMenuItem ucimultipleone;
+  JCheckBoxMenuItem ucimultipletwo;
+  JCheckBoxMenuItem ucimultiplethree;
+  JCheckBoxMenuItem maketellsounds;
+
   JCheckBoxMenuItem tellswitch;
   JCheckBoxMenuItem addnameontellswitch;
   JCheckBoxMenuItem highlight;
@@ -560,10 +566,18 @@ class mymultiframe extends JFrame
     randomArmy.          setSelected(sharedVariables.randomArmy);
     randomTiles.         setSelected(sharedVariables.randomBoardTiles);
     notifysound.         setSelected(sharedVariables.specificSounds[4]);
+    maketellsounds.      setSelected(sharedVariables.makeTellSounds);
     tabbing.             setSelected(sharedVariables.tabsOnly);
     qsuggestPopup.       setSelected(sharedVariables.showQsuggest);
     rotateaways.         setSelected(sharedVariables.rotateAways);
-
+    if(sharedVariables.uciMultipleLines == 1) {
+        ucimultipleone.setSelected(true);
+    } else  if(sharedVariables.uciMultipleLines == 2) {
+       ucimultipletwo.setSelected(true);
+    }
+    else if(sharedVariables.uciMultipleLines == 3) {
+       ucimultiplethree.setSelected(true);
+    }
     if (sharedVariables.rotateAways) {
       try {
 	scriptLoader loadScripts = new  scriptLoader();
@@ -1242,12 +1256,18 @@ class mymultiframe extends JFrame
     hearsound = new JCheckBoxMenuItem("Sounds");
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
+    maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     // .. / (separator)
     JMenuItem helpanalysis = new JMenuItem("Engine Analysis Help");
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
     JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
     JMenuItem enginerestart = new JMenuItem("Restart Engine");
     JMenuItem enginestop = new JMenuItem("Stop Engine");
+    JMenu uciMultipleMenu = new JMenu("Multiple Lines(UCI)");
+     // .. / Multiple LinesDisplay /
+    ucimultipleone = new JCheckBoxMenuItem("One Line(Default)");
+    ucimultipletwo = new JCheckBoxMenuItem("Two Lines");
+    ucimultiplethree = new JCheckBoxMenuItem("Three Lines");
     JMenu engineMenu = new JMenu("Analysis Display");
     // .. / Analysis Display /
     JMenuItem ananfont = new JMenuItem("Analysis Font");
@@ -1354,6 +1374,7 @@ class mymultiframe extends JFrame
     soundmenu.add(hearsound);
     soundmenu.add(makeObserveSounds);
     soundmenu.add(notifysound);
+    soundmenu.add(maketellsounds);
     optionsmenu.add(showMugshots);
     // .. /
     optionsmenu.addSeparator();
@@ -1363,7 +1384,13 @@ class mymultiframe extends JFrame
     optionsmenu.add(winanalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
+    optionsmenu.add(uciMultipleMenu);
     optionsmenu.add(engineMenu);
+    // .. / Multile Linmes Display /
+    uciMultipleMenu.add(ucimultipleone);
+    uciMultipleMenu.add(ucimultipletwo);
+    uciMultipleMenu.add(ucimultiplethree);
+
     // .. / Analysis Display /
     engineMenu.add(ananfont);
     engineMenu.add(ananfore);
@@ -1444,8 +1471,12 @@ class mymultiframe extends JFrame
     // add listeners
     showMugshots.addActionListener(this);
     makeObserveSounds.addActionListener(this);
+    maketellsounds.addActionListener(this);
     hearsound.addActionListener(this);
     notifysound.addActionListener(this);
+    ucimultipleone.addActionListener(this);
+    ucimultipletwo.addActionListener(this);
+    ucimultiplethree.addActionListener(this);
     helpanalysis.addActionListener(this);
     ucianalysis.addActionListener(this);
     winanalysis.addActionListener(this);
@@ -2379,7 +2410,27 @@ myboardappearancemenu.add(consoleaspect);
       if (!go && !sharedVariables.engineOn)
         makeEngineWarning();
 
-    } else if (action.equals("Set Application Background Color")) {
+    }
+    else if (action.equals("One Line(Default)")) {
+        sharedVariables.uciMultipleLines = 1;
+        ucimultipleone.setSelected(true);
+        ucimultipletwo.setSelected(false);
+        ucimultiplethree.setSelected(false);
+    }
+else if (action.equals("Two Lines")) {
+        sharedVariables.uciMultipleLines = 2;
+        ucimultipleone.setSelected(false);
+        ucimultipletwo.setSelected(true);
+        ucimultiplethree.setSelected(false);
+    }
+else if (action.equals("Three Lines")) {
+        sharedVariables.uciMultipleLines = 3;
+        ucimultipleone.setSelected(false);
+        ucimultipletwo.setSelected(false);
+        ucimultiplethree.setSelected(true);
+    }
+
+     else if (action.equals("Set Application Background Color")) {
       try {
 	JDialog frame = new JDialog();
         Color newColor = JColorChooser.showDialog(frame, "Application Color",
@@ -3977,7 +4028,13 @@ dot.setVisible(true);
       sharedVariables.specificSounds[4] = !sharedVariables.specificSounds[4];
       notifysound.setSelected(sharedVariables.specificSounds[4]);
 
-    } else if (action.equals("Sounds for Observed Games")) {
+    }
+    else if (action.equals("Sounds for Tells")) {
+      sharedVariables.makeTellSounds = !sharedVariables.makeTellSounds;
+      maketellsounds.setSelected(sharedVariables.makeTellSounds);
+
+    }
+     else if (action.equals("Sounds for Observed Games")) {
       sharedVariables.makeObserveSounds = !sharedVariables.makeObserveSounds;
       makeObserveSounds.setSelected(sharedVariables.makeObserveSounds);
 

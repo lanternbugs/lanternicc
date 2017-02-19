@@ -2916,7 +2916,7 @@ if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true &&
 }
 }catch(Exception donthave){}
 Sound ptell;
-if(sharedVariables.makeSounds == true && makeASound == true)
+if(sharedVariables.makeSounds == true && makeASound == true && sharedVariables.makeTellSounds)
 if(tellType.contains("ATELLS"))
 ptell=new Sound(sharedVariables.songs[8]);
 else

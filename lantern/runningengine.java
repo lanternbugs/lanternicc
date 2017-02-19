@@ -381,8 +381,15 @@ if(stage == 2 && text.contains("readyok"))
         for(int scripts = 0; scripts < scriptList.size(); scripts++)
         {
         String scriptLine = scriptList.get(scripts).trim();
+        if(scriptLine.contains("MultiPV") && (sharedVariables.uciMultipleLines == 2 || sharedVariables.uciMultipleLines == 3))
+        ;
+        else
 	sendToEngine(scriptLine + "\n");
 
+        }
+        if(sharedVariables.uciMultipleLines == 2 || sharedVariables.uciMultipleLines == 3)
+        {
+          sendToEngine("setoption name MultiPV value " + sharedVariables.uciMultipleLines +  "\n");
         }
 
 if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
