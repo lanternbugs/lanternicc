@@ -158,6 +158,7 @@ class mymultiframe extends JFrame
                                             //WindowFocusListener,
                                            // WindowStateListene
   mymultiframe ownerFrame = this;
+  userButtonsDialog mydialog = null;
   connectionDialog myConnection;
   seekGraphFrame seekGraph;
   JToolBar toolBar;
@@ -4216,12 +4217,16 @@ dot.setVisible(true);
     try {
       //if(myfirstlist == null)
       //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
-      if (!myfirstlist.isVisible() && !mysecondlist.isVisible())
+      if (!myfirstlist.isVisible() && !mysecondlist.isVisible()) {
 	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+      }
       else if (mysecondlist.isVisible() && !mysecondlist.isSelected())
         mysecondlist.setSelected(true);
-      else if (mysecondlist.isVisible())
+      else if (mysecondlist.isVisible()) {
+        mysecondlist.setBoardSize();
         mysecondlist.setVisible(false);
+
+      }
       else if(myfirstlist.isVisible()) {
         myfirstlist.setBoardSize();
         myfirstlist.setVisible(false);
@@ -4955,10 +4960,16 @@ dot.setVisible(true);
   }
   void launchUserButtonDialog()
   {
-	userButtonsDialog mydialog = new userButtonsDialog((JFrame) this,
+    if(mydialog == null || !mydialog.isVisible()) {
+       mydialog = new userButtonsDialog((JFrame) this,
                                                          sharedVariables);
     mydialog.setSize(400,400);
     mydialog.setVisible(true);
+    } else {
+     mydialog.dispose();
+     mydialog = null;
+    }
+
   }
   void launchTopGames()
   {

@@ -2717,7 +2717,7 @@ class randomPieces {
    blackPieceNum = getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
                              whitePieceNum, maxDepth);
 
-   boardNum = randomGenerator.nextInt(temp.maxBoards-1);
+   boardNum = randomGenerator.nextInt(temp.maxBoards);
  }
 
  int getMaxPieceChoiceWhite() {
