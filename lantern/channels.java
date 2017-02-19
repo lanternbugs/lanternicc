@@ -100,6 +100,7 @@ boolean showMaterialCount;
 boolean showRatings;
 boolean showFlags;
 boolean showPallette;
+boolean showedUciMultiLineWarning = false;
 boolean notifyMainAlso = false;
   boolean dontReuseGameTabs=false;
   boolean andreysFonts = false;

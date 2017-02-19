@@ -2412,18 +2412,34 @@ myboardappearancemenu.add(consoleaspect);
 
     }
     else if (action.equals("One Line(Default)")) {
+      if(sharedVariables.engineOn == true && sharedVariables.uciMultipleLines !=1 && !sharedVariables.showedUciMultiLineWarning)
+        {
+          client.writeToSubConsole("Stop and start the engine for lines change to take effect\n", 0);
+           sharedVariables.showedUciMultiLineWarning = true;
+        }
         sharedVariables.uciMultipleLines = 1;
         ucimultipleone.setSelected(true);
         ucimultipletwo.setSelected(false);
         ucimultiplethree.setSelected(false);
+
     }
 else if (action.equals("Two Lines")) {
+  if(sharedVariables.engineOn == true && sharedVariables.uciMultipleLines !=2 && !sharedVariables.showedUciMultiLineWarning)
+        {
+          client.writeToSubConsole("Stop and start the engine for lines change to take effect\n", 0);
+           sharedVariables.showedUciMultiLineWarning = true;
+        }
         sharedVariables.uciMultipleLines = 2;
         ucimultipleone.setSelected(false);
         ucimultipletwo.setSelected(true);
         ucimultiplethree.setSelected(false);
     }
 else if (action.equals("Three Lines")) {
+  if(sharedVariables.engineOn == true && sharedVariables.uciMultipleLines !=3 && !sharedVariables.showedUciMultiLineWarning)
+        {
+          client.writeToSubConsole("Stop and start the engine for lines change to take effect\n", 0);
+           sharedVariables.showedUciMultiLineWarning = true;
+        }
         sharedVariables.uciMultipleLines = 3;
         ucimultipleone.setSelected(false);
         ucimultipletwo.setSelected(false);

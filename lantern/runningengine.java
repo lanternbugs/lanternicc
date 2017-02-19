@@ -59,6 +59,7 @@ PrincipalVariation()
    multipv = "";
 } // end constructor
  }// end inner class
+ int cachedMultipleLines = 1;
 ArrayList<PrincipalVariation> multiLines = new ArrayList();
 ArrayList<String> scriptList = new ArrayList();
 scriptLoader scripter = new scriptLoader();
@@ -391,6 +392,7 @@ if(stage == 2 && text.contains("readyok"))
         {
           sendToEngine("setoption name MultiPV value " + sharedVariables.uciMultipleLines +  "\n");
         }
+        cachedMultipleLines = sharedVariables.uciMultipleLines;
 
 if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
 {
@@ -521,7 +523,6 @@ if(finalStuff.length() > 0)
 
         }// to send null
 
-
         sendToEngine(finalStuff);
         priorSendTime = lastSendTime;
         lastSendTime = System.currentTimeMillis();
@@ -549,7 +550,7 @@ if(text.length() > 0 && ((text.contains(" pv") && stage ==3) || stage<3))
 try {
 if(text.startsWith("info") && (text.contains(" pv") && !text.contains("info currmove") && stage ==3))
 {
-	
+
         // routine for those who print pv twice
         int tryone=text.indexOf(" pv");
         int trytwo = text.indexOf(" pv", tryone + 1);

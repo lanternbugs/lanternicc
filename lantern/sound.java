@@ -54,7 +54,7 @@ else if(os.indexOf( "mac" ) >= 0)
 else
 	operatingSystem = "unix";
 
-    if(operatingSystem.equals("unix") || (operatingSystem.equals("win") && channels.firstSound == false))
+    if(operatingSystem.equals("unix") || operatingSystem.equals("mac") || (operatingSystem.equals("win") && channels.firstSound == false))
     {
      try {
         free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
