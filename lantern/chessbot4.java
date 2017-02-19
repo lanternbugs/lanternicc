@@ -6102,8 +6102,8 @@ if(sharedVariables.tabsOnly == true)
 		{
 
 			if(myboards[a] != null)
-			{
-				if((myboards[a].isVisible() == false || sharedVariables.openBoardCount == 0) && (sharedVariables.mygame[a].imclosed == true || (a == 0 && sharedVariables.openBoardCount == 0)))
+			{                                                                                                  // #mike change 2017
+				if((myboards[a].isVisible() == false || sharedVariables.openBoardCount == 0) && ((sharedVariables.mygame[a] != null && sharedVariables.mygame[a].imclosed == true) || (a == 0 && sharedVariables.openBoardCount == 0)))
 				{
 					//if(sharedVariables.tabTitle[a].startsWith("G"))
 					//{
@@ -6182,13 +6182,17 @@ if(sharedVariables.tabsOnly == true)
          boolean go=true;
         for(int m=0; m<sharedVariables.openBoardCount; m++)
         if(sharedVariables.tabLooking[m]==last)
-        go=false;
+        {go=false;
+        }
 
         if(go== true)
         {
 
          usingClosed = true;
          sharedVariables.tabLooking[sharedVariables.openBoardCount]=last;
+
+        } else {
+         // mike need an else case?
 
         }
        }
