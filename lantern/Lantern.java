@@ -207,6 +207,8 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem ucimultipletwo;
   JCheckBoxMenuItem ucimultiplethree;
   JCheckBoxMenuItem maketellsounds;
+  JCheckBoxMenuItem makedrawsounds;
+  JCheckBoxMenuItem makemovesounds;
 
   JCheckBoxMenuItem tellswitch;
   JCheckBoxMenuItem addnameontellswitch;
@@ -567,6 +569,8 @@ class mymultiframe extends JFrame
     randomTiles.         setSelected(sharedVariables.randomBoardTiles);
     notifysound.         setSelected(sharedVariables.specificSounds[4]);
     maketellsounds.      setSelected(sharedVariables.makeTellSounds);
+    makemovesounds.      setSelected(sharedVariables.makeMoveSounds);
+    makedrawsounds.      setSelected(sharedVariables.makeDrawSounds);
     tabbing.             setSelected(sharedVariables.tabsOnly);
     qsuggestPopup.       setSelected(sharedVariables.showQsuggest);
     rotateaways.         setSelected(sharedVariables.rotateAways);
@@ -1255,6 +1259,8 @@ class mymultiframe extends JFrame
     // .. / Sounds /
     hearsound = new JCheckBoxMenuItem("Sounds");
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
+    makemovesounds = new JCheckBoxMenuItem("Sounds for Moves");
+    makedrawsounds = new JCheckBoxMenuItem("Sounds for Draw Offers");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     // .. / (separator)
@@ -1372,7 +1378,10 @@ class mymultiframe extends JFrame
     optionsmenu.add(soundmenu);
     // .. / Sound /
     soundmenu.add(hearsound);
+    soundmenu.addSeparator();
     soundmenu.add(makeObserveSounds);
+    soundmenu.add(makemovesounds);
+    soundmenu.add(makedrawsounds);
     soundmenu.add(notifysound);
     soundmenu.add(maketellsounds);
     optionsmenu.add(showMugshots);
@@ -1472,6 +1481,8 @@ class mymultiframe extends JFrame
     showMugshots.addActionListener(this);
     makeObserveSounds.addActionListener(this);
     maketellsounds.addActionListener(this);
+    makemovesounds.addActionListener(this);
+    makedrawsounds.addActionListener(this);
     hearsound.addActionListener(this);
     notifysound.addActionListener(this);
     ucimultipleone.addActionListener(this);
@@ -2110,6 +2121,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
     // .. / (separator)
+    JMenuItem broadcasthelp = new JMenuItem("Broadcast Help");
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
     JMenuItem showfm = new JMenuItem("Open ChessFM");
@@ -2135,6 +2147,8 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showrelay);
     actionsmenu.add(ratinggraph);
     actionsmenu.addSeparator();
+    actionsmenu.add(broadcasthelp);
+    actionsmenu.addSeparator();
     actionsmenu.add(followBroadcast);
     actionsmenu.add(unfollowBroadcast);
     actionsmenu.add(showfm);
@@ -2152,6 +2166,7 @@ myboardappearancemenu.add(consoleaspect);
     ratinggraph.addActionListener(this);
     addfriend.addActionListener(this);
     followBroadcast.addActionListener(this);
+    broadcasthelp.addActionListener(this);
     unfollowBroadcast.addActionListener(this);
     showfm.addActionListener(this);
 
@@ -2340,7 +2355,10 @@ myboardappearancemenu.add(consoleaspect);
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/getting-games.html");
 
     }
+    else if (action.equals("Broadcast Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/chessfm.html");
 
+    }
 
 
 
@@ -3400,7 +3418,7 @@ dot.setVisible(true);
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
         client.writeToSubConsole("Be sure to turn on the radio by opening ChessFM, " +
-                                 "Actions - Open ChessFM in the menu.\n", 0);
+                                 "Actions - Open ChessFM in the menu. See \"Broadcast Help\" in Actions menu for any latest info.\n", 0);
       if (action.equals("Show Titled Players Online"))
 	          client.writeToSubConsole("For a context menu with observe, finger etc - double click on a name or highlight a name and right click. ^ next to a name means they are playing.\n", 0);
       //String actionmess = "History\n";
@@ -3430,7 +3448,7 @@ dot.setVisible(true);
       queue.add(data);
 
     } else if (action.equals("Show Relay Schedule")) {
-      openUrl("http://www.chessclub.com/activities/relays.html");
+      openUrl("https://www.chessclub.com/user/activities/relays.html");
 
     }
 
@@ -3454,7 +3472,12 @@ dot.setVisible(true);
       openUrl("http://www.chessclub.com/chessfm/");
 
     } else if(action.equals("Show Rating Graphs")) {
-      openUrl("https://www.chessclub.com/cgi-auth/web_dev_perl/graph-rating.pl");
+      
+      String thename = "WimpB";
+      if(sharedVariables.myname.length() > 0) {
+       thename = sharedVariables.myname;
+      }
+      openUrl("http://statistics.chessclub.com/Embed/Ratings?user=" + thename + "#");
 
     } else if(action.equals("Events List Font")) {
       JFrame f = new JFrame("Events List Font");
@@ -4048,6 +4071,16 @@ dot.setVisible(true);
     else if (action.equals("Sounds for Tells")) {
       sharedVariables.makeTellSounds = !sharedVariables.makeTellSounds;
       maketellsounds.setSelected(sharedVariables.makeTellSounds);
+
+    }
+     else if (action.equals("Sounds for Moves")) {
+      sharedVariables.makeMoveSounds = !sharedVariables.makeMoveSounds;
+      makemovesounds.setSelected(sharedVariables.makeMoveSounds);
+
+    }
+    else if (action.equals("Sounds for Draw Offers")) {
+      sharedVariables.makeDrawSounds = !sharedVariables.makeDrawSounds;
+      makedrawsounds.setSelected(sharedVariables.makeDrawSounds);
 
     }
      else if (action.equals("Sounds for Observed Games")) {

@@ -703,6 +703,23 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donetellsounds] ";
 
+	// drawsounds
+	set_string = set_string + "[drawsounds] ";
+	if(sharedVariables.makeDrawSounds == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donedrawsounds] ";
+
+	// movesounds
+	set_string = set_string + "[movesounds] ";
+	if(sharedVariables.makeMoveSounds == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donemovesounds] ";
 
 
  	// tilesrandom
@@ -2431,6 +2448,30 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 						sharedVariables.makeTellSounds=true;
 					else
 						sharedVariables.makeTellSounds=false;
+					}
+					catch(Exception zzz){}
+				}
+					if(temp.equals("[movesounds]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.makeMoveSounds=true;
+					else
+						sharedVariables.makeMoveSounds=false;
+					}
+					catch(Exception zzz){}
+				}
+
+
+					if(temp.equals("[drawsounds]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.makeDrawSounds=true;
+					else
+						sharedVariables.makeDrawSounds=false;
 					}
 					catch(Exception zzz){}
 				}

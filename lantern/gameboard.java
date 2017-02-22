@@ -1779,7 +1779,9 @@ void stopTheEngine()
 
     int tempnumber=getGameNumber(icsGameNumber);
     boolean iLocked = false;
-
+    if(!sharedVariables.makeMoveSounds) {
+     makeSound = false;
+    }
     if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
       // get pgn move before we make move on board
       String newMove = algabraicMove;

@@ -596,123 +596,7 @@ void setupMenu()
 {
 
 menu3=new JPopupMenu("Popup");
-JMenuItem item = new JMenuItem("Finger");
-item.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-          String name =  consoles[consoleNumber].getSelectedText();
-          doCommand("finger " + name + "\n");
-          }
-      });
-      menu3.add(item);
 
-
-
-JMenuItem item2 = new JMenuItem("Vars");
-item2.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-             String name =  consoles[consoleNumber].getSelectedText();
-             doCommand("Vars " + name + "\n");
-             }
-      });
-      menu3.add(item2);
-JMenuItem item3 = new JMenuItem("Ping");
-item3.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         String name =  consoles[consoleNumber].getSelectedText();
-         doCommand("ping " + name + "\n");
-           }
-      });
-      menu3.add(item3);
-      add(menu3);
-
-menu3.addSeparator();
-
-JMenuItem item4 = new JMenuItem("Match");
-item4.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-          String name =  consoles[consoleNumber].getSelectedText();
-          doCommand("match " + name + "\n");
-          }
-      });
-      menu3.add(item4);
-
-
-
-JMenuItem item5 = new JMenuItem("Assess");
-item5.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-             String name =  consoles[consoleNumber].getSelectedText();
-             doCommand("assess " + name + "\n");
-             }
-      });
-      menu3.add(item5);
-
-JMenuItem item6 = new JMenuItem("Pstat");
-item6.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         String name =  consoles[consoleNumber].getSelectedText();
-         doCommand("pstat " + name + "\n");
-           }
-      });
-      menu3.add(item6);
-
-
-menu3.addSeparator();
-
-
- JMenuItem item7 = new JMenuItem("Observe");
- item7.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           String name =  consoles[consoleNumber].getSelectedText();
-           doCommand("observe " + name + "\n");
-           }
-       });
-       menu3.add(item7);
-
-
-
- JMenuItem item8 = new JMenuItem("Follow");
- item8.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              String name =  consoles[consoleNumber].getSelectedText();
-              doCommand("follow " + name + "\n");
-              }
-       });
-       menu3.add(item8);
-menu3.addSeparator();
-
- JMenuItem item9 = new JMenuItem("History");
- item9.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-          String name =  consoles[consoleNumber].getSelectedText();
-          doCommand("history " + name + "\n");
-            }
-       });
-       menu3.add(item9);
-
-
-
- JMenuItem item10 = new JMenuItem("Liblist");
- item10.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-           String name =  consoles[consoleNumber].getSelectedText();
-           doCommand("liblist " + name + "\n");
-           }
-       });
-       menu3.add(item10);
-
-
-
- JMenuItem item11 = new JMenuItem("Stored");
- item11.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              String name =  consoles[consoleNumber].getSelectedText();
-              doCommand("stored " + name + "\n");
-              }
-       });
-       menu3.add(item11);
-
-menu3.addSeparator();
  JMenuItem item12 = new JMenuItem("Copy");
  item12.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
@@ -722,15 +606,6 @@ menu3.addSeparator();
        });
        menu3.add(item12);
 
- JMenuItem item13 = new JMenuItem("Copy&Paste");
-  item13.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-           consoles[consoleNumber].copy();
-           Input.paste();
-
-             }
-        });
-        menu3.add(item13);
 
 
 

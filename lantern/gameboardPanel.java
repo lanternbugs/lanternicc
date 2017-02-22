@@ -1263,7 +1263,7 @@ void repaintPiece()
 				 repaint();
 
 				Sound movesound;
-				if(sharedVariables.makeSounds == true && piecemoving != piece)
+				if(sharedVariables.makeSounds == true && sharedVariables.makeMoveSounds && piecemoving != piece)
 				if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
 				{
 
@@ -1426,7 +1426,7 @@ void repaintPiece()
 							if(ipremoving==0)
 							{
 								Sound movesound;
-							 if(sharedVariables.makeSounds == true)
+							 if(sharedVariables.makeSounds == true && sharedVariables.makeMoveSounds)
 								 if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
 								 {
 									 if(capture ==0)
@@ -1476,7 +1476,7 @@ void repaintPiece()
                                           {
                                 	 // sound
 					 Sound movesound;
-					 if(sharedVariables.makeSounds == true)
+					 if(sharedVariables.makeSounds == true && sharedVariables.makeMoveSounds)
 					 if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
 								movesound=new Sound(sharedVariables.songs[1]);
 

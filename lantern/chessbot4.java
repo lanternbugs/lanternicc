@@ -4450,7 +4450,7 @@ try {
 					try {
 					if(temp.arg2.startsWith("Your opponent offers you a draw."))
 					{
-						if (sharedVariables.makeSounds == true )
+						if (sharedVariables.makeSounds == true  && sharedVariables.makeDrawSounds == true )
 
 
 							SwingUtilities.invokeLater(new Runnable() {

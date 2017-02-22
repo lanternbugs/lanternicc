@@ -76,6 +76,8 @@ boolean highlightMoves;
 boolean makeSounds;
 boolean makeObserveSounds;
 boolean makeTellSounds;
+boolean makeDrawSounds;
+boolean makeMoveSounds;
 boolean engineOn;
 boolean tabsOnly;
 boolean standAlone;
@@ -358,7 +360,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.67a";
+version = "v5.68";
 debug = false;
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;
@@ -491,6 +493,8 @@ engineOn=false;
 makeSounds=true;
 makeObserveSounds=true;
 makeTellSounds = true;
+makeDrawSounds = true;
+makeMoveSounds = true;
 pgnLogging=true;
 indent=false;
 tellTimestamp=true;
@@ -856,7 +860,7 @@ void setupMenu()
 	rightClickMenu.add("Observe");
 	rightClickMenu.add("Follow");
 	rightClickMenu.add("Challenge");
-	rightClickMenu.add("Assess");
+	rightClickMenu.add("Ping");
 	rightClickMenu.add("Pstat");
 	rightClickMenu.add("Games");
 	rightClickMenu.add("Hyperlink");
