@@ -17,6 +17,11 @@ package lantern;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.html.HTMLDocument;
+
 import javax.swing.JDialog;
 import java.io.*;
 import java.net.*;
@@ -66,7 +71,7 @@ webframe(channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, Stri
 {
 
 //super(frame, mybool);
- super("Web",
+ super("Web View",
           true, //resizable
           true, //closable
           true, //maximizable
@@ -92,48 +97,7 @@ item.addActionListener(new ActionListener() {
 
 
 
-JMenuItem item2 = new JMenuItem("Copy&Paste");
-item2.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            consoles[consoleNumber].copy();
-            Input.paste();}
-      });
-      menu.add(item2);
-JMenuItem item3 = new JMenuItem("Hyperlink");
-item3.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-          try
-                {
 
-
-			String myurl ="";
-			myurl=consoles[consoleNumber].getSelectedText();
-			myurl=myurl.trim();
-			String myurl2 = myurl.toLowerCase();
-			int go=0;
-			if(myurl2.startsWith("www."))
-			go=1;
-			if(myurl2.startsWith("http://"))
-			go=1;
-			if(myurl2.startsWith("https://"))
-			go=1;
-			if(go == 0)
-			return;
-
-			if(myurl.startsWith("<"))
-			{
-                         consoles[consoleNumber].setContentType("text/html");
-                          consoles[consoleNumber].setText(myurl);
-			}
-                        else
-			consoles[consoleNumber].setPage(myurl);
-
-
-             }catch(Exception g)
-                {}
-           }
-      });
-      menu.add(item3);
       add(menu);
 
 setupMenu();
@@ -368,6 +332,7 @@ public void mouseClicked (MouseEvent me) {
 
 
 
+setDocumentListenerUp();
 
 
 consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
@@ -382,6 +347,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 				//Process p = Runtime.getRuntime().exec(cmdLine);
 				String myurl="" + r.getURL();
 				consoles[consoleNumber].setPage(myurl);
+				setDocumentListenerUp();
 		 	}
 
              }catch(Exception e)
@@ -389,9 +355,6 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
             }
         });
 
-
-        scrollbutton = new JButton("no scroll");
-		scrollbutton.setVisible(false);
 
 
        // newbox.setColumns(20);
@@ -413,7 +376,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 
 	SequentialGroup middle = layout.createSequentialGroup();
 	ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-	SequentialGroup h3 = layout.createSequentialGroup();
+
 
 	//Add a scroll pane and a label to the parallel group h2
 	h2.addComponent(myscrollpane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
@@ -422,9 +385,8 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 	//Create a sequential group h3
 
 	//h3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-	h3.addComponent(prefixHandler, GroupLayout.DEFAULT_SIZE, 60, 60);
-	h3.addComponent(Input, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE);
-    h3.addComponent(scrollbutton);
+
+
 
 
 	/*	for(int a=0; a<10; a++)
@@ -440,7 +402,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 
 
 
-h2.addGroup(h3);
+
 //h2.addGroup(middle);
 h1.addGroup(h2);
 
@@ -457,7 +419,6 @@ h1.addGroup(h2);
 
 SequentialGroup v4 = layout.createSequentialGroup();
 
-ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
 	//Add a container gap to the sequential group v1
 	//v1.addContainerGap();
 	//Create a parallel group v2
@@ -475,14 +436,14 @@ ParallelGroup v1 = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
 		vmiddle.addComponent(tellCheckbox);
 */
 
-		v1.addComponent(prefixHandler, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-		v1.addComponent(scrollbutton);
-		v1.addComponent(Input, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+
+
+
 
 
 v4.addGroup(v2);
 //v4.addGroup(vmiddle);
-v4.addGroup(v1);
+
 
 	vGroup.addGroup(v4);
 	//Create the vertical group
@@ -508,6 +469,42 @@ v4.addGroup(v1);
 
 
     }
+
+void setDocumentListenerUp()
+{
+  
+  
+  consoles[consoleNumber].getDocument().addDocumentListener(new DocumentListener()
+{
+   public void insertUpdate(DocumentEvent e) {
+
+    }
+    public void removeUpdate(DocumentEvent e) {
+
+    }
+    public void changedUpdate(DocumentEvent e) {
+        //Plain text components do not fire these events
+        //String text = "";//e.getDocument().getWholeText();
+        try {
+        HTMLDocument doc = (HTMLDocument) e.getDocument();
+        String title = (String) doc.getProperty(Document.TitleProperty);
+        //System.out.println("change update and title  is " + title);
+        if(title.length() > 0) {
+         setTitle(title);
+        } else {
+         setTitle("Web View");
+        }
+
+        } catch(Exception dui) {
+          try {
+            setTitle("Web View");
+
+          } catch(Exception duio) { };
+        }
+    }
+
+});
+}
 
 void setActiveTabForeground(int i)
 {
@@ -675,7 +672,6 @@ sharedVariables.webframeHeight=getHeight();
 
 
     }
-
 
 
 
