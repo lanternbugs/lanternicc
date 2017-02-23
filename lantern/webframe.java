@@ -17,6 +17,10 @@ package lantern;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.html.*;
+import javax.swing.event.*;
+import javax.swing.text.*;
+import java.awt.event.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
@@ -39,6 +43,9 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 
 class webframe extends JInternalFrame  implements  ComponentListener// ActionListener,
 {
@@ -330,9 +337,7 @@ public void mouseClicked (MouseEvent me) {
 
       });
 
-
-
-setDocumentListenerUp();
+consoles[consoleNumber].addPropertyChangeListener("page", new MyPropertyChangedClass());
 
 
 consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
@@ -347,7 +352,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 				//Process p = Runtime.getRuntime().exec(cmdLine);
 				String myurl="" + r.getURL();
 				consoles[consoleNumber].setPage(myurl);
-				setDocumentListenerUp();
+
 		 	}
 
              }catch(Exception e)
@@ -470,23 +475,11 @@ v4.addGroup(v2);
 
     }
 
-void setDocumentListenerUp()
-{
-  
-  
-  consoles[consoleNumber].getDocument().addDocumentListener(new DocumentListener()
-{
-   public void insertUpdate(DocumentEvent e) {
-
-    }
-    public void removeUpdate(DocumentEvent e) {
-
-    }
-    public void changedUpdate(DocumentEvent e) {
-        //Plain text components do not fire these events
-        //String text = "";//e.getDocument().getWholeText();
-        try {
-        HTMLDocument doc = (HTMLDocument) e.getDocument();
+class MyPropertyChangedClass implements PropertyChangeListener {
+ public void propertyChange(PropertyChangeEvent evt) {
+            if (!evt.getPropertyName().equals("page")) return;
+             try {
+        HTMLDocument doc = (HTMLDocument) consoles[consoleNumber].getDocument();
         String title = (String) doc.getProperty(Document.TitleProperty);
         //System.out.println("change update and title  is " + title);
         if(title.length() > 0) {
@@ -501,6 +494,24 @@ void setDocumentListenerUp()
 
           } catch(Exception duio) { };
         }
+ }
+}
+void setDocumentListenerUp()
+{
+
+  
+  consoles[consoleNumber].getDocument().addDocumentListener(new DocumentListener()
+{
+   public void insertUpdate(DocumentEvent e) {
+
+    }
+    public void removeUpdate(DocumentEvent e) {
+
+    }
+    public void changedUpdate(DocumentEvent e) {
+        //Plain text components do not fire these events
+        //String text = "";//e.getDocument().getWholeText();
+
     }
 
 });
