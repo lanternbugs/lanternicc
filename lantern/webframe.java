@@ -47,7 +47,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-class webframe extends JInternalFrame  implements  ComponentListener// ActionListener,
+class webframe extends JInternalFrame
 {
 
 
@@ -61,10 +61,6 @@ class webframe extends JInternalFrame  implements  ComponentListener// ActionLis
 	JPanel mypanel;
 	String lastcommand;
 	int madeTextPane;
-	JPaintedLabel [] channelTabs;
-	JLabel tellLabel;
-	JCheckBox tellCheckbox;
-	JComboBox prefixHandler;
 
 	channels sharedVariables;
 	JEditorPane [] consoles;
@@ -108,41 +104,7 @@ item.addActionListener(new ActionListener() {
       add(menu);
 
 setupMenu();
- menu2=new JPopupMenu("Popup2");
 
-
- /*JMenuItem item3 = new JMenuItem("copy");
- item.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             consoles[consoleNumber].copy();}
-       });
-       menu.add(item3);
- */
-
-
-
- JMenuItem item4a = new JMenuItem("Copy");
- item4a.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             Input.copy();}
-       });
-       menu2.add(item4a);
-
-
-
- JMenuItem item4 = new JMenuItem("Paste");
- item4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-             Input.paste();}
-       });
-       menu2.add(item4);
-      add(menu2);
-
-scrollnow = 1; // we start off with auto scroll
-
-//addMouseListener(this);
-
-addComponentListener(this);
 initComponents();
 }
 
@@ -193,118 +155,11 @@ void openUrl(String myurl)
    private void initComponents() {
 
 
-        String[] prefixStrings = { ">"};
-
-        prefixHandler = new JComboBox(prefixStrings);
-        prefixHandler.setSelectedIndex(0);
-        prefixHandler.setEditable(false);
-        updateComboBox();
-        Input = new JTextField();
-
-		channelTabs = new JPaintedLabel[10];
-		for(int a=0; a<10; a++)
-		{if(a==0)
-		channelTabs[a]=new JPaintedLabel("C" + a, sharedVariables);
-	    else
-		channelTabs[a]=new JPaintedLabel("C" + a, sharedVariables);
-		}
-	    tellLabel=new JLabel("tells");
-	    tellCheckbox=new JCheckBox();
-	    if(sharedVariables.openConsoleCount == 0)
-	    tellCheckbox.setSelected(true);
-
-
-
-
-
-
-        // Input.addActionListener (this);
-Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
-{
-        int a=e.getKeyCode();
-        if(a == 10)
- {  try {
-	 consoles[consoleNumber].setPage(Input.getText());
-	 Input.setText("... trying");
-}
-catch(Exception e1){}
-
-        }
-        if(a == 120)// f9
-        {
-                String s=Input.getText();
-                if(s.length() == 0)
-                if(sharedVariables.lasttell.length()>0)
-                Input.setText("tell " + sharedVariables.lasttell + " ");
-        }
-
-        if(a == 38)// up
-        {
-                if(lastcommand.length() >0)
-                Input.setText(lastcommand);
-        }
-// code here
-    }
-
-   public void keyTyped(KeyEvent e) {;
-
-    }
-
-
-
-    /** Handle the key-released event from the text field. */
-    public void keyReleased(KeyEvent e) {;
-
-    }
-
-
-
-
-}
-
-);
-
-Input.addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
-            if(e.isPopupTrigger())
-               menu2.show(e.getComponent(),e.getX(),e.getY());
-
-
-         }
-         public void mouseReleased(MouseEvent e) {
-            if(e.isPopupTrigger())
-               menu2.show(e.getComponent(),e.getX(),e.getY());
-         }
-
-
-public void mouseEntered (MouseEvent me) {}
-
-
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {
-
-	}
-
-
-      });
-
-
-
-
 
         consoles[consoleNumber] = new JEditorPane();
         consoles[consoleNumber].setEditable(false);
 
-		try {
-			if(incomingUrl.startsWith("<"))
-			{
-                         consoles[consoleNumber].setContentType("text/html");
-                         consoles[consoleNumber].setText(incomingUrl);
-			}
-                        else
-                        consoles[consoleNumber].setPage(incomingUrl);
-		}
-		catch(Exception e2){}
+
 
 consoles[consoleNumber].addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
@@ -387,6 +242,16 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 
 
 	pack();
+	
+		try {
+
+                         LanternPageSetter _setter = new LanternPageSetter();
+                         Thread mythread = new Thread(_setter);
+                         mythread.start();
+
+
+		}
+		catch(Exception e2){}
 
 }
 
@@ -411,110 +276,9 @@ class MyPropertyChangedClass implements PropertyChangeListener {
         }
  }
 }
-void setDocumentListenerUp()
-{
-
-  
-  consoles[consoleNumber].getDocument().addDocumentListener(new DocumentListener()
-{
-   public void insertUpdate(DocumentEvent e) {
-
-    }
-    public void removeUpdate(DocumentEvent e) {
-
-    }
-    public void changedUpdate(DocumentEvent e) {
-        //Plain text components do not fire these events
-        //String text = "";//e.getDocument().getWholeText();
-
-    }
-
-});
-}
-
-void setActiveTabForeground(int i)
-{
-	for(int a=0; a<10; a++)
-	if(a==i)
-	{	channelTabs[a].setForeground(sharedVariables.activeTabForeground);
-		channelTabs[a].setBackground(sharedVariables.tabBackground);
-	}
-	else
-		channelTabs[a].setForeground(sharedVariables.passiveTabForeground);
-
-
-}
-
-void dispatchCommand(String myurl)
-{
-
-	String mycommand="";
-	mycommand=myurl; //.substring(1, myurl.length()-1);// need to figure out why this is -2 not -1, maybe i include the end space which adds a charaacter here when i cut it
-	mycommand=mycommand + "\n";
-
-	myoutput output = new myoutput();
-	      output.data=mycommand;
-	      output.consoleNumber=consoleNumber;
-      queue.add(output);
-
-
-}
 
 
 
-
-/*
-
-public void mousePressed(MouseEvent e) {
- if(e.isPopupTrigger())
-               menu.show(e.getComponent(),e.getX(),e.getY());
-
-
-}
-public void mouseEntered (MouseEvent me) {}
-public void mouseReleased (MouseEvent me) {
-	if(me.isPopupTrigger())
-               menu.show(me.getComponent(),me.getX(),me.getY());
-          }
-
-public void mouseExited (MouseEvent me) {}
-public void mouseClicked (MouseEvent me) {
-
-	}
-
-*/
-
-JTextField Input;
-int scrollnow;
-String myglobalinput;
-JButton scrollbutton;
-
-// Show text when user presses ENTER.
-/*public void actionPerformed(ActionEvent ae) {
-      //client.sendMessage(Input.getText());
-      String mes = Input.getText() + "\n";
-      myoutput output = new myoutput();
-      output.data=mes;
-      output.consoleNumber=consoleNumber;
-      queue.add(output);
-      Input.setText("");
-
-	  			try {
-				StyledDocument doc=consoles[consoleNumber].getStyledDocument();
-	  			if(sharedVariables.password == 0)
-	  			doc.insertString(doc.getEndPosition().getOffset(), mes, null);
-	  			else
-	  			{
-				doc.insertString(doc.getEndPosition().getOffset(), "*******\n", null);
-				sharedVariables.password=0;
-				}
-	  			consoles[consoleNumber].setStyledDocument(doc);
-				}
-				catch(Exception E){ }
-
-    }
-
-*/
 void setupMenu()
 {
 
@@ -539,85 +303,21 @@ menu3=new JPopupMenu("Popup");
 }// end menu setup
 
 
-
-
-void doCommand(String mycommand)
-{
-	myoutput output = new myoutput();
-	output.data=mycommand;
-	output.consoleNumber=sharedVariables.looking[consoleNumber];
-    queue.add(output);
-
-}
-
-
-
-void updateComboBox()
+class LanternPageSetter implements Runnable
 {
 
-	// int cindex=sharedVariables.console[Integer.parseInt(dg.getArg(1))];
-	prefixHandler.removeAllItems();
-	prefixHandler.addItem(">");
-	for(int a=0; a<400; a++)
-	if(sharedVariables.console[consoleNumber][a] == sharedVariables.looking[consoleNumber] && sharedVariables.looking[consoleNumber] != 0)
-	prefixHandler.addItem("Tell " + a + " ");
+ LanternPageSetter()
+ {
+
+ }
+
+public void run()
+ {
+                        try {
+                           consoles[consoleNumber].setPage(incomingUrl);
+                        }catch(Exception dd){}
+ }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void componentHidden(ComponentEvent e) {
-
-    }
-
-    public void componentMoved(ComponentEvent e) {
-sharedVariables.webframePoint=getLocation();
-sharedVariables.webframeWidth=getWidth();
-sharedVariables.webframeHeight=getHeight();
-
-    }
-
-    public void componentResized(ComponentEvent e) {
-    sharedVariables.webframePoint=getLocation();
-	sharedVariables.webframeWidth=getWidth();
-	sharedVariables.webframeHeight=getHeight();
-
-    }
-
-    public void componentShown(ComponentEvent e) {
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
