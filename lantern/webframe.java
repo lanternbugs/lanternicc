@@ -362,10 +362,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 
 
 
-       // newbox.setColumns(20);
-       // newbox.setLineWrap(true);
-       // newbox.setRows(5);
-       // newbox.setWrapStyleWord(true);
+      
         consoles[consoleNumber].setEditable(false);
         JScrollPane myscrollpane = new JScrollPane(consoles[consoleNumber]);
 
@@ -376,104 +373,22 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 
 	//Create a parallel group for the horizontal axis
 	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-	SequentialGroup h1 = layout.createSequentialGroup();
-
-
-	SequentialGroup middle = layout.createSequentialGroup();
-	ParallelGroup h2 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-
-
-	//Add a scroll pane and a label to the parallel group h2
-	h2.addComponent(myscrollpane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);
-	//h2.addComponent(status, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE);// mike commented out
-
-	//Create a sequential group h3
-
-	//h3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-
-
-
-
-	/*	for(int a=0; a<10; a++)
-		{
-			middle.addComponent(channelTabs[a],GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-			middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-		}
-			middle.addComponent(tellLabel);
-			//middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-			middle.addComponent(tellCheckbox);
-			//middle.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-*/
-
-
-
-
-//h2.addGroup(middle);
-h1.addGroup(h2);
-
-//h1.addGroup(middle);
-	//Add the group h1 to the hGroup
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
+	hGroup.addComponent(myscrollpane);
 	layout.setHorizontalGroup(hGroup);
 
 
-	//Create a parallel group for the vertical axis
+	
 	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);// was leading
-	//Create a sequential group v1
 
-SequentialGroup v4 = layout.createSequentialGroup();
+	vGroup.addComponent(myscrollpane);
 
-	//Add a container gap to the sequential group v1
-	//v1.addContainerGap();
-	//Create a parallel group v2
-	ParallelGroup vmiddle = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
-
-//vmiddle.addContainerGap();
-	ParallelGroup v2 = layout.createParallelGroup(GroupLayout.Alignment.BASELINE);
-
-	//Add the group v2 tp the group v1
-	v2.addComponent(myscrollpane, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE);
-
-/*		for(int a=0; a<10; a++)
-			vmiddle.addComponent(channelTabs[a]);
-		vmiddle.addComponent(tellLabel);
-		vmiddle.addComponent(tellCheckbox);
-*/
-
-
-
-
-
-
-v4.addGroup(v2);
-//v4.addGroup(vmiddle);
-
-
-	vGroup.addGroup(v4);
 	//Create the vertical group
 	layout.setVerticalGroup(vGroup);
 
 
 	pack();
 
-
-
-   Color lc=new Color(0,0,0);
-/*	for(int a=0; a<10; a++)
-		channelTabs[a].setForeground(lc);
-*/
-
- setActiveTabForeground(sharedVariables.openConsoleCount);
-
-	for(int a=0; a<10; a++)
-		channelTabs[a].setOpaque(true);
-
-	for(int a=0; a<10; a++)
-		channelTabs[a].setBackground(sharedVariables.tabBackground);
-
-
-    }
+}
 
 class MyPropertyChangedClass implements PropertyChangeListener {
  public void propertyChange(PropertyChangeEvent evt) {
