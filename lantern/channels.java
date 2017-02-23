@@ -870,7 +870,7 @@ void setupMenu()
 
         rightClickListMenu.add("Notify (To be Notified on Arrival)");
         rightClickListMenu.add("NoPlay (Block Play)");
-        rightClickListMenu.add("Censor (Bock Communication)");
+        rightClickListMenu.add("Censor (Block Communication)");
         rightClickListMenu.add("Remove from Notify");
         rightClickListMenu.add("Remove from NoPlay");
         rightClickListMenu.add("Remove from Censor");
