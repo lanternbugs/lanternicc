@@ -241,17 +241,22 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 	layout.setVerticalGroup(vGroup);
 
 
-	pack();
-	
-		try {
 
-                         LanternPageSetter _setter = new LanternPageSetter();
+
+		try {
+                         if(incomingUrl.startsWith("<"))
+			{
+                         consoles[consoleNumber].setContentType("text/html");
+                         consoles[consoleNumber].setText(incomingUrl);
+			}
+                        else {
+                          LanternPageSetter _setter = new LanternPageSetter();
                          Thread mythread = new Thread(_setter);
                          mythread.start();
-
-
+                         }
 		}
 		catch(Exception e2){}
+			pack();
 
 }
 
