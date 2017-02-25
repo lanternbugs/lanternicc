@@ -30,8 +30,10 @@ When gamestate is changed there needs to be a repaint to draw the new board on t
 import java.util.concurrent.locks.*;
 import java.util.ArrayList;
 import javax.swing.*;
-class gamestate {
+import java.math.BigInteger;
 
+class gamestate {
+        static BigInteger currentHash = new BigInteger("-1");
 	int [] crazypieces = new int[13];
 	int [] board = new int[64];
 	int [] boardCopy = new int[64];// used for move list
@@ -891,6 +893,8 @@ int makemove(int from, int to, char prom, int reload, int castleCapture, String 
 copyBoard();// to have current icc board for move list
 
 setMaterialCount(board);
+
+  computeHash();
 return type;
 
 }
@@ -1584,6 +1588,51 @@ void setMaterialCount(int [] board)
 
 }
 
+void computeHash()
+{        try {
+        currentHash = new BigInteger( HashKeysClass.globalinitialhash.toString());
+        int [] board2 = new int[64];
+	for(int a=0; a<64; a++)
+	{  board2[a] = board[63-a];
+          if(board2[a]>0)
+          {
+              BigInteger newHash = HashKeysClass.hashboard[a][board2[a]].xor(currentHash);
+              currentHash = new BigInteger(newHash.toString());
+
+          }
+        }
+         if(movetop  %2 == 1) {
+            BigInteger newHash = HashKeysClass.hashtoggle.xor(currentHash);
+              currentHash = new BigInteger(newHash.toString());
+         }
+          // white king
+          BigInteger newHash1 = HashKeysClass.hashwk.xor(currentHash);
+              currentHash = new BigInteger(newHash1.toString());
+          // white king
+          BigInteger newHash2 = HashKeysClass.hashwq.xor(currentHash);
+              currentHash = new BigInteger(newHash2.toString());
+        // black king
+          BigInteger newHash3 = HashKeysClass.hashbk.xor(currentHash);
+              currentHash = new BigInteger(newHash3.toString());
+          // black king
+          BigInteger newHash4 = HashKeysClass.hashbq.xor(currentHash);
+              currentHash = new BigInteger(newHash4.toString());
+
+         /*
+           if(self->rights.wk == 1)
+        key = key ^ hashwk;
+    if(self->rights.wq == 1)
+        key = key ^ hashwq;
+    if(self->rights.bk == 1)
+        key = key ^ hashbk;
+    if(self->rights.bq == 1)
+        key = key ^ hashbq;
+         */
+
+     }
+     catch(Exception e)  {System.out.println("error in game state hash generator "); }
+
+}
 
 }// end class game state
 

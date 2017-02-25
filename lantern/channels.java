@@ -26,8 +26,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.*;
+import java.math.BigInteger;
 
 public class channels {
+OpeningBookView myOpeningBookView;
+BigInteger cachedCurrentHash = new BigInteger("-1");
 boardSizes [] myBoardSizes;
 boardSizes [] myConsoleSizes;
 boardSizes myActivitiesSizes;
@@ -361,6 +364,9 @@ channels()
 {
 myServer = "ICC";
 version = "v5.71";
+HashKeysClass.generateHashKeys();
+gamestate.currentHash = new BigInteger("-1");
+myOpeningBookView = null;
 debug = false;
 newUserMessage="Welcome to Lantern Chess! Look at Help in the Menu for some questions and support at lanternbugs at gmail.\n";
 engineDirectory = null;

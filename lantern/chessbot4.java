@@ -44,6 +44,7 @@ import free.util.*;
 import java.util.concurrent.locks.*;
 import java.util.Calendar;
 import java.util.StringTokenizer;
+import java.math.BigInteger;
 
  class chessbot4 implements Runnable
 {
@@ -260,6 +261,11 @@ t.start();
                                         }
                                          client2.runSendToIcs();// job processing
                                         updateBoardMenuText();
+                                        if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible())
+                                        if(!sharedVariables.cachedCurrentHash.toString().equals(gamestate.currentHash.toString())) {
+                                              sharedVariables.myOpeningBookView.update();
+                                              sharedVariables.cachedCurrentHash = new BigInteger(gamestate.currentHash.toString());
+                                        }
 
 					if(sharedVariables.doreconnect==true) // this would forcibly be set by user in menu if he chose reconnect to fics or icc
 					{
