@@ -1386,6 +1386,8 @@ class mymultiframe extends JFrame
     soundmenu.add(notifysound);
     soundmenu.add(maketellsounds);
     optionsmenu.add(showMugshots);
+    optionsmenu.addSeparator();
+    optionsmenu.add(openingbookitem);
     // .. /
     optionsmenu.addSeparator();
     optionsmenu.add(helpanalysis);
@@ -1394,6 +1396,7 @@ class mymultiframe extends JFrame
     optionsmenu.add(winanalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
+    optionsmenu.addSeparator();
     optionsmenu.add(uciMultipleMenu);
     optionsmenu.add(engineMenu);
     // .. / Multile Linmes Display /
@@ -1406,8 +1409,7 @@ class mymultiframe extends JFrame
     engineMenu.add(ananfore);
     engineMenu.add(ananback);
     // .. /
-    optionsmenu.addSeparator();
-    optionsmenu.add(openingbookitem);
+
     optionsmenu.addSeparator();
     optionsmenu.add(customizetools);
     optionsmenu.add(toolbox);
@@ -4127,7 +4129,16 @@ dot.setVisible(true);
       } catch (Exception e) {}
 
     } else if(action.equals("Opening Book")) {
-        if(sharedVariables.myOpeningBookView == null) {
+      
+        boolean installed = false;
+        File f = new File("iosopeningbook18.db");
+        if(f.exists() && !f.isDirectory()) {
+         installed = true;
+        }
+       if(!installed) {
+        InstallBookDialog myDialog = new InstallBookDialog(this);
+       }
+        else if(sharedVariables.myOpeningBookView == null) {
             sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue);
 
         }
@@ -4136,8 +4147,8 @@ dot.setVisible(true);
         } else {
           sharedVariables.myOpeningBookView.setVisible(true);
         }
-        if(sharedVariables.myOpeningBookView.isVisible()) {
-         sharedVariables.myOpeningBookView.update(); 
+        if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible()) {
+         sharedVariables.myOpeningBookView.update();
         }
     }
 
