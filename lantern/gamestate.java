@@ -1,5 +1,5 @@
 package lantern;
-/*
+/*    board2[a] = board[63-a];
 *  Copyright (C) 2010 Michael Ronald Adams.
 *  All rights reserved.
 *
@@ -34,6 +34,7 @@ import java.math.BigInteger;
 
 class gamestate {
         static BigInteger currentHash = new BigInteger("-1");
+        static int hashMoveTop = 0;
 	int [] crazypieces = new int[13];
 	int [] board = new int[64];
 	int [] boardCopy = new int[64];// used for move list
@@ -1592,10 +1593,15 @@ void setMaterialCount(int [] board)
 
 void computeHash()
 {        try {
+        hashMoveTop = movetop;
         currentHash = new BigInteger( HashKeysClass.globalinitialhash.toString());
         int [] board2 = new int[64];
 	for(int a=0; a<64; a++)
-	{  board2[a] = board[63-a];
+	{  if(iflipped == 0) {
+              board2[a] = board[63-a];
+          } else {
+              board2[a] = board[a];
+            }
           if(board2[a]>0)
           {
               BigInteger newHash = HashKeysClass.hashboard[a][board2[a]].xor(currentHash);

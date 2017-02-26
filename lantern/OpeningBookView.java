@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import javax.swing.table.*;
 import javax.swing.table.TableRowSorter;
 import javax.swing.GroupLayout.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 class OpeningBookView  extends JDialog
@@ -46,6 +47,7 @@ class OpeningBookView  extends JDialog
   tableClass mymovetabledata  = new tableClass();
   TableRowSorter<TableModel> sorter;
   JScrollPane listScroller;
+  ConcurrentLinkedQueue<myoutput> queue;
 
   public static int choice = 0;
    private void copyInputStreamToFile( InputStream in, File file ) {
@@ -63,10 +65,11 @@ class OpeningBookView  extends JDialog
     }
 }
 
-    OpeningBookView(JFrame frame) {
+    OpeningBookView(JFrame frame, ConcurrentLinkedQueue<myoutput> queue1) {
       super(frame, "Opening Book", false);
       setSize(250,200);
        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+       queue = queue1;
        addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent we) {
 
@@ -85,6 +88,22 @@ class OpeningBookView  extends JDialog
       mypane.setLayout();
       add(mypane);
       addSorter();
+      MouseListener mouseListenerEvents = new MouseAdapter() {
+     public void mouseClicked(MouseEvent e) {
+         if (e.getClickCount() == 2 && e.getButton() != MouseEvent.BUTTON3) {
+
+             JTable target = (JTable)e.getSource();
+             int row = target.getSelectedRow();
+             row = sorter.convertRowIndexToModel(row);
+             String move = (String)moveTable.getModel().getValueAt(row,0);
+             myoutput output = new myoutput();
+             output.data="`c0`" +move + "\n";
+             output.consoleNumber=0;
+             queue.add(output);
+         }
+     }
+     };
+     moveTable.addMouseListener(mouseListenerEvents);
 
       setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
@@ -179,7 +198,14 @@ class OpeningBookView  extends JDialog
                }
                choice++;
                // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
-                ResultSet rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                ResultSet rs;
+
+                if(gamestate.hashMoveTop %2 == 0) {
+                   rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                } else {
+                  rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                }
+
                 while(rs.next())
                 {
                     // read the result set
@@ -193,13 +219,22 @@ class OpeningBookView  extends JDialog
                    data.add(move.move);
                    move.movefrom = rs.getInt( "movefrom");
                    move.moveto = rs.getInt("moveto");
-
-                   move.win = rs.getInt("win");
+                   if(gamestate.hashMoveTop %2 == 0) {
+                       move.win = rs.getInt("win");
                    data.add("" + move.win);
                    move.draw = rs.getInt("draw");
                    data.add("" + move.draw);
                    move.loss = rs.getInt("loss");
                    data.add("" + move.loss);
+                   } else {
+                       move.win = rs.getInt("loss");
+                   data.add("" + move.win);
+                   move.draw = rs.getInt("draw");
+                   data.add("" + move.draw);
+                   move.loss = rs.getInt("win");
+                   data.add("" + move.loss);
+                   }
+
                    mymovetabledata.gamedata.addRow(data);
                    moveListData.add(move);
                 }

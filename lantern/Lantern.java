@@ -4128,7 +4128,7 @@ dot.setVisible(true);
 
     } else if(action.equals("Opening Book")) {
         if(sharedVariables.myOpeningBookView == null) {
-            sharedVariables.myOpeningBookView  = new OpeningBookView(this);
+            sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue);
             sharedVariables.myOpeningBookView.update();
         }
         else if(sharedVariables.myOpeningBookView.isVisible()) {

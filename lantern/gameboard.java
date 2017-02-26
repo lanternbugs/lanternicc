@@ -43,6 +43,7 @@ import javax.swing.event.ChangeEvent.*;
 import java.util.concurrent.locks.*;
 import java.util.Random;
 import java.util.Calendar;
+import java.math.BigInteger;
 
 import layout.TableLayout;
 
@@ -987,6 +988,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
     //else
     //sharedVariables.mygame[gameData.BoardIndex].iflipped=0;
+    if(sharedVariables.mygame[gameData.BoardIndex].state ==
+          sharedVariables.STATE_EXAMINING) {
+           sharedVariables.mygame[gameData.BoardIndex].computeHash();
+          }
     if (isVisible() == true)
       mypanel.repaint();
     sharedVariables.mygame[gameData.BoardIndex].turn=0;
@@ -1150,6 +1155,9 @@ catch(Exception logging){}
         "W" + sharedVariables.mygame[gameData.BoardIndex].myGameNumber;
       queue.add(output);
       */
+      if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING) {
+       gamestate.currentHash = new BigInteger("-1");
+      }
        if (sharedVariables.makeSounds == true  && sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING)
        makeASound(8);
 
