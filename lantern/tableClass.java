@@ -69,6 +69,20 @@ gamedata = new myDefaultTableModel(data, collumns);
 
 }// end constructor
 
+void createOpeningBookColumns()
+{
+data = new Vector();
+collumns = new Vector();
+
+collumns.add("Move");
+collumns.add("Wins");
+collumns.add("Draws");
+collumns.add("Losses");
+gamedata = new myDefaultTableModel(data, collumns);
+
+}// end constructor
+
+
 void createHistoryListColumns()
 {
 Vector<String> data = new Vector();

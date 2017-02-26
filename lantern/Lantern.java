@@ -1279,6 +1279,7 @@ class mymultiframe extends JFrame
     JMenuItem ananfont = new JMenuItem("Analysis Font");
     JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
     JMenuItem ananback = new JMenuItem("Analysis Background Color");
+    JMenuItem openingbookitem = new JMenuItem("Opening Book");
     // .. / (separator)
     JMenuItem customizetools = new JMenuItem("Customize User Buttons");
     JMenuItem toolbox = new JMenuItem("Run a Script");
@@ -1406,6 +1407,8 @@ class mymultiframe extends JFrame
     engineMenu.add(ananback);
     // .. /
     optionsmenu.addSeparator();
+    optionsmenu.add(openingbookitem);
+    optionsmenu.addSeparator();
     optionsmenu.add(customizetools);
     optionsmenu.add(toolbox);
     optionsmenu.addSeparator();
@@ -1493,6 +1496,7 @@ class mymultiframe extends JFrame
     winanalysis.addActionListener(this);
     enginerestart.addActionListener(this);
     enginestop.addActionListener(this);
+    openingbookitem.addActionListener(this);
     ananfont.addActionListener(this);
     ananfore.addActionListener(this);
     ananback.addActionListener(this);
@@ -4122,7 +4126,20 @@ dot.setVisible(true);
         //aa.Input.setFocusable(true);
       } catch (Exception e) {}
 
-    } else if (action.equals("Start Connect Four")) {
+    } else if(action.equals("Opening Book")) {
+        if(sharedVariables.myOpeningBookView == null) {
+            sharedVariables.myOpeningBookView  = new OpeningBookView(this);
+            sharedVariables.myOpeningBookView.update();
+        }
+        else if(sharedVariables.myOpeningBookView.isVisible()) {
+          sharedVariables.myOpeningBookView.setVisible(false);
+        } else {
+          sharedVariables.myOpeningBookView.setVisible(true);
+          sharedVariables.myOpeningBookView.update();
+        }
+    }
+
+     else if (action.equals("Start Connect Four")) {
 
       connectFour frame = new connectFour();
 
@@ -4923,8 +4940,10 @@ dot.setVisible(true);
                 mysettings.saveNow(myboards, consoleSubframes, sharedVariables);
                 mineScores.saveNow(sharedVariables);
                 saveMainApplicationWindowSize();
-
-              } catch (Exception d) {}
+                if(sharedVariables.myOpeningBookView != null) {
+                   sharedVariables.myOpeningBookView.closeDatabase();
+                }
+             } catch (Exception d) {}
               System.exit(0);
               dispose();
               // end try
@@ -4934,6 +4953,9 @@ dot.setVisible(true);
       no.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             try {
+              if(sharedVariables.myOpeningBookView != null) {
+                   sharedVariables.myOpeningBookView.closeDatabase();
+                }
               System.exit(0);
               dispose();
               // end try

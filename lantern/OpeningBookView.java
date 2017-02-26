@@ -33,12 +33,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import javax.swing.table.*;
+import javax.swing.table.TableRowSorter;
+import javax.swing.GroupLayout.*;
 
 
 class OpeningBookView  extends JDialog
 {
   Connection connection = null;
+  ArrayList<DatabaseAMove> moveListData;
+  JTable moveTable;
+  tableClass mymovetabledata  = new tableClass();
+  TableRowSorter<TableModel> sorter;
+  JScrollPane listScroller;
+
   public static int choice = 0;
    private void copyInputStreamToFile( InputStream in, File file ) {
     try {
@@ -57,7 +65,25 @@ class OpeningBookView  extends JDialog
 
     OpeningBookView(JFrame frame) {
       super(frame, "none", false);
-      setSize(500,100);
+      setSize(500,200);
+       setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+       addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent we) {
+
+         setVisible(false);
+    }
+});
+
+      mymovetabledata.createOpeningBookColumns();
+      moveListData = new ArrayList<DatabaseAMove>();
+      moveTable = new JTable();
+      moveTable = new JTable(mymovetabledata.gamedata);
+      moveTable.setShowVerticalLines(true);
+      moveTable.setShowHorizontalLines(true);
+      listScroller = new JScrollPane(moveTable);
+      OverallForBook mypane = new OverallForBook();
+      mypane.setLayout();
+      add(mypane);
 
 
       setVisible(true);
@@ -116,12 +142,18 @@ class OpeningBookView  extends JDialog
                     System.err.println(e);
                 }
     }
-
+   void setWindowState()
+   {
+     
+   }
     void update()
-    {           
-
-      String title = "none";
+    {          for(int s = moveListData.size() -1; s >=0; s--) {
+                  mymovetabledata.gamedata.removeRow(s);
+               }
+               moveListData.clear();
+               String title = "none";
                 if(gamestate.currentHash.toString().equals("-1")) {
+                 setWindowState();
                  return;
                 } else {
                  System.out.println("hash is " + gamestate.currentHash.toString());
@@ -147,23 +179,108 @@ class OpeningBookView  extends JDialog
                   key = "2628344263795677394";
                }
                choice++;
+               // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
                 ResultSet rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString());
                 while(rs.next())
                 {
                     // read the result set
                     //System.out.println("name = " + rs.getString("name"));
-                    System.out.println("move is " + rs.getString("move"));
-                    title = title + " " +  rs.getString("move");
+                   // System.out.println("move is " + rs.getString("move"));
+                   // title = title + " " +  rs.getString("move");
                    // System.out.println("id = " + rs.getInt("id"));
+                   Vector<String> data = new Vector();
+                   DatabaseAMove move = new DatabaseAMove();
+                   move.move = rs.getString("move");
+                   data.add(move.move);
+                   move.movefrom = rs.getInt( "movefrom");
+                   move.moveto = rs.getInt("moveto");
+                   move.draw = rs.getInt("draw");
+                   data.add("" + move.draw);
+                   move.win = rs.getInt("win");
+                   data.add("" + move.win);
+                   move.loss = rs.getInt("loss");
+                   data.add("" + move.loss);
+                   mymovetabledata.gamedata.addRow(data);
+                   moveListData.add(move);
                 }
                 }
                 catch(SQLException e) {
                    System.err.println(e);
                 }
 
-                
+                setWindowState();
                 setTitle(title);
 
     }
+   class DatabaseAMove {
+    // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
+     int movefrom;
+     int moveto;
+     String move;
+     int win;
+     int loss;
+     int draw;
 
+     DatabaseAMove()
+     {
+         movefrom = 0;
+         moveto = 0;
+         move = "";
+         win = 0;
+         loss = 0;
+         draw = 0;
+     }
+   }
+   
+   
+   
+   class OverallForBook extends JPanel
+{
+
+	void setLayout() {
+		//mypane.add(listScroller);
+ GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+	//Create a parallel group for the horizontal axis
+	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+
+
+
+	SequentialGroup h2 = layout.createSequentialGroup();
+
+
+
+			h2.addComponent(listScroller);
+
+
+
+
+	h1.addGroup(h2);
+
+
+
+	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+	//Create the horizontal group
+	layout.setHorizontalGroup(hGroup);
+
+
+	//Create a parallel group for the vertical axis
+	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+
+
+SequentialGroup v1 = layout.createSequentialGroup();
+
+
+
+		v1.addComponent(listScroller);
+
+
+	vGroup.addGroup(v1);
+
+	layout.setVerticalGroup(vGroup);
+
+}// end set layout
+}
 }
