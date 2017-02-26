@@ -146,22 +146,7 @@ class OpeningBookView  extends JDialog
      setItemsVisiblity();
       setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
-        try
-                {
-                File file = new File("iosopeningbook18.db");
-                if (!file.exists()) {
-                    System.out.println("trying to copy");
-                    InputStream link = (getClass().getResourceAsStream("/iosopeningbook18.db"));
-                    //Files.copy(link, file.getAbsoluteFile().toPath());
-                    copyInputStreamToFile( link,  file );
-                    System.out.println("done copy");
 
-                } else {
-                    System.out.println("file exists");
-                }
-                } catch(Exception dui) {
-                    System.out.println("exception on copy");
-                }
         try {
             Class.forName("org.sqlite.JDBC");
 
@@ -169,7 +154,7 @@ class OpeningBookView  extends JDialog
             try
             {
                 // create a database connection
-                connection = DriverManager.getConnection("jdbc:sqlite:iosopeningbook18.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:" + channels.openingBookName);
 
             }
             catch(SQLException e)

@@ -4131,7 +4131,7 @@ dot.setVisible(true);
     } else if(action.equals("Opening Book")) {
       
         boolean installed = false;
-        File f = new File("iosopeningbook18.db");
+        File f = new File(channels.openingBookName);
         if(f.exists() && !f.isDirectory()) {
          installed = true;
         }

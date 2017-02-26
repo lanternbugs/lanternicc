@@ -67,11 +67,11 @@ class InstallBookDialog  extends JDialog
             try
                 {
                   installContinue.setEnabled(false);
-                File file = new File("iosopeningbook18.db");
+                File file = new File(channels.openingBookName);
                 setPaneText("Installing Book");
                 if (!file.exists() && !file.isDirectory()) {
                     System.out.println("trying to copy");
-                    InputStream link = (getClass().getResourceAsStream("/iosopeningbook18.db"));
+                    InputStream link = (getClass().getResourceAsStream("/" + channels.openingBookName));
                     //Files.copy(link, file.getAbsoluteFile().toPath());
                     copyInputStreamToFile( link,  file );
                     System.out.println("done copy");
@@ -118,7 +118,7 @@ class InstallBookDialog  extends JDialog
 
 
      textPane.setEditable(false);
-     String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called openingbook.db in the lantern folder with a size of 160 megs.";
+     String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called " + channels.openingBookName + "  in the lantern folder with a size of 160 megs.";
      setPaneText(text);
 
       setVisible(true);

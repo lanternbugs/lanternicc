@@ -29,6 +29,7 @@ import java.util.*;
 import java.math.BigInteger;
 
 public class channels {
+  static String openingBookName = "lanternopeningbook18.db";
 OpeningBookView myOpeningBookView;
 BigInteger cachedCurrentHash = new BigInteger("-1");
 boardSizes [] myBoardSizes;
@@ -363,7 +364,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.71i";
+version = "v5.71j";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
