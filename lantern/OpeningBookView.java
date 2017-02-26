@@ -64,7 +64,7 @@ class OpeningBookView  extends JDialog
 }
 
     OpeningBookView(JFrame frame) {
-      super(frame, "none", false);
+      super(frame, "Opening Book", false);
       setSize(250,200);
        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
        addWindowListener(new WindowAdapter() {
@@ -84,7 +84,7 @@ class OpeningBookView  extends JDialog
       OverallForBook mypane = new OverallForBook();
       mypane.setLayout();
       add(mypane);
-
+      addSorter();
 
       setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
@@ -151,7 +151,6 @@ class OpeningBookView  extends JDialog
                   mymovetabledata.gamedata.removeRow(s);
                }
                moveListData.clear();
-               String title = "none";
                 if(gamestate.currentHash.toString().equals("-1")) {
                  setWindowState();
                  return;
@@ -204,14 +203,39 @@ class OpeningBookView  extends JDialog
                    mymovetabledata.gamedata.addRow(data);
                    moveListData.add(move);
                 }
+
                 }
                 catch(SQLException e) {
                    System.err.println(e);
                 }
 
                 setWindowState();
-                setTitle(title);
 
+    }
+    
+    void addSorter()
+    {
+
+      sorter =  new TableRowSorter<TableModel>(mymovetabledata.gamedata);
+
+     Comparator intComparator = new Comparator<String>()
+  {
+     @Override
+    public int compare(String arg0, String arg1)
+    {
+      try {
+           Integer val = Integer.parseInt(arg0) - Integer.parseInt(arg1);
+           return val.intValue();
+
+      } catch(Exception dui) {
+      }
+      return 0;
+    }
+  };
+  sorter.setComparator(1, intComparator);
+  sorter.setComparator(2, intComparator);
+  sorter.setComparator(3, intComparator);
+  moveTable.setRowSorter(sorter);
     }
    class DatabaseAMove {
     // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
