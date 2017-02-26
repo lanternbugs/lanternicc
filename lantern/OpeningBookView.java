@@ -37,6 +37,7 @@ import javax.swing.table.*;
 import javax.swing.table.TableRowSorter;
 import javax.swing.GroupLayout.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.swing.text.*;
 
 
 class OpeningBookView  extends JDialog
@@ -48,6 +49,8 @@ class OpeningBookView  extends JDialog
   TableRowSorter<TableModel> sorter;
   JScrollPane listScroller;
   ConcurrentLinkedQueue<myoutput> queue;
+  JTextPane textPane = new JTextPane();
+  JButton backward = new JButton("<");
 
   public static int choice = 0;
    private void copyInputStreamToFile( InputStream in, File file ) {
@@ -104,8 +107,31 @@ class OpeningBookView  extends JDialog
          }
      }
      };
-     moveTable.addMouseListener(mouseListenerEvents);
+     backward.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+             myoutput output = new myoutput();
+             output.data="`c0`" + "multi backward" + "\n";
+             output.consoleNumber=0;
+             queue.add(output);
 
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
+          
+
+     moveTable.addMouseListener(mouseListenerEvents);
+     textPane.setEditable(false);
+     try {
+      StyledDocument doc = textPane.getStyledDocument();
+      String text = "Opening moves shown when examining and in book.  Try Game menu / Examine or Examine my Last Game";
+      doc.insertString(doc.getEndPosition().getOffset(), text, null);
+     }
+     catch(Exception pane) {
+
+     }
+     setItemsVisiblity();
       setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
         try
@@ -162,17 +188,26 @@ class OpeningBookView  extends JDialog
                     System.err.println(e);
                 }
     }
-   void setWindowState()
-   {
-     
-   }
+    void setItemsVisiblity() {
+          if(gamestate.currentHash.toString().equals("-1")) {
+      backward.setVisible(false);
+      listScroller.setVisible(false);
+      textPane.setVisible(true);
+     } else {
+      textPane.setVisible(false);
+      listScroller.setVisible(true);
+      backward.setVisible(true);
+     }
+    }
+
+
     void update()
     {          for(int s = moveListData.size() -1; s >=0; s--) {
                   mymovetabledata.gamedata.removeRow(s);
                }
                moveListData.clear();
+               setItemsVisiblity();
                 if(gamestate.currentHash.toString().equals("-1")) {
-                 setWindowState();
                  return;
                 }
                 try {
@@ -243,7 +278,7 @@ class OpeningBookView  extends JDialog
                    System.err.println(e);
                 }
 
-                setWindowState();
+
 
     }
     
@@ -352,16 +387,14 @@ String getSubMove(int square)
 
 
 
-	SequentialGroup h2 = layout.createSequentialGroup();
-
-
-
-			h2.addComponent(listScroller);
 
 
 
 
-	h1.addGroup(h2);
+       h1.addComponent(listScroller);
+       h1.addComponent(backward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+       h1.addComponent(textPane);
+
 
 
 
@@ -379,9 +412,11 @@ SequentialGroup v1 = layout.createSequentialGroup();
 
 
 		v1.addComponent(listScroller);
+		v1.addComponent(backward);
 
 
 	vGroup.addGroup(v1);
+	vGroup.addComponent(textPane);
 
 	layout.setVerticalGroup(vGroup);
 
