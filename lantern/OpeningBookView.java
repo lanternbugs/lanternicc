@@ -95,7 +95,8 @@ class OpeningBookView  extends JDialog
              JTable target = (JTable)e.getSource();
              int row = target.getSelectedRow();
              row = sorter.convertRowIndexToModel(row);
-             String move = (String)moveTable.getModel().getValueAt(row,0);
+             //String move = (String)moveTable.getModel().getValueAt(row,0);
+             String move = getSubMove(moveListData.get(row).movefrom) + getSubMove(moveListData.get(row).moveto);
              myoutput output = new myoutput();
              output.data="`c0`" +move + "\n";
              output.consoleNumber=0;
@@ -173,8 +174,6 @@ class OpeningBookView  extends JDialog
                 if(gamestate.currentHash.toString().equals("-1")) {
                  setWindowState();
                  return;
-                } else {
-                 System.out.println("hash is " + gamestate.currentHash.toString());
                 }
                 try {
                    Statement statement = connection.createStatement();
@@ -291,8 +290,53 @@ class OpeningBookView  extends JDialog
          draw = 0;
      }
    }
-   
-   
+
+String getSubMove(int square)
+	{
+
+		int col=0;
+		int row=0;
+		String value="";
+		square = 63 - square;
+		square++; // 1-64
+		int square2=65-square;
+
+		row=square%8;
+		//if(flipIt)
+		row=square2%8;
+
+		if(row == 1)
+		value = value + "a";
+		else if(row == 2)
+		value = value + "b";
+		else if(row == 3)
+		value = value + "c";
+		else if(row == 4)
+		value = value + "d";
+		else if(row == 5)
+		value = value + "e";
+		else if(row == 6)
+		value = value + "f";
+		else if(row == 7)
+		value = value + "g";
+		else if(row == 0)
+		value = value + "h";
+
+		col=(int) square/8;
+		if(square %8 != 0)
+		col++;
+
+	//	if(flipIt)// white on bottom doesnt work. black on bottom does
+	//	col=9-col;
+
+		value = value + col;
+
+
+
+
+
+		return value;
+	}
    
    class OverallForBook extends JPanel
 {

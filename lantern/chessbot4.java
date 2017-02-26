@@ -261,9 +261,11 @@ t.start();
                                         }
                                          client2.runSendToIcs();// job processing
                                         updateBoardMenuText();
-                                        if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible())
+
                                         if(!sharedVariables.cachedCurrentHash.toString().equals(gamestate.currentHash.toString())) {
-                                              sharedVariables.myOpeningBookView.update();
+                                              if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible()) {
+                                                 sharedVariables.myOpeningBookView.update();
+                                              }
                                               sharedVariables.cachedCurrentHash = new BigInteger(gamestate.currentHash.toString());
                                         }
 
