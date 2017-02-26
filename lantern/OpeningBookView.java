@@ -51,6 +51,7 @@ class OpeningBookView  extends JDialog
   ConcurrentLinkedQueue<myoutput> queue;
   JTextPane textPane = new JTextPane();
   JButton backward = new JButton("<");
+  JButton forward = new JButton(">");
 
   public static int choice = 0;
    private void copyInputStreamToFile( InputStream in, File file ) {
@@ -120,12 +121,23 @@ class OpeningBookView  extends JDialog
           public void mouseExited (MouseEvent me) {}
           public void mouseClicked (MouseEvent me) {}  });
           
+     forward.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+             myoutput output = new myoutput();
+             output.data="`c0`" + "multi forward" + "\n";
+             output.consoleNumber=0;
+             queue.add(output);
 
+          }
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered (MouseEvent me) {}
+          public void mouseExited (MouseEvent me) {}
+          public void mouseClicked (MouseEvent me) {}  });
      moveTable.addMouseListener(mouseListenerEvents);
      textPane.setEditable(false);
      try {
       StyledDocument doc = textPane.getStyledDocument();
-      String text = "Opening moves shown when examining and in book.  Try Game menu / Examine or Examine my Last Game";
+      String text = "Opening moves show when examining and in book.  Try Game menu / Examine or Examine my Last Game";
       doc.insertString(doc.getEndPosition().getOffset(), text, null);
      }
      catch(Exception pane) {
@@ -191,12 +203,14 @@ class OpeningBookView  extends JDialog
     void setItemsVisiblity() {
           if(gamestate.currentHash.toString().equals("-1")) {
       backward.setVisible(false);
+      forward.setVisible(false);
       listScroller.setVisible(false);
       textPane.setVisible(true);
      } else {
       textPane.setVisible(false);
       listScroller.setVisible(true);
       backward.setVisible(true);
+      forward.setVisible(true);
      }
     }
 
@@ -387,13 +401,15 @@ String getSubMove(int square)
 
 
 
-
+       	SequentialGroup hb = layout.createSequentialGroup();
+       	hb.addComponent(backward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+       	hb.addComponent(forward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
 
 
 
        h1.addComponent(listScroller);
-       h1.addComponent(backward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
        h1.addComponent(textPane);
+       h1.addGroup(hb);
 
 
 
@@ -412,7 +428,10 @@ SequentialGroup v1 = layout.createSequentialGroup();
 
 
 		v1.addComponent(listScroller);
-		v1.addComponent(backward);
+		ParallelGroup vb = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+		vb.addComponent(backward);
+		vb.addComponent(forward);
+		v1.addGroup(vb);
 
 
 	vGroup.addGroup(v1);
