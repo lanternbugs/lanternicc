@@ -893,8 +893,10 @@ int makemove(int from, int to, char prom, int reload, int castleCapture, String 
 copyBoard();// to have current icc board for move list
 
 setMaterialCount(board);
+  if(state == 2) {
+    computeHash();
+  }
 
-  computeHash();
 return type;
 
 }

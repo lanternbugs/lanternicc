@@ -65,7 +65,7 @@ class OpeningBookView  extends JDialog
 
     OpeningBookView(JFrame frame) {
       super(frame, "none", false);
-      setSize(500,200);
+      setSize(250,200);
        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
        addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent we) {
@@ -180,7 +180,7 @@ class OpeningBookView  extends JDialog
                }
                choice++;
                // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
-                ResultSet rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString());
+                ResultSet rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
                 while(rs.next())
                 {
                     // read the result set
@@ -194,10 +194,11 @@ class OpeningBookView  extends JDialog
                    data.add(move.move);
                    move.movefrom = rs.getInt( "movefrom");
                    move.moveto = rs.getInt("moveto");
-                   move.draw = rs.getInt("draw");
-                   data.add("" + move.draw);
+
                    move.win = rs.getInt("win");
                    data.add("" + move.win);
+                   move.draw = rs.getInt("draw");
+                   data.add("" + move.draw);
                    move.loss = rs.getInt("loss");
                    data.add("" + move.loss);
                    mymovetabledata.gamedata.addRow(data);

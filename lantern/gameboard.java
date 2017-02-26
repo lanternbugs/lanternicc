@@ -2079,6 +2079,10 @@ void stopTheEngine()
       readLock2.unlock();
 
       sharedVariables.mygame[gameData.BoardIndex].replay();
+      if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING)
+      {
+          sharedVariables.mygame[gameData.BoardIndex].computeHash();
+      }
 
       Sound s;
 
@@ -2276,8 +2280,10 @@ void stopTheEngine()
       // remove from move list.  we dont have to call all boards
       // because all boards share same data object
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING)
+          sharedVariables.STATE_EXAMINING) {
             sharedVariables.mygame[gameData.BoardIndex].clearShapes();
+            sharedVariables.mygame[gameData.BoardIndex].computeHash();
+      }
       if (sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_OBSERVING || sharedVariables.mygame[gameData.BoardIndex].state ==
@@ -2336,6 +2342,10 @@ void stopTheEngine()
       catch(Exception dumb) {}
        */
       sharedVariables.mygame[gameData.BoardIndex].replay();
+      if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING)
+      {
+          sharedVariables.mygame[gameData.BoardIndex].computeHash();
+      }
       if (isVisible() == true)
         repaintCustom();
     }
