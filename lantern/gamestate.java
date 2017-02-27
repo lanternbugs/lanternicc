@@ -53,7 +53,8 @@ class gamestate {
 	int [] castleCaptures = new int[6000];
 	int wild;
 	int movetop;
-
+int lastKingMoveWhite = -1;
+int lastKingMoveBlack = -1;
 double whiteClock;
 double blackClock;
 int whiteMinute;
@@ -706,6 +707,12 @@ int makemove(int from, int to, char prom, int reload, int castleCapture, String 
        { algabraicMoves[movetop] = algabraicMove;
         
        }
+       if((board[from] == 6 || board[to] == 6) && lastKingMoveWhite == -1) {
+        lastKingMoveWhite = movetop + 1;
+       }  else if((board[from] == 12 || board[to] == 12) && lastKingMoveBlack == -1) {
+        lastKingMoveBlack = movetop + 1;
+       }
+
 	if((castleCapture == 1 || castleCapture == 2) && wild==22)
 	{
 
@@ -1613,18 +1620,24 @@ void computeHash()
             BigInteger newHash = HashKeysClass.hashtoggle.xor(currentHash);
               currentHash = new BigInteger(newHash.toString());
          }
-          // white king
+         if(lastKingMoveWhite == -1) {
+              // white king
           BigInteger newHash1 = HashKeysClass.hashwk.xor(currentHash);
               currentHash = new BigInteger(newHash1.toString());
           // white king
           BigInteger newHash2 = HashKeysClass.hashwq.xor(currentHash);
               currentHash = new BigInteger(newHash2.toString());
-        // black king
+         }
+
+        if(lastKingMoveBlack == -1)
+        {
+          // black king
           BigInteger newHash3 = HashKeysClass.hashbk.xor(currentHash);
               currentHash = new BigInteger(newHash3.toString());
           // black king
           BigInteger newHash4 = HashKeysClass.hashbq.xor(currentHash);
               currentHash = new BigInteger(newHash4.toString());
+        }
 
          /*
            if(self->rights.wk == 1)

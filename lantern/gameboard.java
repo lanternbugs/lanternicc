@@ -2269,9 +2269,15 @@ void stopTheEngine()
   void Backward(String icsGameNumber, String count) {
     int tempnumber=getGameNumber(icsGameNumber);
     final int num=getGameNumber(count);
-
     if (tempnumber == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)	{
       sharedVariables.mygame[gameData.BoardIndex].movetop-=num;
+
+      if(sharedVariables.mygame[gameData.BoardIndex].lastKingMoveWhite > sharedVariables.mygame[gameData.BoardIndex].movetop) {
+        sharedVariables.mygame[gameData.BoardIndex].lastKingMoveWhite = -1;
+      }
+      if(sharedVariables.mygame[gameData.BoardIndex].lastKingMoveBlack > sharedVariables.mygame[gameData.BoardIndex].movetop) {
+        sharedVariables.mygame[gameData.BoardIndex].lastKingMoveBlack = -1;
+      }
       sharedVariables.mygame[gameData.BoardIndex].turn =
         sharedVariables.mygame[gameData.BoardIndex].turn-num;
       for (int a=0; a<sharedVariables.maxGameTabs; a++) {

@@ -274,7 +274,7 @@ class OpeningBookView  extends JDialog
 
                 }
                 catch(SQLException e) {
-                   System.err.println(e);
+                  // System.err.println(e);
                 }
 
 
