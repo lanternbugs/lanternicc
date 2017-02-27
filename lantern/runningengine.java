@@ -489,10 +489,12 @@ if(finalStuff.length() > 0)
 
         try {
          
-         if(System.currentTimeMillis()> lastSendTime + 3000 && System.currentTimeMillis()> priorSendTime + 7000)
+         if(System.currentTimeMillis()> lastSendTime + 3000 && System.currentTimeMillis()> priorSendTime + 7000 && tosend != null)
           Thread.sleep(1500);
-          else
+          else if(tosend != null)
             Thread.sleep(3500);
+            else
+            Thread.sleep(375);
 
 
         
