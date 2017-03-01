@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: lantern_graphics_3_6_11.jar
-Created-By: 1.6.0_21 (Sun Microsystems Inc.)
-Main-Class: lantern.multiframe
-
