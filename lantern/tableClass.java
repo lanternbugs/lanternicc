@@ -78,6 +78,7 @@ collumns.add("Move");
 collumns.add("Wins");
 collumns.add("Draws");
 collumns.add("Losses");
+collumns.add("Percent");
 gamedata = new myDefaultTableModel(data, collumns);
 
 }// end constructor

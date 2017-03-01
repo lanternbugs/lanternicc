@@ -43,6 +43,7 @@ import javax.swing.text.*;
 class OpeningBookView  extends JDialog
 {
   Connection connection = null;
+  static String openingEco = "";
   ArrayList<DatabaseAMove> moveListData;
   JTable moveTable;
   tableClass mymovetabledata  = new tableClass();
@@ -71,7 +72,7 @@ class OpeningBookView  extends JDialog
 
     OpeningBookView(JFrame frame, ConcurrentLinkedQueue<myoutput> queue1) {
       super(frame, "Opening Book", false);
-      setSize(250,200);
+      setSize(275,200);
        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
        queue = queue1;
        addWindowListener(new WindowAdapter() {
@@ -207,6 +208,7 @@ class OpeningBookView  extends JDialog
                moveListData.clear();
                setItemsVisiblity();
                 if(gamestate.currentHash.toString().equals("-1")) {
+                  setTitle("Opening Book");
                  return;
                 }
                 try {
@@ -238,6 +240,9 @@ class OpeningBookView  extends JDialog
                 } else {
                   rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
                 }
+                if(gamestate.hashMoveTop > 6 && openingEco.length() > 0)
+                    ;
+                else setTitle("Opening Book");
 
                 while(rs.next())
                 {
@@ -267,7 +272,17 @@ class OpeningBookView  extends JDialog
                    move.loss = rs.getInt("win");
                    data.add("" + move.loss);
                    }
-
+                   float percentWin = 0;
+                    try {
+                        float denominator =  Float.parseFloat("" + move.win) +  Float.parseFloat("" + move.draw)  + Float.parseFloat("" + move.loss);
+                        float numerator = Float.parseFloat("" + move.win) + (Float.parseFloat("" + move.draw) * (float) .5);
+                        percentWin = numerator / denominator;
+                        
+                    } catch(Exception floating) {
+                        
+                    }
+                    
+                    data.add(String.format("%.2f", percentWin));
                    mymovetabledata.gamedata.addRow(data);
                    moveListData.add(move);
                 }
@@ -276,7 +291,10 @@ class OpeningBookView  extends JDialog
                 catch(SQLException e) {
                   // System.err.println(e);
                 }
-
+               myoutput output = new myoutput();
+               output.data="`e0`" + "multi eco" + "\n";
+               output.consoleNumber=0;
+               queue.add(output);
 
 
     }
@@ -300,9 +318,35 @@ class OpeningBookView  extends JDialog
       return 0;
     }
   };
+  Comparator floatComparator = new Comparator<String>()
+        {
+            @Override
+            public int compare(String arg0, String arg1)
+            {
+                try {
+                    float val = Float.parseFloat(arg0) - Float.parseFloat(arg1);
+                    if(val == 0) {
+                        
+                        return 0;
+                    } else if(val > 0)
+                    {
+                        return 1;
+                    }
+                    else
+                        return -1;
+                    
+                } catch(Exception dui) {
+                }
+                return 0;
+            }
+        };
+
+
   sorter.setComparator(1, intComparator);
   sorter.setComparator(2, intComparator);
   sorter.setComparator(3, intComparator);
+  sorter.setComparator(4, floatComparator);
+
   moveTable.setRowSorter(sorter);
     }
    class DatabaseAMove {

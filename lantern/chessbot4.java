@@ -1082,6 +1082,36 @@ if(console.type == 5)
   }
  return;
 }
+try {
+    if(console.type == 6)
+    {
+        
+        if(thetell.indexOf("Long[") > 0)
+        {
+            int index = thetell.indexOf("Long[");
+            int index2 = thetell.indexOf(":", index+1);
+            int index3 = thetell.indexOf("\n", index2+1);
+            if(index2 > 0 && index3 > index2)
+            {
+                String eco = thetell.substring(index2+1, index3);
+                //writeToSubConsole("mike found eco " + eco, 0);
+                OpeningBookView.openingEco = eco;
+                if(gamestate.hashMoveTop > 6 && sharedVariables.myOpeningBookView != null && eco.length() > 0)
+                   {
+                       sharedVariables.myOpeningBookView.setTitle(eco);
+                   } else if(sharedVariables.myOpeningBookView != null) {
+                       sharedVariables.myOpeningBookView.setTitle("Opening Book");
+                   }
+            }
+        }
+        return;
+    }
+
+    } catch(Exception ecoerror) {
+        writeToSubConsole("exceptoin parsing eco", 0);
+        if(console.type == 6)
+            return;
+    }
 
 int slashN1=thetell.indexOf("\n");
 int slashN2=-1;
@@ -1336,6 +1366,8 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=4;// save pgn
 						if(consoleChar == 'f')
 						console.type=5;// lookup user
+						if(consoleChar == 'e')
+                                                console.type=6;// eco
                                                 String myConNumber="";
 
 						// we assume its c now. could be g for game, c is subframe console
