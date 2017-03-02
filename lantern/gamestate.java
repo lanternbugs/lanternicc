@@ -707,9 +707,9 @@ int makemove(int from, int to, char prom, int reload, int castleCapture, String 
        { algabraicMoves[movetop] = algabraicMove;
         
        }
-       if((board[from] == 6 || board[to] == 6) && lastKingMoveWhite == -1) {
+       if(from > -1 && to > -1 && (board[from] == 6 || board[to] == 6) && lastKingMoveWhite == -1) {
         lastKingMoveWhite = movetop + 1;
-       }  else if((board[from] == 12 || board[to] == 12) && lastKingMoveBlack == -1) {
+       }  else if(from > -1 && to > -1 && (board[from] == 12 || board[to] == 12) && lastKingMoveBlack == -1) {
         lastKingMoveBlack = movetop + 1;
        }
 
