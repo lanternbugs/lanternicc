@@ -1,4 +1,4 @@
-The pieces and Boards in this program come from Jin which is released undger GPL.  
+The pieces and Boards in this program come from Jin except for those otherwise noted below which is released undger GPL.
 
 I do not know that the pieces and boards are all gpl and by making them avaiable offer no more rights than by www.jinchess.com making them available.
 
@@ -14,7 +14,14 @@ The rest of the pieces I do not know though the alpha pieces i understand are co
 
 flags came from http://www.free-country-flags.com/ under the creative commons share and share alike liscence.  i am using flags small in flag pack 1.
 
-note July 17 2011: the purple chess board was coppied from blitzin. i can grant no more rights than i have and icc can request it be taken down.
-the olive chess board came off the net. it is not a copy of blitzin.  the cherry board came off the net it is not a copy of blitzin. I was not able to ascertain the complete rights from teh sites i grabbed the images. the olive and cherry board were part of blog posts found in image search.
+note July 17 2011: the purple chess board was copied from blitzin and is not an exact copy but a partial screen grab. i can grant no more rights than i have and icc can request it be taken down.
+
+The Olive chess board and Cherry board came off the net as partial screen grabs. I was not able to ascertain the
+complete rights from the sites i grabbed the images. The Olive and Cherry board were part of blog posts found
+in image search.
+
+note March 2nd 2017:
+the CCube chess pieces are made by perlhacker(now PerlHackr) which he describes as based on Raptor and GPL
+the Wood-4 and Wood-5 boards are from Stockfish also GPL
 
 Mike Adams
