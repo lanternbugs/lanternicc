@@ -1,5 +1,5 @@
 Lantern Chess client for internet chess servers.
-Copyright (C) 2009-2010 Michael Ronald Adams.
+Copyright (C) 2009-2017 Michael Ronald Adams.
 All rights reserved.
  
 This program is free software; you can redistribute it and/or
