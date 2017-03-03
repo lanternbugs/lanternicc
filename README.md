@@ -8,15 +8,14 @@ The lantern folder is all the java code we use and wrote that make up the client
 Compiling and running lantern is actualy very simple.  But to get a couple of packages we use that are not in this repo 
 as they are not our code though they are open source,  unzip a current lantern jar, found at lanternchess.com
 (you can change the file extension from jar to zip)
-and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. Also get the opening book, lanternopeningbook18.db 
+and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. The layout folder contains an open source  layout known as grid layout, more on that further below.  Also get the opening book, lanternopeningbook18.db 
 which is referenced in code by the program.
 
 So you should have from this repo two directories, lantern and free and from the jar the org and layout
 directory and the book. The org folder contains the java sqlite driver used with the opening
 book and its licence is in licence-for-sqlite-jdbc-master.txt and the source code for it is
 in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org folder. 
- There is also a readme.txt I placed in the org folder with more info.  
-Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
+ There is also a readme.txt I placed in the org folder with more info.  Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
 
 To compiles lantern type javac lantern/*.java
 to run lantern type java lantern/Lantern      Lantern.java contains main.
