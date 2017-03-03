@@ -3538,7 +3538,7 @@ class FileRead
 		  	     }
 		  	catch(Exception eee)
 		  	     {
-					 input = null;
+					 return "";
 				 }
   	   }  // end outer catch
 
