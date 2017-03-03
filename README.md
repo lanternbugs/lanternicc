@@ -12,9 +12,10 @@ and get the layout and org folders. The package in the org folder is an sqlite d
 which is referenced in code by the program.
 
 So you should have from this repo two directories, lantern and free and from the jar the org and layout
-directory and the book. The org folder contains are java sqlite driver used with the opening
+directory and the book. The org folder contains the java sqlite driver used with the opening
 book and its licence is in licence-for-sqlite-jdbc-master.txt and the source code for it is
-in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org folder.  
+in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org folder. 
+ There is also a readme.txt I placed in the org folder with more info.  
 Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
 
 To compiles lantern type javac lantern/*.java
