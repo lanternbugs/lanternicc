@@ -1482,6 +1482,10 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 			FileRead in = new  FileRead();
 
 			StringTokenizer tokens = new StringTokenizer(in.read(), " ");
+                if(!tokens.hasMoreElements())
+                {
+                    return false;
+                }
 
 			if (tokens.nextToken().equals("[color]"))
 			{
@@ -1489,7 +1493,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				String temp = "j";
 				String temp2="";
 
-				while(!temp.equals(""))
+				while(tokens.hasMoreElements() && !temp.equals(""))
 				{
 					temp = tokens.nextToken();
 					if(temp.equals("[donecolor]"))
@@ -1850,7 +1854,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 
 
 				String temp = "j";
-				while(!temp.equals(""))
+				while(tokens.hasMoreElements() && !temp.equals(""))
 				{
 				temp = tokens.nextToken();
 
@@ -1894,7 +1898,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 
 				String temp2="";
 
-				while(!temp.equals(""))
+				while(tokens.hasMoreElements() && !temp.equals(""))
 				{
 					temp2 = tokens.nextToken();
 					if(temp2.startsWith("[doneChan"))
@@ -1930,7 +1934,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				String temp2="";
 				String temp3 = "";
 
-				while(!temp.equals(""))
+				while(tokens.hasMoreElements() && !temp.equals(""))
 				{
 					temp2 = tokens.nextToken();
 					if(temp2.startsWith("[doneQChan"))
@@ -1970,7 +1974,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				try {
 				String temp2="";
 
-				while(!temp.equals(""))
+				while(tokens.hasMoreElements() && !temp.equals(""))
 				{
 					temp2 = tokens.nextToken();
 					if(temp2.startsWith("[doneMainChan"))
