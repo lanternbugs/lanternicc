@@ -1481,7 +1481,13 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
         	try {
 			FileRead in = new  FileRead();
 
-			StringTokenizer tokens = new StringTokenizer(in.read(), " ");
+                StringTokenizer tokens = null;
+                String stringFromSettingsFile = in.read();
+                if(stringFromSettingsFile.length()  == 0) {
+                    return false;
+                }
+                
+                tokens = new StringTokenizer(stringFromSettingsFile, " ");
                 if(!tokens.hasMoreElements())
                 {
                     return false;
