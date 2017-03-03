@@ -11,7 +11,10 @@ as they are not our code though they are open source,  unzip a current lantern j
 and get the layout and org folders. Also get the opening book, lanternopeningbook18.db 
 which is referenced in code by the program.
 
-So you should have from this repo two directories, lantern and free and from the jar the org and layout directory and the book.
+So you should have from this repo two directories, lantern and free and from the jar the org and layout
+directory and the book. The org folder contains are java sqlite driver used with the opening
+book and its licence is in licence-for-sqlite-jdbc-master.txt and the source code for it is
+in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org folder.  
 Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
 
 To compiles lantern type javac lantern/*.java
