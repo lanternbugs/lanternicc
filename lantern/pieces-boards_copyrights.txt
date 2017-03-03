@@ -24,4 +24,6 @@ note March 2nd 2017:
 the CCube chess pieces are made by perlhacker(now PerlHackr) which he describes as based on Raptor and GPL
 the Wood-4 and Wood-5 boards are from Stockfish also GPL
 
+The liebeskind, molten, moltengood, moltenevil pieces were made by moltenthinker for Lantern. He asked me to put them in teh program. 
+
 Mike Adams
