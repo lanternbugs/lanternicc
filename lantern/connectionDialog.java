@@ -89,8 +89,8 @@ public class connectionDialog extends JDialog
     guest.addActionListener(this);
 
     JPanel buttons = new JPanel();
-      buttons.add(guest);
     buttons.add(ok);
+    buttons.add(guest);
     buttons.add(cancel);
      
 
