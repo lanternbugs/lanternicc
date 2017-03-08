@@ -321,7 +321,7 @@ t.start();
 					updateBoard();
 
 				}
-				catch(Exception classNot){writeToConsole("1");
+				catch(Exception classNot){
 					try {Thread.sleep(50);}catch(Exception d){}
 				}
 			}while(keepgoing==1);
