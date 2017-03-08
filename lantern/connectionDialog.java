@@ -56,7 +56,7 @@ public class connectionDialog extends JDialog
     saveNP = new JCheckBox("Save password", sVars.saveNamePass);
 
     nameField = new JTextField(20);
-    if (!sVars.myname.equals(""))
+    if (!sVars.myname.equals("") && !sVars.myname.startsWith("guest"))
       nameField.setText(sVars.myname);
     nameField.setActionCommand("Submit");
     nameField.addActionListener(this);
@@ -83,10 +83,16 @@ public class connectionDialog extends JDialog
     JButton cancel = new JButton("Cancel");
     cancel.setActionCommand("Cancel");
     cancel.addActionListener(this);
+      
+    JButton guest = new JButton("Guest");
+    guest.setActionCommand("Guest");
+    guest.addActionListener(this);
 
     JPanel buttons = new JPanel();
+      buttons.add(guest);
     buttons.add(ok);
     buttons.add(cancel);
+     
 
     int ht = 20;
     double border = 10;
@@ -112,8 +118,9 @@ public class connectionDialog extends JDialog
 
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
-    if (action.equals("Submit") && ok.isEnabled()) login();
+    if (action.equals("Submit") && ok.isEnabled()) login(false);
     if (action.equals("Cancel")) dispose();
+      if (action.equals("Guest")) login(true);
   }
 
   public void changedUpdate(DocumentEvent e) {
@@ -136,7 +143,7 @@ public class connectionDialog extends JDialog
     else ok.setEnabled(!name.equals("") && !pwd.equals(""));
   }
 
-  public void login() {
+  public void login(boolean guest) {
     String user = nameField.getText();
     
     if (user.startsWith("~")) {
@@ -146,7 +153,10 @@ public class connectionDialog extends JDialog
     }
 
     String pwd = pwdField.getText();
-    
+    if(guest) {
+          user = "guest";
+          pwd = "";
+    }
     myoutput data1 = new myoutput();
     data1.data = user + "\n";
     
@@ -155,11 +165,14 @@ public class connectionDialog extends JDialog
     sVars.mypassword= pwd;
     queue.add(data1);
     queue.add(data2);
-
-    sVars.saveNamePass = saveNP.isSelected();
-    if (sVars.saveNamePass)
-      creds.saveNamePass(user, pwd);
-    else creds.resetNamePass();
+      sVars.saveNamePass = saveNP.isSelected();
+      if(!guest) {
+          if (sVars.saveNamePass)
+              creds.saveNamePass(user, pwd);
+          else creds.resetNamePass();
+      } else if (!sVars.saveNamePass)
+          creds.resetNamePass();
+    
     
     dispose();
   }
