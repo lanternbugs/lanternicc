@@ -46,7 +46,7 @@ resourceClass()
 
 
 maxBoards=13;
-maxPieces=24;
+maxPieces=25;
 maxPiecePaths=50;
 
  //squares
@@ -98,11 +98,11 @@ piecePaths[19]="maya";
  piecePaths[20]="medieval";
 
 piecePaths[21]="ccube";
+piecePaths[22]="merida";
+piecePaths[23]="mongemix";
 
-piecePaths[22]="mongemix";
 
-
-piecePaths[23]="random";
+piecePaths[24]="random";
 //for(num=0; num < 16; num++)
 //piecePaths[num]="/" + piecePaths[num];
 
@@ -129,8 +129,9 @@ pieceExt[18]="png";
 pieceExt[19]="png";
 pieceExt[20]="png";
 pieceExt[21]="png";
-pieceExt[22]="mix";
-pieceExt[23]="ran";
+pieceExt[22]="png";
+pieceExt[23]="mix";
+pieceExt[24]="ran";
 
 resizable=new boolean[maxPieces];
 resizable[0]=false;
@@ -156,8 +157,8 @@ resizable[19]=false;
 resizable[20]=false;
 resizable[21]=false;
 resizable[22]=false;
-
-resizable[23]=true;
+resizable[23]=false;
+resizable[24]=true;
 
 
 pieces = new Image[maxPieces][12];
@@ -171,10 +172,12 @@ for(int b=0; b<maxPieces; b++)
 		numberPiecePaths[b]=8;
 	else if(b==12)
 		numberPiecePaths[b]=6;
-	else if(b==6 || b==7 || b == 13 || b== 14 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 22)
+	else if(b==6 || b==7 || b == 13 || b== 14 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 23)
 		numberPiecePaths[b]=15;
 	else if(b==21)
 		numberPiecePaths[b]=47;
+    else if(b==22)
+        numberPiecePaths[b]=41;
 
 	else
 		numberPiecePaths[b]=0;
@@ -279,7 +282,53 @@ if(b==21)// ccube
 
 
 }
-if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 22)// monge harlequin
+    if(b==22)// merida
+    {
+        multiPiecePaths[b][0]=21;
+        multiPiecePaths[b][1]=21;// we just use 8 for both to fix a bug
+        multiPiecePaths[b][2]=22;
+        multiPiecePaths[b][3]=23;
+        multiPiecePaths[b][4]=24;
+        multiPiecePaths[b][5]=25;
+        multiPiecePaths[b][6]=26;
+        multiPiecePaths[b][7]=27;
+        multiPiecePaths[b][8]=28;
+        multiPiecePaths[b][9]=29;
+        multiPiecePaths[b][10]=30;
+        multiPiecePaths[b][11]=31;
+        multiPiecePaths[b][12]=32;
+        multiPiecePaths[b][13]=33;
+        multiPiecePaths[b][14]=34;
+        multiPiecePaths[b][15]=35;
+        multiPiecePaths[b][16]=36;
+        multiPiecePaths[b][17]=37;
+        multiPiecePaths[b][18]=38;
+        multiPiecePaths[b][19]=39;
+        multiPiecePaths[b][20]=40;
+        multiPiecePaths[b][21]=41;
+        multiPiecePaths[b][22]=42;
+        multiPiecePaths[b][23]=43;
+        multiPiecePaths[b][24]=44;
+        multiPiecePaths[b][25]=45;
+        multiPiecePaths[b][26]=46;
+        multiPiecePaths[b][27]=47;
+        multiPiecePaths[b][28]=48;
+        multiPiecePaths[b][29]=52;
+        multiPiecePaths[b][30]=56;
+        multiPiecePaths[b][31]=60;
+        multiPiecePaths[b][32]=64;
+        multiPiecePaths[b][33]=72;
+        
+        multiPiecePaths[b][34]=80;
+        multiPiecePaths[b][35]=88;
+        multiPiecePaths[b][36]=96;
+        multiPiecePaths[b][37]=112;
+        multiPiecePaths[b][38]=128;
+        multiPiecePaths[b][39]=144;
+        multiPiecePaths[b][40]=300;
+
+    }
+if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 23)// monge harlequin
 {
 	multiPiecePaths[b][0]=20;
 	multiPiecePaths[b][1]=24;
