@@ -1,0 +1,4 @@
+Lantern use Eric De Mund's adaptation of the Merida chess pieces(merida.ead-01). "merida" refers to
+Armando H. Marroquin's free Truetype chess font named "Mérida". (More info on  merida see
+http://ixian.com/chess/#other it's available under the Creative Commons Attribution 4.0 International License
+and used unmodified by Lantern. https://creativecommons.org/licenses/by/4.0/
