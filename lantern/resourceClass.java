@@ -172,8 +172,10 @@ for(int b=0; b<maxPieces; b++)
 		numberPiecePaths[b]=8;
 	else if(b==12)
 		numberPiecePaths[b]=6;
-	else if(b==6 || b==7 || b == 13 || b== 14 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 23)
+	else if(b==7 || b == 13 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20)
 		numberPiecePaths[b]=15;
+    else if(b==6 || b == 14 || b==23)
+        numberPiecePaths[b]=17;
 	else if(b==21)
 		numberPiecePaths[b]=47;
     else if(b==22)
@@ -328,7 +330,7 @@ if(b==21)// ccube
         multiPiecePaths[b][40]=300;
 
     }
-if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20 || b == 23)// monge harlequin
+if(b==7 || b==13 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20)//  harlequin
 {
 	multiPiecePaths[b][0]=20;
 	multiPiecePaths[b][1]=24;
@@ -349,6 +351,29 @@ if(b==6 || b==7 || b==13 || b==14 || b == 15 || b == 16 || b == 17 || b == 18 ||
 
 
 }
+    if(b==6 || b==14 || b == 23)// monge harlequin
+    {
+        multiPiecePaths[b][0]=20;
+        multiPiecePaths[b][1]=24;
+        multiPiecePaths[b][2]=28;
+        multiPiecePaths[b][3]=32;
+        multiPiecePaths[b][4]=36;
+        multiPiecePaths[b][5]=42;
+        multiPiecePaths[b][6]=48;
+        multiPiecePaths[b][7]=54;
+        multiPiecePaths[b][8]=60;
+        multiPiecePaths[b][9]=68;
+        multiPiecePaths[b][10]=76;
+        multiPiecePaths[b][11]=84;
+        multiPiecePaths[b][12]=92;
+        multiPiecePaths[b][13]=102;
+        multiPiecePaths[b][14]=112;
+        multiPiecePaths[b][15]=122;
+        multiPiecePaths[b][16]=132;
+        // we didnt load two largest sizes to conserve disk space
+        
+        
+    }
 
 if(b == 0 || b == 1 || b == 2 || b == 3)
 {
