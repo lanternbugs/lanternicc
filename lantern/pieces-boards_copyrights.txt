@@ -27,9 +27,9 @@ the Wood-4 and Wood-5 boards are from Stockfish also GPL
 The liebeskind, molten, moltengood, moltenevil pieces were made by moltenthinker for Lantern. He asked me to put them in teh program. 
 
 note March 8th 2017:
-Lantern use Eric De Mund's adaptation of the Merida chess pieces. "merida" refers to Armando H. Marroquin's
-free Truetype chess font named "Mérida". (More info on  merida see http://ixian.com/chess/#other
-it's available under the Creative Commons Attribution-Share Alike 3.0 Unported License
-and used unmodified by Lantern
+Lantern use Eric De Mund's adaptation of the Merida chess pieces(merida.ead-01). "merida" refers to
+Armando H. Marroquin's free Truetype chess font named "Mérida". (More info on  merida see
+http://ixian.com/chess/#other it's available under the Creative Commons Attribution 4.0 International License
+and used unmodified by Lantern. https://creativecommons.org/licenses/by/4.0/
 
 Mike Adams
