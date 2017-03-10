@@ -487,3 +487,55 @@ SequentialGroup v1 = layout.createSequentialGroup();
 }// end set layout
 }
 }
+
+
+/*
+ 
+ Script used to populate new openingbook (lanternopeninbook19.db) from old(18).
+ 
+ System.out.println("finding tables");
+ rs = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table'");
+ System.out.println("found ");
+ while(rs.next())
+ {
+ 
+ System.out.println("table is " +  rs.getString("TABLE_NAME"));
+ }
+ */
+/*
+ Statement statement2 = connection2.createStatement();
+ statement2.setQueryTimeout(30);  // set timeout to 30 sec.
+ 
+ statement2.executeUpdate("drop table if exists bookmoves");
+ statement2.executeUpdate("CREATE TABLE IF NOT EXISTS bookmoves (HASH TEXT, MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)");
+ 
+ 
+ 
+ DatabaseMetaData md = connection.getMetaData();
+ ResultSet rsM = md.getTables(null, null, "%", null);
+ while (rsM.next()) {
+ System.out.printf("table name: %s%n", rsM.getString("TABLE_NAME"));
+ ResultSet rs = statement.executeQuery("select * from " + rsM.getString("TABLE_NAME") + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+ while(rs.next())
+ {
+ 
+ 
+ DatabaseAMove move = new DatabaseAMove();
+ move.move = rs.getString("move");
+ 
+ move.movefrom = rs.getInt( "movefrom");
+ move.moveto = rs.getInt("moveto");
+ 
+ move.win = rs.getInt("win");
+ 
+ move.draw = rs.getInt("draw");
+ 
+ move.loss = rs.getInt("loss");
+ System.out.println(move.move + " " + move.movefrom + " " + move.moveto +  " " + move.win + " " + move.draw + " " + move.loss);
+ statement2.executeUpdate("insert into bookmoves values('" + rsM.getString("TABLE_NAME") + "', " + move.movefrom + ", " + move.moveto + ", '" + move.move + "', " +  move.win + ", " + move.loss + ", " + move.draw + ")");
+ }
+ 
+ 
+ }
+ System.out.println("done");
+ */
