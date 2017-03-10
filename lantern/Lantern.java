@@ -1264,6 +1264,7 @@ class mymultiframe extends JFrame
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     // .. / (separator)
+    JMenuItem mediocreanalysis = new JMenuItem("Analyze with Mediocre Chess v0.5");
     JMenuItem helpanalysis = new JMenuItem("Engine Analysis Help");
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
     JMenuItem winanalysis = new JMenuItem("Load Winboard Engine");
@@ -1390,6 +1391,7 @@ class mymultiframe extends JFrame
     optionsmenu.add(openingbookitem);
     // .. /
     optionsmenu.addSeparator();
+    optionsmenu.add(mediocreanalysis);
     optionsmenu.add(helpanalysis);
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
@@ -1493,6 +1495,7 @@ class mymultiframe extends JFrame
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
     ucimultiplethree.addActionListener(this);
+    mediocreanalysis.addActionListener(this);
     helpanalysis.addActionListener(this);
     ucianalysis.addActionListener(this);
     winanalysis.addActionListener(this);
@@ -2409,7 +2412,28 @@ myboardappearancemenu.add(consoleaspect);
 
       // Andrey edits:
       // merge the responses for loading engines
-    } else if (action.equals("Load Winboard Engine") ||
+    }
+    else if(action.equals("Analyze with Mediocre Chess v0.5"))
+    {
+       if (sharedVariables.engineOn) {
+         return;
+       }
+        boolean installed = false;
+        File f = new File(sharedVariables.mediocreEngineName);
+        if(f.exists() && !f.isDirectory()) {
+            installed = true;
+        }
+        if(!installed) {
+           InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.mediocreChess5);
+        }
+        else {
+            sharedVariables.uci = true;
+            sharedVariables.engineFile =  f;
+            startTheEngine();
+ 
+        }
+    }
+     else if (action.equals("Load Winboard Engine") ||
                action.equals("Load UCI Engine")) {
       boolean go = false;
       if (!sharedVariables.engineOn) {
@@ -4144,7 +4168,7 @@ dot.setVisible(true);
          installed = true;
         }
        if(!installed) {
-        InstallBookDialog myDialog = new InstallBookDialog(this);
+        InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18);
        }
         else if(sharedVariables.myOpeningBookView == null) {
             sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue);
@@ -4883,6 +4907,7 @@ dot.setVisible(true);
   public void windowClosed(WindowEvent e) {
 
     //if(sharedVariables.engineOn == true)
+    sendToEngine("stop\n");
     sendToEngine("exit\n");
     sendToEngine("quit\n");
   }
@@ -4897,6 +4922,7 @@ dot.setVisible(true);
 
   public void windowClosing(WindowEvent e) {
     //if(sharedVariables.engineOn == true)
+    sendToEngine("stop\n");
     sendToEngine("exit\n");
     sendToEngine("quit\n");
     if (!sharedVariables.standAlone) {

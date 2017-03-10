@@ -161,7 +161,14 @@ try {
 			 		Runtime rt;
 			 		rt = Runtime.getRuntime();
 			 	//sharedVariables.engine = rt.exec(file.toString());
-			 	engine = rt.exec(sharedVariables.engineFile.toString());
+			 	if(sharedVariables.engineFile.toString().endsWith(".jar")) {
+                                      String fileToOpen = "java -jar " + sharedVariables.engineFile.toString();
+                                      engine = rt.exec(fileToOpen);
+                                 }
+                                 else {
+                                   engine = rt.exec(sharedVariables.engineFile.toString());
+                                 }
+
 
 			 	sharedVariables.engineOn = true;
 try {
@@ -453,7 +460,9 @@ while(tosend!=null)
 finalStuff=tosend.data;
 
 	if(tosend.data.contains("quit"))
-	{
+	{               if(sharedVariables.engineFile.toString().endsWith(".jar")) {
+                        sendToEngine("stop\n");
+                        }
 			sendToEngine(finalStuff);
 			finalStuff="";
 			go=0;

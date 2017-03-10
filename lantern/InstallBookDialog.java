@@ -49,12 +49,17 @@ class InstallBookDialog  extends JDialog
   JButton installContinue = new JButton("Continue");
   JButton installCancel = new JButton("Cancel");
   JButton installOk = new JButton("Ok");
+  static int openingBook18 = 1;
+  static int mediocreChess5 = 2;
+  boolean installEngine = false;
 
-
-
-    InstallBookDialog(JFrame frame) {
+    InstallBookDialog(JFrame frame, int type) {
       super(frame, "Extract Opening Book", true);
       setSize(250,200);
+      if(type == mediocreChess5) {
+       installEngine = true;
+       setTitle("Extract Mediocre Chess Engine");
+      }
        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 
@@ -67,20 +72,44 @@ class InstallBookDialog  extends JDialog
             try
                 {
                   installContinue.setEnabled(false);
-                File file = new File(channels.openingBookName);
-                setPaneText("Installing Book");
+                File file;
+                if(installEngine) {
+                    file = new File(channels.mediocreEngineName);
+                  } else {
+                    file = new File(channels.openingBookName);
+                  }
+                if(installEngine) {
+                     setPaneText("Installing Mediocre Chess");
+                  } else { 
+                    setPaneText("Installing Book");
+                  }
                 if (!file.exists() && !file.isDirectory()) {
                     System.out.println("trying to copy");
-                    InputStream link = (getClass().getResourceAsStream("/" + channels.openingBookName));
+                    InputStream link;
+                    
+                    if(installEngine) {
+                        link = (getClass().getResourceAsStream("/engines/" + channels.mediocreEngineName));
+                      } else {
+                        link = (getClass().getResourceAsStream("/" + channels.openingBookName));
+                      }
                     //Files.copy(link, file.getAbsoluteFile().toPath());
                     copyInputStreamToFile( link,  file );
                     System.out.println("done copy");
-                    setPaneText("Opening book succesfully installed.  Go to Options / Opening Book again to open it.");
+                    if(installEngine) {
+                      setPaneText("Mediocre Chess V0.5 succesfully installed.  Go to Options / Analyze With Mediocre Chess v0.5 again to open it.");
+                    } else {
+                      setPaneText("Opening book succesfully installed.  Go to Options / Opening Book again to open it.");
+                    }
+
                     changeButtonsVisiblity();
 
                 } else {
                     System.out.println("file exists");
+                    if(installEngine) {
+                    setPaneText("Medicore Chess allready exists");
+                    } else {
                     setPaneText("Opening book file allready exists");
+                    }
                     changeButtonsVisiblity();
                 }
                 } catch(Exception dui) {
@@ -119,6 +148,9 @@ class InstallBookDialog  extends JDialog
 
      textPane.setEditable(false);
      String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called " + channels.openingBookName + "  in the lantern folder with a size of 160 megs.";
+     if(installEngine) {
+        text = "To use the Medicore Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.mediocreEngineName + "  in the lantern folder with a size of less than a meg.";
+     }
      setPaneText(text);
 
       setVisible(true);
