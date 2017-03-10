@@ -2122,7 +2122,7 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 							processLink(doc, myinput, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
 							//writeToConsole(doc, 0);
 							if(myinput.startsWith("style set to 13."))
-							if(sharedVariables.myname.startsWith("guest"))
+							if(sharedVariables.isGuest())
 								 writeGuestLogin();
 						}
 

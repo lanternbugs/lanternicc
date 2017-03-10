@@ -1187,6 +1187,9 @@ adjustMoveList();
     void sendAction(String action) {
       String primary  = "primary " + sharedVariables.mygame
         [sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
+        if(sharedVariables.isGuest()) {
+        primary = "";
+        }
       if (sharedVariables.mygame
           [sharedVariables.gamelooking[gameData.BoardIndex]].state ==
           sharedVariables.STATE_OVER)

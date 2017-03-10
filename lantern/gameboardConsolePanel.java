@@ -1064,6 +1064,9 @@ int moveKeyType=e.getModifiersEx();
 	int index = prefixHandler.getSelectedIndex();
 	String pre="";
 	String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
+	if(sharedVariables.isGuest()) {
+          primary = "";
+        }
 	if(sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].state == sharedVariables.STATE_OVER)
 		primary = "";
 

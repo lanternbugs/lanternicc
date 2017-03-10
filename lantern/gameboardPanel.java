@@ -1214,7 +1214,9 @@ void repaintPiece()
               String arrowFrom = getSubMove(arrowSquare);
               String arrowTo = getSubMove(arrowToSquare);
               String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
-
+              if(sharedVariables.isGuest()) {
+               primary = "";
+              }
               String prefixcommand="";
              // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
             // this will get any text back from server to go to right console
@@ -1339,7 +1341,9 @@ void repaintPiece()
 						 // we need to make the board we are moving on primary first in case of a simul
 						 /************************** primary code ***********************************/
 						 String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
-
+                                                 if(sharedVariables.isGuest()) {
+                                                  primary = "";
+                                                  }
 						String prefixcommand="";
 						 // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
 						 // this will get any text back from server to go to right console
@@ -1490,6 +1494,9 @@ void repaintPiece()
 
                                           }// if not premoving
 					 String primary  = "primary " + sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].myGameNumber + "\n";
+					 if(sharedVariables.isGuest()) {
+                                         primary = "";
+                                         }
 					 String themove = primary  + getMove(-examinepiecemoving, piece);
 					 myoutput amove = new myoutput();
 					 amove.game=1;

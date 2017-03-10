@@ -362,11 +362,18 @@ preselectedBoards preselectBoards;
 
 Point webframePoint;
 JTextPane engineField = new JTextPane();
-
+boolean isGuest()
+{
+ for(int a = 0; a < 10; a++) {
+   if(myname.startsWith("guest" + a))
+    return true;
+ }
+ return false;
+}
 channels()
 {
 myServer = "ICC";
-version = "v5.80";
+version = "v5.81";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
