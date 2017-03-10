@@ -17,6 +17,10 @@ book and its licence is in licence-for-sqlite-jdbc-master.txt and the source cod
 in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org folder. 
  There is also a readme.txt I placed in the org folder with more info.  Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
 
+Note March 9th 2017 - there is now a 5th folder called engines in the jar that currently includes Mediocre Chess
+V0.5, a Java engine contained in a jar.  There is a medicore_readme.txt in the engines folder with info on 
+it's project page and how to get the source.
+
 To compiles lantern type javac lantern/*.java
 to run lantern type java lantern/Lantern      Lantern.java contains main.
 
