@@ -8,8 +8,8 @@ The lantern folder is all the java code we use and wrote that make up the client
 Compiling and running lantern is actualy very simple.  But to get a couple of packages we use that are not in this repo 
 as they are not our code though they are open source,  unzip a current lantern jar, found at lanternchess.com
 (you can change the file extension from jar to zip)
-and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. The layout folder contains an open source  layout known as grid layout, more on that further below.  Also get the opening book, lanternopeningbook18.db 
-which is referenced in code by the program.
+and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. The layout folder contains an open source  layout known as grid layout, more on that further below.  Also get the opening book, lanternopeningbook19.db 
+which is referenced  by the program.
 
 So you should have from this repo two directories, lantern and free and from the jar the org and layout
 directory and the book. The org folder contains the java sqlite driver used with the opening
@@ -19,14 +19,14 @@ in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org f
 
 Update - there is now a 5th folder called engines in the jar that currently includes Mediocre Chess
 V0.5, a Java engine contained in its own jar.  There is a mediocre_readme.txt in the engines folder with
-info on it's project page and how to get the source. It's GPL. While it's packaged in the jar, when it's
+info on its project page and how to get the source. It's GPL. While it's packaged in the jar, when it's
 time to use it, Lantern prompts the user to let it extract it to the Lantern folder and opens
 it like other engines and does not link to it in code. 
 
 To compiles lantern type javac lantern/*.java
 to run lantern type java lantern/Lantern      Lantern.java contains main.
 
-To jar lantern type jar -cvfm lantern###.jar lantern/manifest.txt lantern free layout org lanternopeningbook18.db
+To jar lantern type jar -cvfm lantern###.jar lantern/manifest.txt lantern free layout org engines lanternopeningbook19.db
 
 I compile lantern in java 6 for release.  I think right now in java 8 the channels.java file is erroring. I'll probably fix
 it but its simple to work around probably as it appears there is just some long string used by flags that has some illegal
@@ -34,8 +34,11 @@ characters.  You can just fix the string maybe  delete the parts that error and 
 channels.java class files out of the jar. When i edit lantern on java 8 i avoid javac lantern/*.java and just compile 
 my changes like javac lantern/Lantern.java etc. You can take all class files out of the jar if an issue and just compile changed files to avoid the channels situaton for now. The string in question is just used to find country names for flags. 
 
-The free folder files have to be compiled too or you can just get the class files out of the jar. We havent changed them i beleive.
-I havent compiled them in years, i get them out of the class file but its similar to compiling lantern ie. javac free/*.java etc 
+The free folder files have to be compiled too or you can just get the class files out of the jar. The free
+folder also contains timestammp which is only in the jar. Chessbot4.java's connect() method could also
+be altered to just make a regular socket without timestamp. We havent changed the free files i beleive.
+I havent compiled them in years, i get the class file from the free folder in the jar.
+But its similar to compiling lantern ie. javac free/*.java etc 
 but get all sub directories.  Package lantern only keeps code in the lantern directory not sub directories. 
 
 Now some info on some important files.
