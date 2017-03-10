@@ -147,7 +147,7 @@ class InstallBookDialog  extends JDialog
 
 
      textPane.setEditable(false);
-     String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called " + channels.openingBookName + "  in the lantern folder with a size of 160 megs.";
+     String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called " + channels.openingBookName + "  in the lantern folder with a size of 3 megs.";
      if(installEngine) {
         text = "To use the Medicore Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.mediocreEngineName + "  in the lantern folder with a size of less than a meg.";
      }

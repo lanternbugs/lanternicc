@@ -29,7 +29,8 @@ import java.util.*;
 import java.math.BigInteger;
 
 public class channels {
-  static String openingBookName = "lanternopeningbook18.db";
+  static String openingBookName = "lanternopeningbook19.db";
+  static String oldOpeningBookName = "lanternopeningbook18.db";
   static String mediocreEngineName = "mediocre_v0.5.jar";
 OpeningBookView myOpeningBookView;
 BigInteger cachedCurrentHash = new BigInteger("-1");
@@ -365,7 +366,7 @@ JTextPane engineField = new JTextPane();
 channels()
 {
 myServer = "ICC";
-version = "v5.79";
+version = "v5.80";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

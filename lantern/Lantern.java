@@ -4163,15 +4163,26 @@ dot.setVisible(true);
     } else if(action.equals("Opening Book")) {
       
         boolean installed = false;
+        boolean old = false;
         File f = new File(channels.openingBookName);
         if(f.exists() && !f.isDirectory()) {
          installed = true;
+         old = false;
         }
+        if(installed == false) {
+
+        f = new File(channels.oldOpeningBookName);
+        if(f.exists() && !f.isDirectory()) {
+         installed = true;
+         old = true;
+        }
+        }// installed false
+
        if(!installed) {
         InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18);
        }
         else if(sharedVariables.myOpeningBookView == null) {
-            sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue);
+            sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
 
         }
         else if(sharedVariables.myOpeningBookView.isVisible()) {

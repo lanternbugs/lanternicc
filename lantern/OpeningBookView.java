@@ -53,6 +53,7 @@ class OpeningBookView  extends JDialog
   JTextPane textPane = new JTextPane();
   JButton backward = new JButton("<");
   JButton forward = new JButton(">");
+  boolean oldBook = false;
 
   public static int choice = 0;
    private void copyInputStreamToFile( InputStream in, File file ) {
@@ -70,11 +71,12 @@ class OpeningBookView  extends JDialog
     }
 }
 
-    OpeningBookView(JFrame frame, ConcurrentLinkedQueue<myoutput> queue1) {
+    OpeningBookView(JFrame frame, ConcurrentLinkedQueue<myoutput> queue1, boolean old) {
       super(frame, "Opening Book", false);
       setSize(275,200);
        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
        queue = queue1;
+       oldBook = old;
        addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent we) {
 
@@ -155,7 +157,11 @@ class OpeningBookView  extends JDialog
             try
             {
                 // create a database connection
+                if(oldBook) {
+                  connection = DriverManager.getConnection("jdbc:sqlite:" + channels.oldOpeningBookName);
+                } else {
                 connection = DriverManager.getConnection("jdbc:sqlite:" + channels.openingBookName);
+                }
 
             }
             catch(SQLException e)
@@ -234,11 +240,21 @@ class OpeningBookView  extends JDialog
                choice++;
                // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
                 ResultSet rs;
-
+                if(oldBook) 
+                {
                 if(gamestate.hashMoveTop %2 == 0) {
                    rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
                 } else {
                   rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                }
+                
+                } // if oldbook
+                else {
+                  if(gamestate.hashMoveTop %2 == 0) {
+                     rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" +  gamestate.currentHash.toString()+ "'  ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                     } else {
+                     rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" +  gamestate.currentHash.toString()+ "'  ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                     }
                 }
                 if(gamestate.hashMoveTop > 6 && openingEco.length() > 0)
                     ;
