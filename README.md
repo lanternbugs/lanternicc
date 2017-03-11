@@ -8,8 +8,9 @@ The lantern folder is all the java code we use and wrote that make up the client
 Compiling and running lantern is actualy very simple.  But to get a couple of packages we use that are not in this repo 
 as they are not our code though they are open source,  unzip a current lantern jar, found at lanternchess.com
 (you can change the file extension from jar to zip)
-and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. The layout folder contains an open source  layout known as grid layout, more on that further below.  Also get the opening book, lanternopeningbook19.db 
-which is referenced  by the program.
+and get the layout and org folders. The package in the org folder is an sqlite driver from xerial.org. The layout folder contains an open source  layout known as grid layout, more on that further below.  Also get the opening book, lanternopeningbook19 which is referenced  by the program. Update there is now a second
+apache.commons 1.1 package in the org folder.  This is used for base64 encoding/decoding.  
+The source is on the Apache site if you google the package. 
 
 So you should have from this repo two directories, lantern and free and from the jar the org and layout
 directory and the book. The org folder contains the java sqlite driver used with the opening
