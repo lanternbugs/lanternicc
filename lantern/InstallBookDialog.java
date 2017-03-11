@@ -164,7 +164,7 @@ class InstallBookDialog  extends JDialog
       try {
         textPane.setText("");
       StyledDocument doc = textPane.getStyledDocument();
-      doc.insertString(doc.getEndPosition().getOffset(), text, null);
+      doc.insertString(doc.getLength(), text, null);
      }
      catch(Exception pane) {
 

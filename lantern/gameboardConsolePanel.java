@@ -182,7 +182,7 @@ public void makehappen(int i)
                               tryOnce = false;
                             try {
                               String promptText = "Click tab to toggle analysis back on\n";
-                              sharedVariables.mygamedocs[gameData.LookingAt].insertString(sharedVariables.mygamedocs[gameData.LookingAt].getEndPosition().getOffset(), promptText, null);
+                              sharedVariables.mygamedocs[gameData.LookingAt].insertString(sharedVariables.mygamedocs[gameData.LookingAt].getLength(), promptText, null);
                             }catch(Exception ee){}
                             }
                            }
@@ -1546,7 +1546,7 @@ else
 				else
 					doc=sharedVariables.mydocs[mainConsoleIndex]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
 
-	  			//doc.insertString(doc.getEndPosition().getOffset(), mes, null);
+	  			//doc.insertString(doc.getLength(), mes, null);
 
 
 

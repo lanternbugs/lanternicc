@@ -1050,7 +1050,7 @@ void dispatchCommand(String myurl)
 	try {
 	StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
 
-	doc.insertString(doc.getEndPosition().getOffset(), mycommand, null);
+	doc.insertString(doc.getLength(), mycommand, null);
 
 
 	for(int a=0; a<sharedVariables.maxConsoleTabs; a++)
@@ -1214,7 +1214,7 @@ void doToolBarCommand(int n)
                                        	else
                                              	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
 	try {
-		doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+		doc.insertString(doc.getLength(), mes, attrs);
 		}catch(Exception mydoc){}
 
 }
@@ -1640,7 +1640,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 					int SUBFRAME_CONSOLES=0;
 					int maxLinks =75;
 					myDocWriter.processLink(doc, mes, sharedVariables.typedColor, sharedVariables.looking[consoleNumber], maxLinks, SUBFRAME_CONSOLES, attrs, null);
-					//doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+					//doc.insertString(doc.getLength(), mes, attrs);
 
 					}
 
@@ -1648,7 +1648,7 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 	  			else
 	  			{
 					if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typed == true)
-						doc.insertString(doc.getEndPosition().getOffset(), "*******\n", null);
+						doc.insertString(doc.getLength(), "*******\n", null);
 					sharedVariables.password=0;
 				}
 

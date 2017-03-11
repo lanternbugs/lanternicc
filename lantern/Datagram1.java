@@ -54,7 +54,7 @@ try {
 		//newbox.append("trying to parse 2, p.length =" + p.length() + " p is: " + p + "\n");
 /*StyledDocument doc=consoles[0].getStyledDocument();
 						try {
-							doc.insertString(doc.getEndPosition().getOffset(), "trying to parse 2, p.length =" + p.length() + " p is: " + p + "\n", null);
+							doc.insertString(doc.getLength(), "trying to parse 2, p.length =" + p.length() + " p is: " + p + "\n", null);
 
 
 						consoles[0].setStyledDocument(doc);
@@ -158,7 +158,7 @@ catch(Exception dui){//writeToSubConsole(" datagram exception \n", sharedVariabl
 
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
-								doc.insertString(doc.getEndPosition().getOffset(), mydg + "\n", null);
+								doc.insertString(doc.getLength(), mydg + "\n", null);
 
 
 							consoles[0].setStyledDocument(doc);

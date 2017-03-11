@@ -1638,7 +1638,7 @@ class subframe extends JInternalFrame
       StyledDocument doc =
         sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
 
-      myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mycommand, null);
+      myDocWriter.patchedInsertString(doc, doc.getLength(), mycommand, null);
 
 
       for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
@@ -2098,7 +2098,7 @@ class subframe extends JInternalFrame
 	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
     try {
       myprintoutput printObj = new myprintoutput();
-      printObj.patchedInsertString(doc, doc.getEndPosition().getOffset(), mes, attrs);
+      printObj.patchedInsertString(doc, doc.getLength(), mes, attrs);
       sharedVariables.printQueue.add(printObj);
     } catch (Exception mydoc) {}
   }
@@ -2336,7 +2336,7 @@ class subframe extends JInternalFrame
       printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
                            maxLinks, SUBFRAME_CONSOLES, attrs, null);
       queue.add(printOut);
-      //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+      //doc.insertString(doc.getLength(), mes, attrs);
       
       //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
       //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
@@ -3020,7 +3020,7 @@ class subframe extends JInternalFrame
         printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
                              maxLinks, SUBFRAME_CONSOLES, attrs, null);
         queue.add(printOut);
-        //doc.insertString(doc.getEndPosition().getOffset(), mes, attrs);
+        //doc.insertString(doc.getLength(), mes, attrs);
 
         //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
         //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])

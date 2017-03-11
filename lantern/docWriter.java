@@ -168,7 +168,7 @@ if(myStyles!=null)
 else if(sharedVariables.leftTimestamp == true && hasTimestamp(thetell))
 	insertWithTimeColor(doc, thetell, attrs, col);
 else
-	patchedInsertString(doc, doc.getEndPosition().getOffset(), thetell, attrs);
+	patchedInsertString(doc, doc.getLength(), thetell, attrs);
 
 }
 else
@@ -180,7 +180,7 @@ if(attempt == 1)
 if(myStyles!=null)
 	insertWithStyles(doc, mine.text1, attrs, myStyles,mine.start1, mine.stop1, false);
 else
-patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text1, attrs);
+patchedInsertString(doc, doc.getLength(), mine.text1, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -196,7 +196,7 @@ attrs.addAttribute(javax.swing.text.html.HTML.Attribute.HREF, mine.text2);
 if(myStyles!=null)
 	insertWithStyles(doc, mine.text2, attrs, myStyles,mine.start2, mine.stop2, true);
 else
-patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text2, attrs);
+patchedInsertString(doc, doc.getLength(), mine.text2, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -213,7 +213,7 @@ if(myStyles!=null)
 	insertWithStyles(doc, mine.text3, attrs, myStyles,mine.start3, mine.stop3, false);
 else
 
-	patchedInsertString(doc, doc.getEndPosition().getOffset(), mine.text3, attrs);
+	patchedInsertString(doc, doc.getLength(), mine.text3, attrs);
 
 
 			doc.setParagraphAttributes(doc.getLength(), 1, style, false);
@@ -436,7 +436,7 @@ try {
 int index = thetell.indexOf(" ");
 if(index==-1)
 {
-patchedInsertString(doc, doc.getEndPosition().getOffset(), thetell, attrs);
+patchedInsertString(doc, doc.getLength(), thetell, attrs);
 }
 else
 {
@@ -445,9 +445,9 @@ StyleConstants.setForeground(attrs, sharedVariables.chatTimestampColor);
 String subtell1=thetell.substring(0, index);
 String subtell2=thetell.substring(index,thetell.length());
 
-	patchedInsertString(doc, doc.getEndPosition().getOffset(), subtell1, attrs);
+	patchedInsertString(doc, doc.getLength(), subtell1, attrs);
 StyleConstants.setForeground(attrs, col);
-	patchedInsertString(doc, doc.getEndPosition().getOffset(), subtell2, attrs);
+	patchedInsertString(doc, doc.getLength(), subtell2, attrs);
 
 }
 }
@@ -523,15 +523,15 @@ if(italic1 > -1 && italic2 > -1)
 {
 
 
-patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
+patchedInsertString(doc, doc.getLength(), myStrings[a].substring(dd, italic1), attrs);
 
-//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, italic1), attrs);
+//patchedInsertString(doc, doc.getLength(), myStrings[a].substring(dd, italic1), attrs);
 
 if(sharedVariables.italicsBehavior == 2)
 	StyleConstants.setForeground(attrs, myStyles.colors[a].brighter());
 if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, true);
-patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(italic1, italic2+1), attrs);
+patchedInsertString(doc, doc.getLength(), myStrings[a].substring(italic1, italic2+1), attrs);
 if(sharedVariables.italicsBehavior == 1)
 StyleConstants.setItalic(attrs, false);
 if(sharedVariables.italicsBehavior == 2)
@@ -546,9 +546,9 @@ fram.setSize(300,300);
 else
 {
  // insert end
-patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
+patchedInsertString(doc, doc.getLength(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
 
-//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
+//patchedInsertString(doc, doc.getLength(), myStrings[a].substring(dd, myStrings[a].length()), attrs);
 
  dd=-1;
 }
@@ -558,8 +558,8 @@ patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a].substrin
 
 }  // end if
 else
-//patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a], attrs);
-patchedInsertString(doc, doc.getEndPosition().getOffset(), myStrings[a], attrs);
+//patchedInsertString(doc, doc.getLength(), myStrings[a], attrs);
+patchedInsertString(doc, doc.getLength(), myStrings[a], attrs);
 
 }// if start > blocks[a]
 }//end for

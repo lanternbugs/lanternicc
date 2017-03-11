@@ -141,7 +141,7 @@ class OpeningBookView  extends JDialog
      try {
       StyledDocument doc = textPane.getStyledDocument();
       String text = "Opening moves show when examining and in book.  Try Game menu / Examine or Examine my Last Game";
-      doc.insertString(doc.getEndPosition().getOffset(), text, null);
+      doc.insertString(doc.getLength(), text, null);
      }
      catch(Exception pane) {
 
@@ -247,7 +247,7 @@ class OpeningBookView  extends JDialog
                 } else {
                   rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
                 }
-                
+
                 } // if oldbook
                 else {
                   if(gamestate.hashMoveTop %2 == 0) {
