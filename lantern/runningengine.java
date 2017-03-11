@@ -904,7 +904,7 @@ doc.remove(0, doc.getLength());
 for(int i=0; i < multiLines.size(); i++)
 {
 PrincipalVariation p = multiLines.get(i);
-String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi: " + p.multipv + "\n";
+String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
