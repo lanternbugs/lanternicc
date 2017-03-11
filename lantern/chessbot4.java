@@ -1112,7 +1112,12 @@ try {
         if(console.type == 6)
             return;
     }
-
+try {
+  if(thetell.startsWith("bell set to 0."))
+   if(sharedVariables.isGuest())
+	 writeGuestLogin();
+}
+catch(Exception guestIssue) { }
 int slashN1=thetell.indexOf("\n");
 int slashN2=-1;
 if(slashN1 > -1)
@@ -2108,6 +2113,7 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 //writeToConsole("got a starts with and lastMoveGame is " + lastMoveGame)
 
 						}
+
 						if(special == 0)
 						{
 
@@ -2121,9 +2127,7 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 							//doc.insertString(doc.getLength(), myinput, null);
 							processLink(doc, myinput, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
 							//writeToConsole(doc, 0);
-							if(myinput.startsWith("style set to 13."))
-							if(sharedVariables.isGuest())
-								 writeGuestLogin();
+
 						}
 
 					}// end try
@@ -2160,17 +2164,14 @@ void processLink2(StyledDocument doc, String thetell, Color col, int index, int 
 
 	void writeGuestLogin()
 	{
-		String s1= "Games guests can observe can be seen by typing ";
-		String s2= "\"games *-r-T-e\"\n";
+		String s1= "Guests can play unrated. Game menu - Seek a Game, to make an offer, or Windows menu / Seek Graph to accept one.\n";
+
 try{
 
 StyledDocument doc=sharedVariables.mydocs[0];// 0 for main console
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 StyleConstants.setForeground(attrs, sharedVariables.ForColor);
 doc.insertString(doc.getLength(), s1, attrs);
-StyleConstants.setUnderline(attrs, true);
-attrs.addAttribute(javax.swing.text.html.HTML.Attribute.HREF, "games *-r-T-e");
-myDocWriter.patchedInsertString(doc, doc.getLength(), s2, attrs);
 myDocWriter.writeToConsole(doc, 0);// o for main console
 }
 catch(Exception e)
@@ -2471,6 +2472,7 @@ if(dg.getArg(0).equals("27"))
                                 sendMessage("`u1`" + "multi =chan\n");
 		 sharedVariables.myname=dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
+
 
 		 try { myConnection.dispose(); } catch(Exception done){};
 	 	}

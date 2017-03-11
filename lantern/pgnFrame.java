@@ -124,7 +124,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 	void enterExamineMode(int row)
 	{
          
-         if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.myname.startsWith("guest"))
+         if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest())
          {
             String event = myLoader.games.get(row).event;
             if(event == null) 
