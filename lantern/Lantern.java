@@ -251,6 +251,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem leftNameTimestamp;
   JCheckBoxMenuItem reconnectTimestamp;
   JCheckBoxMenuItem qtellTimestamp;
+  JCheckBoxMenuItem timeStamp24hr;
   JCheckBoxMenuItem checkLegality;
   JCheckBoxMenuItem useTopGame;
   JCheckBoxMenuItem dontReuseGameTabs;
@@ -550,6 +551,7 @@ class mymultiframe extends JFrame
     channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
     qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
+    timeStamp24hr.       setSelected(sharedVariables.timeStamp24hr);
     reconnectTimestamp.  setSelected(sharedVariables.reconnectTimestamp);
 
     if (sharedVariables.andreysLayout >= 0 &&
@@ -1345,6 +1347,7 @@ class mymultiframe extends JFrame
     leftNameTimestamp = new JCheckBoxMenuItem("Timestamp To Left Of Name");
     qtellTimestamp = new JCheckBoxMenuItem("Timestamp Channel Qtells");
     reconnectTimestamp = new JCheckBoxMenuItem("Timestamp Connecting");
+    timeStamp24hr = new JCheckBoxMenuItem("Timestamp in 24hr format");
 
     // add shortcuts
     optionsmenu.setMnemonic(KeyEvent.VK_O);
@@ -1478,6 +1481,7 @@ class mymultiframe extends JFrame
     //chattimestamp.add(leftNameTimestamp); //disabling the option
     chattimestamp.add(qtellTimestamp);
     chattimestamp.add(reconnectTimestamp);
+    chattimestamp.add(timeStamp24hr);
 
     // special settings
     consolemenu.setSelected(true);
@@ -1549,6 +1553,7 @@ class mymultiframe extends JFrame
     //leftNameTimestamp.addActionListener(this);
     qtellTimestamp.addActionListener(this);
     reconnectTimestamp.addActionListener(this);
+    timeStamp24hr.addActionListener(this);
 
     /****************************** Windows ******************************/
     sharedVariables.myWindows = new JMenu("Windows");
@@ -4023,6 +4028,10 @@ dot.setVisible(true);
     } else if (action.equals("Timestamp Channel Qtells")) {
       sharedVariables.qtellTimestamp = !sharedVariables.qtellTimestamp;
       qtellTimestamp.setSelected(sharedVariables.qtellTimestamp);
+
+    } else if (action.equals("Timestamp in 24hr format")) {
+      sharedVariables.timeStamp24hr = !sharedVariables.timeStamp24hr;
+      timeStamp24hr.setSelected(sharedVariables.timeStamp24hr);
 
     } else if (action.equals("Timestamp Tells")) {
       sharedVariables.tellTimestamp = !sharedVariables.tellTimestamp;
