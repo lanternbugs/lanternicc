@@ -2429,6 +2429,26 @@ class subframe extends JInternalFrame
 
             //if (e.getModifiersEx() == 128)// ctrl + t
             if (gme == InputEvent.CTRL_DOWN_MASK) {
+              if (a == KeyEvent.VK_PAGE_DOWN) {
+                int con = sharedVariables.looking[consoleNumber] + 1;
+                if (con == sharedVariables.maxConsoleTabs)
+                  con = 0;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
+                }
+                makeHappen(con);
+              }
+              
+              //if (a == 37) {
+              if (a == KeyEvent.VK_PAGE_UP) {
+                int con = sharedVariables.looking[consoleNumber] - 1;
+                if (con == -1)
+                  con = sharedVariables.maxConsoleTabs - 1;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
+                }
+                makeHappen(con);
+              }
 
               //if (a == 70) {
               if (a == KeyEvent.VK_F) {
@@ -3440,7 +3460,6 @@ class subframe extends JInternalFrame
     } // end arrow manager
   }// end panel
 }// end subframe
-
 
 /*
 

@@ -1562,6 +1562,27 @@ Input.addKeyListener(new KeyListener() {public void keyPressed(KeyEvent e)
 
 
 	  }
+            if (e.getModifiersEx() == InputEvent.CTRL_DOWN_MASK) {
+              if (a == KeyEvent.VK_PAGE_DOWN) {
+                int con = sharedVariables.looking[consoleNumber] + 1;
+                if (con == sharedVariables.maxConsoleTabs)
+                  con = 0;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
+                }
+                makeHappen(con);
+              }
+
+              if (a == KeyEvent.VK_PAGE_UP) {
+                int con = sharedVariables.looking[consoleNumber] - 1;
+                if (con == -1)
+                  con = sharedVariables.maxConsoleTabs - 1;
+                if (sharedVariables.consolesTabLayout[consoleNumber] == 3) {
+                  tabChooser.setSelectedIndex(con);
+                }
+                makeHappen(con);
+              }
+            }
       if( e.getModifiersEx() == 64)
        {
          if(a == 39  ) // shift + right arrow
