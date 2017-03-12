@@ -7252,85 +7252,104 @@ void giveFocus(focusOwner mine)
 
 String getATimestamp()
 {
-String theTime="";
-try {
+    String theTime="";
+    try {
 
-Calendar Now=Calendar.getInstance();
-String hour= "" + Now.get(Now.HOUR);// was HOUR_OF_DAY for 24 hour time
-if(hour.equals("0"))
-hour = "12";
+        Calendar Now=Calendar.getInstance();
+        String hour;
 
-String minute="" + Now.get(Now.MINUTE);
-if(minute.length()==1)
-minute="0"+ minute;
+        if(sharedVariables.timeStamp24hr) {
+            hour= "" + Now.get(Now.HOUR_OF_DAY);
+            if(hour.length()==1)
+                hour = "0" + hour;
+        }
+        else {
+            hour= "" + Now.get(Now.HOUR);
+            if(hour.equals("0"))
+                hour = "12";
+        }
 
-String second="" + Now.get( Now.SECOND);
-if(second.length()==1)
-second="0"+ second;
+        String minute="" + Now.get(Now.MINUTE);
+        if(minute.length()==1)
+            minute="0"+ minute;
 
-theTime="(" + hour + ":" + minute + ":" + second + ")";
-if(sharedVariables.leftTimestamp == true)
-theTime=hour + ":" + minute + ":" + second + " ";
+        String second="" + Now.get( Now.SECOND);
+        if(second.length()==1)
+            second="0"+ second;
 
-}
-catch(Exception dumtime){}
+        if(sharedVariables.leftTimestamp == true)
+            theTime=hour + ":" + minute + ":" + second + " ";
+        else
+            theTime="(" + hour + ":" + minute + ":" + second + ")";
 
-return theTime;
+    }
+    catch(Exception dumtime){}
+
+    return theTime;
 }
 
 
 String getADatestamp()
 {
-String theTime="";
-try {
+    String theTime="";
+    try {
 
-Calendar Now=Calendar.getInstance();
-String hour= "" + Now.get(Now.HOUR);// was HOUR_OF_DAY for 24 hour time
-if(hour.equals("0"))
-hour = "12";
+        Calendar Now=Calendar.getInstance();
+        String hour;
 
-String minute="" + Now.get(Now.MINUTE);
-if(minute.length()==1)
-minute="0"+ minute;
+        if(sharedVariables.timeStamp24hr) {
+            hour= "" + Now.get(Now.HOUR_OF_DAY);
+            if(hour.length()==1)
+                hour = "0" + hour;
+        }
+        else {
+            hour= "" + Now.get(Now.HOUR);
+            if(hour.equals("0"))
+                hour = "12";
+        }
 
-String second="" + Now.get( Now.SECOND);
-if(second.length()==1)
-second="0"+ second;
-// day of week, am pm
-int dayNum = Now.get(Now.DAY_OF_WEEK);
-String weekday = "";
-if(dayNum == 1)
-weekday="Sunday";
-if(dayNum == 2)
-weekday="Monday";
-if(dayNum == 3)
-weekday="Tuesday";
-if(dayNum == 4)
-weekday="Wednesday";
-if(dayNum == 5)
-weekday="Thursday";
-if(dayNum == 6)
-weekday="Friday";
-if(dayNum == 7)
-weekday="Saturday";
+        String minute="" + Now.get(Now.MINUTE);
+        if(minute.length()==1)
+            minute="0"+ minute;
 
+        String second="" + Now.get( Now.SECOND);
+        if(second.length()==1)
+            second="0"+ second;
+        // day of week, am pm
+        int dayNum = Now.get(Now.DAY_OF_WEEK);
+        String weekday = "";
+        if(dayNum == 1)
+            weekday="Sunday";
+        if(dayNum == 2)
+            weekday="Monday";
+        if(dayNum == 3)
+            weekday="Tuesday";
+        if(dayNum == 4)
+            weekday="Wednesday";
+        if(dayNum == 5)
+            weekday="Thursday";
+        if(dayNum == 6)
+            weekday="Friday";
+        if(dayNum == 7)
+            weekday="Saturday";
 
+        String ampm = "" ;
+        
+        // 24 hours format doesn't have AM/PM
+        if(!sharedVariables.timeStamp24hr) {
+            int ampmNum = Now.get(Now.AM_PM);
+            if(ampmNum == 0)
+                ampm = "AM";
+            else
+                ampm = "PM";
+        }
 
+        theTime=weekday + " " + hour + ":" + minute + " " + ampm;
 
-int ampmNum = Now.get(Now.AM_PM);
-String ampm = "" ;
-if(ampmNum == 0)
-ampm = "AM";
-else
-ampm = "PM";
+    }
+    catch(Exception dumtime){}
 
-
-theTime=weekday + " " + hour + ":" + minute + " " + ampm;
-
-}
-catch(Exception dumtime){}
-
-return theTime;
+    return theTime;
 }
 
 void writeDateStamps()

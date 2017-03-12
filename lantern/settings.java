@@ -799,6 +799,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donetime-channel] ";
 
+// timestamp24hr
+	set_string = set_string + "[time-24hr] ";
+	if(sharedVariables.timeStamp24hr == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[donetime-24hr] ";
+
 // ecluded pieces
 for(int excl = 0; excl < sharedVariables.excludedPiecesWhite.length; excl++)
 {
@@ -2548,6 +2557,18 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+				if (temp.equals("[time-24hr]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.timeStamp24hr=true;
+					else
+						sharedVariables.timeStamp24hr=false;
+					}
+					catch(Exception zzz){}
+				}
+
 
 
 
