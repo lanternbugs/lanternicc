@@ -475,6 +475,15 @@ import layout.TableLayout;
               });
 
             menu2.add(item5);
+            
+            JMenuItem item55 = new JMenuItem("Assess  " + nameF);
+            item55.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Pstat " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item55);
 
             JMenuItem item56 = new JMenuItem("Vars  " + nameF);
             item56.addActionListener(new ActionListener() {
@@ -611,6 +620,15 @@ import layout.TableLayout;
               });
 
             menu2.add(item5);
+
+            JMenuItem item55 = new JMenuItem("Assess  " + nameF);
+            item55.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  sendCommand("Pstat " + nameF + "\n");
+                }
+              });
+
+            menu2.add(item55);
 
             JMenuItem item56 = new JMenuItem("Vars  " + nameF);
             item56.addActionListener(new ActionListener() {
