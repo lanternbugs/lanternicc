@@ -147,7 +147,9 @@ class DesEncrypter {
             byte[] enc = ecipher.doFinal(utf8);
 
             // Encode bytes to base64 to get a string
-            return new sun.misc.BASE64Encoder().encode(enc);
+           // return new sun.misc.BASE64Encoder().encode(enc);
+           return new String(org.apache.commons.codec.binary.Base64.encodeBase64(enc));
+
         } catch (javax.crypto.BadPaddingException e) {
         } catch (IllegalBlockSizeException e) {
         } catch (UnsupportedEncodingException e) {
@@ -159,8 +161,8 @@ class DesEncrypter {
    public String decrypt(String str) {
         try {
             // Decode base64 to get bytes
-            byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
-
+            //byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+            byte[] dec = org.apache.commons.codec.binary.Base64.decodeBase64(str);
             // Decrypt
             byte[] utf8 = dcipher.doFinal(dec);
 

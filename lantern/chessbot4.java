@@ -1112,7 +1112,12 @@ try {
         if(console.type == 6)
             return;
     }
-
+try {
+  if(thetell.startsWith("bell set to 0."))
+   if(sharedVariables.isGuest())
+	 writeGuestLogin();
+}
+catch(Exception guestIssue) { }
 int slashN1=thetell.indexOf("\n");
 int slashN2=-1;
 if(slashN1 > -1)
@@ -1564,7 +1569,7 @@ char c=(char) tempinput.read();
 						//newbox.setText(newbox.getText() + "found datagrame trying to parse\n");
 
 						//StyledDocument doc=newbox.getStyledDocument();
-						//doc.insertString(doc.getEndPosition().getOffset(), "found datagram trying to parse", null);
+						//doc.insertString(doc.getLength(), "found datagram trying to parse", null);
 						//newbox.setStyledDocument(doc);
 
 
@@ -1576,7 +1581,7 @@ char c=(char) tempinput.read();
 						//writedg("Datagram: type " + dg.type + " args " + dg.argc + " spot 0: " + dg.getArg(0));
 						//newbox.setText(newbox.getText() + "Datagram: type " + dg.type + " args " + dg.argc + " spot 0: " + dg.getArg(0) + "\n");
 						/*StyledDocument doc=consoles[0].getStyledDocument();
-						doc.insertString(doc.getEndPosition().getOffset(), "Datagram: type " + dg.type + " args " + dg.argc + " spot 0: " + dg.getArg(0) + "\n", null);
+						doc.insertString(doc.getLength(), "Datagram: type " + dg.type + " args " + dg.argc + " spot 0: " + dg.getArg(0) + "\n", null);
 						consoles[0].setStyledDocument(doc);
 						*/
 						processDatagram(dg,  new routing());
@@ -2076,7 +2081,7 @@ void normalLineProcessing(String myinput)
 								if(myinput.contains(")"))
 								{
 									StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[lastConsoleNumber]];
-									myDocWriter.patchedInsertString(doc,doc.getEndPosition().getOffset(), myinput, null);
+									myDocWriter.patchedInsertString(doc,doc.getLength(), myinput, null);
 									special=1;
 									myDocWriter.writeToConsole(doc, sharedVariables.looking[lastConsoleNumber]);
 
@@ -2108,6 +2113,7 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 //writeToConsole("got a starts with and lastMoveGame is " + lastMoveGame)
 
 						}
+
 						if(special == 0)
 						{
 
@@ -2118,12 +2124,10 @@ SimpleAttributeSet attrs = new SimpleAttributeSet();
 		StyleConstants.setBold(attrs, true);
 
 							StyledDocument doc=sharedVariables.mydocs[0];
-							//doc.insertString(doc.getEndPosition().getOffset(), myinput, null);
+							//doc.insertString(doc.getLength(), myinput, null);
 							processLink(doc, myinput, sharedVariables.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, null);
 							//writeToConsole(doc, 0);
-							if(myinput.startsWith("style set to 13."))
-							if(sharedVariables.isGuest())
-								 writeGuestLogin();
+
 						}
 
 					}// end try
@@ -2136,7 +2140,7 @@ void writedg(String mydg)
 
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
-								myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mydg + "\n", null);
+								myDocWriter.patchedInsertString(doc, doc.getLength(), mydg + "\n", null);
 
 
 							//consoles[0].setStyledDocument(doc);
@@ -2160,17 +2164,14 @@ void processLink2(StyledDocument doc, String thetell, Color col, int index, int 
 
 	void writeGuestLogin()
 	{
-		String s1= "Games guests can observe can be seen by typing ";
-		String s2= "\"games *-r-T-e\"\n";
+		String s1= "Guests can play unrated. Game menu - Seek a Game, to make an offer, or Windows menu / Seek Graph to accept one.\n";
+
 try{
 
 StyledDocument doc=sharedVariables.mydocs[0];// 0 for main console
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 StyleConstants.setForeground(attrs, sharedVariables.ForColor);
-doc.insertString(doc.getEndPosition().getOffset(), s1, attrs);
-StyleConstants.setUnderline(attrs, true);
-attrs.addAttribute(javax.swing.text.html.HTML.Attribute.HREF, "games *-r-T-e");
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), s2, attrs);
+doc.insertString(doc.getLength(), s1, attrs);
 myDocWriter.writeToConsole(doc, 0);// o for main console
 }
 catch(Exception e)
@@ -2471,6 +2472,7 @@ if(dg.getArg(0).equals("27"))
                                 sendMessage("`u1`" + "multi =chan\n");
 		 sharedVariables.myname=dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
+
 
 		 try { myConnection.dispose(); } catch(Exception done){};
 	 	}
@@ -3560,7 +3562,7 @@ if(chatTime2.length() > 0 && myStyles !=null )
 myStyles.colors[0]=sharedVariables.chatTimestampColor;
 
 }
-//doc.insertString(doc.getEndPosition().getOffset(), thetell, attrs);
+//doc.insertString(doc.getLength(), thetell, attrs);
 //writeToConsole(doc, cindex);
 
 String body = dg.getArg(4);
@@ -4706,7 +4708,7 @@ void writeToConsole(String s)
          /*
 	StyledDocument doc=consoles[0].getStyledDocument();
 							try {
-								doc.insertString(doc.getEndPosition().getOffset(), s + "\n", null);
+								doc.insertString(doc.getLength(), s + "\n", null);
 
 
 							consoles[0].setStyledDocument(doc);
@@ -4727,9 +4729,9 @@ void writeToSubConsole(String s, int n)
                                                                 StyleConstants.setForeground(attrs, mycolor);
 
 
-                                                        myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), s, attrs);
+                                                        myDocWriter.patchedInsertString(doc, doc.getLength(), s, attrs);
 
-                                                        	//doc.insertString(doc.getEndPosition().getOffset(), s, null);
+                                                        	//doc.insertString(doc.getLength(), s, null);
 
 
 							consoles[n].setStyledDocument(doc);
@@ -4772,7 +4774,7 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 	else
 		StyleConstants.setForeground(attrs, sharedVariables.tabStuff[z].ForColor);
 
-		myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), theNotifyTell, attrs);
+		myDocWriter.patchedInsertString(doc, doc.getLength(), theNotifyTell, attrs);
 
 } // end try
 catch(Exception dui){}
@@ -4982,20 +4984,20 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 if(z == 0 && goTab == false)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-myDocWriter.patchedInsertString(doc,doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc,doc.getLength(), chatTime2, attrs);
 break;
 }
 else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc, doc.getLength(), chatTime2, attrs);
 
 
 }
 else if(cindex2[z]==1)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), chatTime2, attrs);
+myDocWriter.patchedInsertString(doc, doc.getLength(), chatTime2, attrs);
 } // end else
 } // end for
 
@@ -5017,18 +5019,18 @@ for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
 if(z == 0 && goTab == false)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
+myDocWriter.patchedInsertString(doc, doc.getLength(), mess, attrs);
 break;
 }
 else if(z == 0 && sharedVariables.notifyMainAlso == true && sharedVariables.mainAlso[tempInt] == true)
 {
 StyledDocument doc = sharedVariables.mydocs[z];
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
+myDocWriter.patchedInsertString(doc, doc.getLength(), mess, attrs);
 }
 else if(cindex2[z]==1)
 	{
 	StyledDocument doc = sharedVariables.mydocs[z];
-	myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), mess, attrs);
+	myDocWriter.patchedInsertString(doc, doc.getLength(), mess, attrs);
 
 	}
 }
@@ -7250,85 +7252,104 @@ void giveFocus(focusOwner mine)
 
 String getATimestamp()
 {
-String theTime="";
-try {
+    String theTime="";
+    try {
 
-Calendar Now=Calendar.getInstance();
-String hour= "" + Now.get(Now.HOUR);// was HOUR_OF_DAY for 24 hour time
-if(hour.equals("0"))
-hour = "12";
+        Calendar Now=Calendar.getInstance();
+        String hour;
 
-String minute="" + Now.get(Now.MINUTE);
-if(minute.length()==1)
-minute="0"+ minute;
+        if(sharedVariables.timeStamp24hr) {
+            hour= "" + Now.get(Now.HOUR_OF_DAY);
+            if(hour.length()==1)
+                hour = "0" + hour;
+        }
+        else {
+            hour= "" + Now.get(Now.HOUR);
+            if(hour.equals("0"))
+                hour = "12";
+        }
 
-String second="" + Now.get( Now.SECOND);
-if(second.length()==1)
-second="0"+ second;
+        String minute="" + Now.get(Now.MINUTE);
+        if(minute.length()==1)
+            minute="0"+ minute;
 
-theTime="(" + hour + ":" + minute + ":" + second + ")";
-if(sharedVariables.leftTimestamp == true)
-theTime=hour + ":" + minute + ":" + second + " ";
+        String second="" + Now.get( Now.SECOND);
+        if(second.length()==1)
+            second="0"+ second;
 
-}
-catch(Exception dumtime){}
+        if(sharedVariables.leftTimestamp == true)
+            theTime=hour + ":" + minute + ":" + second + " ";
+        else
+            theTime="(" + hour + ":" + minute + ":" + second + ")";
 
-return theTime;
+    }
+    catch(Exception dumtime){}
+
+    return theTime;
 }
 
 
 String getADatestamp()
 {
-String theTime="";
-try {
+    String theTime="";
+    try {
 
-Calendar Now=Calendar.getInstance();
-String hour= "" + Now.get(Now.HOUR);// was HOUR_OF_DAY for 24 hour time
-if(hour.equals("0"))
-hour = "12";
+        Calendar Now=Calendar.getInstance();
+        String hour;
 
-String minute="" + Now.get(Now.MINUTE);
-if(minute.length()==1)
-minute="0"+ minute;
+        if(sharedVariables.timeStamp24hr) {
+            hour= "" + Now.get(Now.HOUR_OF_DAY);
+            if(hour.length()==1)
+                hour = "0" + hour;
+        }
+        else {
+            hour= "" + Now.get(Now.HOUR);
+            if(hour.equals("0"))
+                hour = "12";
+        }
 
-String second="" + Now.get( Now.SECOND);
-if(second.length()==1)
-second="0"+ second;
-// day of week, am pm
-int dayNum = Now.get(Now.DAY_OF_WEEK);
-String weekday = "";
-if(dayNum == 1)
-weekday="Sunday";
-if(dayNum == 2)
-weekday="Monday";
-if(dayNum == 3)
-weekday="Tuesday";
-if(dayNum == 4)
-weekday="Wednesday";
-if(dayNum == 5)
-weekday="Thursday";
-if(dayNum == 6)
-weekday="Friday";
-if(dayNum == 7)
-weekday="Saturday";
+        String minute="" + Now.get(Now.MINUTE);
+        if(minute.length()==1)
+            minute="0"+ minute;
 
+        String second="" + Now.get( Now.SECOND);
+        if(second.length()==1)
+            second="0"+ second;
+        // day of week, am pm
+        int dayNum = Now.get(Now.DAY_OF_WEEK);
+        String weekday = "";
+        if(dayNum == 1)
+            weekday="Sunday";
+        if(dayNum == 2)
+            weekday="Monday";
+        if(dayNum == 3)
+            weekday="Tuesday";
+        if(dayNum == 4)
+            weekday="Wednesday";
+        if(dayNum == 5)
+            weekday="Thursday";
+        if(dayNum == 6)
+            weekday="Friday";
+        if(dayNum == 7)
+            weekday="Saturday";
 
+        String ampm = "" ;
+        
+        // 24 hours format doesn't have AM/PM
+        if(!sharedVariables.timeStamp24hr) {
+            int ampmNum = Now.get(Now.AM_PM);
+            if(ampmNum == 0)
+                ampm = "AM";
+            else
+                ampm = "PM";
+        }
 
+        theTime=weekday + " " + hour + ":" + minute + " " + ampm;
 
-int ampmNum = Now.get(Now.AM_PM);
-String ampm = "" ;
-if(ampmNum == 0)
-ampm = "AM";
-else
-ampm = "PM";
+    }
+    catch(Exception dumtime){}
 
-
-theTime=weekday + " " + hour + ":" + minute + " " + ampm;
-
-}
-catch(Exception dumtime){}
-
-return theTime;
+    return theTime;
 }
 
 void writeDateStamps()
@@ -7341,7 +7362,7 @@ StyledDocument doc=sharedVariables.mydocs[mydocs];
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 
 StyleConstants.setForeground(attrs, sharedVariables.chatTimestampColor);
-myDocWriter.patchedInsertString(doc, doc.getEndPosition().getOffset(), dateStamp, attrs);
+myDocWriter.patchedInsertString(doc, doc.getLength(), dateStamp, attrs);
 }// end for
 }// end try
 catch(Exception badWrite){}

@@ -125,6 +125,7 @@ boolean tellTimestamp;
 boolean leftTimestamp;
 boolean reconnectTimestamp;
 boolean qtellTimestamp;
+boolean timeStamp24hr;
 boolean channelNumberLeft;
 boolean checkLegality;
 boolean compactNameList=false;
@@ -373,7 +374,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v5.81";
+version = "v5.82a";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -519,6 +520,7 @@ reconnectTimestamp=true;
 shoutTimestamp=true;
 channelTimestamp=true;
 qtellTimestamp=true;
+timeStamp24hr = false;
 channelNumberLeft=true;
 checkLegality=true;
 autoPromote = true;
@@ -878,6 +880,7 @@ void setupMenu()
 	rightClickMenu.add("Challenge");
 	rightClickMenu.add("Ping");
 	rightClickMenu.add("Pstat");
+        rightClickMenu.add("Assess");
 	rightClickMenu.add("Games");
 	rightClickMenu.add("Hyperlink");
 	rightClickMenu.add("Quarantine");

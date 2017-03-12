@@ -292,7 +292,7 @@ try {
 //StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
  StyledDocument doc = sharedVariables.engineDoc;
 
-doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
+doc.insertString(doc.getLength(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
@@ -630,7 +630,7 @@ try {
 //StyledDocument doc = sharedVariables.mygamedocs[BoardIndex];
  StyledDocument doc = sharedVariables.engineDoc;
 
-doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
+doc.insertString(doc.getLength(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
@@ -706,8 +706,8 @@ lastWinboardLine = winboardLine;
 StyledDocument doc = sharedVariables.engineDoc;
 
 doc.remove(0, doc.getLength());
-//doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
-doc.insertString(doc.getEndPosition().getOffset(), winboardLine, null);
+//doc.insertString(doc.getLength(), text + "\n", null);
+doc.insertString(doc.getLength(), winboardLine, null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
@@ -734,7 +734,7 @@ try {
   StyledDocument doc = sharedVariables.engineDoc;
 doc.remove(0, doc.getLength());
  // doc.remove(0,doc.toString().length());
-doc.insertString(doc.getEndPosition().getOffset(), text + "\n", null);
+doc.insertString(doc.getLength(), text + "\n", null);
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
 {
@@ -904,14 +904,14 @@ doc.remove(0, doc.getLength());
 for(int i=0; i < multiLines.size(); i++)
 {
 PrincipalVariation p = multiLines.get(i);
-String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi: " + p.multipv + "\n";
+String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
 }
 String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);
-doc.insertString(doc.getEndPosition().getOffset(), line1 + line2, null);
+doc.insertString(doc.getLength(), line1 + line2, null);
 }
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
