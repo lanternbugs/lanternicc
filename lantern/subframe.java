@@ -3440,3 +3440,52 @@ class subframe extends JInternalFrame
     } // end arrow manager
   }// end panel
 }// end subframe
+
+
+/*
+
+possible code to use to fix console not scrolling to bottom with new java 9 code
+
+
+ sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+ public void adjustmentValueChanged(AdjustmentEvent e) {
+ if (wheelIsScrolling) {
+ wheelIsScrolling = false;
+ return;
+ }
+ 
+ JScrollBar scrollBar = (JScrollBar) e.getSource();
+ BoundedRangeModel listModel = scrollBar.getModel();
+ int value = listModel.getValue();
+ int extent = listModel.getExtent();
+ int maximum = listModel.getMaximum();
+ if (scrollnow == 1 &&
+ !sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting()) {
+ // e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+ // end if not adjusting
+ value = maximum - extent;
+ scrollBar.setValue(value - consoles[consoleNumber].getFont().getSize());
+ } else {
+ if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
+ scrollnow = 0;
+ 
+ int d = consoles[consoleNumber].getScrollableBlockIncrement(consoles[consoleNumber].getVisibleRect(),
+ SwingConstants.VERTICAL, -1);
+ int myvalue = 60 + d;
+ try {
+ if (sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValue() + myvalue >
+ sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getMaximum())
+ scrollnow = 1;
+ 
+ if (scrollnow == 1 &&
+ !sharedVariables.ConsoleScrollPane[consoleNumber].getVerticalScrollBar().getValueIsAdjusting())
+ e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+ // value = maximum - extent;
+ //scrollBar.setValue(value - consoles[consoleNumber].getFont().getSize());
+ // end try
+ } catch (Exception e1) {}
+ }// end else
+ }// end  is adjustment value changed
+ });// end adjustment class
+
+*/
