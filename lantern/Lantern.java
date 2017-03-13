@@ -1347,7 +1347,7 @@ class mymultiframe extends JFrame
     leftNameTimestamp = new JCheckBoxMenuItem("Timestamp To Left Of Name");
     qtellTimestamp = new JCheckBoxMenuItem("Timestamp Channel Qtells");
     reconnectTimestamp = new JCheckBoxMenuItem("Timestamp Connecting");
-    timeStamp24hr = new JCheckBoxMenuItem("Timestamp in 24hr format");
+    timeStamp24hr = new JCheckBoxMenuItem("Timestamp in 24hr Format");
 
     // add shortcuts
     optionsmenu.setMnemonic(KeyEvent.VK_O);
@@ -4038,7 +4038,7 @@ dot.setVisible(true);
       sharedVariables.qtellTimestamp = !sharedVariables.qtellTimestamp;
       qtellTimestamp.setSelected(sharedVariables.qtellTimestamp);
 
-    } else if (action.equals("Timestamp in 24hr format")) {
+    } else if (action.equals("Timestamp in 24hr Format")) {
       sharedVariables.timeStamp24hr = !sharedVariables.timeStamp24hr;
       timeStamp24hr.setSelected(sharedVariables.timeStamp24hr);
 

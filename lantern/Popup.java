@@ -98,10 +98,14 @@ field.setFont(sharedVariables.myFont);
 
 field.setLineWrap(true);
 field.setWrapStyleWord(true);
-JScrollPane myscroller = new JScrollPane(field);
+final JScrollPane myscroller = new JScrollPane(field);
 //pane2.add(field);
 JButton button = new JButton("Ok");
-
+javax.swing.SwingUtilities.invokeLater(new Runnable() {
+   public void run() { 
+       myscroller.getVerticalScrollBar().setValue(0);
+   }
+});
 
 
 	button.addActionListener(new ActionListener() {

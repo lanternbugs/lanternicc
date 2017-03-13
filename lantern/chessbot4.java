@@ -1117,7 +1117,7 @@ try {
  {
   try {
     Popup mypopper = new Popup(masterFrame, false, thetell, sharedVariables);
-      mypopper.setSize(400,175);
+      mypopper.setSize(550,175);
       mypopper.setVisible(true);
       return;
   }
