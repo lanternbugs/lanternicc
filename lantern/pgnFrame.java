@@ -111,7 +111,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
           String text = myLoader.games.get(row).gameData;
            Color dataBackground = new Color(235,235,235);
 
-          Popup dataPopup = new Popup((JFrame) getDesktopPane().getTopLevelAncestor()  , false, text);
+          Popup dataPopup = new Popup((JFrame) getDesktopPane().getTopLevelAncestor()  , false, text, sharedVariables);
           dataPopup.setSize(650,500);
           dataPopup.field.setFont(sharedVariables.myFont);
           dataPopup.field.setBackground(dataBackground);

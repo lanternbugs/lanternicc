@@ -102,7 +102,7 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			{
 					String swarning = "Could not read your list of channels to create console. If any channel selection was valid a console will be made. Otherwise please try again. It needs to be a space seperated list with valid channel numbers. i.e. 2 3 100";
 
-					Popup pop=new Popup(frame2, true, swarning);
+					Popup pop=new Popup(frame2, true, swarning, sharedVariables);
 					pop.setVisible(true);
 			}
 			finally{

@@ -294,7 +294,7 @@ formulaLabel = new JLabel("formula");
 
 			         void showErrorMessage(String mess)
 			         {
-			          Popup mywarning = new Popup(frame, true, mess);
+			          Popup mywarning = new Popup(frame, true, mess, sharedVariables);
 			          mywarning.setVisible(true);
 			         }
 

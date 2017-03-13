@@ -42,16 +42,16 @@ class Popup extends JDialog
 {
 JTextArea field;
 String warning1;
-
+channels sharedVariables;
 void setWarning(String s)
 {
 	warning1=s;
 }
 
-Popup(JFrame frame, boolean mybool, String warning)
+Popup(JFrame frame, boolean mybool, String warning, channels sharedVariables1)
 {
 super(frame, mybool);
-
+sharedVariables = sharedVariables1;
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 //	JPanel pane = new JPanel();
@@ -94,6 +94,7 @@ Color backcol= new Color(0,0,0);
 Color forcol = new Color(255,255,255);
 field.setBackground(backcol);
 field.setForeground(forcol);
+field.setFont(sharedVariables.myFont);
 
 field.setLineWrap(true);
 field.setWrapStyleWord(true);

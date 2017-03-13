@@ -2732,7 +2732,7 @@ else if (action.equals("Three Lines")) {
     mess+=verticalList.get(v);
 
   }// if vertical list size
-      Popup mypopper = new Popup(this, false, mess);
+      Popup mypopper = new Popup(this, false, mess, sharedVariables);
       mypopper.setSize(600,500);
       mypopper.setVisible(true);
 
@@ -2740,7 +2740,7 @@ else if (action.equals("Three Lines")) {
 
       String mess = sharedVariables.getChannelNotifyOnline();
       mess += sharedVariables.getConnectNotifyOnline();
-      Popup mypopper = new Popup(this, false, mess);
+      Popup mypopper = new Popup(this, false, mess, sharedVariables);
       mypopper.setSize(600,500);
       mypopper.setVisible(true);
 
@@ -2767,7 +2767,7 @@ else if (action.equals("Three Lines")) {
         mymap+="\n";
       }
 
-      Popup mypopper = new Popup(this, false, mymap);
+      Popup mypopper = new Popup(this, false, mymap, sharedVariables);
       mypopper.setSize(600,500);
       mypopper.setVisible(true);
 
@@ -2785,7 +2785,7 @@ else if (action.equals("Three Lines")) {
           "gameendwin, gameenddraw, gameendloss.  format is type in main" +
           " console +alias   then the alias name, then the command which" +
           " should start with 'say' to speak to your opponent\n";
-        Popup mypopper = new Popup(this, false, mes1 + mes2 + mes3);
+        Popup mypopper = new Popup(this, false, mes1 + mes2 + mes3, sharedVariables);
         mypopper.setSize(600,500);
         mypopper.setVisible(true);
       }
@@ -2804,7 +2804,7 @@ else if (action.equals("Three Lines")) {
           String mes="lantern_away.txt not found or has nothing in it.  " +
             "Create a file called lantern_away.txt and put away messages " +
             "in it till you run out of ideas, then reselect this option";
-          Popup mypopper = new Popup(this, false, mes);
+          Popup mypopper = new Popup(this, false, mes, sharedVariables);
           mypopper.setVisible(true);
           rotateaways.setSelected(false);
         }// else size not > 0
@@ -2821,7 +2821,7 @@ else if (action.equals("Three Lines")) {
         "forward 1, at a set interval with delay set by the user between " +
         "moves.\n\nFor example go to the Actions menu and choose Examine My " +
         "Last game, then to to Start Examine Game Replay.";
-      Popup mypopper = new Popup(this, false, mes);
+      Popup mypopper = new Popup(this, false, mes, sharedVariables);
       mypopper.setSize(300,350);
       mypopper.setVisible(true);
 
@@ -2962,7 +2962,7 @@ dot.setVisible(true);
       if (hasfocus == -1) {
         String swarning = "First click or select a console window, " +
           "and change tab to one to customize.";
-        Popup pframe = new Popup((JFrame) this, true, swarning);
+        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
         pframe.setVisible(true);
         return;
       }
@@ -2987,7 +2987,7 @@ dot.setVisible(true);
       } else {
         String swarning = "The currently selected window is looking at the " +
           "main console tab, this can't be customized, click C1, C2, etc., first.";
-        Popup pframe = new Popup((JFrame) this, true, swarning);
+        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
         pframe.setVisible(true);
         return;
       }
@@ -3008,7 +3008,7 @@ dot.setVisible(true);
         consoleChatframes[detachedIndex].setVisible(true);
       } else {
         Popup mypopper =
-          new Popup(this, false, "Can only have two detached chat frames open now.");
+          new Popup(this, false, "Can only have two detached chat frames open now.", sharedVariables);
         mypopper.setVisible(true);
       }
 
@@ -3134,7 +3134,7 @@ dot.setVisible(true);
       FileWrite mywriter = new FileWrite();
       String mess = "Next time you start the program, boards " +
         (ontop ? "will NOT" : "will") + " be on top windows.";
-      Popup mypopper = new Popup(this, true, mess);
+      Popup mypopper = new Popup(this, true, mess, sharedVariables);
       mypopper.setVisible(true);
       mywriter.write((ontop ? "false" : "true") + "\r\n", "lantern_board_on_top.txt");
 
@@ -3177,7 +3177,7 @@ dot.setVisible(true);
       if(!sharedVariables.autoPromote)
       {
        String s = "A promotion dialog will appear on promotion.  For premoves no dialog will appear and it will be auto promote.";
-        Popup temp = new Popup(this, false, s);
+        Popup temp = new Popup(this, false, s, sharedVariables);
         temp.setVisible(true);
       }
     }
@@ -3198,7 +3198,7 @@ dot.setVisible(true);
         String s = "Lantern will log bullet, blitz and standard games " +
           "you observe to lantern_obullet.pgn, lantern_oblitz.pgn, and " +
           "lantern_ostandard.pgn.\n\n  Not currently configured to log wild games.";
-        Popup temp = new Popup(this, false, s);
+        Popup temp = new Popup(this, false, s, sharedVariables);
         temp.setVisible(true);
       }
 
@@ -3707,7 +3707,7 @@ dot.setVisible(true);
         "folder is a general folder for when I want pieces I can resize, and the " +
         "monge pieces don't actually come in the 64 size.\n\n  The monge mix is a " +
         "mix of pieces from the Fantasy and Spatial set I've put together.";
-      Popup mypopup = new Popup(this, false, warning);
+      Popup mypopup = new Popup(this, false, warning, sharedVariables);
       mypopup.setSize(600,500);
       mypopup.setVisible(true);
 
@@ -3962,7 +3962,7 @@ dot.setVisible(true);
 
       String swarning =
         "This setting will update on board as soon as the next game starts.";
-      Popup pframe = new Popup((JFrame) this, true, swarning);
+      Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
       pframe.setVisible(true);
 
     } else if (action.equals("Use Light Square as Board Background")) {
@@ -4436,13 +4436,13 @@ dot.setVisible(true);
   void makeEngineWarning() {
     String swarning = "You must be in examine or observe mode to load an engine and " +
       "you need to click on the board and game tab that is in this mode as well first.";
-    Popup pframe = new Popup((JFrame) this, true, swarning);
+    Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
     pframe.setVisible(true);
   }
 
   void makeEngineWarning2() {
     String swarning = "You must not be playing to load an engine.";
-    Popup pframe = new Popup((JFrame) this, true, swarning);
+    Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
     pframe.setVisible(true);
   }
 
