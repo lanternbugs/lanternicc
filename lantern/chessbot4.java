@@ -1112,6 +1112,19 @@ try {
         if(console.type == 6)
             return;
     }
+    
+ if(console.type == 7)
+ {
+  try {
+    Popup mypopper = new Popup(masterFrame, false, thetell);
+      mypopper.setSize(400,175);
+      mypopper.setVisible(true);
+      return;
+  }
+  catch (Exception servertime) {
+      System.out.println("exceptoin on server time");
+  }
+ }
 try {
   if(thetell.startsWith("bell set to 0."))
    if(sharedVariables.isGuest())
@@ -1373,6 +1386,8 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=5;// lookup user
 						if(consoleChar == 'e')
                                                 console.type=6;// eco
+                                                if(consoleChar == 't')
+                                                console.type=7;// eco
                                                 String myConNumber="";
 
 						// we assume its c now. could be g for game, c is subframe console

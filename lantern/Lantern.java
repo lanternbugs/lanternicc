@@ -2138,6 +2138,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
     // .. / (separator)
     JMenuItem broadcasthelp = new JMenuItem("Broadcast Help");
+    JMenuItem servertime = new JMenuItem("Server Time");
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
     JMenuItem showfm = new JMenuItem("Open ChessFM");
@@ -2164,6 +2165,7 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(ratinggraph);
     actionsmenu.addSeparator();
     actionsmenu.add(broadcasthelp);
+    actionsmenu.add(servertime);
     actionsmenu.addSeparator();
     actionsmenu.add(followBroadcast);
     actionsmenu.add(unfollowBroadcast);
@@ -2183,6 +2185,7 @@ myboardappearancemenu.add(consoleaspect);
     addfriend.addActionListener(this);
     followBroadcast.addActionListener(this);
     broadcasthelp.addActionListener(this);
+    servertime.addActionListener(this);
     unfollowBroadcast.addActionListener(this);
     showfm.addActionListener(this);
 
@@ -2374,6 +2377,12 @@ myboardappearancemenu.add(consoleaspect);
     else if (action.equals("Broadcast Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/chessfm.html");
 
+    }
+    else if(action.equals("Server Time")) {
+     myoutput output = new myoutput();
+               output.data="`t0`" + "multi date" + "\n";
+               output.consoleNumber=0;
+               queue.add(output);
     }
 
 
