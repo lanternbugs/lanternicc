@@ -1266,6 +1266,7 @@ class mymultiframe extends JFrame
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     // .. / (separator)
+    JMenuItem cuckooanalysis = new JMenuItem("Analyze with CuckooChess 1.12");
     JMenuItem mediocreanalysis = new JMenuItem("Analyze with Mediocre Chess v0.5");
     JMenuItem helpanalysis = new JMenuItem("Engine Analysis Help");
     JMenuItem ucianalysis = new JMenuItem("Load UCI Engine");
@@ -1394,11 +1395,15 @@ class mymultiframe extends JFrame
     optionsmenu.add(openingbookitem);
     // .. /
     optionsmenu.addSeparator();
-    optionsmenu.add(mediocreanalysis);
+      optionsmenu.add(cuckooanalysis);
+      JMenu javaEngines = new JMenu("Other Engines");
+    javaEngines.add(mediocreanalysis);
+      optionsmenu.add(javaEngines);
     optionsmenu.add(helpanalysis);
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
     optionsmenu.add(winanalysis);
+      optionsmenu.addSeparator();
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
     optionsmenu.addSeparator();
@@ -1499,6 +1504,7 @@ class mymultiframe extends JFrame
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
     ucimultiplethree.addActionListener(this);
+      cuckooanalysis.addActionListener(this);
     mediocreanalysis.addActionListener(this);
     helpanalysis.addActionListener(this);
     ucianalysis.addActionListener(this);
@@ -2426,6 +2432,25 @@ myboardappearancemenu.add(consoleaspect);
 
       // Andrey edits:
       // merge the responses for loading engines
+    }
+    else if(action.equals("Analyze with CuckooChess 1.12")) {
+        if (sharedVariables.engineOn) {
+            return;
+        }
+        boolean installed = false;
+        File f = new File(sharedVariables.cuckooEngineName);
+        if(f.exists() && !f.isDirectory()) {
+            installed = true;
+        }
+        if(!installed) {
+            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.cuckooChess112);
+        }
+        else {
+            sharedVariables.uci = true;
+            sharedVariables.engineFile =  f;
+            startTheEngine();
+            
+        }
     }
     else if(action.equals("Analyze with Mediocre Chess v0.5"))
     {
