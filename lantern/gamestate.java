@@ -241,13 +241,19 @@ void readInitialPosition(String initial)
 
 initialPosition= new String(initial);
 readInitialPosition2(initialPosition, board);
-generateFen(board);
+generateFen(board, initial);
 }
 
-void generateFen(int board[])
+void generateFen(int board[], String initial)
 {
   engineFen = "";
   engineTop = 0;
+  if(initial.equals("*")) {
+    // this is enough to make gameboard.java send startpos for fen.
+   engineFen = "*";
+   return;
+  }
+
 int spaces = 0;
 for(int a=7; a>=0; a--)
 {

@@ -712,7 +712,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
        }
         } // if i > -1
+        if(sharedVariables.mygame[gameData.BoardIndex].state !=
+          sharedVariables.STATE_OBSERVING && !sharedVariables.mygame[gameData.BoardIndex].engineFen.equals("*")) {
         sharedVariables.mygame[gameData.BoardIndex].engineFen = fen;
+        }
        }
        catch(Exception e){}
 
