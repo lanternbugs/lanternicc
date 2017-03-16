@@ -2258,7 +2258,7 @@ void stopTheEngine()
         sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
       
     } else {
-      moves ="position startpos";
+      moves ="stop\nposition startpos";
       moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
     }
     outgoing.data+= moves;

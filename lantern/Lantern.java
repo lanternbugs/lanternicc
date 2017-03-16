@@ -2448,7 +2448,7 @@ myboardappearancemenu.add(consoleaspect);
         else {
             sharedVariables.uci = true;
             sharedVariables.engineFile =  f;
-            startTheEngine();
+            startTheEngine(true);
             
         }
     }
@@ -2468,7 +2468,7 @@ myboardappearancemenu.add(consoleaspect);
         else {
             sharedVariables.uci = true;
             sharedVariables.engineFile =  f;
-            startTheEngine();
+            startTheEngine(true);
  
         }
     }
@@ -2491,13 +2491,13 @@ myboardappearancemenu.add(consoleaspect);
             sharedVariables.engineDirectory = fc.getCurrentDirectory();
             sharedVariables.uci = (action.equals("Load UCI Engine"));
 
-            startTheEngine();
+            startTheEngine(false);
           }
         } catch (Exception e) {}
       }
 
       if (!go && !sharedVariables.engineOn)
-        makeEngineWarning();
+        makeEngineWarning(false);
 
     }
     else if (action.equals("One Line(Default)")) {
@@ -2681,7 +2681,7 @@ else if (action.equals("Three Lines")) {
 
     } else if (action.equals("Restart Engine")) {
       if (!sharedVariables.engineOn)
-	startTheEngine();
+	startTheEngine(false);
 
     } else if (action.equals("Activities Window/Events")) {
       openActivities();
@@ -4458,9 +4458,14 @@ dot.setVisible(true);
     } catch (Exception dui) {}
   }
 
-  void makeEngineWarning() {
+  void makeEngineWarning(boolean usingJavaEngine) {
     String swarning = "You must be in examine or observe mode to load an engine and " +
       "you need to click on the board and game tab that is in this mode as well first.";
+      if(usingJavaEngine) {
+        swarning = "You must be in examine mode to load a preinstalled engine. " +
+         "If you load a UCI engine you can use it in observe mode too.\n\n" +
+      "You also need to click on the board and game tab that is in this mode as well first.";
+      }
     Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
     pframe.setVisible(true);
   }
@@ -4583,7 +4588,7 @@ dot.setVisible(true);
         consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
   }
 
-  void startTheEngine() {
+  void startTheEngine(boolean usingJavaEngine) {
     boolean go = false;
     int aa;
     for (aa=0; aa< sharedVariables.openBoardCount; aa++) {
@@ -4604,8 +4609,8 @@ dot.setVisible(true);
 	if (sharedVariables.mygame[myboards[a].gameData.LookingAt] != null &&
             (sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
              sharedVariables.STATE_EXAMINING ||
-             sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
-             sharedVariables.STATE_OBSERVING)) {
+             (sharedVariables.mygame[myboards[a].gameData.LookingAt].state ==
+             sharedVariables.STATE_OBSERVING && !usingJavaEngine))) {
           try {
             go=true;
             myoutput tosend = new myoutput();
@@ -4629,7 +4634,7 @@ dot.setVisible(true);
 
     if (!go) {
       sharedVariables.engineOn = false;
-      makeEngineWarning();
+      makeEngineWarning(usingJavaEngine);
     }// if go false
   }
 
