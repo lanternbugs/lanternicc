@@ -356,9 +356,9 @@ ConcurrentLinkedQueue<myoutput> engineQueue;
 ConcurrentLinkedQueue<myprintoutput> printQueue;
 
 OutputStream engineOut;
-File engineFile;
-File engineDirectory;
-File wallpaperFile;
+File engineFile = null;
+File engineDirectory = null;
+File wallpaperFile = null;
 preselectedBoards preselectBoards;
 
 Point webframePoint;

@@ -2680,8 +2680,25 @@ else if (action.equals("Three Lines")) {
       }
 
     } else if (action.equals("Restart Engine")) {
+      boolean usingJavaEngine = false;
+      if(sharedVariables.engineFile != null)
+      if(sharedVariables.engineFile.toString().endsWith(sharedVariables.mediocreEngineName) ||
+       sharedVariables.engineFile.toString().endsWith(sharedVariables.cuckooEngineName) )
+       usingJavaEngine = true;
+       
+      if(sharedVariables.engineFile == null) {
+        String swarning = "Load an engine before trying to restart it.";
+       Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+    pframe.setVisible(true);
+       return; 
+      }
       if (!sharedVariables.engineOn)
-	startTheEngine(false);
+	startTheEngine(usingJavaEngine);
+      else {
+        String swarning = "Stop the engine before trying to restart it.";
+        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+        pframe.setVisible(true);
+      }
 
     } else if (action.equals("Activities Window/Events")) {
       openActivities();
@@ -4463,7 +4480,7 @@ dot.setVisible(true);
       "you need to click on the board and game tab that is in this mode as well first.";
       if(usingJavaEngine) {
         swarning = "You must be in examine mode to load a preinstalled engine. " +
-         "If you load a UCI engine you can use it in observe mode too.\n\n" +
+         "If you load a UCI engine you can use it in observe mode too.\n" +
       "You also need to click on the board and game tab that is in this mode as well first.";
       }
     Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
