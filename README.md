@@ -19,21 +19,18 @@ in sqlite-jdbc-master.zip. I put both these files, the zip and txt, in the org f
  There is also a readme.txt I placed in the org folder with more info.  Place these 4 folders and a book in a folder.  ( two folders you pull out of this repo)
 
 Update - there is now a 5th folder called engines in the jar that currently includes Mediocre Chess
-V0.5, a Java engine contained in its own jar.  There is a mediocre_readme.txt in the engines folder with
-info on its project page and how to get the source. It's GPL. While it's packaged in the jar, when it's
-time to use it, Lantern prompts the user to let it extract it to the Lantern folder and opens
-it like other engines and does not link to it in code. 
+V0.5 and CuckooChess 1.12  Java engines contained in their own jars.  There is a mediocre_readme.txt and cuckoo_readme.txt
+in the engines folder with info on their project pages and how to get their source. They are GPL. While they are
+packaged in the jar, when it's time to use them, Lantern prompts the user to let it extract them to the Lantern folder and opens them like other engines, with a runtime, and does not link to them in code. 
 
 To compiles lantern type javac lantern/*.java
 to run lantern type java lantern/Lantern      Lantern.java contains main.
 
 To jar lantern type jar -cvfm lantern###.jar lantern/manifest.txt lantern free layout org engines lanternopeningbook19.db
 
-I compile lantern in java 6 for release.  I think right now in java 8 the channels.java file is erroring. I'll probably fix
-it but its simple to work around probably as it appears there is just some long string used by flags that has some illegal
-characters.  You can just fix the string maybe  delete the parts that error and shouldnt hurt lantern or take 
-channels.java class files out of the jar. When i edit lantern on java 8 i avoid javac lantern/*.java and just compile 
-my changes like javac lantern/Lantern.java etc. You can take all class files out of the jar if an issue and just compile changed files to avoid the channels situaton for now. The string in question is just used to find country names for flags. 
+I compile lantern in java 6 for release.  I have also compiled in Java 8.  When i edit lantern I sometimes just compile 
+my changed files, like javac lantern/Lantern.java etc. A string mentioned earlier that was not compiling in channels.java
+on mac Java 8, has been fixed. Lantern also works now on Java 9 though i've not tried compiling all files on 9, just some.
 
 The free folder files have to be compiled too or you can just get the class files out of the jar. The free
 folder also contains timestammp which is only in the jar. Chessbot4.java's connect() method could also
