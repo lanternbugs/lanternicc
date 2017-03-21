@@ -198,8 +198,10 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 			for(int a=0; a<myLoader.games.get(row).moves.size() - 1; a++)// size - 1 since last thing is result we got there
-				send(myLoader.games.get(row).moves.get(a) + "\n");
-
+			{
+                          String theMoveSent = "multi chessmove " + myLoader.games.get(row).moves.get(a) + "\n";
+                          send(theMoveSent);
+                        }
                         if(myLoader.games.get(row).iccResult != null)
                              send("Tag ICCResult " + myLoader.games.get(row).iccResult + "\n");
                        	else
