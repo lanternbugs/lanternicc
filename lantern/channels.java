@@ -374,7 +374,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v5.88";
+version = "v5.89";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

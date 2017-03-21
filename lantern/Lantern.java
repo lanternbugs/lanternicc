@@ -527,6 +527,8 @@ class mymultiframe extends JFrame
 
     setPieces(sharedVariables.pieceType);
     setCheckersPieces(sharedVariables.checkersPieceType);
+    if(sharedVariables.boardType > graphics.maxBoards - 1 || sharedVariables.boardType < 0)
+       sharedVariables.boardType = 2;
     setBoard(sharedVariables.boardType);
     if(sharedVariables.moveInputType == 0)
     {
@@ -1683,9 +1685,8 @@ class mymultiframe extends JFrame
     boardarray[11] = new JCheckBoxMenuItem("Wood-4");
     boardarray[12] = new JCheckBoxMenuItem("Wood-5");
     boardarray[13] = new JCheckBoxMenuItem("Cold Marble");
-    boardarray[14] = new JCheckBoxMenuItem("Gray Tiles");
-    boardarray[15] = new JCheckBoxMenuItem("Green Marble");
-    boardarray[16] = new JCheckBoxMenuItem("Slate");
+    boardarray[14] = new JCheckBoxMenuItem("Green Marble");
+    boardarray[15] = new JCheckBoxMenuItem("Slate");
   // .. / .. / (separator)
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
@@ -1880,7 +1881,7 @@ class mymultiframe extends JFrame
 
     myboardappearancemenu.add(selectboards);
     // .. / Boards /
-    for (int i=0; i<boardarray.length - 6; i++)
+    for (int i=0; i<boardarray.length - 5; i++)
     {  selectboards.add(boardarray[i]);
               if(i == 3) // dark wood
        {
@@ -1889,7 +1890,7 @@ class mymultiframe extends JFrame
        }
 
     }
-      for (int i=boardarray.length - 4; i<boardarray.length; i++)
+      for (int i=boardarray.length - 3; i<boardarray.length; i++)
       {  selectboards.add(boardarray[i]);
       }
     selectboards.addSeparator();
@@ -3668,16 +3669,12 @@ dot.setVisible(true);
         sharedVariables.boardType=13;
         setBoard(sharedVariables.boardType);
         
-    } else if (action.equals("Gray Tiles")) {
+    } else if (action.equals("Green Marble")) {
         sharedVariables.boardType=14;
         setBoard(sharedVariables.boardType);
-        
-    } else if (action.equals("Green Marble")) {
-        sharedVariables.boardType=15;
-        setBoard(sharedVariables.boardType);
-        
+
     } else if (action.equals("Slate")) {
-        sharedVariables.boardType=16;
+        sharedVariables.boardType=15;
         setBoard(sharedVariables.boardType);
         
     }
