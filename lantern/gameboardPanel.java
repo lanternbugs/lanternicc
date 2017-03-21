@@ -1350,7 +1350,7 @@ void repaintPiece()
 						 if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
 						 	prefixcommand="`g" + gameData.LookingAt + "`";
 
-						 String themove = primary  + prefixcommand + getMove(piecemoving, piece);
+						 String themove = primary  + prefixcommand + "multi " +  getMove(piecemoving, piece);
 						 myoutput amove = new myoutput();
 						 amove.game=1;
 						 amove.consoleNumber=0;
@@ -1497,7 +1497,7 @@ void repaintPiece()
 					 if(sharedVariables.isGuest()) {
                                          primary = "";
                                          }
-					 String themove = primary  + getMove(-examinepiecemoving, piece);
+					 String themove = primary  + "multi " + getMove(-examinepiecemoving, piece);
 					 myoutput amove = new myoutput();
 					 amove.game=1;
 					 amove.consoleNumber=0;
