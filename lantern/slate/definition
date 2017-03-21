@@ -1,0 +1,6 @@
+classname = free.jin.board.BoardPattern
+
+id = slate
+name = Slate
+boardPainter.classname = free.chess.SquareImagesBoardPainter
+imageUseMode = slice

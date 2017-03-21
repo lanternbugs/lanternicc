@@ -1,0 +1,6 @@
+classname = free.jin.board.BoardPattern
+
+id = cold-marble
+name = Cold Marble
+boardPainter.classname = free.chess.SquareImagesBoardPainter
+imageUseMode = scale
