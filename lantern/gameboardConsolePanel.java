@@ -1962,7 +1962,7 @@ else if (sharedVariables.rightClickMenu.get(mfinal).equals("Quarantine")) {
           }
       });
       menu3.add(items[m]);
-      if(m == 3 || m == 7 || m == 9)
+      if(m == 3  || m == 10 || m == 14)
       menu3.addSeparator();
 
       if(m < sharedVariables.rightClickMenu.size())

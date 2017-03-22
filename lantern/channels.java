@@ -882,7 +882,6 @@ void setupMenu()
 	rightClickMenu.add("Pstat");
         rightClickMenu.add("Assess");
 	rightClickMenu.add("Games");
-	rightClickMenu.add("Hyperlink");
 	rightClickMenu.add("Quarantine");
 	rightClickMenu.add("Tell");
 

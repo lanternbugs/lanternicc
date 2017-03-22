@@ -1401,6 +1401,7 @@ class mymultiframe extends JFrame
       JMenu javaEngines = new JMenu("Other Engines");
     javaEngines.add(mediocreanalysis);
       optionsmenu.add(javaEngines);
+      optionsmenu.addSeparator();
     optionsmenu.add(helpanalysis);
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
