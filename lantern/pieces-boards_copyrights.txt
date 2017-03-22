@@ -33,6 +33,9 @@ http://ixian.com/chess/#other it's available under the Creative Commons Attribut
 and used unmodified by Lantern. https://creativecommons.org/licenses/by/4.0/
 
 note March 21st 2017:
-Added the Cold Marble, Green Marble, Slate, and Gray Tiles boards from Jin. Update - removed Gray Tiles, it did not scale to small sizes well. 
+Added the Cold Marble, Green Marble, Slate, and Gray Tiles boards from Jin. Update - removed Gray Tiles, it did not scale to small sizes well.
+
+note march 21st 2017:
+added Kingdom and Condal pieces from Jin. 
 
 Mike Adams
