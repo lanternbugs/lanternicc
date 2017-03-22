@@ -46,7 +46,7 @@ resourceClass()
 
 
 maxBoards=16;
-maxPieces=25;
+maxPieces=27;
 maxPiecePaths=50;
 
  //squares
@@ -102,10 +102,10 @@ piecePaths[19]="maya";
 
 piecePaths[21]="ccube";
 piecePaths[22]="merida";
-piecePaths[23]="mongemix";
-
-
-piecePaths[24]="random";
+piecePaths[23]="kingdom";
+piecePaths[24]="condal";
+piecePaths[25]="mongemix";
+piecePaths[26]="random";
 //for(num=0; num < 16; num++)
 //piecePaths[num]="/" + piecePaths[num];
 
@@ -133,8 +133,10 @@ pieceExt[19]="png";
 pieceExt[20]="png";
 pieceExt[21]="png";
 pieceExt[22]="png";
-pieceExt[23]="mix";
-pieceExt[24]="ran";
+pieceExt[23]="png";
+pieceExt[24]="png";
+pieceExt[25]="mix";
+pieceExt[26]="ran";
 
 resizable=new boolean[maxPieces];
 resizable[0]=false;
@@ -161,7 +163,9 @@ resizable[20]=false;
 resizable[21]=false;
 resizable[22]=false;
 resizable[23]=false;
-resizable[24]=true;
+resizable[24]=false;
+resizable[25]=false;
+resizable[26]=true;
 
 
 pieces = new Image[maxPieces][12];
@@ -177,7 +181,7 @@ for(int b=0; b<maxPieces; b++)
 		numberPiecePaths[b]=6;
 	else if(b==7 || b == 13 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20)
 		numberPiecePaths[b]=15;
-    else if(b==6 || b == 14 || b==23)
+    else if(b==6 || b == 14 || b==23 || b == 24 || b == 25)
         numberPiecePaths[b]=17;
 	else if(b==21)
 		numberPiecePaths[b]=47;
@@ -354,7 +358,7 @@ if(b==7 || b==13 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 
 
 
 }
-    if(b==6 || b==14 || b == 23)// monge harlequin
+    if(b==6 || b==14 || b == 23 || b == 24 || b == 25)// monge harlequin
     {
         multiPiecePaths[b][0]=20;
         multiPiecePaths[b][1]=24;

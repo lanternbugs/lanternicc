@@ -318,7 +318,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem pieces23;
   JCheckBoxMenuItem pieces24;
   */
-  JCheckBoxMenuItem[] piecesarray = new JCheckBoxMenuItem[25];
+  JCheckBoxMenuItem[] piecesarray = new JCheckBoxMenuItem[27];
   JCheckBoxMenuItem[] checkerspiecesarray = new JCheckBoxMenuItem[2];
   JCheckBoxMenuItem[] italicsBehavior = new JCheckBoxMenuItem[3];
 
@@ -1712,7 +1712,7 @@ class mymultiframe extends JFrame
     piecesarray[6] = new JCheckBoxMenuItem("Spatial");
     piecesarray[13] = new JCheckBoxMenuItem("Eyes");
     piecesarray[14] = new JCheckBoxMenuItem("Fantasy");
-    piecesarray[23] = new JCheckBoxMenuItem("Monge Mix");
+    piecesarray[25] = new JCheckBoxMenuItem("Monge Mix");
     JMenuItem aboutmonge = new JMenuItem ("About Monge Pieces");
     // .. / .. /
     piecesarray[7] = new JCheckBoxMenuItem("Harlequin");
@@ -1729,7 +1729,9 @@ class mymultiframe extends JFrame
     // .. / .. /
     piecesarray[21] = new JCheckBoxMenuItem("CCube");
       piecesarray[22] = new JCheckBoxMenuItem("Merida");
-    piecesarray[24] = new JCheckBoxMenuItem("Random Pieces");
+      piecesarray[23] = new JCheckBoxMenuItem("Kingdom");
+      piecesarray[24] = new JCheckBoxMenuItem("Condal");
+    piecesarray[26] = new JCheckBoxMenuItem("Random Pieces");
     // .. /
 
         JMenu checkersselectpieces = new JMenu("Checkers Pieces");
@@ -1913,7 +1915,7 @@ class mymultiframe extends JFrame
     mongeMenu.add(piecesarray[6]);
     mongeMenu.add(piecesarray[13]);
     mongeMenu.add(piecesarray[14]);
-    mongeMenu.add(piecesarray[23]);
+    mongeMenu.add(piecesarray[25]);
     mongeMenu.add(aboutmonge);
     // .. / .. /
     for (int i=7; i<10; i++)
@@ -1927,7 +1929,9 @@ class mymultiframe extends JFrame
     // .. / .. /
     selectpieces.add(piecesarray[21]);
     selectpieces.add(piecesarray[22]);
+      selectpieces.add(piecesarray[23]);
       selectpieces.add(piecesarray[24]);
+      selectpieces.add(piecesarray[26]);
 
     checkersselectpieces.add(checkerspiecesarray[0]);
     checkersselectpieces.add(checkerspiecesarray[1]);
@@ -3756,8 +3760,9 @@ dot.setVisible(true);
       sharedVariables.pieceType=21;
       setPieces(sharedVariables.pieceType);
 
-    } else if (action.equals("Monge Mix")) {
-      sharedVariables.pieceType=23;
+    }
+    else if (action.equals("Monge Mix")) {
+      sharedVariables.pieceType=25;
       setPieces(sharedVariables.pieceType);
 
     } else if (action.equals("About Monge Pieces")) {
@@ -3783,8 +3788,19 @@ dot.setVisible(true);
         setPieces(sharedVariables.pieceType);
         
     }
+    else if (action.equals("Kingdom")) {
+        sharedVariables.pieceType=23;
+        setPieces(sharedVariables.pieceType);
+        
+    }
+    else if (action.equals("Condal")) {
+        sharedVariables.pieceType=24;
+        setPieces(sharedVariables.pieceType);
+        
+    }
+      
     else if (action.equals("Random Pieces")) {
-      sharedVariables.pieceType=24;
+      sharedVariables.pieceType=26;
       setPieces(sharedVariables.pieceType);
 
     }  else if (action.equals("Black-Red")) {
@@ -4873,7 +4889,7 @@ dot.setVisible(true);
     if (type >= 0 && type < piecesarray.length)
       piecesarray[type].setSelected(true);
 
-    if (type == 24) generateRandomPieces(type);
+    if (type == 26) generateRandomPieces(type);
 
     for (int a=0; a<sharedVariables.maxGameTabs; a++)
       if (myboards[a] != null)
