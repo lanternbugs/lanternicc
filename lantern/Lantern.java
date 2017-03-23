@@ -1906,31 +1906,40 @@ class mymultiframe extends JFrame
     myboardappearancemenu.add(checkersselectpieces);
     myboardappearancemenu.addSeparator();
     // .. / Pieces /
-    for (int i=0; i<6; i++)
-      selectpieces.add(piecesarray[i]);
-    for (int i=18; i<21; i++)
-      selectpieces.add(piecesarray[i]);
+      selectpieces.add(piecesarray[4]);
+      selectpieces.add(piecesarray[5]);
+      selectpieces.add(piecesarray[21]);
+      selectpieces.add(piecesarray[22]);
+      
+    
     selectpieces.add(mongeMenu);
     // .. / .. / Monge /
+    mongeMenu.add(piecesarray[14]);
     mongeMenu.add(piecesarray[6]);
     mongeMenu.add(piecesarray[13]);
-    mongeMenu.add(piecesarray[14]);
     mongeMenu.add(piecesarray[25]);
     mongeMenu.add(aboutmonge);
+      for (int i=18; i<21; i++)
+          selectpieces.add(piecesarray[i]);
     // .. / .. /
     for (int i=7; i<10; i++)
       selectpieces.add(piecesarray[i]);
     for (int i=15; i<18; i++)
       selectpieces.add(piecesarray[i]);
-    selectpieces.add(moltenmenu);
-    // .. / .. / Molten /
-    for (int i=10; i<13; i++)
-      moltenmenu.add(piecesarray[i]);
+    
     // .. / .. /
-    selectpieces.add(piecesarray[21]);
-    selectpieces.add(piecesarray[22]);
+    
       selectpieces.add(piecesarray[23]);
       selectpieces.add(piecesarray[24]);
+      JMenu dycheMenu = new JMenu("Dyche");
+      for (int i=0; i < 3;  i++)
+          dycheMenu.add(piecesarray[i]);
+      selectpieces.add(dycheMenu);
+      selectpieces.add(piecesarray[3]);
+      selectpieces.add(moltenmenu);
+      // .. / .. / Molten /
+      for (int i=10; i<13; i++)
+          moltenmenu.add(piecesarray[i]);
       selectpieces.add(piecesarray[26]);
 
     checkersselectpieces.add(checkerspiecesarray[0]);
@@ -5798,39 +5807,43 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       ext = graphics.pieceExt[a];
       if (ext.equals("mix"))// was rand
         break;   // allways last. not real pieces , randomly generated
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wp." + ext);
+        String resizableNumber = "64";
+        if(a < 4) {
+            resizableNumber = "76";
+        }
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wp." + ext);
       graphics.pieces[a][0] = Toolkit.getDefaultToolkit().getImage(myurl);
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wn." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wn." + ext);
       graphics.pieces[a][1] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wb." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wb." + ext);
       graphics.pieces[a][2] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wr." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wr." + ext);
       graphics.pieces[a][3] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wq." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wq." + ext);
       graphics.pieces[a][4] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/wk." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/wk." + ext);
       graphics.pieces[a][5] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bp." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/bp." + ext);
       graphics.pieces[a][6] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bn." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/bn." + ext);
       graphics.pieces[a][7] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bb." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/bb." + ext);
       graphics.pieces[a][8] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/br." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/br." + ext);
       graphics.pieces[a][9] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bq." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/bq." + ext);
       graphics.pieces[a][10] = Toolkit.getDefaultToolkit().getImage(myurl);
 
-      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/64/bk." + ext);
+      myurl = this.getClass().getResource(graphics.piecePaths[a] + "/" + resizableNumber + "/bk." + ext);
       graphics.pieces[a][11] = Toolkit.getDefaultToolkit().getImage(myurl);
 
       // now load multi pieces

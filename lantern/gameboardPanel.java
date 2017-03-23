@@ -907,7 +907,11 @@ int findPieceMatch(int pieceCol) // would feed it say 1 and 7 for white and blac
 						choice=m;
 					else
 					    break;
-	return choice;
+	if(graphics.multiPiecePaths[getPieceType(pieceCol)][choice] + 30 < idealSize && getPieceType(pieceCol) < 4) {
+        choice = -1;// this will force resizing
+        //System.out.println("forcing resizing and piece type is " + getPieceType(pieceCol));
+    }
+    return choice;
 }
 void drawPiecePallete(int piece, int OriginX, int OriginY, int Looking, Graphics g, Graphics2D g2)
 {
@@ -969,7 +973,7 @@ void drawMySlidingPiece(Graphics g, int squarex, int squarey, int difx, int dify
                      drawCheckersPiece( g, mx - ((int) (squarex -4 ) /2), my - ((int) (squarey -4 ) /2),  piece);
                    return;
                    }
-                	if(difx == 0 && dify == 0 && graphics.resizable[sharedVariables.pieceType] == false && graphics.multiPieces[sharedVariables.pieceType][choice][piece-1]!=null)
+                	if(choice != -1 && difx == 0 && dify == 0 && graphics.resizable[sharedVariables.pieceType] == false && graphics.multiPieces[sharedVariables.pieceType][choice][piece-1]!=null)
 			{
 				// piece size goes from squarex + 2 to 2*squarex-4
 				// and squarey + 2 to 2*squarey -4;
@@ -994,7 +998,7 @@ void drawMyPiece(Graphics g, int boardx, int boardy, int difx, int dify, int b, 
 			// squarex squarey is square size
 			// difx dify is 0 if squarex = squarey
 			// boardx board y is overall board offset
-			if(difx == 0 && dify == 0 && graphics.resizable[getPieceType(piece-1)] == false && graphics.multiPieces[getPieceType(piece-1)][choice][piece-1]!=null)
+			if(choice != -1 && difx == 0 && dify == 0 && graphics.resizable[getPieceType(piece-1)] == false && graphics.multiPieces[getPieceType(piece-1)][choice][piece-1]!=null)
 			{
 				// piece size goes from squarex + 2 to 2*squarex-4
 				// and squarey + 2 to 2*squarey -4;
