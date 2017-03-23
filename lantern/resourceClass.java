@@ -103,7 +103,7 @@ piecePaths[19]="maya";
 piecePaths[21]="ccube";
 piecePaths[22]="merida";
 piecePaths[23]="kingdom";
-piecePaths[24]="condal";
+piecePaths[24]="alpha2";
 piecePaths[25]="mongemix";
 piecePaths[26]="random";
 //for(num=0; num < 16; num++)
@@ -181,11 +181,11 @@ for(int b=0; b<maxPieces; b++)
 		numberPiecePaths[b]=6;
 	else if(b==7 || b == 13 || b==15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 20)
 		numberPiecePaths[b]=15;
-    else if(b==6 || b == 14 || b==23 || b == 24 || b == 25)
+    else if(b==6 || b == 14 || b==23 || b == 25)
         numberPiecePaths[b]=17;
 	else if(b==21)
 		numberPiecePaths[b]=47;
-    else if(b==22)
+    else if(b==22 || b==24)
         numberPiecePaths[b]=41;
 
 	else
@@ -291,7 +291,7 @@ if(b==21)// ccube
 
 
 }
-    if(b==22)// merida
+    if(b==22 || b==24)// merida
     {
         multiPiecePaths[b][0]=21;
         multiPiecePaths[b][1]=21;// we just use 8 for both to fix a bug
@@ -358,7 +358,7 @@ if(b==7 || b==13 || b == 15 || b == 16 || b == 17 || b == 18 || b == 19 || b == 
 
 
 }
-    if(b==6 || b==14 || b == 23 || b == 24 || b == 25)// monge harlequin
+    if(b==6 || b==14 || b == 23  || b == 25)// monge harlequin
     {
         multiPiecePaths[b][0]=20;
         multiPiecePaths[b][1]=24;

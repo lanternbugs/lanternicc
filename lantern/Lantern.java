@@ -1730,7 +1730,7 @@ class mymultiframe extends JFrame
     piecesarray[21] = new JCheckBoxMenuItem("CCube");
       piecesarray[22] = new JCheckBoxMenuItem("Merida");
       piecesarray[23] = new JCheckBoxMenuItem("Kingdom");
-      piecesarray[24] = new JCheckBoxMenuItem("Condal");
+      piecesarray[24] = new JCheckBoxMenuItem("Alpha-2");
     piecesarray[26] = new JCheckBoxMenuItem("Random Pieces");
     // .. /
 
@@ -1908,6 +1908,11 @@ class mymultiframe extends JFrame
     // .. / Pieces /
       selectpieces.add(piecesarray[4]);
       selectpieces.add(piecesarray[5]);
+      selectpieces.add(piecesarray[24]);
+      JMenu dycheMenu = new JMenu("Dyche");
+      for (int i=0; i < 3;  i++)
+          dycheMenu.add(piecesarray[i]);
+      selectpieces.add(dycheMenu);
       selectpieces.add(piecesarray[21]);
       selectpieces.add(piecesarray[22]);
       
@@ -1930,11 +1935,6 @@ class mymultiframe extends JFrame
     // .. / .. /
     
       selectpieces.add(piecesarray[23]);
-      selectpieces.add(piecesarray[24]);
-      JMenu dycheMenu = new JMenu("Dyche");
-      for (int i=0; i < 3;  i++)
-          dycheMenu.add(piecesarray[i]);
-      selectpieces.add(dycheMenu);
       selectpieces.add(piecesarray[3]);
       selectpieces.add(moltenmenu);
       // .. / .. / Molten /
@@ -3802,7 +3802,7 @@ dot.setVisible(true);
         setPieces(sharedVariables.pieceType);
         
     }
-    else if (action.equals("Condal")) {
+    else if (action.equals("Alpha-2")) {
         sharedVariables.pieceType=24;
         setPieces(sharedVariables.pieceType);
         

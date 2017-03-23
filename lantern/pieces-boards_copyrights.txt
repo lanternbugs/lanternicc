@@ -1,4 +1,4 @@
-﻿The pieces and Boards in this program come from Jin except for those otherwise noted below which is released undger GPL.
+The pieces and Boards in this program come from Jin except for those otherwise noted below which is released undger GPL.
 
 I do not know that the pieces and boards are all gpl and by making them avaiable offer no more rights than by www.jinchess.com making them available.
 
@@ -26,10 +26,10 @@ the Wood-4 and Wood-5 boards are from Stockfish also GPL
 
 The liebeskind, molten, moltengood, moltenevil pieces were made by moltenthinker for Lantern. He asked me to put them in teh program. 
 
-note March 8th 2017:
-Lantern use Eric De Mund's adaptation of the Merida chess pieces(merida.ead-01). "merida" refers to
-Armando H. Marroquin's free Truetype chess font named "Mérida". (More info on  merida see
-http://ixian.com/chess/#other it's available under the Creative Commons Attribution 4.0 International License
+note March 8th 2017 and March 23 2017 update added the Alpha pieces from same source:
+Lantern use Eric De Mund's adaptation of the Merida and Alpha(listed as Alpha-2 in pieces menu) chess pieces(merida.ead-01 and alpha.ead-01). "merida" refers to
+Armando H. Marroquin's free Truetype chess font named "Mérida". "alpha" refers to Eric Bentzen's free Truetype chess font named "Alpha". (More info on  merida and alpha see
+http://ixian.com/chess/#other They are available under the Creative Commons Attribution 4.0 International License
 and used unmodified by Lantern. https://creativecommons.org/licenses/by/4.0/
 
 note March 21st 2017:
