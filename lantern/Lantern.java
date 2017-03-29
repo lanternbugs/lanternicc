@@ -217,6 +217,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem drawCoordinates;
   JCheckBoxMenuItem showRatings;
   JCheckBoxMenuItem showFlags;
+  JCheckBoxMenuItem chessFontForMoveList;
   JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
   JCheckBoxMenuItem lowTimeColors;
@@ -518,6 +519,7 @@ class mymultiframe extends JFrame
     drawCoordinates.     setSelected(sharedVariables.drawCoordinates);
     showRatings.         setSelected(sharedVariables.showRatings);
     showFlags.           setSelected(sharedVariables.showFlags);
+    chessFontForMoveList.setSelected(sharedVariables.chessFontForMoveList);
     showPallette.        setSelected(sharedVariables.showPallette);
     autoChat.            setSelected(sharedVariables.autoChat);
     lowTimeColors.       setSelected(sharedVariables.lowTimeColors);
@@ -1777,6 +1779,7 @@ class mymultiframe extends JFrame
     showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
     playersInMyGame = new JCheckBoxMenuItem("Show Observers In Games");
     useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
+      chessFontForMoveList = new JCheckBoxMenuItem("Chess Font For Move List");
     // .. /
     JMenu examReplay = new JMenu("Examine Game Replay");
     // .. / Examine Game Replay /
@@ -1954,6 +1957,7 @@ class mymultiframe extends JFrame
 	    theHideMenu.add(showFlags);
 	    theHideMenu.add(showRatings);
     theHideMenu.add(playersInMyGame);
+      theHideMenu.add(chessFontForMoveList);
 
 myboardappearancemenu.add(consoleaspect);
     // .. / Board Console /
@@ -2120,6 +2124,7 @@ myboardappearancemenu.add(consoleaspect);
     drawCoordinates.addActionListener(this);
     showPallette.addActionListener(this);
     showFlags.addActionListener(this);
+      chessFontForMoveList.addActionListener(this);
     showRatings.addActionListener(this);
     playersInMyGame.addActionListener(this);
     //useLightBackground.addActionListener(this);
@@ -4056,7 +4061,18 @@ dot.setVisible(true);
       Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
       pframe.setVisible(true);
 
-    } else if (action.equals("Use Light Square as Board Background")) {
+    }
+    else if (action.equals("Chess Font For Move List")) {
+        sharedVariables.chessFontForMoveList = !sharedVariables.chessFontForMoveList;
+        chessFontForMoveList.setSelected(sharedVariables.chessFontForMoveList);
+        
+        String swarning =
+        "This setting will update on new boards or fully on restarting the program.";
+        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+        pframe.setVisible(true);
+        
+    }
+    else if (action.equals("Use Light Square as Board Background")) {
       sharedVariables.useLightBackground = !sharedVariables.useLightBackground;
       useLightBackground.setSelected(sharedVariables.useLightBackground);
 
@@ -5801,7 +5817,14 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
         graphics.boards[a][1] = Toolkit.getDefaultToolkit().getImage(myurl);
       }
     }
-
+      try {
+          sharedVariables.chessfont1 = Font.createFont(Font.TRUETYPE_FONT,this.getClass().getResource("chessalpha2/ChessAlpha2.ttf").openStream()).deriveFont(Font.PLAIN,14);
+          GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+          //register the font
+          ge.registerFont(Font.createFont(Font.TRUETYPE_FONT,this.getClass().getResource("chessalpha2/ChessAlpha2.ttf").openStream()));
+      } catch(Exception fonte) {
+          System.out.println("font load exception");
+      }
     for (int a=0; a<graphics.maxPieces; a++) {
       String ext = "gif";
       ext = graphics.pieceExt[a];

@@ -617,7 +617,17 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[doneshowflags] ";
 
-	// showFlags
+	
+        // chess font for move list
+        set_string = set_string + "[chessfontformovelist] ";
+        if(sharedVariables.chessFontForMoveList == true)
+            set_string = set_string + "1" + " ";
+        else
+            set_string = set_string + "0" + " ";
+        // closing
+        set_string = set_string + "[donechessfontformovelist] ";
+        
+        // showFlags
 	set_string = set_string + "[gameendmess] ";
 	if(sharedVariables.gameend == true)
 		set_string = set_string + "1" + " ";
@@ -2304,6 +2314,38 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+
+                    if (temp.equals("[chessfontformovelist]"))
+                    {
+                        try {
+                            int truth = Integer.parseInt(tokens.nextToken());
+                            if(truth == 1)
+                                sharedVariables.chessFontForMoveList=true;
+                            else {
+                                sharedVariables.chessFontForMoveList=false;
+                                int fai;
+                                try {
+                                for(fai = 0; fai < sharedVariables.gametable.length; fai++) {
+                                    if(sharedVariables.gametable[fai] != null) {
+                                        sharedVariables.gametable[fai].setFont(sharedVariables.originaMoveListFont);
+                                    }
+                                }
+                                }catch(Exception faidui) {System.out.println("exception on reverting chess font"); }
+                                
+                                for(fai = 0; fai < sharedVariables.mygametable.length; fai++) {
+                                    
+                                    if(sharedVariables.mygametable[fai] != null) {
+                                        sharedVariables.mygametable[fai].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
+                                    }
+                                }
+                                
+                                
+                                
+                            }
+                        }
+                        catch(Exception zzz){System.out.println("exception on chess font");}
+                    }
+                    
 
 				if (temp.equals("[uselightbackground]"))
 				{

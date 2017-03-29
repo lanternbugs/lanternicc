@@ -904,10 +904,24 @@ doc.remove(0, doc.getLength());
 for(int i=0; i < multiLines.size(); i++)
 {
 PrincipalVariation p = multiLines.get(i);
+    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+        p.line = p.line.replace("N", "Z");
+        p.line = p.line.replace("B", "J");
+        p.line = p.line.replace("Q", "M");
+        p.line = p.line.replace("K", "N");
+        p.line = p.line.replace("R", "L");
+        p.line = p.line.replace("Z", "K");
+    }
 String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
+    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+        line1 = "---: " + p.depth + " ---: " + p.score + " ---" + p.multipv + ": ";
+    }
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
+    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+        line1 = "---: " + p.depth + " ---: " + p.score + "\n";
+    }
 }
 String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);

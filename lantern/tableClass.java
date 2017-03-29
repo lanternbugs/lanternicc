@@ -30,6 +30,10 @@ Vector<String> data;
 Vector<String> collumns;
 String type1;
 String type2;
+    
+    boolean chessFontForMoveList;
+    boolean getChessFontForMoveList() { return chessFontForMoveList;}
+    void setChessFontForMoveList(boolean val) { chessFontForMoveList = val;}
 
 tableClass()
 {
@@ -48,7 +52,7 @@ collumns.add("Date Game Started");
 gamedata = new myDefaultTableModel(data, collumns);
 type1="none";
 type2="none";
-
+chessFontForMoveList = true;
 }// end constructor
 void createLiblistColumns()
 {
@@ -156,6 +160,29 @@ gamedata = new myDefaultTableModel(data, collumns);
 void addMove(int moveNum, String move)
 {
 	// moveNum 0 no moves.  move 1 white move 2 black
+    if(chessFontForMoveList) {
+        if(moveNum %2 == 0 ) {
+            move = move.replace("N", "Z");
+            move = move.replace("B", "J");
+            move = move.replace("Q", "M");
+            move = move.replace("K", "N");
+            move = move.replace("R", "L");
+            move = move.replace("P", "I");
+            move = move.replace("p", "I");
+            move = move.replace("Z", "K");
+            
+        } else {
+            move = move.replace("N", "k");
+            move = move.replace("B", "j");
+            move = move.replace("Q", "m");
+            move = move.replace("K", "n");
+            move = move.replace("R", "l");
+            move = move.replace("P", "i");
+            move = move.replace("p", "i");
+            
+        }
+        move = move.replace("@", "O");
+    }
 	Vector<String> newRow = new Vector();
 
 	if(moveNum %2 == 1)

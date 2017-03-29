@@ -29,6 +29,9 @@ import java.util.*;
 import java.math.BigInteger;
 
 public class channels {
+    Font chessfont1 = null;
+    Font originaMoveListFont = null;
+    boolean chessFontForMoveList = true;
   static String openingBookName = "lanternopeningbook19.db";
   static String oldOpeningBookName = "lanternopeningbook18.db";
   static String mediocreEngineName = "mediocre_v0.5.jar";
@@ -374,7 +377,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v5.92";
+version = "v5.93";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

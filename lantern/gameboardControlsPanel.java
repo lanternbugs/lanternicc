@@ -856,6 +856,11 @@ import layout.TableLayout;
         sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns(sharedVariables.mygame[gameData.BoardIndex].wild);
         sharedVariables.gametable[gameData.BoardIndex] =
           new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
+          sharedVariables.originaMoveListFont = sharedVariables.gametable[gameData.BoardIndex].getFont();
+          if(sharedVariables.chessFontForMoveList) {
+              sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.chessfont1);
+          }
+          sharedVariables.mygametable[gameData.BoardIndex].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
       }
       //gametable.setBackground(listColor);
       listScroller = new JScrollPane(sharedVariables.gametable[gameData.BoardIndex], JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -953,7 +958,7 @@ adjustMoveList();
       */
 
       int andreySpace = 5;
-      double[][] andreySize = {{150, TableLayout.FILL, 80},
+      double[][] andreySize = {{160, TableLayout.FILL, 90},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
