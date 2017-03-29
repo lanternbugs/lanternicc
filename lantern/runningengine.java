@@ -904,7 +904,6 @@ String parseChessFont(String line)
   line = line.replace("   ", " ");
   line = line.replace("  ", " ");
 
-  System.out.println("trying1");
  String newLine = "";
  int whiteMove = 1;
  int blackMove  = 2;
@@ -914,7 +913,7 @@ String parseChessFont(String line)
   return line;
 
  }
- System.out.println("trying2");
+
  int i = 0;
  try {
  StringTokenizer tokens = null;
@@ -926,7 +925,6 @@ String parseChessFont(String line)
   }
 
    boolean initialized = false;
-   System.out.println("starting while");
    while(tokens.hasMoreElements())
    {
       String temp = tokens.nextToken();
@@ -944,24 +942,19 @@ String parseChessFont(String line)
        }
        continue;
       } // if initializes
-      System.out.println("temp is " + temp);
       if(i %3 == newMove) {
         newLine = newLine + temp + " ";
-        System.out.println("addeing new move");
       }
        else if(i %3 == blackMove) {
            newLine = newLine + parseBlackFont(temp) + " ";
-            System.out.println("addeing black move");
        } else if(i %3 == whiteMove) {
           newLine = newLine + parseWhiteFont(temp) + " ";
-           System.out.println("addeing white move");
        }
       i++;
    }
       }// end try 
       catch(Exception dui) {
-      
-      System.out.println("exception is is " + i);}
+      }
    return newLine;
 }
 
@@ -1007,13 +1000,13 @@ PrincipalVariation p = multiLines.get(i);
 
 String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
     if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
-        line1 = "D: " + p.depth + " ---: " + p.score + " ---" + p.multipv + ": ";
+        line1 = "d: " + p.depth + " : " + p.score + " --" + p.multipv + ": ";
     }
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
     if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
-        line1 = "D: " + p.depth + " ---: " + p.score + "\n";
+        line1 = "d: " + p.depth + " : " + p.score + "\n";
     }
 }
 String line2 = p.line + "\n";
