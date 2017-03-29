@@ -36,6 +36,12 @@ note March 21st 2017:
 Added the Cold Marble, Green Marble, Slate, and Gray Tiles boards from Jin. Update - removed Gray Tiles, it did not scale to small sizes well.
 
 note march 21st 2017:
-added Kingdom and Condal pieces from Jin. 
+added Kingdom and Condal pieces from Jin.
+
+note March 28th 2017:
+Lantern now uses the Chess Alpha 2 font.
+"This font was originally designed by Eric Bentzen © 1998. Version 2 was modified by Peter Strickland © 2006."
+It is free for non commercial use. The readme for it and the font is in the chessalpha2 folder
+in the lantern folder visible when you extract the contents of the jar.
 
 Mike Adams
