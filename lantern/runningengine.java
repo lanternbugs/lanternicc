@@ -893,9 +893,109 @@ void sortMultiLines()
     }
   }
 }
+
+String parseChessFont(String line)
+{
+  line = line.replace("        ", " ");
+  line = line.replace("       ", " ");
+  line = line.replace("      ", " ");
+  line = line.replace("     ", " ");
+  line = line.replace("    ", " ");
+  line = line.replace("   ", " ");
+  line = line.replace("  ", " ");
+
+  System.out.println("trying1");
+ String newLine = "";
+ int whiteMove = 1;
+ int blackMove  = 2;
+ int newMove = 0;
+ if(line == null || line.equals(""))
+ {
+  return line;
+
+ }
+ System.out.println("trying2");
+ int i = 0;
+ try {
+ StringTokenizer tokens = null;
+
+ tokens = new StringTokenizer(line, " ");
+  if(!tokens.hasMoreElements())
+  {
+    return line;
+  }
+
+   boolean initialized = false;
+   System.out.println("starting while");
+   while(tokens.hasMoreElements())
+   {
+      String temp = tokens.nextToken();
+      if(!initialized) {
+        initialized = true;
+       newLine = newLine + temp + " ";
+       if(temp.contains("..")) {
+          if(tokens.hasMoreElements()) {
+               String temp2 = tokens.nextToken();
+               temp2 = parseBlackFont(temp2);
+               newLine = newLine + temp2 + " ";
+          }
+       } else {
+         i++;
+       }
+       continue;
+      } // if initializes
+      System.out.println("temp is " + temp);
+      if(i %3 == newMove) {
+        newLine = newLine + temp + " ";
+        System.out.println("addeing new move");
+      }
+       else if(i %3 == blackMove) {
+           newLine = newLine + parseBlackFont(temp) + " ";
+            System.out.println("addeing black move");
+       } else if(i %3 == whiteMove) {
+          newLine = newLine + parseWhiteFont(temp) + " ";
+           System.out.println("addeing white move");
+       }
+      i++;
+   }
+      }// end try 
+      catch(Exception dui) {
+      
+      System.out.println("exception is is " + i);}
+   return newLine;
+}
+
+String parseBlackFont(String line)
+{       try {
+        line = line.replace("N", "Z");
+        line = line.replace("B", "J");
+        line = line.replace("Q", "M");
+        line = line.replace("K", "N");
+        line = line.replace("R", "L");
+        line = line.replace("Z", "K");
+ } catch(Exception dui) {
+  System.out.println("color black exception");
+   }
+        return line;
+}
+
+String parseWhiteFont(String line)
+{
+ try {
+        line = line.replace("N", "k");
+        line = line.replace("B", "j");
+        line = line.replace("Q", "m");
+        line = line.replace("K", "n");
+        line = line.replace("R", "l");
+ } catch(Exception dui) {
+   System.out.println("color white exception");
+ }
+        return line;
+}
+
 void printMultiPv()
 {
-  
+
   try {
 
 
@@ -904,27 +1004,24 @@ doc.remove(0, doc.getLength());
 for(int i=0; i < multiLines.size(); i++)
 {
 PrincipalVariation p = multiLines.get(i);
-    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
-        p.line = p.line.replace("N", "Z");
-        p.line = p.line.replace("B", "J");
-        p.line = p.line.replace("Q", "M");
-        p.line = p.line.replace("K", "N");
-        p.line = p.line.replace("R", "L");
-        p.line = p.line.replace("Z", "K");
-    }
+
 String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
     if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
-        line1 = "---: " + p.depth + " ---: " + p.score + " ---" + p.multipv + ": ";
+        line1 = "D: " + p.depth + " ---: " + p.score + " ---" + p.multipv + ": ";
     }
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
     if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
-        line1 = "---: " + p.depth + " ---: " + p.score + "\n";
+        line1 = "D: " + p.depth + " ---: " + p.score + "\n";
     }
 }
 String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);
+
+ if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+        line2 = parseChessFont(line2);
+    }
 doc.insertString(doc.getLength(), line1 + line2, null);
 }
 for(int a=0; a<sharedVariables.openBoardCount; a++)
