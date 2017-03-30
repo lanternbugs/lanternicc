@@ -1690,6 +1690,9 @@ class mymultiframe extends JFrame
     boardarray[13] = new JCheckBoxMenuItem("Cold Marble");
     boardarray[14] = new JCheckBoxMenuItem("Green Marble");
     boardarray[15] = new JCheckBoxMenuItem("Slate");
+    boardarray[16] = new JCheckBoxMenuItem("Thief");
+    boardarray[17] = new JCheckBoxMenuItem("Tournament Mat");
+    boardarray[18] = new JCheckBoxMenuItem("Tournament Mat2");
   // .. / .. / (separator)
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
@@ -1887,7 +1890,7 @@ class mymultiframe extends JFrame
 
     myboardappearancemenu.add(selectboards);
     // .. / Boards /
-    for (int i=0; i<boardarray.length - 5; i++)
+    for (int i=0; i<boardarray.length - 8; i++)
     {  selectboards.add(boardarray[i]);
               if(i == 3) // dark wood
        {
@@ -1896,7 +1899,7 @@ class mymultiframe extends JFrame
        }
 
     }
-      for (int i=boardarray.length - 3; i<boardarray.length; i++)
+      for (int i=boardarray.length - 6; i<boardarray.length; i++)
       {  selectboards.add(boardarray[i]);
       }
     selectboards.addSeparator();
@@ -3694,6 +3697,19 @@ dot.setVisible(true);
 
     } else if (action.equals("Slate")) {
         sharedVariables.boardType=15;
+        setBoard(sharedVariables.boardType);
+        
+    }    else if (action.equals("Thief")) {
+        sharedVariables.boardType=16;
+        setBoard(sharedVariables.boardType);
+
+    }  else if (action.equals("Tournament Mat")) {
+        sharedVariables.boardType=17;
+        setBoard(sharedVariables.boardType);
+
+    }
+     else if (action.equals("Tournament Mat2")) {
+        sharedVariables.boardType=18;
         setBoard(sharedVariables.boardType);
         
     }
