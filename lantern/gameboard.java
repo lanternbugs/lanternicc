@@ -1227,27 +1227,28 @@ void stopTheEngine()
   void resetMoveList() {
 
     try {
-      for (int d=0; d<sharedVariables.openBoardCount; d++)
-        if (sharedVariables.mygametable[sharedVariables.gamelooking[d]] != null)
-          if (sharedVariables.gamelooking[d] == gameData.BoardIndex) {
-            sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
-              try {
-              if(sharedVariables.chessFontForMoveList) {
-                  sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.chessfont1);
-              } else {
-                  sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.originaMoveListFont);
-              }
-              }
-              catch(Exception chessfont) {}
-              sharedVariables.mygametable[gameData.BoardIndex].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
-            sharedVariables.mygametable
-              [gameData.BoardIndex].createMoveListColumns(
-
-               sharedVariables.mygame[gameData.BoardIndex].wild
-              );
+        sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
+       
+        sharedVariables.mygametable[gameData.BoardIndex].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
+        sharedVariables.mygametable
+        [gameData.BoardIndex].createMoveListColumns(
+                                                    
+                                                    sharedVariables.mygame[gameData.BoardIndex].wild
+                                                    );
+        if(sharedVariables.gametable[gameData.BoardIndex] != null)
+        {
             sharedVariables.gametable[gameData.BoardIndex].setModel
-              (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
-          }
+            (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
+            try {
+                if(sharedVariables.chessFontForMoveList) {
+                    sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.chessfont1);
+                } else {
+                    sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.originaMoveListFont);
+                }
+            }
+            catch(Exception baddui) { }
+        }
+        
     }// end try
     catch(Exception reset) {}
   }
