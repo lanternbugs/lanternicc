@@ -1235,7 +1235,7 @@ void stopTheEngine()
                                                     
                                                     sharedVariables.mygame[gameData.BoardIndex].wild
                                                     );
-        if(sharedVariables.gametable[gameData.BoardIndex] != null)
+        if(sharedVariables.gametable[gameData.BoardIndex] != null && sharedVariables.gamelooking[gameData.BoardIndex] == gameData.BoardIndex)
         {
             sharedVariables.gametable[gameData.BoardIndex].setModel
             (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
