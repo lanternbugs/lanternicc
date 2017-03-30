@@ -1235,19 +1235,23 @@ void stopTheEngine()
                                                     
                                                     sharedVariables.mygame[gameData.BoardIndex].wild
                                                     );
-        if(sharedVariables.gametable[gameData.BoardIndex] != null && sharedVariables.gamelooking[gameData.BoardIndex] == gameData.BoardIndex)
+                                                    
+        for(int i = 0; i < sharedVariables.gamelooking.length && i < sharedVariables.gametable.length; i++ ) {
+            if(sharedVariables.gamelooking[i] == gameData.BoardIndex && sharedVariables.gametable[i] != null )
         {
-            sharedVariables.gametable[gameData.BoardIndex].setModel
+            sharedVariables.gametable[i].setModel
             (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
             try {
                 if(sharedVariables.chessFontForMoveList) {
-                    sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.chessfont1);
+                    sharedVariables.gametable[i].setFont(sharedVariables.chessfont1);
                 } else {
-                    sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.originaMoveListFont);
+                    sharedVariables.gametable[i].setFont(sharedVariables.originaMoveListFont);
                 }
             }
             catch(Exception baddui) { }
-        }
+        }// end if
+        }// end for
+
         
     }// end try
     catch(Exception reset) {}
