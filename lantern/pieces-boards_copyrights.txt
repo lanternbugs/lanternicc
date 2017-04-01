@@ -46,7 +46,7 @@ in the lantern folder visible when you extract the contents of the jar.
 
 note March 30th 2017:
 Added three new board choices, Thief, Tournament Mat, and Tournament
-Mat2. (April 1st 2017 also added Wood 2 from Raptor. it's in Lantern's menu as Wood-6)
+Mat2. (April 1st 2017 also added Wood 2 and 3 from Raptor. they are in Lantern's menu as Wood-6 and Wood-7)
  They are from Raptor. Rapter is under the BSD New License.
 
 Mike Adams
