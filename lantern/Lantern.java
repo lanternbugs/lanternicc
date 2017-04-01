@@ -1031,7 +1031,7 @@ class mymultiframe extends JFrame
       if (top.equals("true"))
         return true;
     }  else {
-     return true;  // no file its true 
+     return true;  // no file its true
     }
     return false;
   }
@@ -4657,7 +4657,8 @@ dot.setVisible(true);
 
     for(int a=0; a<sharedVariables.maxGameTabs; a++)
       if(myboards[a] != null)
-        //if(myboards[a].isVisible() == true)
+        if(myboards[a].isVisible())
+        if(myboards[a].mypanel != null)
         myboards[a].mypanel.repaint();
 
   }
@@ -4955,7 +4956,8 @@ dot.setVisible(true);
 
     for (int a=0; a<sharedVariables.maxGameTabs; a++)
       if (myboards[a] != null)
-        //if(myboards[a].isVisible() == true)
+      if(myboards[a].mypanel != null)
+        if(myboards[a].isVisible())
         myboards[a].mypanel.repaint();
   }
    void setCheckersPieces(int type) {
@@ -4973,7 +4975,8 @@ dot.setVisible(true);
 
     for (int a=0; a<sharedVariables.maxGameTabs; a++)
       if (myboards[a] != null)
-        //if(myboards[a].isVisible() == true)
+        if(myboards[a].mypanel != null)
+        if(myboards[a].isVisible())
         myboards[a].mypanel.repaint();
   }
   void generateRandomPieces(int type) {

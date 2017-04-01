@@ -1227,24 +1227,18 @@ void stopTheEngine()
   void resetMoveList() {
 
     try {
-        sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
-       
-        sharedVariables.mygametable[gameData.BoardIndex].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
-        sharedVariables.mygametable
-        [gameData.BoardIndex].createMoveListColumns(
-                                                    
-                                                    sharedVariables.mygame[gameData.BoardIndex].wild
-                                                    );
-                                                    
-        for(int i = 0; i < sharedVariables.gamelooking.length && i < sharedVariables.gametable.length; i++ ) {
-            if(sharedVariables.gamelooking[i] == gameData.BoardIndex && sharedVariables.gametable[i] != null )
-        {
-            sharedVariables.gametable[i].setModel
-            (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
-        }// end if
-        }// end for
+      for (int d=0; d<sharedVariables.openBoardCount; d++)
+        if (sharedVariables.mygametable[sharedVariables.gamelooking[d]] != null)
+          if (sharedVariables.gamelooking[d] == gameData.BoardIndex) {
+            sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
+            sharedVariables.mygametable
+              [gameData.BoardIndex].createMoveListColumns(
 
-        
+               sharedVariables.mygame[gameData.BoardIndex].wild
+              );
+            sharedVariables.gametable[gameData.BoardIndex].setModel
+              (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
+          }
     }// end try
     catch(Exception reset) {}
   }
