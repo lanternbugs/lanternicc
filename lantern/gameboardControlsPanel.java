@@ -856,7 +856,6 @@ import layout.TableLayout;
         sharedVariables.mygametable[gameData.BoardIndex].createMoveListColumns(sharedVariables.mygame[gameData.BoardIndex].wild);
         sharedVariables.gametable[gameData.BoardIndex] =
           new JTable(sharedVariables.mygametable[gameData.BoardIndex].gamedata);
-          sharedVariables.originaMoveListFont = sharedVariables.gametable[gameData.BoardIndex].getFont();
           if(sharedVariables.chessFontForMoveList) {
               sharedVariables.gametable[gameData.BoardIndex].setFont(sharedVariables.chessfont1);
           }

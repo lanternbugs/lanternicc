@@ -30,7 +30,6 @@ import java.math.BigInteger;
 
 public class channels {
     Font chessfont1 = null;
-    Font originaMoveListFont = null;
     boolean chessFontForMoveList = true;
   static String openingBookName = "lanternopeningbook19.db";
   static String oldOpeningBookName = "lanternopeningbook18.db";
@@ -377,7 +376,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v5.95";
+version = "v5.96";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

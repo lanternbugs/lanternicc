@@ -1241,14 +1241,6 @@ void stopTheEngine()
         {
             sharedVariables.gametable[i].setModel
             (sharedVariables.mygametable[gameData.BoardIndex].gamedata);
-            try {
-                if(sharedVariables.chessFontForMoveList) {
-                    sharedVariables.gametable[i].setFont(sharedVariables.chessfont1);
-                } else {
-                    sharedVariables.gametable[i].setFont(sharedVariables.originaMoveListFont);
-                }
-            }
-            catch(Exception baddui) { }
         }// end if
         }// end for
 

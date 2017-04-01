@@ -382,6 +382,8 @@ class mymultiframe extends JFrame
     gamequeue = new ConcurrentLinkedQueue<newBoardData>();
 
     sharedVariables = new channels();
+    // chess font setting
+    sharedVariables.chessFontForMoveList =  getChessFontSetting();
     loadGraphicsStandAlone();
     sharedVariables.useTopGames = getOnTopSetting();
     queue = new ConcurrentLinkedQueue<myoutput>();
@@ -1012,6 +1014,24 @@ class mymultiframe extends JFrame
       String top = ontop.get(0);
       if (top.equals("true"))
         return true;
+    }
+    return false;
+  }
+  
+  boolean getChessFontSetting() {
+
+    scriptLoader loadScripts = new  scriptLoader();
+    ArrayList<String> ontop = new ArrayList();
+    // Andrey says:
+    // want to be able to change this to:
+    //List<String> ontop = new ArrayList<String>();
+    loadScripts.loadScript(ontop, "lantern_move_list_font_choice.txt");
+    if (ontop.size() > 0) {
+      String top = ontop.get(0);
+      if (top.equals("true"))
+        return true;
+    }  else {
+     return true;  // no file its true 
     }
     return false;
   }
@@ -4079,13 +4099,14 @@ dot.setVisible(true);
 
     }
     else if (action.equals("Chess Font For Move List")) {
-        sharedVariables.chessFontForMoveList = !sharedVariables.chessFontForMoveList;
-        chessFontForMoveList.setSelected(sharedVariables.chessFontForMoveList);
-        
-        String swarning =
-        "This setting will update on new boards or fully on restarting the program.";
-        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
-        pframe.setVisible(true);
+        boolean chessfont = getChessFontSetting();
+
+      FileWrite mywriter = new FileWrite();
+      String mess = "Next time you start the program,  a chess font for move list " +
+        (chessfont ? "will NOT" : "will") + " be used.";
+      Popup mypopper = new Popup(this, true, mess, sharedVariables);
+      mypopper.setVisible(true);
+      mywriter.write((chessfont ? "false" : "true") + "\r\n", "lantern_move_list_font_choice.txt");
         
     }
     else if (action.equals("Use Light Square as Board Background")) {
