@@ -1715,6 +1715,7 @@ class mymultiframe extends JFrame
     boardarray[18] = new JCheckBoxMenuItem("Tournament Mat2");
     boardarray[19] = new JCheckBoxMenuItem("Wood-6");
     boardarray[20] = new JCheckBoxMenuItem("Wood-7");
+    boardarray[21] = new JCheckBoxMenuItem("Wood-8");
   // .. / .. / (separator)
     JMenu preset = new JMenu("Preset Color Boards");
     // .. / .. / Preset Color Boards /
@@ -1912,7 +1913,7 @@ class mymultiframe extends JFrame
 
     myboardappearancemenu.add(selectboards);
     // .. / Boards /
-    for (int i=0; i<boardarray.length - 10; i++)
+    for (int i=0; i<boardarray.length - 11; i++)
     {  selectboards.add(boardarray[i]);
               if(i == 3) // dark wood
        {
@@ -1920,10 +1921,11 @@ class mymultiframe extends JFrame
            selectboards.add(boardarray[12]);
            selectboards.add(boardarray[19]);
            selectboards.add(boardarray[20]);
+           selectboards.add(boardarray[21]);
        }
 
     }
-      for (int i=boardarray.length - 8; i<boardarray.length -2; i++)
+      for (int i=boardarray.length - 9; i<boardarray.length -3; i++)
       {  selectboards.add(boardarray[i]);
       }
     selectboards.addSeparator();
@@ -3718,6 +3720,11 @@ dot.setVisible(true);
     }
     else if (action.equals("Wood-7")) {
       sharedVariables.boardType=20;
+      setBoard(sharedVariables.boardType);
+
+    }
+    else if (action.equals("Wood-8")) {
+      sharedVariables.boardType=21;
       setBoard(sharedVariables.boardType);
 
     }
