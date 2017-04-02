@@ -50,6 +50,6 @@ Mat2. (April 1st 2017 also added Wood 2 and 3 from Raptor. they are in Lantern's
  They are from Raptor. Rapter is under the BSD New License.
  
  note April 2nd 2017:
- Wood-8 board was found in google search of images public domain
+ Wood-8 board was found in google search of images. i was searching public domain stuf but as this was a blog post i could not ascertain the exact copyright and offer no clear rights. 
 
 Mike Adams
