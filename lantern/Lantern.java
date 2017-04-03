@@ -2551,8 +2551,37 @@ myboardappearancemenu.add(consoleaspect);
            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
         }
         else {
-            sharedVariables.uci = true;
-            sharedVariables.engineFile =  f;
+          sharedVariables.uci = true;
+            if(sharedVariables.operatingSystem.equals("mac")) {
+                 try {
+                   String lookup = getClass().getProtectionDomain().getCodeSource().getLocation() + "" ;
+                   if(lookup.length() > 7) {
+                   lookup = lookup.substring(5, lookup.length());
+                   }
+                   int b = 0; 
+                   int c = 0;
+                   while(b!= -1) {
+                     if(b + 1 >= lookup.length()) {
+                       break;
+                     }
+                    b = lookup.indexOf("/", b + 1);
+                    if(b > -1) {
+                     c = b;
+                    }
+                   }
+                   if(c > 0)
+                   {
+                    lookup = lookup.substring(0, c) + "/" + sharedVariables.stockfishName;
+                   }
+
+                  // System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation() + "/" + sharedVariables.stockfishName);
+                   System.out.println(lookup);
+                    File f2 = new File(lookup);
+                     sharedVariables.engineFile =  f2;
+                 } catch( Exception duii) { }
+              }  else {
+               sharedVariables.engineFile =  f;
+              }
             startTheEngine(false);
  
         }

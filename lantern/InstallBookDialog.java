@@ -123,6 +123,9 @@ class InstallBookDialog  extends JDialog
                       }
                     //Files.copy(link, file.getAbsoluteFile().toPath());
                     copyInputStreamToFile( link,  file );
+                    if(installType == stockfish8) {
+                     file.setExecutable(true);
+                    }
                     System.out.println("done copy");
                     if(installType == mediocreChess5) {
                       setPaneText("Mediocre Chess V0.5 succesfully installed.  Go to Options / Other Engines / Analyze With Mediocre Chess v0.5 again to open it.");
