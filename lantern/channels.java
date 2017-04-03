@@ -31,6 +31,7 @@ import java.math.BigInteger;
 public class channels {
     Font chessfont1 = null;
     boolean chessFontForMoveList = true;
+    static String stockfishName = "l-stockfish-8-64";
   static String openingBookName = "lanternopeningbook19.db";
   static String oldOpeningBookName = "lanternopeningbook18.db";
   static String mediocreEngineName = "mediocre_v0.5.jar";
@@ -376,7 +377,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v5.97";
+version = "v5.98";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -399,6 +400,9 @@ else
 	operatingSystem = "unix";
 }
 catch(Exception duiiii){}
+if(operatingSystem.equals("win")) {
+ stockfishName = "l-stockfish_8_x64.exe";
+}
 setupMenu();
 toolboxListData = new listClass("Scripts");
 

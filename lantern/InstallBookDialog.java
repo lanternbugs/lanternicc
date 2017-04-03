@@ -52,12 +52,15 @@ class InstallBookDialog  extends JDialog
   static int openingBook18 = 1;
   static int mediocreChess5 = 2;
   static int cuckooChess112 = 3;
+  static int stockfish8 = 4;
   boolean installEngine = false;
     int installType = 1;
+    Font myfont;
 
-    InstallBookDialog(JFrame frame, int type) {
+    InstallBookDialog(JFrame frame, int type, Font thefont) {
       super(frame, "Extract Opening Book", true);
-      setSize(250,200);
+      myfont = thefont;
+      setSize(350,300);
       if(type == mediocreChess5) {
        installEngine = true;
        setTitle("Extract Mediocre Chess Engine");
@@ -65,6 +68,10 @@ class InstallBookDialog  extends JDialog
         if(type == mediocreChess5) {
             installEngine = true;
             setTitle("Extract Cuckoo Chess Engine");
+        }
+        if(type == stockfish8) {
+            installEngine = true;
+            setTitle("Extract Stockfish 8 Engine");
         }
         installType = type;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -84,14 +91,21 @@ class InstallBookDialog  extends JDialog
                     file = new File(channels.mediocreEngineName);
                   }else if(installType == cuckooChess112) {
                      file = new File(channels.cuckooEngineName);
-                  }else {
+                  } else if(installType == stockfish8) {
+                     file = new File(channels.stockfishName);
+                  }
+                  else {
                     file = new File(channels.openingBookName);
                   }
                 if(installType == mediocreChess5) {
                      setPaneText("Installing Mediocre Chess");
                 } else if(installType == cuckooChess112) {
                     setPaneText("Installing Cuckoo Chess");
-                } else {
+                }  else if(installType == stockfish8) {
+                    setPaneText("Installing Stockfish 8");
+                }
+
+                else {
                     setPaneText("Installing Book");
                   }
                 if (!file.exists() && !file.isDirectory()) {
@@ -102,6 +116,8 @@ class InstallBookDialog  extends JDialog
                         link = (getClass().getResourceAsStream("/engines/" + channels.mediocreEngineName));
                     } else if(installType == cuckooChess112) {
                         link = (getClass().getResourceAsStream("/engines/" + channels.cuckooEngineName));
+                    } else if(installType == stockfish8) {
+                        link = (getClass().getResourceAsStream("/engines/" + channels.stockfishName));
                     }else {
                         link = (getClass().getResourceAsStream("/" + channels.openingBookName));
                       }
@@ -112,7 +128,11 @@ class InstallBookDialog  extends JDialog
                       setPaneText("Mediocre Chess V0.5 succesfully installed.  Go to Options / Other Engines / Analyze With Mediocre Chess v0.5 again to open it.");
                     } else if(installType == cuckooChess112) {
                         setPaneText("Cuckoo Chess 1.12 succesfully installed.  Go to Options / Analyze With Cuckoo Chess 1.12 again to open it.");
-                    } else {
+                    }  else if(installType == stockfish8) {
+                        setPaneText("Stockfish 8 succesfully installed.  Go to Options / Analyze With Stockfish 8 again to open it.");
+                    }
+
+                    else {
                       setPaneText("Opening book succesfully installed.  Go to Options / Opening Book again to open it.");
                     }
 
@@ -124,7 +144,11 @@ class InstallBookDialog  extends JDialog
                     setPaneText("Medicore Chess allready exists");
                     } else if(installType == cuckooChess112) {
                         setPaneText("Cuckoo Chess allready exists");
-                    } else {
+                    } else if(installType == stockfish8) {
+                        setPaneText("Stockfish 8 allready exists");
+                    }
+
+                     else {
                     setPaneText("Opening book file allready exists");
                     }
                     changeButtonsVisiblity();
@@ -164,6 +188,7 @@ class InstallBookDialog  extends JDialog
 
 
      textPane.setEditable(false);
+     textPane.setFont(myfont);
      String text = "To use the Opening Book the book file must be extracted from the Lantern Jar. It will create a file called " + channels.openingBookName + "  in the lantern folder with a size of 3 megs.";
      if(installType == mediocreChess5) {
         text = "To use the Medicore Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.mediocreEngineName + "  in the lantern folder with a size of less than a meg.";
@@ -171,6 +196,10 @@ class InstallBookDialog  extends JDialog
         if(installType == cuckooChess112) {
             text = "To use the Cuckoo Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.cuckooEngineName + "  in the lantern folder with a size of less than a meg.";
         }
+        if(installType == stockfish8) {
+            text = "To use the Stockfish 8 Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.stockfishName + "  in the lantern folder with a size of about a meg.";
+        }
+
      setPaneText(text);
 
       setVisible(true);

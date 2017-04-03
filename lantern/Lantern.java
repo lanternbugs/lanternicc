@@ -1290,6 +1290,7 @@ class mymultiframe extends JFrame
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     // .. / (separator)
+    JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 8");
     JMenuItem cuckooanalysis = new JMenuItem("Analyze with CuckooChess 1.12");
     JMenuItem mediocreanalysis = new JMenuItem("Analyze with Mediocre Chess v0.5");
     JMenuItem helpanalysis = new JMenuItem("Engine Analysis Help");
@@ -1419,8 +1420,14 @@ class mymultiframe extends JFrame
     optionsmenu.add(openingbookitem);
     // .. /
     optionsmenu.addSeparator();
-      optionsmenu.add(cuckooanalysis);
+
       JMenu javaEngines = new JMenu("Other Engines");
+      if(sharedVariables.operatingSystem.equals("win") || sharedVariables.operatingSystem.equals("mac")) {
+       optionsmenu.add(stockfishanalysis);
+      javaEngines.add(cuckooanalysis);
+      } else {
+       optionsmenu.add(cuckooanalysis); 
+      }
     javaEngines.add(mediocreanalysis);
       optionsmenu.add(javaEngines);
       optionsmenu.addSeparator();
@@ -1529,6 +1536,7 @@ class mymultiframe extends JFrame
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
     ucimultiplethree.addActionListener(this);
+    stockfishanalysis.addActionListener(this);
       cuckooanalysis.addActionListener(this);
     mediocreanalysis.addActionListener(this);
     helpanalysis.addActionListener(this);
@@ -2499,7 +2507,7 @@ myboardappearancemenu.add(consoleaspect);
             installed = true;
         }
         if(!installed) {
-            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.cuckooChess112);
+            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.cuckooChess112, sharedVariables.myFont);
         }
         else {
             sharedVariables.uci = true;
@@ -2519,12 +2527,33 @@ myboardappearancemenu.add(consoleaspect);
             installed = true;
         }
         if(!installed) {
-           InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.mediocreChess5);
+           InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.mediocreChess5, sharedVariables.myFont);
         }
         else {
             sharedVariables.uci = true;
             sharedVariables.engineFile =  f;
             startTheEngine(true);
+ 
+        }
+    }
+    
+     else if(action.equals("Analyze with Stockfish 8"))
+    {
+       if (sharedVariables.engineOn) {
+         return;
+       }
+        boolean installed = false;
+        File f = new File(sharedVariables.stockfishName);
+        if(f.exists() && !f.isDirectory()) {
+            installed = true;
+        }
+        if(!installed) {
+           InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
+        }
+        else {
+            sharedVariables.uci = true;
+            sharedVariables.engineFile =  f;
+            startTheEngine(false);
  
         }
     }
@@ -4362,7 +4391,7 @@ dot.setVisible(true);
         }// installed false
 
        if(!installed) {
-        InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18);
+        InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18, sharedVariables.myFont);
        }
         else if(sharedVariables.myOpeningBookView == null) {
             sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
