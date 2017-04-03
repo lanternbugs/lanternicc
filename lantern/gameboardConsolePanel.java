@@ -200,7 +200,9 @@ public void makehappen(int i)
 void setEngineDoc()
 {
 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);
-gameconsoles[gameData.BoardIndex].setFont(sharedVariables.analysisFont);
+if(sharedVariables.analysisFont != null) {
+  gameconsoles[gameData.BoardIndex].setFont(sharedVariables.analysisFont);
+}
 gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.analysisForegroundColor);
 gameconsoles[gameData.BoardIndex].setBackground(sharedVariables.analysisBackgroundColor);
 

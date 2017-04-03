@@ -682,10 +682,19 @@ try {
 }
 catch(Exception badEventsFont){}
 try {
+//analysisFont = new Font("Times New Roman", Font.PLAIN, 16);
+analysisFont = new Font("Arial", Font.PLAIN, 16);
+
+}
+catch(Exception badanalysisfont){
+try {
 analysisFont = new Font("Times New Roman", Font.PLAIN, 16);
 
 }
-catch(Exception badanalysisfont){}
+catch(Exception badanalysisfont2){
+analysisFont = null;
+}
+} // end try
 
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
@@ -758,8 +767,12 @@ tellNameColor=new Color(255,255,153);
 nameForegroundColor = new Color(51, 51, 0);
 nameBackgroundColor = new Color(255,255,204);
 
-analysisForegroundColor =  new Color(51, 51, 0);
-analysisBackgroundColor =  new Color(255,255,204);
+// below are old values pre lantern 5.98
+//analysisForegroundColor =  new Color(51, 51, 0);
+//analysisBackgroundColor =  new Color(255,255,204);
+
+analysisForegroundColor =  new Color(0, 0, 0);
+analysisBackgroundColor =  new Color(255,255,255);
 
 // my original tan board
 //lightcolor= new Color(255, 204, 204);

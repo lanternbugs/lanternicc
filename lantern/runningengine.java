@@ -999,20 +999,20 @@ for(int i=0; i < multiLines.size(); i++)
 PrincipalVariation p = multiLines.get(i);
 
 String line1 = "Depth: " + p.depth + " Score: " + p.score + " Multi-" + p.multipv + ": ";
-    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+    if(sharedVariables.analysisFont != null && sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
         line1 = "d: " + p.depth + " : " + p.score + " --" + p.multipv + ": ";
     }
 if(multiLines.size() == 1) //  no multipv
 {
   line1 = "Depth: " + p.depth + " Score: " + p.score + "\n";
-    if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+    if(sharedVariables.analysisFont != null && sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
         line1 = "d: " + p.depth + " : " + p.score + "\n";
     }
 }
 String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);
 
- if(sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
+ if(sharedVariables.analysisFont != null && sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
         line2 = parseChessFont(line2);
     }
 doc.insertString(doc.getLength(), line1 + line2, null);
