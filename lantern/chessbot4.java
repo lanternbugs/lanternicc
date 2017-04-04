@@ -259,10 +259,17 @@ t.start();
                                           myDocWriter.patchedInsertString(printObj.doc, printObj.end, printObj.mystring, printObj.attrs);
                                           printObj=sharedVariables.printQueue.poll();
                                         }
-                                        
+                                              try {    // allways runs
+                                               int mysounds=myboards[sharedVariables.soundBoard].gameData.LookingAt;
+                                                if(mysounds != sharedVariables.soundGame)
+                                                sharedVariables.soundGame=mysounds;
+                                                }
+                                                catch(Exception nolook){}
                                         	if(!queue.isEmpty()) {
       SwingUtilities.invokeLater(new Runnable() {
     public void run() {
+
+
         client2.runSendToIcs();// job processing
     }
 });
@@ -6467,12 +6474,7 @@ public void runSendToIcs()
 	try{
 					myoutput tosend = new myoutput();
 					tosend=queue.poll();
-                                                 try {    // allways runs
-                                                 int mysounds=myboards[sharedVariables.soundBoard].gameData.LookingAt;
-                                                if(mysounds != sharedVariables.soundGame)
-                                                sharedVariables.soundGame=mysounds;
-                                                }
-                                                catch(Exception nolook){}
+
 
 
 					while(tosend != null)
