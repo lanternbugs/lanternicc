@@ -259,7 +259,15 @@ t.start();
                                           myDocWriter.patchedInsertString(printObj.doc, printObj.end, printObj.mystring, printObj.attrs);
                                           printObj=sharedVariables.printQueue.poll();
                                         }
-                                         client2.runSendToIcs();// job processing
+                                        
+                                        	if(!queue.isEmpty()) {
+      SwingUtilities.invokeLater(new Runnable() {
+    public void run() {
+        client2.runSendToIcs();// job processing
+    }
+});
+      }
+
                                         updateBoardMenuText();
 
                                         if(!sharedVariables.cachedCurrentHash.toString().equals(gamestate.currentHash.toString())) {
