@@ -138,11 +138,13 @@ public void makehappen(int i)
                 sharedVariables.mygame[gameData.LookingAt].blacknow = (long) time;
 
             }
-
+             try {
             if(lastTabNumber > -1)
             channelTabs[lastTabNumber].setBackground(sharedVariables.tabBackground);
+             } catch(Exception a12) { }
+             try {
             setActiveTabForeground(physicalTab);
-
+             }catch(Exception a13) { }
          //  mypanel.repaint();
          // mycontrolspanel.repaint();
 
@@ -162,29 +164,34 @@ public void makehappen(int i)
 
  			try {prefixHandler.setSelectedIndex(comboMemory[i]); }catch(Exception dummy){}
  			sharedVariables.lastButton=gameData.BoardIndex;
+ 			
+ 			try {
  			sharedVariables.moveSliders[gameData.BoardIndex].setMaximum(sharedVariables.mygame[gameData.LookingAt].turn);
  			sharedVariables.moveSliders[gameData.BoardIndex].setValue(sharedVariables.mygame[gameData.LookingAt].turn);
- 			
+                        } catch(Exception a14) { }
 
  			sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
- 			
+
                          if(gameData.LookingAt == sharedVariables.engineBoard && sharedVariables.engineOn == true )
                          {
                            if(gameData.LookingAt != oldLookingAt) {
                              sharedVariables.mygame[gameData.LookingAt].clickCount--;
                            }
-
+                            try {
                            if(sharedVariables.mygame[gameData.LookingAt].clickCount %2 == 0)
                            setEngineDoc();
                            else {
                            setGameDoc();
+                           }
+                            }
+                           catch(Exception a19) { }
                             if(gameData.LookingAt == oldLookingAt && tryOnce == true) {
                               tryOnce = false;
                             try {
                               String promptText = "Click tab to toggle analysis back on\n";
                               sharedVariables.mygamedocs[gameData.LookingAt].insertString(sharedVariables.mygamedocs[gameData.LookingAt].getLength(), promptText, null);
                             }catch(Exception ee){}
-                            }
+
                            }
                             sharedVariables.mygame[gameData.LookingAt].clickCount++;
                          }
@@ -193,31 +200,36 @@ public void makehappen(int i)
 
 
                          sharedVariables.pointedToMain[gameData.BoardIndex]=false;// this tells us if the tab is on a game but console is on main
- 			sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
+ 			 try {
+                         sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
 			adjustMoveList();
+			  } catch(Exception a111) { }
  								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type somethi
 }
 void setEngineDoc()
 {
+  
+  try {
 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.engineDoc);
 if(sharedVariables.analysisFont != null) {
   gameconsoles[gameData.BoardIndex].setFont(sharedVariables.analysisFont);
 }
 gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.analysisForegroundColor);
 gameconsoles[gameData.BoardIndex].setBackground(sharedVariables.analysisBackgroundColor);
-
+  } catch(Exception dui) { }
 }
 void  setGameDoc()
- {
+ { 
+   try {
    gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mygamedocs[gameData.LookingAt]);
    gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.ForColor);
 gameconsoles[gameData.BoardIndex].setBackground(sharedVariables.BackColor);
 if(sharedVariables.myFont != null)
 	gameconsoles[gameData.BoardIndex].setFont(sharedVariables.myFont);
-
+   }catch(Exception dui2) { }
  }
 void setMainConsoleDoc()
-{
+{   try {
 gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainConsoleIndex]);
      if(sharedVariables.tabStuff[mainConsoleIndex].tabFont!=null)
      gameconsoles[gameData.BoardIndex].setFont(sharedVariables.tabStuff[mainConsoleIndex].tabFont);
@@ -233,7 +245,7 @@ gameconsoles[gameData.BoardIndex].setStyledDocument(sharedVariables.mydocs[mainC
      gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.tabStuff[mainConsoleIndex].ForColor);
      else
      gameconsoles[gameData.BoardIndex].setForeground(sharedVariables.ForColor);
-
+}catch(Exception dui2) { }
 }
 
 

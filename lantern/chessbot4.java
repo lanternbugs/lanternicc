@@ -229,9 +229,9 @@ t.start();
 						 queue.add(output);
 						}
 					}
-					int got;
+     int got;
 
-					if(sharedVariables.myServer.equals("FICS"))
+     if(sharedVariables.myServer.equals("FICS"))
 					got=getdata();
 					else
 					got = getIccData();
@@ -4599,8 +4599,16 @@ try {
 	}// end try
 	catch(Exception e)
 	{ }
+	
+	if(!gamequeue.isEmpty()) {
+      SwingUtilities.invokeLater(new Runnable() {
+    public void run() {
+        client.Run();
+    }
+});
+ }
 
-client.Run();
+
 	}
 
 int getGameNumber(String icsGameNumber)
