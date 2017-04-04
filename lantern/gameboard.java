@@ -203,13 +203,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
       gameData.LookingAt=boardNumber;
 
       sharedVariables.gamelooking[gameData.BoardIndex]=gameData.LookingAt;
-      ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-      Lock readLock = rwl.readLock();
-      readLock.lock();
+
+
       if(sharedVariables.mygame[gameData.BoardIndex] == null)
         sharedVariables.mygame[gameData.BoardIndex] =
           new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
-      readLock.unlock();
+
       //writeout("going to create overall\n");
       myconsolepanel =
         new gameboardConsolePanel(topGame, consoles, consoleSubframes,
@@ -840,12 +839,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                    String white_initial, String white_inc, String type,
                    String white_rating, String black_rating,
                    String white_titles, String black_titles, int played) {
-    ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-    Lock readLock = rwl.readLock();
-    readLock.lock();
+
     sharedVariables.mygame[gameData.BoardIndex] =
       new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
-    readLock.unlock();
+
     boolean lowTime=false;
     
     try {
@@ -1350,10 +1347,7 @@ void stopTheEngine()
     //int tempnumber=getGameNumber(icsGameNumber);
     //if(tempnumber == myGameNumber)
     //{
-    ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-    Lock writeLock = rwl.writeLock();
-    
-    writeLock.lock();
+
     try {
       //double whiteClockd, blackClockd;
       if(colort.equals("W")) {
@@ -1387,7 +1381,7 @@ void stopTheEngine()
           System.currentTimeMillis();
       }
     } catch(Exception e) {}
-    finally { writeLock.unlock();}
+
     //}
   }
 
@@ -1505,9 +1499,10 @@ void stopTheEngine()
 
     }// ened paint clocks
 
-    public void run (  )   {
 
-      //void updateTime()
+
+
+    public void run() {
 
       if (sharedVariables.mygame[gameData.BoardIndex] == null)
         // not equal null remove
@@ -1521,16 +1516,19 @@ void stopTheEngine()
         paintClocks();
         return;
       }
+       SwingUtilities.invokeLater(new Runnable() {
+    public void run() {
+      
+
       int newminute=0;
       int newsecond=0;
       int newtenth=0;
       if (((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 1 &&  sharedVariables.mygame[gameData.BoardIndex].wild != 30)
       || ((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 0 && sharedVariables.mygame[gameData.BoardIndex].wild == 30)) {
         // white on the move
-        ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-        Lock writeLock = rwl.writeLock();
+
         try {
-          writeLock.lock();
+
 
 
           double time=System.currentTimeMillis();
@@ -1560,9 +1558,7 @@ void stopTheEngine()
                       (sharedVariables.mygame[gameData.BoardIndex].wtime ));
 
         } catch(Exception duy) {}
-        finally {
-          writeLock.unlock();
-        }
+
 
         if (sharedVariables.mygame[gameData.BoardIndex].whiteMinute != newminute ||
             sharedVariables.mygame[gameData.BoardIndex].whiteSecond != newsecond ||
@@ -1570,20 +1566,16 @@ void stopTheEngine()
 
           if (sharedVariables.mygame[gameData.BoardIndex].state !=
               sharedVariables.STATE_EXAMINING) {
-            ReentrantReadWriteLock rwll = new ReentrantReadWriteLock();
-            Lock readLock = rwll.readLock();
+
             try {
-              readLock.lock();
+
 
               sharedVariables.mygame[gameData.BoardIndex].whiteMinute=newminute;
 
               sharedVariables.mygame[gameData.BoardIndex].whiteSecond=newsecond;
               sharedVariables.mygame[gameData.BoardIndex].whiteTenth=newtenth;
             } catch(Exception duyi) {}
-            finally {
 
-              readLock.unlock();
-            }
 	  		}
           //if(isVisible() == true)
           //repaint();
@@ -1593,10 +1585,9 @@ void stopTheEngine()
       }// end if white
       else {
 
-        ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-        Lock writeLock = rwl.writeLock();
+
         try {
-          writeLock.lock();
+
 
           double time=System.currentTimeMillis();
           time=(double)(time-sharedVariables.mygame[gameData.BoardIndex].blacknow);
@@ -1611,8 +1602,7 @@ void stopTheEngine()
           newtenth =
             getTenths(1000 * (sharedVariables.mygame[gameData.BoardIndex].btime));
         } catch(Exception duy){}
-        finally {
-          writeLock.unlock(); }
+
 
         if (sharedVariables.mygame[gameData.BoardIndex].blackMinute != newminute ||
             sharedVariables.mygame[gameData.BoardIndex].blackSecond != newsecond ||
@@ -1628,10 +1618,7 @@ void stopTheEngine()
               sharedVariables.mygame[gameData.BoardIndex].blackSecond=newsecond;
               sharedVariables.mygame[gameData.BoardIndex].blackTenth=newtenth;
             } catch(Exception duyi) {}
-            finally {
 
-
-            }
 
           }
           //if(isVisible() == true)
@@ -1641,6 +1628,11 @@ void stopTheEngine()
 
         }
       }// end if black
+      
+
+
+         }
+         });// end invoke later
     }
 
   }// end todo class
