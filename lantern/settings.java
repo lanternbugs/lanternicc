@@ -811,6 +811,27 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donetime-24hr] ";
 
+// ecluded boards
+for(int exclb = 0; exclb < sharedVariables.excludedBoards.length; exclb++)
+{
+ if(sharedVariables.excludedBoards[exclb]==true)
+ {
+
+// channel timestamp
+	set_string = set_string + "[brdexcluded] ";
+
+		set_string = set_string + exclb + " ";
+
+	// closing
+		set_string = set_string + "[donebrdexcluded] ";
+
+
+
+ }// end if
+
+}// end for
+
+
 // ecluded pieces
 for(int excl = 0; excl < sharedVariables.excludedPiecesWhite.length; excl++)
 {
@@ -2347,7 +2368,16 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					catch(Exception zzz){}
 				}
 
+                                if (temp.equals("[brdexcluded]"))
+				{
+				try {
+					int truth2 = Integer.parseInt(tokens.nextToken());
+                                         sharedVariables.excludedBoards[truth2]=true;
 
+                                }
+                                catch(Exception exclusion){}
+
+                                }// end excluded
 				if (temp.equals("[excluded]"))
 				{
 				try {

@@ -82,6 +82,7 @@ static boolean firstSound=true;
 boolean [] pointedToMain = new boolean[100];
 boolean [] excludedPiecesBlack;
 boolean [] excludedPiecesWhite;
+boolean [] excludedBoards;
 boolean highlightMoves;
 boolean makeSounds;
 boolean makeObserveSounds;
@@ -377,7 +378,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v6.01";
+version = "v6.01a";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -423,12 +424,19 @@ myseek = new seekData();
 resourceClass dummyUse = new resourceClass();
 excludedPiecesWhite = new boolean[dummyUse.maxPieces - 1];
 excludedPiecesBlack = new boolean[dummyUse.maxPieces - 1];
+excludedBoards = new boolean[dummyUse.maxBoards];
 
 for(int excl = 0; excl < dummyUse.maxPieces - 1; excl++)
 {
   excludedPiecesWhite[excl]=false;
   excludedPiecesBlack[excl]=false;
 }
+
+for(int exclB = 0; exclB < dummyUse.maxBoards; exclB++)
+{
+  excludedBoards[exclB]=false;
+}
+
 
 noidle=false;
 standAlone = true;

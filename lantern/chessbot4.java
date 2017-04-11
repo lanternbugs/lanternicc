@@ -5227,7 +5227,7 @@ void proccessGameInfo(newBoardData temp)
                                         if(sharedVariables.openBoardCount == 1 && sharedVariables.tabLooking[0] == -1)
                                         {
                                           sharedVariables.tabLooking[0] =0;
-                                          sharedVariables.mygame[0]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+                                          sharedVariables.mygame[0]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack, sharedVariables.excludedBoards);
                                         }
 
                                         try {
@@ -6164,7 +6164,7 @@ if(sharedVariables.tabsOnly == true)
 							        break;
 				                        }
                                 */
-                                sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+                                sharedVariables.mygame[a]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack, sharedVariables.excludedBoards);
 
                                 return a;
 				}
@@ -6218,7 +6218,7 @@ if(sharedVariables.tabsOnly == true)
                  else
                   myboards[last].setVisible(true);
                   mycreator.updateBoardsMenu(last);
-                  sharedVariables.mygame[last]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+                  sharedVariables.mygame[last]=new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack, sharedVariables.excludedBoards);
                    //myboards[last].myconsolepanel.makehappen(last);
                    for(int tab = 0; tab < sharedVariables.openBoardCount; tab++)
                    { myboards[last].myconsolepanel.channelTabs[tab].setVisible(true);
@@ -7090,7 +7090,7 @@ try {
 		Lock readLock = rwl.readLock();
 
 readLock.lock();
-		sharedVariables.mygame[tabNumber] = new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+		sharedVariables.mygame[tabNumber] = new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack, sharedVariables.excludedBoards);
 
                 //if(physicalTab != 0)
                 sharedVariables.mygame[tabNumber].imclosed = true;

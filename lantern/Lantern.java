@@ -1364,6 +1364,7 @@ class mymultiframe extends JFrame
     JMenuItem configureRand = new JMenuItem("Configure Random Pieces For White");
     JMenuItem configureRandBlack = new JMenuItem("Configure Random Pieces For Black");
     randomTiles = new JCheckBoxMenuItem("Random Square Tiles Observe Only");
+    JMenuItem configureRandBoards = new JMenuItem("Configure Random Square Tiles");
     // .. /
     JMenu chattimestamp = new JMenu("Chat Timestamp");
     // .. / Chat Timestamp /
@@ -1509,6 +1510,7 @@ class mymultiframe extends JFrame
     randomGraphics.add(configureRand);
     randomGraphics.add(configureRandBlack);
     randomGraphics.add(randomTiles);
+    randomGraphics.add(configureRandBoards);
     // .. /
     optionsmenu.add(chattimestamp);
     // .. / Chat Timestamp /
@@ -1586,6 +1588,7 @@ class mymultiframe extends JFrame
     configureRand.addActionListener(this);
     configureRandBlack.addActionListener(this);
     randomTiles.addActionListener(this);
+    configureRandBoards.addActionListener(this);
     channelTimestamp.addActionListener(this);
     shoutTimestamp.addActionListener(this);
     tellTimestamp.addActionListener(this);
@@ -4333,7 +4336,15 @@ dot.setVisible(true);
                                           excludedSetting, whiteSetting);
       goConfigure.setVisible(true);
 
-    } else if (action.equals("Random Square Tiles Observe Only")) {
+    }
+     else if (action.equals("Configure Random Square Tiles")) {
+      CustomizeExcludedBoardsDialog goConfigure =
+        new CustomizeExcludedBoardsDialog(this, false, sharedVariables, graphics,
+                                          sharedVariables.excludedBoards);
+      goConfigure.setVisible(true);
+
+    }
+     else if (action.equals("Random Square Tiles Observe Only")) {
       sharedVariables.randomBoardTiles = !sharedVariables.randomBoardTiles;
       randomTiles.setSelected(sharedVariables.randomBoardTiles);
 

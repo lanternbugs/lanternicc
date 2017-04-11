@@ -207,7 +207,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
       if(sharedVariables.mygame[gameData.BoardIndex] == null)
         sharedVariables.mygame[gameData.BoardIndex] =
-          new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+          new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack,sharedVariables.excludedBoards);
 
       //writeout("going to create overall\n");
       myconsolepanel =
@@ -732,7 +732,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     Lock readLock = rwl.readLock();
     readLock.lock();
     sharedVariables.mygame[gameData.BoardIndex] =
-      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack,sharedVariables.excludedBoards);
     readLock.unlock();
 
     sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
@@ -841,7 +841,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                    String white_titles, String black_titles, int played) {
 
     sharedVariables.mygame[gameData.BoardIndex] =
-      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack);
+      new gamestate(sharedVariables.excludedPiecesWhite, sharedVariables.excludedPiecesBlack, sharedVariables.excludedBoards);
 
     boolean lowTime=false;
     
@@ -2725,9 +2725,11 @@ class randomPieces {
   channels SharedVariables;
   boolean [] excludedPiecesWhite;
    boolean [] excludedPiecesBlack;
-  randomPieces(boolean [] excludedPieces1, boolean [] excludedPieces2) {
+    boolean [] excludedBoards;
+  randomPieces(boolean [] excludedPieces1, boolean [] excludedPieces2, boolean [] excludedBoards1) {
     excludedPiecesWhite=excludedPieces1;
     excludedPiecesBlack=excludedPieces2;
+    excludedBoards = excludedBoards1;
     blackPieceNum=0;
     whitePieceNum=0;
     boardNum=0;
@@ -2741,13 +2743,27 @@ class randomPieces {
    blackPieceNum = getChoiceBlack(randomGenerator.nextInt(getMaxPieceChoiceBlack() - 1),
                              whitePieceNum, maxDepth);
 
-   boardNum = randomGenerator.nextInt(temp.maxBoards);
+  // boardNum = randomGenerator.nextInt(temp.maxBoards);
+  boardNum =   getChoiceBoard(randomGenerator.nextInt(getMaxBoardChoice()),
+                             boardNum, maxDepth);
  }
 
  int getMaxPieceChoiceWhite() {
    int x=0;
    for (int y=0; y<excludedPiecesWhite.length; y++)
      if (excludedPiecesWhite[y]==false)
+       x++;
+
+   if (x > 2)
+     return x;
+
+   return 2;
+ }
+ 
+ int getMaxBoardChoice() {
+   int x=0;
+   for (int y=0; y<excludedBoards.length; y++)
+     if (excludedBoards[y]==false)
        x++;
 
    if (x > 2)
@@ -2813,6 +2829,27 @@ class randomPieces {
 
    return 0;
  }     // end function
+
+  int getChoiceBoard(int num, int otherset, int depth) {
+   int i=0;
+   int y;
+   for (y=0; y<excludedBoards.length; y++) {
+     if (excludedBoards[y] == false)
+     {  if (i==num)
+         return y;
+
+
+       i++;
+   }
+   }     // end for
+
+         if(i==num && depth > 0)
+       return getChoiceBoard(randomGenerator.nextInt(getMaxBoardChoice()), -1, depth-1);
+     // end for
+
+   return 0;
+ }     // end function
+
 
 
 
