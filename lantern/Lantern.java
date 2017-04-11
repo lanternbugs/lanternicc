@@ -1507,8 +1507,10 @@ class mymultiframe extends JFrame
     observeOptions.add(randomGraphics);
     // .. / .. / Random Pieces Board when Observing /
     randomGraphics.add(randomArmy);
+    randomGraphics.addSeparator();
     randomGraphics.add(configureRand);
     randomGraphics.add(configureRandBlack);
+    randomGraphics.addSeparator();
     randomGraphics.add(randomTiles);
     randomGraphics.add(configureRandBoards);
     // .. /
