@@ -51,7 +51,7 @@ setTitle(" Pieces Checked show in random pieces on observe.");
 setSize(500,500);
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-checkPanel.setLayout(new GridLayout(11, 2));
+checkPanel.setLayout(new GridLayout(0, 3));
 mypieces = new JCheckBox[dummyUse.maxPieces - 1];
 
 
@@ -132,6 +132,7 @@ field2.setForeground(forcol);
 field2.setLineWrap(true);
 field2.setWrapStyleWord(true);
 JScrollPane myscroller = new JScrollPane(field2);
+field2.setFont(sharedVariables.myFont);
 field2.setText(getText());
 
 

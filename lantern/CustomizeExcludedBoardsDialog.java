@@ -20,6 +20,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.JDialog;
 import javax.swing.GroupLayout.*;
+import java.awt.geom.*;
 
 
 class CustomizeExcludedBoardsDialog extends JDialog
@@ -46,11 +47,11 @@ excludedBoards =excludedBoards1;
 String excluded=getExcluded();
 if(excluded== null)
 excluded = "";
-setTitle(" Boards Checked show in random boards on observe.");
-setSize(500,500);
+setTitle(" Boards checked show in random square tiles on observe.");
+setSize(550,500);
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-checkPanel.setLayout(new GridLayout(11, 2));
+checkPanel.setLayout(new GridLayout(0, 3));
 myBoards = new JCheckBox[dummyUse.maxBoards];
 
 
@@ -75,8 +76,7 @@ for(int z=0; z< dummyUse.maxBoards; z++)
 				{
                                   //String mytext= field.getText();
 				 try
-			 	{        if(num == 0) 
-			 	           return;
+			 	{        
                                          Boards=num;
                                          myImagePanel.repaint();
                                   }
@@ -140,6 +140,7 @@ field2.setForeground(forcol);
 field2.setLineWrap(true);
 field2.setWrapStyleWord(true);
 JScrollPane myscroller = new JScrollPane(field2);
+field2.setFont(sharedVariables.myFont);
 field2.setText(getText());
 
 
@@ -181,7 +182,7 @@ SequentialGroup v4 = layout.createSequentialGroup();
 	v3.addComponent(cancelButton);
 
 
-        v4.addComponent(myImagePanel, 50, 50, 50);
+        v4.addComponent(myImagePanel, 75, 75, 75);
           v4.addGroup(v3);
 
 
@@ -213,7 +214,7 @@ String getText()
 {
 String mess="";
 
-mess = "Check the Boards you wish for random boards on observe to choose from and uncheck those you dont. Hit ok to save your changes.";
+mess = "Check the Boards you wish for random square tiles on observe to choose from and uncheck those you dont. Hit ok to save your changes.";
 
 
  return mess;
@@ -228,16 +229,32 @@ class JImagePanel extends JPanel
 
 		super.paintComponent(g);
 
-		//setBackground(sharedVariables.boardBackgroundColor);
+		setBackground(sharedVariables.boardBackgroundColor);
 
 		Graphics2D g2 = (Graphics2D) g;
 
                 int boardx=5;
 		int boardy=5; // upper left
-		int square=50;
+		int square=75;
 		int dif=2;
-                for(int a=0; a<2; a++)
-                g.drawImage(graphics.boards[Boards][a], boardx +  a * square + dif , boardy + dif, square - dif, square-4, this);
+                for(int a=0; a<6; a++)   {
+                 if(Boards == 0)
+                 {
+                     if(a%2 == 1)
+				g2.setColor(sharedVariables.lightcolor);
+				else
+				g2.setColor(sharedVariables.darkcolor);
+
+
+
+					g2.fill(new Rectangle2D.Double((double) boardx +  a * square + dif, (double) boardy + dif, (double) square - dif, (double)square-4));
+
+                 }//end solid colored board
+                 else {
+                     g.drawImage(graphics.boards[Boards][(a+1)%2], boardx +  a * square + dif , boardy + dif, square - dif, square-4, this);
+                 }
+                }
+
 
   }
   catch(Exception dui){}
