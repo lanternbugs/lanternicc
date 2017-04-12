@@ -82,7 +82,10 @@ public class Lantern {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.SystemLookAndFeel");
 
     } catch (Exception d) {}
-
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+          try {
     final mymultiframe frame = new mymultiframe();
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     //DO_NOTHING_ON_CLOSE
@@ -96,16 +99,11 @@ public class Lantern {
 
     //frame.setDefaultLookAndFeelDecorated(false);
 
-    SwingUtilities.invokeLater(new Runnable() {
-        @Override
-          public void run() {
-          try {
-            frame.repaintTabs();
-          } catch (Exception e1) {
-            //ignore
-          }
-        }
-      });
+
+
+
+      
+      frame.repaintTabs();
 
 
     try {
@@ -150,7 +148,13 @@ public class Lantern {
       frame.sharedVariables.setDefaultWebBoardSize();
     }
     catch(Exception duiii){}
+     } catch (Exception e1) {
+            //ignore
+          }
+        }
+      });
   }
+
 }// end main class
 
 class mymultiframe extends JFrame

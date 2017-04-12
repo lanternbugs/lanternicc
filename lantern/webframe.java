@@ -162,22 +162,25 @@ void openUrl(String myurl)
 
 
 consoles[consoleNumber].addMouseListener(new MouseAdapter() {
-         public void mousePressed(MouseEvent e) {
+         public void mousePressed(MouseEvent e) { try {
             if(e.isPopupTrigger())
 
                if(consoles[consoleNumber].getSelectedText().indexOf(" ") == -1)
                menu3.show(e.getComponent(),e.getX(),e.getY());
                else
                menu.show(e.getComponent(),e.getX(),e.getY());
+         }catch(Exception dui) { }
 
 
          }
          public void mouseReleased(MouseEvent e) {
+           try {
             if(e.isPopupTrigger())
                if(consoles[consoleNumber].getSelectedText().indexOf(" ") == -1)
                menu3.show(e.getComponent(),e.getX(),e.getY());
                else
                menu.show(e.getComponent(),e.getX(),e.getY());
+           }catch(Exception dui) { }
         }
 
 
@@ -206,6 +209,7 @@ consoles[consoleNumber].addHyperlinkListener(new HyperlinkListener()
 				//String cmdLine = "start " + r.getURL();
 				//Process p = Runtime.getRuntime().exec(cmdLine);
 				String myurl="" + r.getURL();
+				consoles[consoleNumber].setContentType("text/html");
 				consoles[consoleNumber].setPage(myurl);
 
 		 	}
