@@ -1228,6 +1228,7 @@ void stopTheEngine()
         if (sharedVariables.mygametable[sharedVariables.gamelooking[d]] != null)
           if (sharedVariables.gamelooking[d] == gameData.BoardIndex) {
             sharedVariables.mygametable[gameData.BoardIndex] = new tableClass();
+            sharedVariables.mygametable[gameData.BoardIndex].setChessFontForMoveList(sharedVariables.chessFontForMoveList);
             sharedVariables.mygametable
               [gameData.BoardIndex].createMoveListColumns(
 

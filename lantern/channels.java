@@ -378,7 +378,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v6.03";
+version = "v6.04";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -403,6 +403,9 @@ else
 catch(Exception duiiii){}
 if(operatingSystem.equals("win")) {
  stockfishName = "l-stockfish_8_x64.exe";
+} else if(operatingSystem.equals("unix")) 
+{
+ stockfishName = "stockfish_8_x64"; 
 }
 setupMenu();
 toolboxListData = new listClass("Scripts");

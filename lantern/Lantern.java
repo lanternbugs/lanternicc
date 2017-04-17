@@ -1427,7 +1427,13 @@ class mymultiframe extends JFrame
     optionsmenu.addSeparator();
 
       JMenu javaEngines = new JMenu("Other Engines");
-      if(sharedVariables.operatingSystem.equals("win") || sharedVariables.operatingSystem.equals("mac")) {
+      boolean unixStockfishInstalled = false;
+      try {
+        File f = new File(sharedVariables.stockfishName);
+        if(f.exists() && !f.isDirectory())
+            unixStockfishInstalled = true;
+      }catch(Exception duistocky) { }
+      if(sharedVariables.operatingSystem.equals("win") || sharedVariables.operatingSystem.equals("mac") || unixStockfishInstalled) {
        optionsmenu.add(stockfishanalysis);
       javaEngines.add(cuckooanalysis);
       } else {
@@ -2557,11 +2563,14 @@ myboardappearancemenu.add(consoleaspect);
             installed = true;
         }
         if(!installed) {
+          if(sharedVariables.operatingSystem.equals("unix")) {
+           return;
+          }
            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
         }
         else {
           sharedVariables.uci = true;
-            if(sharedVariables.operatingSystem.equals("mac")) {
+            if(sharedVariables.operatingSystem.equals("mac") || sharedVariables.operatingSystem.equals("unix")) {
                  try {
                    String lookup = getClass().getProtectionDomain().getCodeSource().getLocation() + "" ;
                    if(lookup.length() > 7) {
