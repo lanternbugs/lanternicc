@@ -675,7 +675,7 @@ try {
              score = tokens.nextToken();
              i++;
              num = Integer.parseInt(score);
-             score = formatScore(score);
+             score = formatScore(score, false);
              temp = tokens.nextToken();
              i++;
              num = Integer.parseInt(temp);
@@ -786,7 +786,7 @@ void parseMultiPV(String text, String pvLine, boolean multi)
                 if(temp.equals("cp"))
                 {
                 p.score = tokens.nextToken();
-                p.score = formatScore(p.score);
+                p.score = formatScore(p.score, true);
                 i++;
                 }
                 if(temp.equals("mate")) {
@@ -817,10 +817,14 @@ void parseMultiPV(String text, String pvLine, boolean multi)
        }
 
         }            // end function
-String formatScore(String score)
+String formatScore(String score, boolean uci)
 {
  try {
      int n = Integer.parseInt(score);
+     if(sharedVariables.mygame[BoardIndex].engineTop %2 == 1 && uci)
+     {
+       n *= -1;
+     }
      double num =  ((double) n * .01);
      return String.format("%.2f", num);
  }
