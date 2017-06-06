@@ -403,7 +403,7 @@ if(stage == 2 && text.contains("readyok"))
 
 if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
 {
-
+    sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen = fixFenIfNeeded(sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen);
     sendToEngine("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + "\n");
 	writeOut("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + "\n");
 
@@ -621,6 +621,29 @@ writeOut("go no longer 1\n");
 catch(Exception e){writeOut("exception terminated loop");}
 }// end run uci
 
+
+String fixFenIfNeeded(String fen)
+{
+  try {
+  if(fen.contains(" KQkq")) {
+     int [] board = sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].board;
+     boolean go = false;
+     if(board[0] != 4 && board[0] != 10)
+         go = true;
+     if(board[7] != 4 && board[7] != 10)
+         go = true;
+     if(board[56] != 4 && board[56] != 10)
+         go = true;
+     if(board[63] != 4 && board[63] != 10)
+         go = true;
+  if(go) {
+    fen = fen.replace(" KQkq", "");
+  }
+  } // end try
+  } catch(Exception dui) {}
+
+   return fen;
+}
 void writeOut(String text)
 {
 try {
