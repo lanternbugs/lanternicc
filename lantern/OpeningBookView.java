@@ -105,7 +105,7 @@ class OpeningBookView  extends JDialog
              //String move = (String)moveTable.getModel().getValueAt(row,0);
              String move = getSubMove(moveListData.get(row).movefrom) + getSubMove(moveListData.get(row).moveto);
              myoutput output = new myoutput();
-             output.data="`c0`" +move + "\n";
+             output.data="`c0`" + "multi chessmove " + move + "\n";
              output.consoleNumber=0;
              queue.add(output);
          }
