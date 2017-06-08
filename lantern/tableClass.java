@@ -217,7 +217,27 @@ rowString = rowString.replace("[", "");
 rowString = rowString.replace("]", "");
 rowString = rowString.replace(",", "");
 rowString += " ";
-
+    if(chessFontForMoveList) {
+        
+            rowString = rowString.replace("N", "Z");
+            rowString = rowString.replace("K", "N");
+            rowString = rowString.replace("J", "B");
+            rowString = rowString.replace("M", "Q");
+            rowString = rowString.replace("L", "R");
+            rowString = rowString.replace("I", "p");
+            rowString = rowString.replace("Z", "K");
+            
+      
+            rowString = rowString.replace("n", "z");
+            rowString = rowString.replace("k", "N");
+            rowString = rowString.replace("j", "B");
+            rowString = rowString.replace("m", "Q");
+            rowString = rowString.replace("l", "R");
+            rowString = rowString.replace("i", "p");
+            rowString = rowString.replace("z", "K");
+            
+       
+    }
 
 theMoves += rowString;
 if(row % 7 == 0 && row < temp.size() - 1 && row != 0)
