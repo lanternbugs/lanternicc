@@ -70,6 +70,7 @@ double wtime;
 double btime;
 int turn;
 int state;
+boolean iWasMadeExaminer;
 int iflipped;
 int myGameNumber;
 int movelock;
@@ -179,6 +180,7 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2, boolean [] exc
 	movelock=0;
 	whiteMinute=blackMinute=whiteSecond=blackSecond=whiteTenth=blackTenth=0;
 	state=-1;
+	iWasMadeExaminer = false;
 	myColor = "W";
     iflipped=0;
     turn=0;

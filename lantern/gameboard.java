@@ -813,7 +813,11 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
       if(relation.equals("E")) {
        if (sharedVariables.makeSounds == true  && sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_PLAYING)
-       makeASound(8);
+       {
+         makeASound(8);
+       } else if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_OBSERVING) {
+        sharedVariables.mygame[gameData.BoardIndex].iWasMadeExaminer = true;
+       }
         sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_EXAMINING;
         sharedVariables.mygame[gameData.BoardIndex].piecePallette=true;
@@ -846,7 +850,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     boolean lowTime=false;
     
     try {
-    double timeCheck=Double.parseDouble(white_initial) + 2/3 * Double.parseDouble(white_inc);
+    double timeCheck=Double.parseDouble(white_initial) + .666 * Double.parseDouble(white_inc);
 
     if(timeCheck < 2.9 && sharedVariables.lowTimeColors == true)
     lowTime=true;
@@ -1053,6 +1057,11 @@ if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals(""))
 return;
 if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals("lantern_owild.pgn"))
 return;
+if(sharedVariables.mygame[gameData.BoardIndex].movetop < 1)
+return;
+if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING &&
+sharedVariables.mygame[gameData.BoardIndex].iWasMadeExaminer == false)
+return;
 
 String game = "\r\n";
 /*
@@ -1101,7 +1110,14 @@ Calendar Now=Calendar.getInstance();
 String year = "" + Now.get(Now.YEAR);
 int m = Now.get(Now.MONTH) + 1;
 String month = "" + m;
+if(m < 10) {
+ month = "0" + month;
+}
 String day = "" + Now.get(Now.DAY_OF_MONTH);
+if(day.length() == 1)
+{
+  day = "0" + day;
+}
 date = year + "." + month + "." + day;
 }
 catch(Exception dumdate){}
