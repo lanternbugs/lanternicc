@@ -310,20 +310,27 @@ JMenuItem item1 = new JMenuItem("close game");
     saveitem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             try {
+
                 String myfile = gameFrame.getFile(new JFrame("framer"));
                 if(myfile.equals(""))
                 return;
-                logPgn("0-0", "0-0", myfile);
-                
+                logPgn(sharedVariables.mygame[gameData.LookingAt].iccResultString, sharedVariables.mygame[gameData.LookingAt].iccResult, myfile);
+
             } catch(Exception dui) {
-                
+
             }
-            
+
         }
     });
-    menu2.add(saveitem);
-    
-    
+    if(sharedVariables.mygame[gameData.LookingAt].state != -1 ||
+    !sharedVariables.mygame[gameData.LookingAt].name1.equals("") ||
+    !sharedVariables.mygame[gameData.LookingAt].name2.equals(""))
+    {
+       menu2.add(saveitem);
+    }
+
+
+
 JMenuItem item2 = new JMenuItem("clear tab chat");
  item2.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
@@ -455,10 +462,23 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
             game += "[Round \"-\"]\r\n";
             game += "[White \"" + sharedVariables.mygame[gameData.LookingAt].realname1 + "\"]\r\n";
             game += "[Black \"" + sharedVariables.mygame[gameData.LookingAt].realname2 + "\"]\r\n";
+            if(iccresult.equals(""))
+            {
+               iccresult = "*";
+            }
             game += "[Result \"" + iccresult + "\"]\r\n";
-            game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
-            game += "[WhiteElo \"" + sharedVariables.mygame[gameData.LookingAt].whiteRating + "\"]\r\n";
-            game += "[BlackElo \"" + sharedVariables.mygame[gameData.LookingAt].blackRating + "\"]\r\n";
+            if(!iccresultstring.equals(""))
+            {
+                game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
+            }
+           if(!sharedVariables.mygame[gameData.BoardIndex].whiteRating.equals("0"))
+           {
+             game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
+           }
+           if(!sharedVariables.mygame[gameData.BoardIndex].blackRating.equals("0"))
+           {
+              game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+           }
             game += "[Opening \"*\"]\r\n";
             game += "[ECO \"*\"]\r\n";
             game += "[NIC \"*\"]\r\n";

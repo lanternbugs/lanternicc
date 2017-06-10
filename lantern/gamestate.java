@@ -98,6 +98,8 @@ String tabtitle;
 String myFen;
 String engineFen;
 String initialPosition;
+String iccResult = "";
+String iccResultString = "";
 boolean newBoard;
 String name1;
 String name2;

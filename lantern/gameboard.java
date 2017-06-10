@@ -1130,10 +1130,23 @@ game += "[Date \"" + date +  "\"]\r\n";
 game += "[Round \"-\"]\r\n";
 game += "[White \"" + sharedVariables.mygame[gameData.BoardIndex].realname1 + "\"]\r\n";
 game += "[Black \"" + sharedVariables.mygame[gameData.BoardIndex].realname2 + "\"]\r\n";
+if(iccresult.equals(""))
+{
+  iccresult = "*";
+}
 game += "[Result \"" + iccresult + "\"]\r\n";
-game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
-game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
-game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+if(!iccresultstring.equals(""))
+{
+   game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
+}
+if(!sharedVariables.mygame[gameData.BoardIndex].whiteRating.equals("0"))
+{
+  game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
+}
+if(!sharedVariables.mygame[gameData.BoardIndex].blackRating.equals("0"))
+{
+  game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+}
 game += "[Opening \"*\"]\r\n";
 game += "[ECO \"*\"]\r\n";
 game += "[NIC \"*\"]\r\n";
@@ -1155,7 +1168,16 @@ writer.writeAppend(game, sharedVariables.mygame[gameData.BoardIndex].observedPgn
 catch(Exception logging){}
 
 }// end method log observed pgn
+  void setGameResult(String icsGameNumber, String iccresultstring, String iccresult)
+  {
+     int tempnumber=getGameNumber(icsGameNumber);
 
+    if (tempnumber ==
+        sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+            sharedVariables.mygame[gameData.BoardIndex].iccResult = iccresult;
+            sharedVariables.mygame[gameData.BoardIndex].iccResultString = iccresultstring;
+        }
+  }
   void gameEnded(String icsGameNumber) {
 
     int tempnumber=getGameNumber(icsGameNumber);

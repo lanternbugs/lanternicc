@@ -4596,6 +4596,16 @@ try {
  			gamequeue.add(temp);
 
 		}
+		
+		if(dg.getArg(0).equals("13") || dg.getArg(0).equals("16"))// 13 DG_GAME_RESULT // 16 game i'm observingt result
+                {
+                     	newBoardData temp = new newBoardData();
+			temp.dg=16001;  // set result
+ 			temp.arg1=dg.getArg(1); // game  number
+ 			temp.arg2=dg.getArg(4); // 1-0
+ 			temp.arg3=dg.getArg(5); // white checkmated
+ 			gamequeue.add(temp);
+                }
 		if(dg.getArg(0).equals("56"))// 13 DG_GAME_RESULT // 16 game i'm observingt result// update clocks
 		{
 
@@ -5783,6 +5793,17 @@ else
 							if(myboards[gamenum]== null)
 								return;
 							myboards[gamenum].logObservedPgn(temp.arg2, temp.arg3); // pass game number
+
+				    }
+
+				    if(temp.dg == 16001)//set result i made up the number 16000 to let the datagram parser  handle it
+					{
+							int gamenum=getGameBoard(temp.arg1);
+							if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+								return;
+							if(myboards[gamenum]== null)
+								return;
+							myboards[gamenum].setGameResult(temp.arg1, temp.arg2, temp.arg3); // pass game number
 
 				    }
 
