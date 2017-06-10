@@ -436,7 +436,7 @@ gametable.addMouseListener(mouseListenerEvents);
 
 
 void savePgn(String type1, String type2, String gameIndex)
-{                       String fileName = getFile();
+{                       String fileName = getFile(this);
                         if(fileName.equals(""))
                         return;
  			else
@@ -457,7 +457,7 @@ void savePgn(String type1, String type2, String gameIndex)
 }
 
 
-String getFile()
+static String getFile(JFrame myFrame)
 {
 
 		try {
@@ -486,7 +486,7 @@ return "Pgn";
 
 
 
-			int returnVal = fc.showDialog((JFrame) this, "Save");
+			int returnVal = fc.showDialog((JFrame) myFrame, "Save");
 
 			 if (returnVal == JFileChooser.APPROVE_OPTION)
 			 {

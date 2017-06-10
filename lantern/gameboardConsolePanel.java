@@ -42,7 +42,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.event.ChangeEvent.*;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 
 class gameboardConsolePanel extends JPanel
 {
@@ -306,7 +306,24 @@ JMenuItem item1 = new JMenuItem("close game");
        });
        menu2.add(item1);
 
-
+    JMenuItem saveitem = new JMenuItem("save to PGN");
+    saveitem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String myfile = gameFrame.getFile(new JFrame("framer"));
+                if(myfile.equals(""))
+                return;
+                logPgn("0-0", "0-0", myfile);
+                
+            } catch(Exception dui) {
+                
+            }
+            
+        }
+    });
+    menu2.add(saveitem);
+    
+    
 JMenuItem item2 = new JMenuItem("clear tab chat");
  item2.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
@@ -362,6 +379,110 @@ try {
 add(menu2);
 menu2.show(e.getComponent(),e.getX(),e.getY());
 }
+    
+    
+    
+    
+    void logPgn(String iccresult, String iccresultstring, String fileName)
+    {
+        try {
+            
+            
+            String game = "\r\n";
+            /*
+             [Event "ICC 5 0"]
+             [Site "Internet Chess Club"]
+             [Date "2011.10.09"]
+             [Round "-"]
+             [White "Mike"]
+             [Black "Prophet-Daniel"]
+             [Result "1-0"]
+             [ICCResult "Black forfeits on time"]
+             [WhiteElo "1046"]
+             [BlackElo "943"]
+             [Opening "Sicilian"]
+             [ECO "B54"]
+             [NIC "SI.01"]
+             [Time "03:46:21"]
+             [TimeControl "300+0"]
+             */
+            String date = "*";
+            String theTime="*";
+            try {
+                
+                Calendar Now=Calendar.getInstance();
+                String hour= "" + Now.get(Now.HOUR_OF_DAY);// was HOUR for 12 hour time
+                if(hour.equals("0"))
+                    hour = "12";
+                
+                String minute="" + Now.get(Now.MINUTE);
+                if(minute.length()==1)
+                    minute="0"+ minute;
+                
+                String second="" + Now.get( Now.SECOND);
+                if(second.length()==1)
+                    second="0"+ second;
+                
+                theTime=hour + ":" + minute + ":" + second;
+                
+            }
+            catch(Exception dumtime){}
+            
+            try {
+                
+                Calendar Now=Calendar.getInstance();
+                // year.month.day
+                String year = "" + Now.get(Now.YEAR);
+                int m = Now.get(Now.MONTH) + 1;
+                String month = "" + m;
+                if(m < 10) {
+                    month = "0" + month;
+                }
+                String day = "" + Now.get(Now.DAY_OF_MONTH);
+                if(day.length() == 1)
+                {
+                    day = "0" + day;
+                }
+                date = year + "." + month + "." + day;
+            }
+            catch(Exception dumdate){}
+            
+            
+            
+            game += "[Event \"ICC " +  sharedVariables.mygame[gameData.LookingAt].time + " " + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
+            game += "[Site \"Internet Chess Club\"]\r\n";
+            game += "[Date \"" + date +  "\"]\r\n";
+            game += "[Round \"-\"]\r\n";
+            game += "[White \"" + sharedVariables.mygame[gameData.LookingAt].realname1 + "\"]\r\n";
+            game += "[Black \"" + sharedVariables.mygame[gameData.LookingAt].realname2 + "\"]\r\n";
+            game += "[Result \"" + iccresult + "\"]\r\n";
+            game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
+            game += "[WhiteElo \"" + sharedVariables.mygame[gameData.LookingAt].whiteRating + "\"]\r\n";
+            game += "[BlackElo \"" + sharedVariables.mygame[gameData.LookingAt].blackRating + "\"]\r\n";
+            game += "[Opening \"*\"]\r\n";
+            game += "[ECO \"*\"]\r\n";
+            game += "[NIC \"*\"]\r\n";
+            game += "[Time \"" + theTime + "\"]\r\n";
+            int minutes = sharedVariables.mygame[gameData.LookingAt].time  * 60;
+            game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
+            game += "\r\n";
+            // now moves
+            game += sharedVariables.mygametable[gameData.LookingAt].getMoves() + "\r\n";
+            game += "{" + iccresultstring + "}\r\n";
+            game += iccresult + "\r\n";
+            FileWrite writer = new FileWrite();
+            writer.writeAppend(game, fileName);
+            
+            
+            
+            
+        }// end try
+        catch(Exception logging){}
+        
+    }// end method log observed pgn
+    
+    
+    
 void adjustMoveList()
 {
 final int aaa = gameData.BoardIndex;
