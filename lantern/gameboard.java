@@ -1176,7 +1176,7 @@ catch(Exception logging){}
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
             sharedVariables.mygame[gameData.BoardIndex].iccResult = iccresult;
             sharedVariables.mygame[gameData.BoardIndex].iccResultString = iccresultstring;
-        }
+        } 
   }
   void gameEnded(String icsGameNumber) {
 
