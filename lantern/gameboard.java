@@ -887,8 +887,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     sharedVariables.mygame[gameData.BoardIndex].newBoard=false;
 
     String ratedDisplay = "r";
-    if (rated.equals("0"))
-      ratedDisplay = "u";
+    sharedVariables.mygame[gameData.BoardIndex].rated = true;
+    if (rated.equals("0")) {
+     sharedVariables.mygame[gameData.BoardIndex].rated = false;
+     ratedDisplay = "u";
+    }
+
 
     if (rating_type.equals("Wild") || rating_type.startsWith("Loser")) {
       wildTypes wt = new wildTypes();
@@ -1039,7 +1043,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   }
   void setObservedPgnFile(double time, int wild)
   {
-  
+
    if(wild > 0)
    sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_owild.pgn";
    else if(time < 3)
@@ -1124,8 +1128,12 @@ String wildString = "";
             {
              wildString = "w" + sharedVariables.mygame[gameData.BoardIndex].wild + " ";
             }
-
-game += "[Event \"ICC " + wildString +   sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+String isRated = "";
+if(!sharedVariables.mygame[gameData.BoardIndex].rated)
+{
+   isRated = " u";
+}
+game += "[Event \"ICC " + wildString +   sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + isRated + "\"]\r\n";
 game += "[Site \"Internet Chess Club\"]\r\n";
 game += "[Date \"" + date +  "\"]\r\n";
 game += "[Round \"-\"]\r\n";

@@ -53,6 +53,7 @@ class gamestate {
 	int [] castleCaptures = new int[6000];
 	int wild;
 	int movetop;
+	boolean rated = true;
 int lastKingMoveWhite = -1;
 int lastKingMoveBlack = -1;
 double whiteClock;

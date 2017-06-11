@@ -192,6 +192,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          String time = "";
          String number1 = "";
          String number2 = "";
+         boolean foundUnrated = false;
          try {
          if(event.startsWith("ICC tourney")) {
           // (w26 3 1) or //(3 1)
@@ -211,6 +212,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
               }
             }
               sub = sub.trim();
+
+              int index3 = sub.indexOf(" u");
+              if(index3 > 0) {
+                foundUnrated = true;
+               sub = sub.replace(" u", "");
+              }
 
               int index = sub.indexOf(" ");
               if(index > 0 && index < sub.length() - 1)  {
@@ -234,12 +241,13 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
               // it can be w9<space> or w27<space> but we trim
               sub = sub.trim();
              }
-             
+
             }
 
 
               int index2 = sub.indexOf(" u");
               if(index2 > 0) {
+                foundUnrated = true;
                sub = sub.replace(" u", "");
               }
 
@@ -258,11 +266,16 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          {
             int num1 = Integer.parseInt(number1.trim());
             int num2 = Integer.parseInt(number2.trim());
-            if(num1 >= 0 && num1 < 601 && num2  >=0 && num2 < 301) 
+            if(num1 >= 0 && num1 < 601 && num2  >=0 && num2 < 301)
             {
              if(!(num1 == 0 && num2 == 0))
              {
                time = " " + num1 + " " + num2;
+               if(foundUnrated == true) {
+                time = time + " u";
+               } else {
+                time = time + " r"; 
+               }
              }
             }
          }
