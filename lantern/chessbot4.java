@@ -4475,6 +4475,7 @@ try {
  			temp.arg1=dg.getArg(1); // game  number
  			temp.arg2=dg.getArg(4); // 1-0
  			temp.arg3=dg.getArg(5); // white checkmated
+ 			temp.arg4=dg.getArg(6); // eco
  			gamequeue.add(temp);
                 }
 		if(dg.getArg(0).equals("13"))// 13 DG_GAME_RESULT // 16 game i'm observingt result
@@ -5804,7 +5805,7 @@ else
 								return;
 							if(myboards[gamenum]== null)
 								return;
-							myboards[gamenum].setGameResult(temp.arg1, temp.arg2, temp.arg3); // pass game number
+							myboards[gamenum].setGameResult(temp.arg1, temp.arg2, temp.arg3, temp.arg4); // pass game number
 
 				    }
 

@@ -1157,7 +1157,13 @@ if(!sharedVariables.mygame[gameData.BoardIndex].blackRating.equals("0"))
   game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
 }
 game += "[Opening \"*\"]\r\n";
-game += "[ECO \"*\"]\r\n";
+if(!sharedVariables.mygame[gameData.BoardIndex].eco.equals("")) {
+game += "[ECO \"" + sharedVariables.mygame[gameData.BoardIndex].eco + "\"]\r\n";
+} else 
+{
+  game += "[ECO \"*\"]\r\n";
+}
+
 game += "[NIC \"*\"]\r\n";
 game += "[Time \"" + theTime + "\"]\r\n";
 int minutes = sharedVariables.mygame[gameData.BoardIndex].time  * 60;
@@ -1180,7 +1186,7 @@ writer.writeAppend(game, sharedVariables.mygame[gameData.BoardIndex].observedPgn
 catch(Exception logging){}
 
 }// end method log observed pgn
-  void setGameResult(String icsGameNumber, String iccresultstring, String iccresult)
+  void setGameResult(String icsGameNumber, String iccresultstring, String iccresult, String eco)
   {
      int tempnumber=getGameNumber(icsGameNumber);
 
@@ -1188,6 +1194,7 @@ catch(Exception logging){}
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
             sharedVariables.mygame[gameData.BoardIndex].iccResult = iccresult;
             sharedVariables.mygame[gameData.BoardIndex].iccResultString = iccresultstring;
+            sharedVariables.mygame[gameData.BoardIndex].eco = eco;
         } 
   }
   void gameEnded(String icsGameNumber) {

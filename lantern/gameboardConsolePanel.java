@@ -480,16 +480,21 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
             {
                 game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
             }
-           if(!sharedVariables.mygame[gameData.BoardIndex].whiteRating.equals("0"))
+           if(!sharedVariables.mygame[gameData.LookingAt].whiteRating.equals("0"))
            {
-             game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
+             game += "[WhiteElo \"" + sharedVariables.mygame[gameData.LookingAt].whiteRating + "\"]\r\n";
            }
-           if(!sharedVariables.mygame[gameData.BoardIndex].blackRating.equals("0"))
+           if(!sharedVariables.mygame[gameData.LookingAt].blackRating.equals("0"))
            {
-              game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+              game += "[BlackElo \"" + sharedVariables.mygame[gameData.LookingAt].blackRating + "\"]\r\n";
            }
             game += "[Opening \"*\"]\r\n";
-            game += "[ECO \"*\"]\r\n";
+            if(!sharedVariables.mygame[gameData.LookingAt].eco.equals("")) {
+             game += "[ECO \"" + sharedVariables.mygame[gameData.LookingAt].eco + "\"]\r\n";
+           } else
+           {
+             game += "[ECO \"*\"]\r\n";
+           }
             game += "[NIC \"*\"]\r\n";
             game += "[Time \"" + theTime + "\"]\r\n";
             int minutes = sharedVariables.mygame[gameData.LookingAt].time  * 60;

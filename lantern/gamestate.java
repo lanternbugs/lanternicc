@@ -79,6 +79,7 @@ int whiteMaterialCount;
 int blackMaterialCount;
 int blank; // for an x in examine mode
 int madeMove;
+String eco;
 boolean [] excludedPiecesWhite;
 boolean [] excludedPiecesBlack;
 boolean [] excludedBoards;
@@ -148,6 +149,7 @@ gamestate(boolean [] excludedPieces1, boolean [] excludedPieces2, boolean [] exc
 	randomObj.randomizeGraphics();
 	ficsSet=0;
 	wild=0;
+	eco = "";
 	tabtitle = "";
 	becameExamined=false;
         name1="";
