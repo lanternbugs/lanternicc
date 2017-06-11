@@ -489,6 +489,9 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
             game += "[Time \"" + theTime + "\"]\r\n";
             int minutes = sharedVariables.mygame[gameData.LookingAt].time  * 60;
             game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
+            if(sharedVariables.mygame[gameData.LookingAt].engineFen.length() > 8) {
+             game += "[FEN \"" +  sharedVariables.mygame[gameData.LookingAt].engineFen + "\"]\r\n"; 
+            }
             game += "\r\n";
             // now moves
             game += sharedVariables.mygametable[gameData.LookingAt].getMoves() + "\r\n";

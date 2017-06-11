@@ -378,7 +378,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v6.10";
+version = "v6.11";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -462,8 +462,8 @@ dot.setVisible(true);
 */
 }
 notifyControllerFile = "lantern_notify_controler.ini";
-boardType=12;
-pieceType=5;
+boardType=11;
+pieceType=22;
 checkersPieceType = 1;
 NOT_FOUND_NUMBER = -100;
 

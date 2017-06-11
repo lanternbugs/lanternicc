@@ -1039,8 +1039,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   }
   void setObservedPgnFile(double time, int wild)
   {
-   if(wild == 20)
-   return; // we dont log these, string remains "" and will be ignored.
+  
    if(wild > 0)
    sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_owild.pgn";
    else if(time < 3)
@@ -1054,8 +1053,6 @@ void logObservedPgn(String iccresult, String iccresultstring)
 {
 try {
 if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals(""))
-return;
-if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals("lantern_owild.pgn"))
 return;
 if(sharedVariables.mygame[gameData.BoardIndex].movetop < 1)
 return;
@@ -1122,9 +1119,13 @@ date = year + "." + month + "." + day;
 }
 catch(Exception dumdate){}
 
+String wildString = "";
+            if(sharedVariables.mygame[gameData.BoardIndex].wild > 0)
+            {
+             wildString = "w" + sharedVariables.mygame[gameData.BoardIndex].wild + " ";
+            }
 
-
-game += "[Event \"ICC " +  sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+game += "[Event \"ICC " + wildString +   sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
 game += "[Site \"Internet Chess Club\"]\r\n";
 game += "[Date \"" + date +  "\"]\r\n";
 game += "[Round \"-\"]\r\n";
@@ -1153,6 +1154,9 @@ game += "[NIC \"*\"]\r\n";
 game += "[Time \"" + theTime + "\"]\r\n";
 int minutes = sharedVariables.mygame[gameData.BoardIndex].time  * 60;
 game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+if(sharedVariables.mygame[gameData.BoardIndex].engineFen.length() > 8) {
+             game += "[FEN \"" +  sharedVariables.mygame[gameData.BoardIndex].engineFen + "\"]\r\n";
+            }
 game += "\r\n";
 // now moves
 game += sharedVariables.mygametable[gameData.BoardIndex].getMoves() + "\r\n";

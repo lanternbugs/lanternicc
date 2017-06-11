@@ -3369,9 +3369,9 @@ dot.setVisible(true);
       sharedVariables.pgnObservedLogging = !sharedVariables.pgnObservedLogging;
       pgnObservedLogging.setSelected(sharedVariables.pgnObservedLogging);
       if (sharedVariables.pgnObservedLogging) {
-        String s = "Lantern will log bullet, blitz and standard games " +
-          "you observe to lantern_obullet.pgn, lantern_oblitz.pgn, and " +
-          "lantern_ostandard.pgn.\n\n  Not currently configured to log wild games.";
+        String s = "Lantern will log bullet, blitz and standard games as well as wild games " +
+          "you observe to lantern_obullet.pgn, lantern_oblitz.pgn, " +
+          "lantern_ostandard.pgn and lantern_owild.pgn.\n\n";
         Popup temp = new Popup(this, false, s, sharedVariables);
         temp.setVisible(true);
       }
