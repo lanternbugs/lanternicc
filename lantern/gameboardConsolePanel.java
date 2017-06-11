@@ -455,8 +455,12 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
             catch(Exception dumdate){}
             
             
-            
-            game += "[Event \"ICC " +  sharedVariables.mygame[gameData.LookingAt].time + " " + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
+            String wildString = "";
+            if(sharedVariables.mygame[gameData.LookingAt].wild > 0)
+            {
+             wildString = "w" + sharedVariables.mygame[gameData.LookingAt].wild + " ";
+            }
+            game += "[Event \"ICC " + wildString +  sharedVariables.mygame[gameData.LookingAt].time + " " + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
             game += "[Site \"Internet Chess Club\"]\r\n";
             game += "[Date \"" + date +  "\"]\r\n";
             game += "[Round \"-\"]\r\n";

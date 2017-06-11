@@ -126,46 +126,57 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          
          if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest())
          {
+
+
             String event = myLoader.games.get(row).event;
+            String timeControl = "";
+            if(event != null)  {
+                timeControl = findTime(event);
+            }
+
             if(event == null) 
              send("multi Examine\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w9 "))
-             send("multi Match " + sharedVariables.myname + " w9\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w17 "))
-             send("multi Match " + sharedVariables.myname + " w17\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w17\n");
              else if(event.startsWith("ICC tourney") && event.contains("(w22 "))
-             send("multi Match " + sharedVariables.myname + " w22\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w22\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w23 "))
-             send("multi Match " + sharedVariables.myname + " w23\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w23\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w25 "))
-             send("multi Match " + sharedVariables.myname + " w25\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w25\n");
               else if(event.startsWith("ICC tourney") && event.contains("(w26 "))
-             send("multi Match " + sharedVariables.myname + " w26\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w26\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w27 "))
-             send("multi Match " + sharedVariables.myname + " w27\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w27\n");
              else if(event.startsWith("ICC tourney") && event.contains("(w28 "))
-             send("multi Match " + sharedVariables.myname + " w28\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w28\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w30 "))
-             send("multi Match " + sharedVariables.myname + " w30\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w30\n");
 
             else if(myLoader.games.get(row).event.startsWith("ICC w9"))
-             send("multi Match " + sharedVariables.myname + " w9\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
             else if(myLoader.games.get(row).event.startsWith("ICC w17"))
-             send("multi Match " + sharedVariables.myname + " w17\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w17\n");
             else if(myLoader.games.get(row).event.startsWith("ICC w22"))
-             send("multi Match " + sharedVariables.myname + " w22\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w22\n");
             else if(myLoader.games.get(row).event.startsWith("ICC w23"))
-             send("multi Match " + sharedVariables.myname + " w23\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w23\n");
            else if(myLoader.games.get(row).event.startsWith("ICC w25"))
-             send("multi Match " + sharedVariables.myname + " w25\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w25\n");
            else if(myLoader.games.get(row).event.startsWith("ICC w26"))
-             send("multi Match " + sharedVariables.myname + " w26\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w26\n");
            else if(myLoader.games.get(row).event.startsWith("ICC w27"))
-             send("multi Match " + sharedVariables.myname + " w27\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w27\n");
            else if(myLoader.games.get(row).event.startsWith("ICC w28"))
-             send("multi Match " + sharedVariables.myname + " w28\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w28\n");
            else if(myLoader.games.get(row).event.startsWith("ICC w30"))
-             send("multi Match " + sharedVariables.myname + " w30\n");
+             send("multi Match " + sharedVariables.myname + timeControl + " w30\n");
+           else if(!timeControl.equals(""))
+           {
+            send("multi Match " + sharedVariables.myname + timeControl + "\n");
+           }
            else
             send("multi Examine\n");
          }// if my name
@@ -176,7 +187,89 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
         }
+        String findTime(String event)
+        {
+         String time = "";
+         String number1 = "";
+         String number2 = "";
+         try {
+         if(event.startsWith("ICC tourney")) {
+          // (w26 3 1) or //(3 1)
+          int start = event.indexOf("(");
+          if(start > 0)
+          {
+           int end = event.indexOf(")");
+           if(end > start)
+           {
+            String sub = event.substring(start+1, end);
+            if(sub.startsWith("w"))
+            {
+             if(sub.length() > 5)
+             {
+              sub = sub.substring(3, sub.length());
+              // it can be w9<space> or w27<space> but we trim
+              }
+            }
+              sub = sub.trim();
 
+              int index = sub.indexOf(" ");
+              if(index > 0 && index < sub.length() - 1)  {
+                 number1 = sub.substring(0, index);
+                 number2= sub.substring(index+1, sub.length());
+              }
+
+          }
+          }
+
+         }  else if(event.startsWith("ICC "))
+         {
+            if(event.length() > 6)
+            {
+             String sub = event.substring(4, event.length());
+             if(sub.startsWith("w"))
+            {
+             if(sub.length() > 5)
+             {
+              sub = sub.substring(3, sub.length());
+              // it can be w9<space> or w27<space> but we trim
+              sub = sub.trim();
+             }
+             
+            }
+
+
+              int index2 = sub.indexOf(" u");
+              if(index2 > 0) {
+               sub = sub.replace(" u", "");
+              }
+
+              int index = sub.indexOf(" ");
+              if(index > 0 && index < sub.length() - 1)  {
+                 number1 = sub.substring(0, index);
+                 number2= sub.substring(index+1, sub.length());
+              }
+             }
+
+            }
+
+
+
+         if(!number1.equals("") && !number2.equals(""))
+         {
+            int num1 = Integer.parseInt(number1.trim());
+            int num2 = Integer.parseInt(number2.trim());
+            if(num1 >= 0 && num1 < 601 && num2  >=0 && num2 < 301) 
+            {
+             if(!(num1 == 0 && num2 == 0))
+             {
+               time = " " + num1 + " " + num2;
+             }
+            }
+         }
+         }// end try
+         catch(Exception dui) { }
+         return time;
+        }
          void examine(int row)
 	 {
 
