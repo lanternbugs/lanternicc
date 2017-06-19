@@ -63,9 +63,20 @@ public class AudioClip{
 
   static{
     String [] classnames = new String[0];
+    String playerFileName = "players.txt";
+    try {
+  String os = System.getProperty("os.name").toLowerCase();
+if (os.indexOf( "win" ) >= 0)
+	playerFileName = "players.txt";
+else if(os.indexOf( "mac" ) >= 0)
+	playerFileName = "players.txt";
+else
+	playerFileName = "linuxplayers.txt";
+}
+catch(Exception duiiii){}
     try{
       try{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(AudioClip.class.getResourceAsStream("players.txt")));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(AudioClip.class.getResourceAsStream(playerFileName)));
 
         Vector tempVec = new Vector();
         String line;
