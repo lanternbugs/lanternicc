@@ -22,11 +22,37 @@ import free.util.IOUtilities;
 import free.util.audio.AudioClip;
 
 
-class Sound extends JApplet
+import java.io.File;
+import java.io.IOException;
+ 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.util.concurrent.ConcurrentLinkedQueue;
+class Sound extends JApplet implements LineListener, Runnable
     {
  private  java.applet.AudioClip song; // Sound player
  private URL songPath; // Sound path
  String operatingSystem;
+ /**
+   * The current thread playing the sound.
+   */
+
+ private volatile Thread playerThread = null;
+
+
+
+  /**
+   * The queue holding AudioClips for the player thread to play.
+   */
+
+ConcurrentLinkedQueue<URL> queue = new ConcurrentLinkedQueue();
  Sound(String filename)
  {
      try
@@ -54,14 +80,25 @@ else if(os.indexOf( "mac" ) >= 0)
 else
 	operatingSystem = "unix";
 
-    if(operatingSystem.equals("unix") || operatingSystem.equals("mac") || (operatingSystem.equals("win") && channels.firstSound == false))
+    if(operatingSystem.equals("mac") || (operatingSystem.equals("win") && channels.firstSound == false))
     {
      try {
         free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
-      // playUnixSound(unixClip);
        unixClip.play();
      }
      catch(Exception dui){}
+    }
+    else if(operatingSystem.equals("unix"))
+    {
+
+         if (playerThread==null){ // Lazily start the thread.
+      playerThread = new Thread(this, "SunAudioPlayer");
+      playerThread.setDaemon(true);
+      playerThread.start();
+    }
+
+    queue.add(songPath1);
+
     }
     else
     {
@@ -83,10 +120,101 @@ else
     }// end else
  }              // end method
 
- public void playURL(URL song)
- {
+  boolean playCompleted;
+     
+    /**
+     * Play a given audio file.
+     * @param audioFilePath Path of the audio file.
+     */
 
- }
+    public void run(){
+       try {
+
+           URL url = queue.poll();
+           if(url == null) {
+            try {
+              Thread.sleep(50);
+            }catch(Exception einterupt) {}
+           } else {
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(url);
+
+          //  AudioFormat format =    new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, AudioSystem.NOT_SPECIFIED,16, 2, 4, AudioSystem.NOT_SPECIFIED, true);
+          //free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(url);
+           // byte [] data = unixClip.getData();
+       // AudioFormat format = getFormatForPlaying(data);
+
+
+             AudioFormat format = audioStream.getFormat();
+
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+           // Clip audioClip = (Clip) AudioSystem.getLine(info);
+             Clip audioClip = (Clip) AudioSystem.getClip(null);
+
+            audioClip.addLineListener(this);
+
+            audioClip.open(audioStream);
+
+            audioClip.start();
+
+            while (!playCompleted) {
+                // wait for the playback completes
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            audioClip.close();
+            }// end else
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println("The specified audio file is not supported.");
+            ex.printStackTrace();
+        } catch (LineUnavailableException ex) {
+            System.out.println("Audio line for playing back is unavailable.");
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Error playing the audio file.");
+            ex.printStackTrace();
+        }
+
+    }
+     protected static AudioFormat getFormatForPlaying(byte [] audioData)
+      throws UnsupportedAudioFileException, IOException{
+    AudioFormat format = AudioSystem.getAudioFileFormat(
+        new ByteArrayInputStream(audioData)).getFormat();
+
+    // At present, ALAW and ULAW encodings must be converted
+    // to PCM_SIGNED before it can be played
+    if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
+      return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+          format.getSampleRate(), format.getSampleSizeInBits() * 2,
+          format.getChannels(), format.getFrameSize() * 2,
+          format.getFrameRate(), true);
+    else
+      return format;
+  }
+    /**
+     * Listens to the START and STOP events of the audio line.
+     */
+    @Override
+    public void update(LineEvent event) {
+        LineEvent.Type type = event.getType();
+
+        if (type == LineEvent.Type.START) {
+           // System.out.println("Playback started.");
+
+        } else if (type == LineEvent.Type.STOP) {
+            playCompleted = true;
+           // System.out.println("Playback completed.");
+        }
+
+    }
+ 
+
+
 
 
 
