@@ -94,10 +94,13 @@ else
          if (playerThread==null){ // Lazily start the thread.
       playerThread = new Thread(this, "SunAudioPlayer");
       playerThread.setDaemon(true);
+      queue.add(songPath1);
       playerThread.start();
+    }  else {
+     queue.add(songPath1); 
     }
 
-    queue.add(songPath1);
+
 
     }
     else
