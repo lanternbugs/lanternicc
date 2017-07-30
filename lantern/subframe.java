@@ -570,7 +570,18 @@ class subframe extends JInternalFrame
     }
     initComponents();
   }
-
+  String getAMinuteTimestamp()
+    {
+     String theTime = chessbot4.getATimestamp();
+     int one = theTime.indexOf(":");
+     if(one > -1 && theTime.length() > one + 1) {
+        int two = theTime.indexOf(":", one + 1);
+        if(two > -1) {
+         theTime = theTime.substring(0, two);
+        }
+     }
+     return theTime;
+    }
   public void actionPerformed(ActionEvent event) {
   
     try {
@@ -2098,7 +2109,7 @@ class subframe extends JInternalFrame
 	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
     try {
       myprintoutput printObj = new myprintoutput();
-      printObj.patchedInsertString(doc, doc.getLength(), chessbot4.getATimestamp() + " " + mes, attrs);
+      printObj.patchedInsertString(doc, doc.getLength(), getAMinuteTimestamp() + " " + mes, attrs);
       sharedVariables.printQueue.add(printObj);
     } catch (Exception mydoc) {}
   }
@@ -2868,12 +2879,12 @@ class subframe extends JInternalFrame
                  	if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor == null)
        	               {    
                          StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-                        writeToConsole(chessbot4.getATimestamp() + " " + mes, sharedVariables.typedColor , true, attrs);
+                        writeToConsole(getAMinuteTimestamp() + " " + mes, sharedVariables.typedColor , true, attrs);
                        }
           	else
 	         { 
                    StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
-                   writeToConsole(chessbot4.getATimestamp() + " " + mes,  sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor , true, attrs);
+                   writeToConsole(getAMinuteTimestamp() + " " + mes,  sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor , true, attrs);
                  }
 
                 // true for italic
