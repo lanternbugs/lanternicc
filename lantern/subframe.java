@@ -2098,7 +2098,7 @@ class subframe extends JInternalFrame
 	StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
     try {
       myprintoutput printObj = new myprintoutput();
-      printObj.patchedInsertString(doc, doc.getLength(), mes, attrs);
+      printObj.patchedInsertString(doc, doc.getLength(), chessbot4.getATimestamp() + " " + mes, attrs);
       sharedVariables.printQueue.add(printObj);
     } catch (Exception mydoc) {}
   }
@@ -2873,7 +2873,7 @@ class subframe extends JInternalFrame
           	else
 	         { 
                    StyleConstants.setForeground(attrs, sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor);
-                   writeToConsole(mes,  sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor , true, attrs);
+                   writeToConsole(chessbot4.getATimestamp() + " " + mes,  sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor , true, attrs);
                  }
 
                 // true for italic
