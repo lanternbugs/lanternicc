@@ -804,7 +804,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 
 // timestamp24hr
 	set_string = set_string + "[time-24hr] ";
-	if(sharedVariables.timeStamp24hr == true)
+	if(channels.timeStamp24hr == true)
 		set_string = set_string + "1" + " ";
 	else
 		set_string = set_string + "0" + " ";
@@ -2598,9 +2598,9 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
 					if(truth == 1)
-						sharedVariables.timeStamp24hr=true;
+						channels.timeStamp24hr=true;
 					else
-						sharedVariables.timeStamp24hr=false;
+						channels.timeStamp24hr=false;
 					}
 					catch(Exception zzz){}
 				}

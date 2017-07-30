@@ -2868,7 +2868,7 @@ class subframe extends JInternalFrame
                  	if(sharedVariables.tabStuff[sharedVariables.looking[consoleNumber]].typedColor == null)
        	               {    
                          StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-                        writeToConsole(mes, sharedVariables.typedColor , true, attrs);
+                        writeToConsole(chessbot4.getATimestamp() + " " + mes, sharedVariables.typedColor , true, attrs);
                        }
           	else
 	         { 

@@ -127,10 +127,10 @@ boolean iloggedon;
 boolean channelTimestamp;
 boolean shoutTimestamp;
 boolean tellTimestamp;
-boolean leftTimestamp;
+static boolean leftTimestamp;
 boolean reconnectTimestamp;
 boolean qtellTimestamp;
-boolean timeStamp24hr;
+static boolean timeStamp24hr;
 boolean channelNumberLeft;
 boolean checkLegality;
 boolean compactNameList=false;
@@ -378,7 +378,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v6.15";
+version = "v6.15a";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

@@ -2611,7 +2611,7 @@ if(dg.getArg(0).equals("27"))
 
 			if(sharedVariables.channelTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				chatTime=getATimestamp();
 				else
 				chatTime2=getATimestamp();
@@ -2818,7 +2818,7 @@ if(dg.getArg(0).equals("31"))// tell
 
 			if(sharedVariables.tellTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				chatTime=getATimestamp();
 				else
 				chatTime2=getATimestamp();
@@ -3050,7 +3050,7 @@ else
 
 			if(sharedVariables.shoutTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				chatTime=getATimestamp();
 				else
 				chatTime2=getATimestamp();
@@ -3422,7 +3422,7 @@ catch(Exception baddup){}
 
 			if(sharedVariables.qtellTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				{
 					chatTime=  getATimestamp();
 					chatTime = chatTime.replace("(", " ");
@@ -5666,7 +5666,7 @@ else
 
 			if(sharedVariables.tellTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				chatTime=getATimestamp();
 				else
 				chatTime2=getATimestamp();
@@ -5730,7 +5730,7 @@ else
 
 			if(sharedVariables.tellTimestamp == true)
 			{
-				if(sharedVariables.leftTimestamp == false)
+				if(channels.leftTimestamp == false)
 				chatTime=getATimestamp();
 				else
 				chatTime2=getATimestamp();
@@ -7306,7 +7306,7 @@ void giveFocus(focusOwner mine)
 
 }
 
-String getATimestamp()
+static String getATimestamp()
 {
     String theTime="";
     try {
@@ -7314,7 +7314,7 @@ String getATimestamp()
         Calendar Now=Calendar.getInstance();
         String hour;
 
-        if(sharedVariables.timeStamp24hr) {
+        if(channels.timeStamp24hr) {
             hour= "" + Now.get(Now.HOUR_OF_DAY);
             if(hour.length()==1)
                 hour = "0" + hour;
@@ -7333,7 +7333,7 @@ String getATimestamp()
         if(second.length()==1)
             second="0"+ second;
 
-        if(sharedVariables.leftTimestamp == true)
+        if(channels.leftTimestamp == true)
             theTime=hour + ":" + minute + ":" + second + " ";
         else
             theTime="(" + hour + ":" + minute + ":" + second + ")";
@@ -7353,7 +7353,7 @@ String getADatestamp()
         Calendar Now=Calendar.getInstance();
         String hour;
 
-        if(sharedVariables.timeStamp24hr) {
+        if(channels.timeStamp24hr) {
             hour= "" + Now.get(Now.HOUR_OF_DAY);
             if(hour.length()==1)
                 hour = "0" + hour;
@@ -7392,7 +7392,7 @@ String getADatestamp()
         String ampm = "" ;
         
         // 24 hours format doesn't have AM/PM
-        if(!sharedVariables.timeStamp24hr) {
+        if(!channels.timeStamp24hr) {
             int ampmNum = Now.get(Now.AM_PM);
             if(ampmNum == 0)
                 ampm = "AM";

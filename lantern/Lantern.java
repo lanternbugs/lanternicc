@@ -561,7 +561,7 @@ class mymultiframe extends JFrame
     channelTimestamp.    setSelected(sharedVariables.channelTimestamp);
     shoutTimestamp.      setSelected(sharedVariables.shoutTimestamp);
     qtellTimestamp.      setSelected(sharedVariables.qtellTimestamp);
-    timeStamp24hr.       setSelected(sharedVariables.timeStamp24hr);
+    timeStamp24hr.       setSelected(channels.timeStamp24hr);
     reconnectTimestamp.  setSelected(sharedVariables.reconnectTimestamp);
 
     if (sharedVariables.andreysLayout >= 0 &&
@@ -571,7 +571,7 @@ class mymultiframe extends JFrame
     playersInMyGame.     setSelected((sharedVariables.playersInMyGame == 2));
     unobserveGoExamine.  setSelected(sharedVariables.unobserveGoExamine);
     tellTimestamp.       setSelected(sharedVariables.tellTimestamp);
-    leftNameTimestamp.   setSelected(sharedVariables.leftTimestamp);
+    leftNameTimestamp.   setSelected(channels.leftTimestamp);
     checkLegality.       setSelected(sharedVariables.checkLegality);
     lineindent.          setSelected(sharedVariables.indent);
 
@@ -4263,8 +4263,8 @@ dot.setVisible(true);
       addnameontellswitch.setSelected(sharedVariables.addNameOnSwitch);
 
     }  else if (action.equals("Timestamp To Left Of Name")) {
-      sharedVariables.leftTimestamp = !sharedVariables.leftTimestamp;
-      leftNameTimestamp.setSelected(sharedVariables.leftTimestamp);
+      channels.leftTimestamp = !channels.leftTimestamp;
+      leftNameTimestamp.setSelected(channels.leftTimestamp);
 
 
     } else if (action.equals("Timestamp Connecting")) {
@@ -4280,8 +4280,8 @@ dot.setVisible(true);
       qtellTimestamp.setSelected(sharedVariables.qtellTimestamp);
 
     } else if (action.equals("Timestamp in 24hr Format")) {
-      sharedVariables.timeStamp24hr = !sharedVariables.timeStamp24hr;
-      timeStamp24hr.setSelected(sharedVariables.timeStamp24hr);
+      channels.timeStamp24hr = !channels.timeStamp24hr;
+      timeStamp24hr.setSelected(channels.timeStamp24hr);
 
     } else if (action.equals("Timestamp Tells")) {
       sharedVariables.tellTimestamp = !sharedVariables.tellTimestamp;
