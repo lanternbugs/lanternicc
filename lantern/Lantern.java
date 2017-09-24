@@ -2488,16 +2488,16 @@ myboardappearancemenu.add(consoleaspect);
       mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
 
     } else if (action.equals("ICC Information Help Files")) {
-      openUrl("http://www.chessclub.com/help/info-list");
+      sharedVariables.openUrl("http://www.chessclub.com/help/info-list");
 
     } else if (action.equals("ICC Command Help Files")) {
-      openUrl("http://www.chessclub.com/help/help-list");
+      sharedVariables.openUrl("http://www.chessclub.com/help/help-list");
 
     } else if (action.equals("Join/Renew")) {
-      openUrl("http://www.chessclub.com/tryicc/purchase.html");
+      sharedVariables.openUrl("http://www.chessclub.com/tryicc/purchase.html");
 
     } else if (action.equals("Lost Password")) {
-      openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
+      sharedVariables.openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
 
       /*
     } else if (action.equals("Start AutoExam")) {
@@ -3668,7 +3668,7 @@ dot.setVisible(true);
       queue.add(data);
 
     } else if (action.equals("Show Relay Schedule")) {
-      openUrl("https://www.chessclub.com/user/activities/relays.html");
+      sharedVariables.openUrl("https://www.chessclub.com/user/activities/relays.html");
 
     }
 
@@ -3685,11 +3685,11 @@ dot.setVisible(true);
       /*
       if (sharedVariables.myname.length() > 0 &&
           sharedVariables.mypassword.length() > 0)
-        openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname +
+        sharedVariables.openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname +
                 "&pass=" + sharedVariables.mypassword);
       else
       */
-      openUrl("http://www.chessclub.com/chessfm/");
+      sharedVariables.openUrl("http://www.chessclub.com/chessfm/");
 
     } else if(action.equals("Show Rating Graphs")) {
       
@@ -3697,7 +3697,7 @@ dot.setVisible(true);
       if(sharedVariables.myname.length() > 0) {
        thename = sharedVariables.myname;
       }
-      openUrl("http://statistics.chessclub.com/Embed/Ratings?user=" + thename + "#");
+      sharedVariables.openUrl("http://statistics.chessclub.com/Embed/Ratings?user=" + thename + "#");
 
     } else if(action.equals("Events List Font")) {
       JFrame f = new JFrame("Events List Font");
@@ -6174,60 +6174,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
   }//end method
   */
 
-  void openUrl(String myurl) {
-    try {
-      String os = System.getProperty("os.name").toLowerCase();
-
-      //Process p = Runtime.getRuntime().exec(cmdLine);
-      Runtime rt = Runtime.getRuntime();
-      if (os.indexOf("win") >= 0) {
-        String[] cmd = new String[4];
-        cmd[0] = "cmd.exe";
-        cmd[1] = "/C";
-        cmd[2] = "start";
-        cmd[3] = myurl;
-
-        rt.exec(cmd);
-      } else if (os.indexOf("mac") >= 0) {
-
-        Runtime runtime = Runtime.getRuntime();
-        if (myurl.startsWith("www."))
-          myurl="http://" + myurl;
-        String[] args = {"osascript", "-e", "open location \"" + myurl + "\""};
-        try {
-          Process process = runtime.exec(args);
-        } catch (IOException e) {
-          // do what you want with this
-          // http://www.devdaily.com/java/mac-java-open-url-browser-osascript
-        }
-
-        // rt.exec( "open " + myurl);
-        /*
-        Class fileMgr = Class.forName("com.apple.eio.FileManager");
-        Method openURL = fileMgr.getDeclaredMethod("openURL",
-                                                   new Class[] {String.class});
-        openURL.invoke(null, new Object[] {myurl});
-
-        http://www.java2s.com/Code/Java/Development-Class/LaunchBrowserinMacLinuxUnix.htm
-        */
-        //String[] commandLine = { "safari", "http://www.javaworld.com/" };
-        //Process process = Runtime.getRuntime().exec(commandLine);
-
-      } else {             //prioritized 'guess' of users' preference
-        String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
-                             "netscape","opera","links","lynx"};
-
-        StringBuffer cmd = new StringBuffer();
-        for (int i=0; i<browsers.length; i++)
-          cmd.append((i==0  ? "" : " || ") + browsers[i] +" \"" + myurl + "\" ");
-
-        rt.exec(new String[] {"sh", "-c", cmd.toString()});
-        //rt.exec("firefox http://www.google.com");
-        //System.out.println(cmd.toString());
-      }// end else
-      // end try
-    } catch (Exception e) {}
-  }
+  
 
   public void saveSettings() {
 
