@@ -27,6 +27,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.*;
 import java.math.BigInteger;
+import free.util.BrowserControl;
 
 public class channels {
     Font chessfont1 = null;
@@ -1131,19 +1132,22 @@ final String myurl2=myurl;
 
 	          }
 				else
-				{             //prioritized 'guess' of users' preference
-	              String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
-	                  "netscape","opera","links","lynx"};
+				{
+                    if(!BrowserControl.displayURL(myurl)) {
+                        //last resort: try some prioritized 'guess' of users' preference
+                        String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+                                "netscape", "opera", "links", "lynx"};
 
-	              StringBuffer cmd = new StringBuffer();
-	              for (int i=0; i<browsers.length; i++)
-	                cmd.append( (i==0  ? "" : " || " ) + browsers[i] +" \"" + myurl + "\" ");
+                        StringBuffer cmd = new StringBuffer();
+                        for (int i = 0; i < browsers.length; i++)
+                            cmd.append((i == 0 ? "" : " || ") + browsers[i] + " \"" + myurl + "\" ");
 
-	              rt.exec(new String[] { "sh", "-c", cmd.toString() });
-	              //rt.exec("firefox http://www.google.com");
-	              //System.out.println(cmd.toString());
+                        rt.exec(new String[]{"sh", "-c", cmd.toString()});
+                        //rt.exec("firefox http://www.google.com");
+                        //System.out.println(cmd.toString());
 
 
+                    }
 				}// end else
 			}// end try
 			catch(Exception e)
