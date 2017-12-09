@@ -379,7 +379,7 @@ boolean isGuest()
 channels()
 {
 myServer = "ICC";
-version = "v6.15d";
+version = "v6.16";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -740,7 +740,8 @@ myTabFont = new Font("TimesRoman", Font.PLAIN, 16);
 crazyFont = new Font("TimesRoman", Font.PLAIN, 20);
 ForColor = new Color(204,204, 255);
 typedColor = new Color(235, 235, 255);
-MainBackColor = new Color(204,255,255);
+//MainBackColor = new Color(204,255,255);    // old blue
+MainBackColor = new Color(239,237,192);
 BackColor = new Color(0,0,0);
 //boardForegroundColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);

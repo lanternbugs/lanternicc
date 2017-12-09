@@ -121,21 +121,66 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
          }
 
+
+         int getWildNumber(String variant) 
+         {
+          if(variant.toLowerCase().startsWith("three checks"))
+            return 25;
+            if(variant.toLowerCase().startsWith("3check"))
+            return 25;
+            if(variant.toLowerCase().startsWith("atomic"))
+            return 27;
+            if(variant.toLowerCase().startsWith("crazyhouse"))
+            return 23;
+            if(variant.toLowerCase().startsWith("loser"))
+            return 17;
+            if(variant.toLowerCase().startsWith("giveaway"))
+            return 26;
+            if(variant.toLowerCase().startsWith("suicide"))
+            return 26;
+            if(variant.toLowerCase().startsWith("shatranj"))
+            return 28;
+            if(variant.toLowerCase().startsWith("2king"))
+            return 9;
+
+          return 0;
+         }
+
+
 	void enterExamineMode(int row)
 	{
-         
+
          if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest())
          {
 
 
             String event = myLoader.games.get(row).event;
+            String variant = myLoader.games.get(row).variant;
+            int wild = 0;
             String timeControl = "";
             if(event != null)  {
                 timeControl = findTime(event);
             }
+            if(variant != null) {
+             wild = getWildNumber(variant);
+            }
 
             if(event == null) 
              send("multi Examine\n");
+             else if(wild == 17)
+             send("multi Match " + sharedVariables.myname + timeControl + " w17\n");
+             else if(wild == 23)
+             send("multi Match " + sharedVariables.myname + timeControl + " w23\n");
+             else if(wild == 25)
+             send("multi Match " + sharedVariables.myname + timeControl + " w25\n");
+             else if(wild == 27)
+             send("multi Match " + sharedVariables.myname + timeControl + " w27\n");
+             else if(wild == 26)
+             send("multi Match " + sharedVariables.myname + timeControl + " w26\n");
+              else if(wild == 9)
+             send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
+             else if(wild == 28)
+             send("multi Match " + sharedVariables.myname + timeControl + " w28\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w9 "))
              send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w17 "))
@@ -182,7 +227,20 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          }// if my name
          else
          {
+           
+          String variant = myLoader.games.get(row).variant;
+            int wild = 0;
+            if(variant != null) {
+             wild = getWildNumber(variant);
+            }
+            
+            if(wild != 0) {
+               send("set wild " + wild + "\n");
+            }
           send("Examine\n");
+          if(wild != 0) {
+           send("set wild 0" + "\n");
+          }
          }
 
 

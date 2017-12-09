@@ -117,6 +117,8 @@ pgnData mygame= new pgnData();
 				 	mygame.iccResult=getPgnArg(line);
                                  if(line.startsWith("[FEN"))
 				 	mygame.iccFen=getPgnArg(line);
+			 	 if(line.startsWith("[Variant"))
+				 	mygame.variant=getPgnArg(line);
 
 			 }
 
@@ -277,6 +279,7 @@ while(go==true);
 		String gameData;
 		String iccResult;
 		String iccFen;
+		String variant;
 
 }
 
