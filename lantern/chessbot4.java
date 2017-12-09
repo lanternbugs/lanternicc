@@ -2193,8 +2193,22 @@ void processLink2(StyledDocument doc, String thetell, Color col, int index, int 
 
 
 	void writeGuestLogin()
-	{
-		String s1= "Guests can play unrated. Game menu - Seek a Game, to make an offer, or Windows menu / Seek Graph to accept one.\n";
+	{ try{
+
+                StyledDocument doc=sharedVariables.mydocs[0];// 0 for main console
+                SimpleAttributeSet attrs = new SimpleAttributeSet();
+                StyleConstants.setForeground(attrs, sharedVariables.qtellcolor);
+                int [] cindex2 = new int[sharedVariables.maxConsoleTabs];
+		cindex2[0]=0; // default till we know more is its not going to main
+                String tempo = "To sign up go to https://login.chessclub.com/Registration  Lantern Chess can be used with a 30 day free trial to ICC if not had yet.\n";
+		processLink2(doc, tempo, sharedVariables.qtellcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+              }
+              catch(Exception duie){}
+
+
+                String s1= "Guests can play unrated. Game menu - Seek a Game, to make an offer, or Windows menu / Seek Graph to accept one.\n";
+
+
 
 try{
 
