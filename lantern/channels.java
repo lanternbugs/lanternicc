@@ -376,10 +376,19 @@ boolean isGuest()
  }
  return false;
 }
+boolean isAnon()
+{
+ for(int a = 0; a < 10; a++) {
+   if(myname.startsWith("anon" + a))
+    return true;
+ }
+ return false;
+}
+
 channels()
 {
 myServer = "ICC";
-version = "v6.16";
+version = "v6.17";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

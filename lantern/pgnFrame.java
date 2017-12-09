@@ -160,6 +160,9 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
             String timeControl = "";
             if(event != null)  {
                 timeControl = findTime(event);
+                if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && sharedVariables.isAnon()) {
+                   timeControl = timeControl.replace("r", "u");
+                }
             }
             if(variant != null) {
              wild = getWildNumber(variant);
