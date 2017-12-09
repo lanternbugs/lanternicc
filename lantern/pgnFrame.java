@@ -350,8 +350,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                          enterExamineMode(row);
 			if(myLoader.games.get(row).iccFen != null)
                           send("multi loadfen " + myLoader.games.get(row).iccFen + "\n");
-			send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
+                          if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest()) {
+                              send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
 			send("Setblackname " + myLoader.games.get(row).blackName + "\n");
+                          }
+
 			if(myLoader.games.get(row).whiteElo != null)
                           send("Tag WhiteElo " + myLoader.games.get(row).whiteElo + "\n");
 			if(myLoader.games.get(row).blackElo != null)
