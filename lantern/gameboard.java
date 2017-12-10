@@ -1168,6 +1168,28 @@ game += "[NIC \"*\"]\r\n";
 game += "[Time \"" + theTime + "\"]\r\n";
 int minutes = sharedVariables.mygame[gameData.BoardIndex].time  * 60;
 game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+if(sharedVariables.mygame[gameData.BoardIndex].wild == 1) {
+             game += "[Variant \"wildcastle\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.BoardIndex].wild == 9) {
+             game += "[Variant \"twokings\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.BoardIndex].wild == 17) {
+             game += "[Variant \"losers\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.BoardIndex].wild == 22) {
+             game += "[Variant \"fischerandom\"]\r\n";
+            }if(sharedVariables.mygame[gameData.BoardIndex].wild == 23) {
+             game += "[Variant \"crazyhouse\"]\r\n";
+            }if(sharedVariables.mygame[gameData.BoardIndex].wild == 25) {
+             game += "[Variant \"3check\"]\r\n";
+            }if(sharedVariables.mygame[gameData.BoardIndex].wild == 26) {
+             game += "[Variant \"giveaway\"]\r\n";
+            }if(sharedVariables.mygame[gameData.BoardIndex].wild == 27) {
+             game += "[Variant \"atomic\"]\r\n";
+            }if(sharedVariables.mygame[gameData.BoardIndex].wild == 28) {
+             game += "[Variant \"shatranj\"]\r\n";
+            }
 if(sharedVariables.mygame[gameData.BoardIndex].engineFen.length() > 8) {
              game += "[FEN \"" +  sharedVariables.mygame[gameData.BoardIndex].engineFen + "\"]\r\n";
             }

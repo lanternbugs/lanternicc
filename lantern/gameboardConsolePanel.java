@@ -499,8 +499,30 @@ menu2.show(e.getComponent(),e.getX(),e.getY());
             game += "[Time \"" + theTime + "\"]\r\n";
             int minutes = sharedVariables.mygame[gameData.LookingAt].time  * 60;
             game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.LookingAt].inc + "\"]\r\n";
+            if(sharedVariables.mygame[gameData.LookingAt].wild == 1) {
+             game += "[Variant \"wildcastle\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.LookingAt].wild == 9) {
+             game += "[Variant \"twokings\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.LookingAt].wild == 17) {
+             game += "[Variant \"losers\"]\r\n";
+            }
+            if(sharedVariables.mygame[gameData.LookingAt].wild == 22) {
+             game += "[Variant \"fischerandom\"]\r\n";
+            }if(sharedVariables.mygame[gameData.LookingAt].wild == 23) {
+             game += "[Variant \"crazyhouse\"]\r\n";
+            }if(sharedVariables.mygame[gameData.LookingAt].wild == 25) {
+             game += "[Variant \"3check\"]\r\n";
+            }if(sharedVariables.mygame[gameData.LookingAt].wild == 26) {
+             game += "[Variant \"giveaway\"]\r\n";
+            }if(sharedVariables.mygame[gameData.LookingAt].wild == 27) {
+             game += "[Variant \"atomic\"]\r\n";
+            }if(sharedVariables.mygame[gameData.LookingAt].wild == 28) {
+             game += "[Variant \"shatranj\"]\r\n";
+            }
             if(sharedVariables.mygame[gameData.LookingAt].engineFen.length() > 8) {
-             game += "[FEN \"" +  sharedVariables.mygame[gameData.LookingAt].engineFen + "\"]\r\n"; 
+             game += "[FEN \"" +  sharedVariables.mygame[gameData.LookingAt].engineFen + "\"]\r\n";
             }
             game += "\r\n";
             // now moves

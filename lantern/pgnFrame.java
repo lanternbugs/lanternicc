@@ -142,6 +142,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
             return 28;
             if(variant.toLowerCase().startsWith("2king"))
             return 9;
+            if(variant.toLowerCase().startsWith("twokings"))
+            return 9;
+            if(variant.toLowerCase().startsWith("wildcastle"))
+            return 1;
+            if(variant.toLowerCase().startsWith("fischerandom") || variant.toLowerCase().startsWith("chess960"))
+            return 22;
 
           return 0;
          }
@@ -168,7 +174,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
              wild = getWildNumber(variant);
             }
 
-            if(event == null) 
+            if(event == null)
              send("multi Examine\n");
              else if(wild == 17)
              send("multi Match " + sharedVariables.myname + timeControl + " w17\n");
@@ -184,6 +190,10 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
              send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
              else if(wild == 28)
              send("multi Match " + sharedVariables.myname + timeControl + " w28\n");
+             else if(wild == 1)
+             send("multi Match " + sharedVariables.myname + timeControl + " w1\n");
+             else if(wild == 22)
+             send("multi Match " + sharedVariables.myname + timeControl + " w22\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w9 "))
              send("multi Match " + sharedVariables.myname + timeControl + " w9\n");
             else if(event.startsWith("ICC tourney") && event.contains("(w17 "))
