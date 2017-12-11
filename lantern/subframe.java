@@ -103,9 +103,13 @@ class subframe extends JInternalFrame
     queue=queue1;
     myboards=myboards1;
     consoleTitle="Main Console " + (sharedVariables1.openConsoleCount) + ": ";
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     consoleNumber = sharedVariables.openConsoleCount;
-    
+    if(consoleNumber == 0) {
+      setDefaultCloseOperation(0);
+    } else {
+     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
     /*
     JMenu consoleMenu = new JMenu("Colors/fonts per console");
     JMenuItem setfont = new JMenuItem("Console's Font");
@@ -2229,6 +2233,13 @@ class subframe extends JInternalFrame
   public void internalFrameClosing(InternalFrameEvent e) {
     if (isVisible() && !isMaximum() && !isIcon()) {
       setBoardSize();
+    }
+
+    if(consoleNumber == 0) {
+      try {
+      mymultiframe frame =  (mymultiframe)getRootPane().getParent().getParent().getParent().getParent().getParent().getParent();
+      frame.windowClosingHandler();
+      } catch(Exception dui) {}
     }
   }
 

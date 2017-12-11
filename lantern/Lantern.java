@@ -5207,7 +5207,12 @@ dot.setVisible(true);
   }
 
   public void windowClosing(WindowEvent e) {
-    //if(sharedVariables.engineOn == true)
+   windowClosingHandler();
+  }
+
+  public void windowClosingHandler()
+  {
+     //if(sharedVariables.engineOn == true)
     sendToEngine("stop\n");
     sendToEngine("exit\n");
     sendToEngine("quit\n");
@@ -5218,8 +5223,8 @@ dot.setVisible(true);
         new JSettingsDialog((JFrame) this, false,
                             sharedVariables);
     }
-  }
 
+  }
   /********************* Console Events **********************************/
 
   void compactConsole() {
