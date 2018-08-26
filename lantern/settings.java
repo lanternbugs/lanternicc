@@ -1087,6 +1087,18 @@ for(int excl = 0; excl < sharedVariables.excludedPiecesBlack.length; excl++)
 	// closing tellstotab
 	set_string = set_string + "[donetellstotab] ";
 
+
+        	// tells to tab
+	set_string = set_string + "[disableHyperlinks] ";
+	if(sharedVariables.disableHyperlinks == true)
+	set_string = set_string + "1" + " ";
+	else
+	set_string = set_string + "0" + " ";
+
+	// closing tellstotab
+	set_string = set_string + "[donedisableHyperlinks] ";
+
+
 	// notify window width
 	set_string = set_string + "[notifywindowwidth] ";
 	if(sharedVariables.notifyWindowWidth > 20)
@@ -2329,6 +2341,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					catch(Exception zzz){}
 				}
 
+                                 if (temp.equals("[disableHyperlinks]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.disableHyperlinks=true;
+					else
+						sharedVariables.disableHyperlinks=false;
+					}
+					catch(Exception zzz){}
+				}
 
                     
 

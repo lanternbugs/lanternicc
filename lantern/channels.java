@@ -62,6 +62,7 @@ tableClass [] mygametable;
 JTable [] gametable;
 JMenu myWindows;
 JMenuItem [] openBoards;
+boolean disableHyperlinks = false;
 boolean debug = false;
 boolean hasSettings=false;
 boolean randomArmy=false;
@@ -388,7 +389,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.17a";
+version = "v6.18";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -1078,6 +1079,9 @@ if(screenW > 900 && screenH > 700)
 }
 void openUrl(String myurl)
 {
+  if(disableHyperlinks) {
+   return;
+  }
 // mac fix replace %0D at end with empty
 if(myurl.endsWith("\r"))
 myurl=myurl.trim();

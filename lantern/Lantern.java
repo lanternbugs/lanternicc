@@ -334,6 +334,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem rotateaways;
   JCheckBoxMenuItem notifysound;
   JCheckBoxMenuItem qsuggestPopup;
+   JCheckBoxMenuItem disableHyperlinks;
   JCheckBoxMenuItem autopopup;
   JCheckBoxMenuItem basketballFlag;
   JCheckBoxMenuItem autoPromote;
@@ -585,6 +586,7 @@ class mymultiframe extends JFrame
     makedrawsounds.      setSelected(sharedVariables.makeDrawSounds);
     tabbing.             setSelected(sharedVariables.tabsOnly);
     qsuggestPopup.       setSelected(sharedVariables.showQsuggest);
+    disableHyperlinks.       setSelected(sharedVariables.disableHyperlinks);
     rotateaways.         setSelected(sharedVariables.rotateAways);
     if(sharedVariables.uciMultipleLines == 1) {
         ucimultipleone.setSelected(true);
@@ -1321,6 +1323,7 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     JMenuItem advancedmenuhelp = new JMenuItem("Advanced Menu Help");
     qsuggestPopup = new JCheckBoxMenuItem("Qsuggest Popups");
+     disableHyperlinks = new JCheckBoxMenuItem("Disable Web Hyperlinks");
     alwaysShowEdit = new JCheckBoxMenuItem("Always Show Console Edit Menu");
 
     channelNumberLeft = new JCheckBoxMenuItem("Channel Number On Left");
@@ -1469,9 +1472,11 @@ class mymultiframe extends JFrame
     optionsmenu.addSeparator();
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
+
     advancedOptions.add(advancedmenuhelp);
     advancedOptions.addSeparator();
     advancedOptions.add(qsuggestPopup);
+    advancedOptions.add(disableHyperlinks);
     advancedOptions.add(alwaysShowEdit);
 
     advancedOptions.add(channelNumberLeft);
@@ -1566,6 +1571,7 @@ class mymultiframe extends JFrame
     toolbox.addActionListener(this);
     advancedmenuhelp.addActionListener(this);
     qsuggestPopup.addActionListener(this);
+    disableHyperlinks.addActionListener(this);
     alwaysShowEdit.addActionListener(this);
     consolemenu.addActionListener(this);
     channelNumberLeft.addActionListener(this);
@@ -2469,7 +2475,11 @@ myboardappearancemenu.add(consoleaspect);
                output.consoleNumber=0;
                queue.add(output);
     }
+     else if (action.equals("Disable Web Hyperlinks")) {
+      sharedVariables.disableHyperlinks = !sharedVariables.disableHyperlinks;
+      disableHyperlinks.setSelected(sharedVariables.disableHyperlinks);
 
+    }
 
 
     else if (action.equals("Qsuggest Popups")) {
