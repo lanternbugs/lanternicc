@@ -177,6 +177,7 @@ public class customizeChannelsDialog extends JDialog
       qtc.add(i);
 
     qtc.add(230);
+    qtc.add(231);
     qtc.add(232);
     qtc.add(280);
 
