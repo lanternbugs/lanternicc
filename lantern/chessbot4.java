@@ -3372,6 +3372,8 @@ if(botname.equals("Slomato"))
 botsChannel=222;
 if(botname.equals("LittlePer"))
 botsChannel=225;
+if(botname.equals("USCF"))
+botsChannel=231;
 if(botsChannel > -1 && multiLine == false)
 {
 
@@ -3800,6 +3802,8 @@ if(dg.getArg(4).equals("Ketchup"))
 tomato=228;
 if(dg.getArg(4).equals("Olive"))
 tomato=230;
+if(dg.getArg(4).equals("USCF"))
+tomato=231;
 if(sharedVariables.showQsuggest == false || tomato != 0)
 {
 
@@ -7767,6 +7771,13 @@ go = true;
 tabNumber++;
 }// go = false
 sharedVariables.console[tabNumber][230]= 1;
+}
+if(sharedVariables.channelNamesList.get(li).channel.equals("231")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][231]= 1;
 }
 if(sharedVariables.channelNamesList.get(li).channel.equals("232")) {
 if(go == false) {

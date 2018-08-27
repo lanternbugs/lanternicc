@@ -2232,7 +2232,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem servertime = new JMenuItem("Server Time");
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
-    JMenuItem showfm = new JMenuItem("Open ChessFM");
+    JMenuItem showfm = new JMenuItem("Open Videos Page");
 
     // add shortcuts
     actionsmenu.setMnemonic(KeyEvent.VK_A);
@@ -2504,10 +2504,10 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.openUrl("http://www.chessclub.com/help/help-list");
 
     } else if (action.equals("Join/Renew")) {
-      sharedVariables.openUrl("http://www.chessclub.com/tryicc/purchase.html");
+      sharedVariables.openUrl("https://login.chessclub.com/Registration");
 
     } else if (action.equals("Lost Password")) {
-      sharedVariables.openUrl("http://www.chessclub.com/helpcenter/mailpassword.html");
+      sharedVariables.openUrl("https://login.chessclub.com/Account/ForgotPassword");
 
       /*
     } else if (action.equals("Start AutoExam")) {
@@ -3678,7 +3678,7 @@ dot.setVisible(true);
       queue.add(data);
 
     } else if (action.equals("Show Relay Schedule")) {
-      sharedVariables.openUrl("https://www.chessclub.com/user/activities/relays.html");
+      sharedVariables.openUrl("https://www.chessclub.com/relayed-events");
 
     }
 
@@ -3688,7 +3688,7 @@ dot.setVisible(true);
     } else if (action.equals("Lookup User")) {
       LookupUserDialog frame = new LookupUserDialog(this, false, queue);
 
-    } else if (action.equals("Open ChessFM")) {
+    } else if (action.equals("Open Videos Page")) {
 
       // ?user=me&pass=pass
 
@@ -3699,7 +3699,7 @@ dot.setVisible(true);
                 "&pass=" + sharedVariables.mypassword);
       else
       */
-      sharedVariables.openUrl("http://www.chessclub.com/chessfm/");
+      sharedVariables.openUrl("https://www.chessclub.com/videos");
 
     } else if(action.equals("Show Rating Graphs")) {
       
