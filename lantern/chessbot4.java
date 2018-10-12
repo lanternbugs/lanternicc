@@ -7551,6 +7551,15 @@ sharedVariables.console[tabNumber][2]= 1;
 
 }
 
+if(sharedVariables.channelNamesList.get(li).channel.equals("47")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][47]= 1;
+
+}
+
 if(sharedVariables.channelNamesList.get(li).channel.equals("100")) {
 if(go == false) {
 go = true;
@@ -7692,6 +7701,14 @@ tabNumber++;
 sharedVariables.console[tabNumber][46]= 1;
 }
 
+if(sharedVariables.channelNamesList.get(li).channel.equals("47")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][47]= 1;
+}
+
 if(sharedVariables.channelNamesList.get(li).channel.equals("49")) {
 if(go == false) {
 go = true;
@@ -7817,6 +7834,26 @@ sharedVariables.console[tabNumber][280]= 1;
 
  if(sharedVariables.console[tabNumber][280] == 1 )
   setConsoleSendPrefixes("280", tabNumber);
+  
+// ******************** Stage 12
+if(tabNumber < 11) {
+  go=false;
+for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+if(sharedVariables.channelNamesList.get(li).channel.equals("47")) {
+if(go == false) {
+go = true;
+tabNumber++;
+}// go = false
+sharedVariables.console[tabNumber][47]= 1;
+}
+}// end for
+
+ if(sharedVariables.console[tabNumber][71] == 1 )
+  setConsoleSendPrefixes("71", tabNumber);
+
+}
+
+
 } // end else
 
 
