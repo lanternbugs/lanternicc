@@ -79,6 +79,7 @@ boolean autoKetchup;
 boolean autoSlomato;
 boolean autoOlive;
 boolean autoLittlePer;
+boolean autoPear;
 boolean autoPromote;
 static boolean firstSound=true;
 boolean [] pointedToMain = new boolean[100];
@@ -389,7 +390,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.19a";
+version = "v6.19b";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -607,6 +608,7 @@ autoKetchup = false;
 autoOlive = false;
 autoSlomato = false;
 autoLittlePer =false;
+autoPear = false;
 
 toolbarVisible=true;
 showQsuggest=true;

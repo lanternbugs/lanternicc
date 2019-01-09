@@ -1364,6 +1364,7 @@ class mymultiframe extends JFrame
     JCheckBoxMenuItem autoketchup = new JCheckBoxMenuItem("Ketchup");
     JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Olive");
     JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("LittlePer");
+    JCheckBoxMenuItem autopear = new JCheckBoxMenuItem("Pear");
     // .. / .. /
     JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
     // .. / .. / Random Pieces Board when Observing /
@@ -1518,6 +1519,7 @@ class mymultiframe extends JFrame
     tournieFollow.add(autoketchup);
     tournieFollow.add(autoolive);
     tournieFollow.add(autolittleper);
+    tournieFollow.add(autopear);
     // .. / .. /
     observeOptions.add(randomGraphics);
     // .. / .. / Random Pieces Board when Observing /
@@ -1602,6 +1604,7 @@ class mymultiframe extends JFrame
     autoketchup.addActionListener(this);
     autoolive.addActionListener(this);
     autolittleper.addActionListener(this);
+     autopear.addActionListener(this);
     randomArmy.addActionListener(this);
     configureRand.addActionListener(this);
     configureRandBlack.addActionListener(this);
@@ -4343,7 +4346,10 @@ dot.setVisible(true);
     } else if (action.equals("Slomato")) {
       sharedVariables.autoSlomato = !sharedVariables.autoSlomato;
 
-    } else if (action.equals("Random Piece Set Observe Only")) {
+    } else if (action.equals("Pear")) {
+      sharedVariables.autoPear = !sharedVariables.autoPear;
+
+    }  else if (action.equals("Random Piece Set Observe Only")) {
       sharedVariables.randomArmy = !sharedVariables.randomArmy;
       randomArmy.setSelected(sharedVariables.randomArmy);
 

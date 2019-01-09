@@ -3360,6 +3360,8 @@ if(botname.equals("Tomato"))
 botsChannel=46;
 if(botname.equals("Flash"))
 botsChannel=49;
+if(botname.equals("USCF"))
+botsChannel=231;
 if(botname.equals("Cooly"))
 botsChannel=224;
 if(botname.equals("WildOne"))
@@ -3372,8 +3374,8 @@ if(botname.equals("Slomato"))
 botsChannel=222;
 if(botname.equals("LittlePer"))
 botsChannel=225;
-if(botname.equals("USCF"))
-botsChannel=231;
+if(botname.equals("Pear"))
+botsChannel=227;
 if(botsChannel > -1 && multiLine == false)
 {
 
@@ -3636,6 +3638,8 @@ go=1;
 if(botname.equals("Slomato") && sharedVariables.autoSlomato == true)
 go=1;
 if(botname.equals("LittlePer") && sharedVariables.autoLittlePer == true)
+go=1;
+if(botname.equals("Pear") && sharedVariables.autoPear == true)
 go=1;
 
 
