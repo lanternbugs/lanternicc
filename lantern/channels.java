@@ -390,7 +390,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.19b";
+version = "v6.19c";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;

@@ -3374,7 +3374,7 @@ if(botname.equals("Slomato"))
 botsChannel=222;
 if(botname.equals("LittlePer"))
 botsChannel=225;
-if(botname.equals("Pear"))
+if(botname.equals("pear"))
 botsChannel=227;
 if(botsChannel > -1 && multiLine == false)
 {
@@ -3639,7 +3639,7 @@ if(botname.equals("Slomato") && sharedVariables.autoSlomato == true)
 go=1;
 if(botname.equals("LittlePer") && sharedVariables.autoLittlePer == true)
 go=1;
-if(botname.equals("Pear") && sharedVariables.autoPear == true)
+if(botname.equals("pear") && sharedVariables.autoPear == true)
 go=1;
 
 
@@ -3800,7 +3800,7 @@ if(dg.getArg(4).equals("Cooly"))
 tomato=224;
 if(dg.getArg(4).equals("LittlePer"))
 tomato=225;
-if(dg.getArg(4).equals("Pear"))
+if(dg.getArg(4).equals("pear"))
 tomato=227;
 if(dg.getArg(4).equals("Ketchup"))
 tomato=228;
