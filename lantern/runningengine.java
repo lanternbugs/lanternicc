@@ -856,6 +856,18 @@ String formatScore(String score, boolean uci)
 boolean addSwapLine(PrincipalVariation p)
 {
   boolean found = false;
+  if(!p.score.toLowerCase().contains("mate"))
+  {
+    int spaces = 0;
+    int index = p.line.indexOf(" ");
+    while(index != -1) {
+     spaces++;
+     index = p.line.indexOf(" ", index + 1);
+    }
+    if(spaces < 3) {
+     return false; 
+    }
+  }
   for(int i=0; i< multiLines.size(); i++)
   {
     PrincipalVariation temp = multiLines.get(i);
