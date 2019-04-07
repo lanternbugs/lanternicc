@@ -1398,6 +1398,7 @@ class mymultiframe extends JFrame
     autotomato.setMnemonic(KeyEvent.VK_T);
     autowildone.setMnemonic(KeyEvent.VK_W);
     autoslomato.setMnemonic(KeyEvent.VK_S);
+    autopear.setMnemonic(KeyEvent.VK_P);
     autoketchup.setMnemonic(KeyEvent.VK_K);
     autoolive.setMnemonic(KeyEvent.VK_O);
     autolittleper.setMnemonic(KeyEvent.VK_L);

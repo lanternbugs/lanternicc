@@ -1048,6 +1048,12 @@ if(multiLines.size() == 1) //  no multipv
 String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);
 
+if(i > 0) {
+                  line2 = truncateLine2(line2, 18);
+
+               }
+
+
  if(sharedVariables.analysisFont != null && sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
         line2 = parseChessFont(line2);
     }
@@ -1067,6 +1073,24 @@ setEngineDoc(doc, a);
 catch(Exception e)
 {}
 }
+
+String truncateLine2(String line2, int spaces)
+    {
+        int position = -1;
+        int counter = 0;
+        while(line2.indexOf(" ", position +1) != -1) {
+            counter++;
+            position = line2.indexOf(" ", position +1);
+            if(counter == spaces) {
+                break;
+            }
+
+    }
+    if(position != -1) {
+        return line2.substring(0, position);
+    }
+        return line2;
+    }
 
 String addMoveNumbers(String inputLine)
 {
