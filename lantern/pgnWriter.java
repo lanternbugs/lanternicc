@@ -326,10 +326,26 @@ String getPgn(String moves, int iflipped, int [] board2)
 		{
 			board[to]=board[from];
 			board[from]=0;
-			if(xto > 4)
-				board[yto * 8 + 7]=0;
-			else
-				board[yto * 8]=0;
+			int rook;
+			if(xto > 4) {
+				rook = board[yto * 8 + 7];
+				board[yto * 8 + 7] = 0;
+				if(from > to) {
+					board[to + 1] = rook;
+				} else {
+					board[to - 1] = rook;
+				}
+			}
+			else {
+				rook = board[yto * 8];
+				board[yto * 8] = 0;
+				if(from > to) {
+					board[to + 1] = rook;
+				} else {
+					board[to - 1] = rook;
+				}
+
+			}
 		}
 		else if(!promotion.equals("") && (board[from] == 1 || board[from]==7))
 		{

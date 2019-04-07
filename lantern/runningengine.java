@@ -360,7 +360,7 @@ int stage=0;
 //sendToEngine("move d7d5\n");
 String text="";
 do {
-
+text = "";
 if(in.ready())
 text=in.readLine();
 
@@ -601,14 +601,11 @@ writeOut("Excption bad one\n");
 }
 }// end if
 
-
-
-
-
-
-
 try {
-Thread.sleep(30);
+  if(text.length() == 0) {
+      Thread.sleep(30);
+  }
+
 }
 catch(Exception E5){}
 
