@@ -3,16 +3,18 @@ package lantern;
 *  Copyright (C) 2010 Michael Ronald Adams.
 *  All rights reserved.
 *
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
+* this file is free software; you can redistribute
+ * it and/or modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
 
 *  This code is distributed in the hope that it will
 *  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 *  General Public License for more details.
+
+note - 4-21-19. i've relicenced this file From GPL to LGPL.  Since it is just a utility file used in
+a chessclub connectoin I want to make it more easily availble for anyone doing a parser to ICC
 */
 import java.io.*;
 
