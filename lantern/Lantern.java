@@ -211,6 +211,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem ucimultipletwo;
   JCheckBoxMenuItem ucimultiplethree;
   JCheckBoxMenuItem maketellsounds;
+  JCheckBoxMenuItem makeatnamesounds;
   JCheckBoxMenuItem makedrawsounds;
   JCheckBoxMenuItem makemovesounds;
 
@@ -582,6 +583,7 @@ class mymultiframe extends JFrame
     randomTiles.         setSelected(sharedVariables.randomBoardTiles);
     notifysound.         setSelected(sharedVariables.specificSounds[4]);
     maketellsounds.      setSelected(sharedVariables.makeTellSounds);
+    makeatnamesounds.    setSelected(sharedVariables.makeAtNameSounds);
     makemovesounds.      setSelected(sharedVariables.makeMoveSounds);
     makedrawsounds.      setSelected(sharedVariables.makeDrawSounds);
     tabbing.             setSelected(sharedVariables.tabsOnly);
@@ -1295,6 +1297,7 @@ class mymultiframe extends JFrame
     makedrawsounds = new JCheckBoxMenuItem("Sounds for Draw Offers");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
+    makeatnamesounds = new JCheckBoxMenuItem("Sounds for @yourname");
     // .. / (separator)
     JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 8");
     JMenuItem cuckooanalysis = new JMenuItem("Analyze with CuckooChess 1.12");
@@ -1422,6 +1425,7 @@ class mymultiframe extends JFrame
     soundmenu.addSeparator();
     soundmenu.add(makeObserveSounds);
     soundmenu.add(makemovesounds);
+    soundmenu.add(makeatnamesounds);
     soundmenu.add(makedrawsounds);
     soundmenu.add(notifysound);
     soundmenu.add(maketellsounds);
@@ -1551,6 +1555,7 @@ class mymultiframe extends JFrame
     showMugshots.addActionListener(this);
     makeObserveSounds.addActionListener(this);
     maketellsounds.addActionListener(this);
+    makeatnamesounds.addActionListener(this);
     makemovesounds.addActionListener(this);
     makedrawsounds.addActionListener(this);
     hearsound.addActionListener(this);
@@ -2290,6 +2295,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem askaquestion = new JMenuItem("Ask A Question");
     JMenuItem lanternmanual = new JMenuItem("Lantern Help Index");
     JMenuItem changelog = new JMenuItem("Change Log");
+    JMenuItem privacypolicy = new JMenuItem("Privacy Policy");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
     JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
     JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
@@ -2312,6 +2318,7 @@ myboardappearancemenu.add(consoleaspect);
     helpmenu.add(askaquestion);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
+    helpmenu.add(privacypolicy);
     helpmenu.addSeparator();
     helpmenu.add(infohelp);
     helpmenu.add(commandhelp);
@@ -2329,6 +2336,7 @@ myboardappearancemenu.add(consoleaspect);
     askaquestion.addActionListener(this);
     lanternmanual.addActionListener(this);
     changelog.addActionListener(this);
+    privacypolicy.addActionListener(this);
     infohelp.addActionListener(this);
     commandhelp.addActionListener(this);
     joinrenewhelp.addActionListener(this);
@@ -2501,7 +2509,11 @@ myboardappearancemenu.add(consoleaspect);
     } else if (action.equals("Change Log")) {
       mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
 
-    } else if (action.equals("ICC Information Help Files")) {
+    }  else if (action.equals("Privacy Policy")) {
+     sharedVariables.openUrl("http://www.lanternchess.com/lanternchessios-privacypolicy.html");
+
+    }
+    else if (action.equals("ICC Information Help Files")) {
       sharedVariables.openUrl("http://www.chessclub.com/help/info-list");
 
     } else if (action.equals("ICC Command Help Files")) {
@@ -4393,6 +4405,11 @@ dot.setVisible(true);
     else if (action.equals("Sounds for Tells")) {
       sharedVariables.makeTellSounds = !sharedVariables.makeTellSounds;
       maketellsounds.setSelected(sharedVariables.makeTellSounds);
+
+    }
+     else if (action.equals("Sounds for @yourname")) {
+      sharedVariables.makeAtNameSounds = !sharedVariables.makeAtNameSounds;
+      maketellsounds.setSelected(sharedVariables.makeAtNameSounds);
 
     }
      else if (action.equals("Sounds for Moves")) {

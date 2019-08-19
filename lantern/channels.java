@@ -90,6 +90,7 @@ boolean highlightMoves;
 boolean makeSounds;
 boolean makeObserveSounds;
 boolean makeTellSounds;
+boolean makeAtNameSounds;
 boolean makeDrawSounds;
 boolean makeMoveSounds;
 boolean engineOn;
@@ -198,7 +199,7 @@ String [] consoleTabCustomTitles;
 static String gameOverTitle = "W";
 String wallpaperFileName;
 String lasttell;
-String myname;// my login on the server
+String myname = "";// my login on the server
 String mypassword; // used if we need to open a secure web page
 String myPartner; // my bughouse partner
 String myopponent;
@@ -390,7 +391,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.20";
+version = "v6.21";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -539,6 +540,7 @@ engineOn=false;
 makeSounds=true;
 makeObserveSounds=true;
 makeTellSounds = true;
+makeAtNameSounds = true;
 makeDrawSounds = true;
 makeMoveSounds = true;
 pgnLogging=true;

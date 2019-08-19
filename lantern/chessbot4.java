@@ -2634,6 +2634,7 @@ if(dg.getArg(0).equals("27"))
 			}
 String thetell = "";
 String extraSpacing = "";
+boolean atNameDone =  dg.getArg(4).toLowerCase().contains(" @" + sharedVariables.myname.toLowerCase() + " ");
 if(sharedVariables.channelNumberLeft == false)
 {
 // old format channel after name
@@ -2818,8 +2819,9 @@ StyledDocument	doc=sharedVariables.mydocs[0];
 	myStyles.colors[0]=sharedVariables.chatTimestampColor;
 
 }
-
-
+Sound atName;
+if(sharedVariables.makeSounds == true && atNameDone == true && sharedVariables.makeAtNameSounds)
+atName=new Sound(sharedVariables.songs[0]);
 }// end channel tell
 
 

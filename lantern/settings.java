@@ -705,6 +705,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[donetellsounds] ";
+		
+         // at name sounds
+	set_string = set_string + "[atnamesounds] ";
+	if(sharedVariables.makeAtNameSounds == true)
+		set_string = set_string + "1" + " ";
+	else
+		set_string = set_string + "0" + " ";
+	// closing
+		set_string = set_string + "[doneatnamesounds] ";
 
 	// drawsounds
 	set_string = set_string + "[drawsounds] ";
@@ -2526,6 +2535,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 						sharedVariables.makeTellSounds=true;
 					else
 						sharedVariables.makeTellSounds=false;
+					}
+					catch(Exception zzz){}
+				}
+					if(temp.equals("[atnamesounds]"))
+				{
+				try {
+					int truth = Integer.parseInt(tokens.nextToken());
+					if(truth == 1)
+						sharedVariables.makeAtNameSounds=true;
+					else
+						sharedVariables.makeAtNameSounds=false;
 					}
 					catch(Exception zzz){}
 				}
