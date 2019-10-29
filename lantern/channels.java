@@ -391,7 +391,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.21";
+version = "v6.22";
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -457,8 +457,8 @@ for(int exclB = 0; exclB < dummyUse.maxBoards; exclB++)
 noidle=false;
 standAlone = true;
 try {
-chessclubIP = java.net.InetAddress.getByName("chessclub.com").getHostAddress();
-chessclubPort = "5000";
+chessclubIP = java.net.InetAddress.getByName("main.chessclub.com").getHostAddress();
+chessclubPort = "443";
 /*
 JFrame dot = new JFrame("pass, chessclub. ip is " + chessclubIP);
 dot.setSize(700,100);
@@ -725,7 +725,7 @@ analysisFont = null;
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
 else if(operatingSystem.equals("mac"))
-	myFont = new Font("Andale Mono", Font.BOLD, 14);
+	myFont = new Font("Andale Mono", Font.BOLD, 16);
 else
 	myFont = new Font("Lucida Console", Font.PLAIN, 18);
 try {

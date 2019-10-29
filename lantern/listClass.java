@@ -289,12 +289,16 @@ void removeFromEvents(String index)
 }
 void resetList()
 {
-	try {
-		for(int i=model.size()-1; i >0; i--)
+	int bottom = 0;
+	if(thisListType.toLowerCase().startsWith("notify")) {
+              bottom = 1;
+        }
+        try {
+		for(int i=model.size()-1; i >bottom; i--)
 	{model.remove(i);
 	}
 
-	for(int i=modeldata.size()-1; i >0; i--)
+	for(int i=modeldata.size()-1; i >bottom; i--)
 	{
 	 modeldata.remove(i);
  	}
@@ -358,9 +362,14 @@ void notifyStateChanged(String name, String state)
 	{ model.set(i,  notify_string);
 		return;
 	}
+        if(name.toLowerCase().startsWith("double click")) {
+            model.add(1, notify_string);
+	    modeldata.add(1, name);
+        } else {
+          model.add(2, notify_string);
+          modeldata.add(2, name);
+        }
 
-	model.add(1, notify_string);
-	modeldata.add(1, name);
 
 
 

@@ -589,7 +589,7 @@ try {
 			requestSocket = new Socket("127.0.0.1", 5499);// 127.0.0.1 or 207.99.83.228
 			else
 			//requestSocket = new Socket("69.36.243.188", 23);// 127.0.0.1 or	FICS by IP
-			 requestSocket = new Socket("chessclub.com", 23);
+			 requestSocket = new Socket("main.chessclub.com", 23);
                         }
 
 			//System.out.println("Connected to chessclub.com on port 23");

@@ -57,6 +57,7 @@ class subframe extends JInternalFrame
   String[] comboMemory;
   String[] namesMemory;
   int madeTextPane;
+  createWindows mycreator;
 
   JPaintedLabel[] channelTabs;
   JLabel tellLabel;
@@ -87,7 +88,7 @@ class subframe extends JInternalFrame
 
   subframe(channels sharedVariables1, JTextPane[] consoles1,
            ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1,
-           gameboard[] myboards1) {
+           gameboard[] myboards1, createWindows mycreator1) {
 
     //super(frame, mybool);
     super("Main Console " + (sharedVariables1.openConsoleCount),
@@ -102,6 +103,7 @@ class subframe extends JInternalFrame
     sharedVariables=sharedVariables1;
     queue=queue1;
     myboards=myboards1;
+    mycreator = mycreator1;
     consoleTitle="Main Console " + (sharedVariables1.openConsoleCount) + ": ";
     consoleNumber = sharedVariables.openConsoleCount;
     if(consoleNumber == 0) {
@@ -1923,6 +1925,45 @@ class subframe extends JInternalFrame
                        menu2.add(item4);
                        else
                        menu3.add(item4);
+                       
+                       
+                       
+             if(menu3 == null)
+               menu2.addSeparator();
+               else 
+               menu3.addSeparator();
+                       
+            JMenuItem itemX1 = new JMenuItem("Organizing Channels Help");
+            itemX1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                   mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/mychat.html");
+                }
+              });
+                      if(menu3 == null)
+                       menu2.add(itemX1);
+                       else
+                       menu3.add(itemX1);
+                       
+           JMenuItem itemX2 = new JMenuItem("Colors and Font by Tab Help");
+            itemX2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                   mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/colorsbytab.html");
+                }
+              });
+                      if(menu3 == null)
+                       menu2.add(itemX2);
+                       else
+                       menu3.add(itemX2);
+
+
+            if(menu3 == null)
+               menu2.addSeparator();
+               else 
+               menu3.addSeparator();
+
+
+
+
 
             JMenuItem item1 = new JMenuItem("clear tab chat");
             item1.addActionListener(new ActionListener() {
@@ -2036,6 +2077,35 @@ class subframe extends JInternalFrame
              menu2.add(item7);
            else
            menu3.add(item7);
+           
+           
+              if(menu3 == null)
+              menu2.addSeparator();
+               else 
+               menu3.addSeparator();
+                       
+            JMenuItem itemX3 = new JMenuItem("Personal Tell Help");
+            itemX3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                   mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/personal-tells.html");
+                }
+              });
+                      if(menu3 == null)
+                       menu2.add(itemX3);
+                       else
+                       menu3.add(itemX3);
+                       
+
+
+
+            if(menu3 == null)
+               menu2.addSeparator();
+               else 
+               menu3.addSeparator();
+
+
+
+
 
             JMenuItem itemQ = new JMenuItem("Manage Qtells For Channels on Tab");
             itemQ.addActionListener(new ActionListener() {

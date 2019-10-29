@@ -87,7 +87,7 @@ protected void createConsoleFrame() {
 
 
 
-   	consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
+   	consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards, this);
 
 	consoleSubframes[sharedVariables.openConsoleCount].setVisible(true);
 
@@ -106,7 +106,7 @@ protected void createConsoleFrame() {
     {
 		for(int z=sharedVariables.openConsoleCount; z < sharedVariables.maxConsoleTabs; z++)
 		{
-			consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
+			consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards, this);
 
 
 			sharedVariables.desktop.add(consoleSubframes[sharedVariables.openConsoleCount]);
@@ -220,7 +220,7 @@ protected void restoreConsoleFrame() {
 	consoleSubframes[sharedVariables.openConsoleCount].madeTextPane=1;
 
  
-   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards);
+   consoleSubframes[sharedVariables.openConsoleCount] = new subframe(sharedVariables, consoles, queue, myDocWriter, myboards, this);
 
 try {
 // patch routine to restore board to same size if its first  board

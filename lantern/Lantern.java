@@ -438,6 +438,7 @@ class mymultiframe extends JFrame
 
     /*************** trying list code *****************/
     notifyList = new listClass("Notify Online");
+    notifyList.notifyStateChanged("Double Click to Watch", "1");
     eventsList = new listClass("Events");
     seeksList = new listClass("Human Seeks");
     computerSeeksList = new listClass("Computer Seeks");
@@ -1321,6 +1322,7 @@ class mymultiframe extends JFrame
     // .. / (separator)
     JMenuItem customizetools = new JMenuItem("Customize User Buttons");
     JMenuItem toolbox = new JMenuItem("Run a Script");
+    JMenuItem toolboxhelp = new JMenuItem("Script Help");
     // .. / (separator)
     JMenu advancedOptions = new JMenu("Advanced");
     // .. / Advanced /
@@ -1476,6 +1478,8 @@ class mymultiframe extends JFrame
     optionsmenu.add(customizetools);
     optionsmenu.add(toolbox);
     optionsmenu.addSeparator();
+    optionsmenu.add(toolboxhelp);
+     optionsmenu.addSeparator();
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
 
@@ -1577,6 +1581,7 @@ class mymultiframe extends JFrame
     ananback.addActionListener(this);
     customizetools.addActionListener(this);
     toolbox.addActionListener(this);
+    toolboxhelp.addActionListener(this);
     advancedmenuhelp.addActionListener(this);
     qsuggestPopup.addActionListener(this);
     disableHyperlinks.addActionListener(this);
@@ -1632,6 +1637,8 @@ class mymultiframe extends JFrame
     JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     JMenuItem mynotify = new JMenuItem("Notify Window");
     JMenuItem mytopgames = new JMenuItem("Top Games Window");
+    JMenuItem windowhelp = new JMenuItem("Windows Menu Help");
+    JMenuItem notifyhelp = new JMenuItem("Notify Help");
 
     // .. / (separator)
     JMenuItem nboard = new JMenuItem("New Board"); // we are not going to add this one anymore due to bugs
@@ -1680,6 +1687,9 @@ class mymultiframe extends JFrame
     sharedVariables.myWindows.add(mynotify);
     sharedVariables.myWindows.add(mytopgames);
     sharedVariables.myWindows.addSeparator();
+    sharedVariables.myWindows.add(windowhelp);
+    sharedVariables.myWindows.add(notifyhelp);
+    sharedVariables.myWindows.addSeparator();
     //sharedVariables.myWindows.add(nboard);
     sharedVariables.myWindows.add(rconsole);
     sharedVariables.myWindows.add(detachedconsole);
@@ -1700,6 +1710,8 @@ class mymultiframe extends JFrame
     seekingGraph.addActionListener(this);
     mynotify.addActionListener(this);
     mytopgames.addActionListener(this);
+    windowhelp.addActionListener(this);
+    notifyhelp.addActionListener(this);
     nboard.addActionListener(this);
     rconsole.addActionListener(this);
     detachedconsole.addActionListener(this);
@@ -1891,6 +1903,8 @@ class mymultiframe extends JFrame
     JMenuItem help_pgn = new JMenuItem("PGN Menu Help");
     JMenuItem help_game_communication = new JMenuItem("Game Communication Menu Help");
     JMenuItem help_getting_game = new JMenuItem("Getting a Game Help");
+    JMenuItem help_tournaments = new JMenuItem("Tournament Help");
+    JMenuItem help_tournament_schedule = new JMenuItem("Tournament Schedule");
      JMenuItem help_customizing_board = new JMenuItem("Customizing Board Help");
     // add shortcuts
     myboardmenu.setMnemonic(KeyEvent.VK_G);
@@ -1935,6 +1949,8 @@ class mymultiframe extends JFrame
     myboardmenu.add(withdrawSent);
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
+    myboardmenu.add(help_tournaments);
+    myboardmenu.add(help_tournament_schedule);
     myboardmenu.addSeparator();
     myboardmenu.add(flipSent);
      myboardmenu.add(showexam);
@@ -2174,6 +2190,8 @@ myboardappearancemenu.add(consoleaspect);
     help_pgn.addActionListener(this);
     help_game_communication.addActionListener(this);
     help_getting_game.addActionListener(this);
+    help_tournaments.addActionListener(this);
+    help_tournament_schedule.addActionListener(this);
     help_board_advanced.addActionListener(this);
     showexam.addActionListener(this);
     showexamlast.addActionListener(this);
@@ -2225,7 +2243,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
     // .. / (separator)
     JMenuItem lookupuser = new JMenuItem("Lookup User");
-    JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
+    JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings in M0 Tab");
      JMenuItem addfriend = new JMenuItem("Add a Friend");
 
     // .. / (separator)
@@ -2233,11 +2251,11 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
     JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
     // .. / (separator)
-    JMenuItem showtitled = new JMenuItem("Show Titled Players Online");
+    JMenuItem showtitled = new JMenuItem("Show Titled Players Online in M0 Tab");
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
     JMenuItem ratinggraph = new JMenuItem("Show Rating Graphs");
     // .. / (separator)
-    JMenuItem broadcasthelp = new JMenuItem("Broadcast Help");
+    JMenuItem broadcasthelp = new JMenuItem("ICC Calendar");
     JMenuItem servertime = new JMenuItem("Server Time");
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
@@ -2296,6 +2314,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem lanternmanual = new JMenuItem("Lantern Help Index");
     JMenuItem changelog = new JMenuItem("Change Log");
     JMenuItem privacypolicy = new JMenuItem("Privacy Policy");
+    JMenuItem calendaritem = new JMenuItem("ICC Calendar");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
     JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
     JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
@@ -2319,6 +2338,7 @@ myboardappearancemenu.add(consoleaspect);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
     helpmenu.add(privacypolicy);
+    helpmenu.add(calendaritem);
     helpmenu.addSeparator();
     helpmenu.add(infohelp);
     helpmenu.add(commandhelp);
@@ -2337,6 +2357,7 @@ myboardappearancemenu.add(consoleaspect);
     lanternmanual.addActionListener(this);
     changelog.addActionListener(this);
     privacypolicy.addActionListener(this);
+    calendaritem.addActionListener(this);
     infohelp.addActionListener(this);
     commandhelp.addActionListener(this);
     joinrenewhelp.addActionListener(this);
@@ -2477,8 +2498,28 @@ myboardappearancemenu.add(consoleaspect);
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/getting-games.html");
 
     }
-    else if (action.equals("Broadcast Help")) {
-      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/chessfm.html");
+     else if (action.equals("Tournament Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/tournaments.html");
+
+    }
+     else if (action.equals("Script Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/toolbox.html");
+
+    }
+    else if (action.equals("Windows Menu Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/windowsmenu.html");
+
+    }
+    else if (action.equals("Notify Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/notifywindow.html");
+
+    }
+     else if (action.equals("Tournament Schedule")) {
+      sharedVariables.openUrl("http://www.chessclub.com/help/tournaments");
+
+    }
+    else if (action.equals("ICC Calendar")) {
+      sharedVariables.openUrl("https://www20.chessclub.com/calendar");
 
     }
     else if(action.equals("Server Time")) {
@@ -3064,8 +3105,8 @@ dot.setVisible(true);
        else if(action.equals("Reconnect to ICC"))
       {
         try {
-        sharedVariables.chessclubIP = java.net.InetAddress.getByName("chessclub.com").getHostAddress();
-        sharedVariables.chessclubPort = "5000";
+        sharedVariables.chessclubIP = java.net.InetAddress.getByName("main.chessclub.com").getHostAddress();
+        sharedVariables.chessclubPort = "443";
 /*
 JFrame dot = new JFrame("pass, chessclub.com ip is " + sharedVariables.chessclubIP);
 dot.setSize(700,100);
@@ -3650,7 +3691,7 @@ dot.setVisible(true);
     } else if (action.equals("Show My Recent Games") ||
                action.equals("Show My Game Library") ||
                action.equals("Show My Adjourned Games") ||
-               action.equals("Show My Profile and Ratings") ||
+               action.equals("Show My Profile and Ratings in M0 Tab") ||
                action.equals("Enter Examination Mode") ||
                action.equals("Examine My Last Game") ||
                action.equals("Observe High Rated Game") ||
@@ -3660,21 +3701,21 @@ dot.setVisible(true);
                action.equals("Follow Broadcast- When On") ||
                action.equals("Disconnect") ||
                action.equals("Rematch") ||
-               action.equals("Show Titled Players Online") ||
+               action.equals("Show Titled Players Online in M0 Tab") ||
                action.equals("Withdraw Challenges")) {
       if (action.equals("Follow Broadcast- When On"))
         client.writeToSubConsole("Be sure to turn on the radio by opening ChessFM, " +
-                                 "Actions - Open ChessFM in the menu. See \"Broadcast Help\" in Actions menu for any latest info.\n", 0);
-      if (action.equals("Show Titled Players Online"))
+                                 "Actions - Open ChessFM in the menu. See \"Broadcast Help\" in Lantern Manul for any latest info.\n", 0);
+      if (action.equals("Show Titled Players Online in M0 Tab"))
 	          client.writeToSubConsole("For a context menu with observe, finger etc - double click on a name or highlight a name and right click. ^ next to a name means they are playing.\n", 0);
       //String actionmess = "History\n";
       String actionmess =
         (action.equals("Show My Recent Games") ? "History" :
          (action.equals("Show My Game Library") ? "Liblist" :
           (action.equals("Show My Adjourned Games") ? "Stored" :
-           (action.equals("Show My Profile and Ratings") ? "Finger" :
+           (action.equals("Show My Profile and Ratings in M0 Tab") ? "Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
-            (action.equals("Show Titled Players Online") ? "Who T" :
+            (action.equals("Show Titled Players Online in M0 Tab") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
              (action.equals("Rematch") ? "Rematch" :
              (action.equals("Examine My Last Game") ? "Examine -1" :
