@@ -287,7 +287,9 @@ class myDefaultTableModel extends DefaultTableModel
 	}
 	myDefaultTableModel(Vector<String> a1, Vector<String> a2)
 	{
-		super(a1,a2);
+        super(a1, a2);
+        // user below java 9 and up
+        // super(new Object[][] {((Object[]) a1.toArray())},(Object[]) a2.toArray());
 		count=0;
 		done=false;
 
