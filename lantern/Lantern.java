@@ -602,7 +602,12 @@ class mymultiframe extends JFrame
     if (sharedVariables.rotateAways) {
       try {
 	scriptLoader loadScripts = new  scriptLoader();
-	loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
+          if(channels.macClient) {
+              loadScripts.loadScript(sharedVariables.lanternAways, channels.publicDirectory + "lantern_away.txt");
+          } else {
+             loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
+          }
+	
       } catch (Exception du) {}
     }
 
@@ -2680,8 +2685,18 @@ myboardappearancemenu.add(consoleaspect);
           JFileChooser fc = new JFileChooser();
           if(sharedVariables.engineDirectory != null)
            fc.setCurrentDirectory(sharedVariables.engineDirectory);
-          else
-          fc.setCurrentDirectory(new File("."));
+          else {
+              if(channels.macClient) {
+                  fc.setCurrentDirectory(new File(channels.publicDirectory));
+              } else {
+                  if(channels.macClient) {
+                      fc.setCurrentDirectory(new File(channels.publicDirectory));
+                  } else {
+                      fc.setCurrentDirectory(new File("."));
+                  }
+              }
+          }
+          
 
           int returnVal = fc.showOpenDialog(this);
 
@@ -3041,14 +3056,26 @@ else if (action.equals("Three Lines")) {
       if (!sharedVariables.rotateAways) {
         scriptLoader loadScripts = new scriptLoader();
         sharedVariables.lanternAways.clear();
-        loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
+          if(channels.macClient) {
+              loadScripts.loadScript(sharedVariables.lanternAways, channels.publicDirectory + "lantern_away.txt");
+          } else {
+              loadScripts.loadScript(sharedVariables.lanternAways, "lantern_away.txt");
+          }
+        
         if (sharedVariables.lanternAways.size() > 0) {
           rotateaways.setSelected(true);
           sharedVariables.rotateAways=true;
           // size > 0
         } else {
           String mes="lantern_away.txt not found or has nothing in it.  " +
-            "Create a file called lantern_away.txt and put away messages " +
+            "Create a file called lantern_away.txt";
+            if(channels.macClient) {
+                mes += " in Documents/LanternChess";
+            } else
+            {
+                mes += " in the lantern folder";
+            }
+            mes += " and put away messages " +
             "in it till you run out of ideas, then reselect this option";
           Popup mypopper = new Popup(this, false, mes, sharedVariables);
           mypopper.setVisible(true);
