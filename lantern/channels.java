@@ -30,7 +30,7 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
-    static boolean macClient = true;
+    static boolean macClient = false;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
@@ -910,17 +910,14 @@ for(int a=0; a<maxChannels; a++)
 
     void setUpDirectories()
     {
-        System.out.println("trying to set up directories");
         try {
             File file = new File(System.getProperty("user.home") + "/Documents/LanternChess");
             if (!file.exists()) {
                 if (file.mkdir()) {
                     publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
-                    System.out.println("set pubic directory to " + publicDirectory);
                     
                 } else {
                     publicDirectory = System.getProperty("user.home") + "/Documents/";
-                    System.out.println("failure and public directry is " + publicDirectory);
                 }
             } else {
                 publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
