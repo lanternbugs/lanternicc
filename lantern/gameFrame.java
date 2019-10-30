@@ -462,7 +462,12 @@ static String getFile(JFrame myFrame)
 
 		try {
 JFileChooser fc = new JFileChooser();
-fc.setCurrentDirectory(new File("."));
+            if(channels.macClient) {
+                fc.setCurrentDirectory(new File(channels.publicDirectory));
+            } else {
+                fc.setCurrentDirectory(new File("."));
+            }
+
 fc.setFileFilter(new FileFilter() {
         public boolean accept(File f) {
           if(f.getName().toLowerCase().endsWith(".pgn"))

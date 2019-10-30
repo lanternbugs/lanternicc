@@ -4176,7 +4176,7 @@ catch(Exception notifysound){}
 	}
 if(console.type  == 3)
 {
-				FileWriter fstream = new FileWriter(sharedVariables.defaultpgn, true);
+    FileWriter fstream = new FileWriter(sharedVariables.defaultpgn, true);
 
 try {
 			   BufferedWriter out = new BufferedWriter(fstream);
@@ -4190,7 +4190,7 @@ try {
 }
 else if(console.type == 2)
 {
-				FileWriter fstream = new FileWriter("lantern_" + sharedVariables.myname + ".pgn", true);
+				FileWriter fstream = new FileWriter(channels.publicDirectory + "lantern_" + sharedVariables.myname + ".pgn", true);
 
 try {
 			   BufferedWriter out = new BufferedWriter(fstream);

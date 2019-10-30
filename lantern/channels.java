@@ -30,6 +30,9 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
+    static boolean macClient = true;
+    static String privateDirectory = "";
+    static String publicDirectory = "";
     Font chessfont1 = null;
     boolean chessFontForMoveList = true;
     static String stockfishName = "l-stockfish-8-64";
@@ -392,6 +395,10 @@ channels()
 {
 myServer = "ICC";
 version = "v6.22";
+    if(macClient) {
+      setUpDirectories();
+    }
+    
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -901,6 +908,36 @@ for(int a=0; a<maxChannels; a++)
 	loadNotifyOnTabs();
 }
 
+    void setUpDirectories()
+    {
+        System.out.println("trying to set up directories");
+        try {
+            File file = new File(System.getProperty("user.home") + "/Documents/LanternChess");
+            if (!file.exists()) {
+                if (file.mkdir()) {
+                    publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                    System.out.println("set pubic directory to " + publicDirectory);
+                    
+                } else {
+                    publicDirectory = System.getProperty("user.home") + "/Documents/";
+                    System.out.println("failure and public directry is " + publicDirectory);
+                }
+            } else {
+                publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+            }
+            
+            file = new File(System.getProperty("user.home") + "/Library/LanternChess");
+            if (!file.exists()) {
+                if (file.mkdir()) {
+                    privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                } else {
+                    privateDirectory = System.getProperty("user.home") + "/Library/";
+                }
+            } else {
+                privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+            }
+        } catch(Exception badfile) {System.out.println(badfile.getMessage());}
+    }
 
 void setChatBufferSize()
 {

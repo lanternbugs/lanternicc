@@ -1045,13 +1045,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   {
 
    if(wild > 0)
-   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_owild.pgn";
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = channels.publicDirectory + "lantern_owild.pgn";
    else if(time < 3)
-   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_obullet.pgn";
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = channels.publicDirectory + "lantern_obullet.pgn";
    else if(time < 15)
-   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_oblitz.pgn";
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = channels.publicDirectory + "lantern_oblitz.pgn";
    else
-   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = "lantern_ostandard.pgn";
+   sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = channels.publicDirectory + "lantern_ostandard.pgn";
   } // end method set observed pgn file
 void logObservedPgn(String iccresult, String iccresultstring)
 {
