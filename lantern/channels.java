@@ -30,11 +30,11 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
-    static boolean macClient = false;
+    static boolean macClient = true;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
-    boolean chessFontForMoveList = true;
+    boolean chessFontForMoveList = false;
     static String stockfishName = "l-stockfish-8-64";
   static String openingBookName = "lanternopeningbook19.db";
   static String oldOpeningBookName = "lanternopeningbook18.db";

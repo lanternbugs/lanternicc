@@ -222,7 +222,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem drawCoordinates;
   JCheckBoxMenuItem showRatings;
   JCheckBoxMenuItem showFlags;
-  JCheckBoxMenuItem chessFontForMoveList;
+  //JCheckBoxMenuItem chessFontForMoveList;
   JCheckBoxMenuItem showPallette;
   JCheckBoxMenuItem autoChat;
   JCheckBoxMenuItem lowTimeColors;
@@ -389,7 +389,7 @@ class mymultiframe extends JFrame
 
     sharedVariables = new channels();
     // chess font setting
-    sharedVariables.chessFontForMoveList =  getChessFontSetting();
+      sharedVariables.chessFontForMoveList =  false;
     loadGraphicsStandAlone();
     sharedVariables.useTopGames = getOnTopSetting();
     queue = new ConcurrentLinkedQueue<myoutput>();
@@ -528,7 +528,7 @@ class mymultiframe extends JFrame
     drawCoordinates.     setSelected(sharedVariables.drawCoordinates);
     showRatings.         setSelected(sharedVariables.showRatings);
     showFlags.           setSelected(sharedVariables.showFlags);
-    chessFontForMoveList.setSelected(sharedVariables.chessFontForMoveList);
+    //chessFontForMoveList.setSelected(sharedVariables.chessFontForMoveList);
     showPallette.        setSelected(sharedVariables.showPallette);
     autoChat.            setSelected(sharedVariables.autoChat);
     lowTimeColors.       setSelected(sharedVariables.lowTimeColors);
@@ -1033,7 +1033,9 @@ class mymultiframe extends JFrame
   }
   
   boolean getChessFontSetting() {
-
+      
+      return false;
+/*
     scriptLoader loadScripts = new  scriptLoader();
     ArrayList<String> ontop = new ArrayList();
     // Andrey says:
@@ -1048,6 +1050,7 @@ class mymultiframe extends JFrame
      return true;  // no file its true
     }
     return false;
+ */
   }
 
   public void setUpLanternNotify() {
@@ -1860,7 +1863,7 @@ class mymultiframe extends JFrame
     showRatings = new JCheckBoxMenuItem("Show Ratings on Board When Playing");
     playersInMyGame = new JCheckBoxMenuItem("Show Observers In Games");
     useLightBackground = new JCheckBoxMenuItem("Use Light Square as Board Background");
-      chessFontForMoveList = new JCheckBoxMenuItem("Chess Font For Move List");
+    //  chessFontForMoveList = new JCheckBoxMenuItem("Chess Font For Move List");
     // .. /
     JMenu examReplay = new JMenu("Examine Game Replay");
     // .. / Examine Game Replay /
@@ -2045,7 +2048,7 @@ class mymultiframe extends JFrame
 	    theHideMenu.add(showFlags);
 	    theHideMenu.add(showRatings);
     theHideMenu.add(playersInMyGame);
-      theHideMenu.add(chessFontForMoveList);
+      //theHideMenu.add(chessFontForMoveList);
 
 myboardappearancemenu.add(consoleaspect);
     // .. / Board Console /
@@ -2214,7 +2217,7 @@ myboardappearancemenu.add(consoleaspect);
     drawCoordinates.addActionListener(this);
     showPallette.addActionListener(this);
     showFlags.addActionListener(this);
-      chessFontForMoveList.addActionListener(this);
+    //  chessFontForMoveList.addActionListener(this);
     showRatings.addActionListener(this);
     playersInMyGame.addActionListener(this);
     //useLightBackground.addActionListener(this);
