@@ -44,7 +44,7 @@ class InstallBookDialog  extends JDialog
 {
 
 
-
+  String stockfish = "Stockfish 8";
   JTextPane textPane = new JTextPane();
   JButton installContinue = new JButton("Continue");
   JButton installCancel = new JButton("Cancel");
@@ -61,6 +61,9 @@ class InstallBookDialog  extends JDialog
       super(frame, "Extract Opening Book", true);
       myfont = thefont;
       setSize(350,300);
+      if(channels.stockfishName.contains("10")) {
+       stockfish = "Stockfish 10";
+      }
       if(type == mediocreChess5) {
        installEngine = true;
        setTitle("Extract Mediocre Chess Engine");
@@ -71,7 +74,7 @@ class InstallBookDialog  extends JDialog
         }
         if(type == stockfish8) {
             installEngine = true;
-            setTitle("Extract Stockfish 8 Engine");
+            setTitle("Extract " + stockfish + " Engine");
         }
         installType = type;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -102,7 +105,7 @@ class InstallBookDialog  extends JDialog
                 } else if(installType == cuckooChess112) {
                     setPaneText("Installing Cuckoo Chess");
                 }  else if(installType == stockfish8) {
-                    setPaneText("Installing Stockfish 8");
+                    setPaneText("Installing " + stockfish);
                 }
 
                 else {
@@ -132,7 +135,7 @@ class InstallBookDialog  extends JDialog
                     } else if(installType == cuckooChess112) {
                         setPaneText("Cuckoo Chess 1.12 succesfully installed.  Go to Options / Analyze With Cuckoo Chess 1.12 again to open it.");
                     }  else if(installType == stockfish8) {
-                        setPaneText("Stockfish 8 succesfully installed.  Go to Options / Analyze With Stockfish 8 again to open it.");
+                        setPaneText(stockfish + " succesfully installed.  Go to Options / Analyze With " + stockfish + " again to open it.");
                     }
 
                     else {
@@ -148,7 +151,7 @@ class InstallBookDialog  extends JDialog
                     } else if(installType == cuckooChess112) {
                         setPaneText("Cuckoo Chess allready exists");
                     } else if(installType == stockfish8) {
-                        setPaneText("Stockfish 8 allready exists");
+                        setPaneText(stockfish + " allready exists");
                     }
 
                      else {
@@ -200,7 +203,7 @@ class InstallBookDialog  extends JDialog
             text = "To use the Cuckoo Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.cuckooEngineName + "  in the lantern folder with a size of less than a meg.";
         }
         if(installType == stockfish8) {
-            text = "To use the Stockfish 8 Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.stockfishName + "  in the lantern folder with a size of about a meg.";
+            text = "To use the " + stockfish + " Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.stockfishName + "  in the lantern folder with a size of about a meg.";
         }
 
      setPaneText(text);
