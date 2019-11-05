@@ -2496,14 +2496,19 @@ if(dg.getArg(0).equals("27"))
 		{sendMessage("multi set-quietly prompt 0\n");
 
 		 sendMessage("multi set-quietly style 13\n");
-	      
+
                 try {
+                  String javaVersion = System.getProperty("java.version");
                  String OS = "Linux";
                  if(sharedVariables.operatingSystem.equals("mac"))
                  OS = "Mac";
                  else if(sharedVariables.operatingSystem.equals("win"))
                  OS = "Windows";
-		sendMessage("multi set-quietly interface Lantern Chess " + sharedVariables.version + " on " + OS + "\n");
+                 String javaMessage = "";
+                 if(channels.macClient) {
+                     javaMessage =  " Java " + javaVersion;
+                 }
+		sendMessage("multi set-quietly interface Lantern Chess " + sharedVariables.version + " on " + OS + javaMessage +"\n");
                 }// end try
                 catch(Exception badvar){}
 		sendMessage("SeT-QuietlY level1 5\n");
