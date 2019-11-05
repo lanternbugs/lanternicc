@@ -394,7 +394,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.22";
+version = "v6.22d";
     if(macClient) {
       setUpDirectories();
     }
@@ -423,9 +423,12 @@ else
 catch(Exception duiiii){}
 if(operatingSystem.equals("win")) {
  stockfishName = "l-stockfish_8_x64.exe";
-} else if(operatingSystem.equals("unix")) 
+} else if(operatingSystem.equals("unix"))
 {
  stockfishName = "stockfish_8_x64"; 
+}    else if(operatingSystem.equals("mac"))
+{
+ stockfishName = "l-stockfish-10-64";
 }
 setupMenu();
 toolboxListData = new listClass("Scripts");
