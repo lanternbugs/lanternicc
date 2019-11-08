@@ -46,8 +46,12 @@ class settings {
 	settings(channels sharedVariables){
 		aFile= "\\multiframe\\multi_settings.txt";
 
-		if(sharedVariables.standAlone == true)
+        if(sharedVariables.standAlone == true) {
 			aFile= "multi_settings.txt";
+            if(channels.macClient) {
+                aFile = channels.privateDirectory + aFile;
+            }
+        }
 
 		aFileLinux= "/multiframe/multi_settings.txt";
 		} // constructor
@@ -84,7 +88,7 @@ class settings {
 	if(sharedVariables.engineDirectory!= null)
 	{
         try {
-        engineFile = "lantern_engine_directory.ini";
+            engineFile = channels.privateDirectory + "lantern_engine_directory.ini";
 
         FileWriter efstream = new FileWriter(engineFile);
 	FileWrite out = new FileWrite();
@@ -1522,7 +1526,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 
 
                 try {
-        engineFile = "lantern_engine_directory.ini";
+                    engineFile = channels.privateDirectory + "lantern_engine_directory.ini";
 	FileRead in = new FileRead();
 
        String engineString = in.read2(engineFile);

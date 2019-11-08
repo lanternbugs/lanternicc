@@ -394,7 +394,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.22d";
+version = "v6.22e";
     if(macClient) {
       setUpDirectories();
     }
@@ -484,7 +484,7 @@ dot.setSize(700,100);
 dot.setVisible(true);
 */
 }
-notifyControllerFile = "lantern_notify_controler.ini";
+notifyControllerFile = privateDirectory +  "lantern_notify_controler.ini";
 boardType=21;
 pieceType=22;
 checkersPieceType = 1;
@@ -1376,7 +1376,7 @@ catch(Exception eeee)
 
 void loadNotifyOnTabs()
 {
-   String s = read("notifyontabs.ini");
+   String s = read(privateDirectory + "notifyontabs.ini");
    boolean go= true;
    StringTokenizer tokens = new StringTokenizer(s, "###");
    while(go == true)
@@ -1442,7 +1442,7 @@ void setNotifyOnTabsState()
 
            s = s + "###";
         }
-	writer.write(s, "notifyontabs.ini");
+	writer.write(s, privateDirectory + "notifyontabs.ini");
 
 }
 

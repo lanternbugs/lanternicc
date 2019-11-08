@@ -91,11 +91,11 @@ class InstallBookDialog  extends JDialog
                   installContinue.setEnabled(false);
                 File file;
                 if(installType == mediocreChess5) {
-                    file = new File(channels.mediocreEngineName);
+                    file = new File(channels.privateDirectory + channels.mediocreEngineName);
                   }else if(installType == cuckooChess112) {
-                     file = new File(channels.cuckooEngineName);
+                     file = new File(channels.privateDirectory + channels.cuckooEngineName);
                   } else if(installType == stockfish8) {
-                     file = new File(channels.stockfishName);
+                      file = new File(channels.privateDirectory + channels.stockfishName);
                   }
                   else {
                     file = new File(channels.openingBookName);

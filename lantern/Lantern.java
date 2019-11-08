@@ -1023,7 +1023,7 @@ class mymultiframe extends JFrame
     // Andrey says:
     // want to be able to change this to:
     //List<String> ontop = new ArrayList<String>();
-    loadScripts.loadScript(ontop, "lantern_board_on_top.txt");
+      loadScripts.loadScript(ontop, channels.privateDirectory + "lantern_board_on_top.txt");
     if (ontop.size() > 0) {
       String top = ontop.get(0);
       if (top.equals("true"))
@@ -2595,7 +2595,7 @@ myboardappearancemenu.add(consoleaspect);
             return;
         }
         boolean installed = false;
-        File f = new File(sharedVariables.cuckooEngineName);
+        File f = new File(channels.privateDirectory + sharedVariables.cuckooEngineName);
         if(f.exists() && !f.isDirectory()) {
             installed = true;
         }
@@ -2615,7 +2615,7 @@ myboardappearancemenu.add(consoleaspect);
          return;
        }
         boolean installed = false;
-        File f = new File(sharedVariables.mediocreEngineName);
+        File f = new File(channels.privateDirectory + sharedVariables.mediocreEngineName);
         if(f.exists() && !f.isDirectory()) {
             installed = true;
         }
@@ -2636,7 +2636,7 @@ myboardappearancemenu.add(consoleaspect);
          return;
        }
         boolean installed = false;
-        File f = new File(sharedVariables.stockfishName);
+        File f = new File(channels.privateDirectory + sharedVariables.stockfishName);
         if(f.exists() && !f.isDirectory()) {
             installed = true;
         }
@@ -2651,6 +2651,7 @@ myboardappearancemenu.add(consoleaspect);
             if(sharedVariables.operatingSystem.equals("mac") || sharedVariables.operatingSystem.equals("unix")) {
                  try {
                    String lookup = getClass().getProtectionDomain().getCodeSource().getLocation() + "" ;
+                     System.out.println("mike says lookup is " + lookup);
                    if(lookup.length() > 7) {
                    lookup = lookup.substring(5, lookup.length());
                    }
@@ -2667,7 +2668,13 @@ myboardappearancemenu.add(consoleaspect);
                    }
                    if(c > 0)
                    {
-                    lookup = lookup.substring(0, c) + "/" + sharedVariables.stockfishName;
+                       if(channels.macClient) {
+                           lookup =  channels.privateDirectory +  sharedVariables.stockfishName;
+                           System.out.println("mike says lookup is now " + lookup);
+                       } else {
+                           lookup = lookup.substring(0, c) + "/" +  sharedVariables.stockfishName;
+                       }
+                       
                    }
 
                   // System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation() + "/" + sharedVariables.stockfishName);
@@ -3415,7 +3422,7 @@ dot.setVisible(true);
         (ontop ? "will NOT" : "will") + " be on top windows.";
       Popup mypopper = new Popup(this, true, mess, sharedVariables);
       mypopper.setVisible(true);
-      mywriter.write((ontop ? "false" : "true") + "\r\n", "lantern_board_on_top.txt");
+        mywriter.write((ontop ? "false" : "true") + "\r\n", channels.privateDirectory + "lantern_board_on_top.txt");
 
     } else if (action.equals("Seek a Game")) {
 
@@ -5258,7 +5265,7 @@ dot.setVisible(true);
       
       ArrayList<String> myArray2 = new ArrayList();
 
-      myloader.loadScript(myArray2, "lantern_default_size.ini");
+        myloader.loadScript(myArray2, channels.privateDirectory +  "lantern_default_size.ini");
 
       if(!valid) {
       try {
@@ -5489,7 +5496,7 @@ dot.setVisible(true);
                          }
                   FileWrite writer = new FileWrite();
                   String outputSizes =  "" + screenW + "\n" + screenH + "\n";
-                  writer.write(outputSizes, "lantern_default_size.ini");
+        writer.write(outputSizes, channels.privateDirectory + "lantern_default_size.ini");
                  } catch(Exception dumb) {}
 
   }
