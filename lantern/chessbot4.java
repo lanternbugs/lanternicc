@@ -361,7 +361,13 @@ t.start();
 
 void updateBoardMenuText()
 {
-  for(int a=0; a < sharedVariables.maxGameTabs; a++)
+  SwingUtilities.invokeLater(new Runnable() {
+        @Override
+          public void run() {
+    if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+      System.out.println("updateboard menu found to not be on event dispatch thread");
+  }
+    for(int a=0; a < sharedVariables.maxGameTabs; a++)
   {
      if(myboards[a] == null)
      break;
@@ -385,12 +391,18 @@ void updateBoardMenuText()
      }
 
   }// end for
-
+ }
+      });
 }
 
 void updateBoard()
 {
-
+    SwingUtilities.invokeLater(new Runnable() {
+    @Override
+      public void run() {
+    if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+        System.out.println("update board found to not be on event dispatch thread");
+    }
 	try {
 	if(sharedVariables.lastButton > -1 && sharedVariables.lastButton< sharedVariables.maxBoardTabs)
 	{
@@ -418,6 +430,8 @@ void updateBoard()
 	}
 catch(Exception e)
 {}
+          }
+          });
 }
 
 
@@ -659,6 +673,12 @@ try {
 
 void closeAllGameTabs(boolean reconnecting)
 {
+   SwingUtilities.invokeLater(new Runnable() {
+   @Override
+     public void run() {
+    if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+        System.out.println("close all game tabs found to not be on event dispatch thread");
+    }
 try {
 for(int i=sharedVariables.openBoardCount-1; i>=0; i--)
 if(myboards[i] != null)
@@ -675,11 +695,18 @@ if(myboards[i] != null)
 catch(Exception badgameclose)
 {// do nothing
 }
-
+         }
+         });
 
 }
 void updateGameTabs(String title, int num)
 {
+  SwingUtilities.invokeLater(new Runnable() {
+  @Override
+    public void run() {
+    if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+        System.out.println("updategametabs found to not be on event dispatch thread");
+    }
   int physicalTab=0;
   for(int c=0; c<sharedVariables.maxGameTabs; c++)
   if(sharedVariables.tabLooking[c]==num)
@@ -699,7 +726,8 @@ void updateGameTabs(String title, int num)
 		}
 	}
 	sharedVariables.mygame[num].tabtitle= title;
-
+        }
+        });
 }
 
 
