@@ -394,7 +394,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.22e";
+version = "v6.22f";
     if(macClient) {
       setUpDirectories();
     }

@@ -671,7 +671,7 @@ try {
 		}
 }
 
-void closeAllGameTabs(boolean reconnecting)
+void closeAllGameTabs(final boolean reconnecting)
 {
    SwingUtilities.invokeLater(new Runnable() {
    @Override
@@ -699,7 +699,7 @@ catch(Exception badgameclose)
          });
 
 }
-void updateGameTabs(String title, int num)
+void updateGameTabs(final String title, final int num)
 {
   SwingUtilities.invokeLater(new Runnable() {
   @Override
