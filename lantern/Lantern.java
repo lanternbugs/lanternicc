@@ -2259,6 +2259,9 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showlib = new JMenuItem("Show My Game Library");
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
     // .. / (separator)
+      JMenuItem showStore = new JMenuItem("ICC Store");
+      JMenuItem showMyICC = new JMenuItem("My ICC");
+      
     JMenuItem lookupuser = new JMenuItem("Lookup User");
     JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings in M0 Tab");
      JMenuItem addfriend = new JMenuItem("Add a Friend");
@@ -2286,6 +2289,9 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
     actionsmenu.addSeparator();
+      actionsmenu.add(showStore);
+      actionsmenu.add(showMyICC);
+      actionsmenu.addSeparator();
     actionsmenu.add(lookupuser);
     actionsmenu.add(showfinger);
     actionsmenu.add(addfriend);
@@ -2305,6 +2311,9 @@ myboardappearancemenu.add(consoleaspect);
     showhistory.addActionListener(this);
     showlib.addActionListener(this);
     showstored.addActionListener(this);
+      showStore.addActionListener(this);
+      showMyICC.addActionListener(this);
+      
     showfinger.addActionListener(this);
     showobs.addActionListener(this);
     showobs5.addActionListener(this);
@@ -3808,19 +3817,19 @@ dot.setVisible(true);
       LookupUserDialog frame = new LookupUserDialog(this, false, queue);
 
     } else if (action.equals("Open Videos Page")) {
-
-      // ?user=me&pass=pass
-
-      /*
-      if (sharedVariables.myname.length() > 0 &&
-          sharedVariables.mypassword.length() > 0)
-        sharedVariables.openUrl("http://www.chessclub.com/chessfm/?user=" + sharedVariables.myname +
-                "&pass=" + sharedVariables.mypassword);
-      else
-      */
       sharedVariables.openUrl("https://www.chessclub.com/videos");
 
-    } else if(action.equals("Show Rating Graphs")) {
+    }
+      else if (action.equals("ICC Store")) {
+        sharedVariables.openUrl("https://store.chessclub.com/");
+
+      }
+      else if (action.equals("My ICC")) {
+        sharedVariables.openUrl("https://login.chessclub.com");
+
+      }
+    
+    else if(action.equals("Show Rating Graphs")) {
       
       String thename = "WimpB";
       if(sharedVariables.myname.length() > 0) {
