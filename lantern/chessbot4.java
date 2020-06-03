@@ -3522,6 +3522,12 @@ if(botname.equals("LittlePer"))
 botsChannel=225;
 if(botname.equals("pear"))
 botsChannel=227;
+    if(botname.equals("Automato"))
+    botsChannel=226;
+    if(botname.equals("Yenta"))
+    botsChannel=232;
+    if(botname.equals("uscf"))
+    botsChannel=231;
 if(botsChannel > -1 && multiLine == false)
 {
 
@@ -3787,6 +3793,12 @@ if(botname.equals("LittlePer") && sharedVariables.autoLittlePer == true)
 go=1;
 if(botname.equals("pear") && sharedVariables.autoPear == true)
 go=1;
+            if(botname.equals("Automato") && sharedVariables.autoAutomato == true)
+            go=1;
+            if(botname.equals("Yenta") && sharedVariables.autoYenta == true)
+            go=1;
+            if(botname.equals("uscf") && sharedVariables.autouscf == true)
+            go=1;
 
 
 if(i>-1 && go == 1)
@@ -3955,8 +3967,12 @@ if(dg.getArg(4).equals("Ketchup"))
 tomato=228;
 if(dg.getArg(4).equals("Olive"))
 tomato=230;
-if(dg.getArg(4).equals("USCF"))
+if(dg.getArg(4).equals("uscf"))
 tomato=231;
+    if(dg.getArg(4).equals("Automato"))
+    tomato=226;
+    if(dg.getArg(4).equals("Yenta"))
+    tomato=232;
 if(sharedVariables.showQsuggest == false || tomato != 0)
 {
 

@@ -1384,6 +1384,9 @@ class mymultiframe extends JFrame
     JCheckBoxMenuItem autoolive = new JCheckBoxMenuItem("Olive");
     JCheckBoxMenuItem autolittleper = new JCheckBoxMenuItem("LittlePer");
     JCheckBoxMenuItem autopear = new JCheckBoxMenuItem("Pear");
+      JCheckBoxMenuItem autoAutomato = new JCheckBoxMenuItem("Automato");
+      JCheckBoxMenuItem autoYenta = new JCheckBoxMenuItem("Yenta");
+      JCheckBoxMenuItem autouscf = new JCheckBoxMenuItem("uscf");
     // .. / .. /
     JMenu randomGraphics = new JMenu("Random Pieces Board when Observing");
     // .. / .. / Random Pieces Board when Observing /
@@ -1543,6 +1546,9 @@ class mymultiframe extends JFrame
     tournieFollow.add(autoolive);
     tournieFollow.add(autolittleper);
     tournieFollow.add(autopear);
+      tournieFollow.add(autoAutomato);
+      tournieFollow.add(autoYenta);
+      tournieFollow.add(autouscf);
     // .. / .. /
     observeOptions.add(randomGraphics);
     // .. / .. / Random Pieces Board when Observing /
@@ -1630,6 +1636,9 @@ class mymultiframe extends JFrame
     autoolive.addActionListener(this);
     autolittleper.addActionListener(this);
      autopear.addActionListener(this);
+      autoAutomato.addActionListener(this);
+      autoYenta.addActionListener(this);
+      autouscf.addActionListener(this);
     randomArmy.addActionListener(this);
     configureRand.addActionListener(this);
     configureRandBlack.addActionListener(this);
@@ -4474,7 +4483,20 @@ dot.setVisible(true);
     } else if (action.equals("Pear")) {
       sharedVariables.autoPear = !sharedVariables.autoPear;
 
-    }  else if (action.equals("Random Piece Set Observe Only")) {
+    }  else if (action.equals("Automato")) {
+      sharedVariables.autoAutomato = !sharedVariables.autoAutomato;
+
+    }
+    
+    else if (action.equals("Yenta")) {
+      sharedVariables.autoYenta = !sharedVariables.autoYenta;
+
+    }
+    
+    else if (action.equals("uscf")) {
+      sharedVariables.autouscf = !sharedVariables.autouscf;
+
+    } else if (action.equals("Random Piece Set Observe Only")) {
       sharedVariables.randomArmy = !sharedVariables.randomArmy;
       randomArmy.setSelected(sharedVariables.randomArmy);
 
