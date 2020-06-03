@@ -148,7 +148,7 @@ boolean autoChat = true;
 boolean blockSays = false;
 boolean lowTimeColors = false;
 boolean newObserveGameSwitch = true;
-boolean saveNamePass = false;
+boolean saveNamePass = true;
 boolean drawCoordinates = true;
 boolean ActivitiesOnTop=false;
 boolean unobserveGoExamine=false;
@@ -213,6 +213,7 @@ String chessclubPort;
 String operatingSystem;
 String notifyControllerFile;
 String defaultpgn;
+    String popupChallenger = "";
 
 String countryNames = "AE;UAE;AF;Afghanistan;AL;Albania;DZ;Algeria;AS;American_Samoa;AD;Andorra;AO;Angola;AI;Anguilla;AG;Antigua_and_Barbuda;AR;Argentina;AM;Armenia;AW;Aruba;AU;Australia;AT;Austria;AZ;Azerbaijan;BS;Bahamas;BH;Bahrain;BD;Bangladesh;BB;Barbados;BY;Belarus;BE;Belgium;BZ;Belize;BJ;Benin;BM;Bermuda;BT;Bhutan;BO;Bolivia;BW;Botswana;BR;Brazil;BG;Bulgaria;BF;Burkina_Faso;BI;Burundi;KH;Cambodia;CM;Cameroon;CA;Canada;CV;Cape_Verde;KY;Cayman_Islands;CF;Central_African_Republic;TD;Chad;CL;Chile;CN;China;CX;Christmas_Island;CO;Colombia;KM;Comoros;CK;Cook_Islands;CR;Costa_Rica;HR;Croatia;CU;Cuba;CY;Cyprus;DK;Denmark;DJ;Djibouti;DM;Dominica;DO;Dominican_Republic;EC;Ecuador;EG;Egypt;SV;El_Salvador;GQ;Equatorial_Guinea;ER;Eritrea;EE;Estonia;ET;Ethiopia;FK;Falkland_Islands;FO;Faroe_Islands;FJ;Fiji;FI;Finland;FR;France;GA;Gabon;GM;Gambia;GE;Georgia;DE;Germany;GH;Ghana;GI;Gibraltar;GB;United_Kingdom;GR;Greece;GL;Greenland;GD;Grenada;GT;Guatemala;GN;Guinea;GW;Guinea_Bissau;GY;Guyana;HT;Haiti;HN;Honduras;HK;Hong_Kong;HU;Hungary;icc;icc;icc;icc1;IS;Iceland;IN;India;ID;Indonesia;IR;Iran;IQ;Iraq;IE;Ireland;IL;Israel;IT;Italy;JM;Jamaica;JP;Japan;JO;Jordan;KZ;Kazakhstan;KE;Kenya;KI;Kiribati;KR;South_Korea;KW;Kuwait;KG;Kyrgyzstan;LA;Laos;LV;Latvia;LB;Lebanon;LS;Lesotho;LR;Liberia;LY;Libya;LI;Liechtenstein;LT;Lithuania;LU;Luxembourg;MK;Macedonia;MG;Madagascar;MW;Malawi;MY;Malaysia;MV;Maldives;ML;Mali;MT;Malta;MH;Marshall_Islands;MR;Mauritania;MU;Mauritius;MX;Mexico;FM;Micronesia;MD;Moldova;MC;Monaco;MN;Mongolia;MS;Montserrat;MA;Morocco;MZ;Mozambique;MM;Myanmar;NA;Namibia;NR;Nauru;NP;Nepal;NL;Netherlands;AN;Netherlands_Antilles;NZ;New_Zealand;NI;Nicaragua;NE;Niger;NG;Nigeria;NU;Niue;NF;Norfolk_Island;NO;Norway;OM;Oman;PK;Pakistan;PW;Palau;PA;Panama;PG;Papua_New_Guinea;PY;Paraguay;PE;Peru;PH;Philippines;PL;Poland;PR;Puerto_Rico;PT;Portugal;PR;Puerto_Rico;QA;Qatar;RO;Romania;RS;Serbia_and_Montenegro;RU;Russian_Federation;RW;Rwanda;LC;Saint_Lucia;WS;Samoa;SM;San_Marino;SA;Saudi_Arabia;SN;Senegal;SC;Seychelles;SL;Sierra_Leone;SG;Singapore;SK;Slovakia;SI;Slovenia;SO;Somalia;ZA;South_Africa;ES;Spain;LK;Sri_Lanka;SD;Sudan;SR;Suriname;SZ;Swaziland;SE;Sweden;CH;Switzerland;SY;Syria;TW;Taiwan;TJ;Tajikistan;TZ;Tanzania;TH;Thailand;TG;Togo;TO;Tonga;TT;Trinidad_and_Tobago;TN;Tunisia;TR;Turkey;TM;Turkmenistan;TC;Turks_and_Caicos_Islands;TV;Tuvalu;UG;Uganda;UA;Ukraine;UK;United_Kingdom;US;United_States_of_America;UY;Uruguay;UZ;Uzbekistan;VU;Vanuatu;VE;Venezuela;VI;US_Virgin_Islands;VN;Vietnam;YE;Yemen;ZA;South_Africa;ZM;Zambia;ZW;Zimbabwe;";
 String newUserMessage;
@@ -735,7 +736,7 @@ analysisFont = null;
 if(operatingSystem.equals("unix"))
 	myFont = new Font("Andale Mono", Font.PLAIN, 18);
 else if(operatingSystem.equals("mac"))
-	myFont = new Font("Andale Mono", Font.BOLD, 16);
+	myFont = new Font("Andale Mono", Font.BOLD, 18);
 else
 	myFont = new Font("Lucida Console", Font.PLAIN, 18);
 try {
@@ -765,7 +766,8 @@ crazyFont = new Font("TimesRoman", Font.PLAIN, 20);
 ForColor = new Color(204,204, 255);
 typedColor = new Color(235, 235, 255);
 //MainBackColor = new Color(204,255,255);    // old blue
-MainBackColor = new Color(239,237,192);
+//MainBackColor = new Color(239,237,192);    // old beighe
+MainBackColor = new Color(255,255,255);
 BackColor = new Color(0,0,0);
 //boardForegroundColor = new Color(0,0,0);
 //boardBackgroundColor = new Color(235,223,236);
