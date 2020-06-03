@@ -1090,10 +1090,115 @@ void checkForChannelAdd(String thetell)
 
 
 }
+    void checkForChallenge(String theTell)
+    {
+        if(theTell.startsWith("Challenge: "))
+        {
+            String name = "";
+            for(int a = 11; a < theTell.length(); a++)
+            {
+                if(theTell.charAt(a) == ' ') {
+                    break;
+                } else {
+                    name = name + theTell.substring(a, a+1);
+                }
+            }
+            if(name.equals(sharedVariables.popupChallenger))
+            {
+                String command = "multi accept " + name + "\n";
+                try {
+                    if(qsuggestDialog!=null)
+                    {
+
+                        qsuggestDialog.dispose();
+                        qsuggestDialog=null;
+                    }
+                }
+                catch(Exception qsug){}
+                try{
+                if(sharedVariables.showQsuggest == true)
+                {
+                qsuggestDialog=new qsuggest(masterFrame, false, queue);
+                qsuggestDialog.suggestion(theTell, command, name, name);// text command id (2,1,6)
+                qsuggestDialog.setVisible(true);
+                } // end if
+                } // end try
+                catch(Exception qsug2){}
+            } // end if
+            } // end if
+     }
+    
+    void checkForChallengeRemoved(String data)
+    {
+        String name = "";
+        CharSequence hasBeen = "has been withdrawn.";
+        CharSequence whoWas = ", who was challenging you,";
+        CharSequence replacing = "Replacing old challenge from ";
+        if(data.startsWith("The challenge from ") && data.contains(hasBeen)){
+        int spaces = 0;
+        
+            for(int a = 0; a < data.length(); a++) {
+                if(data.charAt(a) == ' ') {
+                spaces++;
+                if(spaces == 4) {
+                    break;
+                }
+            } else if(spaces == 3) {
+                name = name + data.substring(a, a+1);
+            }
+        }
+    } else if(data.contains(whoWas)) {
+        for(int a = 0; a < data.length(); a++) {
+            if(data.charAt(a) == ',') {
+                break;
+            } else {
+                name = name + data.substring(a, a+1);
+            }
+        }
+        
+    }
+    else if(data.contains(replacing))
+    {
+        int spaces = 0;
+        
+        for(int a = 0; a < data.length(); a++) {
+            if(data.charAt(a) == ' ') {
+                spaces++;
+            } else if(spaces == 4) {
+                if(data.charAt(a) == '.') {
+                    break;
+                }
+                name = name + data.substring(a, a+1);
+            }
+        }
+    }
+        if(name.equals(sharedVariables.popupChallenger)) {
+        // remove challenge by name
+            try {
+                               if(qsuggestDialog!=null)
+                               {
+
+                                   qsuggestDialog.dispose();
+                                   qsuggestDialog=null;
+                               }
+                           }
+                           catch(Exception qsug){}
+    }
+    }
+    
+void setPopupChallenger(String theTell)
+    {
+        if(theTell.length() < 8) {
+            return;
+        }
+        sharedVariables.popupChallenger = theTell.substring(6, theTell.length() -1);
+    }
 
 void writeLevel1(routing console, String thetell)
 {
 // if console type is 5 , finger special
+    checkForChallenge(thetell);
+    checkForChallengeRemoved(thetell);
 if(console.type == 5)
 {  Color fingerBackground = new Color(235,235,235);
   if(fingerPopup == null)
@@ -3873,8 +3978,12 @@ if(sharedVariables.showQsuggest == false || tomato != 0)
 
 		}
 String theTell = dg.getArg(1);
-if(theTell.startsWith("Match") || theTell.startsWith("match"))
-theTell = "\"" + theTell + "\"";
+    if(theTell.startsWith("Match") || theTell.startsWith("match")) {
+        setPopupChallenger(theTell);
+        theTell = "\"" + theTell + "\"";
+        
+    }
+
 SimpleAttributeSet attrs = new SimpleAttributeSet();
 	if(sharedVariables.qtellStyle == 1 || sharedVariables.qtellStyle == 3)
 		StyleConstants.setItalic(attrs, true);
@@ -3930,8 +4039,8 @@ try {
 
 		if(dg.getArg(1).equals(qsuggestDialog.id))
 		{
-		qsuggestDialog.dispose();
-		qsuggestDialog=null;
+            qsuggestDialog.dispose();
+            qsuggestDialog=null;
 		}
 	}
 }

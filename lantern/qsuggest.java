@@ -48,6 +48,7 @@ JButton OkButton;
 JButton CancelButton;
 String command;
 String id;
+    String suggestor;
 ConcurrentLinkedQueue<myoutput> queue;
 
 qsuggest(JFrame frame, boolean mybool,  ConcurrentLinkedQueue<myoutput> queue1)
@@ -95,10 +96,16 @@ add(mypanel);
 
 
 }
-void suggestion(String text, String mycommand, String myid, String suggestor)
+void suggestion(String text, String mycommand, String myid, String suggestor1)
 {
 	command=mycommand;
-	myTextPane.setText(suggestor + " suggests: " + command + "\n\n");
+    suggestor = suggestor1;
+    if(myid.equals(suggestor)) {
+        myTextPane.setText(text + "\n\n");
+    } else {
+        myTextPane.setText(suggestor + " suggests: " + command + "\n\n");
+    }
+	
 	id=myid;
 
 }
