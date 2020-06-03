@@ -2328,7 +2328,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem calendaritem = new JMenuItem("ICC Calendar");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
     JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
-    JMenuItem joinrenewhelp = new JMenuItem("Join/Renew");
+    JMenuItem joinrenewhelp = new JMenuItem("Join");
     JMenuItem passwordhelp = new JMenuItem("Lost Password");
     JMenu poweroutmenu = new JMenu("Extra-games");
     // .. / Extra-games
@@ -2571,7 +2571,7 @@ myboardappearancemenu.add(consoleaspect);
     } else if (action.equals("ICC Command Help Files")) {
       sharedVariables.openUrl("http://www.chessclub.com/help/help-list");
 
-    } else if (action.equals("Join/Renew")) {
+    } else if (action.equals("Join")) {
       sharedVariables.openUrl("https://login.chessclub.com/Registration");
 
     } else if (action.equals("Lost Password")) {
@@ -2830,7 +2830,24 @@ else if (action.equals("Three Lines")) {
 
     } else if (action.equals("Set Wallpaper")) {
       try {
-        JFileChooser fc = new JFileChooser();
+          File file = new File("/System/Library/Desktop Pictures/" );
+          String filePath = "";
+          if (file.exists()) {
+              filePath =  "/System/Library/Desktop Pictures/";
+          }
+          
+          if(filePath.equals("")) {
+              file = new File( "/Library/Desktop Pictures/");
+              if (file.exists()) {
+                  filePath =  "/Library/Desktop Pictures/";
+              }
+          }
+          JFileChooser fc;
+          if(filePath.equals("")) {
+             fc = new JFileChooser();
+          } else {
+             fc = new JFileChooser(filePath);
+          }
         int returnVal = fc.showOpenDialog(this);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
