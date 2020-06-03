@@ -173,6 +173,7 @@ class mymultiframe extends JFrame
   topGamesFrame myTopGamesFrame;
   gameFrame myGameList;
   listClass eventsList;
+  listClass tournamentList;
   listClass seeksList;
   listClass computerSeeksList;
   toolboxDialog mybox;
@@ -440,11 +441,12 @@ class mymultiframe extends JFrame
     notifyList = new listClass("Notify Online");
     notifyList.notifyStateChanged("Double Click to Watch", "1");
     eventsList = new listClass("Events");
+    tournamentList = new listClass("Tournaments");
     seeksList = new listClass("Human Seeks");
     computerSeeksList = new listClass("Computer Seeks");
     sharedVariables.activitiesPanel =
       new ActivitiesWindowPanel(this, sharedVariables, queue, eventsList,
-                                seeksList, computerSeeksList, notifyList, this);
+                                seeksList, computerSeeksList, notifyList, tournamentList, this);
     myfirstlist = new listFrame(this, sharedVariables, queue);
     mysecondlist = new listInternalFrame(this, sharedVariables, queue);
     sharedVariables.desktop.add(mysecondlist);
@@ -485,7 +487,7 @@ class mymultiframe extends JFrame
     mineScores.readNow(sharedVariables);
 
     client = new chessbot4(gameconsoles, gamequeue, queue, consoles, sharedVariables,
-                           myboards, consoleSubframes, mycreator, graphics, eventsList,
+                           myboards, consoleSubframes, mycreator, graphics, eventsList, tournamentList,
                            seeksList, computerSeeksList, notifyList, gameList,
                            myGameList, this, consoleChatframes, seekGraph, this,
                            myConnection, myfirstlist, mysecondlist);
@@ -4784,7 +4786,7 @@ dot.setVisible(true);
       //if(myfirstlist == null)
       //mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
       if (!myfirstlist.isVisible() && !mysecondlist.isVisible()) {
-	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, this);
+	mycreator.createListFrame(eventsList, seeksList, computerSeeksList, notifyList, tournamentList, this);
       }
       else if (mysecondlist.isVisible() && !mysecondlist.isSelected())
         mysecondlist.setSelected(true);
@@ -4798,6 +4800,10 @@ dot.setVisible(true);
         myfirstlist.setVisible(false);
       }
       sharedVariables.activitiesPanel.setColors();
+        if(sharedVariables.activitiesTabNumber == 4) {
+            sharedVariables.activitiesPanel.theEventsList.setModel(tournamentList.eventsTable);
+            sharedVariables.activitiesPanel.setEventTournamentTableProperties();
+        }
       //myfirstlist.setSelected(true);
     } catch (Exception dui) {}
   }

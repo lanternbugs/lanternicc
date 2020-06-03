@@ -2739,7 +2739,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				{
 				try {
 					int tabNumber = Integer.parseInt(tokens.nextToken());
-					if(tabNumber > -1 && tabNumber < 4) {
+					if(tabNumber > -1 && tabNumber < 5) {
                                            sharedVariables.activitiesTabNumber = tabNumber;  
                                         }
 					}

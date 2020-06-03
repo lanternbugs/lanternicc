@@ -48,13 +48,15 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 
 
 	listClass eventsList;
+    listClass tournamentList;
 	listClass seeksList;
 	listClass computerSeeksList;
 	listClass notifyList;
 	channels sharedVariables;
 	ConcurrentLinkedQueue<myoutput> queue;
 
-        JLabel eventsLabel;
+    JLabel tournamentLabel;
+    JLabel eventsLabel;
 	JLabel seeksLabel;
 	JLabel computerSeeksLabel;
 	JLabel notifyLabel;
@@ -90,7 +92,7 @@ JFrame homeFrame;
 	//subframe [] consoleSubframes;
 
 //subframe(JFrame frame, boolean mybool)
-ActivitiesWindowPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, JFrame homeFrame1)
+ActivitiesWindowPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, listClass tournamentList1, JFrame homeFrame1)
 {
 
 //super(frame, mybool);
@@ -103,6 +105,7 @@ ActivitiesWindowPanel(JFrame master, channels sharedVariables1, ConcurrentLinked
 
 
 eventsList=eventsList1;
+    tournamentList = tournamentList1;
 seeksList =seeksList1;
 computerSeeksList =computerSeeksList1;
 notifyList = notifyList1;
@@ -131,7 +134,27 @@ notifylistScrollerPanel.theNotifyList.setBackground(sharedVariables.listColor);
 
 }
 
+void setEventTournamentTableProperties()
+    {
+        theEventsList.setShowVerticalLines(false);
+        theEventsList.setShowHorizontalLines(true);
+        TableColumn col0 = theEventsList.getColumnModel().getColumn(JOIN_COL);
+        col0.setPreferredWidth(iconWidth);
+        col0.setMaxWidth(iconWidth);
+        TableColumn col1 = theEventsList.getColumnModel().getColumn(WATCH_COL);
+        col1.setPreferredWidth(iconWidth);
+        col1.setMaxWidth(iconWidth);
 
+        TableColumn col2 = theEventsList.getColumnModel().getColumn(INFO_COL);
+        col2.setPreferredWidth(iconWidth);
+        col2.setMaxWidth(iconWidth);
+
+        TableColumn col3 = theEventsList.getColumnModel().getColumn(ENTRY_COL);
+        col3.setPreferredWidth(200);
+        col3.setMaxWidth(10000);
+
+    }
+    
 void initComponents(){
 
 /*try {
@@ -140,12 +163,13 @@ add(displayList.theList);
 }catch(Exception d) { }
 */
 eventsLabel = new JLabel("Events List", SwingConstants.CENTER);
-
+tournamentLabel = new JLabel("Tournaments", SwingConstants.CENTER);
 seeksLabel = new JLabel("Human Seeks", SwingConstants.CENTER);
 computerSeeksLabel = new JLabel(" Computer Seeks", SwingConstants.CENTER);
 notifyLabel = new JLabel(" Notify List", SwingConstants.CENTER);
 channelLabel = new JLabel(" Channel List    ");
 
+tournamentLabel.setOpaque(true);
 eventsLabel.setOpaque(true);
 seeksLabel.setOpaque(true);
 computerSeeksLabel.setOpaque(true);
@@ -154,37 +178,21 @@ notifyLabel.setOpaque(true);
 defaultLabelColor = this.getBackground();
 selectedLabelColor = new Color(176,196,222);
 //list = new JList(data); //data has type Object[]
-theEventsList = new JTable(eventsList.eventsTable)
-{
-            //  Returning the Class of each column will allow different
-            //  renderers to be used based on Class
-            public Class getColumnClass(int column)
-            {
-                return getValueAt(0, column).getClass();
-            }
-};
+    theEventsList = new JTable(eventsList.eventsTable)
+    {
+                //  Returning the Class of each column will allow different
+                //  renderers to be used based on Class
+                public Class getColumnClass(int column)
+                {
+                    return getValueAt(0, column).getClass();
+                }
+    };
 /*theEventsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 theEventsList.setLayoutOrientation(JList.VERTICAL);
 theEventsList.setVisibleRowCount(-1);
 */
 
-theEventsList.setShowVerticalLines(false);
-theEventsList.setShowHorizontalLines(true);
-TableColumn col0 = theEventsList.getColumnModel().getColumn(JOIN_COL);
-col0.setPreferredWidth(iconWidth);
-col0.setMaxWidth(iconWidth);
-TableColumn col1 = theEventsList.getColumnModel().getColumn(WATCH_COL);
-col1.setPreferredWidth(iconWidth);
-col1.setMaxWidth(iconWidth);
-
-TableColumn col2 = theEventsList.getColumnModel().getColumn(INFO_COL);
-col2.setPreferredWidth(iconWidth);
-col2.setMaxWidth(iconWidth);
-
-TableColumn col3 = theEventsList.getColumnModel().getColumn(ENTRY_COL);
-col3.setPreferredWidth(200);
-col3.setMaxWidth(10000);
-
+    setEventTournamentTableProperties();
 listScroller = new JScrollPane(theEventsList);
 listScrollerPanel = new EventsPanel();
 listScrollerPanel.add(listScroller);
@@ -389,6 +397,8 @@ MouseListener mouseListenerComputerSeeks = new MouseAdapter() {
      }
  };
  theComputerSeeksList.addMouseListener(mouseListenerComputerSeeks);
+    
+    
  MouseListener mouseListenerEvents = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {
   JTable target = (JTable)e.getSource();
@@ -408,6 +418,12 @@ String listing = eventsList.getEventListing(row);
 String join = eventsList.getJoinCommand(row);
 String info = eventsList.getInfoCommand(row);
 String watch = eventsList.getWatchCommand(row);
+         if(sharedVariables.activitiesTabNumber == 4) {
+             listing = tournamentList.getEventListing(row);
+             join = tournamentList.getJoinCommand(row);
+             info = tournamentList.getInfoCommand(row);
+             watch = tournamentList.getWatchCommand(row);
+         }
 /*JFrame framer = new JFrame("join is: " + join + " and watch is: " + watch + " and info is: " + info + " and col is: " + col);
 framer.setSize(1000,100);
 framer.setVisible(true);
@@ -588,7 +604,7 @@ setLayout();
 
 
 // set default visible
-if(sharedVariables.activitiesTabNumber != 0)
+if(sharedVariables.activitiesTabNumber != 0 && sharedVariables.activitiesTabNumber != 4)
 	listScrollerPanel.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 1)
 	myseeks1.setVisible(false);
@@ -600,6 +616,52 @@ if(sharedVariables.activitiesTabNumber != 4)
 	channelPanel.setVisible(false);
 setLabelSelected(sharedVariables.activitiesTabNumber);
 
+    tournamentLabel.addMouseListener(new MouseAdapter() {
+             public void mousePressed(MouseEvent e) {
+                 // turn on events and off seeks
+               //  if(!listScroller.isVisible())
+
+
+                     notifylistScrollerPanel.setVisible(false);
+                     myseeks2.setVisible(false);
+                     myseeks1.setVisible(false);
+                      channelPanel.setVisible(false);
+                                       listScrollerPanel.setVisible(true);
+                                       listScroller.setVisible(true);
+                     sharedVariables.activitiesTabNumber=4;
+                     setLabelSelected(sharedVariables.activitiesTabNumber);
+                 theEventsList.setModel(tournamentList.eventsTable);
+                 setEventTournamentTableProperties();
+
+
+
+                     paintComponents(getGraphics()); repaint();
+
+
+                }
+
+
+             public void mouseReleased(MouseEvent e) {
+                // turn on events and off seeks
+              /*  if(!listScroller.isVisible())
+                 {
+                     seeklistScroller.setVisible(false);
+                     notifylistScroller.setVisible(false);
+                     computerseeklistScroller.setVisible(false);
+                     listScroller.setVisible(true);
+                     paintComponents(getGraphics()); repaint();
+
+                 }
+              */
+              }
+
+
+    public void mouseEntered (MouseEvent me) {}
+    public void mouseExited (MouseEvent me) {}
+    public void mouseClicked (MouseEvent me) {}
+    });
+
+    
 eventsLabel.addMouseListener(new MouseAdapter() {
          public void mousePressed(MouseEvent e) {
              // turn on events and off seeks
@@ -614,6 +676,8 @@ eventsLabel.addMouseListener(new MouseAdapter() {
                                    listScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=0;
 				 setLabelSelected(sharedVariables.activitiesTabNumber);
+             theEventsList.setModel(eventsList.eventsTable);
+             setEventTournamentTableProperties();
 
 
 
@@ -811,7 +875,7 @@ public void mouseClicked (MouseEvent me) {}
 
 void setLabelSelected(int num)
 {
-   if(num != 0 )
+   if(num != 0)
      eventsLabel.setBackground(defaultLabelColor);
    else 
      eventsLabel.setBackground(selectedLabelColor);
@@ -830,6 +894,10 @@ void setLabelSelected(int num)
      notifyLabel.setBackground(defaultLabelColor);
    else 
      notifyLabel.setBackground(selectedLabelColor);
+    if(num != 4)
+      tournamentLabel.setBackground(defaultLabelColor);
+    else
+      tournamentLabel.setBackground(selectedLabelColor);
 
 }
 void setLayout()
@@ -861,6 +929,7 @@ channelPanel.add(channelScroller3);
 	h2.addComponent(computerSeeksLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	h2.addComponent(eventsLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	h2.addComponent(notifyLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+    h2.addComponent(tournamentLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	//h2.addComponent(channelLabel);
 
 	h3.addComponent(myseeks1);
@@ -905,6 +974,7 @@ v9.addComponent(eventsLabel);
 v9.addComponent(notifyLabel);
 v9.addComponent(seeksLabel);
 v9.addComponent(computerSeeksLabel);
+    v9.addComponent(tournamentLabel);
 //v9.addComponent(channelLabel);
 		v1.addGroup(v9);
 		v1.addComponent(listScrollerPanel);

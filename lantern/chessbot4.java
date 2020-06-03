@@ -98,6 +98,7 @@ chatframe [] consoleChatframes;
 JTextPane gameconsoles[];
 resourceClass graphics;
 listClass eventsList;
+listClass tournamentList;
 listClass seeksList;
 listClass computerSeeksList;
 listClass notifyList;
@@ -110,7 +111,7 @@ listInternalFrame mysecondlist;
 newBoardCreator client;
 sendToIcs client2;
 long lastBlockSaysTime;
-	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
+	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
 SUBFRAME_CONSOLES=0;
@@ -143,6 +144,7 @@ dummyResponse=false;
 client = new newBoardCreator();
 client3 = new newListAdder();
 eventsList = eventsList1;
+        tournamentList = tournamentList1;
 seeksList = seeksList1;
 computerSeeksList = computerSeeksList1;
 notifyList = notifyList1;
@@ -294,6 +296,7 @@ t.start();
 										seeksList.resetList();
 										computerSeeksList.resetList();
 										eventsList.resetList();
+                                        tournamentList.resetList();
 										notifyList.resetList();
 										Thread.sleep(1000);
 										sharedVariables.timestamp=null;
@@ -474,6 +477,7 @@ computerSeeksList.resetList();
 seeksList.resetList();
 notifyList.resetList();
 eventsList.resetList();
+    tournamentList.resetList();
 }
 catch(Exception listException) { }
 
@@ -3718,11 +3722,14 @@ if(dg.getArg(0).equals("44"))
 {
 	// index , event description, join, watch, info
 	eventsList.addToEvents(dg.getArg(3), dg.getArg(1), dg.getArg(4), dg.getArg(5), dg.getArg(6));
+    tournamentList.addToEvents(dg.getArg(3), dg.getArg(1), dg.getArg(4), dg.getArg(5), dg.getArg(6));
 }
  if(dg.getArg(0).equals("104"))
 {
 	// index , event description, join, watch, info
 	eventsList.removeFromEvents(dg.getArg(1));
+    tournamentList.removeFromEvents(dg.getArg(1));
+    
 }
 
 /**************** game list events ********************/

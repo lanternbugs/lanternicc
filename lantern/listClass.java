@@ -49,7 +49,7 @@ ImageIcon infoIcon;
 
 listClass(String type){
 eventList = new ArrayList<String>();
-    eventList.add(type);
+eventList.add(type);
 eventListData = new ArrayList<String>();
     eventListData.add(type);
 thisListType = type;
@@ -76,7 +76,7 @@ modelwatch = new DefaultListModel();
 
 // we are storing events in both a table and list
 
-if(type.equals("Events"))
+if(type.equals("Events") || type.equals("Tournaments"))
 {
 joinIcon = new ImageIcon(channels.eventsImages.get(0));
 watchIcon = new ImageIcon(channels.eventsImages.get(1));
@@ -119,6 +119,12 @@ void removeFromList(String index)
 }
 void addToEvents(String entry, String number, String join, String watch, String info)
 {
+    CharSequence cs_tourn = "Tournament";
+    CharSequence cs_manager = "manager";
+    if(thisListType.equals("Tournaments") && (!entry.contains(cs_tourn) || !entry.contains(cs_manager)))
+    {
+        return;
+    }
 	int add=1;
 
         int spot = -1;

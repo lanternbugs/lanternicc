@@ -511,7 +511,7 @@ sharedVariables.openBoardCount++;
 
 }
 
-protected void createListFrame(listClass eventsList, listClass seeksList, listClass computerSeeksList, listClass notifyList, JFrame homeFrame)
+protected void createListFrame(listClass eventsList, listClass seeksList, listClass computerSeeksList, listClass notifyList, listClass tournamentList, JFrame homeFrame)
 {
 /*if(myfirstlist == null)
 {
@@ -537,7 +537,7 @@ mysecondlist.setVisible(true);
 try
     { //myfirstlist.setSelected(true);
     sharedVariables.activitiesPanel.setLabelSelected(sharedVariables.activitiesTabNumber);
-if(sharedVariables.activitiesTabNumber != 0)
+if(sharedVariables.activitiesTabNumber != 0 && sharedVariables.activitiesTabNumber != 4)
 	sharedVariables.activitiesPanel.listScrollerPanel.setVisible(false);
 else
 	sharedVariables.activitiesPanel.listScrollerPanel.setVisible(true);
