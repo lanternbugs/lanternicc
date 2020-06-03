@@ -1154,7 +1154,7 @@ class mymultiframe extends JFrame
     myfiles.add(help_connecting);
     //myfiles.add(reconnect2);
     myfiles.addSeparator();
-    myfiles.add(wallpaper1);
+    //myfiles.add(wallpaper1);
     myfiles.add(settings2);
     myfiles.add(quitItem);
 
@@ -1258,6 +1258,7 @@ class mymultiframe extends JFrame
     // .. /
     mywindowscolors.addSeparator();
     mywindowscolors.add(wallpaper2);
+      mywindowscolors.add(wallpaper1);
 
     // add listeners
     fontchange.addActionListener(this);
@@ -1748,6 +1749,7 @@ class mymultiframe extends JFrame
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
     JMenuItem showexam = new JMenuItem("Enter Examination Mode");
     JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
+    JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
     JMenu boardDesign = new JMenu("Board Design");
     // .. / Board Design /
     boarddesignarray[0] = new JCheckBoxMenuItem("Original");
@@ -1960,6 +1962,7 @@ class mymultiframe extends JFrame
     myboardmenu.add(nchallenge);
     myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
+      myboardmenu.add(unfollowBroadcast);
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
     myboardmenu.add(help_tournaments);
@@ -2208,6 +2211,7 @@ myboardappearancemenu.add(consoleaspect);
     help_board_advanced.addActionListener(this);
     showexam.addActionListener(this);
     showexamlast.addActionListener(this);
+      unfollowBroadcast.addActionListener(this);
     lcolor.addActionListener(this);
     dcolor.addActionListener(this);
     bbackcolor.addActionListener(this);
@@ -2271,7 +2275,6 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem broadcasthelp = new JMenuItem("ICC Calendar");
     JMenuItem servertime = new JMenuItem("Server Time");
     JMenuItem followBroadcast = new JMenuItem("Follow Broadcast- When On");
-    JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
     JMenuItem showfm = new JMenuItem("Open Videos Page");
 
     // add shortcuts
@@ -2295,11 +2298,7 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showrelay);
     actionsmenu.add(ratinggraph);
     actionsmenu.addSeparator();
-    actionsmenu.add(broadcasthelp);
     actionsmenu.add(servertime);
-    actionsmenu.addSeparator();
-    actionsmenu.add(followBroadcast);
-    actionsmenu.add(unfollowBroadcast);
     actionsmenu.add(showfm);
 
     lookupuser.addActionListener(this);
@@ -2317,7 +2316,6 @@ myboardappearancemenu.add(consoleaspect);
     followBroadcast.addActionListener(this);
     broadcasthelp.addActionListener(this);
     servertime.addActionListener(this);
-    unfollowBroadcast.addActionListener(this);
     showfm.addActionListener(this);
 
     /****************************** Help ******************************/
