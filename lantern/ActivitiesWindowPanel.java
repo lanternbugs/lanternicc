@@ -622,20 +622,7 @@ setLabelSelected(sharedVariables.activitiesTabNumber);
                //  if(!listScroller.isVisible())
 
 
-                     notifylistScrollerPanel.setVisible(false);
-                     myseeks2.setVisible(false);
-                     myseeks1.setVisible(false);
-                      channelPanel.setVisible(false);
-                                       listScrollerPanel.setVisible(true);
-                                       listScroller.setVisible(true);
-                     sharedVariables.activitiesTabNumber=4;
-                     setLabelSelected(sharedVariables.activitiesTabNumber);
-                 theEventsList.setModel(tournamentList.eventsTable);
-                 setEventTournamentTableProperties();
-
-
-
-                     paintComponents(getGraphics()); repaint();
+                 switchToTournaments();
 
 
                 }
@@ -873,6 +860,24 @@ public void mouseClicked (MouseEvent me) {}
 
 }// end inti components
 
+    void switchToTournaments()
+    {
+        notifylistScrollerPanel.setVisible(false);
+                            myseeks2.setVisible(false);
+                            myseeks1.setVisible(false);
+                             channelPanel.setVisible(false);
+                                              listScrollerPanel.setVisible(true);
+                                              listScroller.setVisible(true);
+                            sharedVariables.activitiesTabNumber=4;
+                            setLabelSelected(sharedVariables.activitiesTabNumber);
+                        theEventsList.setModel(tournamentList.eventsTable);
+                        setEventTournamentTableProperties();
+
+
+
+                            paintComponents(getGraphics()); repaint();
+    }
+    
 void setLabelSelected(int num)
 {
    if(num != 0)

@@ -1751,6 +1751,7 @@ class mymultiframe extends JFrame
     JMenu myboardappearancemenu = new JMenu("Board");
     JMenu myboardmenu = new JMenu("Game");
     // Game /
+    JMenuItem jtournament = new JMenuItem("Join Tournaments");
     JMenuItem nseek = new JMenuItem("Seek a Game");
     JMenuItem nchallenge = new JMenuItem("Challenge");
     JMenuItem dorematch = new JMenuItem("Rematch");
@@ -1966,7 +1967,7 @@ class mymultiframe extends JFrame
     // add to menu bar
 		menu.add(optionsmenu);
 	// Options /
-
+    myboardmenu.add(jtournament);
     myboardmenu.add(nseek);
     myboardmenu.add(nchallenge);
     myboardmenu.add(dorematch);
@@ -2148,6 +2149,7 @@ myboardappearancemenu.add(consoleaspect);
     //sidewaysconsole.setSelected(false);
 
     // add listeners
+      jtournament.addActionListener(this);
     nseek.addActionListener(this);
     nchallenge.addActionListener(this);
     dorematch.addActionListener(this);
@@ -2970,7 +2972,22 @@ else if (action.equals("Three Lines")) {
     } else if (action.equals("Activities Window/Events")) {
       openActivities();
 
-    } else if (action.equals("Notify Window")) {
+    }
+      else if (action.equals("Join Tournaments")) {
+         
+          try {
+          if(!mysecondlist.isVisible() && !myfirstlist.isVisible())
+        openActivities();
+          else if(mysecondlist.isVisible()) {
+              mysecondlist.setSelected(true);
+          }
+          
+                   sharedVariables.activitiesPanel.switchToTournaments();
+          } catch(Exception badtournswitch) {}
+
+      }
+    
+    else if (action.equals("Notify Window")) {
 
       launchNotifyWindow();
 
