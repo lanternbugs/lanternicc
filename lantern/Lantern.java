@@ -4899,6 +4899,17 @@ dot.setVisible(true);
                    } else {
                       fc = new JFileChooser(filePath);
                    }
+              fc.setFileFilter(new FileFilter() {
+                public boolean accept(File f) {
+                  String fname = f.getName().toLowerCase();
+                  return (fname.endsWith(".jpg") || fname.endsWith(".jpeg") ||
+                          fname.endsWith(".img") || fname.endsWith(".png") || f.isDirectory());
+                }
+
+                public String getDescription() {
+                  return "Image Files (*.img, *.jpg, *.img, *.png)";
+                }
+              });
                  int returnVal = fc.showOpenDialog(this);
 
                  if (returnVal == JFileChooser.APPROVE_OPTION) {
