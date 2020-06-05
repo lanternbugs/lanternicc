@@ -260,6 +260,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem qtellTimestamp;
   JCheckBoxMenuItem timeStamp24hr;
   JCheckBoxMenuItem checkLegality;
+      JCheckBoxMenuItem noFocusOnObserve;
   JCheckBoxMenuItem useTopGame;
   JCheckBoxMenuItem dontReuseGameTabs;
 
@@ -578,6 +579,7 @@ class mymultiframe extends JFrame
     tellTimestamp.       setSelected(sharedVariables.tellTimestamp);
     leftNameTimestamp.   setSelected(channels.leftTimestamp);
     checkLegality.       setSelected(sharedVariables.checkLegality);
+       noFocusOnObserve.       setSelected(sharedVariables.noFocusOnObserve);
     lineindent.          setSelected(sharedVariables.indent);
 
     checkItalicsBehavior(sharedVariables.italicsBehavior);
@@ -1913,6 +1915,7 @@ class mymultiframe extends JFrame
     // .. / Advanced /
     lowTimeColors = new JCheckBoxMenuItem("Low Time Clock Colors (Bullet Only)");
     checkLegality = new JCheckBoxMenuItem("Check Move Legality");
+      noFocusOnObserve = new JCheckBoxMenuItem("No Focus on Observing");
     unobserveGoExamine = new JCheckBoxMenuItem("Unobserve Games Gone Examine");
     newObserveGameSwitch = new JCheckBoxMenuItem("Switch To New Game Tab On Observe");
      tabbing = new JCheckBoxMenuItem("Tabs Only");
@@ -2131,6 +2134,7 @@ myboardappearancemenu.add(consoleaspect);
     AdvancedGameMenu.add(checkLegality);
     AdvancedGameMenu.add(unobserveGoExamine);
     AdvancedGameMenu.add(newObserveGameSwitch);
+      AdvancedGameMenu.add(noFocusOnObserve);
      AdvancedGameMenu.add(tabbing);
     AdvancedGameMenu.add(aspect);
     // .. / .. / Board Aspect Ratio /
@@ -2254,6 +2258,7 @@ myboardappearancemenu.add(consoleaspect);
     autoChat.addActionListener(this);
     lowTimeColors.addActionListener(this);
     checkLegality.addActionListener(this);
+      noFocusOnObserve.addActionListener(this);
     unobserveGoExamine.addActionListener(this);
     newObserveGameSwitch.addActionListener(this);
     for (int i=0; i<aspectarray.length; i++)
@@ -2441,7 +2446,14 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.checkLegality = !sharedVariables.checkLegality;
       checkLegality.setSelected(sharedVariables.checkLegality);
 
-    } else if (action.equals("Unobserve Games Gone Examine")) {
+    }
+      else if (action.equals("No Focus on Observing")) {
+        sharedVariables.noFocusOnObserve = !sharedVariables.noFocusOnObserve;
+        checkLegality.setSelected(sharedVariables.noFocusOnObserve);
+
+      }
+    
+    else if (action.equals("Unobserve Games Gone Examine")) {
       sharedVariables.unobserveGoExamine = !sharedVariables.unobserveGoExamine;
       unobserveGoExamine.setSelected(sharedVariables.unobserveGoExamine);
 

@@ -5475,7 +5475,7 @@ void proccessGameInfo(newBoardData temp)
 					repaintBoards(gamenum);
 
                                         try {
-					selectBoard();
+					selectBoard(gamenum);
 
                                         if(sharedVariables.autoChat == true)
                                         setComboMemory(sharedVariables.mygame[gamenum].state, gamenum);
@@ -6242,7 +6242,7 @@ boolean notPlaying()
 
 	return false;
 }
-void selectBoard()
+void selectBoard(int passedIndex)
 {
 
 
@@ -6294,7 +6294,10 @@ if(sharedVariables.tabsOnly == true)
 			if(myboards[bb].isVisible() == true)
 			{
 				try {
-					myboards[bb].setSelected(true);
+                    if (!(sharedVariables.mygame[passedIndex].state == sharedVariables.STATE_OBSERVING && sharedVariables.noFocusOnObserve)) {
+                        myboards[bb].setSelected(true);
+                    }
+					
 					if(maximum == true)
 						myboards[bb].setMaximum(true);
 					else if(myboards[bb].isIcon())

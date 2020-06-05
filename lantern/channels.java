@@ -157,6 +157,7 @@ boolean ActivitiesOnTop=false;
 boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 boolean showMugshots = true;
+    boolean noFocusOnObserve = false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();
@@ -398,7 +399,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.23a";
+version = "v6.23b";
     if(macClient) {
       setUpDirectories();
     }

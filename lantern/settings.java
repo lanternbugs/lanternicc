@@ -736,6 +736,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[donemovesounds] ";
+        
+        // movesounds
+        set_string = set_string + "[nofocusonobserve] ";
+        if(sharedVariables.noFocusOnObserve == true)
+            set_string = set_string + "1" + " ";
+        else
+            set_string = set_string + "0" + " ";
+        // closing
+            set_string = set_string + "[nofocusonobserve] ";
 
 
  	// tilesrandom
@@ -2564,6 +2573,18 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+                    
+                    if(temp.equals("[nofocusonobserve]"))
+                    {
+                    try {
+                        int truth = Integer.parseInt(tokens.nextToken());
+                        if(truth == 1)
+                            sharedVariables.noFocusOnObserve=true;
+                        else
+                            sharedVariables.noFocusOnObserve=false;
+                        }
+                        catch(Exception zzz){}
+                    }
 
 
 					if(temp.equals("[drawsounds]"))
