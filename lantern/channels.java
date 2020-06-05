@@ -30,7 +30,7 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
-    static boolean macClient = false;
+    static boolean macClient = true;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
@@ -400,7 +400,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.23b";
+version = "v6.23c";
     if(macClient) {
       setUpDirectories();
     }
