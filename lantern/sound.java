@@ -80,7 +80,7 @@ else if(os.indexOf( "mac" ) >= 0)
 else
 	operatingSystem = "unix";
 
-    if((operatingSystem.equals("win") && channels.firstSound == false))
+    if((operatingSystem.equals("win")  || operatingSystem.equals("mac")) && channels.firstSound == false)
     {
      try {
         free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
@@ -88,7 +88,7 @@ else
      }
      catch(Exception dui){}
     }
-    else if(operatingSystem.equals("unix") || operatingSystem.equals("mac"))
+    else if(operatingSystem.equals("unix"))
     {
 
          if (playerThread==null){ // Lazily start the thread.
