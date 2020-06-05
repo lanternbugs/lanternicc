@@ -30,7 +30,7 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
-    static boolean macClient = true;
+    static boolean macClient = false;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
