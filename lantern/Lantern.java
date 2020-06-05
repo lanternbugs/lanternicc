@@ -197,6 +197,7 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem showMugshots;
   JCheckBoxMenuItem makeObserveSounds;
   JCheckBoxMenuItem hearsound;
+      JCheckBoxMenuItem softerSound;
   JCheckBoxMenuItem gameend;
   JCheckBoxMenuItem channelNumberLeft;
   JCheckBoxMenuItem tabbing;
@@ -425,6 +426,44 @@ class mymultiframe extends JFrame
     colortype = 1;
     sharedVariables.desktop = new JDesktopPaneCustom(sharedVariables, myboards,
                                                      consoleSubframes, this);
+      
+      sharedVariables.desktop.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+           {
+               JPopupMenu menu2=new JPopupMenu("Popup2");
+                                                 JMenuItem item1 = new JMenuItem("Set Background");
+                                                  item1.addActionListener(new ActionListener() {
+                                                 public void actionPerformed(ActionEvent e) {
+                                                     setWallPaper();
+                                                 }
+
+                                        });
+
+                                         menu2.add(item1);
+
+                                        JMenuItem item2 = new JMenuItem("Set Application Background Color");
+                                                                          item2.addActionListener(new ActionListener() {
+                                                                         public void actionPerformed(ActionEvent e) {
+                                                                             setApplicationColor();
+
+                                                                         }
+
+                                        });
+
+                                        menu2.add(item2);
+                                        add(menu2);
+                             menu2.show(e.getComponent(),e.getX(),e.getY());
+           }
+        }
+
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseEntered(MouseEvent me) {}
+        public void mouseExited(MouseEvent me) {}
+        public void mouseClicked(MouseEvent me) {}
+      });
+      
+      
     sharedVariables.desktop.add(seekGraph);
 
 
@@ -625,6 +664,7 @@ class mymultiframe extends JFrame
     showMugshots.        setSelected(sharedVariables.showMugshots);
     autonoidle.        setSelected(sharedVariables.noidle);
     hearsound.           setSelected(sharedVariables.makeSounds);
+      softerSound.           setSelected(sharedVariables.softerMoveSounds);
     consolemenu.         setSelected(sharedVariables.showConsoleMenu);
 
     /*
@@ -1134,7 +1174,7 @@ class mymultiframe extends JFrame
     JMenuItem reconnect4 = new JMenuItem("Reconnect to ICC (alternate)");
     JMenuItem help_connecting = new JMenuItem("Anon and Guest Login Help");
     reconnect2 = new JMenuItem("Reconnect to FICS");// off now
-    JMenuItem wallpaper1 = new JMenuItem("Set Wallpaper");
+    JMenuItem wallpaper1 = new JMenuItem("Set Background");
     JMenuItem settings2 = new JMenuItem("Save Settings");
     JMenuItem quitItem = new JMenuItem("Disconnect");
 
@@ -1306,6 +1346,7 @@ class mymultiframe extends JFrame
     JMenu soundmenu = new JMenu("Sound");
     // .. / Sounds /
     hearsound = new JCheckBoxMenuItem("Sounds");
+      softerSound = new JCheckBoxMenuItem("Softer Move Sounds");
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
     makemovesounds = new JCheckBoxMenuItem("Sounds for Moves");
     makedrawsounds = new JCheckBoxMenuItem("Sounds for Draw Offers");
@@ -1444,6 +1485,8 @@ class mymultiframe extends JFrame
     // .. / Sound /
     soundmenu.add(hearsound);
     soundmenu.addSeparator();
+      soundmenu.add(softerSound);
+      soundmenu.addSeparator();
     soundmenu.add(makeObserveSounds);
     soundmenu.add(makemovesounds);
     soundmenu.add(makeatnamesounds);
@@ -1585,6 +1628,7 @@ class mymultiframe extends JFrame
     makemovesounds.addActionListener(this);
     makedrawsounds.addActionListener(this);
     hearsound.addActionListener(this);
+      softerSound.addActionListener(this);
     notifysound.addActionListener(this);
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
@@ -2795,17 +2839,7 @@ else if (action.equals("Three Lines")) {
     }
 
      else if (action.equals("Set Application Background Color")) {
-      try {
-	JDialog frame = new JDialog();
-        Color newColor = JColorChooser.showDialog(frame, "Application Color",
-                                                  sharedVariables.MainBackColor);
-        if (newColor != null) {
-          sharedVariables.MainBackColor=newColor;
-          sharedVariables.wallpaperImage=null;
-          sharedVariables.wallpaperFileName = "";
-          repaint();
-        }
-      } catch (Exception e) {}
+         setApplicationColor();
 
     } else if (action.equals("Open Web")) {
       mycreator.createWebFrame("http://www.google.com");
@@ -2860,37 +2894,8 @@ else if (action.equals("Three Lines")) {
         }
       } catch (Exception nine) {}
 
-    } else if (action.equals("Set Wallpaper")) {
-      try {
-          File file = new File("/System/Library/Desktop Pictures/" );
-          String filePath = "";
-          if (file.exists()) {
-              filePath =  "/System/Library/Desktop Pictures/";
-          }
-          
-          if(filePath.equals("")) {
-              file = new File( "/Library/Desktop Pictures/");
-              if (file.exists()) {
-                  filePath =  "/Library/Desktop Pictures/";
-              }
-          }
-          JFileChooser fc;
-          if(filePath.equals("")) {
-             fc = new JFileChooser();
-          } else {
-             fc = new JFileChooser(filePath);
-          }
-        int returnVal = fc.showOpenDialog(this);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-          sharedVariables.wallpaperFile = fc.getSelectedFile();
-         sharedVariables.addWallPaper();
-                   // end stand alone
-        }
-
-        repaint();
-      // end try
-      } catch (Exception e) {}
+    } else if (action.equals("Set Background")) {
+        setWallPaper();
 
       // Andrey edits:
       // merging the various analysis settings into one response
@@ -4592,6 +4597,9 @@ dot.setVisible(true);
     } else if (action.equals("Sounds")) {
       sharedVariables.makeSounds = !sharedVariables.makeSounds;
 
+    } else if (action.equals("Softer Move Sounds")) {
+      sharedVariables.softerMoveSounds = !sharedVariables.softerMoveSounds;
+
     } else if (action.equals("Start Powerout")) {
 
       //JFrame aframe = new JFrame();
@@ -4855,7 +4863,54 @@ dot.setVisible(true);
       }
     }
   }// end action performed method
+      
+      void setApplicationColor()
+      {
+          try {
+             JDialog frame = new JDialog();
+                 Color newColor = JColorChooser.showDialog(frame, "Application Color",
+                                                           sharedVariables.MainBackColor);
+                 if (newColor != null) {
+                   sharedVariables.MainBackColor=newColor;
+                   sharedVariables.wallpaperImage=null;
+                   sharedVariables.wallpaperFileName = "";
+                   repaint();
+                 }
+               } catch (Exception e) {}
+      }
+  void setWallPaper()
+      {
+          try {
+                   File file = new File("/System/Library/Desktop Pictures/" );
+                   String filePath = "";
+                   if (file.exists()) {
+                       filePath =  "/System/Library/Desktop Pictures/";
+                   }
+                   
+                   if(filePath.equals("")) {
+                       file = new File( "/Library/Desktop Pictures/");
+                       if (file.exists()) {
+                           filePath =  "/Library/Desktop Pictures/";
+                       }
+                   }
+                   JFileChooser fc;
+                   if(filePath.equals("")) {
+                      fc = new JFileChooser();
+                   } else {
+                      fc = new JFileChooser(filePath);
+                   }
+                 int returnVal = fc.showOpenDialog(this);
 
+                 if (returnVal == JFileChooser.APPROVE_OPTION) {
+                   sharedVariables.wallpaperFile = fc.getSelectedFile();
+                  sharedVariables.addWallPaper();
+                            // end stand alone
+                 }
+
+                 repaint();
+               // end try
+               } catch (Exception e) {}
+      }
   void openActivities() {
     try {
       //if(myfirstlist == null)
@@ -6098,6 +6153,10 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       sharedVariables.songs[8]=songPath;
       songPath = this.getClass().getResource("draw.au"); // Geturl of sound was wav
       sharedVariables.songs[9]=songPath;
+        songPath = this.getClass().getResource("click18a2.au"); // Geturl of sound was wav
+        sharedVariables.songs[10]=songPath;
+        songPath = this.getClass().getResource("click10b2.au"); // Geturl of sound was wav
+        sharedVariables.songs[11]=songPath;
 
       songPath = this.getClass().getResource("BEEP_FM.au"); // Geturl of sound  was wav
       sharedVariables.poweroutSounds[0]=songPath;

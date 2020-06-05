@@ -158,6 +158,7 @@ boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 boolean showMugshots = true;
     boolean noFocusOnObserve = false;
+    boolean softerMoveSounds =  false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();

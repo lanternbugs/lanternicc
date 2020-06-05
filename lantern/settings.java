@@ -479,6 +479,14 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donemakeSounds] ";
 
+        // softer sounds
+        set_string = set_string + "[softerSounds] ";
+        if(sharedVariables.softerMoveSounds == true)
+            set_string = set_string + "1" + " ";
+        else
+            set_string = set_string + "0" + " ";
+        // closing
+            set_string = set_string + "[donesofterSounds] ";
 
 	// show qsuggest
 	set_string = set_string + "[qsuggestShow] ";
@@ -2167,6 +2175,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+                    if (temp.equals("[softerSounds]"))
+                                {
+                                try {
+                                    int truth = Integer.parseInt(tokens.nextToken());
+                                    if(truth == 1)
+                                        sharedVariables.softerMoveSounds=true;
+                                    else
+                                        sharedVariables.softerMoveSounds=false;
+                                    }
+                                    catch(Exception zzz){}
+                                }
 				if (temp.equals("[qsuggestShow]"))
 				{
 				try {
