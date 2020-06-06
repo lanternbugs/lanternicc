@@ -6164,7 +6164,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       sharedVariables.songs[8]=songPath;
       songPath = this.getClass().getResource("draw.au"); // Geturl of sound was wav
       sharedVariables.songs[9]=songPath;
-        songPath = this.getClass().getResource("media.io_click18a3.au"); // Geturl of sound was wav
+        songPath = this.getClass().getResource("click18a3.au"); // Geturl of sound was wav
         sharedVariables.songs[10]=songPath;
         songPath = this.getClass().getResource("media.io_click10b3.au"); // Geturl of sound was wav
         sharedVariables.songs[11]=songPath;
