@@ -3506,7 +3506,7 @@ if(botname.equals("Tomato"))
 botsChannel=46;
 if(botname.equals("Flash"))
 botsChannel=49;
-if(botname.equals("USCF"))
+if(botname.equals("uscf"))
 botsChannel=231;
 if(botname.equals("Cooly"))
 botsChannel=224;
