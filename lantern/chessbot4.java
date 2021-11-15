@@ -3844,7 +3844,12 @@ if(dg.getArg(0).equals("44"))
  if(dg.getArg(0).equals("104"))
 {
 	// index , event description, join, watch, info
-	eventsList.removeFromEvents(dg.getArg(1));
+    try {
+        eventsList.removeFromEvents(dg.getArg(1));
+    } catch(Exception dui) {
+        
+    }
+	
     tournamentList.removeFromEvents(dg.getArg(1));
     
 }

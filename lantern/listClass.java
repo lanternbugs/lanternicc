@@ -252,7 +252,26 @@ void addToEvents(String entry, String number, String join, String watch, String 
 }
 void removeFromEvents(String index)
 {
-	for(int i=0; i < model.size(); i++)
+   
+    if(thisListType.equals("Tournaments"))
+    {
+        boolean go = false;
+        for(int i=0; i < model.size(); i++) {
+            if(modeldata.elementAt(i).equals(index))
+            {
+               
+                go = true;
+            }
+        }
+        
+        if(!go) {
+            return;
+        }
+        
+    }
+    
+	
+    for(int i=0; i < model.size(); i++)
 	if(modeldata.elementAt(i).equals(index))
 	{  String tempwatch = (String) modelwatch.elementAt(i);
 	 String tempinfo = (String) modelinfo.elementAt(i);
@@ -278,16 +297,24 @@ void removeFromEvents(String index)
            break;
 
           }
+try {
+    
+    model.remove(i);
+modelinfo.remove(i);
+modeljoin.remove(i);
+modelwatch.remove(i);
+modeldata.remove(i);
+    
+eventsTable.removeRow(i);
+eventsTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
+    topGamesTable.removeRow(i);
+    topGamesTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
 
-          model.remove(i);
-	modelinfo.remove(i);
-	modeljoin.remove(i);
-	modelwatch.remove(i);
-	 modeldata.remove(i);
-	 eventsTable.removeRow(i);
-	 eventsTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
- 	 topGamesTable.removeRow(i);
- 	 topGamesTable.rowsRemoved( new TableModelEvent(eventsTable, i, i, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE));
+}
+        catch(Exception noentry) {
+            System.out.println(noentry.getMessage());
+        }
+          
 
  }
 

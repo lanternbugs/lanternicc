@@ -98,7 +98,7 @@ class InstallBookDialog  extends JDialog
                       file = new File(channels.privateDirectory + channels.stockfishName);
                   }
                   else {
-                    file = new File(channels.openingBookName);
+                    file = new File(channels.privateDirectory + channels.openingBookName);
                   }
                 if(installType == mediocreChess5) {
                      setPaneText("Installing Mediocre Chess");

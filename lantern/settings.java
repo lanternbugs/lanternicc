@@ -95,7 +95,9 @@ class settings {
 
 	out.write2(efstream, sharedVariables.engineDirectory.getPath());
         }
-        catch(Exception easy){}
+        catch(Exception easy){
+            System.out.println(easy.getMessage());
+        }
 
         }
 	int zz;
@@ -479,14 +481,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// closing
 		set_string = set_string + "[donemakeSounds] ";
 
-        // softer sounds
-        set_string = set_string + "[softerSounds] ";
-        if(sharedVariables.softerMoveSounds == true)
-            set_string = set_string + "1" + " ";
-        else
-            set_string = set_string + "0" + " ";
-        // closing
-            set_string = set_string + "[donesofterSounds] ";
+     
 
 	// show qsuggest
 	set_string = set_string + "[qsuggestShow] ";
@@ -1202,22 +1197,24 @@ for(int boarc=0; boarc< sharedVariables.maxConsoleTabs; boarc++)
 
 try {
 int boar2=0;
-for(int boar=0; boar< sharedVariables.openBoardCount; boar++)
+for(int boar=0; boar< myboards.length; boar++)
 {
        if(myboards[boar]!=null)
        if(sharedVariables.myBoardSizes[boar].con0x > 10)
        {
 	set_string = set_string + "[Gam" + boar2 +"] ";
-			set_string = set_string + "" + sharedVariables.myBoardSizes[boar2].point0.x + " " + sharedVariables.myBoardSizes[boar2].point0.y + " ";
-			set_string = set_string + "" + sharedVariables.myBoardSizes[boar2].con0x + " " + sharedVariables.myBoardSizes[boar2].con0y + " ";
-			set_string = set_string + "[doneGam" + boar + "] ";
+			set_string = set_string + "" + sharedVariables.myBoardSizes[boar].point0.x + " " + sharedVariables.myBoardSizes[boar].point0.y + " ";
+			set_string = set_string + "" + sharedVariables.myBoardSizes[boar].con0x + " " + sharedVariables.myBoardSizes[boar].con0y + " ";
+			set_string = set_string + "[doneGam" + boar2 + "] ";
 
        boar2++;
        }
 }
 
 }// end try
-catch(Exception badboard){}
+catch(Exception badboard){
+    System.out.println(badboard.getMessage());
+}
 
 
 	set_string = set_string + "[ActivitiesSizes] ";
@@ -1338,7 +1335,9 @@ catch(Exception badboard){}
 
 			if(sharedVariables.console[tnum][cnum]==1)
 			     set_string = set_string + cnum + " ";
-			}catch(Exception badchannel){}
+			}catch(Exception badchannel){
+                System.out.println(badchannel.getMessage());
+            }
 		}// done cnum for
 	set_string = set_string + "[doneChan" + tnum + "] ";
 
@@ -1372,7 +1371,9 @@ catch(Exception badboard){}
 
 			if(sharedVariables.mainAlso[cnum]== true)
 			     set_string = set_string + cnum + " ";
-			}catch(Exception badchannel){}
+			}catch(Exception badchannel){
+                System.out.println(badchannel.getMessage());
+            }
 		}// done cnum for
 	set_string = set_string + "[doneMainChan" + "] ";
 
@@ -1519,7 +1520,9 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
               }
               
             }// end try
-            catch(Exception dui){}
+            catch(Exception dui){
+                System.out.println(dui.getMessage());
+            }
          // scroll through these and set the selector on read settings.  our consoles are allready created
         }       // end for
 
@@ -2175,17 +2178,7 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
-                    if (temp.equals("[softerSounds]"))
-                                {
-                                try {
-                                    int truth = Integer.parseInt(tokens.nextToken());
-                                    if(truth == 1)
-                                        sharedVariables.softerMoveSounds=true;
-                                    else
-                                        sharedVariables.softerMoveSounds=false;
-                                    }
-                                    catch(Exception zzz){}
-                                }
+                 
 				if (temp.equals("[qsuggestShow]"))
 				{
 				try {
@@ -3718,7 +3711,9 @@ class FileRead
     }// end finally
 }// overall try
 catch(Exception eeee)
-{ }// overall catch
+{
+    System.out.println(eeee.getMessage());
+}// overall catch
 
     return s.toString();
 

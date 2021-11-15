@@ -285,18 +285,18 @@ class myDefaultTableModel extends DefaultTableModel
 		return false;
 
 	}
-	myDefaultTableModel(Vector<String> a1, Vector<String> a2)
+	myDefaultTableModel(Vector<String> data, Vector<String> collumns)
 	{
-        super(a1, a2);
-        // user below java 9 and up
-        // super(new Object[][] {((Object[]) a1.toArray())},(Object[]) a2.toArray());
+        super(collumns, 0);
+         //user below java 9 and up
+       //  super(new Object[][] {((Object[]) a1.toArray())},(Object[]) a2.toArray());
 		count=0;
 		done=false;
 
 	}
 	void addTableRow(Vector<String> a1)
 	{
-		super.addRow(a1);
+        super.addRow(a1);
 	}
 
 }

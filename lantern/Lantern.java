@@ -197,7 +197,6 @@ class mymultiframe extends JFrame
   JCheckBoxMenuItem showMugshots;
   JCheckBoxMenuItem makeObserveSounds;
   JCheckBoxMenuItem hearsound;
-      JCheckBoxMenuItem softerSound;
   JCheckBoxMenuItem gameend;
   JCheckBoxMenuItem channelNumberLeft;
   JCheckBoxMenuItem tabbing;
@@ -664,8 +663,7 @@ class mymultiframe extends JFrame
     showMugshots.        setSelected(sharedVariables.showMugshots);
     autonoidle.        setSelected(sharedVariables.noidle);
     hearsound.           setSelected(sharedVariables.makeSounds);
-      softerSound.           setSelected(sharedVariables.softerMoveSounds);
-    consolemenu.         setSelected(sharedVariables.showConsoleMenu);
+      consolemenu.         setSelected(sharedVariables.showConsoleMenu);
 
     /*
     if(sharedVariables.consoleLayout == 1) {
@@ -1346,7 +1344,6 @@ class mymultiframe extends JFrame
     JMenu soundmenu = new JMenu("Sound");
     // .. / Sounds /
     hearsound = new JCheckBoxMenuItem("Sounds");
-      softerSound = new JCheckBoxMenuItem("Softer Move Sounds");
     makeObserveSounds = new JCheckBoxMenuItem("Sounds for Observed Games");
     makemovesounds = new JCheckBoxMenuItem("Sounds for Moves");
     makedrawsounds = new JCheckBoxMenuItem("Sounds for Draw Offers");
@@ -1484,9 +1481,7 @@ class mymultiframe extends JFrame
     optionsmenu.add(soundmenu);
     // .. / Sound /
     soundmenu.add(hearsound);
-    soundmenu.addSeparator();
-      soundmenu.add(softerSound);
-      soundmenu.addSeparator();
+    
     soundmenu.add(makeObserveSounds);
     soundmenu.add(makemovesounds);
     soundmenu.add(makeatnamesounds);
@@ -1628,7 +1623,7 @@ class mymultiframe extends JFrame
     makemovesounds.addActionListener(this);
     makedrawsounds.addActionListener(this);
     hearsound.addActionListener(this);
-      softerSound.addActionListener(this);
+     
     notifysound.addActionListener(this);
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
@@ -4597,10 +4592,7 @@ dot.setVisible(true);
     } else if (action.equals("Sounds")) {
       sharedVariables.makeSounds = !sharedVariables.makeSounds;
 
-    } else if (action.equals("Softer Move Sounds")) {
-      sharedVariables.softerMoveSounds = !sharedVariables.softerMoveSounds;
-
-    } else if (action.equals("Start Powerout")) {
+    }  else if (action.equals("Start Powerout")) {
 
       //JFrame aframe = new JFrame();
       //aframe.setVisible(true);
@@ -4636,14 +4628,14 @@ dot.setVisible(true);
       
         boolean installed = false;
         boolean old = false;
-        File f = new File(channels.openingBookName);
+        File f = new File(channels.privateDirectory + channels.openingBookName);
         if(f.exists() && !f.isDirectory()) {
          installed = true;
          old = false;
         }
         if(installed == false) {
 
-        f = new File(channels.oldOpeningBookName);
+        f = new File(channels.privateDirectory + channels.oldOpeningBookName);
         if(f.exists() && !f.isDirectory()) {
          installed = true;
          old = true;
@@ -5584,13 +5576,13 @@ dot.setVisible(true);
   void storeCurrentSizes()
   {
       try {
-         for (int b=0; b<sharedVariables.maxGameTabs; b++) {
+         for (int b=0; b < myboards.length; b++) {
 	if (myboards[b] != null) {
           if (myboards[b].isVisible() &&
               !myboards[b].isMaximum())
             myboards[b].setBoardSize();
         } else {
-          sharedVariables.openBoardCount=b;
+         // sharedVariables.openBoardCount=b;
           break;
         }
       }
@@ -5624,6 +5616,7 @@ dot.setVisible(true);
          myNotifyFrame.saveSize();
       }
       } catch(Exception dui) {
+          System.out.println(dui.getMessage());
       }
       
 
@@ -6164,9 +6157,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       sharedVariables.songs[8]=songPath;
       songPath = this.getClass().getResource("draw.au"); // Geturl of sound was wav
       sharedVariables.songs[9]=songPath;
-        songPath = this.getClass().getResource("click18a3.au"); // Geturl of sound was wav
+        songPath = this.getClass().getResource("AnyConv.com__MOVE2.au"); // Geturl of sound was wav
         sharedVariables.songs[10]=songPath;
-        songPath = this.getClass().getResource("media.io_click10b3.au"); // Geturl of sound was wav
+        songPath = this.getClass().getResource("AnyConv.com__CAPTURE2.au"); // Geturl of sound was wav
         sharedVariables.songs[11]=songPath;
 
       songPath = this.getClass().getResource("BEEP_FM.au"); // Geturl of sound  was wav

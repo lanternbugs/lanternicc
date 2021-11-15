@@ -1438,17 +1438,9 @@ void repaintPiece()
 								 if(sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
 								 {
 									 if(capture ==0)
-                                            if(sharedVariables.softerMoveSounds) {
-                                                movesound=new Sound(sharedVariables.songs[10]);
-                                            } else {
-                                                movesound=new Sound(sharedVariables.songs[1]);
-                                            }
+                                         movesound=new Sound(sharedVariables.songs[1]);
                                      else
-                                            if(sharedVariables.softerMoveSounds) {
-                                                movesound=new Sound(sharedVariables.songs[11]);
-                                            } else {
-                                                movesound=new Sound(sharedVariables.songs[2]);
-                                            }
+                                         movesound=new Sound(sharedVariables.songs[2]);
 								 }
 
 							 }

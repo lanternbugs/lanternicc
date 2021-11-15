@@ -152,15 +152,21 @@ class OpeningBookView  extends JDialog
 
         try {
             Class.forName("org.sqlite.JDBC");
+            // create our mysql database connection
+                /*  String myDriver = "org.gjt.mm.mysql.Driver";
+                  String myUrl = "jdbc:mysql://localhost/test";
+                  Class.forName(myDriver);
+                 */
 
 
             try
             {
                 // create a database connection
                 if(oldBook) {
-                  connection = DriverManager.getConnection("jdbc:sqlite:" + channels.oldOpeningBookName);
+                  connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.oldOpeningBookName);
                 } else {
-                connection = DriverManager.getConnection("jdbc:sqlite:" + channels.openingBookName);
+                  //  Connection conn = DriverManager.getConnection(myUrl, "root", "");
+                connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.openingBookName);
                 }
 
             }

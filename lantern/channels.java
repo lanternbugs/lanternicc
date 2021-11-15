@@ -30,7 +30,7 @@ import java.math.BigInteger;
 import free.util.BrowserControl;
 
 public class channels {
-    static boolean macClient = false;
+    static boolean macClient = true;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
@@ -158,7 +158,6 @@ boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 boolean showMugshots = true;
     boolean noFocusOnObserve = false;
-    boolean softerMoveSounds =  false;
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();
@@ -400,7 +399,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.23e";
+version = "v6.23m";
     if(macClient) {
       setUpDirectories();
     }

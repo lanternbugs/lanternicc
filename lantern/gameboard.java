@@ -1787,11 +1787,7 @@ void stopTheEngine()
             @Override
               public void run() {
               try {
-                  if(sharedVariables.softerMoveSounds) {
-                      Sound movesound=new Sound(sharedVariables.songs[10]);
-                  } else {
-                      Sound movesound=new Sound(sharedVariables.songs[1]);
-                  }
+                  Sound movesound=new Sound(sharedVariables.songs[1]);
 
                 
 
@@ -1805,11 +1801,7 @@ void stopTheEngine()
             @Override
               public void run() {
               try {
-                if(sharedVariables.softerMoveSounds) {
-                    Sound movesound=new Sound(sharedVariables.songs[11]);
-                } else {
-                    Sound movesound=new Sound(sharedVariables.songs[2]);
-                }
+                  Sound movesound=new Sound(sharedVariables.songs[2]);
 
               } catch (Exception e1) {
                 //ignore
