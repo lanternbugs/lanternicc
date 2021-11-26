@@ -1376,7 +1376,7 @@ class mymultiframe extends JFrame
     JMenuItem ananfont = new JMenuItem("Analysis Font");
     JMenuItem ananfore = new JMenuItem("Analysis Foreground Color");
     JMenuItem ananback = new JMenuItem("Analysis Background Color");
-    JMenuItem openingbookitem = new JMenuItem("Opening Book");
+    JMenuItem openingbookitem = new JMenuItem("Opening Explorer");
     // .. / (separator)
     JMenuItem customizetools = new JMenuItem("Customize User Buttons");
     JMenuItem toolbox = new JMenuItem("Run a Script");
@@ -4626,7 +4626,7 @@ dot.setVisible(true);
         //aa.Input.setFocusable(true);
       } catch (Exception e) {}
 
-    } else if(action.equals("Opening Book")) {
+    } else if(action.equals("Opening Explorer")) {
       
         boolean installed = false;
         boolean old = false;
