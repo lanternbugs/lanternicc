@@ -127,7 +127,7 @@ boolean showedUciMultiLineWarning = false;
 boolean notifyMainAlso = false;
   boolean dontReuseGameTabs=false;
   boolean andreysFonts = false;
-boolean sideways;
+int sideways;
 boolean alwaysShowEdit;
 boolean loadSizes;
 boolean showConsoleMenu;
@@ -292,7 +292,7 @@ int notifyWindowHeight = -1;
 int moveInputType=0;
 static int DRAG_DROP = 0;
 static int CLICK_CLICK = 1;
-int andreysLayout = 1; // Andrey's layout variable
+int andreysLayout = 2; // Andrey's layout variable
 int lastSpositionBoard=-1;
 int chatBufferSize;
 boolean chatBufferLarge = false;
@@ -587,7 +587,7 @@ showRatings=true;
 showFlags=true;
 showPallette=true;
 
-sideways=false;
+sideways=0;
 alwaysShowEdit=true;
 showConsoleMenu=false;
 autoBufferChat=true;
