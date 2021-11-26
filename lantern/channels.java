@@ -399,7 +399,17 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.23m";
+version = "v6.23n";
+    try {
+      String os = System.getProperty("os.name").toLowerCase();
+    if (os.indexOf( "win" ) >= 0)
+        operatingSystem = "win";
+    else if(os.indexOf( "mac" ) >= 0)
+        operatingSystem = "mac";
+    else
+        operatingSystem = "unix";
+    }
+    catch(Exception duiiii){}
     if(macClient) {
       setUpDirectories();
     }
@@ -416,16 +426,7 @@ mineScores = new mineScoresGroup();
 Looking = new int[100];
 try { engineDoc=engineField.getStyledDocument(); } catch(Exception enginestuff){}
 mydocs = new StyledDocument[maxConsoleTabs];
-try {
-  String os = System.getProperty("os.name").toLowerCase();
-if (os.indexOf( "win" ) >= 0)
-	operatingSystem = "win";
-else if(os.indexOf( "mac" ) >= 0)
-	operatingSystem = "mac";
-else
-	operatingSystem = "unix";
-}
-catch(Exception duiiii){}
+
 if(operatingSystem.equals("win")) {
  stockfishName = "l-stockfish_8_x64.exe";
 } else if(operatingSystem.equals("unix"))
@@ -922,30 +923,63 @@ for(int a=0; a<maxChannels; a++)
 
     void setUpDirectories()
     {
+       
+        if(operatingSystem ==  null) {
+            return;
+        }
         try {
-            File file = new File(System.getProperty("user.home") + "/Documents/LanternChess");
+            if(operatingSystem.equals("win")) {
+            String myDocuments=new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
+                String appData = System.getenv("APPDATA");
+                String pgnDirectory = myDocuments + "/LanternChess/";
+                String settingsDirectory = appData + "/LanternChess/";
+            File file = new File(pgnDirectory);
             if (!file.exists()) {
                 if (file.mkdir()) {
-                    publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                    publicDirectory = pgnDirectory;
                     
-                } else {
-                    publicDirectory = System.getProperty("user.home") + "/Documents/";
                 }
             } else {
-                publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                publicDirectory = pgnDirectory;
             }
             
-            file = new File(System.getProperty("user.home") + "/Library/LanternChess");
+            file = new File(settingsDirectory);
             if (!file.exists()) {
                 if (file.mkdir()) {
-                    privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
-                } else {
-                    privateDirectory = System.getProperty("user.home") + "/Library/";
+                    privateDirectory = settingsDirectory;
                 }
             } else {
-                privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                privateDirectory = settingsDirectory;
+            }
+        } else if(operatingSystem.equals("mac"))
+            {
+                
+                    File file = new File(System.getProperty("user.home") + "/Documents/LanternChess");
+                    if (!file.exists()) {
+                        if (file.mkdir()) {
+                            publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                            
+                        } else {
+                            publicDirectory = System.getProperty("user.home") + "/Documents/";
+                        }
+                    } else {
+                        publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                    }
+                    
+                    file = new File(System.getProperty("user.home") + "/Library/LanternChess");
+                    if (!file.exists()) {
+                        if (file.mkdir()) {
+                            privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                        } else {
+                            privateDirectory = System.getProperty("user.home") + "/Library/";
+                        }
+                    } else {
+                        privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                    }
+               
             }
         } catch(Exception badfile) {System.out.println(badfile.getMessage());}
+       
     }
 
 void setChatBufferSize()
