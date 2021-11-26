@@ -652,9 +652,13 @@ class mymultiframe extends JFrame
 	
       } catch (Exception du) {}
     }
+      boolean sideValue = false;
+      if(sharedVariables.sideways == 1) {
+          sideValue = true;
+      }
 
     iloggedon.           setSelected(sharedVariables.iloggedon);
-    sidewaysconsole.     setSelected(sharedVariables.sideways);
+    sidewaysconsole.     setSelected(sideValue);
     alwaysShowEdit.         setSelected(sharedVariables.alwaysShowEdit);
     autopopup.           setSelected(sharedVariables.autopopup);
     basketballFlag.      setSelected(sharedVariables.basketballFlag);
@@ -3571,8 +3575,6 @@ dot.setVisible(true);
 
     } else if (action.equals("Hide Board Console")) {
       sharedVariables.boardConsoleType = 0;
-      sharedVariables.sideways = false;
-      sidewaysconsole.setSelected(false);
 
       redrawBoard(sharedVariables.boardConsoleType);
 
@@ -5511,8 +5513,8 @@ dot.setVisible(true);
       sidewaysconsole.setSelected(true);
     }
     */
-    sharedVariables.sideways = !sharedVariables.sideways;
-    sidewaysconsole.setSelected(sharedVariables.sideways);
+    sharedVariables.sideways = 1;
+    sidewaysconsole.setSelected(true);
 
     redrawBoard(sharedVariables.boardConsoleType);
   }

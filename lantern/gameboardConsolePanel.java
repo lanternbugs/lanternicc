@@ -81,6 +81,7 @@ boolean tryOnce = true;
 gameboardControlsPanel mycontrolspanel;
 gameboardTop topGame;
 gameboardPanel mypanel;
+    boolean sideWayValue = false;
 gameboardConsolePanel(gameboardTop topGame1, JTextPane consoles1[], subframe consoleSubframes1[], channels sharedVariables1, gamestuff gameData1, JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, docWriter myDocWriter1, gameboardControlsPanel mycontrolspanel1, gameboardPanel mypanel1)
 {
 topGame=topGame1;
@@ -1685,7 +1686,7 @@ if(sharedVariables.myFont != null)
 
 	for(int a=0; a< sharedVariables.maxGameTabs; a++)
 		channelTabs[a].setBackground(sharedVariables.tabBackground);
-if(sharedVariables.sideways==false)
+if(sideWayValue)
 	setHorizontalLayout();
 else
 	setVerticalLayout();

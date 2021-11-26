@@ -343,9 +343,21 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   int getBoardHeight() {
     return getHeight();
   }
+    
+    boolean getSidewayValue()
+    {
+        if ((sharedVariables.sideways==1 ||  (sharedVariables.sideways == 0 && isMaximum())) && sharedVariables.boardConsoleType != 0)
+        {
+            myconsolepanel.sideWayValue = true;
+            return true;
+        }
+        myconsolepanel.sideWayValue = false;
+        return false;
+      
+    }
     int getControlHeight()
     {
-     if(sharedVariables.sideways == true)
+     if(getSidewayValue())
      return getBoardHeight();
      
      return getBoardHeight() - getConsoleHeight();
@@ -355,12 +367,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     {
       int width = getBoardWidth();
       int height = getBoardHeight();
-      if (sharedVariables.sideways==false)
+      if (!getSidewayValue())
       height = height - getConsoleHeight();
 
       controlLength = 235;
      int dif = 0;
-     if (sharedVariables.sideways==false)
+     if (!getSidewayValue())
       dif = width - controlLength;
      else
       dif = width - controlLength - getConsoleWidth();
@@ -424,7 +436,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 	mycontrolspanel= new gameboardControlsPanel(theBoard, gameData, sharedVariables, queue);
       }	else {
         myconsolepanel.removeAll();
-        if (sharedVariables.sideways==true)
+        if (getSidewayValue())
           myconsolepanel.setVerticalLayout();
         else
           myconsolepanel.setHorizontalLayout();
@@ -449,20 +461,28 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         myconsolepanel.jScrollPane1.setVisible(true);
       }
 
-      if (sharedVariables.sideways==false)
-	setOverallVertical();
-      else
-	setOverallHorizontal();
+      if (getSidewayValue())
+      {
+          setOverallHorizontal();
+      }
+      else {
+          setOverallVertical();
+      }
+	
 
       return;
     }
 
     void overallSwitch() {
 
-      if (sharedVariables.sideways==false)
-	setOverallVertical();
-      else
-	setOverallHorizontal();
+        if (getSidewayValue())
+        {
+            setOverallHorizontal();
+        }
+        else {
+            setOverallVertical();
+        }
+      
 
       return;
     }

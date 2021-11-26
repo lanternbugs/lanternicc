@@ -502,10 +502,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 	// sideways console on board
 
 	set_string = set_string + "[sidewaysConsole] ";
-	if(sharedVariables.sideways == true)
-		set_string = set_string + "1" + " ";
-	else
-		set_string = set_string + "0" + " ";
+		set_string = set_string + sharedVariables.sideways + " ";
 	// closing
 		set_string = set_string + "[donesidewaysConsole] ";
 
@@ -1946,10 +1943,10 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 				{
 				try {
 					int truth = Integer.parseInt(tokens.nextToken());
-					if(truth == 1)
-						sharedVariables.sideways=true;
+					if(truth >=0 && truth < 3)
+						sharedVariables.sideways=truth;
 					else
-						sharedVariables.sideways=false;
+						sharedVariables.sideways=0;// default value
 					}
 					catch(Exception zzz){}
 				}
