@@ -946,7 +946,7 @@ adjustMoveList();
     return false;
 
    }
-      float[] columnWidthPercentage = {0.24f, 0.38f, 0.38f};
+      float[] columnWidthPercentage = {0.28f, 0.36f, 0.36f};
 
       private void resizeColumns() {
           // Use TableColumnModel.getTotalColumnWidth() if your table is included in a JScrollPane
@@ -976,7 +976,9 @@ adjustMoveList();
       */
 
       int andreySpace = 5;
-      double[][] andreySize = {{160, TableLayout.FILL, 90},
+      int moveTableWidth = 190;
+       
+      double[][] andreySize = {{moveTableWidth, TableLayout.FILL, 90},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
