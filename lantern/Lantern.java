@@ -878,7 +878,7 @@ class mymultiframe extends JFrame
          mycreator.restoreConsoleFrame();
          int px = 30;
           int py = 30;
-          int cw = (int) (sharedVariables.screenW/2 - px - 1/10*sharedVariables.screenW/2);
+          int cw = (int) (sharedVariables.screenW * 2 / 5 - px );
           int ch = (int) ((sharedVariables.screenH / 2) - py - (sharedVariables.screenH/ 2)/6);
 
           consoleSubframes[0].setLocation(px, py);
@@ -888,7 +888,7 @@ class mymultiframe extends JFrame
 
           px = px + px + cw;
           py = 30;
-          cw = (int) (sharedVariables.screenW/2 - 30 - (sharedVariables.screenW/2) / 10);
+          cw = (int) (sharedVariables.screenW * 3 / 5 -  30);
           ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
           if (ch > cw + 100)
             ch=cw+100;
