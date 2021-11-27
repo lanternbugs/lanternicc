@@ -42,6 +42,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.event.ChangeEvent.*;
 import java.util.concurrent.locks.*;
 import java.util.Random;
+import javax.swing.table.*;
 
 import layout.TableLayout;
 
@@ -171,6 +172,7 @@ import layout.TableLayout;
           if(buttonPanelFlow != null)
           buttonPanelFlow.setBackground(sharedVariables.boardBackgroundColor);
         }
+          resizeColumns();
         if(isAndreyLayout() == true)
         {
          if(andreyNavig!=null)
@@ -944,6 +946,23 @@ adjustMoveList();
     return false;
 
    }
+      float[] columnWidthPercentage = {0.24f, 0.38f, 0.38f};
+
+      private void resizeColumns() {
+          // Use TableColumnModel.getTotalColumnWidth() if your table is included in a JScrollPane
+         if(sharedVariables.gametable[gameData.BoardIndex] == null) {
+             return;
+         }
+          int tW = sharedVariables.gametable[gameData.BoardIndex].getWidth();
+          TableColumn column;
+          TableColumnModel jTableColumnModel = sharedVariables.gametable[gameData.BoardIndex].getColumnModel();
+          int cantCols = jTableColumnModel.getColumnCount();
+          for (int i = 0; i < cantCols; i++) {
+              column = jTableColumnModel.getColumn(i);
+              int pWidth = Math.round(columnWidthPercentage[i] * tW);
+              column.setPreferredWidth(pWidth);
+          }
+      }
     void makeAndreysLayout() {
 
       /* int myOverallWidth = getControlLength();  //width of this panel

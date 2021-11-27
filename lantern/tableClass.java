@@ -140,7 +140,7 @@ void createMoveListColumns(int wild)
 Vector<String> data = new Vector();
 Vector<String> collumns = new Vector();
 
-collumns.add("Move No.");
+collumns.add("No.");
 if(wild == 30)
 {collumns.add("Black");
 collumns.add("Red");
