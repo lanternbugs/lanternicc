@@ -679,9 +679,9 @@ mygame = new gamestate[300];
 
 boardConsoleType=2;
 boardConsoleSizes[0]=30;
-boardConsoleSizes[1]=100;
-boardConsoleSizes[2]=160;
-boardConsoleSizes[3]=300;
+boardConsoleSizes[1]=125;
+boardConsoleSizes[2]=180;
+boardConsoleSizes[3]=270;
 lastSoundTime=0;
 lastSoundCount=0;
 

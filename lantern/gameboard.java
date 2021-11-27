@@ -396,7 +396,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     
     int getConsoleWidth()
     {
-      
+     if(getSidewayValue()) {
+         return (int)(sharedVariables.boardConsoleSizes
+                  [3] * 1.8);
+     }
      return (int)(sharedVariables.boardConsoleSizes
               [sharedVariables.boardConsoleType] * 1.8);
     }
