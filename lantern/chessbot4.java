@@ -6723,7 +6723,7 @@ public void runSendToIcs()
                                         }
                                         else if(tosend.gameConsoleSide > -1)
 					{
-                                                  theMainFrame.sideConsole();
+                                                  theMainFrame.sideConsole(1);
    						if(tosend.gameFocusConsole > -1)
 						myboards[tosend.gameFocusConsole].giveFocus();
 

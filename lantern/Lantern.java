@@ -239,6 +239,8 @@ class mymultiframe extends JFrame
   */
   JCheckBoxMenuItem[] boardconsolearray = new JCheckBoxMenuItem[4];
   JCheckBoxMenuItem sidewaysconsole;
+      JCheckBoxMenuItem sidewaysconsolemax;
+      JCheckBoxMenuItem bottomconsole;
   JCheckBoxMenuItem playersInMyGame;
   JCheckBoxMenuItem unobserveGoExamine;
 
@@ -654,11 +656,15 @@ class mymultiframe extends JFrame
     }
       boolean sideValue = false;
       if(sharedVariables.sideways == 1) {
-          sideValue = true;
+          sidewaysconsole.     setSelected(true);
+      } else if(sharedVariables.sideways == 0) {
+          sidewaysconsolemax.     setSelected(true);
+      } else if(sharedVariables.sideways == 2) {
+          bottomconsole.     setSelected(true);
       }
 
     iloggedon.           setSelected(sharedVariables.iloggedon);
-    sidewaysconsole.     setSelected(sideValue);
+    
     alwaysShowEdit.         setSelected(sharedVariables.alwaysShowEdit);
     autopopup.           setSelected(sharedVariables.autopopup);
     basketballFlag.      setSelected(sharedVariables.basketballFlag);
@@ -1895,6 +1901,8 @@ class mymultiframe extends JFrame
 	    boardconsolearray[3] = new JCheckBoxMenuItem("Larger Board Console");
 	    // .. / .. / (separator)
 	    sidewaysconsole = new JCheckBoxMenuItem("Console On Side");
+      sidewaysconsolemax = new JCheckBoxMenuItem("Console On Side when Maximized");
+      bottomconsole = new JCheckBoxMenuItem("Console On Bottom");
 
     JMenu boardSquareColors = new JMenu("Board Squares Colors");
     // .. / Board Squares Colors /
@@ -1969,7 +1977,7 @@ class mymultiframe extends JFrame
     aspectarray[2] = new JCheckBoxMenuItem("4:3");
     aspectarray[3] = new JCheckBoxMenuItem("3:2");
     // .. /
-   
+      JMenu bottom_console_menu = new JMenu("Bottom Console Size");
     JMenuItem help_board_advanced = new JMenuItem("Board Advanced Menu Help");
     JMenuItem help_pgn = new JMenuItem("PGN Menu Help");
     JMenuItem help_game_communication = new JMenuItem("Game Communication Menu Help");
@@ -2116,10 +2124,13 @@ class mymultiframe extends JFrame
 
 myboardappearancemenu.add(consoleaspect);
     // .. / Board Console /
+      consoleaspect.add(bottom_console_menu);
     for (int i=0; i<boardconsolearray.length; i++)
-      consoleaspect.add(boardconsolearray[i]);
+        bottom_console_menu.add(boardconsolearray[i]);
     consoleaspect.addSeparator();
     consoleaspect.add(sidewaysconsole);
+      consoleaspect.add(sidewaysconsolemax);
+      consoleaspect.add(bottomconsole);
 
     myboardappearancemenu.add(boardSquareColors);
     // .. / Board Squares Colors /
@@ -2309,6 +2320,8 @@ myboardappearancemenu.add(consoleaspect);
     for (int i=0; i<boardconsolearray.length; i++)
       boardconsolearray[i].addActionListener(this);
     sidewaysconsole.addActionListener(this);
+      sidewaysconsolemax.addActionListener(this);
+      bottomconsole.addActionListener(this);
     highlight.addActionListener(this);
 
     /****************************** Actions ******************************/
@@ -3588,11 +3601,33 @@ dot.setVisible(true);
       largerConsole();
 
     } else if (action.equals("Console On Side")) {
-      sideConsole();
+      sideConsole(1);
+        sidewaysconsole.setSelected(true);
+        sidewaysconsolemax.setSelected(false);
+        bottomconsole.setSelected(false);
 
       // Andrey edits:
       // merge the board actions
-    } else if (action.equals("Default Board") ||
+    }
+    else if (action.equals("Console On Side when Maximized")) {
+     sideConsole(0);
+        sidewaysconsole.setSelected(false);
+        sidewaysconsolemax.setSelected(true);
+        bottomconsole.setSelected(false);
+
+     // Andrey edits:
+     // merge the board actions
+   }
+    else if (action.equals("Console On Bottom")) {
+     sideConsole(2);
+        sidewaysconsole.setSelected(false);
+        sidewaysconsolemax.setSelected(false);
+        bottomconsole.setSelected(true);
+
+     // Andrey edits:
+     // merge the board actions
+   }
+    else if (action.equals("Default Board") ||
                action.equals("Tan Board") ||
                action.equals("Gray Color Board") ||
                action.equals("Blitzin Green Board")) {
@@ -5503,7 +5538,7 @@ dot.setVisible(true);
     redrawBoard(sharedVariables.boardConsoleType);
   }
 
-  void sideConsole() {
+  void sideConsole(int val) {
     /*
     if (sharedVariables.sideways == true) {
       sharedVariables.sideways=false;
@@ -5513,7 +5548,7 @@ dot.setVisible(true);
       sidewaysconsole.setSelected(true);
     }
     */
-    sharedVariables.sideways = 1;
+    sharedVariables.sideways = val;
     sidewaysconsole.setSelected(true);
 
     redrawBoard(sharedVariables.boardConsoleType);
