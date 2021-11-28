@@ -399,7 +399,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.23n";
+version = "v6.24a";
     try {
       String os = System.getProperty("os.name").toLowerCase();
     if (os.indexOf( "win" ) >= 0)
