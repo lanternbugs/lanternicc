@@ -882,8 +882,8 @@ class mymultiframe extends JFrame
       try {
         if (sharedVariables.screenW > 100 && sharedVariables.screenH > 100) {
          mycreator.restoreConsoleFrame();
-         int px = 30;
-          int py = 30;
+         int px = 10;
+          int py = 10;
           int cw = (int) (sharedVariables.screenW * 2 / 5 - px );
           int ch = (int) ((sharedVariables.screenH / 2) - py - (sharedVariables.screenH/ 2)/6);
 
@@ -1175,7 +1175,7 @@ class mymultiframe extends JFrame
     setJMenuBar(menu);
 
     /****************************** File ******************************/
-    JMenu myfiles = new JMenu("File");
+    JMenu myfiles = new JMenu("Connection");
     // File /
     JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
     JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
@@ -2402,6 +2402,10 @@ myboardappearancemenu.add(consoleaspect);
     /****************************** Help ******************************/
     JMenu helpmenu = new JMenu("Help");
     // Help /
+      JMenuItem joinrenewhelp = new JMenuItem("Join");
+        JMenuItem iccstore2 = new JMenuItem("ICC Store");
+      JMenuItem passwordhelp = new JMenuItem("Lost Password");
+        JMenuItem chesscoaches = new JMenuItem("Chess Coaches");
     JMenuItem askaquestion = new JMenuItem("Ask A Question");
     JMenuItem lanternmanual = new JMenuItem("Lantern Help Index");
     JMenuItem changelog = new JMenuItem("Change Log");
@@ -2409,8 +2413,8 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem calendaritem = new JMenuItem("ICC Calendar");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
     JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
-    JMenuItem joinrenewhelp = new JMenuItem("Join");
-    JMenuItem passwordhelp = new JMenuItem("Lost Password");
+    
+      
     JMenu poweroutmenu = new JMenu("Extra-games");
     // .. / Extra-games
     JMenuItem power = new JMenuItem("Start Powerout");
@@ -2426,6 +2430,12 @@ myboardappearancemenu.add(consoleaspect);
     // add to menu bar
     menu.add(helpmenu);
     // Help /
+      helpmenu.add(joinrenewhelp);
+      helpmenu.add(passwordhelp);
+      helpmenu.add(iccstore2);
+      helpmenu.add(chesscoaches);
+      helpmenu.addSeparator();
+      
     helpmenu.add(askaquestion);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
@@ -2435,8 +2445,7 @@ myboardappearancemenu.add(consoleaspect);
     helpmenu.add(infohelp);
     helpmenu.add(commandhelp);
     helpmenu.addSeparator();
-    helpmenu.add(joinrenewhelp);
-    helpmenu.add(passwordhelp);
+    
     helpmenu.add(poweroutmenu);
     // .. / Extra-games
     poweroutmenu.add(power);
@@ -2454,6 +2463,8 @@ myboardappearancemenu.add(consoleaspect);
     commandhelp.addActionListener(this);
     joinrenewhelp.addActionListener(this);
     passwordhelp.addActionListener(this);
+      chesscoaches.addActionListener(this);
+      iccstore2.addActionListener(this);
     power.addActionListener(this);
     mines.addActionListener(this);
     mastermind.addActionListener(this);
@@ -2660,9 +2671,13 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.openUrl("http://www.chessclub.com/help/help-list");
 
     } else if (action.equals("Join")) {
-      sharedVariables.openUrl("https://login.chessclub.com/Registration");
+      sharedVariables.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
 
-    } else if (action.equals("Lost Password")) {
+    } else if (action.equals("Chess Coaches")) {
+        sharedVariables.openUrl("https://store.chessclub.com/teachers");
+
+      }
+    else if (action.equals("Lost Password")) {
       sharedVariables.openUrl("https://login.chessclub.com/Account/ForgotPassword");
 
       /*

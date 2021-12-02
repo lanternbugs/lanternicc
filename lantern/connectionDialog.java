@@ -80,8 +80,8 @@ public class connectionDialog extends JDialog
     // unless the user is trying to log in as a guest ('g' or 'guest',
     // lowercase only for now)
       
-    JButton cancel = new JButton("Cancel");
-    cancel.setActionCommand("Cancel");
+    JButton cancel = new JButton("Sign-Up");
+    cancel.setActionCommand("Sign-Up");
     cancel.addActionListener(this);
       
     JButton guest = new JButton("Guest");
@@ -119,7 +119,7 @@ public class connectionDialog extends JDialog
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
     if (action.equals("Submit") && ok.isEnabled()) login(false);
-    if (action.equals("Cancel")) dispose();
+    if (action.equals("Sign-Up")) sVars.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
       if (action.equals("Guest")) login(true);
   }
 

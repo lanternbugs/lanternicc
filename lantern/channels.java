@@ -399,7 +399,7 @@ boolean isAnon()
 channels()
 {
 myServer = "ICC";
-version = "v6.24a";
+version = "v6.25a";
     try {
       String os = System.getProperty("os.name").toLowerCase();
     if (os.indexOf( "win" ) >= 0)
@@ -1169,6 +1169,9 @@ void openUrl(String myurl)
 // mac fix replace %0D at end with empty
 if(myurl.endsWith("\r"))
 myurl=myurl.trim();
+    if(myurl.equals("https://store.chessclub.com/customer/account/")) {
+        myurl = "https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/";
+    }
 final String myurl2=myurl;
       SwingUtilities.invokeLater(new Runnable() {
         @Override
