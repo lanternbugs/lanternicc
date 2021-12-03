@@ -385,7 +385,12 @@ if(stage == 2 && text.contains("readyok"))
 	sendToEngine("setoption name UCI_AnalyseMode value true\n");
 	//sendToEngine("setoption name MultiPV value 3\n");
         scriptList.clear();
+    if(channels.macClient) {
+        scripter.loadScript(scriptList, channels.publicDirectory + "lantern_uci_script.txt");
+    } else {
         scripter.loadScript(scriptList, "lantern_uci_script.txt");
+    }
+        
         for(int scripts = 0; scripts < scriptList.size(); scripts++)
         {
         String scriptLine = scriptList.get(scripts).trim();

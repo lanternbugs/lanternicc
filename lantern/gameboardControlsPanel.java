@@ -978,7 +978,7 @@ adjustMoveList();
       int andreySpace = 5;
       int moveTableWidth = 190;
        
-      double[][] andreySize = {{moveTableWidth, TableLayout.FILL, 50},
+      double[][] andreySize = {{moveTableWidth, TableLayout.FILL, 90},
                                {20,  40, andreySpace, 20, TableLayout.FILL,
                                 30, 30, andreySpace, 40, 20}};
      
