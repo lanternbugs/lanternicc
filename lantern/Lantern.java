@@ -89,8 +89,12 @@ public class Lantern {
     final mymultiframe frame = new mymultiframe();
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     //DO_NOTHING_ON_CLOSE
-
-    frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
+    if(channels.fics) {
+        frame.setTitle("Diamond Chess on FICS " + frame.sharedVariables.version);
+    } else {
+        frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
+    }
+    
     frame.setVisible(true);
 
     // uncomment below line to test name and pass saving
@@ -1177,6 +1181,7 @@ class mymultiframe extends JFrame
     /****************************** File ******************************/
     JMenu myfiles = new JMenu("Connection");
     // File /
+    JMenuItem reconnectFics = new JMenuItem("Reconnect to FICS");
     JMenuItem reconnect1 = new JMenuItem("Reconnect to ICC");
     JMenuItem reconnect3 = new JMenuItem("Reconnect to Queen");
     JMenuItem reconnect4 = new JMenuItem("Reconnect to ICC (alternate)");
@@ -1197,9 +1202,14 @@ class mymultiframe extends JFrame
     // add to menu bar
     menu.add(myfiles);
     // File /
-    myfiles.add(reconnect1);
-    myfiles.add(reconnect4);
-    myfiles.add(reconnect3);
+      if(!sharedVariables.fics) {
+          myfiles.add(reconnect1);
+          myfiles.add(reconnect4);
+          myfiles.add(reconnect3);
+      } else {
+          myfiles.add(reconnectFics);
+      }
+   
     myfiles.addSeparator();
     myfiles.add(help_connecting);
     //myfiles.add(reconnect2);
@@ -1212,6 +1222,7 @@ class mymultiframe extends JFrame
     settings2.addActionListener(this);
     reconnect1.addActionListener(this);
     reconnect4.addActionListener(this);
+    reconnectFics.addActionListener(this);
     help_connecting.addActionListener(this);
     //reconnect2.addActionListener(this);
     reconnect3.addActionListener(this);
@@ -3297,6 +3308,13 @@ dot.setVisible(true);
 
       sharedVariables.myServer="FICS";
       sharedVariables.doreconnect=true;
+        try {
+            if (myConnection == null || !myConnection.isVisible())
+              myConnection = new connectionDialog(this, sharedVariables, queue, false);
+
+            myConnection.setVisible(true);
+          } catch(Exception conn) {}
+        
 
     } else if (action.equals("Save Settings")) {
       storeCurrentSizes();
@@ -3362,6 +3380,9 @@ dot.setVisible(true);
 
 
        String actionmess = "`m1`" + "multi =chan\n";
+       if(sharedVariables.fics) {
+           actionmess = "=channels\n";
+       }
 
       myoutput data = new myoutput();
       data.data=actionmess;

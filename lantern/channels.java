@@ -158,6 +158,14 @@ boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 boolean showMugshots = true;
     boolean noFocusOnObserve = false;
+    static boolean fics = false;
+    boolean timeStampChat = true;
+    String whoAmI = "";
+    boolean sendILoggedOn = false;
+    boolean showSeeks = true;
+    boolean amazonBuild = false;
+    boolean guest = false;
+    
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
 ArrayList<String> rightClickListMenu = new ArrayList();
@@ -209,7 +217,7 @@ String lasttell;
 String myname = "";// my login on the server
 String mypassword; // used if we need to open a secure web page
 String myPartner; // my bughouse partner
-String myopponent;
+String myopponent = "";
 String myServer; // FICS or ICC
 String version; // current version of this build i.e. v1.48
 String chessclubIP;
@@ -398,8 +406,14 @@ boolean isAnon()
 
 channels()
 {
-myServer = "ICC";
-version = "v6.25b";
+    if(fics) {
+        myServer = "FICS";
+        version = "v1.0a";
+    } else {
+        myServer = "ICC";
+        version = "v6.25b";
+    }
+
     try {
       String os = System.getProperty("os.name").toLowerCase();
     if (os.indexOf( "win" ) >= 0)
@@ -927,12 +941,16 @@ for(int a=0; a<maxChannels; a++)
         if(operatingSystem ==  null) {
             return;
         }
+        String appType = "LanternChess";
+        if(fics) {
+            appType = "DiamondChess";
+        }
         try {
             if(operatingSystem.equals("win")) {
             String myDocuments=new JFileChooser().getFileSystemView().getDefaultDirectory().toString();
                 String appData = System.getenv("APPDATA");
-                String pgnDirectory = myDocuments + "/LanternChess/";
-                String settingsDirectory = appData + "/LanternChess/";
+                String pgnDirectory = myDocuments + "/" + appType + "/";
+                String settingsDirectory = appData + "/" + appType + "/";
             File file = new File(pgnDirectory);
             if (!file.exists()) {
                 if (file.mkdir()) {
@@ -954,27 +972,27 @@ for(int a=0; a<maxChannels; a++)
         } else if(operatingSystem.equals("mac"))
             {
                 
-                    File file = new File(System.getProperty("user.home") + "/Documents/LanternChess");
+                    File file = new File(System.getProperty("user.home") + "/Documents/" + appType);
                     if (!file.exists()) {
                         if (file.mkdir()) {
-                            publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                            publicDirectory = System.getProperty("user.home") + "/Documents/" + appType + "/";
                             
                         } else {
                             publicDirectory = System.getProperty("user.home") + "/Documents/";
                         }
                     } else {
-                        publicDirectory = System.getProperty("user.home") + "/Documents/LanternChess/";
+                        publicDirectory = System.getProperty("user.home") + "/Documents/" + appType + "/";
                     }
                     
-                    file = new File(System.getProperty("user.home") + "/Library/LanternChess");
+                    file = new File(System.getProperty("user.home") + "/Library/" + appType);
                     if (!file.exists()) {
                         if (file.mkdir()) {
-                            privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                            privateDirectory = System.getProperty("user.home") + "/Library/" + appType + "/";
                         } else {
                             privateDirectory = System.getProperty("user.home") + "/Library/";
                         }
                     } else {
-                        privateDirectory = System.getProperty("user.home") + "/Library/LanternChess/";
+                        privateDirectory = System.getProperty("user.home") + "/Library/" + appType + "/";
                     }
                
             }

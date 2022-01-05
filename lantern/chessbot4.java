@@ -111,6 +111,7 @@ listInternalFrame mysecondlist;
 newBoardCreator client;
 sendToIcs client2;
 long lastBlockSaysTime;
+DataParsing ficsParser;
 	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
@@ -153,7 +154,7 @@ myGameList=myGameList1;
 mycreator = mycreator1;
 myDocWriter = new docWriter(sharedVariables, consoleSubframes, consoles, gameconsoles, myboards, consoleChatframes);
 masterFrame=masterFrame1;
-
+ficsParser = new DataParsing(sharedVariables, queue, gamequeue, myDocWriter, this);
 //Thread t = new Thread(client);
 //t.start();
 client2 = new sendToIcs();
@@ -270,7 +271,6 @@ t.start();
                                         	if(!queue.isEmpty()) {
       SwingUtilities.invokeLater(new Runnable() {
     public void run() {
-
 
         client2.runSendToIcs();// job processing
     }
@@ -467,7 +467,7 @@ catch(Exception e)
 			startedParsing = false;
 			fullyConnected = -1;
 
-			if(sharedVariables.myServer.equals("ICC"))
+			if(sharedVariables.myServer.equals("ICC") || sharedVariables.myServer.equals("FICS"))
 			{
 
 
@@ -558,7 +558,9 @@ try {
 			requestSocket = new Socket("127.0.0.1", 5500);// 127.0.0.1 or 207.99.83.228
 	else
 */
-	try{
+                
+if(sharedVariables.myServer.equals("ICC")) {
+    try{
 
       Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
       Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
@@ -567,17 +569,33 @@ try {
 
     } catch(Exception d){
 
-		sharedVariables.chessclubIP = java.net.InetAddress.getByName("alt1.chessclub.com").getHostAddress();
+        sharedVariables.chessclubIP = java.net.InetAddress.getByName("alt1.chessclub.com").getHostAddress();
         sharedVariables.chessclubPort = "443";
-		Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
-		      Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
+        Class tsSocketClass = Class.forName("free.chessclub.timestamp.TimestampingSocket");
+              Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
 
         requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
 
 
 
-		}
+        }// end catch
 
+} // if icc
+    else {
+        try {
+            sharedVariables.chessclubIP = java.net.InetAddress.getByName("freechess.org").getHostAddress();
+            sharedVariables.chessclubPort = "5000";
+            Class tsSocketClass = Class.forName("free.freechess.timeseal.TimesealingSocket");
+                  Constructor tsSocketConstructor = tsSocketClass.getConstructor(new Class[]{String.class, int.class});
+
+            requestSocket = (Socket)tsSocketConstructor.newInstance(new Object[]{sharedVariables.chessclubIP, new Integer(sharedVariables.chessclubPort)});
+
+        } catch(Exception notimestamp) {
+            requestSocket = new Socket("freechess.org", 5000);
+        }
+        System.out.println("made fics socket");
+    }
+	
 	if(requestSocket== null)
 	{
                 try {
@@ -1696,23 +1714,10 @@ char c=(char) tempinput.read();
 					myinput=myinput + c;
 
 
-					//myglobalinput = myglobalinput + c;
-					// end of line condition
-					// if more data is in socket,
-					// we will read it later after
-					// we process this line
-					/*if(myinput.charAt(0) == '\031')
-					{String tzy = "";
-					tzy = tzy + myinput.charAt(i-1);
-					newbox.append(tzy);
-					}*/
-					// for fics '\n\rfics% '
 
 					if(sharedVariables.myServer.equals("FICS"))
 					{
-						if(i>=8)
-						{if(myinput.charAt(i-1) == ' ' && myinput.charAt(i-2) == '%' && myinput.charAt(i-3) == 's' && myinput.charAt(i-4) == 'c' && myinput.charAt(i-5) == 'i' && myinput.charAt(i-6) == 's' && myinput.charAt(i-7) == '\r' && myinput.charAt(i-8) == '\n')
-							break;}
+						
 					}
 					else
 					{
@@ -1766,7 +1771,11 @@ char c=(char) tempinput.read();
 							normalLineProcessing(myinput);
 						}
 						else// fics
-						ficsParsing(myinput);
+                            {
+                                ficsParser.getData(myinput);
+                               // ficsParsing(myinput);
+                            }
+						
 
 						}
 						return 1; // we must have read something
@@ -5420,7 +5429,7 @@ newBoardData temp = new newBoardData();
 
 void proccessGameInfo(newBoardData temp)
 {
-		try{
+    try{
 			if(temp != null)
 				{
 
@@ -5443,7 +5452,7 @@ void proccessGameInfo(newBoardData temp)
                                         }
 
                                         try {
-					if(sharedVariables.myServer.equals("ICC"))
+					if(sharedVariables.myServer.equals("ICC") || sharedVariables.myServer.equals("FICS"))
 					myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, temp.arg17, temp.type); // pass game number
 					else // fics
 					myboards[gamenum].gameStartedFics(temp.arg1);
@@ -6822,8 +6831,7 @@ public void runSendToIcs()
 						// and try to switch them to low time board
 						if(tosend.gameboard > -1 &&  tosend.gamelooking > -1)
 						switchboard(tosend.gameboard, tosend.gamelooking);
-
-
+                        
 						sendMessage(tosend.data);
 
 					}
