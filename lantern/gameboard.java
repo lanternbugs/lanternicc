@@ -749,7 +749,38 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     }
     */
   }
+  
+  void updateFicsBoard(String icsGameNumber, String boardLexigraphic)
+  {
+      int tempnumber=getGameNumber(icsGameNumber);
 
+      if (tempnumber ==
+          sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+          try {
+              int [] oldBoard = new int[64];
+              //String oldSideToMove = "" + self.sideToMove;
+              //String oldGameNumber = "" + self.gameNumber;
+
+              int c = 0;
+              for(int a = 0; a <8; a++)
+              {    for(int b=0; b< 8; b++)
+              {
+                  String  newString = boardLexigraphic.substring(c, c+1);
+                  oldBoard[a * 8 + b] = sharedVariables.mygame[gameData.BoardIndex].board[a * 8 + b];
+                  sharedVariables.mygame[gameData.BoardIndex].board[a * 8 + b] = stringToPiece(newString);
+                  c+=1;
+              }
+              }
+              sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+                  
+              //copyToDisplayBoard();
+
+              //setMaterialCount();
+         } catch(Exception overrun) {}
+          
+      }
+  }
+    
   void gameStartedFics(String icsGameNumber) {
     ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
     Lock readLock = rwl.readLock();
@@ -2572,6 +2603,39 @@ void stopTheEngine()
 
     return 0;
   }
+    
+    int stringToPiece(String piece)
+        {
+            if(piece.equals("-"))
+            return(0);
+        else if(piece.equals("P"))
+            return(1);
+        else if(piece.equals("N"))
+            return(2);
+        else if(piece.equals("B"))
+            return(3);
+        else if(piece.equals("R"))
+            return(4);
+        else if(piece.equals("Q"))
+            return(5);
+        else if(piece.equals("K"))
+            return(6);
+        else if(piece.equals("p"))
+            return(7);
+        else if(piece.equals("n"))
+            return(8);
+        else if(piece.equals("b"))
+            return(9);
+        else if(piece.equals("r"))
+            return(10);
+        else if(piece.equals("q"))
+            return(11);
+        else if(piece.equals("k"))
+            return(12);
+
+        else
+            return(0);
+        }
 
   void setautoexamon() {
     sharedVariables.autoexam = 1;
