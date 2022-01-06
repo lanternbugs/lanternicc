@@ -1145,12 +1145,17 @@ public class DataParsing
         if(newdata.startsWith("<12>"))
         {
             Style12Struct styleLine = getStyle12StructString(newdata);
+            boolean gameExists = checkIfGameExists(styleLine.getGameNumber());
             if(styleLine != null) {
-                if(!checkIfGameExists(styleLine.getGameNumber())) {
+                if(!gameExists) {
                     gameStarted(styleLine);
                 }
-                
+                if(gameExists) {
+                    moveSent(styleLine);
+                }
                 updateBoard(styleLine);
+                updateFicsClocks(styleLine);
+                
             }
             else {
                 System.out.println("our game is null");
@@ -2472,8 +2477,7 @@ public class DataParsing
         //else
         temp.arg18="!";
         gamequeue.add(temp);
-        System.out.println("added game start to gamequeue");
-        System.out.println("board lexio is: " + myGameStruct.getBoardLexigraphic());
+        initialPositionSent(myGameStruct);
         
         // void gameStarted(String icsGameNumber, String WN, String BN,
         //String wildNumber, String rating_type, String rated,
@@ -2498,6 +2502,53 @@ public class DataParsing
         gamequeue.add(temp);
     }
     
+    void updateFicsClocks(Style12Struct myGameStruct) {
+        // Color whose turn it is to move ("B" or "W")
+        String color = myGameStruct.getCurrentPlayer();
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = color;
+        temp.arg3 = "" + myGameStruct.getWhiteTime() * 1000;
+        temp.dg=56;
+        gamequeue.add(temp);
+        if(color.equals("W")) {
+            color = "B";
+        } else {
+            color = "W";
+        }
+        
+        newBoardData temp1 = new newBoardData();
+        temp1.type=0;
+        temp1.arg1 = "" + myGameStruct.getGameNumber();
+        temp1.arg2 = color;
+        temp1.arg3 = "" + myGameStruct.getBlackTime() * 1000;
+        temp1.dg=56;
+        gamequeue.add(temp1);
+    }
+    
+    void moveSent(Style12Struct myGameStruct) {
+        // void moveSent(String icsGameNumber, String amove,
+       // String algabraicMove, boolean makeSound)
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = getMoveFromVerbose(myGameStruct.getMoveVerbose());
+        temp.arg3 = myGameStruct.getMoveSAN();
+        temp.arg4 = "false"; // is variation shoudl be on for spos
+        temp.dg=24;
+        gamequeue.add(temp);
+    }
+    
+    void initialPositionSent(Style12Struct myGameStruct) {
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = myGameStruct.getBoardLexigraphic();
+        temp.dg=25;
+        gamequeue.add(temp);
+    }
+    
     boolean checkIfGameExists(int gameNumber) {
       /*  int gameNum = -1;
         try {
@@ -2508,11 +2559,9 @@ public class DataParsing
        */
         for(int a = 0; a < mySettings.mygame.length; a++) {
             if(mySettings.mygame[a] != null && mySettings.mygame[a].myGameNumber == gameNumber) {
-                System.out.println("game exists");
                 return true;
             }
         }
-        System.out.println("game does not exist");
         return false;
     }
     
@@ -2523,7 +2572,6 @@ public class DataParsing
 
 
             style12line=Style12Struct.parseStyle12Line(" " + input.trim() + " ");
-            System.out.println("Style12 struct with game number " +  style12line.getGameNumber()  +  " and move " + style12line.getMoveSAN());
             if(mySettings.fics) {
                 return style12line;
             }
