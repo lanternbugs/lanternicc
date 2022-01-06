@@ -702,7 +702,12 @@ import layout.TableLayout;
 
             if (sharedVariables.mygame[gameData.LookingAt].state ==
                 sharedVariables.STATE_EXAMINING) {
-              sendCommand("multi forward\n");
+                if(sharedVariables.fics) {
+                    sendCommand("forward\n");
+                } else {
+                    sendCommand("multi forward\n");
+                }
+              
               myboard.giveFocus();
 
             } else {
@@ -734,7 +739,12 @@ import layout.TableLayout;
 
             if (sharedVariables.mygame[gameData.LookingAt].state ==
                 sharedVariables.STATE_EXAMINING) {
-              sendCommand("multi backward\n");
+                if(sharedVariables.fics) {
+                    sendCommand("backward\n");
+                } else {
+                    sendCommand("multi backward\n");
+                }
+              
               myboard.giveFocus();
 
             } else {
@@ -757,7 +767,12 @@ import layout.TableLayout;
           public void mousePressed(MouseEvent e) {
             if (sharedVariables.mygame[gameData.LookingAt].state ==
                 sharedVariables.STATE_EXAMINING) {
-              sendCommand("multi forward 999\n");
+                if(sharedVariables.fics) {
+                    sendCommand("forward 999\n");
+                } else {
+                    sendCommand("multi forward 999\n");
+                }
+              
 
             } else {
 
@@ -789,7 +804,12 @@ import layout.TableLayout;
 
             if (sharedVariables.mygame[gameData.LookingAt].state ==
                 sharedVariables.STATE_EXAMINING) {
-              sendCommand("multi backward 999\n");
+                if(sharedVariables.fics) {
+                    sendCommand("backward 999\n");
+                } else {
+                    sendCommand("multi backward 999\n");
+                }
+              
             } else {
               int loc = sharedVariables.moveSliders[gameData.BoardIndex].getValue();
 
@@ -1283,7 +1303,12 @@ adjustMoveList();
 
     void sendCommand(String command) {
       myoutput output = new myoutput();
-      output.data="`c0`" + command;
+        if(sharedVariables.fics) {
+            output.data = command;
+        } else {
+            output.data="`c0`" + command;
+        }
+      
       output.consoleNumber=0;
       output.game=1;
       queue.add(output);
