@@ -5613,6 +5613,19 @@ void proccessGameInfo(newBoardData temp)
 							repaintBoards(gamenum);
 
 					}
+                    
+                    if(temp.dg == 15202)// updte fics board
+                    {
+                        //writeToConsole("in dg 42");
+                        int gamenum=getGameBoard(temp.arg1);
+                            if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+                            return;
+                            if(myboards[gamenum]== null)
+                            return;
+                            myboards[gamenum].updateFicsBoard(temp.arg1, temp.arg2);
+                            repaintBoards(gamenum);
+
+                    }
 
 					if(temp.dg == 37)// send move
 					{
@@ -5986,7 +5999,12 @@ else
                                                         if(sharedVariables.unobserveGoExamine == true && sharedVariables.mygame[gamenum].played_game == 1)
                                                         {
                                                          myoutput tempo = new myoutput();
-                                                         tempo.data = "`c0`" +  "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
+                                                            if(sharedVariables.fics) {
+                                                                tempo.data = "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
+                                                            } else {
+                                                                tempo.data = "`c0`" +  "Unobserve " + sharedVariables.mygame[gamenum].myGameNumber + "\n";
+                                                            }
+                                                         
                                                          queue.add(tempo);
                                                         }
                                                 	myboards[gamenum].gameEndedExamined(temp.arg1); // pass game number
@@ -7274,6 +7292,9 @@ try {
 
 			myoutput data = new myoutput();
 			String prefixcommand="`g" + tabNumber + "`";
+                if(sharedVariables.fics) {
+                    prefixcommand = "";
+                }
 			data.data=data.data+prefixcommand;
 			int myGameNumber = -100;
 		if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_PLAYING)
@@ -7291,7 +7312,12 @@ try {
 
         	}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_EXAMINING)
-		{	data.data = "`c0`" + "Unexamine\n";
+		{   if(sharedVariables.fics) {
+                 data.data = "Unexamine\n";
+            } else {
+                 data.data = "`c0`" + "Unexamine\n";
+            }
+            
 			data.consoleNumber = 0;
 			data.game=1;
 			// now call game over this ensures any engines shut down
@@ -7301,7 +7327,11 @@ try {
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
 		}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_OBSERVING)
-		{	data.data =  "`c0`" + "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
+		{	if(sharedVariables.fics) {
+                 data.data =  "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
+            } else {
+                data.data =  "`c0`" + "Unobserve " + sharedVariables.mygame[tabNumber].myGameNumber + "\n";
+            }
 			data.consoleNumber = 0;
 			data.game=1;
 			if(myboards[tabNumber]!=null)
