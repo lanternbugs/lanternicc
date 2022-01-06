@@ -1144,12 +1144,13 @@ public class DataParsing
         }
         if(newdata.startsWith("<12>"))
         {
-            System.out.println("proccing a fics 12");
             Style12Struct styleLine = getStyle12StructString(newdata);
             if(styleLine != null) {
                 if(!checkIfGameExists(styleLine.getGameNumber())) {
-                    gameStarted("" + styleLine.getGameNumber(), styleLine.getWhiteName(), styleLine.getBlackName());
+                    gameStarted(styleLine);
                 }
+                
+                updateBoard(styleLine);
             }
             else {
                 System.out.println("our game is null");
@@ -2441,27 +2442,30 @@ public class DataParsing
 
 */
     
-    void gameStarted(String gameNumber, String whiteName, String blackName)
+    void gameStarted(Style12Struct myGameStruct)
     {
         newBoardData temp = new newBoardData();
-        temp.type=0;
-        temp.arg1 = gameNumber;
-        temp.arg2 = whiteName;
-        temp.arg3 = blackName;
+        temp.type= myGameStruct.getGameType();
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = myGameStruct.getWhiteName();
+        temp.arg3 = myGameStruct.getBlackName();
         temp.arg4 = "0";
         temp.arg5 = "blitz";
         temp.arg6 = "0";
-        temp.arg7 = "2";
-        temp.arg8 = "12";
+        temp.arg7 = "" + myGameStruct.getInitialTime();
+        temp.arg8 = "" +
+        myGameStruct.getIncrement();
         temp.arg11 = "0";
         temp.arg13 = "";
         temp.arg14 = "";
         temp.arg16 =  "";
         temp.arg17 = "0";
-
-
-
-        temp.arg11= "";
+        if(myGameStruct.isPlayedGame())
+        {
+            temp.arg11 = "1";
+        } else {
+            temp.arg11 = "0";
+        }
         temp.dg=18;
         //if(dg.getArg(0).equals("40"))
         //temp.arg18="isolated";
@@ -2469,6 +2473,7 @@ public class DataParsing
         temp.arg18="!";
         gamequeue.add(temp);
         System.out.println("added game start to gamequeue");
+        System.out.println("board lexio is: " + myGameStruct.getBoardLexigraphic());
         
         // void gameStarted(String icsGameNumber, String WN, String BN,
         //String wildNumber, String rating_type, String rated,
@@ -2477,7 +2482,22 @@ public class DataParsing
         //String white_titles, String black_titles, int played)
         
         // myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, //temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, //temp.arg17, temp.type); // pass game number
+        
+        //@param gameType The code for the type of the game. Possible values are
+        //* <code>MY_GAME</code>, <code>OBSERVED_GAME</code> and
+        //* <code>ISOLATED_BOARD</code>.
+        //@param isPlayedGame <code>true</code> if the game is played,
     }
+    
+    void updateBoard(Style12Struct myGameStruct) {
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = myGameStruct.getBoardLexigraphic();
+        temp.dg=15202;
+        gamequeue.add(temp);
+    }
+    
     boolean checkIfGameExists(int gameNumber) {
       /*  int gameNum = -1;
         try {
