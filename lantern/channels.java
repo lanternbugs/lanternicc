@@ -943,7 +943,7 @@ for(int a=0; a<maxChannels; a++)
         }
         String appType = "LanternChess";
         if(fics) {
-            appType = "DiamondChess";
+            appType = "PearlChess";
         }
         try {
             if(operatingSystem.equals("win")) {

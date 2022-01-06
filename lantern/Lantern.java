@@ -90,7 +90,7 @@ public class Lantern {
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     //DO_NOTHING_ON_CLOSE
     if(channels.fics) {
-        frame.setTitle("Diamond Chess on FICS " + frame.sharedVariables.version);
+        frame.setTitle("Pearl Chess on FICS " + frame.sharedVariables.version);
     } else {
         frame.setTitle("Lantern Chess " + frame.sharedVariables.version);
     }
