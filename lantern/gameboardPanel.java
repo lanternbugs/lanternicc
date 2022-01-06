@@ -1352,9 +1352,9 @@ void repaintPiece()
 						 // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
 						 // this will get any text back from server to go to right console
 						 if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
-						 	prefixcommand="`g" + gameData.LookingAt + "`";
+						 	prefixcommand="`g" + gameData.LookingAt + "`multi chessmove ";
 
-						 String themove = primary  + prefixcommand + "multi chessmove " +  getMove(piecemoving, piece);
+						 String themove = primary  + prefixcommand +  getMove(piecemoving, piece);
                                                  myoutput amove = new myoutput();
 						 amove.game=1;
 						 amove.consoleNumber=0;
