@@ -886,7 +886,7 @@ public class DataParsing
             }
 
             // [self sendToFICS:@"set prompt fics%" :soc];
-               sendToFICS("$set interface Diamond Chess on FICS " +  mySettings.version);
+               sendToFICS("$set interface Pearl Chess on FICS " +  mySettings.version);
 
             sendToFICS("$set prompt");
             sendToFICS("$set style 12");
@@ -1162,11 +1162,16 @@ public class DataParsing
             }
         }
         
-        /*
+        
 
         if(checkIfGameOver(newdata)) {
-            return true;
+            return false;
         }
+        
+        if(newdata.startsWith("Game ") || newdata.startsWith("Creating: ")) {
+            // setGameStartParamsAsNeeded(newdata);
+    }
+         /*
 
         if(isKibWhisperInfo(newdata)) {
             return true;
@@ -1298,9 +1303,7 @@ public class DataParsing
         });
 
     }
-        if(newdata.startsWith("Game ") || newdata.startsWith("Creating: ")) {
-             setGameStartParamsAsNeeded(newdata);
-    }
+        
 */
         if(!gamequeue.isEmpty()) {
           SwingUtilities.invokeLater(new Runnable() {
@@ -1672,21 +1675,25 @@ public class DataParsing
         return "" + seconds;
 
     }
-
+ 
+ */
+    
     boolean checkIfGameOver(String newdata)
     {
         // also "You are no longer examining game 18.
         if(newdata.startsWith("You are no longer examining game ")) {
         String number = "";
-        for (int a = 0; a < openGames.size(); a++) {
-            GameState openGame = openGames.get(a);
-            if(openGame.relationToGame.equals("2")) {
-                number = openGame.gameNumber;
-                break;
+        for (int a = 0; a < mySettings.mygame.length; a++) {
+            if(mySettings.mygame[a] != null) {
+                gamestate openGame = mySettings.mygame[a];
+                if(openGame.state == mySettings.STATE_EXAMINING) {
+                    number = "" + openGame.myGameNumber;
+                    break;
+                }
             }
         }
         if(!number.equals("")) {
-            processGameType(GAME_ENDED, number);
+            gameEnded(number);
             return false;
         }
 
@@ -1711,12 +1718,12 @@ public class DataParsing
 
         }
         if(stop > (start +1) && start > 0) {
-            processGameType(GAME_ENDED, newdata.substring(start+1, stop));// end is? mike stop - start -1
+            gameEnded(newdata.substring(start+1, stop));// end is? mike stop - start -1
         }
         return false;
     } else {
         // check for played games ending
-        if(!newdata.startsWith("{Game")) {
+         if(!newdata.startsWith("{Game")) {
             return false;
         }
 
@@ -1728,9 +1735,14 @@ public class DataParsing
             // {Game 126 (adammr vs. AnderssenA) adammr resigns} 0-1
             if(line1.equals("{Game")) {
                 String number = line2;
-                GameState openGame = getAnOpenGameState(false, number, mySettings);
-                if(openGame != null) {
-                    if(openGame.relationToGame.equals("-1") || openGame.relationToGame.equals("1") || (!mySettings.fics && openGame.relationToGame.equals("0")))
+                gamestate openGame = null;
+                for (int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null && mySettings.mygame[a].state == mySettings.STATE_PLAYING && number.equals("" + mySettings.mygame[a].myGameNumber)) {
+                           openGame = mySettings.mygame[a];
+                           break;
+                    }
+                    }
+                if(openGame != null)
                     {
                         // 1 -1 playing
                         String lineEnd = spaceArray.get(spaceArray.size() -1);
@@ -1750,19 +1762,8 @@ public class DataParsing
                             type = GAME_ENDED;
                         }
                         if(type == GAME_ENDED) {
-                                processGameType(GAME_ENDED, number);
-                            openGame.pgnResult = lineEnd;
-                            if(mySettings.gameSounds == true) {
-                                MainActivity.playSound("gameend");
-                            }
-                            if(mySettings.fics) {
-                                openGame.saveToPgn();
-                            } else {
-                                OutputDataClass tempo = new OutputDataClass();
-                                tempo.sendData = "multi logpgn -1\n";
-                                MainActivity.sendQueueConsole.add(tempo);
-                            }
-
+                                gameEnded(number);
+                            String pgnResult = lineEnd;
                             return false;
                         }
                     }
@@ -1770,13 +1771,13 @@ public class DataParsing
                     }
                 }
 
-            }
+            
         }
 
     }
-        return false;
+    return false;
     }
-
+/*
     void setICCGameStartParamsAsNeeded(GameState openGame)
     {
 
@@ -2457,7 +2458,7 @@ public class DataParsing
         temp.arg4 = "0";
         temp.arg5 = "blitz";
         temp.arg6 = "0";
-        temp.arg7 = "" + myGameStruct.getInitialTime();
+        temp.arg7 = "" + (myGameStruct.getInitialTime() / 60);
         temp.arg8 = "" +
         myGameStruct.getIncrement();
         temp.arg11 = "0";
@@ -2491,6 +2492,14 @@ public class DataParsing
         //* <code>MY_GAME</code>, <code>OBSERVED_GAME</code> and
         //* <code>ISOLATED_BOARD</code>.
         //@param isPlayedGame <code>true</code> if the game is played,
+    }
+    
+    void gameEnded(String gameNumber) {
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = gameNumber;
+        temp.dg=13;
+        gamequeue.add(temp);
     }
     
     void updateBoard(Style12Struct myGameStruct) {
