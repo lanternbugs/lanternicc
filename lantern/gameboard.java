@@ -800,62 +800,20 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     timer.scheduleAtFixedRate( new ToDoTask (  ) , 100 ,100) ;
 }
 
-  void initialFicsInfo(String icsGameNumber, String WN, String BN,
-                       String gameType, String played, String plies,
-                       String myturn) {
+  void initialFicsInfo(String icsGameNumber, String rType, String r, String wElo, String bElo, String wTitle, String bTitle)
+    {
     int tempnumber=getGameNumber(icsGameNumber);
     if (tempnumber ==
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
-      // set ply always
-      try {
-        sharedVariables.mygame[gameData.BoardIndex].movetop =
-          Integer.parseInt(plies);
-        sharedVariables.mygame[gameData.BoardIndex].turn =
-          Integer.parseInt(plies);
-        for(int a=0; a<sharedVariables.maxGameTabs; a++) {
-          if(sharedVariables.gamelooking[a]==gameData.BoardIndex &&
-             sharedVariables.gamelooking[a]!=-1 &&
-             sharedVariables.moveSliders[a]!=null) {
-            sharedVariables.moveSliders[a].setMaximum
-              (sharedVariables.mygame[gameData.BoardIndex].turn);
-            sharedVariables.moveSliders[a].setValue
-              (sharedVariables.moveSliders[a].getMaximum());
-          }// end if
-        }// end for
-      }// end try
-      catch(Exception e) {}
-
-      if (sharedVariables.mygame[gameData.BoardIndex].ficsSet == 1)
-        return;
-      else
-        sharedVariables.mygame[gameData.BoardIndex].ficsSet = 1;
-
-      sharedVariables.mygame[gameData.BoardIndex].name1 = WN;
-      // + " " + white_titles + " " + white_rating;
-      sharedVariables.mygame[gameData.BoardIndex].name2 = BN;
-      // + " " + black_titles + " " + black_rating;
-      timer = new Timer (  ) ;
-      timer.scheduleAtFixedRate( new ToDoTask (  ) , 300 ,300) ;
-      if (gameType.equals("2"))
-        sharedVariables.mygame[gameData.BoardIndex].state =
-          sharedVariables.STATE_OBSERVING; // observed
-      else if(gameType.equals("1") && played.equals("False"))
-        sharedVariables.mygame[gameData.BoardIndex].state =
-          sharedVariables.STATE_EXAMINING; // examined
-      else {
-        sharedVariables.mygame[gameData.BoardIndex].state =
-          sharedVariables.STATE_PLAYING; // played
-        if (myturn.equals("False")) {
-          // on first move its not my turn so we flip
-          // this breaks for resumed games by the way
-          sharedVariables.mygame[gameData.BoardIndex].myColor = "B";
-          //sharedVariables.mygame[gameData.BoardIndex].flip();
-          sharedVariables.mygame[gameData.BoardIndex].iflipped=1;
-        }
-      }
-      if (sharedVariables.mygame[gameData.BoardIndex].state ==
-          sharedVariables.STATE_EXAMINING)
-        sharedVariables.mygame[gameData.BoardIndex].piecePallette=true;
+      sharedVariables.mygame[gameData.BoardIndex].realelo1 = wElo;
+      sharedVariables.mygame[gameData.BoardIndex].realelo2 = bElo;
+        sharedVariables.mygame[gameData.BoardIndex].name1 =
+        sharedVariables.mygame[gameData.BoardIndex].realname1 + " " + wTitle + " " + wElo;
+        sharedVariables.mygame[gameData.BoardIndex].name2 =
+        sharedVariables.mygame[gameData.BoardIndex].realname2 + " " + bTitle + " " + bElo;
+        repaint();
+      
+    
     }// its a valid game
   }
 

@@ -247,11 +247,14 @@ public class DataParsing
 
     void ficsProcessLine(String  data)
     {
+        if(!lastGameStartString.equals("")) {
+             setGameStartParamsAsNeeded(lastGameStartString);
+        }
         if(isPrompt(data))  {
               sendOutChat();
               resetParsing();
         return;
-    }
+      }
        // Log.d("TAG", "ficsProcessLine: mike data is " + data);
         if(data.equals("[G]")) {
         return;
@@ -1169,8 +1172,9 @@ public class DataParsing
         }
         
         if(newdata.startsWith("Game ") || newdata.startsWith("Creating: ")) {
-            // setGameStartParamsAsNeeded(newdata);
-    }
+            setGameStartParamsAsNeeded(newdata);
+        }
+        parseCreatingAsNeededForRatings(newdata);
          /*
 
         if(isKibWhisperInfo(newdata)) {
@@ -1181,7 +1185,7 @@ public class DataParsing
             return true;
         }
 
-        parseCreatingAsNeededForRatings(newdata);
+        
 
         if(newdata.startsWith("{Game ") || newdata.startsWith("Game ")) {
             mySettings.gameChatLog.addChat(newdata,"server_text");
@@ -1802,7 +1806,7 @@ public class DataParsing
         }
 
     }
-
+*/
     void setGameStartParamsAsNeeded(String data)
     {
         boolean found = false;
@@ -1825,8 +1829,14 @@ public class DataParsing
             if(tempNumber.length() > 1) {
                 number = tempNumber.substring(0, tempNumber.length() -1);
             }
-            GameState openGame = getAnOpenGameState( false, number, mySettings);
-            if(openGame != null && openGame.gameNumber.equals(number)) {
+            gamestate openGame = null;
+            for (int a = 0; a < mySettings.mygame.length; a++) {
+                if(mySettings.mygame[a] != null && number.equals("" + mySettings.mygame[a].myGameNumber)) {
+                       openGame = mySettings.mygame[a];
+                       break;
+                }
+                }
+            if(openGame != null && number.equals("" + openGame.myGameNumber)) {
                 String rType = spaceArray.get(7);
                 if(rType.equals("crazyhouse")) {
                     rType = "Crazyhouse";
@@ -1845,20 +1855,11 @@ public class DataParsing
                 bElo = getGameStartRating(tempo2);
                 String wTitle = "";
                 String bTitle = "";
-            openGame.setGameStartedParmsFics(rType,  r,  wElo,  bElo,  wTitle,  bTitle, null);
+                setGameStartedParmsFics("" + openGame.myGameNumber, rType,  r,  wElo,  bElo,  wTitle,  bTitle);
+                lastGameStartString = "";
 
 
-           // [boardvc setCraftyButtonState];
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            MainActivity.mySquares.invalidate();
-                        } catch (Exception dui) {
-                            //Log.d("TAG", "setStockfishButtonVisiblity: mike exceptoin on visiblity " + dui.getMessage());
-                        }
-                    }
-                });
+          
             } else {
                 lastGameStartString = data;
             }
@@ -1876,15 +1877,15 @@ public class DataParsing
             }
             if(found) {
                 found = false;
-                GameState openGame = null;
-                for (int a = 0; a < openGames.size(); a++) {
-                    openGame = openGames.get(a);
-                    if(openGame.whiteName.equals(tempo1) && openGame.blackName.equals(tempo2)) {
-                        found = true;
-                        break;
+                gamestate openGame = null;
+                for (int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null && mySettings.mygame[a].realname1.equals(tempo1) && mySettings.mygame[a].realname2.equals(tempo2)) {
+                           openGame = mySettings.mygame[a];
+                           found = true;
+                           break;
                     }
-
-                }
+                    }
+                
                 if(found) {
                     String rType = spaceArray.get(6);
                     if(rType.equals("crazyhouse")) {
@@ -1909,20 +1910,11 @@ public class DataParsing
                
                     String wTitle = "";
                     String bTitle = "";
-                openGame.setGameStartedParmsFics(rType,  r,  wElo,  bElo,  wTitle,  bTitle, null);
+                setGameStartedParmsFics("" + openGame.myGameNumber, rType,  r,  wElo,  bElo,  wTitle,  bTitle);
+                    lastGameStartString = "";
 
 
-               // mike fix [boardvc setCraftyButtonState];
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                MainActivity.mySquares.invalidate();
-                            } catch (Exception dui) {
-                                //Log.d("TAG", "setStockfishButtonVisiblity: mike exceptoin on visiblity " + dui.getMessage());
-                            }
-                        }
-                    });
+               
                 } else {
                     lastGameStartString = data;
                 }
@@ -1977,6 +1969,8 @@ public class DataParsing
 
     }
     }
+ 
+ /*
 
     boolean isKibWhisperInfo(String data)
     {
@@ -2492,6 +2486,20 @@ public class DataParsing
         //* <code>MY_GAME</code>, <code>OBSERVED_GAME</code> and
         //* <code>ISOLATED_BOARD</code>.
         //@param isPlayedGame <code>true</code> if the game is played,
+    }
+    
+    void setGameStartedParmsFics(String myGameNumber, String rType,  String r,  String wElo,  String bElo,  String wTitle,  String bTitle)
+    {
+        newBoardData temp = new newBoardData();
+        temp.dg=250;
+        temp.arg1 = myGameNumber;
+        temp.arg2 = rType;
+        temp.arg3 = r;
+        temp.arg4 = wElo;
+        temp.arg5 = bElo;
+        temp.arg6 = wTitle;
+        temp.arg7 = bTitle;
+        gamequeue.add(temp);
     }
     
     void gameEnded(String gameNumber) {
