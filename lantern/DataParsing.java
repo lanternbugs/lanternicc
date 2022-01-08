@@ -874,10 +874,12 @@ public class DataParsing
 
             } else {
                 mySettings.whoAmI = line6;
+                mySettings.myname = line6;
                 mySettings.guest = false;
                 for(int a = 1; a < line6.length(); a++) {
                     if(line6.charAt(a) == '(') {
                         mySettings.whoAmI = line6.substring(0,a);
+                        mySettings.myname = mySettings.whoAmI;
                         for(int b = a+1; b < line6.length(); b++) {
                             if(line6.charAt( b) == 'U') {
                                 mySettings.guest = true;
@@ -1637,12 +1639,26 @@ public class DataParsing
         return "";
     }
 
-    String getMoveFromVerbose(String verboseMove)
+    String getMoveFromVerbose(String verboseMove, String color)
     {
         // R/d3-h3 or e2-e4
         String aMove = "e2e4";
-        if(verboseMove.equals("o-o") || verboseMove.equals("o-o-o"))
-        return verboseMove;
+        if(verboseMove.equals("o-o") || verboseMove.equals("o-o-o")) {
+            
+            if(verboseMove.equals("o-o") && color.equals("W")) // was blacks move
+            {
+               return "e8g8c";
+            } else if(verboseMove.equals("o-o")) {
+                return "e1g1c";
+            }
+            if(verboseMove.equals("o-o-o") && color.equals("W")) // was blacks move
+            {
+                return "e8c8C";
+            } else if(verboseMove.equals("o-o-o")) {
+                return "e1c1C";
+            }
+        }
+        
         for(int a =0; a < verboseMove.length() -1; a++)
         {
             if(verboseMove.charAt(a) == '/') {
@@ -2550,7 +2566,7 @@ public class DataParsing
         newBoardData temp = new newBoardData();
         temp.type=0;
         temp.arg1 = "" + myGameStruct.getGameNumber();
-        temp.arg2 = getMoveFromVerbose(myGameStruct.getMoveVerbose());
+        temp.arg2 = getMoveFromVerbose(myGameStruct.getMoveVerbose(), myGameStruct.getCurrentPlayer());
         temp.arg3 = myGameStruct.getMoveSAN();
         temp.arg4 = "false"; // is variation shoudl be on for spos
         temp.dg=24;

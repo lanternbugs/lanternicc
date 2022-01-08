@@ -771,7 +771,31 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                   c+=1;
               }
               }
-              sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+              if(sharedVariables.mygame[gameData.BoardIndex].state != sharedVariables.STATE_PLAYING) {
+                  sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+              } else {
+                  if(!sharedVariables.mygame[gameData.BoardIndex].myColor.equals("B"))  {
+                      sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+                  }
+                  
+                  if (sharedVariables.mygame[gameData.BoardIndex].state ==
+                      sharedVariables.STATE_PLAYING) {
+                    if(sharedVariables.myname.equals(sharedVariables.mygame[gameData.BoardIndex].realname1)) {
+                      sharedVariables.mygame[gameData.BoardIndex].myColor = "W";
+                      //  if (sharedVariables.mygame[gameData.BoardIndex].iflipped == 0)
+                        //  flipSent(icsGameNumber, "1");
+                        
+                    } else {
+                      sharedVariables.mygame[gameData.BoardIndex].myColor = "B";
+
+                      if (sharedVariables.mygame[gameData.BoardIndex].iflipped == 0)
+                        flipSent(icsGameNumber, "1");
+                    }
+                  }
+              }
+              
+              
+              
                   
               //copyToDisplayBoard();
 
@@ -995,7 +1019,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     setTitle(sharedVariables.mygame[gameData.BoardIndex].title);
 
     if (sharedVariables.mygame[gameData.BoardIndex].state ==
-        sharedVariables.STATE_PLAYING) {
+        sharedVariables.STATE_PLAYING && !channels.fics) {
       if (sharedVariables.myname.equals(WN)) {
         sharedVariables.mygame[gameData.BoardIndex].myColor = "W";
         //sharedVariables.mygame[gameData.BoardIndex].iflipped=0;
