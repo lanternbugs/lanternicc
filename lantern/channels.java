@@ -506,6 +506,9 @@ dot.setVisible(true);
 }
 notifyControllerFile = privateDirectory +  "lantern_notify_controler.ini";
 boardType=21;
+    if(fics) {
+        boardType = 11;
+    }
 pieceType=22;
 checkersPieceType = 1;
 NOT_FOUND_NUMBER = -100;
