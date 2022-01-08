@@ -1209,11 +1209,13 @@ class mymultiframe extends JFrame
       } else {
           myfiles.add(reconnectFics);
       }
+   if(!channels.fics) {
+       myfiles.addSeparator();
+       myfiles.add(help_connecting);
+       //myfiles.add(reconnect2);
+       myfiles.addSeparator();
+   }
    
-    myfiles.addSeparator();
-    myfiles.add(help_connecting);
-    //myfiles.add(reconnect2);
-    myfiles.addSeparator();
     //myfiles.add(wallpaper1);
     myfiles.add(settings2);
     myfiles.add(quitItem);
@@ -1532,6 +1534,7 @@ class mymultiframe extends JFrame
       optionsmenu.add(javaEngines);
       optionsmenu.addSeparator();
     optionsmenu.add(helpanalysis);
+      
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
     optionsmenu.add(winanalysis);
@@ -1560,7 +1563,6 @@ class mymultiframe extends JFrame
      optionsmenu.addSeparator();
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
-
     advancedOptions.add(advancedmenuhelp);
     advancedOptions.addSeparator();
     advancedOptions.add(qsuggestPopup);
@@ -2040,8 +2042,11 @@ class mymultiframe extends JFrame
       myboardmenu.add(unfollowBroadcast);
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
-    myboardmenu.add(help_tournaments);
-    myboardmenu.add(help_tournament_schedule);
+      if(!channels.fics) {
+          myboardmenu.add(help_tournaments);
+          myboardmenu.add(help_tournament_schedule);
+      }
+    
     myboardmenu.addSeparator();
     myboardmenu.add(flipSent);
      myboardmenu.add(showexam);
@@ -2371,10 +2376,13 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showhistory);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
-    actionsmenu.addSeparator();
-      actionsmenu.add(showStore);
-      actionsmenu.add(showMyICC);
-      actionsmenu.addSeparator();
+      if(!channels.fics) {
+          actionsmenu.addSeparator();
+            actionsmenu.add(showStore);
+            actionsmenu.add(showMyICC);
+            actionsmenu.addSeparator();
+      }
+    
     actionsmenu.add(lookupuser);
     actionsmenu.add(showfinger);
     actionsmenu.add(addfriend);
@@ -2382,13 +2390,16 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showobs);
     actionsmenu.add(showobs5);
     actionsmenu.add(showobs15);
-    actionsmenu.addSeparator();
-    actionsmenu.add(showtitled);
-    actionsmenu.add(showrelay);
-    actionsmenu.add(ratinggraph);
-    actionsmenu.addSeparator();
-    actionsmenu.add(servertime);
-    actionsmenu.add(showfm);
+      if(!channels.fics) {
+          actionsmenu.addSeparator();
+          actionsmenu.add(showtitled);
+          actionsmenu.add(showrelay);
+          actionsmenu.add(ratinggraph);
+          actionsmenu.addSeparator();
+          actionsmenu.add(servertime);
+          actionsmenu.add(showfm);
+      }
+    
 
     lookupuser.addActionListener(this);
     showhistory.addActionListener(this);
@@ -2441,21 +2452,28 @@ myboardappearancemenu.add(consoleaspect);
     // add to menu bar
     menu.add(helpmenu);
     // Help /
-      helpmenu.add(joinrenewhelp);
-      helpmenu.add(passwordhelp);
-      helpmenu.add(iccstore2);
-      helpmenu.add(chesscoaches);
-      helpmenu.addSeparator();
+      if(!channels.fics) {
+          helpmenu.add(joinrenewhelp);
+          helpmenu.add(passwordhelp);
+          helpmenu.add(iccstore2);
+          helpmenu.add(chesscoaches);
+          helpmenu.addSeparator();
+          
+        helpmenu.add(askaquestion);
+      }
       
-    helpmenu.add(askaquestion);
     helpmenu.add(lanternmanual);
     helpmenu.add(changelog);
-    helpmenu.add(privacypolicy);
-    helpmenu.add(calendaritem);
-    helpmenu.addSeparator();
-    helpmenu.add(infohelp);
-    helpmenu.add(commandhelp);
-    helpmenu.addSeparator();
+      helpmenu.add(privacypolicy);
+      if(!channels.fics) {
+          
+          helpmenu.add(calendaritem);
+          helpmenu.addSeparator();
+          helpmenu.add(infohelp);
+          helpmenu.add(commandhelp);
+          helpmenu.addSeparator();
+      }
+   
     
     helpmenu.add(poweroutmenu);
     // .. / Extra-games
@@ -5811,26 +5829,33 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     hgroup.addComponent(userbuttonLabel);
     //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //hgroup.addComponent(scripterLabel);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(topGamesLabel);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(notifyLabel);
+        if(!channels.fics) {
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(topGamesLabel);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(notifyLabel);
+        }
+    
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(seeksLabel, 100, 100, 100);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(activitesLabel);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure1);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure3);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure5);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure15);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure25);
-    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hgroup.addComponent(pure960);
+        if(!channels.fics) {
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(activitesLabel);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure1);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure3);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure5);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure15);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure25);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(pure960);
+        }
+    
+   
 
     layout.setHorizontalGroup(hgroup);
 	ParallelGroup vgroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
@@ -5839,16 +5864,22 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
 	  vgroup.addComponent(sharedVariables.mybuttons[a]);
     vgroup.addComponent(userbuttonLabel);
     //vgroup.addComponent(scripterLabel);
-    vgroup.addComponent(topGamesLabel);
-    vgroup.addComponent(notifyLabel);
+        if(!channels.fics) {
+            vgroup.addComponent(topGamesLabel);
+            vgroup.addComponent(notifyLabel);
+        }
+    
     vgroup.addComponent(seeksLabel);
-    vgroup.addComponent(activitesLabel);
-    vgroup.addComponent(pure1);
-    vgroup.addComponent(pure3);
-    vgroup.addComponent(pure5);
-    vgroup.addComponent(pure15);
-    vgroup.addComponent(pure25);
-    vgroup.addComponent(pure960);
+        if(!channels.fics) {
+            vgroup.addComponent(activitesLabel);
+            vgroup.addComponent(pure1);
+            vgroup.addComponent(pure3);
+            vgroup.addComponent(pure5);
+            vgroup.addComponent(pure15);
+            vgroup.addComponent(pure25);
+            vgroup.addComponent(pure960);
+        }
+    
     layout.setVerticalGroup(vgroup);
 
 	}
