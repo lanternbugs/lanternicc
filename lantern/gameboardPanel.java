@@ -1348,6 +1348,9 @@ void repaintPiece()
                                                  if(sharedVariables.isGuest()) {
                                                   primary = "";
                                                   }
+                                  if((sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].state == sharedVariables.STATE_PLAYING || sharedVariables.mygame[sharedVariables.gamelooking[gameData.BoardIndex]].state == sharedVariables.STATE_EXAMINING) && channels.fics) {
+                                      primary = "";
+                                  }
 						String prefixcommand="";
 						 // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
 						 // this will get any text back from server to go to right console
