@@ -759,7 +759,9 @@ public class DataParsing
             }
         }
       */
-
+        if(ficsType == SEEKING_LINE) {
+            return;
+        }
         if(ficsType == CHANNEL_TELL) {
             writeOutToChannel(ficsChatTell, getChannelNumber(spaceSeperatedLine.get(0)));
            
