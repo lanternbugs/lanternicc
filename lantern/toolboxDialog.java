@@ -257,6 +257,9 @@ public class toolboxDialog extends JDialog
   private void runCommand(String command, String prefix) {
     myoutput output = new myoutput();
     output.data= "`c" + conNumber + "`" + prefix + command + "\n";
+      if(channels.fics) {
+          output.data=  prefix + command + "\n";
+      }
     output.consoleNumber = conNumber;
     queue.add(output);
   }
