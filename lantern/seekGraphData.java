@@ -291,5 +291,17 @@ void removeSeek(String index)
 catch(Exception dumb){}
 }// end method remove
 
+    void resetToStartCondition()
+        {
+            int a;
+        seekList.clear();
+            for(a = 0; a < bulletW + height * bulletW; a++)
+                bulletGrid[a] = null;
+            //blitzGrid = [[NSMutableArray alloc] init];
+            for(a = 0; a < blitzW + height * blitzW; a++)
+                blitzGrid[a] = null;
+            for(a = 0; a < standardW + height * standardW; a++)
+                standardGrid[a] = null;
 
+        }
 } // end class

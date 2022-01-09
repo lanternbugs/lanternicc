@@ -439,6 +439,9 @@ return null;
                               {
 
                                         String play = "`c0`" + "play " + over.index + "\n";
+                                  if(channels.fics) {
+                                      play = "$play " + over.index + "\n";
+                                  }
 					myoutput temp =new myoutput();
 					temp.data=play;
 					temp.consoleNumber=0;

@@ -346,12 +346,13 @@ public class DataParsing
                     }
                 }
         }
+        */
         if(ficsType == SEEK_ADD || ficsType == SEEK_REMOVE || ficsType == SEEK_REMOVE_ALL) {
             processSeekData(ficsType, data);
             resetParsing();
             return;
         }
-
+        /*
         if(ficsType == SAY_TYPE)
         {
             if(lineCount == 1 && spaceSeperatedLine.size() > 0) {
@@ -897,12 +898,12 @@ public class DataParsing
             sendToFICS("$set style 12");
             sendToFICS("$set width 240");
             if(mySettings.showSeeks) {
-                sendToFICS("$set seek 0"); // now off since not hooked up
+                sendToFICS("$set seek 1"); // now off since not hooked up
             } else {
                 sendToFICS("$set seek 0");
             }
 
-            sendToFICS("$iset seekinfo 0");
+            sendToFICS("$iset seekinfo 1");
 
             sendToFICS("$iset crazyhouse 1");
             sendToFICS("=channel");
@@ -2247,7 +2248,7 @@ public class DataParsing
 
         return false;
     }
-
+*/
     void processSeekData(int ficsType, String data)
     {
     try {
@@ -2259,7 +2260,6 @@ public class DataParsing
 
         if (ficsType == SEEK_ADD)
         {
-
             // fill for seek graph
 
 
@@ -2365,9 +2365,9 @@ public class DataParsing
             String sManual = "";
 
 
-            if(mySettings.seekViewData != null)
+            if(mySettings.graphData != null)
             {
-                mySettings.seekViewData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual);
+                mySettings.graphData.addSeek(sIndex, sName, sTitles, sRating, sProvisional, sWild, sRatingType, sTime, sInc, sRated, sRange, sColor, sFormula, sManual, mainTelnet.notifyList);
             }
 
             //refresh
@@ -2378,10 +2378,10 @@ public class DataParsing
         {
 
 
-            if(mySettings.seekViewData != null)
+            if(mySettings.graphData != null)
             {
                 for(int a =1; a < spaceSeperatedLine.size(); a++) {
-                    mySettings.seekViewData.removeSeek(spaceSeperatedLine.get(a));
+                    mySettings.graphData.removeSeek(spaceSeperatedLine.get(a));
             }
                 // [self.graphData removeSeek:[NSString stringWithFormat:@"%s",arg[0]]];
 
@@ -2393,7 +2393,7 @@ public class DataParsing
 
         if(ficsType == SEEK_REMOVE_ALL)
         {
-            mySettings.seekViewData.resetToStartCondition();
+           mySettings.graphData.resetToStartCondition();
         }
 
     } catch (Exception exception) {
@@ -2415,28 +2415,23 @@ public class DataParsing
     }
 
     void refreshSeekView() {
-        MainActivity main = (MainActivity) MainActivity.getAppActivity();
-        int tab = main.getTabHost().getCurrentTab();
-        if(tab == MainActivity.BOARD_TAB) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if(ICSBoard.graph != null)  {
-                            ICSBoard.graph.invalidate();
-                        }
-                    } catch (Exception dui) {
-                        //Log.d("TAG", "setStockfishButtonVisiblity: mike exceptoin on visiblity " + dui.getMessage());
-                    }
-                }
-            });
-
-        }
+        
+        SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+          try {
+              if(mainTelnet.seekGraph.isVisible())
+                  mainTelnet.seekGraph.mypanel.repaint();
+          } catch (Exception dui) {
+              //Log.d("TAG", "setStockfishButtonVisiblity: mike exceptoin on visiblity " + dui.getMessage());
+          }
+      }
+  });
+       
     }
 
     void dismissSeekGraph()
     {
-        MainActivity main = (MainActivity) MainActivity.getAppActivity();
+        /*MainActivity main = (MainActivity) MainActivity.getAppActivity();
         int tab = main.getTabHost().getCurrentTab();
         if(tab == MainActivity.BOARD_TAB) {
             final ICSBoard board = (ICSBoard) main.getLocalActivityManager().getCurrentActivity();
@@ -2454,9 +2449,10 @@ public class DataParsing
             });
 
         }
+         */
     }
 
-*/
+
     
     void gameStarted(Style12Struct myGameStruct)
     {
@@ -2524,6 +2520,15 @@ public class DataParsing
         temp.arg1 = gameNumber;
         temp.dg=13;
         gamequeue.add(temp);
+        for(int a = 0; a < mySettings.mygame.length; a++) {
+            if(mySettings.mygame[a] != null && gameNumber.equals("" + mySettings.mygame[a].myGameNumber) ) {
+                if(mySettings.mygame[a].state == mySettings.STATE_PLAYING || mySettings.mygame[a].state == mySettings.STATE_EXAMINING) {
+                    sendToFICS("$iset seekinfo 1");
+                }
+            }
+        }
+        
+       
     }
     
     void updateBoard(Style12Struct myGameStruct) {
