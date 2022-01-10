@@ -3918,13 +3918,14 @@ dot.setVisible(true);
             (action.equals("Show Titled Players Online in M0 Tab") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
              (action.equals("Rematch") ? "Rematch" :
-             (action.equals("Examine My Last Game") ? "Examine -1" :
+             (action.equals("Examine My Last Game") && !channels.fics ? "Examine -1" :
+              (action.equals("Examine My Last Game") && channels.fics ? "exl" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match")))))))))))))) + "\n";
+                                 "Match"))))))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC"))

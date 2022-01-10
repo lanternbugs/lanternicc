@@ -408,7 +408,7 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0a";
+        version = "v1.0b";
     } else {
         myServer = "ICC";
         version = "v6.25b";
@@ -1015,7 +1015,12 @@ void setupMenu()
 {
 
 	rightClickMenu.add("Finger");
-	rightClickMenu.add("Finger -n");
+    if(fics) {
+        rightClickMenu.add("Finger r");
+    } else {
+        rightClickMenu.add("Finger -n");
+    }
+	
 	rightClickMenu.add("Lookup");
 	rightClickMenu.add("Vars");
 	rightClickMenu.add("Google");
