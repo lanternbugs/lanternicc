@@ -593,7 +593,7 @@ if(sharedVariables.myServer.equals("ICC")) {
         } catch(Exception notimestamp) {
             requestSocket = new Socket("freechess.org", 5000);
         }
-        System.out.println("made fics socket");
+        sharedVariables.whoAmI = "";
     }
 	
 	if(requestSocket== null)
