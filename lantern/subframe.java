@@ -1722,8 +1722,7 @@ class subframe extends JInternalFrame
       for (int m=0; m<sharedVariables.rightClickMenu.size()-removal; m++) {
 
 	final int mfinal = m;
-        items[m] = new JMenuItem("" + sharedVariables.rightClickMenu.get(m) +
-                                 " " + handle);
+        items[m] =sharedVariables.rightClickMenu.get(m).equals("Finger r") ? new JMenuItem("Finger " + handle + " r") : new JMenuItem("" + sharedVariables.rightClickMenu.get(m) + " " + handle);
         
         items[m].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1795,7 +1794,12 @@ class subframe extends JInternalFrame
                 }
                 */
               } else {
-          	doCommand(sharedVariables.rightClickMenu.get(mfinal) + " " + name + "\n");
+                  String command = sharedVariables.rightClickMenu.get(mfinal) + " " + name;
+                  if(channels.fics && command.startsWith("Finger r"))
+                  {
+                      command = "Finger " + name + " r";;
+                  }
+          	doCommand(command + "\n");
               }
             }
           });
