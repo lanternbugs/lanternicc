@@ -1067,6 +1067,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   }
 
   void logpgn() {
+      if(channels.fics) {
+          return; // to implment fics saving pgn from game data
+      }
     myoutput output = new myoutput();
 
     output.data= "`p" + "0" + "`" + "logpgn " +
