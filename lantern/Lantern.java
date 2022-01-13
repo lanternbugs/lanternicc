@@ -173,6 +173,7 @@ class mymultiframe extends JFrame
   docWriter myDocWriter;
   listFrame myfirstlist;
   listInternalFrame mysecondlist;
+  seekGameDialog myseeker;
   notifyFrame myNotifyFrame;
   topGamesFrame myTopGamesFrame;
   gameFrame myGameList;
@@ -839,18 +840,27 @@ class mymultiframe extends JFrame
 	    Image myIconImage512 = null;
 	        URL myurl512 = this.getClass().getResource("lantern-512.png");
       myIconImage512 = Toolkit.getDefaultToolkit().getImage(myurl512);
+        
+        Image myPearlImage512 = null;
+            URL myurlPearl512 = this.getClass().getResource("pearlchess.png");
+        myPearlImage512 = Toolkit.getDefaultToolkit().getImage(myurlPearl512);
 
 
 
        final java.util.List<Image> icons = new ArrayList<Image>();
-       icons.add(myIconImage16);
-       icons.add(myIconImage24);
-       icons.add(myIconImage32);
-       icons.add(myIconImage48);
-       icons.add(myIconImage64);
-	   icons.add(myIconImage128);
-	   icons.add(myIconImage256);
-       icons.add(myIconImage512);
+        if(channels.fics) {
+            icons.add(myPearlImage512);
+        } else {
+            icons.add(myIconImage16);
+            icons.add(myIconImage24);
+            icons.add(myIconImage32);
+            icons.add(myIconImage48);
+            icons.add(myIconImage64);
+            icons.add(myIconImage128);
+            icons.add(myIconImage256);
+            icons.add(myIconImage512);
+        }
+      
         SwingUtilities.invokeLater( new Runnable() {
 	               public void run() {
 
@@ -3561,30 +3571,7 @@ dot.setVisible(true);
 
     } else if (action.equals("Seek a Game")) {
 
-      seekGameDialog myseeker = new seekGameDialog(this, false, sharedVariables, queue);
-      int defaultWidth = 425;
-      int defaultHeight = 220;
-      myseeker.setSize(defaultWidth,defaultHeight);
-
-      try {
-	Toolkit toolkit =  Toolkit.getDefaultToolkit();
-        Dimension dim = toolkit.getScreenSize();
-        int screenW = dim.width;
-        int screenH = dim.height;
-        int px = (int) ((screenW - defaultWidth) / 2);
-        if (px < 50)
-          px = 50;
-        int py = (int) ((screenH - defaultHeight) / 2);
-        if (py < 50)
-          py=50;
-
-        myseeker.setLocation(px, py);
-      } catch (Exception centerError) {}
-
-      myseeker.setTitle("Seek a Game");
-
-      myseeker.setVisible(true);
-
+      openSeekAGame();
     } else if (action.equals("Challenge")) {
         sharedVariables.challengeCreator("", this, queue);
 
@@ -5006,6 +4993,38 @@ dot.setVisible(true);
                // end try
                } catch (Exception e) {}
       }
+      void openSeekAGame()
+      {
+          if(myseeker != null && myseeker.isVisible()) {
+              myseeker.dispose();
+              myseeker = null;
+              return;
+          }
+          myseeker = new seekGameDialog(this, false, sharedVariables, queue);
+          int defaultWidth = 425;
+          int defaultHeight = 220;
+          myseeker.setSize(defaultWidth,defaultHeight);
+
+          try {
+        Toolkit toolkit =  Toolkit.getDefaultToolkit();
+            Dimension dim = toolkit.getScreenSize();
+            int screenW = dim.width;
+            int screenH = dim.height;
+            int px = (int) ((screenW - defaultWidth) / 2);
+            if (px < 50)
+              px = 50;
+            int py = (int) ((screenH - defaultHeight) / 2);
+            if (py < 50)
+              py=50;
+
+            myseeker.setLocation(px, py);
+          } catch (Exception centerError) {}
+
+          myseeker.setTitle("Seek a Game");
+
+          myseeker.setVisible(true);
+
+      }
   void openActivities() {
     try {
       //if(myfirstlist == null)
@@ -5839,9 +5858,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(seeksLabel, 100, 100, 100);
+    hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hgroup.addComponent(activitesLabel);
         if(!channels.fics) {
-            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(activitesLabel);
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
             hgroup.addComponent(pure1);
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
@@ -5954,6 +5973,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
 
     //activitesLabel.setIcon(sharedVariables.activitiesIcon);
     activitesLabel.setText("   Activities   ");
+      if(channels.fics) {
+          activitesLabel.setText("   Seek   ");
+      }
    // activitesLabel.setHorizontalAlignment( SwingConstants.CENTER );
     activitesLabel.setOpaque(true);
     activitesLabel.setBackground(new Color(245,245,250));
@@ -5962,7 +5984,12 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
             ;
           else {
-            openActivities();
+              if(channels.fics) {
+                  openSeekAGame();
+              } else {
+                  openActivities();
+              }
+            
           }// end else
         }
 
