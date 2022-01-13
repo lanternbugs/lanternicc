@@ -218,22 +218,47 @@ formulaLabel = new JLabel("formula");
 
                             if(formulaBox.isSelected() == true)
                             	formula="f";
-                            else
-                            	formula = "n";
+                            else {
+                                if(channels.fics) {
+                                    formula = "";
+                                } else {
+                                    formula = "n";
+                                }
+                            }
+                            	
 
                             if(manualBox.isSelected() == true)
                             	manual="m";
-                            else
-                            	manual = "a";
+                            else {
+                                if(channels.fics) {
+                                    manual = "";
+                                } else {
+                                    manual = "a";
+                                }
+                            }
+                            	
 
 
 
 							String seekString = "seek " + time + " " + inc + " w" + wild + " " + rated + " " + minseek + "-" + maxseek + " " + formula + " " + manual + " " + color;
+                    if(channels.fics) {
+                        seekString = "seek " + time + " " + inc + " " + rated + " " + minseek + "-" + maxseek;
+                        if(!formula.equals("")) {
+                            seekString += " " + formula;
+                       } if(!manual.equals("")) {
+                        seekString += " " + manual;
+                       }
+                    }
 
 
                             // dialouge success
                                 //showErrorMessage("success! " + seekString);
-								sendToIcs("multi " + seekString + "\n");
+                    if(channels.fics) {
+                        sendToIcs(seekString + "\n");
+                    } else {
+                        sendToIcs("multi " + seekString + "\n");
+                    }
+								
                                // save values;
                                sharedVariables.myseek.minseek=minseek;
                                sharedVariables.myseek.maxseek=maxseek;
@@ -381,7 +406,12 @@ formulaLabel = new JLabel("formula");
 void sendToIcs(String mess)
 {
 	myoutput data = new myoutput();
-	data.data= "`c0`" + mess;
+    if(channels.fics) {
+        data.data= mess;
+    } else {
+        data.data= "`c0`" + mess;
+    }
+	
 	queue.add(data);
 
 }
@@ -451,26 +481,39 @@ add(row4);
 
 void saveToICC()
 {
+    if(channels.fics) {
+        sendToIcs("$set time " + sharedVariables.myseek.time + "\n");
+        sendToIcs("$set inc " + sharedVariables.myseek.inc + "\n");
+        if(!sharedVariables.guest) {
+            if(sharedVariables.myseek.rated==true)
+               sendToIcs("set rated 1" +  "\n");
+            else
+           sendToIcs("set rated 0" +  "\n");
+        }
+        
+    } else {
+        sendToIcs("multi set-quietly time " + sharedVariables.myseek.time + "\n");
+        sendToIcs("multi set-quietly inc " + sharedVariables.myseek.inc + "\n");
+        sendToIcs("multi set-quietly minseek " + sharedVariables.myseek.minseek + "\n");
+        sendToIcs("multi set-quietly maxseek " + sharedVariables.myseek.maxseek + "\n");
+        sendToIcs("multi set-quietly wild " + sharedVariables.myseek.wild + "\n");
+      if(sharedVariables.myseek.rated==true)
+         sendToIcs("multi set-quietly rated 1" +  "\n");
+      else
+     sendToIcs("multi set-quietly rated 0" +  "\n");
 
-                              	sendToIcs("multi set-quietly time " + sharedVariables.myseek.time + "\n");
-                              	sendToIcs("multi set-quietly inc " + sharedVariables.myseek.inc + "\n");
-                              	sendToIcs("multi set-quietly minseek " + sharedVariables.myseek.minseek + "\n");
-                              	sendToIcs("multi set-quietly maxseek " + sharedVariables.myseek.maxseek + "\n");
-                              	sendToIcs("multi set-quietly wild " + sharedVariables.myseek.wild + "\n");
-                                if(sharedVariables.myseek.rated==true)
-                             	  sendToIcs("multi set-quietly rated 1" +  "\n");
-                                else
-         	                  sendToIcs("multi set-quietly rated 0" +  "\n");
+      if(sharedVariables.myseek.manual==true)
+         sendToIcs("multi set-quietly manual 1" +  "\n");
+      else
+     sendToIcs("multi set-quietly manual 0" +  "\n");
 
-                                if(sharedVariables.myseek.manual==true)
-                             	  sendToIcs("multi set-quietly manual 1" +  "\n");
-                                else
-         	                  sendToIcs("multi set-quietly manual 0" +  "\n");
+      if(sharedVariables.myseek.formula==true)
+         sendToIcs("multi set-quietly useformula 1" +  "\n");
+      else
+     sendToIcs("multi set-quietly useformula 0" +  "\n");
+    }
 
-                                if(sharedVariables.myseek.formula==true)
-                             	  sendToIcs("multi set-quietly useformula 1" +  "\n");
-                                else
-         	                  sendToIcs("multi set-quietly useformula 0" +  "\n");
+                              	
 
 }
 }// end class
