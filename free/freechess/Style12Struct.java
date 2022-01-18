@@ -259,7 +259,6 @@ public class Style12Struct extends Struct{
       default:
         throw new IllegalArgumentException("Bad myRelation value: "+myRelation);
     }
-
     boolean isMyTurn = myRelation > 0;
 
     int initTime = 60*Integer.parseInt(tokens.nextToken()); // Initial time
@@ -272,19 +271,19 @@ public class Style12Struct extends Struct{
     int blackTime = Integer.parseInt(tokens.nextToken()); // Black's remaining time
 
     int nextMoveNumber = Integer.parseInt(tokens.nextToken()); // The number of the next move
-
     String moveVerbose = tokens.nextToken(); // The move in verbose notation
     if (moveVerbose.equals("none"))
       moveVerbose = null;
 
     String moveTimeString = tokens.nextToken(); // The amount of time taken for the last move
-    moveTimeString = moveTimeString.substring(1, moveTimeString.length() - 1);
-    StringTokenizer timeTokens = new StringTokenizer(moveTimeString, ":.");
+   /* moveTimeString = moveTimeString.substring(1, moveTimeString.length() - 1);
+    StringTokenizer timeTokens = new StringTokenizer(moveTimeString, ":");
     int minutes = Integer.parseInt(timeTokens.nextToken());
     int seconds = Integer.parseInt(timeTokens.nextToken());
     int milliseconds = Integer.parseInt(timeTokens.nextToken());
     int moveTime = 60*1000*minutes + 1000*seconds + milliseconds;
-
+    */
+      int moveTime = 0;
     String moveSAN = tokens.nextToken(); // The move in SAN notation
     if (moveSAN.equals("none"))
       moveSAN = null;
@@ -294,7 +293,6 @@ public class Style12Struct extends Struct{
     boolean isClockRunning = parseBoolean(tokens.nextToken()); // Is the clock of the player to move running?
 
     int lag = Integer.parseInt(tokens.nextToken()); // The lag, in milliseconds.
-
     return new Style12Struct(positionLexigraphic, currentPlayer, doublePawnPushFile, canWhiteCastleKingside,
       canWhiteCastleQueenside, canBlackCastleKingside, canBlackCastleQueenside, pliesSinceIrreversible,
       gameNumber, whiteName, blackName, gameType, isPlayedGame, isMyTurn, initTime, increment,
