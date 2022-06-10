@@ -474,6 +474,12 @@ catch(Exception e)
 
 try {
  channels.firstSound=true;
+sharedVariables.ccListData.clear();
+    try {
+        sharedVariables.updateCorrTable();
+    } catch(Exception dui) {
+        
+    }
 computerSeeksList.resetList();
 seeksList.resetList();
 notifyList.resetList();

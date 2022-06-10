@@ -1027,6 +1027,7 @@ void setChatBufferSize()
     }
     
     void updateCorrTable() {
+        if(corrPanel != null && corrPanel.corrTable != null)
         corrPanel.corrTable.repaint();
     }
     

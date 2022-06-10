@@ -59,7 +59,7 @@ CorrespondenceViewPanel(JFrame master, channels sharedVariables1, ConcurrentLink
 {
 sharedVariables=sharedVariables1;
 queue=queue1;
-
+sharedVariables.corrPanel = this;
 homeFrame=homeFrame1;
     initComponents();
 }// end constructor
@@ -77,6 +77,11 @@ void initComponents(){
     refreshGamesButton = new JButton();
     startGameButton = new JButton();
     refreshGamesButton.setText("Refresh Games");
+    refreshGamesButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        refreshGames();
+      }
+    } );
     startGameButton.setText("Start Game");
     startGameButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -150,28 +155,6 @@ void setLayout()
 
 
 }// end set layout
-    
-    void startGame()
-    {
-        try {
-            URL url = new URL("http://pool.cloud.chessclub.com/");
-            URLConnection con = url.openConnection();
-            InputStream inputStream = con.getInputStream();
-            StringBuilder textBuilder = new StringBuilder();
-                try (Reader reader = new BufferedReader(new InputStreamReader
-                  (inputStream, StandardCharsets.UTF_8))) {
-                    int c = 0;
-                    while ((c = reader.read()) != -1) {
-                        textBuilder.append((char) c);
-                    }
-                }
-            System.out.println(textBuilder.toString());
-            
-        } catch(Exception e) {
-            
-        }
-        
-    }
     
     void addDoubleClickListener()
     {
@@ -259,4 +242,44 @@ void setLayout()
         corrTable.addMouseListener(mouseListenerEvents);
     }
 
+    
+    void startGame()
+    {
+        try {
+            URL url = new URL("http://pool.cloud.chessclub.com/");
+            URLConnection con = url.openConnection();
+            InputStream inputStream = con.getInputStream();
+            StringBuilder textBuilder = new StringBuilder();
+                try (Reader reader = new BufferedReader(new InputStreamReader
+                  (inputStream, StandardCharsets.UTF_8))) {
+                    int c = 0;
+                    while ((c = reader.read()) != -1) {
+                        textBuilder.append((char) c);
+                    }
+                }
+            System.out.println(textBuilder.toString());
+            
+        } catch(Exception e) {
+            
+        }
+        
+    }
+    
+    void refreshGames()
+    {
+        try {
+            myoutput output = new myoutput();
+            output.consoleNumber = 0;
+            output.data = "multi cc-list\n";
+            queue.add(output);
+            sharedVariables.ccListData.clear();
+            corrTable.repaint();
+            
+        } catch(Exception e) {
+            
+        }
+        
+    }
+    
+   
 }//end class
