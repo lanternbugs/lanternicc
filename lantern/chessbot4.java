@@ -2487,6 +2487,11 @@ int gamenum=0;
                 data.add(dg.getArg(a));
             }
             sharedVariables.ccListData.add(data);
+            try {
+                sharedVariables.updateCorrTable();
+            } catch(Exception dui) {
+                
+            }
             
         }
 if( dg.getArg(0).equals("152"))

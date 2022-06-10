@@ -870,19 +870,7 @@ public void mouseClicked (MouseEvent me) {}
     
     corrLabel.addMouseListener(new MouseAdapter() {
              public void mousePressed(MouseEvent e) {
-                 // turn on events and off seeks
-                 //if(!seeklistScroller.isVisible())
-
-                     listScrollerPanel.setVisible(false);
-                     myseeks1.setVisible(false);
-                     notifylistScrollerPanel.setVisible(false);
-
-                     myseeks2.setVisible(false);
-                     channelPanel.setVisible(false);
-                 corrPanel.setVisible(true);
-                     sharedVariables.activitiesTabNumber=5;
-                     setLabelSelected(sharedVariables.activitiesTabNumber);
-                     paintComponents(getGraphics()); repaint();
+                 switchToCorrespondence();
 
                 }
 
@@ -926,6 +914,24 @@ public void mouseClicked (MouseEvent me) {}
 
 
                             paintComponents(getGraphics()); repaint();
+    }
+    
+    void switchToCorrespondence()
+    {
+        // turn on events and off seeks
+        //if(!seeklistScroller.isVisible())
+
+            listScrollerPanel.setVisible(false);
+            myseeks1.setVisible(false);
+            notifylistScrollerPanel.setVisible(false);
+
+            myseeks2.setVisible(false);
+            channelPanel.setVisible(false);
+        corrPanel.setVisible(true);
+        corrPanel.refreshGames();
+            sharedVariables.activitiesTabNumber=5;
+            setLabelSelected(sharedVariables.activitiesTabNumber);
+            paintComponents(getGraphics()); repaint();
     }
     
 void setLabelSelected(int num)

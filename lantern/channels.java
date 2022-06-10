@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class channels {
     static boolean macClient = true;
+    CorrespondenceViewPanel corrPanel = null;
     static String privateDirectory = "";
     static String publicDirectory = "";
     Font chessfont1 = null;
@@ -1023,6 +1024,10 @@ void setChatBufferSize()
         ccListColumnNames.add("black");
         ccListColumnNames.add("b-rating");
         ccListColumnNames.add("last");
+    }
+    
+    void updateCorrTable() {
+        corrPanel.corrTable.repaint();
     }
     
 void setupMenu()
