@@ -1827,6 +1827,7 @@ class mymultiframe extends JFrame
     // Game /
     JMenuItem jtournament = new JMenuItem("Join Tournaments");
     JMenuItem nseek = new JMenuItem("Seek a Game");
+      JMenuItem jcorrespondence = new JMenuItem("Correspondence");
     JMenuItem nchallenge = new JMenuItem("Challenge");
     JMenuItem dorematch = new JMenuItem("Rematch");
     JMenuItem flipSent = new JMenuItem("Flip");
@@ -2005,6 +2006,7 @@ class mymultiframe extends JFrame
     JMenuItem help_pgn = new JMenuItem("PGN Menu Help");
     JMenuItem help_game_communication = new JMenuItem("Game Communication Menu Help");
     JMenuItem help_getting_game = new JMenuItem("Getting a Game Help");
+      JMenuItem help_correspondence = new JMenuItem("Correspondence Help");
     JMenuItem help_tournaments = new JMenuItem("Tournament Help");
     JMenuItem help_tournament_schedule = new JMenuItem("Tournament Schedule");
      JMenuItem help_customizing_board = new JMenuItem("Customizing Board Help");
@@ -2046,6 +2048,7 @@ class mymultiframe extends JFrame
 	// Options /
     myboardmenu.add(jtournament);
     myboardmenu.add(nseek);
+      myboardmenu.add(jcorrespondence);
     myboardmenu.add(nchallenge);
     myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
@@ -2053,6 +2056,7 @@ class mymultiframe extends JFrame
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
       if(!channels.fics) {
+          myboardmenu.add(help_correspondence);
           myboardmenu.add(help_tournaments);
           myboardmenu.add(help_tournament_schedule);
       }
@@ -2234,6 +2238,7 @@ myboardappearancemenu.add(consoleaspect);
 
     // add listeners
       jtournament.addActionListener(this);
+      jcorrespondence.addActionListener(this);
     nseek.addActionListener(this);
     nchallenge.addActionListener(this);
     dorematch.addActionListener(this);
@@ -2301,6 +2306,7 @@ myboardappearancemenu.add(consoleaspect);
     help_pgn.addActionListener(this);
     help_game_communication.addActionListener(this);
     help_getting_game.addActionListener(this);
+      help_correspondence.addActionListener(this);
     help_tournaments.addActionListener(this);
     help_tournament_schedule.addActionListener(this);
     help_board_advanced.addActionListener(this);
@@ -2356,6 +2362,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showhistory = new JMenuItem("Show My Recent Games");
     JMenuItem showlib = new JMenuItem("Show My Game Library");
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
+      JMenuItem showcorrespondence = new JMenuItem("Show My Correspondence Games");
     // .. / (separator)
       JMenuItem showStore = new JMenuItem("ICC Store");
       JMenuItem showMyICC = new JMenuItem("My ICC");
@@ -2386,6 +2393,7 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showhistory);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
+      actionsmenu.add(showcorrespondence);
       if(!channels.fics) {
           actionsmenu.addSeparator();
             actionsmenu.add(showStore);
@@ -2415,6 +2423,7 @@ myboardappearancemenu.add(consoleaspect);
     showhistory.addActionListener(this);
     showlib.addActionListener(this);
     showstored.addActionListener(this);
+      showcorrespondence.addActionListener(this);
       showStore.addActionListener(this);
       showMyICC.addActionListener(this);
       
@@ -2649,6 +2658,10 @@ myboardappearancemenu.add(consoleaspect);
     }
      else if (action.equals("Tournament Help")) {
       mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/tournaments.html");
+
+    }
+     else if (action.equals("Correspondence Help")) {
+      mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/correspondence.html");
 
     }
      else if (action.equals("Script Help")) {
@@ -3056,7 +3069,7 @@ else if (action.equals("Three Lines")) {
       openActivities();
 
     }
-      else if (action.equals("Join Tournaments")) {
+      else if (action.equals("Join Tournaments") || action.equals("Correspondence") || action.equals("Show My Correspondence Games")) {
          
           try {
           if(!mysecondlist.isVisible() && !myfirstlist.isVisible())
@@ -3064,8 +3077,13 @@ else if (action.equals("Three Lines")) {
           else if(mysecondlist.isVisible()) {
               mysecondlist.setSelected(true);
           }
-          
-                   sharedVariables.activitiesPanel.switchToTournaments();
+                  if(action.equals("Join Tournaments")) {
+                      sharedVariables.activitiesPanel.switchToTournaments();
+                  } else // two correspondence options
+                  {
+                      sharedVariables.activitiesPanel.switchToCorrespondence();
+                  }
+                   
           } catch(Exception badtournswitch) {}
 
       }
