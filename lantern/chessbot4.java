@@ -45,6 +45,7 @@ import java.util.concurrent.locks.*;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
  class chessbot4 implements Runnable
 {
@@ -648,14 +649,14 @@ if(sharedVariables.myServer.equals("ICC")) {
 			if(sharedVariables.myServer.equals("ICC"))
 			{
 			sharedVariables.myname="";// reset our name at reconnect.  having a name means we can use level1
-			String  dgs= "00000000000001001010000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+			String  dgs= "0000000000000100101000001100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 			// turn on 0 ( who am i ) and 32 ( shout)
 			String dgs2="";
 			String newdgs="";
 			for(int a = 0; a< dgs.length(); a++)// 79 80 string list
 			{// 50 and 51 seeks
 			if(a!= 0 && a != 32 && a != 31 && a != 28 && a != 26 && a != 13 && a != 14 && a != 15 && a!= 16 && a != 17 && a != 18 && a != 19 && a!=20 && a != 21 && a != 22 && a != 23 && a != 24 && a != 25 /*&& a != 27 */ && a != 33 && a != 34 && a != 37 && a != 39 && a != 40 && a != 41 && a != 42 && a!= 43 && a!= 44 /*&& a!= 46*/ && a != 47 && a!= 48 &&  a != 50 && a!= 51 && a!= 56 && a!=58 &&  a!= 59 &&  a!=60 && a!= 62 && a!=63 && a!= 64 && a!=65  && a!= 67 && a!= 69 && a!= 70 && a!= 72 && a!= 73 && a!=77 && a!=79 && a!=80 && a!=82 && a!= 83 && a!=86 && a!=91 && a!=99 && /* a!= 103 && */a!= 104 && a!=132
-			 && a!= 152 )
+			 && a!= 152 && a!= 161 )
                         dgs2= dgs2 + "0";
 			else
 			{
@@ -930,6 +931,9 @@ if(level2 == 1)
 		dg= new Datagram1(myinput);
 
 		processDatagram(dg, new routing());
+        if(dg.getArg(0).equals("161")) {
+            System.out.println(myinput);
+        }
 	    }
 		catch(Exception e)
 		{}
@@ -2470,6 +2474,21 @@ int gamenum=0;
  return;
 }
 */
+    if(dg.getArg(0).equals("161")) // correspondence
+        {
+            //161 DG_CORRESPONDENCE_GAME
+            // 14 arguments
+
+            //target reason begin end id white white_pre_rating black_pre_rating start_dt last_move_dt status num_half_moves comment
+            Vector<String> data = new Vector<String>();
+            for(int a= 1; a < dg.argc; a++)
+            {
+                if(a == 5 || a == 6 || a == 7 || a == 8 || a == 9 || a == 17)
+                data.add(dg.getArg(a));
+            }
+            sharedVariables.ccListData.add(data);
+            
+        }
 if( dg.getArg(0).equals("152"))
 {
  //writeToSubConsole(dg.getArg(0) + " arg1: " + dg.getArg(1) + " arg2: " + dg.getArg(2) + " arg3: " + dg.getArg(3) + " arg4: " + dg.getArg(4), 0);

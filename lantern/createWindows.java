@@ -564,6 +564,10 @@ if(sharedVariables.activitiesTabNumber != 4)
 sharedVariables.activitiesPanel.channelPanel.setVisible(false);
 else
 sharedVariables.activitiesPanel.channelPanel.setVisible(true);
+        if(sharedVariables.activitiesTabNumber != 5)
+        sharedVariables.activitiesPanel.corrPanel.setVisible(false);
+        else
+        sharedVariables.activitiesPanel.corrPanel.setVisible(true);
 
 
 

@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.*;
 import java.math.BigInteger;
 import free.util.BrowserControl;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 public class channels {
     static boolean macClient = true;
@@ -50,6 +52,8 @@ ActivitiesWindowPanel activitiesPanel;
 seekGraphData graphData;
 mineScoresGroup mineScores;
 gameFrame myGameList;
+    Vector<Vector<String>> ccListData = new Vector<Vector<String>>();
+    Vector ccListColumnNames = new Vector<String>();
 
 JScrollPane [] ConsoleScrollPane;
 gamestate [] mygame;
@@ -408,7 +412,7 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0b";
+        version = "v1.0e";
     } else {
         myServer = "ICC";
         version = "v6.25b";
@@ -427,7 +431,7 @@ channels()
     if(macClient) {
       setUpDirectories();
     }
-    
+    setUpCorrespondenceTableColumns();
 HashKeysClass.generateHashKeys();
 gamestate.currentHash = new BigInteger("-1");
 myOpeningBookView = null;
@@ -1011,6 +1015,16 @@ void setChatBufferSize()
     chatBufferSize=55000;
   }
 }
+
+    void setUpCorrespondenceTableColumns() {
+        ccListColumnNames.add("number");
+        ccListColumnNames.add("white");
+        ccListColumnNames.add("w-rating");
+        ccListColumnNames.add("black");
+        ccListColumnNames.add("b-rating");
+        ccListColumnNames.add("last");
+    }
+    
 void setupMenu()
 {
 

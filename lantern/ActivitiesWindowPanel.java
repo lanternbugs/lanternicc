@@ -61,6 +61,7 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JLabel computerSeeksLabel;
 	JLabel notifyLabel;
 	JLabel channelLabel;
+    JLabel corrLabel;
 	Color defaultLabelColor = null;
 	Color selectedLabelColor = null;
         int iconWidth = 42;
@@ -72,7 +73,7 @@ JScrollPane channelScroller2;
 JScrollPane channelScroller3;
 EventsPanel listScrollerPanel;
 notifyPanel notifylistScrollerPanel;
-
+CorrespondenceViewPanel corrPanel;
 int currentChannel = -1;
 int currentChannel2 = -1;
 int currentChannel3 = -1;
@@ -117,6 +118,7 @@ myseeks2=new seekPanel(sharedVariables, queue, seekPanel.cSeeks);// 1 for  displ
 
 //add(mypanel);
 notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
+    corrPanel = new CorrespondenceViewPanel(master, sharedVariables1, queue1, master);
 //notifylistScrollerPanel.add(notifylistScrollerPanel.notifylistScroller);
 initComponents();
 
@@ -168,12 +170,13 @@ seeksLabel = new JLabel("Human Seeks", SwingConstants.CENTER);
 computerSeeksLabel = new JLabel(" Computer Seeks", SwingConstants.CENTER);
 notifyLabel = new JLabel(" Notify List", SwingConstants.CENTER);
 channelLabel = new JLabel(" Channel List    ");
-
+corrLabel = new JLabel(" Correspondence", SwingConstants.CENTER);
 tournamentLabel.setOpaque(true);
 eventsLabel.setOpaque(true);
 seeksLabel.setOpaque(true);
 computerSeeksLabel.setOpaque(true);
 notifyLabel.setOpaque(true);
+    corrLabel.setOpaque(true);
 
 defaultLabelColor = this.getBackground();
 selectedLabelColor = new Color(176,196,222);
@@ -614,6 +617,8 @@ if(sharedVariables.activitiesTabNumber != 3)
 	notifylistScrollerPanel.setVisible(false);
 if(sharedVariables.activitiesTabNumber != 4)
 	channelPanel.setVisible(false);
+    if(sharedVariables.activitiesTabNumber != 5)
+        corrPanel.setVisible(false);
 setLabelSelected(sharedVariables.activitiesTabNumber);
 
     tournamentLabel.addMouseListener(new MouseAdapter() {
@@ -658,6 +663,7 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 				 notifylistScrollerPanel.setVisible(false);
 				 myseeks2.setVisible(false);
 				 myseeks1.setVisible(false);
+             corrPanel.setVisible(false);
 				  channelPanel.setVisible(false);
                                    listScrollerPanel.setVisible(true);
                                    listScroller.setVisible(true);
@@ -702,6 +708,7 @@ seeksLabel.addMouseListener(new MouseAdapter() {
 				 listScrollerPanel.setVisible(false);
 				 notifylistScrollerPanel.setVisible(false);
 				 myseeks2.setVisible(false);
+             corrPanel.setVisible(false);
 
 				 channelPanel.setVisible(false);
 				  myseeks1.setVisible(true);
@@ -745,6 +752,7 @@ notifyLabel.addMouseListener(new MouseAdapter() {
 				 myseeks2.setVisible(false);
 
 				 channelPanel.setVisible(false);
+             corrPanel.setVisible(false);
 				  notifylistScrollerPanel.setVisible(true);
 				  notifylistScrollerPanel.notifylistScroller.setVisible(true);
 				 sharedVariables.activitiesTabNumber=3;
@@ -792,6 +800,7 @@ computerSeeksLabel.addMouseListener(new MouseAdapter() {
 				 notifylistScrollerPanel.setVisible(false);
 				 channelPanel.setVisible(false);
 				 myseeks2.setVisible(true);
+             corrPanel.setVisible(false);
 				 sharedVariables.activitiesTabNumber=2;
 				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				 paintComponents(getGraphics()); repaint();
@@ -830,6 +839,7 @@ channelLabel.addMouseListener(new MouseAdapter() {
 
 				 myseeks2.setVisible(false);
 				 channelPanel.setVisible(true);
+             corrPanel.setVisible(false);
 				 sharedVariables.activitiesTabNumber=4;
 				 setLabelSelected(sharedVariables.activitiesTabNumber);
 				 paintComponents(getGraphics()); repaint();
@@ -856,6 +866,46 @@ public void mouseEntered (MouseEvent me) {}
 public void mouseExited (MouseEvent me) {}
 public void mouseClicked (MouseEvent me) {}
 });
+    
+    
+    corrLabel.addMouseListener(new MouseAdapter() {
+             public void mousePressed(MouseEvent e) {
+                 // turn on events and off seeks
+                 //if(!seeklistScroller.isVisible())
+
+                     listScrollerPanel.setVisible(false);
+                     myseeks1.setVisible(false);
+                     notifylistScrollerPanel.setVisible(false);
+
+                     myseeks2.setVisible(false);
+                     channelPanel.setVisible(false);
+                 corrPanel.setVisible(true);
+                     sharedVariables.activitiesTabNumber=5;
+                     setLabelSelected(sharedVariables.activitiesTabNumber);
+                     paintComponents(getGraphics()); repaint();
+
+                }
+
+
+             public void mouseReleased(MouseEvent e) {
+                // turn on events and off seeks
+               /* if(!listScroller.isVisible())
+                 {
+                     listScroller.setVisible(false);
+                     seeklistScroller.setVisible(false);
+                      notifylistScroller.setVisible(false);
+                     computerseeklistScroller.setVisible(true);
+                    paintComponents(getGraphics());
+
+                 }
+             */
+             }
+
+
+    public void mouseEntered (MouseEvent me) {}
+    public void mouseExited (MouseEvent me) {}
+    public void mouseClicked (MouseEvent me) {}
+    });
 
 
 }// end inti components
@@ -903,6 +953,10 @@ void setLabelSelected(int num)
       tournamentLabel.setBackground(defaultLabelColor);
     else
       tournamentLabel.setBackground(selectedLabelColor);
+    if(num != 5)
+      corrLabel.setBackground(defaultLabelColor);
+    else
+      corrLabel.setBackground(selectedLabelColor);
 
 }
 void setLayout()
@@ -935,13 +989,14 @@ channelPanel.add(channelScroller3);
 	h2.addComponent(eventsLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	h2.addComponent(notifyLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
     h2.addComponent(tournamentLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+    h2.addComponent(corrLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	//h2.addComponent(channelLabel);
 
 	h3.addComponent(myseeks1);
 	h4.addComponent(listScrollerPanel);
 	h5.addComponent(notifylistScrollerPanel);
 	h6.addComponent(myseeks2);
-	//h7.addComponent(channelPanel);
+	h7.addComponent(corrPanel);
 
 
 
@@ -951,7 +1006,7 @@ h1.addGroup(h3);
 h1.addGroup(h4);
 h1.addGroup(h5);
 h1.addGroup(h6);
-//h1.addGroup(h7);
+h1.addGroup(h7);
 
 	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
 	//Create the horizontal group
@@ -980,6 +1035,7 @@ v9.addComponent(notifyLabel);
 v9.addComponent(seeksLabel);
 v9.addComponent(computerSeeksLabel);
     v9.addComponent(tournamentLabel);
+    v9.addComponent(corrLabel);
 //v9.addComponent(channelLabel);
 		v1.addGroup(v9);
 		v1.addComponent(listScrollerPanel);
@@ -992,7 +1048,7 @@ v9.addComponent(computerSeeksLabel);
 v3.addGroup(v9);
 v3.addComponent(notifylistScrollerPanel);
 //v33.addGroup(v9);
-//v33.addComponent(channelPanel);
+v33.addComponent(corrPanel);
 v44.addGroup(v9);
 v44.addComponent(myseeks2);
 
@@ -1001,7 +1057,7 @@ v4.addGroup(v1);
 v4.addGroup(v2);
 v4.addGroup(v3);
 v4.addGroup(v44);
-//v4.addGroup(v33);
+v4.addGroup(v33);
 
 	vGroup.addGroup(v4);
 
