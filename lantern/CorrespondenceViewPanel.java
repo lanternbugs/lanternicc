@@ -67,6 +67,7 @@ homeFrame=homeFrame1;
 
 void initComponents(){
     corrTable = new JTable(sharedVariables.ccListData, sharedVariables.ccListColumnNames);
+    //corrTable.removeColumn(corrTable.getColumnModel().getColumn(0)); will work to remove game numbers
     dummyLabel = new JLabel("Correspondence");
     scrollPane = new JScrollPane();
     scrollPane = new JScrollPane(corrTable);
@@ -205,7 +206,7 @@ void setLayout()
                       item2.addActionListener(new ActionListener() {
                        public void actionPerformed(ActionEvent e) {
                            CorrespondenceMoveDialog dialog = new CorrespondenceMoveDialog(homeFrame, sharedVariables, queue, gameIndex);
-                           dialog.setSize(500,300);
+                           dialog.setSize(800,300);
                            dialog.setVisible(true);
                           
 
