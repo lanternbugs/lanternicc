@@ -72,7 +72,7 @@ void initComponents(){
     scrollPane = new JScrollPane();
     scrollPane = new JScrollPane(corrTable);
    // scrollPane.setViewportView(corrTable);
-   corrTable.setFillsViewportHeight(true);
+  corrTable.setFillsViewportHeight(true);
     scrollPane.setColumnHeaderView(corrTable.getTableHeader());
     corrTable.setDefaultEditor(Object.class, null);
     refreshGamesButton = new JButton();
@@ -150,7 +150,7 @@ void setLayout()
     vGroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     vGroup.addGroup(vRow2);
     vGroup.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE,
-                          GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+                          GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
 
       layout.setVerticalGroup(vGroup);
 

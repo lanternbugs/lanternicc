@@ -1053,8 +1053,7 @@ v9.addComponent(computerSeeksLabel);
 
 v3.addGroup(v9);
 v3.addComponent(notifylistScrollerPanel);
-//v33.addGroup(v9);
-v33.addComponent(corrPanel);
+//v33.addComponent(corrPanel);
 v44.addGroup(v9);
 v44.addComponent(myseeks2);
 
@@ -1063,7 +1062,7 @@ v4.addGroup(v1);
 v4.addGroup(v2);
 v4.addGroup(v3);
 v4.addGroup(v44);
-v4.addGroup(v33);
+v4.addComponent(corrPanel);
 
 	vGroup.addGroup(v4);
 

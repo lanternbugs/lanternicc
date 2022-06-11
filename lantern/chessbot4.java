@@ -938,7 +938,7 @@ if(level2 == 1)
 
 		processDatagram(dg, new routing());
         if(dg.getArg(0).equals("161")) {
-            System.out.println(myinput);
+            //System.out.println(myinput);
         }
 	    }
 		catch(Exception e)
