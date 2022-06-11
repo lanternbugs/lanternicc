@@ -43,6 +43,7 @@ class Popup extends JDialog
 JTextArea field;
 String warning1;
 channels sharedVariables;
+    JFrame master;
 void setWarning(String s)
 {
 	warning1=s;
@@ -51,6 +52,8 @@ void setWarning(String s)
 Popup(JFrame frame, boolean mybool, String warning, channels sharedVariables1)
 {
 super(frame, mybool);
+    setLocation(frame.getLocation().x + sharedVariables1.cornerDistance, frame.getLocation().y + sharedVariables1.cornerDistance);// if they set it after it will use the later
+
 sharedVariables = sharedVariables1;
 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -176,7 +179,6 @@ SequentialGroup v4 = layout.createSequentialGroup();
 
 
 setSize(300,260);// this may be set after the call to popup if they want a particular size
-
 
 
 
