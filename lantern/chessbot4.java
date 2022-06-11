@@ -2489,8 +2489,20 @@ int gamenum=0;
             Vector<String> data = new Vector<String>();
             for(int a= 1; a < dg.argc; a++)
             {
-                if(a == 5 || a == 6 || a == 7 || a == 8 || a == 9 || a == 17)
+                if(a == 5 || a == 6 || a == 7 || a == 8 || a == 9 || a == 17 || a == 18)
                 data.add(dg.getArg(a));
+                if(a == 10 && dg.getArg(a).length() > 5) {
+                    data.add(dg.getArg(a).substring(2, dg.getArg(a).length() - 3 ));
+                }
+                if(a == 11 && dg.getArg(a).length() > 5 && dg.getArg(17).length() > 1 ) // 17 is last move
+                {
+                    data.add(dg.getArg(a).substring(2, dg.getArg(a).length() - 3 ));
+                } else if(a == 11 && dg.getArg(a).length() < 6) {
+                    data.add(dg.getArg(a));
+                    
+                } else if(a == 11 ) {
+                        data.add("*");
+                }
             }
             sharedVariables.ccListData.add(data);
             try {
