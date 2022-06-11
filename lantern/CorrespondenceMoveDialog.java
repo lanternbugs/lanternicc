@@ -202,7 +202,7 @@ void setLayout()
     }
     
     void sendMove() {
-        String pre = "multi cc-move " + gameNumber + " ";
+        String pre = "multi cc-move #" + gameNumber + " ";
         String mes = pre + input.getText() + "\n";
         myoutput output = new myoutput();
         if (sharedVariables.myServer.equals("ICC") &&
