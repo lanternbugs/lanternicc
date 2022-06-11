@@ -4999,10 +4999,10 @@ dot.setVisible(true);
   void setWallPaper()
       {
           try {
-                   File file = new File("/System/Library/Desktop Pictures/" );
+                   File file = new File("/System/Library/Desktop Pictures/Solid Colors" );
                    String filePath = "";
                    if (file.exists()) {
-                       filePath =  "/System/Library/Desktop Pictures/";
+                       filePath =  "/System/Library/Desktop Pictures//Solid Colors";
                    }
                    
                    if(filePath.equals("")) {
