@@ -1548,7 +1548,6 @@ class mymultiframe extends JFrame
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
     optionsmenu.add(winanalysis);
-      optionsmenu.addSeparator();
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
     optionsmenu.addSeparator();
@@ -1773,6 +1772,36 @@ class mymultiframe extends JFrame
         eventlist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
                                                     ActionEvent.CTRL_MASK));
     }
+      
+     // enginerestart.setMnemonic(KeyEvent.VK_R);
+      
+      if (sharedVariables.operatingSystem.equals("mac")) {
+          enginerestart.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G,
+                                                      Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+      } else {
+          enginerestart.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G,
+                                                      ActionEvent.CTRL_MASK));
+      }
+      
+      //enginestop.setMnemonic(KeyEvent.VK_S);
+      
+      if (sharedVariables.operatingSystem.equals("mac")) {
+          enginestop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                                                      Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+      } else {
+          enginestop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                                                      ActionEvent.CTRL_MASK));
+      }
+      //openingbookitem.setMnemonic(KeyEvent.VK_S);
+      
+      if (sharedVariables.operatingSystem.equals("mac")) {
+          openingbookitem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                                                      Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+      } else {
+          openingbookitem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                                                      ActionEvent.CTRL_MASK));
+      }
+
 
 
     // add to menu bar
