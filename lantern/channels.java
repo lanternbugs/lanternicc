@@ -416,7 +416,7 @@ channels()
         version = "v1.0e";
     } else {
         myServer = "ICC";
-        version = "v6.25b";
+        version = "v6.26b";
     }
 
     try {
@@ -1023,7 +1023,10 @@ void setChatBufferSize()
         ccListColumnNames.add("w-rating");
         ccListColumnNames.add("black");
         ccListColumnNames.add("b-rating");
+        ccListColumnNames.add("started");
+        ccListColumnNames.add("last time");
         ccListColumnNames.add("last");
+        ccListColumnNames.add("comment");
     }
     
     void updateCorrTable() {
