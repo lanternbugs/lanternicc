@@ -118,7 +118,7 @@ myseeks2=new seekPanel(sharedVariables, queue, seekPanel.cSeeks);// 1 for  displ
 
 //add(mypanel);
 notifylistScrollerPanel = new notifyPanel(sharedVariables, queue,  notifyList);
-    corrPanel = new CorrespondenceViewPanel(master, sharedVariables1, queue1, master);
+    corrPanel = new CorrespondenceViewPanel(master, sharedVariables1, queue1);
 //notifylistScrollerPanel.add(notifylistScrollerPanel.notifylistScroller);
 initComponents();
 

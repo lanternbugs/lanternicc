@@ -55,12 +55,12 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
     JButton startGameButton;
 
 	
-CorrespondenceViewPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, JFrame homeFrame1)
+CorrespondenceViewPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
 {
 sharedVariables=sharedVariables1;
 queue=queue1;
 sharedVariables.corrPanel = this;
-homeFrame=homeFrame1;
+homeFrame=master;
     initComponents();
 }// end constructor
 
@@ -222,7 +222,16 @@ void setLayout()
                        public void actionPerformed(ActionEvent e) {
                            CorrespondenceMoveDialog dialog = new CorrespondenceMoveDialog(homeFrame, sharedVariables, queue, gameIndex, whiteName + " vs " + blackName);
                            dialog.setSize(800,300);
+                           if(homeFrame.getSize().width > 850) {
+                               int x = homeFrame.getLocation().x + (homeFrame.getSize().width - 800) / 2;
+                               int y = 0;
+                               if(homeFrame.getSize().height > 350) {
+                                   y  = homeFrame.getLocation().y + (homeFrame.getSize().height - 300) / 2;
+                               }
+                               dialog.setLocation(x, y);
+                           }
                            dialog.setVisible(true);
+                           dialog.input.requestFocus(true);
                           
 
                      }
