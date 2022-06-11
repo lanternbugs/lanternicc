@@ -172,6 +172,8 @@ void setLayout()
                          // get the row index that contains that coordinate
                          int row = target.rowAtPoint( p );
                     String gameIndex = (String)corrTable.getModel().getValueAt(row,0);
+                     String whiteName = (String)corrTable.getModel().getValueAt(row,1);
+                     String blackName = (String)corrTable.getModel().getValueAt(row,3);
                      
                     
 
@@ -205,7 +207,7 @@ void setLayout()
                      JMenuItem item2 = new JMenuItem("Move in Game");
                       item2.addActionListener(new ActionListener() {
                        public void actionPerformed(ActionEvent e) {
-                           CorrespondenceMoveDialog dialog = new CorrespondenceMoveDialog(homeFrame, sharedVariables, queue, gameIndex);
+                           CorrespondenceMoveDialog dialog = new CorrespondenceMoveDialog(homeFrame, sharedVariables, queue, gameIndex, whiteName + " vs " + blackName);
                            dialog.setSize(800,300);
                            dialog.setVisible(true);
                           

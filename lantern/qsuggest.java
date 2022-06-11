@@ -68,7 +68,8 @@ CancelButton = new JButton("Cancel");
 			 try
 			 	{
 				 myoutput output = new myoutput();
-				 output.data="`c0`" + command + "\n";
+                    output.data="`c0`" + command + "\n";
+				 
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -83,6 +84,14 @@ CancelButton.addActionListener(new ActionListener() {
 				{
 			 try
 			 	{
+                    if(suggestor.equals("correspondence"))// correspondence flow
+                    {
+                        myoutput output = new myoutput();
+                        output.data="`c0`" + "no" + "\n";
+
+                        output.consoleNumber=0;
+                          queue.add(output);
+                    }
 				dispose();
 		}// end try
 			catch(Exception e)
@@ -105,7 +114,15 @@ void suggestion(String text, String mycommand, String myid, String suggestor1)
     } else {
         myTextPane.setText(suggestor + " suggests: " + command + "\n\n");
     }
-	
+	if(myid.equals(suggestor) && myid.equals("correspondence"))
+    {
+        OkButton.setText("Yes");
+        CancelButton.setText("No");
+    } else {
+        OkButton.setText("Ok");
+        CancelButton.setText("Cancel");
+    }
+    repaint();
 	id=myid;
 
 }

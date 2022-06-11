@@ -47,6 +47,8 @@ class CorrespondenceMoveDialog extends JDialog
 	ConcurrentLinkedQueue<myoutput> queue;JFrame homeFrame;
     JTextArea textView;
     JLabel textLabel;
+    JLabel playingLabel;
+    String whoPlaying;
     JButton cancel;
     JButton send;
     JButton help;
@@ -55,13 +57,14 @@ class CorrespondenceMoveDialog extends JDialog
     
 
 	
-    CorrespondenceMoveDialog(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, String gNumber)
+    CorrespondenceMoveDialog(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, String gNumber, String whoIsPlaying)
 {
     super(master, false);
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 sharedVariables=sharedVariables1;
 queue=queue1;
     gameNumber = gNumber;
+    whoPlaying = whoIsPlaying;
     initComponents();
 }// end constructor
 
@@ -107,6 +110,8 @@ void initComponents(){
     
     textLabel = new JLabel("Type a move. There is a  chance to confirm.");
     textLabel.setFont(sharedVariables.myFont);
+    playingLabel = new JLabel(whoPlaying);
+    playingLabel.setFont(sharedVariables.myFont);
 
    
 
@@ -136,6 +141,8 @@ void setLayout()
     hRowBottom.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hRowBottom.addComponent(send, GroupLayout.PREFERRED_SIZE,
                             GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+    hRowBottom.addComponent(playingLabel, GroupLayout.PREFERRED_SIZE,
+                            GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
     h1.addGroup(hRowTop);
     h1.addComponent(textView, GroupLayout.PREFERRED_SIZE,
                     GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
@@ -156,6 +163,8 @@ void setLayout()
     vRowBottom.addComponent(input, GroupLayout.PREFERRED_SIZE,
                             GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
     vRowBottom.addComponent(send, GroupLayout.PREFERRED_SIZE,
+                            GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+    vRowBottom.addComponent(playingLabel, GroupLayout.PREFERRED_SIZE,
                             GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
     
     vGroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
@@ -207,7 +216,7 @@ void setLayout()
         myoutput output = new myoutput();
         if (sharedVariables.myServer.equals("ICC") &&
             sharedVariables.myname.length() > 0)
-          output.data = "`cormove"  + "`" + mes;
+          output.data = "`r1`" + mes;
         else
           output.data = mes;
 

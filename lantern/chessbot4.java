@@ -1227,6 +1227,35 @@ void writeLevel1(routing console, String thetell)
 // if console type is 5 , finger special
     checkForChallenge(thetell);
     checkForChallengeRemoved(thetell);
+    if(console.type == 11)
+    {
+        if(thetell.startsWith("Are you sure you want to play")) {
+            try {
+                if(qsuggestDialog!=null)
+                {
+
+                    qsuggestDialog.dispose();
+                    qsuggestDialog=null;
+                }
+           
+                qsuggestDialog=new qsuggest(masterFrame, false, queue);
+                qsuggestDialog.suggestion(thetell, "Yes", "correspondence","correspondence");// text command id (2,1,6)
+                qsuggestDialog.setVisible(true);
+                Sound movesound= null;
+                if(sharedVariables.makeSounds == true)
+                movesound = new Sound(sharedVariables.songs[1]);
+                }
+            catch(Exception qsug){}
+        }
+        
+         else // popup
+        {
+            Popup mypopper = new Popup(masterFrame, false, thetell, sharedVariables);
+              mypopper.setSize(550,175);
+              mypopper.setVisible(true);
+        }
+        return;
+    }
 if(console.type == 5)
 {  Color fingerBackground = new Color(235,235,235);
   if(fingerPopup == null)
@@ -1564,7 +1593,10 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=4;// save pgn
 						if(consoleChar == 'f')
 						console.type=5;// lookup user
+                        if(consoleChar == 'r')
+                        console.type=11;// correspondence
 						if(consoleChar == 'e')
+                            
                                                 console.type=6;// eco
                                                 if(consoleChar == 't')
                                                 console.type=7;// eco
