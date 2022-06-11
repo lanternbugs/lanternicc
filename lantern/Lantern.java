@@ -3438,6 +3438,7 @@ dot.setVisible(true);
         String swarning = "First click or select a console window, " +
           "and change tab to one to customize.";
         Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+         
         pframe.setVisible(true);
         return;
       }
@@ -3452,6 +3453,7 @@ dot.setVisible(true);
 
           new customizeChannelsDialog((JFrame) this, false, hasfocus,
                                  sharedVariables, consoleSubframes);
+          frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
 
 
        String actionmess = "`m1`" + "multi =chan\n";
@@ -3976,9 +3978,11 @@ dot.setVisible(true);
 
     else if (action.equals("Add a Friend")) {
       addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
+        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
 
     } else if (action.equals("Lookup User")) {
       LookupUserDialog frame = new LookupUserDialog(this, false, queue);
+        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
 
     } else if (action.equals("Open Videos Page")) {
       sharedVariables.openUrl("https://www.chessclub.com/videos");
@@ -4773,6 +4777,8 @@ dot.setVisible(true);
        }
         else if(sharedVariables.myOpeningBookView == null) {
             sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
+            sharedVariables.myOpeningBookView.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+            sharedVariables.myOpeningBookView.setVisible(true);
 
         }
         else if(sharedVariables.myOpeningBookView.isVisible()) {
@@ -4816,6 +4822,7 @@ dot.setVisible(true);
       customizeConsolelColorsDialog frame =
         new customizeConsolelColorsDialog((JFrame) this, false, sharedVariables,
                                           consoles, gameconsoles);
+        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
 
     } else if (action.equals("Notify and Events Background Color")) {
       // BackColor
@@ -4861,6 +4868,7 @@ dot.setVisible(true);
                              sharedVariables.myGameClockFont))));
       JFrame f = new JFrame(action);
       FontChooser2 fc = new FontChooser2(f, fontchanged);
+        fc.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
       fc.setVisible(true);
       Font fnt = fc.getSelectedFont();
       if (fnt != null) {
@@ -4961,6 +4969,7 @@ dot.setVisible(true);
       customizeChannelColorDialog frame =
         new customizeChannelColorDialog((JFrame) this, false,
                                         sharedVariables, consoles);
+        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
       //frame.setSize(300,250);
       frame.setVisible(true);
 
@@ -5017,6 +5026,7 @@ dot.setVisible(true);
                    } else {
                       fc = new JFileChooser(filePath);
                    }
+              fc.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
               fc.setFileFilter(new FileFilter() {
                 public boolean accept(File f) {
                   String fname = f.getName().toLowerCase();
@@ -5848,6 +5858,7 @@ dot.setVisible(true);
        mydialog = new userButtonsDialog((JFrame) this,
                                                          sharedVariables);
     mydialog.setSize(400,400);
+    mydialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
     mydialog.setVisible(true);
     } else {
      mydialog.dispose();

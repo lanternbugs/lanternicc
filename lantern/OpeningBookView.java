@@ -147,7 +147,6 @@ class OpeningBookView  extends JDialog
 
      }
      setItemsVisiblity();
-      setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
 
         try {
