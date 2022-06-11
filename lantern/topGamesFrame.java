@@ -80,6 +80,7 @@ theEventsList = new JTable(eventsList.topGamesTable)
                 return getValueAt(0, column).getClass();
             }
 };
+    theEventsList.setDefaultRenderer(Object.class, new TopGamesTableCellRenderer());
 /*theEventsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 theEventsList.setLayoutOrientation(JList.VERTICAL);
 theEventsList.setVisibleRowCount(-1);
@@ -232,6 +233,19 @@ theEventsList.addMouseListener(mouseListenerEvents);
 
 
 }// end constructor
+    
+    public class TopGamesTableCellRenderer extends DefaultTableCellRenderer {
+
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row,int col) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+        c.setBackground(theEventsList.getBackground());
+        c.setForeground(theEventsList.getForeground());
+        
+        return c;
+    }
+    }
 void setColors()
 {
 theEventsList.setBackground(sharedVariables.listColor);
