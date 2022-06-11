@@ -300,7 +300,7 @@ JButton [] mybuttons;
 
 URL [] songs;
 URL [] poweroutSounds;
-int cornerDistance = 50;
+int cornerDistance = 40;
 int notifyWindowWidth = -1;
 int notifyWindowHeight = -1;
 int moveInputType=0;
@@ -417,7 +417,7 @@ channels()
         version = "v1.0e";
     } else {
         myServer = "ICC";
-        version = "v6.26e-3";
+        version = "v6.26e-4";
     }
 
     try {

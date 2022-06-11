@@ -497,7 +497,9 @@ class mymultiframe extends JFrame
     mysecondlist = new listInternalFrame(this, sharedVariables, queue);
     sharedVariables.desktop.add(mysecondlist);
     myNotifyFrame = new notifyFrame(this, sharedVariables, queue,  notifyList);
+      myNotifyFrame.setLocation(1,1); // if 1 1 we'll position it later
     myTopGamesFrame = new topGamesFrame(this, sharedVariables, queue,  eventsList);
+      myTopGamesFrame.setLocation(1,1); // if 1 1 we'll position it later
     gameList = new tableClass();
     myGameList = new gameFrame(sharedVariables, queue, gameList);
     sharedVariables.myGameList=myGameList;
@@ -2733,6 +2735,7 @@ myboardappearancemenu.add(consoleaspect);
     } else if(action.equals("Ask A Question")) {
       AskAQuestionDialog mypopper = new AskAQuestionDialog(this, false, queue);
       mypopper.setSize(500,140);
+        mypopper.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
       mypopper.setVisible(true);
 
     } else if (action.equals("Lantern Help Index")) {
@@ -2785,6 +2788,8 @@ myboardappearancemenu.add(consoleaspect);
         }
         if(!installed) {
             InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.cuckooChess112, sharedVariables.myFont);
+            myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+            myDialog.setVisible(true);
         }
         else {
             sharedVariables.uci = true;
@@ -2805,6 +2810,8 @@ myboardappearancemenu.add(consoleaspect);
         }
         if(!installed) {
            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.mediocreChess5, sharedVariables.myFont);
+            myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+            myDialog.setVisible(true);
         }
         else {
             sharedVariables.uci = true;
@@ -2829,6 +2836,8 @@ myboardappearancemenu.add(consoleaspect);
            return;
           }
            InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
+            myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+            myDialog.setVisible(true);
         }
         else {
           sharedVariables.uci = true;
@@ -4774,6 +4783,8 @@ dot.setVisible(true);
 
        if(!installed) {
         InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18, sharedVariables.myFont);
+           myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+           myDialog.setVisible(true);
        }
         else if(sharedVariables.myOpeningBookView == null) {
             sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
@@ -5871,8 +5882,14 @@ dot.setVisible(true);
       myTopGamesFrame.setBackground(sharedVariables.listColor);
 	  if(myTopGamesFrame.isVisible())
 	  myTopGamesFrame.setVisible(false);
-	  else
-	  myTopGamesFrame.setVisible(true);
+	  else {
+          if(myTopGamesFrame.getLocation().x == 1 && myTopGamesFrame.getLocation().y == 1) {
+              myTopGamesFrame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+          }
+          myTopGamesFrame.setVisible(true);
+          
+      }
+	  
 
   }
   
@@ -5889,6 +5906,9 @@ if(sharedVariables.notifyWindowHeight > 20) {
     notifyHeight = sharedVariables.notifyWindowHeight;
 }
 myNotifyFrame.setSize(notifyWidth,notifyHeight);
+    if(myNotifyFrame.getLocation().x == 1 && myNotifyFrame.getLocation().y == 1) {
+        myNotifyFrame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+    }
       myNotifyFrame.setVisible(!myNotifyFrame.isVisible());
 
 }

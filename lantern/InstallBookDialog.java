@@ -208,7 +208,6 @@ class InstallBookDialog  extends JDialog
 
      setPaneText(text);
 
-      setVisible(true);
         // load the sqlite-JDBC driver using the current class loader
 
 
