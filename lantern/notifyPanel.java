@@ -76,14 +76,12 @@ theNotifyList.setCellRenderer(new DefaultListCellRenderer() {
         else
         c.setForeground(Color.black);
         if (isSelected) {
-           c.setBackground(new Color(135,206,250));
+           c.setBackground(theNotifyList.getBackground());
         }
         
         return c;
     }
 });
-
-
 
 MouseListener mouseListenerNotify = new MouseAdapter() {
      public void mouseClicked(MouseEvent e) {

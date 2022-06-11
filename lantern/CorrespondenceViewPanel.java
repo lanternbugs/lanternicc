@@ -67,6 +67,7 @@ homeFrame=homeFrame1;
 
 void initComponents(){
     corrTable = new JTable(sharedVariables.ccListData, sharedVariables.ccListColumnNames);
+    corrTable.setDefaultRenderer(Object.class, new CorrTableCellRenderer());
     //corrTable.removeColumn(corrTable.getColumnModel().getColumn(0)); will work to remove game numbers
     dummyLabel = new JLabel("Correspondence");
     scrollPane = new JScrollPane();
@@ -95,7 +96,19 @@ setLayout();
 
 }// end inti components
 
-  
+    public class CorrTableCellRenderer extends DefaultTableCellRenderer {
+
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row,int col) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+        c.setBackground(corrTable.getBackground());
+        c.setForeground(corrTable.getForeground());
+        
+        return c;
+    }
+    }
+    
 void setLayout()
 {
 
