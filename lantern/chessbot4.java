@@ -363,41 +363,55 @@ t.start();
 	}
 
 
-void updateBoardMenuText()
-{
-  SwingUtilities.invokeLater(new Runnable() {
-        @Override
-          public void run() {
-    if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
-      System.out.println("updateboard menu found to not be on event dispatch thread");
-  }
-    for(int a=0; a < sharedVariables.maxGameTabs; a++)
-  {
-     if(myboards[a] == null)
-     break;
+    void updateBoardMenuText()
+    {
+      SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+        if(!javax.swing.SwingUtilities.isEventDispatchThread()) {
+          System.out.println("updateboard menu found to not be on event dispatch thread");
+      }
+        for(int a=0; a < sharedVariables.maxGameTabs; a++)
+      {
+         if(myboards[a] == null)
+         break;
 
-     if(myboards[a].isVisible())
-     {
+         if(myboards[a].isVisible())
+         {
 
-       int d=a+1;
-       String text = "Board " + d + ":";
-       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
-       text += " " + "E" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_PLAYING)
-       text += " " + "P" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-       if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
-       text += " " + "O" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-       if(sharedVariables.openBoards[a].getText().equals(text))
-       continue;
-       else
-       sharedVariables.openBoards[a].setText(text);
+           int d=a+1;
+           String text = "Board " + d + ":";
+           if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_EXAMINING)
+           text += " " + "E" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+           if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_PLAYING)
+           text += " " + "P" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+           if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
+           {
+               if(sharedVariables.mygame[myboards[a].gameData.LookingAt].time == 0 &&
+                  sharedVariables.mygame[myboards[a].gameData.LookingAt].inc == 0) {
+                   text = "COR";
+               } else {
+                   text += " " + "O" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
+               }
+           }
+           if(sharedVariables.openBoards[a].getText().equals(text))
+           continue;
+           else {
+               sharedVariables.openBoards[a].setText(text);
+               if(text.equals("COR")) {
+                   if(myboards[a].myconsolepanel != null && myboards[a].myconsolepanel.channelTabs[a] != null) {
+                       myboards[a].myconsolepanel.channelTabs[a].setText(text);
+                   }
+               }
+               
+           }
+ 
+         }
 
+      }// end for
      }
-
-  }// end for
- }
-      });
-}
+          });
+    }
 
 void updateBoard()
 {
