@@ -2507,11 +2507,11 @@ String getCorrespondenceOpponentsForGame(String gameNumber)
         for(int a = 0; a< sharedVariables.ccListData.size(); a++) {
             Vector<String> game = sharedVariables.ccListData.get(a);
             if(game.get(0).equals(gameNumber)) {
-                if(!game.get(1).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
-                    opponents = game.get(1) + " vs " + sharedVariables.whoAmI;
+                if(!game.get(2).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                    opponents = game.get(2) + " vs " + sharedVariables.whoAmI;
                 }
-                if(!game.get(3).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
-                    opponents = sharedVariables.whoAmI + " vs " + game.get(3);
+                if(!game.get(4).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                    opponents = sharedVariables.whoAmI + " vs " + game.get(4);
                 }
             }
         }

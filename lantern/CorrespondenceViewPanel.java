@@ -185,8 +185,8 @@ void setLayout()
                          // get the row index that contains that coordinate
                          int row = target.rowAtPoint( p );
                     String gameIndex = (String)corrTable.getModel().getValueAt(row,0);
-                     String whiteName = (String)corrTable.getModel().getValueAt(row,1);
-                     String blackName = (String)corrTable.getModel().getValueAt(row,3);
+                     String whiteName = (String)corrTable.getModel().getValueAt(row,2);
+                     String blackName = (String)corrTable.getModel().getValueAt(row,4);
                      
                     
 
