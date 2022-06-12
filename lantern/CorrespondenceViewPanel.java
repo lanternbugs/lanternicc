@@ -49,6 +49,9 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
 	ConcurrentLinkedQueue<myoutput> queue;
     JFrame homeFrame;
     JLabel dummyLabel;
+    JLabel openToGamesLabel = new JLabel("Open to Random Games");
+    JButton openToGamesButton;
+    JButton helpCorrespondenceButton;
     JLabel statusLabel = new JLabel("status: ");
     JLabel doubleClickHintLabel = new JLabel("Double click on a game entry for options like making a move or viewing.");
     JButton refreshGamesButton;
@@ -78,6 +81,8 @@ void initComponents(){
     corrTable.setDefaultEditor(Object.class, null);
     refreshGamesButton = new JButton();
     startGameButton = new JButton();
+    openToGamesButton = new JButton();
+    helpCorrespondenceButton = new JButton();
     refreshGamesButton.setText("Refresh Games");
     refreshGamesButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -88,6 +93,21 @@ void initComponents(){
     startGameButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         startGame();
+      }
+    } );
+    openToGamesButton.setText("Make Open");
+    openToGamesButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        openToGames();
+      }
+    } );
+    helpCorrespondenceButton.setText("Help Correspondence");
+    helpCorrespondenceButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+          myoutput output = new myoutput();
+            output.data = "multi help correspondence\n";
+          output.consoleNumber = 0;
+          queue.add(output);
       }
     } );
     setBackground(Color.white);
@@ -119,12 +139,18 @@ void setLayout()
       ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
     SequentialGroup hRow1 = layout.createSequentialGroup();
     SequentialGroup hRow2 = layout.createSequentialGroup();
+    SequentialGroup hRow3 = layout.createSequentialGroup();
     hRow1.addComponent(refreshGamesButton);
     hRow1.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hRow1.addComponent(doubleClickHintLabel);
     hRow2.addComponent(startGameButton);
     hRow2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hRow2.addComponent(statusLabel);
+    hRow3.addComponent(helpCorrespondenceButton);
+    hRow3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hRow3.addComponent(openToGamesLabel);
+    hRow3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    hRow3.addComponent(openToGamesButton);
     
 
 
@@ -137,6 +163,7 @@ void setLayout()
                     GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
     h1.addGroup(hRow1);
     h1.addGroup(hRow2);
+    h1.addGroup(hRow3);
     h1.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE,
                       GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
       hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
@@ -148,11 +175,17 @@ void setLayout()
       SequentialGroup vGroup = layout.createSequentialGroup();
     ParallelGroup vRow1 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
     ParallelGroup vRow2 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
+    ParallelGroup vRow3 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
+    
+    vRow1.addComponent(refreshGamesButton);
     vRow1.addComponent(refreshGamesButton);
     vRow1.addComponent(doubleClickHintLabel);
-    vRow2.addComponent(statusLabel);
-    vRow2.addComponent(startGameButton);
-
+    vRow2.addComponent(helpCorrespondenceButton);
+    vRow2.addComponent(openToGamesLabel);
+    vRow2.addComponent(openToGamesButton);
+    vRow3.addComponent(statusLabel);
+    vRow3.addComponent(startGameButton);
+    
 
 
 
@@ -162,6 +195,8 @@ void setLayout()
     vGroup.addGroup(vRow1);
     vGroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     vGroup.addGroup(vRow2);
+    vGroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+    vGroup.addGroup(vRow3);
     vGroup.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE,
                           GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
 
@@ -303,6 +338,11 @@ void setLayout()
         } catch(Exception e) {
             
         }
+        
+    }
+    
+    void openToGames()
+    {
         
     }
     
