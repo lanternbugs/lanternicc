@@ -2539,6 +2539,27 @@ String getCorrespondenceOpponentsForGame(String gameNumber)
         
     }
     
+    void updateDataToShowOnTheMove(Vector<String> data) {
+        String onMove = data.get(1);
+        String wName = data.get(2);
+        String bName = data.get(4);
+        String comment = data.get(data.size() - 1);
+        if(comment.equals("1-0") || comment.equals("0-1") || comment.equals("aborted") || comment.startsWith("1/2")) {
+            return;
+        }
+        if(onMove.contains("..")) {
+            if(bName.toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                onMove += " !";
+                data.set(1, onMove);
+            }
+        } else {
+            if(wName.toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                onMove += " !";
+                data.set(1, onMove);
+            }
+        }
+    }
+    
 void processDatagram(Datagram1 dg, routing console)
 {
 try {
@@ -2624,6 +2645,7 @@ int gamenum=0;
                     }
                 }
             }
+            updateDataToShowOnTheMove(data);
             sharedVariables.ccListData.add(data);
             try {
                 sharedVariables.updateCorrTable();
