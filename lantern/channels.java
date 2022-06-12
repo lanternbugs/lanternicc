@@ -417,7 +417,7 @@ channels()
         version = "v1.0e";
     } else {
         myServer = "ICC";
-        version = "v6.26e-7";
+        version = "v6.26e-9";
     }
 
     try {
@@ -1020,6 +1020,7 @@ void setChatBufferSize()
 
     void setUpCorrespondenceTableColumns() {
         ccListColumnNames.add("number");
+        ccListColumnNames.add("Next Move");
         ccListColumnNames.add("white");
         ccListColumnNames.add("w-rating");
         ccListColumnNames.add("black");

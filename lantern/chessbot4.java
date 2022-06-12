@@ -937,7 +937,7 @@ if(level2 == 1)
 		dg= new Datagram1(myinput);
 
 		processDatagram(dg, new routing());
-        if(dg.getArg(0).equals("160")) {
+        if(dg.getArg(0).equals("161")) {
             //System.out.println(myinput);
         }
 	    }
@@ -2573,7 +2573,7 @@ int gamenum=0;
             Vector<String> data = new Vector<String>();
             for(int a= 1; a < dg.argc; a++)
             {
-                if(a == 5 || a == 6 || a == 7 || a == 8 || a == 9 || a == 17 || a == 18)
+                if(a == 6 || a == 7 || a == 8 || a == 9 || a == 17 || a == 18)
                 data.add(dg.getArg(a));
                 if(a == 10 && dg.getArg(a).length() > 5) {
                     data.add(dg.getArg(a).substring(2, dg.getArg(a).length() - 3 ));
@@ -2586,6 +2586,23 @@ int gamenum=0;
                     
                 } else if(a == 11 ) {
                         data.add("*");
+                }
+                if(a == 5) {
+                    data.add(dg.getArg(a));
+                    int num = 1;
+                    try {
+                            int halfMoves = Integer.parseInt(dg.getArg(13));
+                            num = halfMoves / 2 + 1;
+                            String end = "";
+                            if(halfMoves % 2 == 1) {
+                                end = "..";
+                            }
+                            String move = "" + num + end;
+                                data.add(move);
+                    }
+                    catch(Exception dui) {
+                        data.add("*");
+                    }
                 }
             }
             sharedVariables.ccListData.add(data);
