@@ -2501,7 +2501,25 @@ public static boolean willShowMugshot(String urlString) throws MalformedURLExcep
 
   return true;
 }
-
+String getCorrespondenceOpponentsForGame(String gameNumber)
+    {
+        String opponents = "";
+        for(int a = 0; a< sharedVariables.ccListData.size(); a++) {
+            Vector<String> game = sharedVariables.ccListData.get(a);
+            if(game.get(0).equals(gameNumber)) {
+                if(!game.get(1).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                    opponents = game.get(1) + " vs " + sharedVariables.whoAmI;
+                }
+                if(!game.get(3).toLowerCase().equals(sharedVariables.whoAmI.toLowerCase())) {
+                    opponents = sharedVariables.whoAmI + " vs " + game.get(3);
+                }
+            }
+        }
+        
+        return opponents;
+        
+    }
+    
 void processDatagram(Datagram1 dg, routing console)
 {
 try {
@@ -2518,7 +2536,11 @@ int gamenum=0;
         if(sharedVariables.tellTimestamp == true)
         chatTime2=getATimestamp();
 
-        String theNotifyTell = chatTime2 + "Correspondence Move: " + dg.getArg(2) + " has been played in game " + dg.getArg(1) + ". - \"examine #" + dg.getArg(1) + "\"\n";
+        String theNotifyTell = chatTime2 + "Correspondence: " + dg.getArg(2) + " has been played in game " + dg.getArg(1) + ". - \"examine #" + dg.getArg(1) + "\"\n";
+        String opponents = getCorrespondenceOpponentsForGame(dg.getArg(1));
+        if(!opponents.equals("")) {
+            theNotifyTell = chatTime2 + "Correspondence: " + dg.getArg(2) + " has been played in  "  + opponents + " - \"examine #" + dg.getArg(1) + "\"\n";
+        }
         StyledDocument doc;
         // we use main console now for notifications -- 0
 
@@ -2774,6 +2796,7 @@ if(dg.getArg(0).equals("27"))
 								sendMessage("`c0`" + "iloggedon\n");
                                 sendMessage("`u1`" + "multi =chan\n");
 		 sharedVariables.myname=dg.getArg(1);
+            sharedVariables.whoAmI = dg.getArg(1);
 		 sharedVariables.myopponent=dg.getArg(1);
 
 
