@@ -1162,6 +1162,7 @@ void checkForChannelAdd(String thetell)
                 {
                 qsuggestDialog=new qsuggest(masterFrame, false, queue);
                 qsuggestDialog.suggestion(theTell, command, name, name);// text command id (2,1,6)
+                qsuggestDialog.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
                 qsuggestDialog.setVisible(true);
                 } // end if
                 } // end try
@@ -1254,6 +1255,7 @@ void writeLevel1(routing console, String thetell)
            
                 qsuggestDialog=new qsuggest(masterFrame, false, queue);
                 qsuggestDialog.suggestion(thetell, "Yes", "correspondence","correspondence");// text command id (2,1,6)
+                qsuggestDialog.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
                 qsuggestDialog.setVisible(true);
                 Sound movesound= null;
                 if(sharedVariables.makeSounds == true)
@@ -1266,6 +1268,7 @@ void writeLevel1(routing console, String thetell)
         {
             Popup mypopper = new Popup(masterFrame, false, thetell, sharedVariables);
               mypopper.setSize(550,175);
+              mypopper.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
               mypopper.setVisible(true);
         }
         return;
@@ -1341,6 +1344,7 @@ try {
   try {
     Popup mypopper = new Popup(masterFrame, false, thetell, sharedVariables);
       mypopper.setSize(550,175);
+      mypopper.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
       mypopper.setVisible(true);
       return;
   }
@@ -2439,6 +2443,7 @@ catch(Exception qsug){}
 try{
 qsuggestDialog=new qsuggest(masterFrame, false, queue);
 qsuggestDialog.suggestion("Test 1", "Test 1 this is a qsuggest", "jack", "Tom");// text command id (2,1,6)
+    qsuggestDialog.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
 qsuggestDialog.setVisible(true);
 }
 catch(Exception badq){}
@@ -4116,6 +4121,7 @@ if(sharedVariables.showQsuggest == true)
 {
 qsuggestDialog=new qsuggest(masterFrame, false, queue);
 qsuggestDialog.suggestion(dg.getArg(2), dg.getArg(1), dg.getArg(6), dg.getArg(4));// text command id (2,1,6)
+qsuggestDialog.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
 qsuggestDialog.setVisible(true);
 Sound movesound= null;
 if(sharedVariables.makeSounds == true)
