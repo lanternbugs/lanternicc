@@ -2399,7 +2399,7 @@ myboardappearancemenu.add(consoleaspect);
       JMenuItem showMyICC = new JMenuItem("My ICC");
       
     JMenuItem lookupuser = new JMenuItem("Lookup User");
-    JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings in M0 Tab");
+    JMenuItem showfinger = new JMenuItem("Show My Profile and Ratings");
      JMenuItem addfriend = new JMenuItem("Add a Friend");
 
     // .. / (separator)
@@ -3936,7 +3936,7 @@ dot.setVisible(true);
     } else if (action.equals("Show My Recent Games") ||
                action.equals("Show My Game Library") ||
                action.equals("Show My Adjourned Games") ||
-               action.equals("Show My Profile and Ratings in M0 Tab") ||
+               action.equals("Show My Profile and Ratings") ||
                action.equals("Enter Examination Mode") ||
                action.equals("Examine My Last Game") ||
                action.equals("Observe High Rated Game") ||
@@ -3958,7 +3958,7 @@ dot.setVisible(true);
         (action.equals("Show My Recent Games") ? "History" :
          (action.equals("Show My Game Library") ? "Liblist" :
           (action.equals("Show My Adjourned Games") ? "Stored" :
-           (action.equals("Show My Profile and Ratings in M0 Tab") ? "Finger" :
+           (action.equals("Show My Profile and Ratings") ? "`f1`Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online in M0 Tab") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
@@ -3973,7 +3973,7 @@ dot.setVisible(true);
                                  "Match"))))))))))))))) + "\n";
 
 
-      if (sharedVariables.myServer.equals("ICC"))
+      if (sharedVariables.myServer.equals("ICC") && !actionmess.startsWith("`"))
         actionmess = "`c0`" + actionmess;
 
       myoutput data = new myoutput();
