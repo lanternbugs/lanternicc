@@ -2312,7 +2312,7 @@ class subframe extends JInternalFrame
     if(consoleNumber == 0) {
       try {
       //mymultiframe frame =  (mymultiframe)getRootPane().getParent().getParent().getParent().getParent().getParent().getParent();
-      mymultiframe frame = (mymultiframe) getRootPane().getTopLevelAncestor();
+      Multiframe frame = (Multiframe) getRootPane().getTopLevelAncestor();
       frame.windowClosingHandler();
       } catch(Exception dui) {}
     }

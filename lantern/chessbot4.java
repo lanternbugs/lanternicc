@@ -82,7 +82,7 @@ import java.util.ArrayList;
 	int maxLinks=75;
 	long idleTime;
 	qsuggest qsuggestDialog;
-	mymultiframe theMainFrame;
+	Multiframe theMainFrame;
 	connectionDialog myConnection;
 	Datagram1 masterDatagram = new Datagram1();
 	boolean bellSet;
@@ -113,7 +113,7 @@ newBoardCreator client;
 sendToIcs client2;
 long lastBlockSaysTime;
 DataParsing ficsParser;
-	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, mymultiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
+	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, Multiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
 SUBFRAME_CONSOLES=0;

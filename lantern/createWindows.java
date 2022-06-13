@@ -58,8 +58,8 @@ listFrame myfirstlist;
 listInternalFrame mysecondlist;
 docWriter myDocWriter;
 chatframe [] consoleChatframes;
-mymultiframe masterFrame;
-createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, listInternalFrame mysecondlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1, mymultiframe masterFrame1)
+Multiframe masterFrame;
+createWindows(channels sharedVariables1, subframe [] consoleSubframes1 ,gameboard [] myboards1, JTextPane [] consoles1, JTextPane [] gameconsoles1, ConcurrentLinkedQueue<myoutput> queue1, Image [] img1, ConcurrentLinkedQueue<newBoardData> gamequeue1, webframe mywebframe1, resourceClass graphics1, listFrame myfirstlist1, listInternalFrame mysecondlist1, docWriter myDocWriter1, chatframe [] consoleChatframes1, Multiframe masterFrame1)
 {
 consoleSubframes=consoleSubframes1;
 sharedVariables=sharedVariables1;
