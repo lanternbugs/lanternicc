@@ -5025,6 +5025,32 @@ dot.setVisible(true);
     Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
     pframe.setVisible(true);
   }
+      void makeEngineWarningCorrespondence() {
+          String swarning = "Played correspondence games can't be analyzed. Refresh the cc-list on the Correspondence tab of Activities if the state has changed.";
+          Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+          pframe.setVisible(true);
+      }
+      
+      boolean isCorrespondencePlayedGame(String wName, String bName) {
+          wName = wName.toLowerCase();
+          bName = bName.toLowerCase();
+          if(!wName.equals(sharedVariables.whoAmI.toLowerCase()) &&
+             !bName.equals(sharedVariables.whoAmI.toLowerCase()))
+              {
+                  return false;
+              }
+          try {
+              for(int a = 0; a< sharedVariables.ccListData.size(); a++) {
+                  Vector<String> game = sharedVariables.ccListData.get(a);
+                  System.out.println("2: " + game.get(2) + " 4: " + game.get(4));
+                  if(game.get(2).toLowerCase().equals(wName) && game.get(4).toLowerCase().equals(bName)) {
+                      if(game.get(game.size() -1).trim().equals(""))
+                      return true;
+                  }
+              }
+          } catch(Exception dui) {}
+          return false;
+      }
 
   void setBoard(int type) {
     /*
@@ -5149,6 +5175,17 @@ dot.setVisible(true);
         return;
       }
     }
+      for (aa=0; aa< sharedVariables.openBoardCount; aa++) {
+        if (sharedVariables.mygame[aa].state == sharedVariables.STATE_EXAMINING) {
+            if(sharedVariables.mygame[aa].time == 0 && sharedVariables.mygame[aa].inc == 0) {
+                if(isCorrespondencePlayedGame(sharedVariables.mygame[aa].realname1, sharedVariables.mygame[aa].realname2)) {
+                    sharedVariables.engineOn = false;
+                    makeEngineWarningCorrespondence();
+                    return;
+                }
+            }
+        }
+      }
     int visibleBoardCount = 0;
     for(aa = 0; aa < sharedVariables.openBoardCount; aa++) {
        if(myboards[aa].isVisible()) {
