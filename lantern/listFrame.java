@@ -43,7 +43,7 @@ channels sharedVariables;
 JCheckBoxMenuItem notontop;
 ConcurrentLinkedQueue queue;
 //subframe(JFrame frame, boolean mybool)
-listFrame(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue queue1)
+listFrame(Multiframe master, channels sharedVariables1, ConcurrentLinkedQueue queue1)
 {     super(master, false);
 sharedVariables=sharedVariables1;
 queue=queue1;
@@ -72,7 +72,7 @@ JMenuBar myMenu = new JMenuBar();
 
  JMenu mymenu1 = new JMenu("Menu");
 
-   notontop = new JCheckBoxMenuItem("On Top Window");
+   notontop = new JCheckBoxMenuItem("Window");
    notontop.setSelected(true);
   notontop.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
@@ -86,6 +86,22 @@ JMenuBar myMenu = new JMenuBar();
 
 
 myMenu.add(mymenu1);
+    
+    JMenu mymenu2 = new JMenu("Font");
+
+    JMenuItem fontchange = new JMenuItem("Set Event List/Tournaments Font");
+    fontchange.setSelected(true);
+    fontchange.addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent e) {
+              master.setEventListFont();
+
+
+               }
+          });
+     mymenu2.add(fontchange);
+
+
+   myMenu.add(mymenu2);
 setJMenuBar(myMenu);
 myMenu.setVisible(true);
 
