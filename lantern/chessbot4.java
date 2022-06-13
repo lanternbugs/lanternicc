@@ -1275,6 +1275,12 @@ void writeLevel1(routing console, String thetell)
     }
 if(console.type == 5)
 {  Color fingerBackground = new Color(235,235,235);
+    
+    String title = "";
+    try {
+        title = thetell.trim();
+        title = title.substring(0, title.indexOf("\n"));
+    } catch(Exception dui) {}
   if(fingerPopup == null)
   {
   fingerPopup = new Popup(theMainFrame, false, thetell, sharedVariables);
@@ -1289,7 +1295,7 @@ if(console.type == 5)
   else  if(!fingerPopup.isVisible())
   {
   fingerPopup = new Popup(theMainFrame, false, thetell, sharedVariables);
-  fingerPopup.setSize(950,600);
+      fingerPopup.setSize(950,600);
   fingerPopup.field.setFont(sharedVariables.myFont);
   fingerPopup.field.setBackground(fingerBackground);
   fingerPopup.field.setForeground(Color.BLACK);
@@ -1302,10 +1308,16 @@ if(console.type == 5)
   else
   {
    if(thetell.trim().startsWith("Information about ") || thetell.trim().startsWith("Statistics for "))
-   fingerPopup.field.setText(thetell);
-   else
-   fingerPopup.field.setText(fingerPopup.field.getText() + thetell);
+   {
+       fingerPopup.field.setText(thetell);
+         
+   }
+   else {
+       fingerPopup.field.setText(fingerPopup.field.getText() + thetell);
+   }
+   
   }
+    fingerPopup.setTitle(title);
  return;
 }
 try {
