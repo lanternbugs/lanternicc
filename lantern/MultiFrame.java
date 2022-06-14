@@ -2707,64 +2707,7 @@ myboardappearancemenu.add(consoleaspect);
     
      else if(action.equals("Analyze with Stockfish 8") || action.equals("Analyze with Stockfish 10"))
     {
-       if (sharedVariables.engineOn) {
-         return;
-       }
-        boolean installed = false;
-        File f = new File(channels.privateDirectory + sharedVariables.stockfishName);
-        if(f.exists() && !f.isDirectory()) {
-            installed = true;
-        }
-        if(!installed) {
-          if(sharedVariables.operatingSystem.equals("unix")) {
-           return;
-          }
-           InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
-            myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
-            myDialog.setVisible(true);
-        }
-        else {
-          sharedVariables.uci = true;
-            if(sharedVariables.operatingSystem.equals("mac") || sharedVariables.operatingSystem.equals("unix")) {
-                 try {
-                   String lookup = getClass().getProtectionDomain().getCodeSource().getLocation() + "" ;
-                     System.out.println("mike says lookup is " + lookup);
-                   if(lookup.length() > 7) {
-                   lookup = lookup.substring(5, lookup.length());
-                   }
-                   int b = 0;
-                   int c = 0;
-                   while(b!= -1) {
-                     if(b + 1 >= lookup.length()) {
-                       break;
-                     }
-                    b = lookup.indexOf("/", b + 1);
-                    if(b > -1) {
-                     c = b;
-                    }
-                   }
-                   if(c > 0)
-                   {
-                       if(channels.macClient) {
-                           lookup =  channels.privateDirectory +  sharedVariables.stockfishName;
-                           System.out.println("mike says lookup is now " + lookup);
-                       } else {
-                           lookup = lookup.substring(0, c) + "/" +  sharedVariables.stockfishName;
-                       }
-                       
-                   }
-
-                  // System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation() + "/" + sharedVariables.stockfishName);
-                   System.out.println(lookup);
-                    File f2 = new File(lookup);
-                     sharedVariables.engineFile =  f2;
-                 } catch( Exception duii) { }
-              }  else {
-               sharedVariables.engineFile =  f;
-              }
-            startTheEngine(false);
- 
-        }
+      startStockfish();
     }
      else if (action.equals("Load Winboard Engine") ||
                action.equals("Load UCI Engine")) {
@@ -2952,40 +2895,10 @@ else if (action.equals("Three Lines")) {
 
     } else if (action.equals("Stop Engine")) {
 
-      if (sharedVariables.engineOn) {
-
-        myoutput outgoing = new myoutput();
-        outgoing.data = "exit\n";
-
-        sharedVariables.engineQueue.add(outgoing);
-
-        myoutput outgoing2 = new myoutput();
-        outgoing2.data = "quit\n";
-
-        sharedVariables.engineQueue.add(outgoing2);
-        sharedVariables.engineOn=false;
-      }
+      stopTheEngine();
 
     } else if (action.equals("Restart Engine")) {
-      boolean usingJavaEngine = false;
-      if(sharedVariables.engineFile != null)
-      if(sharedVariables.engineFile.toString().endsWith(sharedVariables.mediocreEngineName) ||
-       sharedVariables.engineFile.toString().endsWith(sharedVariables.cuckooEngineName) )
-       usingJavaEngine = true;
-       
-      if(sharedVariables.engineFile == null) {
-        String swarning = "Load an engine before trying to restart it.";
-       Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
-    pframe.setVisible(true);
-       return;
-      }
-      if (!sharedVariables.engineOn)
-    startTheEngine(usingJavaEngine);
-      else {
-        String swarning = "Stop the engine before trying to restart it.";
-        Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
-        pframe.setVisible(true);
-      }
+      restartEngine();
 
     } else if (action.equals("Activities Window/Events")) {
       openActivities();
@@ -5164,7 +5077,111 @@ dot.setVisible(true);
       if (consoleSubframes[a] != null)
         consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
   }
+  void stopTheEngine()
+  {
+      if (sharedVariables.engineOn) {
 
+        myoutput outgoing = new myoutput();
+        outgoing.data = "exit\n";
+
+        sharedVariables.engineQueue.add(outgoing);
+
+        myoutput outgoing2 = new myoutput();
+        outgoing2.data = "quit\n";
+
+        sharedVariables.engineQueue.add(outgoing2);
+        sharedVariables.engineOn=false;
+      }
+          
+  }
+      
+      void startStockfish()
+      {
+          if (sharedVariables.engineOn) {
+            return;
+          }
+           boolean installed = false;
+           File f = new File(channels.privateDirectory + sharedVariables.stockfishName);
+           if(f.exists() && !f.isDirectory()) {
+               installed = true;
+           }
+           if(!installed) {
+             if(sharedVariables.operatingSystem.equals("unix")) {
+              return;
+             }
+              InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.stockfish8, sharedVariables.myFont);
+               myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+               myDialog.setVisible(true);
+           }
+           else {
+             sharedVariables.uci = true;
+               if(sharedVariables.operatingSystem.equals("mac") || sharedVariables.operatingSystem.equals("unix")) {
+                    try {
+                      String lookup = getClass().getProtectionDomain().getCodeSource().getLocation() + "" ;
+                        System.out.println("mike says lookup is " + lookup);
+                      if(lookup.length() > 7) {
+                      lookup = lookup.substring(5, lookup.length());
+                      }
+                      int b = 0;
+                      int c = 0;
+                      while(b!= -1) {
+                        if(b + 1 >= lookup.length()) {
+                          break;
+                        }
+                       b = lookup.indexOf("/", b + 1);
+                       if(b > -1) {
+                        c = b;
+                       }
+                      }
+                      if(c > 0)
+                      {
+                          if(channels.macClient) {
+                              lookup =  channels.privateDirectory +  sharedVariables.stockfishName;
+                              System.out.println("mike says lookup is now " + lookup);
+                          } else {
+                              lookup = lookup.substring(0, c) + "/" +  sharedVariables.stockfishName;
+                          }
+                          
+                      }
+
+                     // System.out.println(getClass().getProtectionDomain().getCodeSource().getLocation() + "/" + sharedVariables.stockfishName);
+                      System.out.println(lookup);
+                       File f2 = new File(lookup);
+                        sharedVariables.engineFile =  f2;
+                    } catch( Exception duii) { }
+                 }  else {
+                  sharedVariables.engineFile =  f;
+                 }
+               startTheEngine(false);
+    
+           }
+      }
+      void restartEngine()
+      {
+          boolean usingJavaEngine = false;
+          if(sharedVariables.engineFile != null)
+          if(sharedVariables.engineFile.toString().endsWith(sharedVariables.mediocreEngineName) ||
+           sharedVariables.engineFile.toString().endsWith(sharedVariables.cuckooEngineName) )
+           usingJavaEngine = true;
+           
+          if(sharedVariables.engineFile == null) {
+              if(sharedVariables.operatingSystem.equals("mac") || sharedVariables.operatingSystem.equals("win")) {
+                  startStockfish();
+                  return;
+              }
+            String swarning = "Load an engine before trying to restart it.";
+           Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+        pframe.setVisible(true);
+           return;
+          }
+          if (!sharedVariables.engineOn)
+        startTheEngine(usingJavaEngine);
+          else {
+            String swarning = "Stop the engine before trying to restart it.";
+            Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+            pframe.setVisible(true);
+          }
+      }
   void startTheEngine(boolean usingJavaEngine) {
     boolean go = false;
     int aa;
@@ -5840,7 +5857,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
   class toolBarPanelClass extends JPanel
   {
 
-     toolBarPanelClass(JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
+     toolBarPanelClass(JLabel toggleEngineLabel, JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
      JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JLabel notifyLabel, JToolBar toolBar)
      {
     GroupLayout layout = new GroupLayout(toolBar);
@@ -5850,6 +5867,8 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     hgroup.addComponent(sharedVariables.mybuttons[0]);
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(userbuttonLabel);
+         hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+         hgroup.addComponent(toggleEngineLabel);
     //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //hgroup.addComponent(scripterLabel);
         if(!channels.fics) {
@@ -5886,6 +5905,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     for(int a=1; a<10; a++)
       vgroup.addComponent(sharedVariables.mybuttons[a]);
     vgroup.addComponent(userbuttonLabel);
+         vgroup.addComponent(toggleEngineLabel);
     //vgroup.addComponent(scripterLabel);
         if(!channels.fics) {
             vgroup.addComponent(topGamesLabel);
@@ -5907,7 +5927,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
 
     }
   }
-
+  JLabel toggleEngineLabel;
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
@@ -5918,6 +5938,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     JButton pure15 = new JButton(" 15-min ");
     JButton pure25 = new JButton(" 25-min ");
     JButton pure960 = new JButton(" Chess960 ");
+      toggleEngineLabel = new JLabel(" Toggle Engine ");
     JLabel seeksLabel = new JLabel();
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
@@ -5930,7 +5951,8 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       sharedVariables.mybuttons[a].setFont(sharedVariables.myFont);
       final int con = a;
 
-      sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
+       
+       sharedVariables.mybuttons[a].addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             toolbarCommands commander = new toolbarCommands(myboards);
             commander.dispatchCommand(con, 0, false, sharedVariables,  queue);
@@ -5940,7 +5962,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
 
     }
 
-    toolBarPanelClass toolBarPanel = new toolBarPanelClass(pure1, pure3, pure5, pure15, pure25, pure960,
+    toolBarPanelClass toolBarPanel = new toolBarPanelClass(toggleEngineLabel, pure1, pure3, pure5, pure15, pure25, pure960,
      seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, notifyLabel, toolBar);
 
  /*
@@ -6001,6 +6023,26 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
         public void mouseExited(MouseEvent me) {}
         public void mouseClicked(MouseEvent me) {}
       });
+      toggleEngineLabel.setOpaque(true);
+      toggleEngineLabel.setBackground(new Color(245,245,250));
+      toggleEngineLabel.addMouseListener(new MouseAdapter() {
+          public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+              ;
+            else {
+                if(!sharedVariables.engineOn) {
+                    restartEngine();
+                } else {
+                    stopTheEngine();
+                }
+            }// end else
+          }
+
+          public void mouseReleased(MouseEvent e) {}
+          public void mouseEntered(MouseEvent me) {}
+          public void mouseExited(MouseEvent me) {}
+          public void mouseClicked(MouseEvent me) {}
+        });
     userbuttonLabel.setText("   Set User Buttons   ");
   //  userbuttonLabel.setHorizontalAlignment( SwingConstants.CENTER );
     userbuttonLabel.setOpaque(true);

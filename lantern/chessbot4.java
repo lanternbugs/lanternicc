@@ -104,7 +104,7 @@ listClass seeksList;
 listClass computerSeeksList;
 listClass notifyList;
 tableClass gameList;
-JFrame masterFrame;
+Multiframe masterFrame;
 int blockConsoleNumber=81;
 newListAdder client3;
 listFrame myfirstlist;
@@ -113,7 +113,7 @@ newBoardCreator client;
 sendToIcs client2;
 long lastBlockSaysTime;
 DataParsing ficsParser;
-	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, JFrame masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, Multiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
+	chessbot4(JTextPane gameconsoles1[], ConcurrentLinkedQueue<newBoardData> gamequeue1, ConcurrentLinkedQueue<myoutput> queue1, JTextPane consoles1[], channels sharedVariables1, gameboard myboards1[], subframe consoleSubframes1[], createWindows mycreator1, resourceClass graphics1, listClass eventsList1, listClass tournamentList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, tableClass gameList1, gameFrame myGameList1, Multiframe masterFrame1, chatframe [] consoleChatframes1, seekGraphFrame seekGraph1, Multiframe theMainFrame1, connectionDialog myConnection1, listFrame myfirstlist1, listInternalFrame mysecondlist1)
 	{
 
 SUBFRAME_CONSOLES=0;
@@ -253,6 +253,7 @@ t.start();
 					processtell();
 
 					}
+                        toggleToolBarEngineVisibility();
 
 					}// end if got=1, got data
                                         //print text
@@ -362,7 +363,31 @@ t.start();
 		}
 	}
 
+    void toggleToolBarEngineVisibility()
+    {
+        boolean playingAnyGame = false;
+        for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
+          if (sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING) {
+              playingAnyGame = true;
+            break;
+          }
+        }
+        
+        if(masterFrame.toggleEngineLabel.isVisible() == playingAnyGame) {
+            final boolean value = !playingAnyGame;
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      masterFrame.toggleEngineLabel.setVisible(value);
+                  } catch (Exception e1) {
 
+                  }
+                }
+              });
+        }
+    }
+    
     void updateBoardMenuText()
     {
       SwingUtilities.invokeLater(new Runnable() {
