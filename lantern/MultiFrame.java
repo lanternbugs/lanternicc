@@ -4888,8 +4888,8 @@ dot.setVisible(true);
   }
 
   void makeEngineWarning(boolean usingJavaEngine) {
-    String swarning = "You must be in examine or observe mode to load an engine and " +
-      "you need to click on the board and game tab that is in this mode as well first.";
+    String swarning = "You must be in examine or observe mode to load an engine. Go to Game menu Examine or Examine Last Game. " +
+      "You may need to click on the board and game tab that is in this mode as well first.";
       if(usingJavaEngine) {
         swarning = "You must be in examine mode to load a preinstalled engine. " +
          "If you load a UCI engine you can use it in observe mode too.\n" +
