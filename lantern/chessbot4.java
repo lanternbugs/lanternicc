@@ -367,7 +367,7 @@ t.start();
     {
         boolean playingAnyGame = false;
         for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
-          if (sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING) {
+          if (sharedVariables.mygame[aa] != null && sharedVariables.mygame[aa].state == sharedVariables.STATE_PLAYING) {
               playingAnyGame = true;
             break;
           }
@@ -379,7 +379,9 @@ t.start();
                 @Override
                   public void run() {
                   try {
-                      masterFrame.toggleEngineLabel.setVisible(value);
+                      if(masterFrame.toggleEngineLabel != null) {
+                          masterFrame.toggleEngineLabel.setVisible(value);
+                      }
                   } catch (Exception e1) {
 
                   }
