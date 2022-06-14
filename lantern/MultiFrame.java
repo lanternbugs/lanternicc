@@ -4554,41 +4554,7 @@ dot.setVisible(true);
 
     } else if(action.equals("Opening Explorer")) {
       
-        boolean installed = false;
-        boolean old = false;
-        File f = new File(channels.privateDirectory + channels.openingBookName);
-        if(f.exists() && !f.isDirectory()) {
-         installed = true;
-         old = false;
-        }
-        if(installed == false) {
-
-        f = new File(channels.privateDirectory + channels.oldOpeningBookName);
-        if(f.exists() && !f.isDirectory()) {
-         installed = true;
-         old = true;
-        }
-        }// installed false
-
-       if(!installed) {
-        InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18, sharedVariables.myFont);
-           myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
-           myDialog.setVisible(true);
-       }
-        else if(sharedVariables.myOpeningBookView == null) {
-            sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
-            sharedVariables.myOpeningBookView.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
-            sharedVariables.myOpeningBookView.setVisible(true);
-
-        }
-        else if(sharedVariables.myOpeningBookView.isVisible()) {
-          sharedVariables.myOpeningBookView.setVisible(false);
-        } else {
-          sharedVariables.myOpeningBookView.setVisible(true);
-        }
-        if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible()) {
-         sharedVariables.myOpeningBookView.update();
-        }
+        openBook();
     }
 
      else if (action.equals("Start Connect Four")) {
@@ -5076,6 +5042,45 @@ dot.setVisible(true);
     for (int a=0; a<sharedVariables.maxConsoleTabs; a++)
       if (consoleSubframes[a] != null)
         consoleSubframes[a].overall.recreate(sharedVariables.consolesTabLayout[a]);
+  }
+      
+  void openBook()
+  {
+      boolean installed = false;
+      boolean old = false;
+      File f = new File(channels.privateDirectory + channels.openingBookName);
+      if(f.exists() && !f.isDirectory()) {
+       installed = true;
+       old = false;
+      }
+      if(installed == false) {
+
+      f = new File(channels.privateDirectory + channels.oldOpeningBookName);
+      if(f.exists() && !f.isDirectory()) {
+       installed = true;
+       old = true;
+      }
+      }// installed false
+
+     if(!installed) {
+      InstallBookDialog myDialog = new InstallBookDialog(this, InstallBookDialog.openingBook18, sharedVariables.myFont);
+         myDialog.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+         myDialog.setVisible(true);
+     }
+      else if(sharedVariables.myOpeningBookView == null) {
+          sharedVariables.myOpeningBookView  = new OpeningBookView(this, queue, old);
+          sharedVariables.myOpeningBookView.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+          sharedVariables.myOpeningBookView.setVisible(true);
+
+      }
+      else if(sharedVariables.myOpeningBookView.isVisible()) {
+        sharedVariables.myOpeningBookView.setVisible(false);
+      } else {
+        sharedVariables.myOpeningBookView.setVisible(true);
+      }
+      if(sharedVariables.myOpeningBookView != null && sharedVariables.myOpeningBookView.isVisible()) {
+       sharedVariables.myOpeningBookView.update();
+      }
   }
   void stopTheEngine()
   {
@@ -5858,7 +5863,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
   {
 
      toolBarPanelClass(JLabel toggleEngineLabel, JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
-     JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JLabel notifyLabel, JToolBar toolBar)
+     JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JLabel notifyBookLabel, JToolBar toolBar)
      {
     GroupLayout layout = new GroupLayout(toolBar);
     SequentialGroup hgroup = layout.createSequentialGroup();
@@ -5873,9 +5878,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     //hgroup.addComponent(scripterLabel);
         if(!channels.fics) {
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(topGamesLabel);
+            hgroup.addComponent(notifyBookLabel);
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(notifyLabel);
+            hgroup.addComponent(topGamesLabel);
         }
     
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
@@ -5909,7 +5914,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     //vgroup.addComponent(scripterLabel);
         if(!channels.fics) {
             vgroup.addComponent(topGamesLabel);
-            vgroup.addComponent(notifyLabel);
+            vgroup.addComponent(notifyBookLabel);
         }
     
     vgroup.addComponent(seeksLabel);
@@ -5928,6 +5933,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     }
   }
   JLabel toggleEngineLabel;
+  JLabel notifyBookLabel;
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
     sharedVariables.mybuttons = new JButton[10];
@@ -5944,7 +5950,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     JLabel userbuttonLabel = new JLabel();
     JLabel  scripterLabel = new JLabel();
     JLabel  topGamesLabel = new JLabel();
-    JLabel notifyLabel = new JLabel();
+    notifyBookLabel = new JLabel();
    for (int a=0; a<10; a++) {
       sharedVariables.mybuttons[a] = new JButton("" + a);
       setButtonTitle(a);
@@ -5963,7 +5969,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     }
 
     toolBarPanelClass toolBarPanel = new toolBarPanelClass(toggleEngineLabel, pure1, pure3, pure5, pure15, pure25, pure960,
-     seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, notifyLabel, toolBar);
+     seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, notifyBookLabel, toolBar);
 
  /*
     pure1.setIcon(sharedVariables.pure1);
@@ -6100,16 +6106,21 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    notifyLabel.setText("   Notify   ");
+    notifyBookLabel.setText("   Notify   ");
    // topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
-    notifyLabel.setOpaque(true);
-    notifyLabel.setBackground(new Color(245,245,250));
-    notifyLabel.addMouseListener(new MouseAdapter() {
+      notifyBookLabel.setOpaque(true);
+      notifyBookLabel.setBackground(new Color(245,245,250));
+      notifyBookLabel.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
             ;
           else {
+              if(notifyBookLabel.getText().toLowerCase().contains("notify")) {
                   launchNotifyWindow();
+              } else {
+                  openBook();
+              }
+              
           }// end else
         }
 

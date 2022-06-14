@@ -253,7 +253,7 @@ t.start();
 					processtell();
 
 					}
-                        toggleToolBarEngineVisibility();
+                        toggleToolBarEngineBookVisibility();
 
 					}// end if got=1, got data
                                         //print text
@@ -363,7 +363,7 @@ t.start();
 		}
 	}
 
-    void toggleToolBarEngineVisibility()
+    void toggleToolBarEngineBookVisibility()
     {
         boolean playingAnyGame = false;
         for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
@@ -388,6 +388,46 @@ t.start();
                 }
               });
         }
+        
+        boolean examining = false;
+        for (int aa=0; aa< sharedVariables.openBoardCount; aa++) {
+          if (sharedVariables.mygame[aa] != null && sharedVariables.mygame[aa].state == sharedVariables.STATE_EXAMINING) {
+              examining = true;
+            break;
+          }
+        }
+        
+        
+        if(masterFrame.notifyBookLabel != null && masterFrame.notifyBookLabel.getText().toLowerCase().contains("notify") && examining) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      if(masterFrame.notifyBookLabel != null) {
+                          masterFrame.notifyBookLabel.setText("  Book  ");
+                      }
+                  } catch (Exception e1) {
+
+                  }
+                }
+              });
+        }
+        
+        if(masterFrame.notifyBookLabel != null && masterFrame.notifyBookLabel.getText().toLowerCase().contains("book") && !examining) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      if(masterFrame.notifyBookLabel != null) {
+                          masterFrame.notifyBookLabel.setText("   Notify   ");
+                      }
+                  } catch (Exception e1) {
+
+                  }
+                }
+              });
+        }
+         
     }
     
     void updateBoardMenuText()
