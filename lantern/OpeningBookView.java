@@ -106,6 +106,9 @@ class OpeningBookView  extends JDialog
              String move = getSubMove(moveListData.get(row).movefrom) + getSubMove(moveListData.get(row).moveto);
              myoutput output = new myoutput();
              output.data="`c0`" + "multi chessmove " + move + "\n";
+             if(channels.fics) {
+                 output.data=move + "\n";
+             }
              output.consoleNumber=0;
              queue.add(output);
          }
@@ -115,6 +118,9 @@ class OpeningBookView  extends JDialog
           public void mousePressed(MouseEvent e) {
              myoutput output = new myoutput();
              output.data="`c0`" + "multi backward" + "\n";
+              if(channels.fics) {
+                  output.data="backward 1" + "\n";
+              }
              output.consoleNumber=0;
              queue.add(output);
 
@@ -128,6 +134,9 @@ class OpeningBookView  extends JDialog
           public void mousePressed(MouseEvent e) {
              myoutput output = new myoutput();
              output.data="`c0`" + "multi forward" + "\n";
+              if(channels.fics) {
+                  output.data="forwarward 1" + "\n";
+              }
              output.consoleNumber=0;
              queue.add(output);
 
@@ -314,8 +323,12 @@ class OpeningBookView  extends JDialog
                 }
                myoutput output = new myoutput();
                output.data="`e0`" + "multi eco" + "\n";
+               
                output.consoleNumber=0;
-               queue.add(output);
+        if(!channels.fics) {
+            queue.add(output);
+        }
+               
 
 
     }
