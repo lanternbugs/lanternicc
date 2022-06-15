@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
+*  Copyright (C) 2010-2022 Michael Ronald Adams.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -32,7 +32,31 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class channels {
+    static boolean fics = false;
+    /* Build Steps for a fics/Pearl versus icc/lantern build http://www.pearlchess.com http://www.lanternchess.com for jars
+     
+     1) Lantern.java is renamed Pearl.java for fics // reverse for icc
+     2) Lantern class in this file is named Pearl
+     3) manifest.txt in same lantern folder has its main class changed to lantern.Pearl
+     4) fics is set to true // false for icc
+     5) free/a-fics/*.* files are coppied to free/a/*.*  reverse free/a-chessclub/*.* for icc
+           These files should be in a pearl.jar on pearlchess.com. This is due to my lack of understanding of how
+           to set up the timestamp and timeseal jars properly not an intrinsic issue i think
+           Anyone with this code who wants both fics and icc builds needs to just set up connect to properly use the timestamp or timseal jars in terms of file and jar
+           placement in folder path structure.
+     
+     notes - chessbot4.java is the main icc parser. chessbot4 routs parsing to DataParsing.java when fics is true.
+     DataParsing.java is based on diamond chess for android parser
+     */
     static boolean macClient = true;
+    /*
+     maclient is true for all builds now and was originaly mac only true when implemented in 2019 for 6.22.
+     It means the Public and Private directories set will be used on that OS.
+     Documents/LanternChess can be a public directory for things a user would want to see like their log files.
+     a private directory is in like Library on mac or appdata on windows then a LanternChess subfolder for  things like settings
+     On linux there just / currently which doesnt seem to produce a result different than macClient false in my test
+     */
+    
     CorrespondenceViewPanel corrPanel = null;
     static String privateDirectory = "";
     static String publicDirectory = "";
@@ -163,7 +187,6 @@ boolean unobserveGoExamine=false;
 boolean consoleDebug = false;
 boolean showMugshots = true;
     boolean noFocusOnObserve = false;
-    static boolean fics = false;
     boolean timeStampChat = true;
     String whoAmI = "";
     boolean sendILoggedOn = false;
@@ -414,10 +437,10 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0e";
+        version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-15";
+        version = "v6.26e-16";
     }
 
     try {
