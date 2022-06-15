@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
+*  Copyright (C) 2010-2022 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -45,6 +45,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javax.swing.filechooser.FileFilter;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class Multiframe extends JFrame
   implements ActionListener, ChangeListener, WindowListener {
@@ -5876,9 +5878,10 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
          hgroup.addComponent(toggleEngineLabel);
     //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //hgroup.addComponent(scripterLabel);
+         hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+         hgroup.addComponent(notifyBookLabel);
         if(!channels.fics) {
-            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(notifyBookLabel);
+            
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
             hgroup.addComponent(topGamesLabel);
         }
@@ -5912,9 +5915,10 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     vgroup.addComponent(userbuttonLabel);
          vgroup.addComponent(toggleEngineLabel);
     //vgroup.addComponent(scripterLabel);
+         vgroup.addComponent(notifyBookLabel);
         if(!channels.fics) {
             vgroup.addComponent(topGamesLabel);
-            vgroup.addComponent(notifyBookLabel);
+            
         }
     
     vgroup.addComponent(seeksLabel);
@@ -5933,6 +5937,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     }
   }
   JLabel toggleEngineLabel;
+      boolean toggleEngineEnabled = true;
   JLabel notifyBookLabel;
   void makeToolBar() {
     toolBar = new JToolBar("Still draggable");
@@ -6033,6 +6038,11 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       toggleEngineLabel.setBackground(new Color(245,245,250));
       toggleEngineLabel.addMouseListener(new MouseAdapter() {
           public void mousePressed(MouseEvent e) {
+              if(!toggleEngineEnabled) {
+                  return;
+              }
+             toggleEngineEnabled = false;
+             setToggleEngineToBeEnabled();
             if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
               ;
             else {
@@ -6244,7 +6254,19 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     toolBar.add(toolBarPanel);
 
   }
-
+  void setToggleEngineToBeEnabled()
+      {
+          Timer timer = new Timer();
+          timer.schedule(new ToggleEngineTimer(),1000);
+      }
+      
+      public class ToggleEngineTimer extends TimerTask
+      {
+          @Override
+          public void run() {
+                  toggleEngineEnabled = true;
+              }
+          }
   void sendToEngine(String output) {
     byte [] b2 = new byte[2500];
     try {

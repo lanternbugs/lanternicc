@@ -1,6 +1,6 @@
 package lantern;
 /*
-*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
+*  Copyright (C) 2012-2022 Michael Ronald Adams, Andrey Gorlin.
 *  All rights reserved.
 *
 * This program is free software; you can redistribute it and/or
@@ -49,7 +49,8 @@ import javax.swing.filechooser.FileFilter;
 //import javax.jnlp.*;
 
 
-//public class multiframe  extends JApplet
+//make this Pearl for a pearl build and rename file Pearl.java. or Lantern for an icc build and rename file Lantern.java if you see it other way around
+// more instructons on fics vs icc build in channels.java were the static variable fics is declared.
 public class Lantern {
 
   public static void createFrame() {
