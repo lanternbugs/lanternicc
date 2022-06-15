@@ -624,10 +624,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
   }// end class overall
 
   // lives as variable on frame now
-
+    runningengine engine1;
   void startEngine() {
 
-    runningengine engine1;
+    if(engine1 != null && !engine1.engineIsStopped) {
+        return;
+    }
     engine1= new runningengine(sharedVariables, gameData.BoardIndex,
                                gameconsoles, gameData);
     Thread t = new Thread(engine1);

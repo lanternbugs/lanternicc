@@ -45,7 +45,7 @@ import java.util.StringTokenizer;
 
 class runningengine implements Runnable
 {
-  
+  boolean engineIsStopped = false;
   class PrincipalVariation {
  String line;
  String depth;
@@ -194,12 +194,16 @@ catch(Exception e)
 try {
 if(sharedVariables.uci == false)
 writeOut("There was an error starting the engine. Is the file a valid engine executable? Is it a Winboard Engine?\n");
-else 
-writeOut("There was an error starting the engine. Is the file a valid engine executable? Is it a UCI Engine?\n");
-}
-catch(Exception ee) {
+else if(sharedVariables.engineFile.toString().endsWith(".jar")) {
+    writeOut("There was an error starting the engine. Medicore chess and Cuckoo Chess need Java install on computer as they are Java engines.\n");
+} else {
+    writeOut("There was an error starting the engine. Is the file a valid engine executable? Is it a UCI Engine?\n");
+    }
 }
 
+catch(Exception ee) {
+}
+    engineIsStopped = true;
 }
 
 
@@ -619,6 +623,7 @@ catch(Exception E5){}
 }
 while(go==1);
 writeOut("go no longer 1\n");
+    engineIsStopped = true;
 }// end try
 catch(Exception e){writeOut("exception terminated loop");}
 }// end run uci
