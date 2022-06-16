@@ -440,7 +440,7 @@ channels()
         version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-17";
+        version = "v6.26e-18";
     }
 
     try {
@@ -1055,8 +1055,35 @@ void setChatBufferSize()
     }
     
     void updateCorrTable() {
-        if(corrPanel != null && corrPanel.corrTable != null)
-        corrPanel.corrTable.repaint();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                  if(corrPanel != null && corrPanel.corrTable != null)
+                  corrPanel.corrTable.repaint();
+              } catch (Exception e1) {
+
+              }
+            }
+          });
+        
+    }
+    
+    void updateCorrStatusBar(final String text)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                  if(corrPanel != null && corrPanel.statusLabel != null) {
+                      corrPanel.statusLabel.setText("Status: " + text);
+                      corrPanel.statusLabel.repaint();
+                  }
+              } catch (Exception e1) {
+
+              }
+            }
+          });
     }
     
 void setupMenu()

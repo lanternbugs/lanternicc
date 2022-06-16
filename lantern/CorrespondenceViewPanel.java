@@ -39,6 +39,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
@@ -302,26 +304,42 @@ void setLayout()
         corrTable.addMouseListener(mouseListenerEvents);
     }
 
-    
+    class GameStarterClass implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            try {
+                URL url = new URL("http://pool.cloud.chessclub.com/");
+                URLConnection con = url.openConnection();
+                InputStream inputStream = con.getInputStream();
+                StringBuilder textBuilder = new StringBuilder();
+                    try (Reader reader = new BufferedReader(new InputStreamReader
+                      (inputStream, StandardCharsets.UTF_8))) {
+                        int c = 0;
+                        while ((c = reader.read()) != -1) {
+                            textBuilder.append((char) c);
+                        }
+                    }
+                myoutput output = new myoutput();
+                output.data ="`y7`" + textBuilder.toString().trim() + "\n";
+                queue.add(output);
+                System.out.println(textBuilder.toString());
+                
+            } catch(Exception e) {
+                
+            }
+        }
+    }
     void startGame()
     {
-        try {
-            URL url = new URL("http://pool.cloud.chessclub.com/");
-            URLConnection con = url.openConnection();
-            InputStream inputStream = con.getInputStream();
-            StringBuilder textBuilder = new StringBuilder();
-                try (Reader reader = new BufferedReader(new InputStreamReader
-                  (inputStream, StandardCharsets.UTF_8))) {
-                    int c = 0;
-                    while ((c = reader.read()) != -1) {
-                        textBuilder.append((char) c);
-                    }
-                }
-            System.out.println(textBuilder.toString());
-            
-        } catch(Exception e) {
-            
-        }
+        startGameButton.setEnabled(false);
+        Timer timer = new Timer();
+        timer.schedule(new enableStartGameTimer(),1000);
+        GameStarterClass enabler = new GameStarterClass();
+         Thread t_start = new Thread(enabler);
+         t_start.start();
+        
         
     }
     
@@ -344,6 +362,26 @@ void setLayout()
     void openToGames()
     {
         
+    }
+    
+    public class enableStartGameTimer extends TimerTask
+    {
+        @Override
+        public void run() {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      if(startGameButton != null) {
+                          startGameButton.setEnabled(true);
+                      }
+                  } catch (Exception e1) {
+
+                  }
+                }
+              });
+            
+        }
     }
     
    

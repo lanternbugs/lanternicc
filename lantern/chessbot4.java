@@ -1309,6 +1309,40 @@ void writeLevel1(routing console, String thetell)
 // if console type is 5 , finger special
     checkForChallenge(thetell);
     checkForChallengeRemoved(thetell);
+    if(console.type == 111)
+    {
+        if(thetell.toLowerCase().trim().startsWith("created correspondence game")) {
+            int index = thetell.toLowerCase().indexOf("left the following message");
+            String postTell = "";
+            if(index > -1) {
+                postTell = thetell.substring(index, thetell.length());
+                thetell = thetell.substring(0, index);
+            }else {
+                index = thetell.toLowerCase().indexOf("added (and emailed");
+                if(index > -1) {
+                    postTell = thetell.substring(index, thetell.length());
+                    thetell = thetell.substring(0, index);
+                }
+            }
+            sharedVariables.updateCorrStatusBar(thetell);
+            try {
+                if(sharedVariables.makeSounds == true)
+            {
+                Sound nsound=new Sound(sharedVariables.songs[4]);
+            }
+                }
+            catch(Exception notifysound){}
+            if(!postTell.equals("")) {
+                normalLineProcessing(postTell);
+            }
+            return;
+        } else {
+            normalLineProcessing(thetell);
+            return;
+        }
+        
+        
+    }
     if(console.type == 11)
     {
         if(thetell.startsWith("Are you sure you want to play")) {
@@ -1690,6 +1724,8 @@ int processLevel1(String myinput, int depth, routing console)
 						console.type=4;// save pgn
 						if(consoleChar == 'f')
 						console.type=5;// lookup user
+                            if(consoleChar == 'y')
+                            console.type=111;// correspondence start game
                         if(consoleChar == 'r')
                         console.type=11;// correspondence
 						if(consoleChar == 'e')
@@ -2655,11 +2691,14 @@ int gamenum=0;
         if(sharedVariables.tellTimestamp == true)
         chatTime2=getATimestamp();
 
-        String theNotifyTell = chatTime2 + "Correspondence: " + dg.getArg(2) + " has been played in game " + dg.getArg(1) + ". - \"examine #" + dg.getArg(1) + "\"\n";
+        String theNotifyTell = "Correspondence: " + dg.getArg(2) + " has been played in game " + dg.getArg(1) + ". - \"examine #" + dg.getArg(1) + "\"\n";
         String opponents = getCorrespondenceOpponentsForGame(dg.getArg(1));
         if(!opponents.equals("")) {
-            theNotifyTell = chatTime2 + "Correspondence: " + dg.getArg(2) + " has been played in  "  + opponents + " - \"examine #" + dg.getArg(1) + "\"\n";
+            theNotifyTell = "Correspondence: " + dg.getArg(2) + " has been played in  "  + opponents + " - \"examine #" + dg.getArg(1) + "\"\n";
         }
+        
+        sharedVariables.updateCorrStatusBar(theNotifyTell);
+        theNotifyTell = chatTime2 + theNotifyTell;
         StyledDocument doc;
         // we use main console now for notifications -- 0
 
