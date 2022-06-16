@@ -1361,7 +1361,7 @@ class Multiframe extends JFrame
     // .. / Chat Timestamp /
     channelTimestamp = new JCheckBoxMenuItem("Timestamp Channels and Kibs");
     shoutTimestamp = new JCheckBoxMenuItem("Timestamp Shouts");
-    tellTimestamp = new JCheckBoxMenuItem("Timestamp Tells");
+    tellTimestamp = new JCheckBoxMenuItem("Timestamp Tells and Notifications");
     leftNameTimestamp = new JCheckBoxMenuItem("Timestamp To Left Of Name");
     qtellTimestamp = new JCheckBoxMenuItem("Timestamp Channel Qtells");
     reconnectTimestamp = new JCheckBoxMenuItem("Timestamp Connecting");
@@ -4393,7 +4393,7 @@ dot.setVisible(true);
       channels.timeStamp24hr = !channels.timeStamp24hr;
       timeStamp24hr.setSelected(channels.timeStamp24hr);
 
-    } else if (action.equals("Timestamp Tells")) {
+    } else if (action.equals("Timestamp Tells and Notifications")) {
       sharedVariables.tellTimestamp = !sharedVariables.tellTimestamp;
       tellTimestamp.setSelected(sharedVariables.tellTimestamp);
 
