@@ -404,7 +404,7 @@ t.start();
                   public void run() {
                   try {
                       if(masterFrame.notifyBookLabel != null) {
-                          masterFrame.notifyBookLabel.setText("  Book  ");
+                          masterFrame.notifyBookLabel.setText("  Opening Explorer  ");
                       }
                   } catch (Exception e1) {
 
@@ -413,13 +413,46 @@ t.start();
               });
         }
         
-        if(masterFrame.notifyBookLabel != null && masterFrame.notifyBookLabel.getText().toLowerCase().contains("book") && !examining) {
+        if(masterFrame.notifyBookLabel != null && masterFrame.notifyBookLabel.getText().toLowerCase().contains("opening explorer") && !examining) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                   public void run() {
                   try {
                       if(masterFrame.notifyBookLabel != null) {
                           masterFrame.notifyBookLabel.setText("   Notify   ");
+                      }
+                  } catch (Exception e1) {
+
+                  }
+                }
+              });
+        }
+        
+        
+        
+        
+        if(masterFrame.topGamesFlipLabel != null && masterFrame.topGamesFlipLabel.getText().toLowerCase().contains("top games") && examining) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      if(masterFrame.topGamesFlipLabel != null) {
+                          masterFrame.topGamesFlipLabel.setText("  Flip  ");
+                      }
+                  } catch (Exception e1) {
+
+                  }
+                }
+              });
+        }
+        
+        if(masterFrame.topGamesFlipLabel != null && masterFrame.topGamesFlipLabel.getText().toLowerCase().contains("flip") && !examining) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                  public void run() {
+                  try {
+                      if(masterFrame.topGamesFlipLabel != null) {
+                          masterFrame.topGamesFlipLabel.setText("   Top Games   ");
                       }
                   } catch (Exception e1) {
 

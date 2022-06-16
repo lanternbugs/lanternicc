@@ -5874,7 +5874,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
   {
 
      toolBarPanelClass(JLabel toggleEngineLabel, JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
-     JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesLabel, JLabel notifyBookLabel, JToolBar toolBar)
+     JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesFlipLabel, JLabel notifyBookLabel, JToolBar toolBar)
      {
     GroupLayout layout = new GroupLayout(toolBar);
     SequentialGroup hgroup = layout.createSequentialGroup();
@@ -5887,13 +5887,14 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
          hgroup.addComponent(toggleEngineLabel);
     //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //hgroup.addComponent(scripterLabel);
-         hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-         hgroup.addComponent(notifyBookLabel);
+        
         if(!channels.fics) {
             
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(topGamesLabel);
+            hgroup.addComponent(topGamesFlipLabel);
         }
+         hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+         hgroup.addComponent(notifyBookLabel);
     
     hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hgroup.addComponent(seeksLabel, 100, 100, 100);
@@ -5926,7 +5927,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     //vgroup.addComponent(scripterLabel);
          vgroup.addComponent(notifyBookLabel);
         if(!channels.fics) {
-            vgroup.addComponent(topGamesLabel);
+            vgroup.addComponent(topGamesFlipLabel);
             
         }
     
@@ -5946,6 +5947,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     }
   }
   JLabel toggleEngineLabel;
+      JLabel  topGamesFlipLabel;
       boolean toggleEngineEnabled = true;
   JLabel notifyBookLabel;
   void makeToolBar() {
@@ -5963,7 +5965,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     JLabel activitesLabel = new JLabel();
     JLabel userbuttonLabel = new JLabel();
     JLabel  scripterLabel = new JLabel();
-    JLabel  topGamesLabel = new JLabel();
+    topGamesFlipLabel = new JLabel();
     notifyBookLabel = new JLabel();
    for (int a=0; a<10; a++) {
       sharedVariables.mybuttons[a] = new JButton("" + a);
@@ -5983,7 +5985,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     }
 
     toolBarPanelClass toolBarPanel = new toolBarPanelClass(toggleEngineLabel, pure1, pure3, pure5, pure15, pure25, pure960,
-     seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesLabel, notifyBookLabel, toolBar);
+     seeksLabel, activitesLabel, userbuttonLabel, scripterLabel, topGamesFlipLabel, notifyBookLabel, toolBar);
 
  /*
     pure1.setIcon(sharedVariables.pure1);
@@ -6106,16 +6108,21 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
         public void mouseClicked(MouseEvent me) {}
       });
 
-    topGamesLabel.setText("   Top Games   ");
-   // topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
-    topGamesLabel.setOpaque(true);
-    topGamesLabel.setBackground(new Color(245,245,250));
-    topGamesLabel.addMouseListener(new MouseAdapter() {
+      topGamesFlipLabel.setText("   Top Games   ");
+      topGamesFlipLabel.setOpaque(true);
+      topGamesFlipLabel.setBackground(new Color(245,245,250));
+      topGamesFlipLabel.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
           if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
             ;
           else {
-            launchTopGames();
+              if(topGamesFlipLabel.getText().toLowerCase().contains("top games")) {
+                  launchTopGames();
+              } else {
+                  myoutput output = new myoutput();
+                  output.data = "multi flip\n";
+                  queue.add(output);
+              }
           }// end else
         }
 
@@ -6126,7 +6133,6 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
       });
 
     notifyBookLabel.setText("   Notify   ");
-   // topGamesLabel.setHorizontalAlignment( SwingConstants.CENTER );
       notifyBookLabel.setOpaque(true);
       notifyBookLabel.setBackground(new Color(245,245,250));
       notifyBookLabel.addMouseListener(new MouseAdapter() {
