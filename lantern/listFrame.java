@@ -70,9 +70,9 @@ setTitle("Activities Window");
 // make menu
 JMenuBar myMenu = new JMenuBar();
 
- JMenu mymenu1 = new JMenu("Menu");
+ JMenu mymenu1 = new JMenu("Window");
 
-   notontop = new JCheckBoxMenuItem("Window");
+   notontop = new JCheckBoxMenuItem("On Top Window");
    notontop.setSelected(true);
   notontop.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,6 @@ myMenu.add(mymenu1);
     JMenu mymenu2 = new JMenu("Font");
 
     JMenuItem fontchange = new JMenuItem("Set Event List/Tournaments Font");
-    fontchange.setSelected(true);
     fontchange.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
               master.setEventListFont();
@@ -102,6 +101,35 @@ myMenu.add(mymenu1);
 
 
    myMenu.add(mymenu2);
+    
+    
+    JMenu mymenu3 = new JMenu("Actions");
+
+    JMenuItem placeSeek = new JMenuItem("Place a Seek");
+    placeSeek.setSelected(true);
+    placeSeek.addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent e) {
+              master.openSeekAGame();
+
+
+               }
+          });
+    JMenuItem addFriend = new JMenuItem("Add a Friend");
+    addFriend.setSelected(true);
+    addFriend.addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent e) {
+              master.openAddAFriend();
+
+
+               }
+          });
+     mymenu3.add(placeSeek);
+    mymenu3.add(addFriend);
+
+
+    myMenu.add(mymenu3);
+    
+    
 setJMenuBar(myMenu);
 myMenu.setVisible(true);
 

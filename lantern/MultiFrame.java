@@ -2361,6 +2361,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenu helpmenu = new JMenu("Help");
     // Help /
       JMenuItem joinrenewhelp = new JMenuItem("Join");
+      JMenuItem helpdiscount = new JMenuItem("Help Discount");
         JMenuItem iccstore2 = new JMenuItem("ICC Store");
       JMenuItem passwordhelp = new JMenuItem("Lost Password");
         JMenuItem chesscoaches = new JMenuItem("Chess Coaches");
@@ -2390,6 +2391,7 @@ myboardappearancemenu.add(consoleaspect);
     // Help /
       if(!channels.fics) {
           helpmenu.add(joinrenewhelp);
+          helpmenu.add(helpdiscount);
           helpmenu.add(passwordhelp);
           helpmenu.add(iccstore2);
           helpmenu.add(chesscoaches);
@@ -2427,6 +2429,7 @@ myboardappearancemenu.add(consoleaspect);
     infohelp.addActionListener(this);
     commandhelp.addActionListener(this);
     joinrenewhelp.addActionListener(this);
+      helpdiscount.addActionListener(this);
     passwordhelp.addActionListener(this);
       chesscoaches.addActionListener(this);
       iccstore2.addActionListener(this);
@@ -3738,6 +3741,7 @@ dot.setVisible(true);
                action.equals("Show My Profile and Ratings") ||
                action.equals("Enter Examination Mode") ||
                action.equals("Examine My Last Game") ||
+               action.equals("Help Discount") ||
                action.equals("Observe High Rated Game") ||
                action.equals("Observe High Rated 5-Minute Game") ||
                action.equals("Observe High Rated 15-Minute Game") ||
@@ -3761,6 +3765,7 @@ dot.setVisible(true);
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online in M0 Tab") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
+             (action.equals("Help Discount") ? "Help discount" :
              (action.equals("Rematch") ? "Rematch" :
              (action.equals("Examine My Last Game") && !channels.fics ? "Examine -1" :
               (action.equals("Examine My Last Game") && channels.fics ? "exl" :
@@ -3769,7 +3774,7 @@ dot.setVisible(true);
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match"))))))))))))))) + "\n";
+                                 "Match")))))))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC") && !actionmess.startsWith("`"))
@@ -3785,8 +3790,7 @@ dot.setVisible(true);
     }
 
     else if (action.equals("Add a Friend")) {
-      addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
-        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+      openAddAFriend();
 
     } else if (action.equals("Lookup User")) {
       LookupUserDialog frame = new LookupUserDialog(this, false, queue);
@@ -5263,7 +5267,12 @@ dot.setVisible(true);
         for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
           consoleSubframes[a].channelTabs[aa].repaint();
   }
-
+  void openAddAFriend()
+  {
+      addFriendDialog frame = new addFriendDialog(this, false, sharedVariables, queue);
+        frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
+          
+  }
   void checkItalicsBehavior(int n) {
     /*
     if (n == 0)
@@ -6257,7 +6266,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
   void setToggleEngineToBeEnabled()
       {
           Timer timer = new Timer();
-          timer.schedule(new ToggleEngineTimer(),1000);
+          timer.schedule(new ToggleEngineTimer(),500);
       }
       
       public class ToggleEngineTimer extends TimerTask
