@@ -189,7 +189,7 @@ public void makehappen(int i)
                             if(gameData.LookingAt == oldLookingAt && tryOnce == true) {
                               tryOnce = false;
                             try {
-                              String promptText = "Click tab to toggle analysis back on\n";
+                              String promptText = "Analysis is running. Click tab to toggle view back to analysis. Go to options / Stop Engine to stop.\n";
                               sharedVariables.mygamedocs[gameData.LookingAt].insertString(sharedVariables.mygamedocs[gameData.LookingAt].getLength(), promptText, null);
                             }catch(Exception ee){}
 
