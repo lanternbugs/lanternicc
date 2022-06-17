@@ -440,7 +440,7 @@ channels()
         version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-23";
+        version = "v6.26e-24";
     }
 
     try {

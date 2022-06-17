@@ -374,12 +374,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 
-				JMenuItem item5 = new JMenuItem("Finger " + historyOpponent);
+				JMenuItem item5 = new JMenuItem("Lookup " + historyOpponent);
 				 item5.addActionListener(new ActionListener() {
           		public void actionPerformed(ActionEvent e) {
 
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + "Finger " + historyOpponent + "\n";
+				 	output.data="`f1`" + "Finger " + historyOpponent + "\n";
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
