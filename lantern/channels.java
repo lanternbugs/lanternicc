@@ -440,7 +440,7 @@ channels()
         version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-22";
+        version = "v6.26e-23";
     }
 
     try {
@@ -1076,8 +1076,7 @@ void setChatBufferSize()
               public void run() {
               try {
                   if(corrPanel != null && corrPanel.statusLabel != null) {
-                      corrPanel.statusLabel.setText("Status: " + text);
-                      corrPanel.statusLabel.repaint();
+                      corrPanel.updateStatusBar("Status: " + text);
                   }
               } catch (Exception e1) {
 

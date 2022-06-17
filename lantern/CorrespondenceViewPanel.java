@@ -40,6 +40,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Clipboard;
 
 
 class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
@@ -227,6 +229,7 @@ void setLayout()
                     String gameIndex = (String)corrTable.getModel().getValueAt(row,0);
                      String whiteName = (String)corrTable.getModel().getValueAt(row,2);
                      String blackName = (String)corrTable.getModel().getValueAt(row,4);
+                     String opponent = whiteName.toLowerCase().trim().equals(sharedVariables.whoAmI.toLowerCase().trim()) ? blackName : whiteName;
                      
                     
 
@@ -239,26 +242,17 @@ void setLayout()
 
 
                   //row = sorter.convertRowIndexToModel(row);
-                     JPopupMenu menu2=new JPopupMenu("Popup2");
-                                     JMenuItem item1 = new JMenuItem("Examine");
-                                      item1.addActionListener(new ActionListener() {
-                                       public void actionPerformed(ActionEvent e) {
-                                         String examineString = "multi examine #" + gameIndex;
-                                           myoutput output = new myoutput();
-                                           output.data="`c0`" + examineString + "\n";
-
-                                           output.consoleNumber=0;
-                                             queue.add(output);
-
-                                     }
-                                          
-
-                            });
-                    
+                     JPopupMenu menu2=new JPopupMenu("Correspondence Game");
+                    JMenuItem item1 = new JMenuItem("Examine #" + gameIndex);
+                    item1.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            sendICSCommand("examine #" + gameIndex);
+                        }
+                    });
                      menu2.add(item1);
                      
-                     JMenuItem item2 = new JMenuItem("Move in Game");
-                      item2.addActionListener(new ActionListener() {
+                     JMenuItem itemMove = new JMenuItem("Move in Game");
+                     itemMove.addActionListener(new ActionListener() {
                        public void actionPerformed(ActionEvent e) {
                            CorrespondenceMoveDialog dialog = new CorrespondenceMoveDialog(homeFrame, sharedVariables, queue, gameIndex, whiteName + " vs " + blackName);
                            dialog.setSize(800,300);
@@ -279,7 +273,66 @@ void setLayout()
 
             });
     
-     menu2.add(item2);
+     menu2.add(itemMove);
+                     
+                     JMenuItem item2 = new JMenuItem("Draw Offer");
+                     item2.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSYesNoCommand("draw #" + gameIndex);
+                             updateStatusBar("Draw offer sent. Check Console M0 Tab for server feedback.");
+                         }
+                     });
+                      menu2.add(item2);
+                     
+                     JMenuItem item3 = new JMenuItem("Abort Offer");
+                     item3.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSYesNoCommand("abort #" + gameIndex);
+                             updateStatusBar("Aort offer sent or automatic on move one. Check Console M0 Tab for server feedback.");
+                         }
+                     });
+                      menu2.add(item3);
+                     
+                     JMenuItem item4 = new JMenuItem("Resign Game #" + gameIndex);
+                     item4.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSYesNoCommand("resign #" + gameIndex);
+                             updateStatusBar("Resign sent. Check Console M0 Tab for server feedback.");
+                         }
+                     });
+                      menu2.add(item4);
+                     
+                     
+                    /* JMenuItem item5 = new JMenuItem("Delete Game");
+                     item5.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSCommand("cc-delete #" + gameIndex);
+                             // need to clear data first
+                     Command("cc-list");
+                             updateStatusBar("Delete sent. Check list or Console M0 Tab for feedback.");
+                         }
+                     });
+                      menu2.add(item5);*/
+                     
+                     JMenuItem item6 = new JMenuItem("Copy " + gameIndex);
+                     item6.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             String myString = gameIndex;
+                             StringSelection stringSelection = new StringSelection(myString);
+                             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                             clipboard.setContents(stringSelection, null);
+                         }
+                     });
+                      menu2.add(item6);
+                     
+                     JMenuItem item7 = new JMenuItem("Lookup " + opponent);
+                     item7.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSLookupCommand("Finger " + opponent);
+                             updateStatusBar("Resign sent. Check Console M0 Tab for server feedback.");
+                         }
+                     });
+                      menu2.add(item7);
                      menu2.show(e.getComponent(),e.getX(),e.getY());
 
 
@@ -385,6 +438,35 @@ void setLayout()
               });
             
         }
+    }
+    
+    void sendICSCommand(String command) {
+        sendCommand(command, "`c0`");
+    }
+    
+    void sendICSLookupCommand(String command)
+    {
+        sendCommand(command, "`fl`");
+    }
+    
+    void sendICSYesNoCommand(String command)
+    {
+        sendCommand(command, "`r1`");
+    }
+    
+    void sendCommand(String command, String prefix)
+    {
+        String examineString = "multi " + command;
+        myoutput output = new myoutput();
+        output.data= prefix + examineString + "\n";
+        output.consoleNumber=0;
+        queue.add(output);
+    }
+    
+    void updateStatusBar(String text)
+    {
+        statusLabel.setText("Status: " + text);
+        statusLabel.repaint();
     }
     
    
