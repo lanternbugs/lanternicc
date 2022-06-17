@@ -1150,7 +1150,7 @@ class Multiframe extends JFrame
     JMenuItem nameBackgroundColor = new JMenuItem("Names List Background Color");
     JMenuItem namelistFont = new JMenuItem("Names List Font");
     // .. /
-    JMenuItem eventsFont = new JMenuItem("Events List Font");
+    JMenuItem eventsFont = new JMenuItem("Event List/Tournaments Font");
     JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
     JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
     // .. / Tabs Colors Menu /
@@ -3817,7 +3817,7 @@ dot.setVisible(true);
       }
       sharedVariables.openUrl("http://statistics.chessclub.com/Embed/Ratings?user=" + thename + "#");
 
-    } else if(action.equals("Events List Font")) {
+    } else if(action.equals("Event List/Tournaments Font")) {
      setEventListFont();
 
     } else if (action.equals("Names List Font")) {
@@ -4765,7 +4765,7 @@ dot.setVisible(true);
       
       void setEventListFont()
       {
-          JFrame f = new JFrame("Events List Font");
+          JFrame f = new JFrame("Event List/Tournaments Font");
           FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
           fc.setVisible(true);
           Font fnt = fc.getSelectedFont();

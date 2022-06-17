@@ -30,7 +30,6 @@ import java.lang.Integer;
 import javax.swing.text.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.applet.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
