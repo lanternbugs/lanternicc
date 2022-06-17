@@ -288,7 +288,7 @@ void setLayout()
                      item3.addActionListener(new ActionListener() {
                          public void actionPerformed(ActionEvent e) {
                              sendICSYesNoCommand("abort #" + gameIndex);
-                             updateStatusBar("Aort offer sent or automatic on move one. Check Console M0 Tab for server feedback.");
+                             updateStatusBar("Abort offer sent or automatic on move one. Check Console M0 Tab for server feedback.");
                          }
                      });
                       menu2.add(item3);

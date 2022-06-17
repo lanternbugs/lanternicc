@@ -51,7 +51,7 @@ void setWarning(String s)
 
 Popup(JFrame frame, boolean mybool, String warning, channels sharedVariables1)
 {
-super(frame, mybool);
+super(frame, false);// doesnt take all focus
     setLocation(frame.getLocation().x + sharedVariables1.cornerDistance, frame.getLocation().y + sharedVariables1.cornerDistance);// if they set it after it will use the later
 
 sharedVariables = sharedVariables1;
