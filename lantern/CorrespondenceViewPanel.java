@@ -53,7 +53,7 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
     JLabel openToGamesLabel = new JLabel("Open to Random Games");
     JButton openToGamesButton;
     JButton helpCorrespondenceButton;
-    JLabel statusLabel = new JLabel("status: ");
+    JLabel statusLabel = new JLabel("Status: ");
     JLabel doubleClickHintLabel = new JLabel("Double click on a game entry for options like making a move or viewing.");
     int doubleClickHintLabelFontSizeToUse = 16;
     JButton refreshGamesButton;
