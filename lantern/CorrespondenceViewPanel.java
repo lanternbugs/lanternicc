@@ -29,7 +29,6 @@ import java.lang.Integer;
 import javax.swing.text.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.applet.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -56,6 +55,7 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
     JButton helpCorrespondenceButton;
     JLabel statusLabel = new JLabel("status: ");
     JLabel doubleClickHintLabel = new JLabel("Double click on a game entry for options like making a move or viewing.");
+    int doubleClickHintLabelFontSizeToUse = 16;
     JButton refreshGamesButton;
     JButton startGameButton;
 
@@ -114,6 +114,9 @@ void initComponents(){
     } );
     setBackground(Color.white);
     addDoubleClickListener();
+    Font doubleClickHintLabelFont = doubleClickHintLabel.getFont();
+    doubleClickHintLabel.setFont(new Font(doubleClickHintLabelFont.getName(), Font.PLAIN, doubleClickHintLabelFontSizeToUse));
+    //System.out.println("font size is " + doubleClickHintLabel.getFont().getSize());
 setLayout();
 
 }// end inti components
