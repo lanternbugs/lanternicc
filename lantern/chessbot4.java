@@ -1377,7 +1377,7 @@ void writeLevel1(routing console, String thetell)
     }
     if(console.type == 11)
     {
-        if(thetell.startsWith("Are you sure you want to")) {
+        if(thetell.contains("Are you sure you want to")) {
             try {
                 if(qsuggestDialog!=null)
                 {
