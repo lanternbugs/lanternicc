@@ -55,19 +55,7 @@ okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event)
 				{
                                   //String mytext= field.getText();
-				 try
-			 	{
-					if(field.getText().length()>0)
-					{
-					 String mess = "+Notify " + field.getText() + "\n";
-					 myoutput data = new myoutput();
-					 data.data=mess;
-					 data.consoleNumber=0;
-					 queue.add(data);
-					}
-                                        dispose();
-				}
-				catch(Exception dummy){}
+				 addFriendAction();
 
 			}// end event
 
@@ -85,9 +73,56 @@ cancelButton.addActionListener(new ActionListener() {
 			}// end event
 
 		});
-
+    setKeyListener();
 setVisible(true);
 }// end method
 
+    
+    void setKeyListener()
+    {
+        field.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+              int a = e.getKeyCode();
+              int gme = e.getModifiersEx();
+            
+              //if (a == 27) {
+              if (a == KeyEvent.VK_ESCAPE) {
+                  field.setText("");
+              }
+
+              //if (a == 10) {
+              if (a == KeyEvent.VK_ENTER) {
+                  addFriendAction();
+              }// end enter
+                }// end key pressed
+
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            /** Handle the key-released event from the text field. */
+            public void keyReleased(KeyEvent e) {
+
+            }
+          });
+    }
+    
+    
+    void addFriendAction()
+    {
+        try
+        {
+           if(field.getText().length()>0)
+           {
+            String mess = "+Notify " + field.getText() + "\n";
+            myoutput data = new myoutput();
+            data.data=mess;
+            data.consoleNumber=0;
+            queue.add(data);
+           }
+                               dispose();
+       }
+       catch(Exception dummy){}
+    }
 
 }// end class
