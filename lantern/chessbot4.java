@@ -2747,7 +2747,7 @@ int gamenum=0;
         
 
         try {
-            if(sharedVariables.makeSounds == true)
+            if(sharedVariables.makeSounds == true && sharedVariables.correspondenceNotificationSounds)
         {
             //sharedVariables.specificSounds[4]== true
             Sound nsound=new Sound(sharedVariables.songs[4]);
