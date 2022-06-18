@@ -440,7 +440,7 @@ channels()
         version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-26";
+        version = "v6.26e-28";
     }
 
     try {
@@ -1054,6 +1054,21 @@ void setChatBufferSize()
         ccListColumnNames.add("comment");
     }
     
+    void updateAutoExamineStatus()
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                  if(corrPanel != null && corrPanel.homeFrame != null)
+                  corrPanel.homeFrame.autoExamine.setSelected(myseek.examine);
+              } catch (Exception e1) {
+
+              }
+            }
+          });
+    }
+    
     void updateCorrTable() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -1067,6 +1082,21 @@ void setChatBufferSize()
             }
           });
         
+    }
+    
+    void updateCorrespondenceOpen()
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+              public void run() {
+              try {
+                  if(corrPanel != null)
+                  corrPanel.updateOpenToRandomGamesButton();
+              } catch (Exception e1) {
+
+              }
+            }
+          });
     }
     
     void updateCorrStatusBar(final String text)
@@ -1623,6 +1653,8 @@ int inc;
 boolean rated;
 boolean manual;
 boolean formula;
+boolean ccopen;// not used in my seek but we can track it here
+boolean examine; // not used as well in a seek but tracked here
 int wild;
 int color;
 boolean saveSettings;
@@ -1636,7 +1668,9 @@ boolean saveSettings;
 		rated = true;
 		manual = false;
 		formula = false;
+        examine = false;
 		wild=0;
+        ccopen = false;
                 color=0;
                 saveSettings=true;
 	}
@@ -1658,8 +1692,8 @@ class preselectedBoards {
 		dark[0]= new Color(71,203,211);
 
 		// tan
-		light[1]=new Color(204, 204, 128);
-		dark[1]= new Color(204,139,61);
+		light[1]=new Color(246, 214, 171);
+		dark[1]= new Color(190,124,86);
 
 		// gray
 		light[2]=new Color(255, 255, 255);
