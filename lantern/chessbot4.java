@@ -486,22 +486,21 @@ t.start();
            text += " " + "P" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
            if(sharedVariables.mygame[myboards[a].gameData.LookingAt].state == sharedVariables.STATE_OBSERVING)
            {
-               if(sharedVariables.mygame[myboards[a].gameData.LookingAt].time == 0 &&
+             /*  if(sharedVariables.mygame[myboards[a].gameData.LookingAt].time == 0 &&
                   sharedVariables.mygame[myboards[a].gameData.LookingAt].inc == 0) {
                    text = "COR";
-               } else {
-                   text += " " + "O" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-               }
+               } else */
+               text += " " + "O" + sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
            }
            if(sharedVariables.openBoards[a].getText().equals(text))
            continue;
            else {
                sharedVariables.openBoards[a].setText(text);
-               if(text.equals("COR")) {
+              /* if(text.equals("COR")) {
                    if(myboards[a].myconsolepanel != null && myboards[a].myconsolepanel.channelTabs[a] != null) {
                        myboards[a].myconsolepanel.channelTabs[a].setText(text);
                    }
-               }
+               }*/
                
            }
  
