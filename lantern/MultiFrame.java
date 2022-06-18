@@ -4943,9 +4943,8 @@ dot.setVisible(true);
           try {
               for(int a = 0; a< sharedVariables.ccListData.size(); a++) {
                   Vector<String> game = sharedVariables.ccListData.get(a);
-                  System.out.println("2: " + game.get(2) + " 4: " + game.get(4));
                   if(game.get(2).toLowerCase().equals(wName) && game.get(4).toLowerCase().equals(bName)) {
-                      if(game.get(game.size() -1).trim().equals(""))
+                      if(game.get(game.size() -1).trim().equals("") || game.get(game.size() -1).trim().contains("?"))
                       return true;
                   }
               }
