@@ -3029,6 +3029,25 @@ if(dg.getArg(0).equals("27"))
                   if(dg.getArg(1).equals("wild"))
                   sharedVariables.myseek.wild=Integer.parseInt(dg.getArg(2));
 
+                  if(dg.getArg(1).equals("ccopen"))
+                  {
+                       if(Integer.parseInt(dg.getArg(2)) == 0)
+                        sharedVariables.myseek.ccopen=false;
+                        else
+                        sharedVariables.myseek.ccopen=true;
+                      sharedVariables.updateCorrespondenceOpen();
+                  }
+                  if(dg.getArg(1).equals("examine"))
+                  {
+                           if(Integer.parseInt(dg.getArg(2)) == 0)
+                            sharedVariables.myseek.examine=false;
+                            else
+                            sharedVariables.myseek.examine=true;
+                          sharedVariables.updateAutoExamineStatus();
+                  }
+                      
+                      
+                      
                   if(dg.getArg(1).equals("rated"))
                   {
                    if(Integer.parseInt(dg.getArg(2)) == 0)
