@@ -1068,7 +1068,8 @@ class Multiframe extends JFrame
       // end try
     } catch (Exception dui) {}
   }// end method setupchannelnotify
-
+    
+ JCheckBoxMenuItem autoExamine; // accessed outside this class to update from telnet
   public void createMenu() {
 
     boardarray = new JCheckBoxMenuItem[graphics.maxBoards];
@@ -1752,6 +1753,7 @@ class Multiframe extends JFrame
     JMenuItem showexam = new JMenuItem("Enter Examination Mode");
     JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
+    autoExamine = new JCheckBoxMenuItem("Auto Examine After Playing");
     JMenu boardDesign = new JMenu("Board Design");
     // .. / Board Design /
     boarddesignarray[0] = new JCheckBoxMenuItem("Original");
@@ -1970,6 +1972,7 @@ class Multiframe extends JFrame
     myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
       myboardmenu.add(unfollowBroadcast);
+      myboardmenu.add(autoExamine);
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
       if(!channels.fics) {
@@ -2230,6 +2233,7 @@ myboardappearancemenu.add(consoleaspect);
     showexam.addActionListener(this);
     showexamlast.addActionListener(this);
       unfollowBroadcast.addActionListener(this);
+    autoExamine.addActionListener(this);
     lcolor.addActionListener(this);
     dcolor.addActionListener(this);
     bbackcolor.addActionListener(this);
@@ -3746,6 +3750,7 @@ dot.setVisible(true);
                action.equals("Observe High Rated 5-Minute Game") ||
                action.equals("Observe High Rated 15-Minute Game") ||
                action.equals("Stop Following") ||
+               action.equals("Auto Examine After Playing") ||
                action.equals("Follow Broadcast- When On") ||
                action.equals("Disconnect") ||
                action.equals("Rematch") ||
@@ -3773,8 +3778,9 @@ dot.setVisible(true);
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
                  (action.equals("Stop Following") ? "Unfollow" :
+                  (action.equals("Auto Examine After Playing") ? "set examine " + !sharedVariables.myseek.examine :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match")))))))))))))))) + "\n";
+                                 "Match"))))))))))))))))) + "\n";
 
 
       if (sharedVariables.myServer.equals("ICC") && !actionmess.startsWith("`"))
