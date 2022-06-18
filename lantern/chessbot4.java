@@ -3243,7 +3243,7 @@ if(chatTime2.length() > 0)
 	if(dg.getArg(3).equals(""))
 	{
 	myStyles.blocks[3]=thetell.length();
-	myStyles.colors[3] = channelcolor;
+	myStyles.colors[3] = atNameDone ? channelcolor.brighter() : channelcolor;;
 
 	}
 	else
@@ -3251,7 +3251,7 @@ if(chatTime2.length() > 0)
 		//myStyles.colors[3] = sharedVariables.channelTitlesColor;
 		myStyles.colors[3]=channelcolor.brighter();
 		myStyles.blocks[4]=thetell.length();
-		myStyles.colors[4] = channelcolor;
+		myStyles.colors[4] = atNameDone ? channelcolor.brighter() : channelcolor;
 		myStyles.top=5;
 
 	}
@@ -3267,15 +3267,16 @@ else
 	if(dg.getArg(3).equals(""))
 	{
 		myStyles.blocks[2]=thetell.length();
-		myStyles.colors[2] = channelcolor;
-	}
+		myStyles.colors[2] = atNameDone ? channelcolor.brighter() : channelcolor;
+        
+    }
 	else
 	{
 		myStyles.blocks[2]=myStyles.blocks[1] + dg.getArg(3).length() + 2;
 		//myStyles.colors[2]= sharedVariables.channelTitlesColor;
 		myStyles.colors[2]=channelcolor.brighter();
 		myStyles.blocks[3]=thetell.length();
-		myStyles.colors[3]= channelcolor;
+		myStyles.colors[3]= atNameDone ? channelcolor.brighter() : channelcolor;
 		myStyles.top=4;
 	}
 
