@@ -472,7 +472,7 @@ try { engineDoc=engineField.getStyledDocument(); } catch(Exception enginestuff){
 mydocs = new StyledDocument[maxConsoleTabs];
 
 if(operatingSystem.equals("win")) {
- stockfishName = "l-stockfish_8_x64.exe";
+ stockfishName = "stockfish_15_x64_popcnt.exe";
 } else if(operatingSystem.equals("unix"))
 {
  stockfishName = "stockfish_8_x64"; 

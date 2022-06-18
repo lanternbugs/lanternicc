@@ -64,6 +64,9 @@ class InstallBookDialog  extends JDialog
       if(channels.stockfishName.contains("10")) {
        stockfish = "Stockfish 10";
       }
+        if(channels.stockfishName.contains("15")) {
+         stockfish = "Stockfish 15";
+        }
       if(type == mediocreChess5) {
        installEngine = true;
        setTitle("Extract Mediocre Chess Engine");

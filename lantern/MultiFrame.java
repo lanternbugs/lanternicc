@@ -1276,7 +1276,7 @@ class Multiframe extends JFrame
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     makeatnamesounds = new JCheckBoxMenuItem("Sounds for @yourname");
     // .. / (separator)
-    JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 8");
+    JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 15");
     if(sharedVariables.operatingSystem.equals("mac")) {
        stockfishanalysis = new JMenuItem("Analyze with Stockfish 10");
     }
@@ -2719,7 +2719,7 @@ myboardappearancemenu.add(consoleaspect);
         }
     }
     
-     else if(action.equals("Analyze with Stockfish 8") || action.equals("Analyze with Stockfish 10"))
+     else if(action.equals("Analyze with Stockfish 15") || action.equals("Analyze with Stockfish 10"))
     {
       startStockfish();
     }
