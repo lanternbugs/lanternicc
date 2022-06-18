@@ -1107,7 +1107,7 @@ void setChatBufferSize()
               public void run() {
               try {
                   if(corrPanel != null && corrPanel.statusLabel != null) {
-                      corrPanel.updateStatusBar("Status: " + text);
+                      corrPanel.updateStatusBar(text);
                   }
               } catch (Exception e1) {
 
