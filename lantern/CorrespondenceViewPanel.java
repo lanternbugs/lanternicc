@@ -50,7 +50,7 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
     JScrollPane scrollPane;
 	channels sharedVariables;
 	ConcurrentLinkedQueue<myoutput> queue;
-    JFrame homeFrame;
+    Multiframe homeFrame;
     JLabel dummyLabel;
     JLabel openToGamesLabel = new JLabel("Open to Random Games");
     JButton openToGamesButton;
@@ -60,9 +60,11 @@ class CorrespondenceViewPanel extends JPanel// implements InternalFrameListener
     int doubleClickHintLabelFontSizeToUse = 16;
     JButton refreshGamesButton;
     JButton startGameButton;
+    String openText = "Make Open";
+    String closedtext = "Make Closed";
 
 	
-CorrespondenceViewPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
+CorrespondenceViewPanel(Multiframe master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1)
 {
 sharedVariables=sharedVariables1;
 queue=queue1;
@@ -99,7 +101,7 @@ void initComponents(){
         startGame();
       }
     } );
-    openToGamesButton.setText("Make Open");
+    openToGamesButton.setText(openText);
     openToGamesButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         openToGames();
@@ -425,7 +427,9 @@ void setLayout()
     
     void openToGames()
     {
-        
+        myoutput output = new myoutput();
+        output.data = "multi set ccopen " + !sharedVariables.myseek.ccopen + "\n";
+        queue.add(output);
     }
     
     public class enableStartGameTimer extends TimerTask
@@ -475,6 +479,16 @@ void setLayout()
     {
         statusLabel.setText("Status: " + text);
         statusLabel.repaint();
+    }
+    
+    void updateOpenToRandomGamesButton()
+    {
+        if(sharedVariables.myseek.ccopen) {
+            openToGamesButton.setText(closedtext);
+        } else {
+            openToGamesButton.setText(openText);
+        }
+        openToGamesButton.repaint();
     }
     
    

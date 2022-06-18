@@ -88,12 +88,12 @@ seekPanel myseeks2;
 
 GroupLayout layout;
 
-JFrame homeFrame;
+Multiframe homeFrame;
 
 	//subframe [] consoleSubframes;
 
 //subframe(JFrame frame, boolean mybool)
-ActivitiesWindowPanel(JFrame master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, listClass tournamentList1, JFrame homeFrame1)
+ActivitiesWindowPanel(Multiframe master, channels sharedVariables1, ConcurrentLinkedQueue<myoutput> queue1, listClass eventsList1, listClass seeksList1, listClass computerSeeksList1, listClass notifyList1, listClass tournamentList1, Multiframe homeFrame1)
 {
 
 //super(frame, mybool);
