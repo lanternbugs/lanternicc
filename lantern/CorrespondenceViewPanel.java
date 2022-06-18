@@ -251,6 +251,14 @@ void setLayout()
                     });
                      menu2.add(item1);
                      
+                     JMenuItem spos = new JMenuItem("Sposition");
+                     spos.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             sendICSCommand("sposition #" + gameIndex);
+                         }
+                     });
+                      menu2.add(spos);
+                     
                      JMenuItem itemMove = new JMenuItem("Move in Game");
                      itemMove.addActionListener(new ActionListener() {
                        public void actionPerformed(ActionEvent e) {
