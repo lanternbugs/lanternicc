@@ -229,6 +229,7 @@ class Multiframe extends JFrame
   JCheckBoxMenuItem iloggedon;
   JCheckBoxMenuItem rotateaways;
   JCheckBoxMenuItem notifysound;
+  JCheckBoxMenuItem correspondenceNotificationSounds;
   JCheckBoxMenuItem qsuggestPopup;
    JCheckBoxMenuItem disableHyperlinks;
   JCheckBoxMenuItem autopopup;
@@ -520,6 +521,7 @@ class Multiframe extends JFrame
     randomArmy.          setSelected(sharedVariables.randomArmy);
     randomTiles.         setSelected(sharedVariables.randomBoardTiles);
     notifysound.         setSelected(sharedVariables.specificSounds[4]);
+    correspondenceNotificationSounds.setSelected(sharedVariables.correspondenceNotificationSounds);
     maketellsounds.      setSelected(sharedVariables.makeTellSounds);
     makeatnamesounds.    setSelected(sharedVariables.makeAtNameSounds);
     makemovesounds.      setSelected(sharedVariables.makeMoveSounds);
@@ -1270,6 +1272,7 @@ class Multiframe extends JFrame
     makemovesounds = new JCheckBoxMenuItem("Sounds for Moves");
     makedrawsounds = new JCheckBoxMenuItem("Sounds for Draw Offers");
     notifysound = new JCheckBoxMenuItem("Sounds for Notifications");
+    correspondenceNotificationSounds =  new JCheckBoxMenuItem("Sounds for Correspondence Notifications");
     maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
     makeatnamesounds = new JCheckBoxMenuItem("Sounds for @yourname");
     // .. / (separator)
@@ -1409,6 +1412,7 @@ class Multiframe extends JFrame
     soundmenu.add(makeatnamesounds);
     soundmenu.add(makedrawsounds);
     soundmenu.add(notifysound);
+    soundmenu.add(correspondenceNotificationSounds);
     soundmenu.add(maketellsounds);
     optionsmenu.add(showMugshots);
     optionsmenu.addSeparator();
@@ -1546,6 +1550,7 @@ class Multiframe extends JFrame
     hearsound.addActionListener(this);
      
     notifysound.addActionListener(this);
+    correspondenceNotificationSounds.addActionListener(this);
     ucimultipleone.addActionListener(this);
     ucimultipletwo.addActionListener(this);
     ucimultiplethree.addActionListener(this);
@@ -4503,6 +4508,11 @@ dot.setVisible(true);
     else if (action.equals("Sounds for Notifications")) {
       sharedVariables.specificSounds[4] = !sharedVariables.specificSounds[4];
       notifysound.setSelected(sharedVariables.specificSounds[4]);
+
+    }
+    else if (action.equals("Sounds for Correspondence Notifications")) {
+      sharedVariables.correspondenceNotificationSounds = !sharedVariables.correspondenceNotificationSounds;
+      correspondenceNotificationSounds.setSelected(sharedVariables.correspondenceNotificationSounds);
 
     }
     else if (action.equals("Sounds for Tells")) {

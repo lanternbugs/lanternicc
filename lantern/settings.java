@@ -700,6 +700,15 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
 		set_string = set_string + "0" + " ";
 	// closing
 		set_string = set_string + "[doneobservesounds] ";
+        
+        // correspondencesounds
+        set_string = set_string + "[correspondencesounds] ";
+        if(sharedVariables.correspondenceNotificationSounds == true)
+            set_string = set_string + "1" + " ";
+        else
+            set_string = set_string + "0" + " ";
+        // closing
+            set_string = set_string + "[correspondencesounds] ";
 
 	// tellsounds
 	set_string = set_string + "[tellsounds] ";
@@ -2549,6 +2558,17 @@ for(int cona = 0; cona < sharedVariables.openConsoleCount; cona++)
 					}
 					catch(Exception zzz){}
 				}
+                    if(temp.equals("[correspondencesounds]"))
+                {
+                try {
+                    int truth = Integer.parseInt(tokens.nextToken());
+                    if(truth == 1)
+                        sharedVariables.correspondenceNotificationSounds=true;
+                    else
+                        sharedVariables.correspondenceNotificationSounds=false;
+                    }
+                    catch(Exception zzz){}
+                }
 					if(temp.equals("[tellsounds]"))
 				{
 				try {

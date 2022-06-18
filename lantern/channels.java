@@ -193,6 +193,7 @@ boolean showMugshots = true;
     boolean showSeeks = true;
     boolean amazonBuild = false;
     boolean guest = false;
+    boolean correspondenceNotificationSounds = true;
     
 int maxUserButtons=10;
 ArrayList<String> rightClickMenu = new ArrayList();
