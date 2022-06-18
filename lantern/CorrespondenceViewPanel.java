@@ -152,9 +152,11 @@ void setLayout()
     hRow1.addComponent(refreshGamesButton);
     hRow1.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hRow1.addComponent(doubleClickHintLabel);
-    hRow2.addComponent(startGameButton);
+    hRow2.addComponent(statusLabel, GroupLayout.PREFERRED_SIZE,
+                       GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
     hRow2.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-    hRow2.addComponent(statusLabel);
+    hRow2.addComponent(startGameButton, GroupLayout.PREFERRED_SIZE,
+                       GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
     hRow3.addComponent(helpCorrespondenceButton);
     hRow3.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     hRow3.addComponent(openToGamesLabel);
