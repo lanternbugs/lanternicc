@@ -1440,9 +1440,9 @@ class Multiframe extends JFrame
       
     optionsmenu.addSeparator();
     optionsmenu.add(ucianalysis);
-    optionsmenu.add(winanalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
+    optionsmenu.add(winanalysis);
     optionsmenu.addSeparator();
     optionsmenu.add(uciMultipleMenu);
     optionsmenu.add(engineMenu);
