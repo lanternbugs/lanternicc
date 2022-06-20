@@ -5583,6 +5583,25 @@ dot.setVisible(true);
               }
 
          setSize(width,height);
+        int locX = 0;
+        int locY = 0;
+        if(valid) {
+            try {
+          if (myArray2.size() > 3) {
+                locX = Integer.parseInt(myArray2.get(2));
+                locY = Integer.parseInt(myArray2.get(3));
+              Dimension size = Toolkit. getDefaultToolkit(). getScreenSize();
+              if(locX + width <= size.width && locY + height <= size.height)
+                  {
+                      setLocation(locX, locY);
+                  }
+          }// end size of array
+              // end try
+            } catch (Exception wrongsize) {
+          
+            }
+
+        }
       if(!valid) {
         if (sharedVariables.operatingSystem.equals("unix")) {
           setVisible(true);
@@ -5778,16 +5797,20 @@ dot.setVisible(true);
     try {
                    int screenW = 0;
                    int screenH = 0;
+                   int locX = 0;
+                   int locY = 0;
                   try {
 
                          screenW = getWidth();
                          screenH = getHeight();
+                         locX = getLocation().x;
+                         locY = getLocation().y;
 
                       } catch (Exception badtool) {
 
                          }
                   FileWrite writer = new FileWrite();
-                  String outputSizes =  "" + screenW + "\n" + screenH + "\n";
+                  String outputSizes =  "" + screenW + "\n" + screenH + "\n" + locX + "\n" + locY + "\n";
         writer.write(outputSizes, channels.privateDirectory + "lantern_default_size.ini");
                  } catch(Exception dumb) {}
 
