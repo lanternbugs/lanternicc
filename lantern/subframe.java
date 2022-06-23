@@ -2555,6 +2555,7 @@ class subframe extends JInternalFrame
               }
 
               //if (a == 71) {
+                /*
               if (a == KeyEvent.VK_G) {
                 String myurl = Input.getText();
                 Input.setText("");
@@ -2564,6 +2565,7 @@ class subframe extends JInternalFrame
 
                 sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
               }
+                 */
               
               //if (a == 72) {
               if (a == KeyEvent.VK_H) {

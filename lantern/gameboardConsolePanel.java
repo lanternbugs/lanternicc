@@ -941,7 +941,7 @@ Input.addKeyListener(new KeyListener() {
             return;
           }
        }
-                   if( aa == 71 &&  e.getModifiersEx() == 128) // ctrl + g
+                  /* if( aa == 71 &&  e.getModifiersEx() == 128) // ctrl + g
                 {
   			String myurl =Input.getText();
                         Input.setText("");
@@ -950,7 +950,7 @@ Input.addKeyListener(new KeyListener() {
                         myurl=myurl.replace(" ", "+");
 
 			sharedVariables.openUrl("http://www.google.com/search?q=" + myurl);
-                }
+                }*/
           if( aa == 72 &&  e.getModifiersEx() == 128 )
              {
               if(sharedVariables.myGameList != null)
