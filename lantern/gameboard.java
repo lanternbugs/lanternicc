@@ -1260,6 +1260,16 @@ catch(Exception logging){}
             sharedVariables.mygame[gameData.BoardIndex].eco = eco;
         } 
   }
+    void updateCorrSposition()
+    {
+        sharedVariables.tabTitle[gameData.BoardIndex] = "SP";
+        sharedVariables.mygame[gameData.BoardIndex].myGameNumber =
+          sharedVariables.STATE_OVER;
+        sharedVariables.mygame[gameData.BoardIndex].state =
+          sharedVariables.STATE_OVER;
+        repaint();
+    }
+    
   void gameEnded(String icsGameNumber) {
 
     int tempnumber=getGameNumber(icsGameNumber);

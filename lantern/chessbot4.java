@@ -5827,6 +5827,11 @@ void proccessGameInfo(newBoardData temp)
                                          else
                                           sharedVariables.mygame[gamenum].played_game = 0;
                                         }
+                    if(temp.arg18.equals("isolated") && temp.arg7.equals("0") && temp.arg8.equals("0"))
+                    {
+                        myboards[gamenum].updateCorrSposition();
+                        repaintBoards(gamenum);
+                    }
 
                         	}// end try
 				catch(Exception ddd){
