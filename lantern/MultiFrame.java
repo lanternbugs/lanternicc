@@ -3195,7 +3195,7 @@ dot.setVisible(true);
           myConnection = new connectionDialog(this, sharedVariables, queue, false);
         //else if (!myConnection.isVisible())
         //  myConnection = new connectionDialog(this, sharedVariables, queue, false);
-
+        myConnection.setLocation(getLocation().x, getLocation().y);
         myConnection.setVisible(true);
       } catch(Exception conn) {}
 
@@ -3206,6 +3206,7 @@ dot.setVisible(true);
         try {
             if (myConnection == null || !myConnection.isVisible())
               myConnection = new connectionDialog(this, sharedVariables, queue, false);
+            myConnection.setLocation(getLocation().x, getLocation().y);
 
             myConnection.setVisible(true);
           } catch(Exception conn) {}
@@ -5652,6 +5653,8 @@ dot.setVisible(true);
       JSettingsDialog frame =
         new JSettingsDialog((JFrame) this, false,
                             sharedVariables);
+        frame.setLocation(getLocation().x + getSize().width / 2 - 100, getLocation().y + getSize().height/ 2 - 100);
+        frame.setVisible(true);
     }
 
   }
@@ -5735,11 +5738,10 @@ dot.setVisible(true);
       pane.add(yes);
       pane.add(no);
       add(pane);
-      setLocation(400,300);
       setSize(200, 200);
 
       storeCurrentSizes();
-      setVisible(true);
+      
       setAlwaysOnTop(true);
     }// end constructor
   }//end class

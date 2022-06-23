@@ -3086,6 +3086,7 @@ if(dg.getArg(0).equals("27"))
 			 myConnection = new connectionDialog(theMainFrame, sharedVariables, queue, false);
 			 else if(!myConnection.isVisible())
 			 myConnection = new connectionDialog(theMainFrame, sharedVariables, queue, false);
+             myConnection.setLocation(masterFrame.getLocation().x + sharedVariables.cornerDistance, masterFrame.getLocation().y + sharedVariables.cornerDistance);
 
 			 myConnection.setVisible(true);
 		 }catch(Exception dduu){}

@@ -145,6 +145,7 @@ public class Lantern {
     try {
       frame.myConnection =
         new connectionDialog(frame, frame.sharedVariables, frame.queue, false);
+        frame.myConnection.setLocation(frame.getLocation().x, frame.getLocation().y);
       frame.myConnection.setVisible(true);
 
     } catch (Exception bfocus) {}
