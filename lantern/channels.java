@@ -441,7 +441,7 @@ channels()
         version = "v1.0f";
     } else {
         myServer = "ICC";
-        version = "v6.26e-32";
+        version = "v6.26e-33";
     }
 
     try {
@@ -1252,7 +1252,7 @@ void challengeCreator(String opponent, JFrame framer, ConcurrentLinkedQueue queu
       int defaultHeight = 260;
       mychallenger.setSize(defaultWidth,defaultHeight);
 
-      try {
+      /*try {
 	Toolkit toolkit =  Toolkit.getDefaultToolkit();
         Dimension dim = toolkit.getScreenSize();
         int screenW = dim.width;
@@ -1266,7 +1266,8 @@ void challengeCreator(String opponent, JFrame framer, ConcurrentLinkedQueue queu
 
         mychallenger.setLocation(px, py);
       } catch (Exception centerError) {}
-
+      */
+    mychallenger.setLocation(framer.getLocation().x + framer.getSize().width / 2  - defaultWidth / 2, framer.getLocation().y + framer.getSize().height / 2 - defaultHeight / 2);
       mychallenger.setTitle("Challenge");
 
       mychallenger.setVisible(true);

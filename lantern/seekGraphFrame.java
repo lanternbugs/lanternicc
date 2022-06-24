@@ -140,8 +140,9 @@ seekGameDialog myseeker = new seekGameDialog(mymultiframe, false, sharedVariable
 int defaultWidth = 425;
 int defaultHeight = 220;
 myseeker.setSize(defaultWidth,defaultHeight);
+    myseeker.setLocation(mymultiframe.getLocation().x + mymultiframe.getSize().width / 2  - defaultWidth / 2, mymultiframe.getLocation().y + mymultiframe.getSize().height / 2 - defaultHeight / 2);
 
-try {
+/*try {
 	Toolkit toolkit =  Toolkit.getDefaultToolkit ();
         Dimension dim = toolkit.getScreenSize();
         int screenW = dim.width;
@@ -157,6 +158,7 @@ try {
       myseeker.setLocation(px, py);
 }
 catch(Exception centerError){}
+ */
 
 myseeker.setTitle("Seek a Game");
 

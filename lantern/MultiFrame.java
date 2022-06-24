@@ -4862,8 +4862,9 @@ dot.setVisible(true);
           int defaultWidth = 425;
           int defaultHeight = 220;
           myseeker.setSize(defaultWidth,defaultHeight);
+          myseeker.setLocation(getLocation().x + getSize().width / 2  - defaultWidth / 2, getLocation().y + getSize().height / 2 - defaultHeight / 2);
 
-          try {
+       /*   try {
         Toolkit toolkit =  Toolkit.getDefaultToolkit();
             Dimension dim = toolkit.getScreenSize();
             int screenW = dim.width;
@@ -4877,6 +4878,7 @@ dot.setVisible(true);
 
             myseeker.setLocation(px, py);
           } catch (Exception centerError) {}
+        */
 
           myseeker.setTitle("Seek a Game");
 
