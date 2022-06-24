@@ -1981,7 +1981,7 @@ class Multiframe extends JFrame
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
       if(!channels.fics) {
-          myboardmenu.add(help_correspondence);
+         // myboardmenu.add(help_correspondence);
           myboardmenu.add(help_tournaments);
           myboardmenu.add(help_tournament_schedule);
       }
