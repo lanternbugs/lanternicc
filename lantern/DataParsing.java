@@ -388,7 +388,7 @@ public class DataParsing
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
             data = "";
         }
-        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL /*|| ficsType == SHOUT_TELL  || ficsType == CSHOUT_TYPE*/) {
+        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL  /*|| ficsType == CSHOUT_TYPE*/) {
 
             if(ficsType == PERSONAL_TELL && lineCount == 1) {
             setLastTeller();
@@ -448,7 +448,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL)
         {
             if(data.length() == 1)
             {
@@ -486,6 +486,47 @@ public class DataParsing
     void processLink2(StyledDocument doc, String thetell, Color col, int index, int attempt, int game, SimpleAttributeSet attrs, int [] allTabs, messageStyles myStyles)
     {
         myDocWriter.processLink2(doc, thetell, col, index, attempt, game, attrs, allTabs, myStyles);
+    }
+    
+    void writeOutToShouts(String thetell)
+    {
+        channels sharedVariables = mySettings;
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+        if(sharedVariables.shoutStyle == 1 || sharedVariables.shoutStyle == 3)
+            StyleConstants.setItalic(attrs, true);
+        if(sharedVariables.shoutStyle == 2 || sharedVariables.shoutStyle == 3)
+            StyleConstants.setBold(attrs, true);
+                        
+        StyledDocument doc;
+
+    messageStyles myStyles = null;
+    /* code to pass an array of consoles this goes to ( just needed if more than one and right now that can just be shouts*/
+    int [] cindex = new int[sharedVariables.maxConsoleTabs];
+    for(int z=0; z<sharedVariables.maxConsoleTabs; z++)
+    {
+        if(z== sharedVariables.shoutRouter.shoutsConsole)
+            cindex[z]=1;
+        else
+            cindex[z]=0;
+    }
+    if(sharedVariables.shoutsAlso == true)
+        cindex[0]=1;
+    /*** end code for passing to process link where this is going */
+
+        doc=sharedVariables.mydocs[sharedVariables.shoutRouter.shoutsConsole];
+
+        /*
+         
+         processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
+         */
+
+
+        processLink2(doc, thetell, sharedVariables.shoutcolor, sharedVariables.shoutRouter.shoutsConsole, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
+        if(sharedVariables.shoutRouter.shoutsConsole>0 && sharedVariables.shoutsAlso == true)
+            {
+                doc=sharedVariables.mydocs[0];
+                    processLink2(doc, thetell, sharedVariables.shoutcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex, myStyles);
+            }
     }
     
     void writeOutToChannel(String theTell, int channelNumber)
@@ -954,6 +995,11 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             }
 
 
+        } else if(ficsType == SHOUT_TELL) {
+            writeOutToShouts(ficsChatTell + "\n");
+            if(!ficsChatTell2.equals("")) {
+               writeOutToMain(ficsChatTell2 + "\n");
+            }
         }   else {
             if(!ficsChatTell.trim().equals("")) {
                 writeOutToMain(ficsChatTell);
@@ -962,16 +1008,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
         }
 
-       /*else if(ficsType == SHOUT_TELL) {
-            mySettings.chatLog.addChat(ficsChatTell ,"shout");
-            mySettings.gameChatLog.addChat(ficsChatTell ,"shout");
-            if(!ficsChatTell2.equals("")) {
-                mySettings.chatLog.addChat(ficsChatTell2, "server_text");
-                mySettings.gameChatLog.addChat(ficsChatTell2, "shout");
-            }
-            consoleManager.updateChat();
-            gameConsoleManager.updateChat();
-        } else if(ficsType == CSHOUT_TYPE) {
+       /*else if(ficsType == CSHOUT_TYPE) {
             mySettings.chatLog.addChat(ficsChatTell, "s-shout");
             if(!ficsChatTell2.equals("")) {
                 mySettings.chatLog.addChat(ficsChatTell2, "server_text");
