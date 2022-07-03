@@ -626,6 +626,7 @@ public class DataParsing
     void writeOutToTell(String thetell, String name)
     {
         channels sharedVariables = mySettings;
+        thetell += "\n";
 
 sharedVariables.lasttell=name; // obsolete but why not leave the data
 sharedVariables.F9Manager.addName(name);
@@ -888,7 +889,20 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }
         return -1;
     }
+    void writeOutToMain(String ficsChatTell)
+    {
+        try{
 
+        StyledDocument doc=mySettings.mydocs[0];// 0 for main console
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+        StyleConstants.setForeground(attrs, mySettings.ForColor);
+            int [] cindex2 = new int[mySettings.maxConsoleTabs];
+            cindex2[0]=0; // default till we know more is its not going to main
+            processLink2(doc, ficsChatTell, mySettings.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+        }
+        catch(Exception e)
+        {}
+    }
 
     void setLastTeller()
     {
@@ -936,22 +950,12 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             
             writeOutToTell(ficsChatTell, spaceSeperatedLine.get(0));
             if(!ficsChatTell2.equals("")) {
-               
+               writeOutToMain(ficsChatTell2 + "\n");
             }
 
 
         }   else {
-            try{
-
-            StyledDocument doc=mySettings.mydocs[0];// 0 for main console
-            SimpleAttributeSet attrs = new SimpleAttributeSet();
-            StyleConstants.setForeground(attrs, mySettings.ForColor);
-                int [] cindex2 = new int[mySettings.maxConsoleTabs];
-                cindex2[0]=0; // default till we know more is its not going to main
-                processLink2(doc, ficsChatTell, mySettings.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
-            }
-            catch(Exception e)
-            {}
+            writeOutToMain(ficsChatTell);
 
         }
 
