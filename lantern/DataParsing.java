@@ -388,7 +388,7 @@ public class DataParsing
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
             data = "";
         }
-        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE /* || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL  || ficsType == CSHOUT_TYPE*/) {
+        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL /*|| ficsType == SHOUT_TELL  || ficsType == CSHOUT_TYPE*/) {
 
             if(ficsType == PERSONAL_TELL && lineCount == 1) {
             setLastTeller();
@@ -448,7 +448,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL)
         {
             if(data.length() == 1)
             {
@@ -622,6 +622,93 @@ public class DataParsing
 
         }// end of if suppress logins false
     }
+    
+    void writeOutToTell(String thetell, String name)
+    {
+        channels sharedVariables = mySettings;
+
+sharedVariables.lasttell=name; // obsolete but why not leave the data
+sharedVariables.F9Manager.addName(name);
+StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[sharedVariables.tellconsole]];
+int direction = sharedVariables.looking[sharedVariables.tellconsole];
+if(sharedVariables.tellsToTab == true)
+{
+direction = sharedVariables.tellTab;
+doc=sharedVariables.mydocs[direction];
+}
+/*** check if forced to tab ****/
+boolean him = false;
+boolean makeASound=true;
+for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
+{
+if(sharedVariables.toldTabNames.get(ab).name.toLowerCase().equals(name.toLowerCase()))
+{
+    direction=sharedVariables.toldTabNames.get(ab).tab;
+    doc=sharedVariables.mydocs[direction];
+    him=true;
+    makeASound=sharedVariables.toldTabNames.get(ab).sound;
+    break;
+}
+}
+
+messageStyles myStyles = null;
+SimpleAttributeSet attrs = new SimpleAttributeSet();
+if(sharedVariables.tellStyle == 1 || sharedVariables.tellStyle == 3)
+    StyleConstants.setItalic(attrs, true);
+if(sharedVariables.tellStyle == 2 || sharedVariables.tellStyle == 3)
+    StyleConstants.setBold(attrs, true);
+
+
+
+if(sharedVariables.tabStuff[direction].tellcolor == null)
+processLink(doc, thetell, sharedVariables.tellcolor, direction, maxLinks, SUBFRAME_CONSOLES, attrs, myStyles);
+else
+processLink(doc, thetell, sharedVariables.tabStuff[direction].tellcolor, direction, maxLinks, SUBFRAME_CONSOLES, attrs, myStyles);
+
+try
+{
+
+for(int z=0; z< sharedVariables.openBoardCount; z++)
+{
+    if(mainTelnet.myboards[z]!=null)
+    if(sharedVariables.boardConsoleType != 0)// dont send tell to board if console disabled, would have later caused it to print twice in main
+    if(sharedVariables.mygame[z].realname1.equals(name) || sharedVariables.mygame[z].realname2.equals(name))
+    {
+
+
+    doc=sharedVariables.mygamedocs[z];
+        processLink(doc, thetell, sharedVariables.tellcolor, z, maxLinks, GAME_CONSOLES, attrs, myStyles);
+    }
+}
+}catch(Exception dumb){}
+
+try {
+if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true && him == false)
+{
+FocusOwner whohasit = new FocusOwner(sharedVariables, mainTelnet.consoleSubframes, mainTelnet.myboards);
+int xxx=mainTelnet.getCurrentConsole();
+    mainTelnet.consoleSubframes[sharedVariables.tellconsole].makeHappen(sharedVariables.tellTab);
+
+if(xxx != sharedVariables.tellconsole || !sharedVariables.operatingSystem.equals("mac"))
+    mainTelnet.giveFocus(whohasit);
+    if(sharedVariables.addNameOnSwitch == true)
+        mainTelnet.consoleSubframes[sharedVariables.tellconsole].addNameToCombo(name);
+}
+}catch(Exception donthave){}
+Sound ptell;
+if(sharedVariables.makeSounds == true && makeASound == true && sharedVariables.makeTellSounds)
+ptell=new Sound(sharedVariables.songs[0]);
+if(sharedVariables.rotateAways == true)
+{
+try{
+
+Random generator = new Random( System.currentTimeMillis() );
+int randomIndex = generator.nextInt( sharedVariables.lanternAways.size());
+String myaway=sharedVariables.lanternAways.get(randomIndex);
+//sendMessage("Away " + myaway + "\n");// implment fics send
+}catch(Exception d){}
+}
+} // end write out tell
 
 
     void resetParsing()
@@ -845,7 +932,15 @@ public class DataParsing
                 
             }
             
-        }  else {
+        }  else if(ficsType == PERSONAL_TELL) {
+            
+            writeOutToTell(ficsChatTell, spaceSeperatedLine.get(0));
+            if(!ficsChatTell2.equals("")) {
+               
+            }
+
+
+        }   else {
             try{
 
             StyledDocument doc=mySettings.mydocs[0];// 0 for main console
@@ -859,23 +954,8 @@ public class DataParsing
             {}
 
         }
-/*
-        else if(ficsType == PERSONAL_TELL) {
-            mySettings.chatLog.addChat(ficsChatTell, "tell");
-            mySettings.gameChatLog.addChat(ficsChatTell, "tell");
-            if(!ficsChatTell2.equals("")) {
-                mySettings.chatLog.addChat(ficsChatTell2, "server_text");
-                mySettings.gameChatLog.addChat(ficsChatTell2, "tell");
-            }
-            consoleManager.updateChat();
-            gameConsoleManager.updateChat();
-            if(mySettings.otherSounds) {
-            MainActivity.playSound("tell");
-            }
-            updateTeller();
 
-
-        } else if(ficsType == SHOUT_TELL) {
+       /*else if(ficsType == SHOUT_TELL) {
             mySettings.chatLog.addChat(ficsChatTell ,"shout");
             mySettings.gameChatLog.addChat(ficsChatTell ,"shout");
             if(!ficsChatTell2.equals("")) {
