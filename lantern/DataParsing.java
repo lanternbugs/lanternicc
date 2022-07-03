@@ -955,7 +955,10 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
 
         }   else {
-            writeOutToMain(ficsChatTell);
+            if(!ficsChatTell.trim().equals("")) {
+                writeOutToMain(ficsChatTell);
+            }
+            
 
         }
 
