@@ -3511,7 +3511,7 @@ try
 try {
 if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true && him == false)
 {
-	focusOwner whohasit = new focusOwner();
+	FocusOwner whohasit = new FocusOwner(sharedVariables, consoleSubframes, myboards);
 	int xxx=getCurrentConsole();
 	consoleSubframes[sharedVariables.tellconsole].makeHappen(sharedVariables.tellTab);
 
@@ -5803,7 +5803,7 @@ void proccessGameInfo(newBoardData temp)
 
 					//	readLock.lock();
 
-					focusOwner whohasit= new focusOwner();
+					FocusOwner whohasit= new FocusOwner(sharedVariables, consoleSubframes, myboards);
 					int gamenum=getNewGameBoard(temp.type);
                                         if(gamenum == -1)
                                         gamenum = 0;
@@ -6014,7 +6014,7 @@ void proccessGameInfo(newBoardData temp)
 							return;
 							if(myboards[gamenum]== null)
 							return;
-                                                        focusOwner whohasit= new focusOwner();
+                                                        FocusOwner whohasit= new FocusOwner(sharedVariables, consoleSubframes, myboards);
                                                          boolean didIt=false;
 							for(int z=0; z< sharedVariables.maxGameTabs; z++)
 							{
@@ -7819,53 +7819,9 @@ catch(Exception z){}
 
 
 
-class focusOwner {
-
-boolean console;
-boolean board;
-int number;
-
-focusOwner()
-{
-
-	console=false;/// if it doesnt set one of these to true nobody gets it
-	number=0;
-	board=false;
-
-	try {
 
 
-	for(int a=0; a<sharedVariables.openConsoleCount; a++)
-	{
-		if(consoleSubframes[a].overall.Input.hasFocus())
-		{
-			console=true;
-			number=a;
-			//writeToConsole("console is true and number is " + a + "\n");
-			return;
-		}
-	}// end for
-
-	for(int a=0; a<sharedVariables.openBoardCount; a++)
-	{
-		if(myboards[a].myconsolepanel.Input.hasFocus())
-		{
-			board=true;
-			number=a;
-			return;
-
-		}
-	}
-
-}// end try
-catch(Exception e){}
-
-}// end constructor
-
-
-}// end class focus owner.
-
-void returnFocus(focusOwner mine)
+void returnFocus(FocusOwner mine)
 {
 
 	try {
@@ -7889,7 +7845,7 @@ int getCurrentConsole()
 
  return -1;
 }
-void giveFocus(focusOwner mine)
+void giveFocus(FocusOwner mine)
 {
 
 	try {
