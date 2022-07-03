@@ -1,4 +1,5 @@
 package lantern;
+import java.applet.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -105,7 +106,6 @@ public class DataParsing
     void getData(String data)
     {
 
-        System.out.println("FICS:" + data);
         //  printInCOut("in here using a c style print");
 
         // if([data length]  < 3)
@@ -287,7 +287,10 @@ public class DataParsing
         if(mySettings.whoAmI.equals("")) {
        checkIfLoggedIn();
     }
-
+        if(data.trim().equals("") && lineCount == 0) {
+            resetParsing();
+            return;
+        }
 
         lineCount++;
         if(mySettings.whoAmI.equals("") && !mySettings.fics && mySettings.amazonBuild) {
@@ -385,7 +388,7 @@ public class DataParsing
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
             data = "";
         }
-        if(ficsType == CHANNEL_TELL/* || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL || ficsType == NOTIFY_TYPE || ficsType == CSHOUT_TYPE*/) {
+        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE /* || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL  || ficsType == CSHOUT_TYPE*/) {
 
             if(ficsType == PERSONAL_TELL && lineCount == 1) {
             setLastTeller();
@@ -445,7 +448,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE)
         {
             if(data.length() == 1)
             {
@@ -551,6 +554,73 @@ public class DataParsing
             processLink2(doc, theTell, channelColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, myStyles);
 
         }
+    }
+    
+    void writeOutToNotify(String tell, String name)
+    {
+        channels sharedVariables = mySettings;
+        mainTelnet.notifyList.notifyStateChanged(name , "" ); // arg2 state "P" playing etc
+        boolean supressLogins=sharedVariables.getNotifyControllerState(name);
+
+
+
+            String theNotifyTell =  tell + "\n";
+            StyledDocument doc;
+        // we use main console now for notifications -- 0
+
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+            if(sharedVariables.nonResponseStyle == 1 || sharedVariables.nonResponseStyle == 3)
+                StyleConstants.setItalic(attrs, true);
+            if(sharedVariables.nonResponseStyle == 2 || sharedVariables.nonResponseStyle == 3)
+                StyleConstants.setBold(attrs, true);
+
+
+
+
+        if(supressLogins == false)
+        {
+        boolean wePrinted = false;
+
+          notifyOnTabs tabsNotify = sharedVariables.getNotifyOnTabs(name);
+          for(int ztab=0; ztab < sharedVariables.maxConsoleTabs; ztab++)
+          {
+
+            if(tabsNotify.notifyControllerTabs.get(ztab).equals("F"))
+            continue;
+            for(int znumber =0; znumber < 400; znumber++)
+                   {
+
+                if(sharedVariables.console[ztab][znumber]==1 || ztab == 0)
+                {
+                int subframe_type = SUBFRAME_CONSOLES;
+                if(ztab > 0)
+                subframe_type = SUBFRAME_NOTIFY;
+                 doc=sharedVariables.mydocs[ztab];
+            wePrinted = true;
+                if(sharedVariables.tabStuff[ztab].ForColor == null)
+            processLink(doc, theNotifyTell, sharedVariables.ForColor, ztab, maxLinks, subframe_type, attrs, null);
+                else
+            processLink(doc, theNotifyTell, sharedVariables.tabStuff[ztab].ForColor, ztab, maxLinks, subframe_type, attrs, null);
+                break;
+                }// end if print
+
+                   } //end for
+                }// end outer for
+
+        try {
+            if(sharedVariables.makeSounds == true && sharedVariables.specificSounds[4]== true )
+        {
+
+
+                if(wePrinted == true)
+            {
+                  Sound nsound=new Sound(sharedVariables.songs[4]);
+                }
+        }
+        }
+        catch(Exception notifysound){}
+
+        }// end of if suppress logins false
     }
 
 
@@ -768,7 +838,14 @@ public class DataParsing
             if(!ficsChatTell2.equals("")) {
                 writeOutToChannel(ficsChatTell2, getChannelNumber(spaceSeperatedLine.get(0)));
             }
-        } else {
+        } else if(ficsType == NOTIFY_TYPE) {
+            
+            writeOutToNotify(ficsChatTell, spaceSeperatedLine.get(1));
+            if(!ficsChatTell2.equals("")) {
+                
+            }
+            
+        }  else {
             try{
 
             StyledDocument doc=mySettings.mydocs[0];// 0 for main console
