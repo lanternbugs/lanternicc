@@ -7088,6 +7088,24 @@ String parseValueSet(String thetell)
 
 class sendToIcs // this method checks the queue which other classes in the program use to send data
 {
+    
+    void cleanOutputDataForFics(myoutput tosend)
+    {
+        if(!channels.fics) {
+            return;
+        }
+        if(tosend != null && tosend.data != null) {
+            tosend.data = tosend.data.replaceAll( "’", "\'" );
+            tosend.data = tosend.data.replaceAll( "”", "\"" );
+            tosend.data = tosend.data.replaceAll( "“", "\"" );
+            tosend.data = tosend.data.replaceAll( "\\u0093", "\"" );  // 147
+            tosend.data = tosend.data.replaceAll( "\\u0094", "\"" );  // 148
+            tosend.data = tosend.data.replaceAll("[^\\x00-\\x7F]", "");
+            if(tosend.data.length() > 399) {
+               tosend.data = tosend.data.substring(0,399) + "\n";
+            }
+        }
+    }
 public void runSendToIcs()
 	{
 
@@ -7099,6 +7117,7 @@ public void runSendToIcs()
 
 					while(tosend != null)
 					{
+                        cleanOutputDataForFics(tosend);
 
 
                                         if(tosend.soundBoard > -1)
