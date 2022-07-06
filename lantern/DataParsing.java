@@ -1390,17 +1390,18 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         if(isPrimaryMessage(newdata)) {
             return true;
         }
-
+        */
         
 
         if(newdata.startsWith("{Game ") || newdata.startsWith("Game ")) {
-            mySettings.gameChatLog.addChat(newdata,"server_text");
-            gameConsoleManager.updateChat();
-
-              if(isExamineInfo(newdata, mySettings)) {
-                  return true;
+            // Game 156:
+            
+            if(isExamineInfo(newdata, mySettings)) {
+                gameMessage(newdata);
+                 return true;
               }
         }
+        /*
 
         if(newdata.startsWith("<b1>"))
         {
@@ -2250,8 +2251,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
         return false;
     }
-
-    boolean isExamineInfo(String data, SharedSettings mySettings)
+*/
+    boolean isExamineInfo(String data, channels mySettings)
     {
         if(data == null) {
             return false;
@@ -2326,7 +2327,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         }
         return false;
     }
-
+/*
     String getGameListName()
     {
         String name = "";
@@ -2656,7 +2657,23 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }
 
 
-    
+    void gameMessage(String message) {
+        try {
+            ArrayList<String> spaceArray = new ArrayList<>();
+            seperateLine(message, spaceArray);
+            newBoardData temp = new newBoardData();
+            temp.dg=77;
+            if(spaceArray.size() < 2 || spaceArray.get(1) == null) {
+                return;
+            }
+            temp.arg1= spaceArray.get(1).replace(":", "");
+            temp.arg2= message;
+            gamequeue.add(temp);
+        } catch(Exception dui) {
+            System.out.println(dui.getMessage());
+        };
+        
+    }
     void gameStarted(Style12Struct myGameStruct)
     {
         newBoardData temp = new newBoardData();
