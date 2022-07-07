@@ -587,6 +587,7 @@ catch(Exception e)
 try {
  channels.firstSound=true;
 sharedVariables.ccListData.clear();
+    DataParsing.backedUp = false;
     try {
         sharedVariables.updateCorrTable();
     } catch(Exception dui) {
