@@ -41,6 +41,7 @@ import javax.swing.table.TableRowSorter;
 class pgnFrame extends JInternalFrame
 {
 	JTable gametable;
+    JLabel helpText;
 tableClass mygametable;
 	channels sharedVariables;
 	ConcurrentLinkedQueue<myoutput> queue;
@@ -75,7 +76,7 @@ void initComponents(){
 
 
 //list = new JList(data); //data has type Object[]
-
+helpText = new JLabel("Right click on a game for options. Double click to examine.");
 gametable = new JTable(mygametable.gamedata);
 gametable.setBackground(listColor);
 
@@ -559,16 +560,17 @@ class overall extends JPanel
 
 
 
-	SequentialGroup h2 = layout.createSequentialGroup();
+	//SequentialGroup h2 = layout.createSequentialGroup();
 
 
 
-	h2.addComponent(listScroller);
+	h1.addComponent(listScroller);
+    h1.addComponent(helpText);
 
 
 
 
-h1.addGroup(h2);
+//h1.addGroup(h2);
 
 
 
@@ -585,7 +587,8 @@ SequentialGroup v1 = layout.createSequentialGroup();
 
 
 
-		v1.addComponent(listScroller);
+		v1.addComponent(helpText);
+        v1.addComponent(listScroller);
 
 
 	vGroup.addGroup(v1);
