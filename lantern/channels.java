@@ -438,10 +438,10 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0f";
+        version = "v1.0g2";
     } else {
         myServer = "ICC";
-        version = "v6.26e-33";
+        version = "v6.27a-1";
     }
 
     try {
