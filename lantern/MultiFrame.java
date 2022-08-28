@@ -2289,6 +2289,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem showlib = new JMenuItem("Show My Game Library");
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
       JMenuItem showcorrespondence = new JMenuItem("Show My Correspondence Games");
+      JMenuItem showlogfile = new JMenuItem("Show My Game Log File");
     // .. / (separator)
       JMenuItem showStore = new JMenuItem("ICC Store");
       JMenuItem showMyICC = new JMenuItem("My ICC");
@@ -2320,6 +2321,7 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
       actionsmenu.add(showcorrespondence);
+      actionsmenu.add(showlogfile);
       if(!channels.fics) {
           actionsmenu.addSeparator();
             actionsmenu.add(showStore);
@@ -2350,6 +2352,7 @@ myboardappearancemenu.add(consoleaspect);
     showlib.addActionListener(this);
     showstored.addActionListener(this);
       showcorrespondence.addActionListener(this);
+      showlogfile.addActionListener(this);
       showStore.addActionListener(this);
       showMyICC.addActionListener(this);
       
@@ -2917,6 +2920,30 @@ else if (action.equals("Three Lines")) {
     } else if (action.equals("Activities Window/Events")) {
       openActivities();
 
+    }
+    else if (action.equals("Show My Game Log File")) {
+        try {
+            String myfile = channels.publicDirectory + "lantern_" + sharedVariables.whoAmI + ".pgn";
+            File f = new File(myfile);
+            if(f.exists() && !f.isDirectory()) {
+                pgnLoader myLoader = new pgnLoader(myfile);
+                tableClass myTableClass = new tableClass();
+                myTableClass.createPgnListColumns();
+                myLoader.loadTable(myTableClass);
+                pgnFrame myPgnFrame = new pgnFrame(sharedVariables, queue,
+                                                   myTableClass, myLoader);
+                sharedVariables.desktop.add(myPgnFrame);
+                myPgnFrame.setSize(750,400);
+                myPgnFrame.setVisible(true);
+            } else {
+                String mess = "lantern_" + sharedVariables.whoAmI + ".pgn not found. Is Game menu / PGN / Log My Games selected?. Have you played a game with Lantern on this username? On Mac give Lantern permission to access the Documents Directory so save games there in a LanternChess subfolder.";
+                Popup mypopper = new Popup(this, true, mess, sharedVariables);
+                mypopper.setVisible(true);
+            }
+            
+        } catch(Exception logproblem) {
+            
+        }
     }
       else if (action.equals("Join Tournaments") || action.equals("Correspondence") || action.equals("Show My Correspondence Games")) {
          
