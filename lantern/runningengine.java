@@ -622,7 +622,8 @@ catch(Exception E5){}
 
 }
 while(go==1);
-writeOut("go no longer 1\n");
+//writeOut("go no longer 1\n");
+    writeOut("Engine stopped. Click tab to fully return to game console. Tapping the tab when engine is running toggles view without stopping engine.");
     engineIsStopped = true;
 }// end try
 catch(Exception e){writeOut("exception terminated loop");}
@@ -1059,7 +1060,7 @@ String line2 = p.line + "\n";
 line2 = addMoveNumbers(line2);
 
 if(i > 0) {
-                  line2 = truncateLine2(line2, 18);
+                  line2 = truncateLine2(line2, 5);
 
                }
 
@@ -1067,7 +1068,12 @@ if(i > 0) {
  if(sharedVariables.analysisFont != null && sharedVariables.analysisFont.getFontName().toLowerCase().equals("chess alpha 2")) {
         line2 = parseChessFont(line2);
     }
-doc.insertString(doc.getLength(), line1 + line2, null);
+    if(i > 0) {
+        doc.insertString(doc.getLength(), line1 + line2 + "\n", null);
+    } else {
+        doc.insertString(doc.getLength(), line1 + line2, null);
+    }
+
 }
 for(int a=0; a<sharedVariables.openBoardCount; a++)
 if(sharedVariables.gamelooking[a]==BoardIndex)
