@@ -1,5 +1,7 @@
 # lanternicc
 
+Lantern was started at the end of 2009 as my first large app that I made. When I started it, I did not yet understand design patterns like delegation or mvc. It does have retain cycles but the app was basicaly designed to run like a number of singletons and performance is not bad and it has enjoyed some commercial success outlasting chessclub.com's ICC for Mac and now replacing it when www.chessclub.com/downloads is accessed on a Mac. My Mars and More app represents a more refined method to coding. In the middle more advanced than lantern but not as mature as Mars and More is my iOS chess apps where delegation became a common pattern and retain cycles were to be avoided.  Lantern was brute force. I have decide at this time to not bother to refactor it.  To me it's still worth updating as the users like it. A beta now runs on FICS as Pearl Chess. search for the fics var near top of channels.java for some detailed instructions on how to build for that in comments there. 
+
 Lantern is a GPL program.  See copyright.txt and pieces-boards_copyrights.txt in the lantern folder.
 The free folder is files from jinchess.com client that are utility and under LGPL.
 I think right now we just use the jin sound package.
