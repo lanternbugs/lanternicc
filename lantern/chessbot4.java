@@ -1440,7 +1440,7 @@ if(console.type == 5)
 
   else
   {
-   if(thetell.trim().startsWith("Information about ") || thetell.trim().startsWith("Statistics for "))
+   if(thetell.trim().startsWith("Information about ") || thetell.trim().startsWith("Variable settings") || thetell.trim().startsWith("Statistics for "))
    {
        fingerPopup.field.setText(thetell);
          

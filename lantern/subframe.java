@@ -1742,6 +1742,10 @@ class subframe extends JInternalFrame
 
                  doCommand("`f1`Finger" + " " + name + "\n");
               }
+              else if (sharedVariables.rightClickMenu.get(mfinal).equals("Vars")) {
+
+                 doCommand("`f1`Vars" + " " + name + "\n");
+              }
 
                else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {
                 sharedVariables.openUrl(name);
