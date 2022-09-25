@@ -2383,7 +2383,7 @@ myboardappearancemenu.add(consoleaspect);
     JMenuItem privacypolicy = new JMenuItem("Privacy Policy");
     JMenuItem calendaritem = new JMenuItem("ICC Calendar");
     JMenuItem infohelp = new JMenuItem("ICC Information Help Files");
-    JMenuItem commandhelp = new JMenuItem("ICC Command Help Files");
+    JMenuItem commandhelp = new JMenuItem("ICC Command Help");
     
       
     JMenu poweroutmenu = new JMenu("Extra-games");
@@ -2409,7 +2409,7 @@ myboardappearancemenu.add(consoleaspect);
           helpmenu.add(chesscoaches);
           helpmenu.addSeparator();
           
-        helpmenu.add(askaquestion);
+        
       }
       
     helpmenu.add(lanternmanual);
@@ -2418,8 +2418,9 @@ myboardappearancemenu.add(consoleaspect);
       if(!channels.fics) {
           
           helpmenu.add(calendaritem);
+          helpmenu.add(askaquestion);
           helpmenu.addSeparator();
-          helpmenu.add(infohelp);
+          //helpmenu.add(infohelp);
           helpmenu.add(commandhelp);
           helpmenu.addSeparator();
       }
@@ -2652,8 +2653,8 @@ myboardappearancemenu.add(consoleaspect);
     else if (action.equals("ICC Information Help Files")) {
       sharedVariables.openUrl("http://www.chessclub.com/help/info-list");
 
-    } else if (action.equals("ICC Command Help Files")) {
-      sharedVariables.openUrl("http://www.chessclub.com/help/help-list");
+    } else if (action.equals("ICC Command Help")) {
+      sharedVariables.openUrl("http://www.chessclub.com/help/commands");
 
     } else if (action.equals("Join")) {
       sharedVariables.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
