@@ -679,6 +679,13 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 				 setLabelSelected(sharedVariables.activitiesTabNumber);
              theEventsList.setModel(eventsList.eventsTable);
              setEventTournamentTableProperties();
+             videoButton.setText("Open Videos Page");
+             removeActionListeners(videoButton);
+             videoButton.addActionListener(new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                 sharedVariables.openUrl("https://www.chessclub.com/videos");
+               }
+             } );
 
 
 
@@ -918,6 +925,13 @@ public void mouseClicked (MouseEvent me) {}
                             setLabelSelected(sharedVariables.activitiesTabNumber);
                         theEventsList.setModel(tournamentList.eventsTable);
                         setEventTournamentTableProperties();
+        videoButton.setText("Tournament Schedule");
+        removeActionListeners(videoButton);
+        videoButton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            sharedVariables.openUrl("https://www.chessclub.com/help/tournaments");
+          }
+        } );
 
 
 
@@ -1362,7 +1376,18 @@ void watchMethod(String watch)
 
  }
 
-
+    void removeActionListeners(JButton button) {
+            if (button == null) {
+                return;
+            }
+            ActionListener[] listeners = button.getActionListeners();
+            if (listeners == null) {
+                return;
+            }
+            for (ActionListener listener : listeners) {
+                button.removeActionListener(listener);
+            }
+        }
 
 
  

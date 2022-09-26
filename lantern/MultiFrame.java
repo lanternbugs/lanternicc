@@ -4935,6 +4935,13 @@ dot.setVisible(true);
         if(sharedVariables.activitiesTabNumber == 4) {
             sharedVariables.activitiesPanel.theEventsList.setModel(tournamentList.eventsTable);
             sharedVariables.activitiesPanel.setEventTournamentTableProperties();
+            sharedVariables.activitiesPanel.videoButton.setText("Tournament Schedule");
+            sharedVariables.activitiesPanel.removeActionListeners(sharedVariables.activitiesPanel.videoButton);
+            sharedVariables.activitiesPanel.videoButton.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent e) {
+                sharedVariables.openUrl("https://www.chessclub.com/help/tournaments");
+              }
+            } );
         }
       //myfirstlist.setSelected(true);
     } catch (Exception dui) {}
