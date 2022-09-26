@@ -1348,10 +1348,11 @@ void watchMethod(String watch)
 
 
 
-	vGroup.addComponent(listScroller, GroupLayout.PREFERRED_SIZE,
-                        GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
       vGroup.addComponent(videoButton, GroupLayout.PREFERRED_SIZE,
                           GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      vGroup.addComponent(listScroller, GroupLayout.PREFERRED_SIZE,
+                        GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+      
       
 
 	layout.setVerticalGroup(vGroup);
