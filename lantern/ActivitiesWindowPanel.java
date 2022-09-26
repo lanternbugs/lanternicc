@@ -45,6 +45,7 @@ class ActivitiesWindowPanel extends JPanel// implements InternalFrameListener
 	JList theChannelList;
 	JList theChannelList2;
 	JList theChannelList3;
+    JButton videoButton;
 
 
 	listClass eventsList;
@@ -164,6 +165,13 @@ displayList = new listClass();
 add(displayList.theList);
 }catch(Exception d) { }
 */
+    videoButton = new JButton();
+    videoButton.setText("Open Videos Page");
+    videoButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        sharedVariables.openUrl("https://www.chessclub.com/videos");
+      }
+    } );
 eventsLabel = new JLabel("Events List", SwingConstants.CENTER);
 tournamentLabel = new JLabel("Tournaments", SwingConstants.CENTER);
 seeksLabel = new JLabel("Human Seeks", SwingConstants.CENTER);
@@ -1328,18 +1336,23 @@ void watchMethod(String watch)
 
 
 	h1.addComponent(listScroller);
+    h1.addComponent(videoButton);
 	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
 	//Create the horizontal group
 	layout.setHorizontalGroup(hGroup);
 
 
 	//Create a parallel group for the vertical axis
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+	//ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+      SequentialGroup vGroup = layout.createSequentialGroup();
 
 
 
-
-	vGroup.addComponent(listScroller);
+	vGroup.addComponent(listScroller, GroupLayout.PREFERRED_SIZE,
+                        GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+      vGroup.addComponent(videoButton, GroupLayout.PREFERRED_SIZE,
+                          GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+      
 
 	layout.setVerticalGroup(vGroup);
 
