@@ -1897,7 +1897,7 @@ class Multiframe extends JFrame
      moveInputMenu.add(clickMoveInput);
     // .. /
 
-
+      JMenuItem opengamefiles = new JMenuItem("Open Game Files on Computer");
     JMenu PgnMenu = new JMenu("PGN");
     // .. / PGN /
     pgnlogging = new JCheckBoxMenuItem("Log Pgn");
@@ -2114,6 +2114,7 @@ myboardappearancemenu.add(consoleaspect);
     myboardmenu.addSeparator();
     //myboardmenu.add(useLightBackground);   // disabled
     // .. /
+      myboardmenu.add(opengamefiles);
    myboardmenu.add(PgnMenu);
     // .. / PGN /
     PgnMenu.add(help_pgn);
@@ -2265,6 +2266,7 @@ myboardappearancemenu.add(consoleaspect);
     pgnlogging.addActionListener(this);
     pgnObservedLogging.addActionListener(this);
     openpgn.addActionListener(this);
+      opengamefiles.addActionListener(this);
     blockSays.addActionListener(this);
     gameend.addActionListener(this);
     autoChat.addActionListener(this);
@@ -2806,7 +2808,7 @@ else if (action.equals("Three Lines")) {
     } else if (action.equals("Open Web")) {
       mycreator.createWebFrame("http://www.google.com");
 
-    } else if (action.equals("Open Pgn")) {
+    } else if (action.equals("Open Pgn") || action.equals("Open Game Files on Computer")) {
       try {
         JFileChooser fc = new JFileChooser();
           if(channels.macClient) {
