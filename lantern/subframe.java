@@ -849,10 +849,21 @@ class subframe extends JInternalFrame
       overall.setMyLayout3();
   }
 
+  int getPopupX()
+  {
+      JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+      return myself.myframe.getLocation().x + myself.myframe.getWidth() / 2;
+  }
+      int getPopupY()
+      {
+          JDesktopPaneCustom myself = (JDesktopPaneCustom) getDesktopPane();
+          return myself.myframe.getLocation().y + myself.myframe.getHeight() / 2;
+      }
   void setTabFont(int con) {
 
     JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc = new FontChooser2(f, sharedVariables.tabStuff[con].tabFont);
+      fc.setLocation(getPopupX() - fc.getWidth() / 2, getPopupY() - fc.getHeight() / 2);
     fc.setVisible(true);
     Font fnt = fc.getSelectedFont();
     if (fnt != null) {
@@ -867,6 +878,7 @@ class subframe extends JInternalFrame
     JFrame f = new JFrame("FontChooser Startup");
     FontChooser2 fc =
       new FontChooser2(f, sharedVariables.consoleFonts[consoleNumber]);
+      fc.setLocation(getPopupX() - fc.getWidth() / 2, getPopupY() - fc.getHeight() / 2);
     fc.setVisible(true);
     Font fnt = fc.getSelectedFont();
     if (fnt != null) {
@@ -882,6 +894,8 @@ class subframe extends JInternalFrame
       new customizeTabConsolelColorsDialog((JFrame) myself.myframe,
                                            false, sharedVariables,
                                            consoles, con, this);
+      frame.setLocation(getPopupX() - frame.getWidth() / 2, getPopupY() - frame.getHeight() / 2);
+      frame.setVisible(true);
   }
   
   void changeTellTab(boolean forward) {
@@ -907,6 +921,7 @@ class subframe extends JInternalFrame
     customizeChannelQtellsDialog frame =
       new customizeChannelQtellsDialog((JFrame) myself.myframe,
                                        false,  sharedVariables, num);
+      frame.setLocation(getPopupX() - frame.getWidth() / 2, getPopupY() - frame.getHeight() / 2);
     frame.setVisible(true);
   }
 

@@ -413,8 +413,6 @@ pane.add(cancelButton);
 
 setSize(470,320);
 setTitle("Tab " + consoleNumber + " Color Chooser");
-setLocation(75,70);
-setVisible(true);
 }// end constructor
 
 
