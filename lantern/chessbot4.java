@@ -1467,7 +1467,7 @@ try {
                 String eco = thetell.substring(index2+1, index3);
                 //writeToSubConsole("mike found eco " + eco, 0);
                 OpeningBookView.openingEco = eco;
-                if(gamestate.hashMoveTop > 6 && sharedVariables.myOpeningBookView != null && eco.length() > 0)
+                if(gamestate.hashMoveTop > 2 && sharedVariables.myOpeningBookView != null && eco.length() > 0)
                    {
                        sharedVariables.myOpeningBookView.setTitle(eco);
                    } else if(sharedVariables.myOpeningBookView != null) {
