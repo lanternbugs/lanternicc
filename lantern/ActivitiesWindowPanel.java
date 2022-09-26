@@ -1066,6 +1066,7 @@ v9.addComponent(computerSeeksLabel);
     v9.addComponent(corrLabel);
 //v9.addComponent(channelLabel);
 		v1.addGroup(v9);
+    v1.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
 		v1.addComponent(listScrollerPanel);
 
 		v2.addGroup(v9);
@@ -1359,7 +1360,6 @@ void watchMethod(String watch)
 	//Create a parallel group for the vertical axis
 	//ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
       SequentialGroup vGroup = layout.createSequentialGroup();
-
 
 
       vGroup.addComponent(videoButton, GroupLayout.PREFERRED_SIZE,
