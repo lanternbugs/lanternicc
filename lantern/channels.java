@@ -441,7 +441,7 @@ channels()
         version = "v1.0g2";
     } else {
         myServer = "ICC";
-        version = "v6.27a-6";
+        version = "v6.27.2";
     }
 
     try {
@@ -478,7 +478,7 @@ if(operatingSystem.equals("win")) {
  stockfishName = "stockfish_8_x64"; 
 }    else if(operatingSystem.equals("mac"))
 {
- stockfishName = "l-stockfish-10-64";
+ stockfishName = "stockfish15mac";
 }
 setupMenu();
 toolboxListData = new listClass("Scripts");

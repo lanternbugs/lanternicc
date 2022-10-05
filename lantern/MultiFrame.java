@@ -1278,7 +1278,7 @@ class Multiframe extends JFrame
     // .. / (separator)
     JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 15");
     if(sharedVariables.operatingSystem.equals("mac")) {
-       stockfishanalysis = new JMenuItem("Analyze with Stockfish 10");
+       stockfishanalysis = new JMenuItem("Analyze with Stockfish 15");
     }
     JMenuItem cuckooanalysis = new JMenuItem("Analyze with CuckooChess 1.12");
     JMenuItem mediocreanalysis = new JMenuItem("Analyze with Mediocre Chess v0.5");
@@ -2725,7 +2725,7 @@ myboardappearancemenu.add(consoleaspect);
         }
     }
     
-     else if(action.equals("Analyze with Stockfish 15") || action.equals("Analyze with Stockfish 10"))
+     else if(action.equals("Analyze with Stockfish 15"))
     {
       startStockfish();
     }
