@@ -715,7 +715,7 @@ for(int z=0; z< sharedVariables.openBoardCount; z++)
 {
     if(mainTelnet.myboards[z]!=null)
     if(sharedVariables.boardConsoleType != 0)// dont send tell to board if console disabled, would have later caused it to print twice in main
-    if(sharedVariables.mygame[z].realname1.equals(name) || sharedVariables.mygame[z].realname2.equals(name))
+    if(sharedVariables.mygame[z] != null && (sharedVariables.mygame[z].realname1.equals(name) || sharedVariables.mygame[z].realname2.equals(name)))
     {
 
 
@@ -2796,7 +2796,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         try {
             for (int a = 0; a < mySettings.mygame.length; a++)
             {
-                if(mySettings.mygame[a].myGameNumber == myGameStruct.getGameNumber()) {
+                if(mySettings.mygame[a] != null && mySettings.mygame[a].myGameNumber == myGameStruct.getGameNumber()) {
                     if(mySettings.mygame[a].style12Boards.size() > 0 && mySettings.mygame[a].state == mySettings.STATE_PLAYING) {
                         String last = mySettings.mygame[a].style12Boards.get(mySettings.mygame[a].style12Boards.size() -1);
                         Style12Struct styleLine = getStyle12StructString(last);
