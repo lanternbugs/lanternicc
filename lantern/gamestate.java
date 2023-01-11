@@ -35,6 +35,7 @@ import java.math.BigInteger;
 class gamestate {
         static BigInteger currentHash = new BigInteger("-1");
         static int hashMoveTop = 0;
+    ArrayList<String> style12Boards = new ArrayList<String>();
 	int [] crazypieces = new int[13];
 	int [] board = new int[64];
 	int [] boardCopy = new int[64];// used for move list

@@ -752,12 +752,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     */
   }
   
-  void updateFicsBoard(String icsGameNumber, String boardLexigraphic)
+  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline)
   {
       int tempnumber=getGameNumber(icsGameNumber);
 
       if (tempnumber ==
           sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
+          sharedVariables.mygame[gameData.BoardIndex].style12Boards.add(styleline);
           try {
               int [] oldBoard = new int[64];
               //String oldSideToMove = "" + self.sideToMove;

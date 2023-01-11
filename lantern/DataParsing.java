@@ -1364,11 +1364,16 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                     if(backedUp) {
                         backedUp = false;
                     } else {
-                        moveSent(styleLine);
+                        if(checkIfIllegalPlayedMoveWasMade(styleLine)) {
+                            sendIllegalMove(styleLine);
+                        } else {
+                            moveSent(styleLine);
+                        }
+                        
                     }
                     
                 }
-                updateBoard(styleLine);
+                updateBoard(styleLine, newdata);
                 updateFicsClocks(styleLine);
                 
             }
@@ -2785,11 +2790,47 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
        
     }
     
-    void updateBoard(Style12Struct myGameStruct) {
+    
+    boolean checkIfIllegalPlayedMoveWasMade(Style12Struct myGameStruct)
+    {
+        try {
+            for (int a = 0; a < mySettings.mygame.length; a++)
+            {
+                if(mySettings.mygame[a].myGameNumber == myGameStruct.getGameNumber()) {
+                    if(mySettings.mygame[a].style12Boards.size() > 0) {
+                        String last = mySettings.mygame[a].style12Boards.get(mySettings.mygame[a].style12Boards.size() -1);
+                        Style12Struct styleLine = getStyle12StructString(last);
+                        if(styleLine.getBoardLexigraphic().equals(myGameStruct.getBoardLexigraphic())) {
+                            if(styleLine.getCurrentPlayer().equals(myGameStruct.getCurrentPlayer()))
+                                return true;
+                        }
+                    }
+                }
+            }
+        } catch(Exception badformat) {
+            
+        }
+        
+        return false;
+    }
+    
+    void sendIllegalMove(Style12Struct myGameStruct)
+    {
+        newBoardData temp = new newBoardData();
+        temp.type=0;
+        temp.arg1 = "" + myGameStruct.getGameNumber();
+        temp.arg2 = "";
+        temp.arg3 = "";
+        temp.dg=42;
+        gamequeue.add(temp);
+    }
+    
+    void updateBoard(Style12Struct myGameStruct, String newdata) {
         newBoardData temp = new newBoardData();
         temp.type=0;
         temp.arg1 = "" + myGameStruct.getGameNumber();
         temp.arg2 = myGameStruct.getBoardLexigraphic();
+        temp.arg3 = newdata;
         temp.dg=15202;
         gamequeue.add(temp);
     }
