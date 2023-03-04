@@ -1071,7 +1071,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
 
   void logpgn() {
       if(channels.fics) {
-          return; // to implment fics saving pgn from game data
+          logFicsGameToPGN();
+          return;
       }
     myoutput output = new myoutput();
 
@@ -1095,12 +1096,167 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
    else
    sharedVariables.mygame[gameData.BoardIndex].observedPgnFile = channels.publicDirectory + "lantern_ostandard.pgn";
   } // end method set observed pgn file
+    
+void logFicsGameToPGN()
+{
+    try {
+    if(sharedVariables.mygame[gameData.BoardIndex].state != sharedVariables.STATE_PLAYING) {
+        System.out.println("state not playing wont log game");
+        return;
+    }
+    
+
+    String game = "\r\n";
+    /*
+    [Event "ICC 5 0"]
+    [Site "Internet Chess Club"]
+    [Date "2011.10.09"]
+    [Round "-"]
+    [White "Mike"]
+    [Black "Prophet-Daniel"]
+    [Result "1-0"]
+    [ICCResult "Black forfeits on time"]
+    [WhiteElo "1046"]
+    [BlackElo "943"]
+    [Opening "Sicilian"]
+    [ECO "B54"]
+    [NIC "SI.01"]
+    [Time "03:46:21"]
+    [TimeControl "300+0"]
+    */
+    String date = "*";
+    String theTime="*";
+    try {
+
+    Calendar Now=Calendar.getInstance();
+    String hour= "" + Now.get(Now.HOUR_OF_DAY);// was HOUR for 12 hour time
+    if(hour.equals("0"))
+    hour = "12";
+
+    String minute="" + Now.get(Now.MINUTE);
+    if(minute.length()==1)
+    minute="0"+ minute;
+
+    String second="" + Now.get( Now.SECOND);
+    if(second.length()==1)
+    second="0"+ second;
+
+    theTime=hour + ":" + minute + ":" + second;
+
+    }
+    catch(Exception dumtime){}
+
+    try {
+
+    Calendar Now=Calendar.getInstance();
+    // year.month.day
+    String year = "" + Now.get(Now.YEAR);
+    int m = Now.get(Now.MONTH) + 1;
+    String month = "" + m;
+    if(m < 10) {
+     month = "0" + month;
+    }
+    String day = "" + Now.get(Now.DAY_OF_MONTH);
+    if(day.length() == 1)
+    {
+      day = "0" + day;
+    }
+    date = year + "." + month + "." + day;
+    }
+    catch(Exception dumdate){}
+
+    String wildString = "";
+                if(sharedVariables.mygame[gameData.BoardIndex].wild > 0)
+                {
+                 wildString = "w" + sharedVariables.mygame[gameData.BoardIndex].wild + " ";
+                }
+    String isRated = "";
+    if(!sharedVariables.mygame[gameData.BoardIndex].rated)
+    {
+       isRated = " u";
+    }
+    game += "[Event \"FICS " + wildString +   sharedVariables.mygame[gameData.BoardIndex].time + " " + sharedVariables.mygame[gameData.BoardIndex].inc + isRated + "\"]\r\n";
+    game += "[Site \"Free Internet Chess Server\"]\r\n";
+    game += "[Date \"" + date +  "\"]\r\n";
+    game += "[Round \"-\"]\r\n";
+    game += "[White \"" + sharedVariables.mygame[gameData.BoardIndex].realname1 + "\"]\r\n";
+    game += "[Black \"" + sharedVariables.mygame[gameData.BoardIndex].realname2 + "\"]\r\n";
+    /*if(iccresult.equals(""))
+    {
+      iccresult = "*";
+    }*/
+    game += "[Result \"" + sharedVariables.mygame[gameData.BoardIndex].ficsResult + "\"]\r\n";
+        /*
+    if(!iccresultstring.equals(""))
+    {
+       game += "[ICCResult \"" + iccresultstring + "\"]\r\n";
+    }
+     */
+    if(!sharedVariables.mygame[gameData.BoardIndex].whiteRating.equals("0"))
+    {
+      game += "[WhiteElo \"" + sharedVariables.mygame[gameData.BoardIndex].whiteRating + "\"]\r\n";
+    }
+    if(!sharedVariables.mygame[gameData.BoardIndex].blackRating.equals("0"))
+    {
+      game += "[BlackElo \"" + sharedVariables.mygame[gameData.BoardIndex].blackRating + "\"]\r\n";
+    }
+    game += "[Opening \"*\"]\r\n";
+    if(!sharedVariables.mygame[gameData.BoardIndex].eco.equals("")) {
+    game += "[ECO \"" + sharedVariables.mygame[gameData.BoardIndex].eco + "\"]\r\n";
+    } else
+    {
+      game += "[ECO \"*\"]\r\n";
+    }
+
+    game += "[NIC \"*\"]\r\n";
+    game += "[Time \"" + theTime + "\"]\r\n";
+    int minutes = sharedVariables.mygame[gameData.BoardIndex].time  * 60;
+    game += "[TimeControl \"" +  minutes + "+" + sharedVariables.mygame[gameData.BoardIndex].inc + "\"]\r\n";
+    if(sharedVariables.mygame[gameData.BoardIndex].wild == 1) {
+                 game += "[Variant \"wildcastle\"]\r\n";
+                }
+                if(sharedVariables.mygame[gameData.BoardIndex].wild == 9) {
+                 game += "[Variant \"twokings\"]\r\n";
+                }
+                if(sharedVariables.mygame[gameData.BoardIndex].wild == 17) {
+                 game += "[Variant \"losers\"]\r\n";
+                }
+                if(sharedVariables.mygame[gameData.BoardIndex].wild == 22) {
+                 game += "[Variant \"fischerandom\"]\r\n";
+                }if(sharedVariables.mygame[gameData.BoardIndex].wild == 23) {
+                 game += "[Variant \"crazyhouse\"]\r\n";
+                }if(sharedVariables.mygame[gameData.BoardIndex].wild == 25) {
+                 game += "[Variant \"3check\"]\r\n";
+                }if(sharedVariables.mygame[gameData.BoardIndex].wild == 26) {
+                 game += "[Variant \"giveaway\"]\r\n";
+                }if(sharedVariables.mygame[gameData.BoardIndex].wild == 27) {
+                 game += "[Variant \"atomic\"]\r\n";
+                }if(sharedVariables.mygame[gameData.BoardIndex].wild == 28) {
+                 game += "[Variant \"shatranj\"]\r\n";
+                }
+    if(sharedVariables.mygame[gameData.BoardIndex].engineFen.length() > 8) {
+                 game += "[FEN \"" +  sharedVariables.mygame[gameData.BoardIndex].engineFen + "\"]\r\n";
+                }
+    game += "\r\n";
+    // now moves
+    game += sharedVariables.mygametable[gameData.BoardIndex].getMoves() + "\r\n";
+   // game += "{" + iccresultstring + "}\r\n";
+    game += sharedVariables.mygame[gameData.BoardIndex].ficsResult + "\r\n";
+        game += "\r\n";
+    FileWrite writer = new FileWrite();
+    writer.writeAppend(game, channels.publicDirectory + "pearl-" + sharedVariables.whoAmI + ".pgn");
+
+
+
+
+    }// end try
+    catch(Exception logging){}
+
+}
 void logObservedPgn(String iccresult, String iccresultstring)
 {
 try {
 if(sharedVariables.mygame[gameData.BoardIndex].observedPgnFile.equals(""))
-return;
-if(sharedVariables.mygame[gameData.BoardIndex].movetop < 1)
 return;
 if(sharedVariables.mygame[gameData.BoardIndex].state == sharedVariables.STATE_EXAMINING &&
 sharedVariables.mygame[gameData.BoardIndex].iWasMadeExaminer == false)

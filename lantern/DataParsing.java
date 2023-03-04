@@ -2000,6 +2000,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                         if(type == GAME_ENDED) {
                                 gameEnded(number);
                             String pgnResult = lineEnd;
+                            openGame.ficsResult = pgnResult;
                             return false;
                         }
                     }

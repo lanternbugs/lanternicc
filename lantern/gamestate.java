@@ -93,6 +93,7 @@ boolean becameExamined;
 boolean sentGameEnd;
 boolean mugshot1=false;
 boolean mugshot2=false;
+String ficsResult = "*";
 String whiteTimeDisplay;
 String blackTimeDisplay;
 String myColor;
