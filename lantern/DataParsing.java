@@ -2837,24 +2837,24 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     
     void updateFicsClocks(Style12Struct myGameStruct) {
         // Color whose turn it is to move ("B" or "W")
-        String color = myGameStruct.getCurrentPlayer();
+        //String color = myGameStruct.getCurrentPlayer();
         newBoardData temp = new newBoardData();
         temp.type=0;
         temp.arg1 = "" + myGameStruct.getGameNumber();
-        temp.arg2 = color;
+        temp.arg2 = "W";
         temp.arg3 = "" + myGameStruct.getWhiteTime() * 1000;
         temp.dg=56;
         gamequeue.add(temp);
-        if(color.equals("W")) {
+        /*if(color.equals("W")) {
             color = "B";
         } else {
             color = "W";
-        }
+        }*/
         
         newBoardData temp1 = new newBoardData();
         temp1.type=0;
         temp1.arg1 = "" + myGameStruct.getGameNumber();
-        temp1.arg2 = color;
+        temp1.arg2 = "B";
         temp1.arg3 = "" + myGameStruct.getBlackTime() * 1000;
         temp1.dg=56;
         gamequeue.add(temp1);
