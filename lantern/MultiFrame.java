@@ -1970,14 +1970,22 @@ class Multiframe extends JFrame
     // add to menu bar
         menu.add(optionsmenu);
     // Options /
-    myboardmenu.add(jtournament);
+      if(!channels.fics) {
+          myboardmenu.add(jtournament);
+      }
+    
     myboardmenu.add(nseek);
-      myboardmenu.add(jcorrespondence);
+      if(!channels.fics) {
+          myboardmenu.add(jcorrespondence);
+      }
+      
     myboardmenu.add(nchallenge);
     myboardmenu.add(dorematch);
     myboardmenu.add(withdrawSent);
       myboardmenu.add(unfollowBroadcast);
-      myboardmenu.add(autoExamine);
+      if(!channels.fics) {
+          myboardmenu.add(autoExamine);
+      }
     myboardmenu.addSeparator();
     myboardmenu.add(help_getting_game);
       if(!channels.fics) {
@@ -2120,7 +2128,9 @@ myboardappearancemenu.add(consoleaspect);
     PgnMenu.add(help_pgn);
     PgnMenu.addSeparator();
     PgnMenu.add(pgnlogging);
-    PgnMenu.add(pgnObservedLogging);
+    if(!channels.fics) {
+        PgnMenu.add(pgnObservedLogging);
+    }
     PgnMenu.add(openpgn);
     // .. /
     myboardmenu.add(examReplay);
@@ -2289,6 +2299,9 @@ myboardappearancemenu.add(consoleaspect);
     // Actions /
     JMenuItem showhistory = new JMenuItem("Show My Recent Games");
     JMenuItem showlib = new JMenuItem("Show My Game Library");
+      if(channels.fics) {
+          showlib = new JMenuItem("Show My Journal");
+      }
     JMenuItem showstored = new JMenuItem("Show My Adjourned Games");
       JMenuItem showcorrespondence = new JMenuItem("Show My Correspondence Games");
       JMenuItem showlogfile = new JMenuItem("Show My Game Log File");
@@ -2303,7 +2316,13 @@ myboardappearancemenu.add(consoleaspect);
     // .. / (separator)
     JMenuItem showobs = new JMenuItem("Observe High Rated Game");
     JMenuItem showobs5 = new JMenuItem("Observe High Rated 5-Minute Game");
+      if(channels.fics) {
+          showobs5 = new JMenuItem("Observe High Rated Blitz Game");
+      }
     JMenuItem showobs15 = new JMenuItem("Observe High Rated 15-Minute Game");
+      if(channels.fics) {
+          showobs15 = new JMenuItem("Observe High Rated Standard Game");
+      }
     // .. / (separator)
     JMenuItem showtitled = new JMenuItem("Show Titled Players Online in M0 Tab");
     JMenuItem showrelay = new JMenuItem("Show Relay Schedule");
@@ -2322,15 +2341,17 @@ myboardappearancemenu.add(consoleaspect);
     actionsmenu.add(showhistory);
     actionsmenu.add(showlib);
     actionsmenu.add(showstored);
-      actionsmenu.add(showcorrespondence);
+      if(!channels.fics) {
+          actionsmenu.add(showcorrespondence);
+      }
       actionsmenu.add(showlogfile);
       if(!channels.fics) {
           actionsmenu.addSeparator();
             actionsmenu.add(showStore);
             actionsmenu.add(showMyICC);
-            actionsmenu.addSeparator();
+            
       }
-    
+      actionsmenu.addSeparator();
       actionsmenu.add(showfinger);
       actionsmenu.add(lookupuser);
     actionsmenu.add(addfriend);
@@ -2927,6 +2948,9 @@ else if (action.equals("Three Lines")) {
     else if (action.equals("Show My Game Log File")) {
         try {
             String myfile = channels.publicDirectory + "lantern_" + sharedVariables.whoAmI + ".pgn";
+            if(channels.fics) {
+                myfile = channels.publicDirectory + "pearl-" + sharedVariables.whoAmI + ".pgn";
+            }
             File f = new File(myfile);
             if(f.exists() && !f.isDirectory()) {
                 pgnLoader myLoader = new pgnLoader(myfile);
@@ -2939,7 +2963,13 @@ else if (action.equals("Three Lines")) {
                 myPgnFrame.setSize(750,400);
                 myPgnFrame.setVisible(true);
             } else {
-                String mess = "lantern_" + sharedVariables.whoAmI + ".pgn not found. Is Game menu / PGN / Log My Games selected?. Have you played a game with Lantern on this username? On Mac give Lantern permission to access the Documents Directory so save games there in a LanternChess subfolder.";
+                String mess = channels.fics ? "pearl-" : "lantern_";
+                if(channels.fics) {
+                    mess+= sharedVariables.whoAmI + ".pgn not found. Is Game menu / PGN / Log My Games selected?. Have you played a game with Pearl on this username? On Mac give Pearl permission to access the Documents Directory so save games there in a PearlChess subfolder.";
+                } else {
+                    mess+= sharedVariables.whoAmI + ".pgn not found. Is Game menu / PGN / Log My Games selected?. Have you played a game with Lantern on this username? On Mac give Lantern permission to access the Documents Directory so save games there in a LanternChess subfolder.";
+                }
+                
                 Popup mypopper = new Popup(this, true, mess, sharedVariables);
                 mypopper.setVisible(true);
             }
@@ -3777,6 +3807,7 @@ dot.setVisible(true);
       // merge all the commands sent from the action menu
     } else if (action.equals("Show My Recent Games") ||
                action.equals("Show My Game Library") ||
+               action.equals("Show My Journal") ||
                action.equals("Show My Adjourned Games") ||
                action.equals("My Profile and Ratings") ||
                action.equals("Enter Examination Mode") ||
@@ -3785,6 +3816,8 @@ dot.setVisible(true);
                action.equals("Observe High Rated Game") ||
                action.equals("Observe High Rated 5-Minute Game") ||
                action.equals("Observe High Rated 15-Minute Game") ||
+               action.equals("Observe High Rated Blitz Game") ||
+               action.equals("Observe High Rated Standard Game") ||
                action.equals("Stop Following") ||
                action.equals("Auto Examine After Playing") ||
                action.equals("Follow Broadcast- When On") ||
@@ -3799,10 +3832,11 @@ dot.setVisible(true);
               client.writeToSubConsole("For a context menu with observe, finger etc - double click on a name or highlight a name and right click. ^ next to a name means they are playing.\n", 0);
       //String actionmess = "History\n";
       String actionmess =
-        (action.equals("Show My Recent Games") ? "History" :
-         (action.equals("Show My Game Library") ? "Liblist" :
+        (action.equals("Show My Recent Games") ?  "History" :
+         (action.equals("Show My Game Library") ?  "Liblist" :
+          (action.equals("Show My Journal") ?  "Journal" :
           (action.equals("Show My Adjourned Games") ? "Stored" :
-           (action.equals("My Profile and Ratings") ? "`f1`Finger" :
+           (action.equals("My Profile and Ratings") ? channels.fics ? "Finger" : "`f1`Finger" :
             (action.equals("Enter Examination Mode") ? "Examine" :
             (action.equals("Show Titled Players Online in M0 Tab") ? "Who T" :
             (action.equals("Disconnect") ? "Quit" :
@@ -3813,13 +3847,15 @@ dot.setVisible(true);
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
+                 (action.equals("Observe High Rated Blitz Game") ? "Observe /b" :
+                  (action.equals("Observe High Rated Standard Game") ? "Observe /s" :
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Auto Examine After Playing") ? "set examine " + !sharedVariables.myseek.examine :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match"))))))))))))))))) + "\n";
+                                 "Match")))))))))))))))))))) + "\n";
 
 
-      if (sharedVariables.myServer.equals("ICC") && !actionmess.startsWith("`"))
+      if (!channels.fics && !actionmess.startsWith("`"))
         actionmess = "`c0`" + actionmess;
 
       myoutput data = new myoutput();
