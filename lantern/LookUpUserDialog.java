@@ -113,6 +113,9 @@ setVisible(true);
            if(field.getText().length()>0)
            {
             String mess = "`f1`Finger " + field.getText() + "\n";
+            if(channels.fics) {
+                mess = "Finger " + field.getText() + "\n";
+            }
             myoutput data = new myoutput();
             data.data=mess;
             data.consoleNumber=0;
