@@ -2869,7 +2869,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg1 = "" + myGameStruct.getGameNumber();
         temp.arg2 = getMoveFromVerbose(myGameStruct.getMoveVerbose(), myGameStruct.getCurrentPlayer());
         temp.arg3 = myGameStruct.getMoveSAN();
-        temp.arg4 = "false"; // is variation shoudl be on for spos
+        temp.arg4 = "true"; // true for sound
         temp.dg=24;
         gamequeue.add(temp);
     }
