@@ -78,6 +78,7 @@ int myGameNumber;
 int movelock;
 int whiteMaterialCount;
 int blackMaterialCount;
+String sideToMove = "w";
 int blank; // for an x in examine mode
 int madeMove;
 String eco;
@@ -1671,6 +1672,104 @@ void computeHash()
      catch(Exception e)  {System.out.println("error in game state hash generator "); }
 
 }
+ // MARK: FICS Engine Fen Code
+    String getStockfishFen()
+    {
+        String side = sideToMove.equals("W") ? "b" : "w";
+        return getPGNPartialFen() + " " + side + " - - 0 \n";
+        // need support for following below:
+        // whiteShort, whiteLong, blackShort, blackLong, sideToMove, enpassantSquare
+        /*
+        String side = "" + self.sideToMove.toLowerCase();
+        String fen = getPGNPartialFen() + " " + side + " ";
+        //+ " - - 0";
+        // castle rights
+        boolean haveWhiteRights = false;
+        boolean haveBlackRights = false;
+        if(whiteShort.equals("") && whiteLong.equals("")) {
+        haveWhiteRights = false;
+    } else {
+        fen = fen + whiteShort;
+        fen = fen + whiteLong;
+        haveWhiteRights = true;
+    }
+        if(blackShort.equals("") && blackLong.equals("")) {
+        haveBlackRights = false;
+    } else {
+        haveBlackRights = true;
+        fen = fen + blackShort;
+        fen = fen + blackLong;
+    }
+        if(!haveBlackRights && !haveWhiteRights) {
+            fen = fen + "-";
+        }
+        if(enpassantSquare.equals("")) {
+        fen = fen + " - 0";
+    } else {
+        fen = fen + " ";
+        fen = fen + enpassantSquare;
+        fen = fen + " 0";
+    }
+        return fen;
+         */
+    }
+    String getPGNPartialFen()
+   {
+       
+       int [] board = new int[64];
+       for(int a = 0; a < 64; a++) {
+           board[a] = this.board[63 - a];
+       }
+
+       String fen = "";
+       for(int a = 0; a < 8; a++) {
+           int spaces = 0;
+           for(int b = 0; b < 8; b++) {
+               if(board[a * 8 + b] == 0) {
+                   spaces++;
+               } else {
+                   if(spaces > 0) {
+                       fen = fen + spaces;
+                       spaces = 0;
+                   }
+                   if(board[a * 8 + b] == 1) {
+                       fen = fen + "P";
+                   } else if(board[a * 8 + b] == 2) {
+                       fen = fen + "N";
+                   } else if(board[a * 8 + b] == 3) {
+                       fen = fen + "B";
+                   } else if(board[a * 8 + b] == 4) {
+                       fen = fen + "R";
+                   } else if(board[a * 8 + b] == 5) {
+                       fen = fen + "Q";
+                   } else if(board[a * 8 + b] == 6) {
+                       fen = fen + "K";
+                   } else if(board[a * 8 + b] == 7) {
+                       fen = fen + "p";
+                   } else if(board[a * 8 + b] == 8) {
+                       fen = fen + "n";
+                   } else if(board[a * 8 + b] == 9) {
+                       fen = fen + "b";
+                   } else if(board[a * 8 + b] == 10) {
+                       fen = fen + "r";
+                   } else if(board[a * 8 + b] == 11) {
+                       fen = fen + "q";
+                   } else if(board[a * 8 + b] == 12) {
+                       fen = fen + "k";
+                   }
+
+               }
+           }
+           if(spaces > 0) {
+               fen = fen +  spaces;
+               spaces = 0;
+           }
+           if(a < 7) {
+               fen = fen + "/";
+           }
+       } // for a
+       return fen;
+   }
 
 }// end class game state
 

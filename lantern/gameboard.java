@@ -752,7 +752,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     */
   }
   
-  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline)
+  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline, String currentPlayer)
   {
       int tempnumber=getGameNumber(icsGameNumber);
 
@@ -796,8 +796,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                     }
                   }
               }
-              
-              
+              // fics engine updates
+              sharedVariables.mygame[gameData.BoardIndex].sideToMove = currentPlayer;
               
                   
               //copyToDisplayBoard();
@@ -2518,31 +2518,35 @@ void stopTheEngine()
   }
 
   void sendUciMoves() {
-
-
-      
-
     myoutput outgoing = new myoutput();
     outgoing.data="stop\n";
     //sharedVariables.engineQueue.add(outgoing);
 
     //myoutput outgoing2 = new myoutput();
-    String moves;
-    if (sharedVariables.mygame[gameData.BoardIndex].engineFen.length()>2) {
+      if(!channels.fics) {
+          String moves;
+          if (sharedVariables.mygame[gameData.BoardIndex].engineFen.length()>2) {
 
-      moves="";
-      if (!sharedVariables.mygame[gameData.BoardIndex].engineFen.startsWith
-          ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
-        moves="ucinewgame\n";
-      moves+="position fen " +
-        sharedVariables.mygame[gameData.BoardIndex].engineFen +
-        sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
-      
-    } else {
-      moves ="stop\nposition startpos";
-      moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
-    }
-    outgoing.data+= moves;
+            moves="";
+            if (!sharedVariables.mygame[gameData.BoardIndex].engineFen.startsWith
+                ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+              moves="ucinewgame\n";
+            moves+="position fen " +
+              sharedVariables.mygame[gameData.BoardIndex].engineFen +
+              sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+            
+          } else {
+            moves ="stop\nposition startpos";
+            moves+=sharedVariables.mygame[gameData.BoardIndex].getUciMoves();
+          }
+          outgoing.data+= moves;
+      } else {
+          // fics use fen always, never moves
+          outgoing.data += "stop\nucinewgame\nposition fen " + sharedVariables.mygame[gameData.BoardIndex].getStockfishFen();
+          //System.out.println(outgoing.data);
+          
+      }
+    
     //sharedVariables.engineQueue.add(outgoing2);
 
     //myoutput outgoing3 = new myoutput();

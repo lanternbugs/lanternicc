@@ -2832,6 +2832,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg1 = "" + myGameStruct.getGameNumber();
         temp.arg2 = myGameStruct.getBoardLexigraphic();
         temp.arg3 = newdata;
+        temp.arg4 = myGameStruct.getCurrentPlayer();
         temp.dg=15202;
         gamequeue.add(temp);
     }

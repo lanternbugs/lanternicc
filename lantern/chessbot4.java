@@ -5990,7 +5990,7 @@ void proccessGameInfo(newBoardData temp)
                             return;
                             if(myboards[gamenum]== null)
                             return;
-                            myboards[gamenum].updateFicsBoard(temp.arg1, temp.arg2, temp.arg3);
+                            myboards[gamenum].updateFicsBoard(temp.arg1, temp.arg2, temp.arg3, temp.arg4);
                             repaintBoards(gamenum);
 
                     }
