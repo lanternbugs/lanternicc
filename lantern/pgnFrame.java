@@ -98,7 +98,16 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 
-     void send(String s)
+     void sendToFics(String s) {
+         if(channels.fics) {
+             try {
+                 Thread.sleep(75); // this should not call on main thread on fics
+             } catch(Exception dui) { }
+         }
+         send(s);
+     }
+    
+    void send(String s)
      {
 
 		 myoutput x = new myoutput();
@@ -248,18 +257,18 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
              wild = getWildNumber(variant);
             }
             if(channels.fics) {
-                send("$unexamine\n");
+                sendToFics("$unexamine\n");
                 if(wild == 27) {
-                   send("$examine b atomic\n");
+                    sendToFics("$examine b atomic\n");
                 } else if(wild == 17){
-                   send("$examine b losers\n");
+                    sendToFics("$examine b losers\n");
                 } else if(wild == 23) {
-                    send("$examine b crazyhouse\n");
+                    sendToFics("$examine b crazyhouse\n");
                 } else if(wild == 26) {
-                    send("$examine b suicide\n");
+                    sendToFics("$examine b suicide\n");
                 }
                 else {
-                    send("$examine\n");
+                    sendToFics("$examine\n");
                 }
             } else {
                 if(wild != 0) {
@@ -375,51 +384,61 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
          void examine(int row)
 	 {
 
-                         enterExamineMode(row);
-         if(!channels.fics) {
-             if(myLoader.games.get(row).iccFen != null)
-                           send("multi loadfen " + myLoader.games.get(row).iccFen + "\n");
-                           if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest()) {
-                               send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
-             send("Setblackname " + myLoader.games.get(row).blackName + "\n");
-                           }
-             
-             if(myLoader.games.get(row).whiteElo != null)
-                           send("Tag WhiteElo " + myLoader.games.get(row).whiteElo + "\n");
-             if(myLoader.games.get(row).blackElo != null)
-                           send("Tag BlackElo " + myLoader.games.get(row).blackElo + "\n");
-             send("Tag Event " + myLoader.games.get(row).event + "\n");
-             send("Tag Site " + myLoader.games.get(row).site + "\n");
-             send("Tag Date " + myLoader.games.get(row).date + "\n");
-         } else {
-             send("$wname " + sanitizeName(myLoader.games.get(row).whiteName) + "\n");
-             send("$bname " + sanitizeName(myLoader.games.get(row).blackName) + "\n");
-         }
-			
+         new Thread(new Runnable() {
+              @Override
+              public void run() {
+                  enterExamineMode(row);
+                  if(!channels.fics) {
+                      if(myLoader.games.get(row).iccFen != null)
+                                    send("multi loadfen " + myLoader.games.get(row).iccFen + "\n");
+                                    if(sharedVariables.myname != null && sharedVariables.myname.length() > 1 && !sharedVariables.isGuest()) {
+                                        send("Setwhitename " + myLoader.games.get(row).whiteName + "\n");
+                      send("Setblackname " + myLoader.games.get(row).blackName + "\n");
+                                    }
+                      
+                      if(myLoader.games.get(row).whiteElo != null)
+                                    send("Tag WhiteElo " + myLoader.games.get(row).whiteElo + "\n");
+                      if(myLoader.games.get(row).blackElo != null)
+                                    send("Tag BlackElo " + myLoader.games.get(row).blackElo + "\n");
+                      send("Tag Event " + myLoader.games.get(row).event + "\n");
+                      send("Tag Site " + myLoader.games.get(row).site + "\n");
+                      send("Tag Date " + myLoader.games.get(row).date + "\n");
+                  } else {
+                      sendToFics("$wname " + sanitizeName(myLoader.games.get(row).whiteName) + "\n");
+                      sendToFics("$bname " + sanitizeName(myLoader.games.get(row).blackName) + "\n");
+                  }
+                     
 
-			
+                     
 
 
 
 
 
-			for(int a=0; a<myLoader.games.get(row).moves.size() - 1; a++)// size - 1 since last thing is result we got there
-			{
-                String prefix = "multi chessmove ";
-                if(channels.fics) {
-                    prefix = "";
-                }
-                String theMoveSent = prefix + myLoader.games.get(row).moves.get(a) + "\n";
-                          send(theMoveSent);
-                        }
-                        if(channels.fics) {
-                            send("$commit\n");
-                        } else {
-                            if(myLoader.games.get(row).iccResult != null)
-                                 send("Tag ICCResult " + myLoader.games.get(row).iccResult + "\n");
-                               else
-                                 send("Tag result " + myLoader.games.get(row).result + "\n");
-                        }
+                     for(int a=0; a<myLoader.games.get(row).moves.size() - 1; a++)// size - 1 since last thing is result we got there
+                     {
+                         String prefix = "multi chessmove ";
+                         if(channels.fics) {
+                             prefix = "";
+                         }
+                         String theMoveSent = prefix + myLoader.games.get(row).moves.get(a) + "\n";
+                                   if(!channels.fics) {
+                                       send(theMoveSent);
+                                    } else {
+                                        sendToFics(theMoveSent);
+                                    }
+                                 }
+                                 if(channels.fics) {
+                                     sendToFics("$commit\n");
+                                 } else {
+                                     if(myLoader.games.get(row).iccResult != null)
+                                          send("Tag ICCResult " + myLoader.games.get(row).iccResult + "\n");
+                                        else
+                                          send("Tag result " + myLoader.games.get(row).result + "\n");
+                                 }
+              }
+         }).start();
+         
                         
 	 }
     
