@@ -855,8 +855,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         // adammr(99): this atomic channel
         if(spaceSeperatedLine.size() > 1) {
         String tempo = spaceSeperatedLine.get(0);
-        String tempo2 = spaceSeperatedLine.get(1);
-        if(getChannelNumber(tempo) > -1 && !(tempo2.startsWith("[") && tempo2.endsWith("]") && spaceSeperatedLine.size() > 2)) {
+        if(getChannelNumber(tempo) > -1 && tempo.endsWith("):")) {
             return CHANNEL_TELL;
         }
     }
