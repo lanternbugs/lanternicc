@@ -834,6 +834,8 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
         sharedVariables.mygame[gameData.BoardIndex].myGameNumber) {
       sharedVariables.mygame[gameData.BoardIndex].realelo1 = wElo;
       sharedVariables.mygame[gameData.BoardIndex].realelo2 = bElo;
+        sharedVariables.mygame[gameData.BoardIndex].whiteRating = wElo;
+        sharedVariables.mygame[gameData.BoardIndex].blackRating = bElo;
         sharedVariables.mygame[gameData.BoardIndex].name1 =
         sharedVariables.mygame[gameData.BoardIndex].realname1 + " " + wTitle + " " + wElo;
         sharedVariables.mygame[gameData.BoardIndex].name2 =
