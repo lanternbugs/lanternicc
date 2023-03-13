@@ -853,9 +853,10 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }
         */
         // adammr(99): this atomic channel
-        if(spaceSeperatedLine.size() > 0) {
+        if(spaceSeperatedLine.size() > 1) {
         String tempo = spaceSeperatedLine.get(0);
-        if(getChannelNumber(tempo) > -1) {
+        String tempo2 = spaceSeperatedLine.get(1);
+        if(getChannelNumber(tempo) > -1 && tempo.startsWith("(") && !(tempo2.startsWith("[") && tempo2.endsWith("]") && spaceSeperatedLine.size() > 2)) {
             return CHANNEL_TELL;
         }
     }
@@ -971,61 +972,65 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                MainActivity.playSound("tell");
             }
         }
-      */
-        if(ficsType == SEEKING_LINE) {
-            return;
-        }
-        if(ficsType == CHANNEL_TELL) {
-            writeOutToChannel(ficsChatTell, getChannelNumber(spaceSeperatedLine.get(0)));
-           
-            if(!ficsChatTell2.equals("")) {
-                writeOutToChannel(ficsChatTell2, getChannelNumber(spaceSeperatedLine.get(0)));
-            }
-        } else if(ficsType == NOTIFY_TYPE) {
-            
-            writeOutToNotify(ficsChatTell, spaceSeperatedLine.get(1));
-            if(!ficsChatTell2.equals("")) {
-                
-            }
-            
-        }  else if(ficsType == PERSONAL_TELL) {
-            
-            writeOutToTell(ficsChatTell, spaceSeperatedLine.get(0));
-            if(!ficsChatTell2.equals("")) {
-               writeOutToMain(ficsChatTell2 + "\n");
-            }
+      */try {
+          if(ficsType == SEEKING_LINE) {
+              return;
+          }
+          if(ficsType == CHANNEL_TELL) {
+              writeOutToChannel(ficsChatTell, getChannelNumber(spaceSeperatedLine.get(0)));
+             
+              if(!ficsChatTell2.equals("")) {
+                  writeOutToChannel(ficsChatTell2, getChannelNumber(spaceSeperatedLine.get(0)));
+              }
+          } else if(ficsType == NOTIFY_TYPE) {
+              
+              writeOutToNotify(ficsChatTell, spaceSeperatedLine.get(1));
+              if(!ficsChatTell2.equals("")) {
+                  
+              }
+              
+          }  else if(ficsType == PERSONAL_TELL) {
+              
+              writeOutToTell(ficsChatTell, spaceSeperatedLine.get(0));
+              if(!ficsChatTell2.equals("")) {
+                 writeOutToMain(ficsChatTell2 + "\n");
+              }
 
 
-        } else if(ficsType == SHOUT_TELL) {
-            writeOutToShouts(ficsChatTell + "\n");
-            if(!ficsChatTell2.equals("")) {
-               writeOutToMain(ficsChatTell2 + "\n");
-            }
-        }   else {
-            if(!ficsChatTell.trim().equals("")) {
-                writeOutToMain(ficsChatTell);
-            }
-            
+          } else if(ficsType == SHOUT_TELL) {
+              writeOutToShouts(ficsChatTell + "\n");
+              if(!ficsChatTell2.equals("")) {
+                 writeOutToMain(ficsChatTell2 + "\n");
+              }
+          }   else {
+              if(!ficsChatTell.trim().equals("")) {
+                  writeOutToMain(ficsChatTell);
+              }
+              
 
-        }
+          }
 
-       /*else if(ficsType == CSHOUT_TYPE) {
-            mySettings.chatLog.addChat(ficsChatTell, "s-shout");
-            if(!ficsChatTell2.equals("")) {
-                mySettings.chatLog.addChat(ficsChatTell2, "server_text");
-            }
-        consoleManager.updateChat();
-        } else if(ficsType == NOTIFY_TYPE) {
-            mySettings.chatLog.addChat(ficsChatTell, "notify");
-            mySettings.gameChatLog.addChat(ficsChatTell, "notify");
-            if(!ficsChatTell2.equals("")) {
-                mySettings.chatLog.addChat(ficsChatTell2, "server_text");
-                mySettings.gameChatLog.addChat(ficsChatTell2, "notify");
-            }
-            consoleManager.updateChat();
-            gameConsoleManager.updateChat();
-        }
-      */
+         /*else if(ficsType == CSHOUT_TYPE) {
+              mySettings.chatLog.addChat(ficsChatTell, "s-shout");
+              if(!ficsChatTell2.equals("")) {
+                  mySettings.chatLog.addChat(ficsChatTell2, "server_text");
+              }
+          consoleManager.updateChat();
+          } else if(ficsType == NOTIFY_TYPE) {
+              mySettings.chatLog.addChat(ficsChatTell, "notify");
+              mySettings.gameChatLog.addChat(ficsChatTell, "notify");
+              if(!ficsChatTell2.equals("")) {
+                  mySettings.chatLog.addChat(ficsChatTell2, "server_text");
+                  mySettings.gameChatLog.addChat(ficsChatTell2, "notify");
+              }
+              consoleManager.updateChat();
+              gameConsoleManager.updateChat();
+          }
+        */
+      } catch(Exception dui) {
+          System.out.println("exception printing fics type " + ficsType + " with content: " + ficsChatTell);
+      }
+        
 
     }
 
