@@ -2838,6 +2838,11 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg2 = myGameStruct.getBoardLexigraphic();
         temp.arg3 = newdata;
         temp.arg4 = myGameStruct.getCurrentPlayer();
+        temp.arg5 = myGameStruct.canWhiteCastleKingside() ? "K" : "";
+        temp.arg6 = myGameStruct.canWhiteCastleQueenside() ? "Q" : "";
+        temp.arg7 = myGameStruct.canBlackCastleKingside() ? "k" : "";
+        temp.arg8 = myGameStruct.canBlackCastleQueenside() ? "q" : "";
+        
         temp.dg=15202;
         gamequeue.add(temp);
     }

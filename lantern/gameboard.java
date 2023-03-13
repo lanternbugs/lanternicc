@@ -752,7 +752,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     */
   }
   
-  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline, String currentPlayer)
+  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline, String currentPlayer, String wShort, String wLong, String bShort, String bLong)
   {
       int tempnumber=getGameNumber(icsGameNumber);
 
@@ -798,6 +798,10 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
               }
               // fics engine updates
               sharedVariables.mygame[gameData.BoardIndex].sideToMove = currentPlayer;
+              sharedVariables.mygame[gameData.BoardIndex].whiteShort = wShort;
+              sharedVariables.mygame[gameData.BoardIndex].whiteLong = wLong;
+              sharedVariables.mygame[gameData.BoardIndex].blackShort = bShort;
+              sharedVariables.mygame[gameData.BoardIndex].blackLong = bLong;
               
                   
               //copyToDisplayBoard();

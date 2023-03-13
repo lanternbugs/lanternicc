@@ -70,6 +70,10 @@ long whitenow;
 long blacknow;
 double wtime;
 double btime;
+String whiteShort = "";
+String whiteLong = "";
+String blackShort = "";
+String blackLong = "";
 int turn;
 int state;
 boolean iWasMadeExaminer;
@@ -1676,12 +1680,13 @@ void computeHash()
     String getStockfishFen()
     {
         String side = sideToMove.equals("W") ? "b" : "w";
-        return getPGNPartialFen() + " " + side + " - - 0 \n";
+        String fen =  getPGNPartialFen() + " " + side + " ";
         // need support for following below:
         // whiteShort, whiteLong, blackShort, blackLong, sideToMove, enpassantSquare
-        /*
-        String side = "" + self.sideToMove.toLowerCase();
-        String fen = getPGNPartialFen() + " " + side + " ";
+        
+        // KQkq or kq or -
+        
+        
         //+ " - - 0";
         // castle rights
         boolean haveWhiteRights = false;
@@ -1703,6 +1708,8 @@ void computeHash()
         if(!haveBlackRights && !haveWhiteRights) {
             fen = fen + "-";
         }
+        return fen + " - 0 \n";
+        /*
         if(enpassantSquare.equals("")) {
         fen = fen + " - 0";
     } else {
