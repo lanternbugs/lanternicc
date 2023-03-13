@@ -856,7 +856,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         if(spaceSeperatedLine.size() > 1) {
         String tempo = spaceSeperatedLine.get(0);
         String tempo2 = spaceSeperatedLine.get(1);
-        if(getChannelNumber(tempo) > -1 && tempo.startsWith("(") && !(tempo2.startsWith("[") && tempo2.endsWith("]") && spaceSeperatedLine.size() > 2)) {
+        if(getChannelNumber(tempo) > -1 && !(tempo2.startsWith("[") && tempo2.endsWith("]") && spaceSeperatedLine.size() > 2)) {
             return CHANNEL_TELL;
         }
     }
