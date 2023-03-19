@@ -4420,6 +4420,11 @@ dot.setVisible(true);
           myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
           myboards[a].mypanel.repaint();
           myboards[a].mycontrolspanel.repaint();
+            if(channels.fics) {
+                myoutput output = new myoutput();
+                output.data = "$Flip\n";
+                queue.add(output);
+            }
           break;
         }// end selected
       }

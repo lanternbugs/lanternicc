@@ -2841,6 +2841,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg6 = myGameStruct.canWhiteCastleQueenside() ? "Q" : "";
         temp.arg7 = myGameStruct.canBlackCastleKingside() ? "k" : "";
         temp.arg8 = myGameStruct.canBlackCastleQueenside() ? "q" : "";
+        temp.arg9 = myGameStruct.isBoardFlipped() ? "1" : "0";
         
         temp.dg=15202;
         gamequeue.add(temp);

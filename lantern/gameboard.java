@@ -752,7 +752,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     */
   }
   
-  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline, String currentPlayer, String wShort, String wLong, String bShort, String bLong)
+  void updateFicsBoard(String icsGameNumber, String boardLexigraphic, String styleline, String currentPlayer, String wShort, String wLong, String bShort, String bLong, String flipped)
   {
       int tempnumber=getGameNumber(icsGameNumber);
 
@@ -802,6 +802,12 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
               sharedVariables.mygame[gameData.BoardIndex].whiteLong = wLong;
               sharedVariables.mygame[gameData.BoardIndex].blackShort = bShort;
               sharedVariables.mygame[gameData.BoardIndex].blackLong = bLong;
+              if(flipped.equals("1")) {
+                  sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+                  sharedVariables.mygame[gameData.BoardIndex].iflipped = 1;
+              } else {
+                  sharedVariables.mygame[gameData.BoardIndex].iflipped = 0;
+              }
               
                   
               //copyToDisplayBoard();

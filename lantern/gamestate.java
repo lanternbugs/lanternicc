@@ -1727,6 +1727,9 @@ void computeHash()
        for(int a = 0; a < 64; a++) {
            board[a] = this.board[63 - a];
        }
+       if(iflipped == 1) {
+           flipSent(board);
+       }
 
        String fen = "";
        for(int a = 0; a < 8; a++) {
