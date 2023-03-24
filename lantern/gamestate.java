@@ -74,6 +74,7 @@ String whiteShort = "";
 String whiteLong = "";
 String blackShort = "";
 String blackLong = "";
+String doublePawnPushFile = "";
 int turn;
 int state;
 boolean iWasMadeExaminer;
@@ -82,7 +83,7 @@ int myGameNumber;
 int movelock;
 int whiteMaterialCount;
 int blackMaterialCount;
-String sideToMove = "w";
+String currentPlayerWhoMoved = "w";
 int blank; // for an x in examine mode
 int madeMove;
 String eco;
@@ -1679,10 +1680,10 @@ void computeHash()
  // MARK: FICS Engine Fen Code
     String getStockfishFen()
     {
-        String side = sideToMove.equals("W") ? "b" : "w";
+        String side = currentPlayerWhoMoved.equals("W") ? "b" : "w";
         String fen =  getPGNPartialFen() + " " + side + " ";
         // need support for following below:
-        // whiteShort, whiteLong, blackShort, blackLong, sideToMove, enpassantSquare
+        // whiteShort, whiteLong, blackShort, blackLong, currentPlayerWhoMoved, enpassantSquare
         
         // KQkq or kq or -
         
@@ -1708,7 +1709,8 @@ void computeHash()
         if(!haveBlackRights && !haveWhiteRights) {
             fen = fen + "-";
         }
-        return fen + " - 0 \n";
+        fen = fen + " " + getStockfishDoublePawnPushFile() + " 0 \n";
+        return fen;
         /*
         if(enpassantSquare.equals("")) {
         fen = fen + " - 0";
@@ -1719,6 +1721,35 @@ void computeHash()
     }
         return fen;
          */
+    }
+    
+    String getStockfishDoublePawnPushFile()
+    {
+        String temp = "";
+        if(doublePawnPushFile.equals("0")) {
+            temp = "a";
+        } else if(doublePawnPushFile.equals("1")) {
+            temp = "b";
+        } else if(doublePawnPushFile.equals("2")) {
+            temp = "c";
+        } else if(doublePawnPushFile.equals("3")) {
+            temp = "d";
+        } else if(doublePawnPushFile.equals("4")) {
+            temp = "e";
+        } else if(doublePawnPushFile.equals("5")) {
+            temp = "f";
+        } else if(doublePawnPushFile.equals("6")) {
+            temp = "g";
+        } else if(doublePawnPushFile.equals("7")) {
+            temp = "h";
+        }
+        
+        if(!temp.equals("") && currentPlayerWhoMoved.equals("B")) {
+            return temp + 6;
+        } else if(!temp.equals("") && currentPlayerWhoMoved.equals("W")) {
+            return temp + 3;
+        }
+        return "-";
     }
     String getPGNPartialFen()
    {

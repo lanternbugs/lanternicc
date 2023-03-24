@@ -2842,6 +2842,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg7 = myGameStruct.canBlackCastleKingside() ? "k" : "";
         temp.arg8 = myGameStruct.canBlackCastleQueenside() ? "q" : "";
         temp.arg9 = myGameStruct.isBoardFlipped() ? "1" : "0";
+        temp.arg10 = "" + myGameStruct.getDoublePawnPushFile();
         
         temp.dg=15202;
         gamequeue.add(temp);
