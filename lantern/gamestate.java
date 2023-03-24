@@ -83,7 +83,7 @@ int myGameNumber;
 int movelock;
 int whiteMaterialCount;
 int blackMaterialCount;
-String currentPlayerWhoMoved = "w";
+String currentPlayer = "w";
 int blank; // for an x in examine mode
 int madeMove;
 String eco;
@@ -1680,10 +1680,10 @@ void computeHash()
  // MARK: FICS Engine Fen Code
     String getStockfishFen()
     {
-        String side = currentPlayerWhoMoved.equals("W") ? "b" : "w";
+        String side = currentPlayer.equals("W") ? "w" : "b";
         String fen =  getPGNPartialFen() + " " + side + " ";
         // need support for following below:
-        // whiteShort, whiteLong, blackShort, blackLong, currentPlayerWhoMoved, enpassantSquare
+        // whiteShort, whiteLong, blackShort, blackLong, currentPlayer, enpassantSquare
         
         // KQkq or kq or -
         
@@ -1744,9 +1744,9 @@ void computeHash()
             temp = "h";
         }
         
-        if(!temp.equals("") && currentPlayerWhoMoved.equals("B")) {
+        if(!temp.equals("") && currentPlayer.equals("W")) {
             return temp + 6;
-        } else if(!temp.equals("") && currentPlayerWhoMoved.equals("W")) {
+        } else if(!temp.equals("") && currentPlayer.equals("B")) {
             return temp + 3;
         }
         return "-";

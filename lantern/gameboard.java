@@ -797,7 +797,7 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                   }
               }
               // fics engine updates
-              sharedVariables.mygame[gameData.BoardIndex].currentPlayerWhoMoved = currentPlayer;
+              sharedVariables.mygame[gameData.BoardIndex].currentPlayer = currentPlayer;
               sharedVariables.mygame[gameData.BoardIndex].whiteShort = wShort;
               sharedVariables.mygame[gameData.BoardIndex].whiteLong = wLong;
               sharedVariables.mygame[gameData.BoardIndex].blackShort = bShort;
