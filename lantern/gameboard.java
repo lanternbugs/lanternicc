@@ -994,9 +994,13 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
           stopTheEngine();
       }
 
-      else
+      else {
         sharedVariables.mygame[gameData.BoardIndex].state =
           sharedVariables.STATE_EXAMINING;
+          if(channels.fics) {
+              sharedVariables.graphData = new seekGraphData();// dump seeks in examine mode on fics
+          }
+          }
 		
       if (sharedVariables.mygame[gameData.BoardIndex].wild == 26 ||
           sharedVariables.mygame[gameData.BoardIndex].wild == 17) {

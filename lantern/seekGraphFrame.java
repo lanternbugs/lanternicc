@@ -135,6 +135,12 @@ add(mypanel);
 
 void showSeekDialog()
 {
+    if(channels.fics && DataParsing.inFicsExamineMode) {
+        String swarning = "To seek games exit examine mode first. Go to Game Menu / Unexamine at top.";
+        Popup pframe = new Popup((JFrame) mymultiframe, true, swarning, sharedVariables);
+        pframe.setVisible(true);
+        return;
+    }
 //JFrame mytempframe = new JFrame();
 seekGameDialog myseeker = new seekGameDialog(mymultiframe, false, sharedVariables, queue);
 int defaultWidth = 425;

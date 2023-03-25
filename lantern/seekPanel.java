@@ -175,6 +175,10 @@ g2.drawString(" 1000", 0, baseHeightBottom - seekGraphData.getHeightAt(1000) * s
 g2.drawString(" 1500", 0, baseHeightBottom - seekGraphData.getHeightAt(1500) * seekHeight + seekTextFont.getSize()/ 2);
 g2.drawString(" 2000", 0, baseHeightBottom - seekGraphData.getHeightAt(2000) * seekHeight + seekTextFont.getSize()/2);
 g2.drawString(" 2500", 0, baseHeightBottom - seekGraphData.getHeightAt(2500) * seekHeight + seekTextFont.getSize()/2);
+            
+            if(channels.fics && DataParsing.inFicsExamineMode) {
+                g2.drawString("Seeks show when not examining. Game / Unexamine", 65, baseHeightBottom - seekGraphData.getHeightAt(1500) * seekHeight + seekTextFont.getSize()/ 3);
+            }
 
 // draw bullet seeks
 int a=0;

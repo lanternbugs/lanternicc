@@ -1757,6 +1757,7 @@ class Multiframe extends JFrame
     JMenuItem withdrawSent = new JMenuItem("Withdraw Challenges");
     JMenuItem showexam = new JMenuItem("Enter Examination Mode");
     JMenuItem showexamlast = new JMenuItem("Examine My Last Game");
+    JMenuItem unexamine = new JMenuItem("Unexamine");
     JMenuItem unfollowBroadcast = new JMenuItem("Stop Following");
     autoExamine = new JCheckBoxMenuItem("Auto Examine After Playing");
     JMenu boardDesign = new JMenu("Board Design");
@@ -1998,6 +1999,7 @@ class Multiframe extends JFrame
     myboardmenu.add(flipSent);
      myboardmenu.add(showexam);
     myboardmenu.add(showexamlast);
+      myboardmenu.add(unexamine);
     myboardmenu.addSeparator();
     myboardmenu.add(autoPromote);
      myboardmenu.add(moveInputMenu);
@@ -2248,6 +2250,7 @@ myboardappearancemenu.add(consoleaspect);
     help_board_advanced.addActionListener(this);
     showexam.addActionListener(this);
     showexamlast.addActionListener(this);
+      unexamine.addActionListener(this);
       unfollowBroadcast.addActionListener(this);
     autoExamine.addActionListener(this);
     lcolor.addActionListener(this);
@@ -3812,6 +3815,7 @@ dot.setVisible(true);
                action.equals("My Profile and Ratings") ||
                action.equals("Enter Examination Mode") ||
                action.equals("Examine My Last Game") ||
+               action.equals("Unexamine") ||
                action.equals("Help Discount") ||
                action.equals("Observe High Rated Game") ||
                action.equals("Observe High Rated 5-Minute Game") ||
@@ -3844,6 +3848,7 @@ dot.setVisible(true);
              (action.equals("Rematch") ? "Rematch" :
              (action.equals("Examine My Last Game") && !channels.fics ? "Examine -1" :
               (action.equals("Examine My Last Game") && channels.fics ? "exl" :
+               (action.equals("Unexamine")  ? "Unexamine" :
               (action.equals("Observe High Rated Game") ? "Observe *" :
                (action.equals("Observe High Rated 5-Minute Game") ? "Observe *f" :
                 (action.equals("Observe High Rated 15-Minute Game") ? "Observe *P" :
@@ -3852,7 +3857,7 @@ dot.setVisible(true);
                  (action.equals("Stop Following") ? "Unfollow" :
                   (action.equals("Auto Examine After Playing") ? "set examine " + !sharedVariables.myseek.examine :
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
-                                 "Match")))))))))))))))))))) + "\n";
+                                 "Match"))))))))))))))))))))) + "\n";
 
 
       if (!channels.fics && !actionmess.startsWith("`"))
@@ -4409,34 +4414,7 @@ dot.setVisible(true);
       redrawBoard(sharedVariables.boardConsoleType);
 
     } else if (action.equals("Flip")) {
-        boolean sentFicsFlip = false;
-      for (int a=0; a<sharedVariables.maxGameTabs && a < myboards.length; a++) {
-        if (myboards[a] != null &&
-            ((myboards[a].isVisible() &&
-            myboards[a].isSelected()) || channels.fics)) {
-            int targetBoard = myboards[a].gameData.LookingAt;
-            if(channels.fics) {
-                targetBoard = myboards[a].gameData.BoardIndex;
-            }
-          int flipPlus = (sharedVariables.mygame[targetBoard].iflipped + 1) % 2;
-          String flip= "" + flipPlus;
-          String icsGameNumber =  "" +
-            sharedVariables.mygame[targetBoard].myGameNumber;
-          myboards[targetBoard].flipSent(icsGameNumber, flip);
-          myboards[a].mypanel.repaint();
-          myboards[a].mycontrolspanel.repaint();
-            if(channels.fics && !sentFicsFlip) {
-                myoutput output = new myoutput();
-                output.data = "$Flip\n";
-                queue.add(output);
-                sentFicsFlip = true;
-            }
-            if(!channels.fics) {
-                break;
-            }
-          
-        }// end selected
-      }
+        runFlipCommand();
 
     } else if (action.equals("Tabs Only")) {
       sharedVariables.tabsOnly = !sharedVariables.tabsOnly;
@@ -4886,6 +4864,37 @@ dot.setVisible(true);
                  }
                } catch (Exception e) {}
       }
+      
+      void runFlipCommand() {
+          boolean sentFicsFlip = false;
+        for (int a=0; a<sharedVariables.maxGameTabs && a < myboards.length; a++) {
+          if (myboards[a] != null &&
+              ((myboards[a].isVisible() &&
+              myboards[a].isSelected()) || channels.fics)) {
+              int targetBoard = myboards[a].gameData.LookingAt;
+              if(channels.fics) {
+                  targetBoard = myboards[a].gameData.BoardIndex;
+              }
+            int flipPlus = (sharedVariables.mygame[targetBoard].iflipped + 1) % 2;
+            String flip= "" + flipPlus;
+            String icsGameNumber =  "" +
+              sharedVariables.mygame[targetBoard].myGameNumber;
+            myboards[targetBoard].flipSent(icsGameNumber, flip);
+            myboards[a].mypanel.repaint();
+            myboards[a].mycontrolspanel.repaint();
+              if(channels.fics && !sentFicsFlip) {
+                  myoutput output = new myoutput();
+                  output.data = "$Flip\n";
+                  queue.add(output);
+                  sentFicsFlip = true;
+              }
+              if(!channels.fics) {
+                  break;
+              }
+            
+          }// end selected
+        }
+      }
   void setWallPaper()
       {
           try {
@@ -4933,6 +4942,12 @@ dot.setVisible(true);
       }
       void openSeekAGame()
       {
+          if(channels.fics && DataParsing.inFicsExamineMode) {
+              String swarning = "To seek games exit examine mode first. Go to Game Menu / Unexamine at top.";
+              Popup pframe = new Popup((JFrame) this, true, swarning, sharedVariables);
+              pframe.setVisible(true);
+              return;
+          }
           if(myseeker != null && myseeker.isVisible()) {
               myseeker.dispose();
               myseeker = null;
@@ -6017,11 +6032,11 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
     //hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
     //hgroup.addComponent(scripterLabel);
         
-        if(!channels.fics) {
-            
-            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(topGamesFlipLabel);
-        }
+         hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+         hgroup.addComponent(topGamesFlipLabel);
+         if(channels.fics) {
+             topGamesFlipLabel.setVisible(false);
+         }
          hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
          hgroup.addComponent(notifyBookLabel);
     
@@ -6248,9 +6263,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
               if(topGamesFlipLabel.getText().toLowerCase().contains("top games")) {
                   launchTopGames();
               } else {
-                  myoutput output = new myoutput();
-                  output.data = "multi flip\n";
-                  queue.add(output);
+                  runFlipCommand();
               }
           }// end else
         }

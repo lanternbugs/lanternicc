@@ -395,7 +395,7 @@ t.start();
             break;
           }
         }
-        
+        DataParsing.inFicsExamineMode = examining ? true : false;
         
         if(masterFrame.notifyBookLabel != null && masterFrame.notifyBookLabel.getText().toLowerCase().contains("notify") && examining) {
             SwingUtilities.invokeLater(new Runnable() {
@@ -437,6 +437,9 @@ t.start();
                   try {
                       if(masterFrame.topGamesFlipLabel != null) {
                           masterFrame.topGamesFlipLabel.setText("  Flip  ");
+                          if(channels.fics) {
+                              masterFrame.topGamesFlipLabel.setVisible(true);
+                          }
                       }
                   } catch (Exception e1) {
 
@@ -452,6 +455,9 @@ t.start();
                   try {
                       if(masterFrame.topGamesFlipLabel != null) {
                           masterFrame.topGamesFlipLabel.setText("   Top Games   ");
+                          if(channels.fics) {
+                              masterFrame.topGamesFlipLabel.setVisible(false);
+                          }
                       }
                   } catch (Exception e1) {
 
@@ -598,6 +604,7 @@ seeksList.resetList();
 notifyList.resetList();
 eventsList.resetList();
     tournamentList.resetList();
+    DataParsing.inFicsExamineMode = false;
 }
 catch(Exception listException) { }
 

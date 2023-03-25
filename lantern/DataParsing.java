@@ -61,6 +61,7 @@ public class DataParsing
         boolean skipShowingGameList = false;
         String lastGameStartString = "";
         static boolean backedUp = false; // resets on connect. for examine mode
+        static boolean inFicsExamineMode = false;
         //static ArrayList<GameState> openGames = new ArrayList<GameState>();
         //static GameState mygame;
         
