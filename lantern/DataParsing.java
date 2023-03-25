@@ -2842,6 +2842,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg8 = myGameStruct.canBlackCastleQueenside() ? "q" : "";
         temp.arg9 = myGameStruct.isBoardFlipped() ? "1" : "0";
         temp.arg10 = "" + myGameStruct.getDoublePawnPushFile();
+        temp.arg11 = myGameStruct.getWhiteName(); // names can change in examine mode
+        temp.arg12 = myGameStruct.getBlackName();
         
         temp.dg=15202;
         gamequeue.add(temp);
