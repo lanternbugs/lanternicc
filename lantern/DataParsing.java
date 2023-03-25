@@ -256,6 +256,9 @@ public class DataParsing
               sendOutChat();
               resetParsing();
         return;
+      } else if(ficsChatTell.contains("(Logout screen by Alefith)") && ficsChatTell.length() > 400) {
+          sendOutChat();
+          resetParsing();
       }
        // Log.d("TAG", "ficsProcessLine: mike data is " + data);
         if(data.equals("[G]")) {
