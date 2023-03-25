@@ -4409,23 +4409,32 @@ dot.setVisible(true);
       redrawBoard(sharedVariables.boardConsoleType);
 
     } else if (action.equals("Flip")) {
-      for (int a=0; a<sharedVariables.maxGameTabs; a++) {
+        boolean sentFicsFlip = false;
+      for (int a=0; a<sharedVariables.maxGameTabs && a < myboards.length; a++) {
         if (myboards[a] != null &&
-            myboards[a].isVisible() &&
-            myboards[a].isSelected()) {
-          int flipPlus = (sharedVariables.mygame[myboards[a].gameData.LookingAt].iflipped + 1) % 2;
+            ((myboards[a].isVisible() &&
+            myboards[a].isSelected()) || channels.fics)) {
+            int targetBoard = myboards[a].gameData.LookingAt;
+            if(channels.fics) {
+                targetBoard = myboards[a].gameData.BoardIndex;
+            }
+          int flipPlus = (sharedVariables.mygame[targetBoard].iflipped + 1) % 2;
           String flip= "" + flipPlus;
           String icsGameNumber =  "" +
-            sharedVariables.mygame[myboards[a].gameData.LookingAt].myGameNumber;
-          myboards[myboards[a].gameData.LookingAt].flipSent(icsGameNumber, flip);
+            sharedVariables.mygame[targetBoard].myGameNumber;
+          myboards[targetBoard].flipSent(icsGameNumber, flip);
           myboards[a].mypanel.repaint();
           myboards[a].mycontrolspanel.repaint();
-            if(channels.fics) {
+            if(channels.fics && !sentFicsFlip) {
                 myoutput output = new myoutput();
                 output.data = "$Flip\n";
                 queue.add(output);
+                sentFicsFlip = true;
             }
-          break;
+            if(!channels.fics) {
+                break;
+            }
+          
         }// end selected
       }
 
