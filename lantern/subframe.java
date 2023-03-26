@@ -1962,10 +1962,13 @@ class subframe extends JInternalFrame
                    mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/mychat.html");
                 }
               });
-                      if(menu3 == null)
-                       menu2.add(itemX1);
-                       else
-                       menu3.add(itemX1);
+                if(!channels.fics) {
+                           if(menu3 == null)
+                           menu2.add(itemX1);
+                           else
+                           menu3.add(itemX1);
+                }
+                
                        
            JMenuItem itemX2 = new JMenuItem("Colors and Font by Tab Help");
             itemX2.addActionListener(new ActionListener() {
@@ -1973,16 +1976,19 @@ class subframe extends JInternalFrame
                    mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/colorsbytab.html");
                 }
               });
-                      if(menu3 == null)
-                       menu2.add(itemX2);
+                if(!channels.fics) {
+                    if(menu3 == null)
+                     menu2.add(itemX2);
+                     else
+                     menu3.add(itemX2);
+                    if(menu3 == null)
+                       menu2.addSeparator();
                        else
-                       menu3.add(itemX2);
+                       menu3.addSeparator();
+                }
+                      
 
 
-            if(menu3 == null)
-               menu2.addSeparator();
-               else 
-               menu3.addSeparator();
 
 
 
@@ -2113,18 +2119,23 @@ class subframe extends JInternalFrame
                    mycreator.createWebFrame("http://www.lanternchess.com/lanternhelp/personal-tells.html");
                 }
               });
-                      if(menu3 == null)
-                       menu2.add(itemX3);
+                if(!channels.fics) {
+                    if(menu3 == null)
+                     menu2.add(itemX3);
+                     else
+                     menu3.add(itemX3);
+                    if(menu3 == null)
+                       menu2.addSeparator();
                        else
-                       menu3.add(itemX3);
+                       menu3.addSeparator();
+                    
+                }
+                      
                        
 
 
 
-            if(menu3 == null)
-               menu2.addSeparator();
-               else 
-               menu3.addSeparator();
+            
 
 
 
@@ -2139,11 +2150,14 @@ class subframe extends JInternalFrame
                   customizeTabQtells(sharedVariables.looking[consoleNumber]);
                 }
               });
+                if(!channels.fics) {
+                    if(menu3 == null)
+                    menu2.add(itemQ);
+                    else
+                    menu3.add(itemQ);
+                }
 
-            if(menu3 == null)
-            menu2.add(itemQ);
-            else
-            menu3.add(itemQ);
+            
 
            if(menu3 == null)
              menu2.add(submenu);
@@ -2170,7 +2184,7 @@ class subframe extends JInternalFrame
     output.data = "`c" + sharedVariables.looking[consoleNumber] +
       "`" + mycommand;
     
-    if (!sharedVariables.myServer.equals("ICC"))
+    if (channels.fics)
       output.data = mycommand;
     
     output.consoleNumber = sharedVariables.looking[consoleNumber];

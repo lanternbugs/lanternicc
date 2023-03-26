@@ -1414,7 +1414,10 @@ class Multiframe extends JFrame
     soundmenu.add(notifysound);
     soundmenu.add(correspondenceNotificationSounds);
     soundmenu.add(maketellsounds);
-    optionsmenu.add(showMugshots);
+      if(!channels.fics) {
+          optionsmenu.add(showMugshots);
+      }
+    
     optionsmenu.addSeparator();
     optionsmenu.add(openingbookitem);
     // .. /
@@ -1436,9 +1439,12 @@ class Multiframe extends JFrame
     javaEngines.add(mediocreanalysis);
       optionsmenu.add(javaEngines);
       optionsmenu.addSeparator();
-    optionsmenu.add(helpanalysis);
-      
-    optionsmenu.addSeparator();
+      if(!channels.fics) {
+          optionsmenu.add(helpanalysis);
+            
+          optionsmenu.addSeparator();
+      }
+    
     optionsmenu.add(ucianalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
@@ -1461,13 +1467,22 @@ class Multiframe extends JFrame
     optionsmenu.add(customizetools);
     optionsmenu.add(toolbox);
     optionsmenu.addSeparator();
-    optionsmenu.add(toolboxhelp);
-     optionsmenu.addSeparator();
+      if(!channels.fics) {
+          optionsmenu.add(toolboxhelp);
+           optionsmenu.addSeparator();
+      }
+    
     // .. / Advanced /
     optionsmenu.add(advancedOptions);
-    advancedOptions.add(advancedmenuhelp);
-    advancedOptions.addSeparator();
-    advancedOptions.add(qsuggestPopup);
+      if(!channels.fics) {
+          advancedOptions.add(advancedmenuhelp);
+          advancedOptions.addSeparator();
+      }
+    
+      if(!channels.fics) {
+          advancedOptions.add(qsuggestPopup);
+      }
+    
     advancedOptions.add(disableHyperlinks);
     advancedOptions.add(alwaysShowEdit);
 
@@ -1478,7 +1493,10 @@ class Multiframe extends JFrame
     advancedOptions.add(dontReuseGameTabs);
     advancedOptions.add(autopopup);
     advancedOptions.add(autoHistoryPopup);
-    advancedOptions.add(basketballFlag);
+      if(!channels.fics) {
+          advancedOptions.add(basketballFlag);
+      }
+    
     advancedOptions.add(lineindent);
     advancedOptions.add(italicsBehaviorMenu);
     // .. / .. / ` ` Behavior /
@@ -1488,8 +1506,11 @@ class Multiframe extends JFrame
     // .. /
     optionsmenu.add(featuresMenu);
     // .. / Features /
-    featuresMenu.add(featuresmenuhelp);
-    featuresMenu.addSeparator();
+      if(!channels.fics) {
+          featuresMenu.add(featuresmenuhelp);
+          featuresMenu.addSeparator();
+      }
+    
     featuresMenu.add(tellswitch);
     featuresMenu.add(addnameontellswitch);
     featuresMenu.add(autonoidle);
@@ -1498,32 +1519,46 @@ class Multiframe extends JFrame
     // .. /
     optionsmenu.add(observeOptions);
     // .. / Observing Options /
-    observeOptions.add(observingmenuhelp);
-    observeOptions.addSeparator();
-    observeOptions.add(tournieFollow);
-    // .. / .. / Follow Tomato Tournament Games /
-    tournieFollow.add(autoflash);
-    tournieFollow.add(autocooly);
-    tournieFollow.add(autotomato);
-    tournieFollow.add(autowildone);
-    tournieFollow.add(autoslomato);
-    tournieFollow.add(autoketchup);
-    tournieFollow.add(autoolive);
-    tournieFollow.add(autolittleper);
-    tournieFollow.add(autopear);
-      tournieFollow.add(autoAutomato);
-      tournieFollow.add(autoYenta);
-      tournieFollow.add(autouscf);
+    if(!channels.fics) {
+        observeOptions.add(observingmenuhelp);
+        observeOptions.addSeparator();
+        observeOptions.add(tournieFollow);
+        // .. / .. / Follow Tomato Tournament Games /
+        tournieFollow.add(autoflash);
+        tournieFollow.add(autocooly);
+        tournieFollow.add(autotomato);
+        tournieFollow.add(autowildone);
+        tournieFollow.add(autoslomato);
+        tournieFollow.add(autoketchup);
+        tournieFollow.add(autoolive);
+        tournieFollow.add(autolittleper);
+        tournieFollow.add(autopear);
+          tournieFollow.add(autoAutomato);
+          tournieFollow.add(autoYenta);
+          tournieFollow.add(autouscf);
+    }
     // .. / .. /
-    observeOptions.add(randomGraphics);
+    
     // .. / .. / Random Pieces Board when Observing /
-    randomGraphics.add(randomArmy);
-    randomGraphics.addSeparator();
-    randomGraphics.add(configureRand);
-    randomGraphics.add(configureRandBlack);
-    randomGraphics.addSeparator();
-    randomGraphics.add(randomTiles);
-    randomGraphics.add(configureRandBoards);
+      if(channels.fics) {
+          observeOptions.add(randomArmy);
+          observeOptions.addSeparator();
+          observeOptions.add(configureRand);
+          observeOptions.add(configureRandBlack);
+          observeOptions.addSeparator();
+          observeOptions.add(randomTiles);
+          observeOptions.add(configureRandBoards);
+      } else {
+          observeOptions.add(randomGraphics);
+          randomGraphics.add(randomArmy);
+          randomGraphics.addSeparator();
+          randomGraphics.add(configureRand);
+          randomGraphics.add(configureRandBlack);
+          randomGraphics.addSeparator();
+          randomGraphics.add(randomTiles);
+          randomGraphics.add(configureRandBoards);
+      }
+    
     // .. /
     optionsmenu.add(chattimestamp);
     // .. / Chat Timestamp /
@@ -1702,13 +1737,19 @@ class Multiframe extends JFrame
     menu.add(sharedVariables.myWindows);
     // Windows /
     //sharedVariables.myWindows.add(nconsole);
-    sharedVariables.myWindows.add(eventlist);
+      if(!channels.fics) {
+          sharedVariables.myWindows.add(eventlist);
+      }
+    
     sharedVariables.myWindows.add(seekingGraph);
     sharedVariables.myWindows.add(mynotify);
-    sharedVariables.myWindows.add(mytopgames);
-    sharedVariables.myWindows.addSeparator();
-    sharedVariables.myWindows.add(windowhelp);
-    sharedVariables.myWindows.add(notifyhelp);
+      if(!channels.fics) {
+          sharedVariables.myWindows.add(mytopgames);
+          sharedVariables.myWindows.addSeparator();
+          sharedVariables.myWindows.add(windowhelp);
+          sharedVariables.myWindows.add(notifyhelp);
+      }
+    
     sharedVariables.myWindows.addSeparator();
     //sharedVariables.myWindows.add(nboard);
     sharedVariables.myWindows.add(rconsole);
@@ -1987,9 +2028,10 @@ class Multiframe extends JFrame
       if(!channels.fics) {
           myboardmenu.add(autoExamine);
       }
-    myboardmenu.addSeparator();
-    myboardmenu.add(help_getting_game);
+    
       if(!channels.fics) {
+          myboardmenu.addSeparator();
+          myboardmenu.add(help_getting_game);
          // myboardmenu.add(help_correspondence);
           myboardmenu.add(help_tournaments);
           myboardmenu.add(help_tournament_schedule);
@@ -2034,7 +2076,10 @@ class Multiframe extends JFrame
       preset.add(presetarray[i]);
     // .. /
     myboardappearancemenu.add(selectpieces);
-    myboardappearancemenu.add(checkersselectpieces);
+      if(!channels.fics) {
+          myboardappearancemenu.add(checkersselectpieces);
+      }
+    
     myboardappearancemenu.addSeparator();
     // .. / Pieces /
       selectpieces.add(piecesarray[4]);
@@ -2082,9 +2127,15 @@ class Multiframe extends JFrame
         theHideMenu.add(materialCount);
         theHideMenu.add(drawCoordinates);
         theHideMenu.add(showPallette);
-        theHideMenu.add(showFlags);
+      if(!channels.fics) {
+          theHideMenu.add(showFlags);
+      }
+        
         theHideMenu.add(showRatings);
-    theHideMenu.add(playersInMyGame);
+      if(!channels.fics) {
+          theHideMenu.add(playersInMyGame);
+      }
+    
       //theHideMenu.add(chessFontForMoveList);
 
 myboardappearancemenu.add(consoleaspect);
@@ -2115,8 +2166,11 @@ myboardappearancemenu.add(consoleaspect);
     // .. / Board Fonts /
     boardFonts9.add(gamefont);
     boardFonts9.add(gameclockfont);
-    myboardappearancemenu.addSeparator();
-    myboardappearancemenu.add(help_customizing_board);
+      if(!channels.fics) {
+          myboardappearancemenu.addSeparator();
+          myboardappearancemenu.add(help_customizing_board);
+      }
+    
     myboardappearancemenu.addSeparator();
     myboardappearancemenu.add(AdvancedGameMenu);
 
@@ -2127,8 +2181,11 @@ myboardappearancemenu.add(consoleaspect);
       myboardmenu.add(opengamefiles);
    myboardmenu.add(PgnMenu);
     // .. / PGN /
-    PgnMenu.add(help_pgn);
-    PgnMenu.addSeparator();
+      if(!channels.fics) {
+          PgnMenu.add(help_pgn);
+          PgnMenu.addSeparator();
+      }
+    
     PgnMenu.add(pgnlogging);
     if(!channels.fics) {
         PgnMenu.add(pgnObservedLogging);
@@ -2143,18 +2200,27 @@ myboardappearancemenu.add(consoleaspect);
 
     myboardmenu.add(Communications);
     // .. / Communications /
-    Communications.add(help_game_communication);
-    Communications.addSeparator();
+      if(!channels.fics) {
+          Communications.add(help_game_communication);
+          Communications.addSeparator();
+      }
+    
     Communications.add(blockSays);
     Communications.add(gameend);
     Communications.add(autoChat);
     // .. /
-    AdvancedGameMenu.add(help_board_advanced);
-    AdvancedGameMenu.addSeparator();
+      if(!channels.fics) {
+          AdvancedGameMenu.add(help_board_advanced);
+          AdvancedGameMenu.addSeparator();
+      }
+    
     // .. / Advanced /
     AdvancedGameMenu.add(lowTimeColors);
     AdvancedGameMenu.add(checkLegality);
-    AdvancedGameMenu.add(unobserveGoExamine);
+      if(!channels.fics) {
+          AdvancedGameMenu.add(unobserveGoExamine);
+      }
+    
     AdvancedGameMenu.add(newObserveGameSwitch);
       AdvancedGameMenu.add(noFocusOnObserve);
      AdvancedGameMenu.add(tabbing);
@@ -2437,9 +2503,11 @@ myboardappearancemenu.add(consoleaspect);
           
         
       }
-      
-    helpmenu.add(lanternmanual);
-    helpmenu.add(changelog);
+     if(!channels.fics) {
+         helpmenu.add(lanternmanual);
+         helpmenu.add(changelog);
+     }
+    
       helpmenu.add(privacypolicy);
       if(!channels.fics) {
           
@@ -3859,7 +3927,14 @@ dot.setVisible(true);
                   (action.equals("Follow Broadcast- When On") ? "Follow Broadcast" :
                                  "Match"))))))))))))))))))))) + "\n";
 
-
+        if(action.equals("Withdraw Challenges") && channels.fics) {
+            actionmess = "$unseek\n";
+            myoutput data = new myoutput();
+            data.data=actionmess;
+            queue.add(data);
+            actionmess = "$withdraw t match\n";
+            
+        }
       if (!channels.fics && !actionmess.startsWith("`"))
         actionmess = "`c0`" + actionmess;
 
