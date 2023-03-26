@@ -7715,9 +7715,12 @@ try {
 			data.consoleNumber = 0;
 			data.game=1;
 			// now call game over this ensures any engines shut down
-			if(myboards[tabNumber]!=null)
+			if(myboards[tabNumber]!=null && !channels.fics)
 				myboards[tabNumber].gameEnded("" + sharedVariables.mygame[tabNumber].myGameNumber);
 			queue.add(data);
+            if(channels.fics) {
+                return;
+            }
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
 		}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_OBSERVING)
