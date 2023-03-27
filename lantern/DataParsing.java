@@ -1368,7 +1368,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                 if(!gameExists) {
                     gameStarted(styleLine);
                 }
-                updateBoard(styleLine, newdata);
+                
                 if(gameExists) {
                     if(backedUp) {
                         backedUp = false;
@@ -1381,6 +1381,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                         
                     }
                 }
+                updateBoard(styleLine, newdata);
                 updateFicsClocks(styleLine);
                 
             }

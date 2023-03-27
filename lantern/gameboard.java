@@ -807,18 +807,25 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
                   sharedVariables.mygame[gameData.BoardIndex].name1 = whiteName;
                   sharedVariables.mygame[gameData.BoardIndex].name2 = blackName;
               }
-              
-              if(flipped.equals("1")) {
-                  sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
-                  sharedVariables.mygame[gameData.BoardIndex].iflipped = 1;
-              } else {
-                  sharedVariables.mygame[gameData.BoardIndex].iflipped = 0;
+              if(sharedVariables.mygame[gameData.BoardIndex].state != sharedVariables.STATE_PLAYING) {
+                  if(flipped.equals("1")) {
+                      sharedVariables.mygame[gameData.BoardIndex].flipSent(sharedVariables.mygame[gameData.BoardIndex].board);
+                      sharedVariables.mygame[gameData.BoardIndex].iflipped = 1;
+                  } else {
+                      sharedVariables.mygame[gameData.BoardIndex].iflipped = 0;
+                  }
               }
               
+              
                   
-              //copyToDisplayBoard();
-
-              //setMaterialCount();
+              if ((sharedVariables.mygame[gameData.BoardIndex].state ==
+               sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
+               sharedVariables.STATE_OBSERVING)&&
+               sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
+               // we allways make the engine moves for later but dont send
+               // unless of course the engine is on
+                   sendUciMoves();
+             }// end if engine on true
          } catch(Exception overrun) {}
           
       }
@@ -2266,7 +2273,7 @@ void stopTheEngine()
          if ((sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_EXAMINING || sharedVariables.mygame[gameData.BoardIndex].state ==
           sharedVariables.STATE_OBSERVING)&&
-          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex) {
+          sharedVariables.engineOn == true && sharedVariables.engineBoard == gameData.BoardIndex && !channels.fics) {
           // we allways make the engine moves for later but dont send
           // unless of course the engine is on
             if (sharedVariables.uci == false)
