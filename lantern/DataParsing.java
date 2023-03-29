@@ -51,6 +51,7 @@ public class DataParsing
         int CSHOUT_TYPE = 12;
         int SAY_TYPE = 13;
         int CHANNEL_LIST_TYPE = 14;
+        int KIB_TYPE = 15;
 
         ArrayList<String> spaceSeperatedLine;
         int ficsType = NO_TYPE;
@@ -282,11 +283,11 @@ public class DataParsing
         if((ficsType == NO_TYPE || (ficsType == UNKNOWN_TYPE && mySettings.whoAmI.equals("") ))
     && (lineCount == 0 || mySettings.whoAmI.equals(""))) {
         seperateLine(data, spaceSeperatedLine);
-        ficsType = getType();
+        ficsType = getType(data);
 
     } else if(data.startsWith("<s") && !mySettings.whoAmI.equals("")) {
         seperateLine(data, spaceSeperatedLine);
-        ficsType =  getType();
+        ficsType =  getType(data);
     }
 
         if(mySettings.whoAmI.equals("")) {
@@ -393,13 +394,13 @@ public class DataParsing
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
             data = "";
         }
-        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL  /*|| ficsType == CSHOUT_TYPE*/) {
+        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL || ficsType == KIB_TYPE  /*|| ficsType == CSHOUT_TYPE*/) {
 
             if(ficsType == PERSONAL_TELL && lineCount == 1) {
             setLastTeller();
             }
 
-            if((data.startsWith("(told ") || data.startsWith("(shouted to ") || data.startsWith("(c-shouted to ")) && lineCount > 1) {
+            if((data.startsWith("(told ") || data.startsWith("(shouted to ") || data.startsWith("(c-shouted to ") || data.startsWith("(kibitzed to") || data.startsWith("(whispered to")) && lineCount > 1) {
                 ficsChatTell2 = ficsChatTell2 + data.trim();
             } else {
 
@@ -453,7 +454,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE)
         {
             if(data.length() == 1)
             {
@@ -777,7 +778,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         return false;
     }
 
-    int getType()
+    int getType(String lineData)
     {
 
         if(!mySettings.whoAmI.equals("")) {
@@ -820,6 +821,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             return NOTIFY_TYPE;
         }
     }
+        if(isKibWhisperInfo(lineData)) {
+            return KIB_TYPE;
+        }
         if(spaceSeperatedLine.size() > 1) {
         String tempo = spaceSeperatedLine.get(1);
         if(tempo.equals("c-shouts:") ) {
@@ -985,7 +989,11 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
               if(!ficsChatTell2.equals("")) {
                   writeOutToChannel(ficsChatTell2, getChannelNumber(spaceSeperatedLine.get(0)));
               }
-          } else if(ficsType == NOTIFY_TYPE) {
+          }
+          else if(ficsType == KIB_TYPE) {
+              writeOutKibWhisperToGameConsoles(ficsChatTell, ficsChatTell2);
+         }
+          else if(ficsType == NOTIFY_TYPE) {
               
               writeOutToNotify(ficsChatTell, spaceSeperatedLine.get(1));
               if(!ficsChatTell2.equals("")) {
@@ -1400,11 +1408,10 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             setGameStartParamsAsNeeded(newdata);
         }
         parseCreatingAsNeededForRatings(newdata);
-         /*
+        
 
-        if(isKibWhisperInfo(newdata)) {
-            return true;
-        }
+        
+        /*
 
         if(isPrimaryMessage(newdata)) {
             return true;
@@ -1544,6 +1551,56 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             }// end if not empty queue
         return returnValue;
 
+    }
+    
+    void writeOutKibWhisperToGameConsoles(String theTell, String theTell2) {
+        try {
+            
+        
+        int gameNumber = getGameNumberFromKibWhisper(theTell);
+        channels sharedVariables = mySettings;
+        try
+        {
+            messageStyles myStyles = null;
+            SimpleAttributeSet attrs = new SimpleAttributeSet();
+            StyledDocument doc;
+
+        for(int z=0; z< sharedVariables.openBoardCount; z++)
+        {
+            if(mainTelnet.myboards[z]!=null)
+             
+            if(sharedVariables.mygame[z] != null && sharedVariables.mygame[z].myGameNumber == gameNumber)
+            {
+
+
+            doc=sharedVariables.mygamedocs[z];
+            int consoleType = GAME_CONSOLES;
+            int number = z;
+                if(sharedVariables.boardConsoleType == 0) {
+                    doc = mySettings.mydocs[0];
+                    consoleType = SUBFRAME_CONSOLES;
+                    number = 0;
+                    int [] cindex2 = new int[mySettings.maxConsoleTabs];
+                    cindex2[0]=0; // default till we know more is its not going to main
+                    
+                    if(!theTell.equals("")) {
+                        processLink2(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+                    } else {
+                        processLink2(doc, theTell + "\n", sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+                    }
+                } else {
+                    
+                    if(!theTell.equals("")) {
+                        processLink(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.kibcolor, number, maxLinks, consoleType, attrs, myStyles);
+                    } else {
+                        processLink(doc, theTell + "\n", sharedVariables.kibcolor, number, maxLinks, consoleType, attrs, myStyles);
+                    }
+                }
+                
+            }
+        }
+        }catch(Exception dumb){}
+            } catch(Exception dumb1) {}
     }
 
  /*
@@ -2211,11 +2268,28 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }
     }
  
- /*
+    int getGameNumberFromKibWhisper(String data) {
+        int start = data.indexOf("[");
+        int end = data.indexOf("]");
+        if(start > -1 && end > -1 && end > start) {
+            String strNumber = data.substring(start + 1, end);
+            try {
+                return Integer.parseInt(strNumber);
+            } catch(Exception e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
 
     boolean isKibWhisperInfo(String data)
     {
-        if(data == null) {
+  //MasterGameBot(----)[15] kibitzes: hi
+  //MasterGameBot(----)[15] whispers: hi
+  //MasterGameBot(----)[33] whispers: hi
+  //adammr(1250)[5] kibitzes: hi
+  
+       if(data == null || !data.contains("[") || !data.contains("]")) {
             return false;
         }
 
@@ -2225,23 +2299,15 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         String item0 = spaceArray.get(0);
         String item1 = spaceArray.get(1);
         if(item1.equals("kibitzes:")) {
-            mySettings.gameChatLog.addChat(data,"server_text");
-            gameConsoleManager.updateChat();
             return true;
         }
         if(item1.equals("whispers:")) {
-            mySettings.gameChatLog.addChat(data,"server_text");
-            gameConsoleManager.updateChat();
             return true;
         }
         if(item0.equals("(kibitzed") && item1.equals("to")) {
-            mySettings.gameChatLog.addChat(data,"server_text");
-            gameConsoleManager.updateChat();
             return true;
         }
         if(item0.equals("(whispered") && item1.equals("to")) {
-            mySettings.gameChatLog.addChat(data,"server_text");
-            gameConsoleManager.updateChat();
             return true;
         }
     }
@@ -2251,8 +2317,6 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             String item0 = spaceArray.get(2);
             String item1 = spaceArray.get(3);
             if(item1.equals("kibitzes:") && item0.endsWith(")") && item00.contains("(") && !item00.contains(")")) {
-                mySettings.gameChatLog.addChat(data,"server_text");
-                gameConsoleManager.updateChat();
                 return true;
             }
         }
@@ -2262,8 +2326,6 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             String item0 = spaceArray.get(1);
             String item1 = spaceArray.get(2);
             if(item1.equals("kibitzes:") && item0.endsWith(")") && item00.contains("(") && !item00.contains(")")) {
-                mySettings.gameChatLog.addChat(data,"server_text");
-                gameConsoleManager.updateChat();
                 return true;
             }
         }
@@ -2271,7 +2333,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
         return false;
     }
-*/
+
     boolean isExamineInfo(String data, channels mySettings)
     {
         if(data == null) {
