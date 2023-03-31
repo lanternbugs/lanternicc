@@ -1557,9 +1557,19 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     
     void writeOutSays(String theTell, String theTell2) {
         try {
-            
+            channels sharedVariables = mySettings;
+        String name = theTell.contains("[") ? theTell.substring(0, theTell.indexOf("[")) : theTell.trim().substring(0, theTell.length());
+            if(theTell.contains("(")) {
+                name = theTell.substring(0, theTell.indexOf("("));
+            }
+            int spaceIndex = name.indexOf(" ");
+            if( spaceIndex > -1 && spaceIndex + 1 < name.length()) {
+                name = name.substring(spaceIndex + 1, name.length());
+            }
+            sharedVariables.lasttell=name; // obsolete but why not leave the data
+            sharedVariables.F9Manager.addName(name);
+            boolean him = false;
         
-        channels sharedVariables = mySettings;
         try
         {
             messageStyles myStyles = null;
@@ -1574,6 +1584,20 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                 direction = sharedVariables.tellTab;
                 doc=sharedVariables.mydocs[direction];
                 }
+                /*** check if forced to tab ****/
+                // boolean him = false; moved up for scope
+                boolean makeASound=true;
+                for(int ab=0; ab<sharedVariables.toldTabNames.size(); ab++)
+                {
+                if(sharedVariables.toldTabNames.get(ab).name.toLowerCase().equals(name.toLowerCase()))
+                {
+                    direction=sharedVariables.toldTabNames.get(ab).tab;
+                    doc=sharedVariables.mydocs[direction];
+                    him=true;
+                    makeASound=sharedVariables.toldTabNames.get(ab).sound;
+                    break;
+                }
+                }
                int consoleType = SUBFRAME_CONSOLES;
                int number = direction;
                int [] cindex2 = new int[mySettings.maxConsoleTabs];
@@ -1586,7 +1610,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                }
                 
                 try {
-                if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true)
+                if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true && him == false)
                 {
                 FocusOwner whohasit = new FocusOwner(sharedVariables, mainTelnet.consoleSubframes, mainTelnet.myboards);
                 int xxx=mainTelnet.getCurrentConsole();
@@ -1594,23 +1618,24 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
                 if(xxx != sharedVariables.tellconsole || !sharedVariables.operatingSystem.equals("mac"))
                     mainTelnet.giveFocus(whohasit);
-                   // if(sharedVariables.addNameOnSwitch == true)
-                   //    mainTelnet.consoleSubframes[sharedVariables.tellconsole].addNameToCombo(name);
-                }
+                   if(sharedVariables.addNameOnSwitch == true) {
+                      mainTelnet.consoleSubframes[sharedVariables.tellconsole].addNameToCombo(name);
+                    }
+                } 
                 }catch(Exception donthave){}
-                if(sharedVariables.makeSounds == true  && sharedVariables.makeTellSounds) {
+                if(sharedVariables.makeSounds == true  && makeASound && sharedVariables.makeTellSounds) {
                     Sound ptell = new Sound(sharedVariables.songs[0]);
                 }
                 
            }
 
-        for(int z=0; z< sharedVariables.openBoardCount; z++)
+        for(int z=0; z< sharedVariables.openBoardCount && him == false; z++)
         {
             if(mainTelnet.myboards[z]!=null) {
             
             if(sharedVariables.mygame[z] != null
                && (sharedVariables.mygame[z].state == sharedVariables.STATE_PLAYING || (sharedVariables.mygame[z].state == sharedVariables.STATE_OVER
-               && (sharedVariables.mygame[z].realname1.equals(sharedVariables.whoAmI) || sharedVariables.mygame[z].realname2.equals(sharedVariables.whoAmI)))))
+               && (sharedVariables.mygame[z].realname1.toLowerCase().equals(name.toLowerCase()) || sharedVariables.mygame[z].realname2.toLowerCase().equals(name.toLowerCase())))))
             {
 
 
