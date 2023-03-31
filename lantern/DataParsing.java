@@ -394,7 +394,7 @@ public class DataParsing
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
             data = "";
         }
-        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL || ficsType == KIB_TYPE  /*|| ficsType == CSHOUT_TYPE*/) {
+        if(ficsType == CHANNEL_TELL || ficsType == NOTIFY_TYPE  || ficsType == PERSONAL_TELL || ficsType == SHOUT_TELL || ficsType == KIB_TYPE || ficsType == SAY_TYPE /*|| ficsType == CSHOUT_TYPE*/) {
 
             if(ficsType == PERSONAL_TELL && lineCount == 1) {
             setLastTeller();
@@ -454,7 +454,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE && ficsType != SAY_TYPE)
         {
             if(data.length() == 1)
             {
@@ -992,7 +992,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
           }
           else if(ficsType == KIB_TYPE) {
               writeOutKibWhisperToGameConsoles(ficsChatTell, ficsChatTell2);
-         }
+         } else if(ficsType == SAY_TYPE) {
+             writeOutSays(ficsChatTell, ficsChatTell2);
+        }
           else if(ficsType == NOTIFY_TYPE) {
               
               writeOutToNotify(ficsChatTell, spaceSeperatedLine.get(1));
@@ -1552,6 +1554,87 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         return returnValue;
 
     }
+    
+    void writeOutSays(String theTell, String theTell2) {
+        try {
+            
+        
+        channels sharedVariables = mySettings;
+        try
+        {
+            messageStyles myStyles = null;
+            SimpleAttributeSet attrs = new SimpleAttributeSet();
+            StyledDocument doc;
+            
+            {
+                doc=sharedVariables.mydocs[sharedVariables.looking[sharedVariables.tellconsole]];
+                int direction = sharedVariables.looking[sharedVariables.tellconsole];
+                if(sharedVariables.tellsToTab == true)
+                {
+                direction = sharedVariables.tellTab;
+                doc=sharedVariables.mydocs[direction];
+                }
+               int consoleType = SUBFRAME_CONSOLES;
+               int number = direction;
+               int [] cindex2 = new int[mySettings.maxConsoleTabs];
+               cindex2[0]=direction; // default till we know more is its not going to main
+               
+               if(!theTell2.equals("")) {
+                   processLink2(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.tellcolor, direction, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+               } else {
+                   processLink2(doc, theTell + "\n", sharedVariables.tellcolor, direction, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+               }
+                
+                try {
+                if(sharedVariables.tellsToTab == true && sharedVariables.switchOnTell == true)
+                {
+                FocusOwner whohasit = new FocusOwner(sharedVariables, mainTelnet.consoleSubframes, mainTelnet.myboards);
+                int xxx=mainTelnet.getCurrentConsole();
+                    mainTelnet.consoleSubframes[sharedVariables.tellconsole].makeHappen(sharedVariables.tellTab);
+
+                if(xxx != sharedVariables.tellconsole || !sharedVariables.operatingSystem.equals("mac"))
+                    mainTelnet.giveFocus(whohasit);
+                   // if(sharedVariables.addNameOnSwitch == true)
+                   //    mainTelnet.consoleSubframes[sharedVariables.tellconsole].addNameToCombo(name);
+                }
+                }catch(Exception donthave){}
+                if(sharedVariables.makeSounds == true  && sharedVariables.makeTellSounds) {
+                    Sound ptell = new Sound(sharedVariables.songs[0]);
+                }
+                
+           }
+
+        for(int z=0; z< sharedVariables.openBoardCount; z++)
+        {
+            if(mainTelnet.myboards[z]!=null) {
+            
+            if(sharedVariables.mygame[z] != null
+               && (sharedVariables.mygame[z].state == sharedVariables.STATE_PLAYING || (sharedVariables.mygame[z].state == sharedVariables.STATE_OVER
+               && (sharedVariables.mygame[z].realname1.equals(sharedVariables.whoAmI) || sharedVariables.mygame[z].realname2.equals(sharedVariables.whoAmI)))))
+            {
+
+
+            doc=sharedVariables.mygamedocs[z];
+            int consoleType = GAME_CONSOLES;
+            int number = z;
+                 
+                
+                if(sharedVariables.boardConsoleType != 0) {
+                    
+                    if(!theTell2.equals("")) {
+                        processLink(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.tellcolor, number, maxLinks, consoleType, attrs, myStyles);
+                    } else {
+                        processLink(doc, theTell + "\n", sharedVariables.tellcolor, number, maxLinks, consoleType, attrs, myStyles);
+                    }
+                }
+                
+            }
+        }
+        }
+        }catch(Exception dumb){}
+            } catch(Exception dumb1) {}
+    }
+    
     
     void writeOutKibWhisperToGameConsoles(String theTell, String theTell2) {
         try {
