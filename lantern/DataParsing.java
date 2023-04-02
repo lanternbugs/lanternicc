@@ -419,12 +419,28 @@ public class DataParsing
                         }
                     }
                 }
-                if(mySettings.timeStampChat && ficsChatTell.equals("")) {
+                boolean  timeStampChat = mySettings.timeStampChat;
+                
+                if((ficsType == CHANNEL_TELL || ficsType == KIB_TYPE) && !mySettings.channelTimestamp) {
+                    timeStampChat = false;
+                }
+                
+                if(ficsType == SHOUT_TELL && !mySettings.shoutTimestamp) {
+                    timeStampChat = false;
+                }
+                
+                if((ficsType == PERSONAL_TELL || ficsType == NOTIFY_TYPE) && !mySettings.tellTimestamp) {
+                    timeStampChat = false;
+                }
+                
+                if(timeStampChat && ficsChatTell.equals("")) {
                     ficsChatTell = getATimestamp();
                 }
+                
+                
 
 
-                if(enter.length() > 0 && mySettings.timeStampChat)
+                if(enter.length() > 0 && timeStampChat)
                 {
                     if(lineCount > 1 && (data.startsWith(" / ") || data.startsWith(" \\ "))) {
                         String tempo = data.trim();
@@ -1047,9 +1063,11 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
 
           } else if(ficsType == SHOUT_TELL) {
-              writeOutToShouts(ficsChatTell + "\n");
+              
               if(!ficsChatTell2.equals("")) {
-                 writeOutToMain(ficsChatTell2 + "\n");
+                  writeOutToShouts(ficsChatTell + "\n" +  ficsChatTell2 + "\n");
+              } else {writeOutToShouts(ficsChatTell + "\n");
+                  
               }
           }   else {
               if(!ficsChatTell.trim().equals("")) {
