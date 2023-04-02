@@ -708,7 +708,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
         else
             set_string = set_string + "0" + " ";
         // closing
-            set_string = set_string + "[correspondencesounds] ";
+            set_string = set_string + "[donecorrespondencesounds] ";
 
 	// tellsounds
 	set_string = set_string + "[tellsounds] ";
@@ -753,7 +753,7 @@ for(zz=0; zz< sharedVariables.maxConsoleTabs; zz++)
         else
             set_string = set_string + "0" + " ";
         // closing
-            set_string = set_string + "[nofocusonobserve] ";
+            set_string = set_string + "[donenofocusonobserve] ";
 
 
  	// tilesrandom
