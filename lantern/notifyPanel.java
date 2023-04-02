@@ -106,6 +106,10 @@ JMenuItem itemobserve= new JMenuItem("Observe " + watchName);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "Observe " + watchName + "\n";
+         if(channels.fics) {
+            action = "$Observe " + watchName + "\n";
+         }
+              
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -211,6 +215,9 @@ JMenuItem item2= new JMenuItem("History " + watchName);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "History " + watchName + "\n";
+              if(channels.fics) {
+                 action = "$History " + watchName + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -223,6 +230,9 @@ JMenuItem item3= new JMenuItem("Finger " + watchName);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" +  "Finger " + watchName + "\n";
+              if(channels.fics) {
+                 action = "$Finger " + watchName + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -237,6 +247,9 @@ JMenuItem item4= new JMenuItem("Games " + watchName);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" +  "Games " + watchName + "\n";
+              if(channels.fics) {
+                 action = "$Games " + watchName + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -250,6 +263,9 @@ JMenuItem item5= new JMenuItem("Ping " + watchName);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" +  "Ping " + watchName + "\n";
+              if(channels.fics) {
+                 action = "$Ping " + watchName + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;

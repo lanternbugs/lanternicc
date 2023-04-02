@@ -1755,11 +1755,20 @@ class subframe extends JInternalFrame
               }
               else if (sharedVariables.rightClickMenu.get(mfinal).equals("Lookup")) {
 
-                 doCommand("`f1`Finger" + " " + name + "\n");
+                 if(channels.fics) {
+                     doCommand("$Finger" + " " + name + "\n");
+                 } else {
+                     doCommand("`f1`Finger" + " " + name + "\n");
+                 }
               }
               else if (sharedVariables.rightClickMenu.get(mfinal).equals("Vars")) {
 
-                 doCommand("`f1`Vars" + " " + name + "\n");
+                 if(channels.fics) {
+                     doCommand("$var" + " " + name + "\n");
+                 } else {
+                     doCommand("`f1`Vars" + " " + name + "\n");
+                 }
+                  
               }
 
                else if (sharedVariables.rightClickMenu.get(mfinal).equals("Hyperlink")) {

@@ -327,7 +327,9 @@ JMenuItem item1 = new JMenuItem("close game");
     !sharedVariables.mygame[gameData.LookingAt].name1.equals("") ||
     !sharedVariables.mygame[gameData.LookingAt].name2.equals(""))
     {
-       menu2.add(saveitem);
+       if(!channels.fics) {
+           menu2.add(saveitem);
+       }
     }
 
 

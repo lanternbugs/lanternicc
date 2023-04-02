@@ -1437,7 +1437,10 @@ class Multiframe extends JFrame
        optionsmenu.add(cuckooanalysis);
       }
     javaEngines.add(mediocreanalysis);
-      optionsmenu.add(javaEngines);
+      if(!channels.fics) {
+          optionsmenu.add(javaEngines);
+      }
+      
       optionsmenu.addSeparator();
       if(!channels.fics) {
           optionsmenu.add(helpanalysis);
@@ -1448,7 +1451,10 @@ class Multiframe extends JFrame
     optionsmenu.add(ucianalysis);
     optionsmenu.add(enginerestart);
     optionsmenu.add(enginestop);
-    optionsmenu.add(winanalysis);
+      if(!channels.fics) {
+          optionsmenu.add(winanalysis);
+      }
+    
     optionsmenu.addSeparator();
     optionsmenu.add(uciMultipleMenu);
     optionsmenu.add(engineMenu);
@@ -1540,24 +1546,13 @@ class Multiframe extends JFrame
     // .. / .. /
     
     // .. / .. / Random Pieces Board when Observing /
-      if(channels.fics) {
-          observeOptions.add(randomArmy);
-          observeOptions.addSeparator();
-          observeOptions.add(configureRand);
-          observeOptions.add(configureRandBlack);
-          observeOptions.addSeparator();
-          observeOptions.add(randomTiles);
-          observeOptions.add(configureRandBoards);
-      } else {
-          observeOptions.add(randomGraphics);
-          randomGraphics.add(randomArmy);
-          randomGraphics.addSeparator();
-          randomGraphics.add(configureRand);
-          randomGraphics.add(configureRandBlack);
-          randomGraphics.addSeparator();
-          randomGraphics.add(randomTiles);
-          randomGraphics.add(configureRandBoards);
-      }
+      observeOptions.add(randomArmy);
+      observeOptions.addSeparator();
+      observeOptions.add(configureRand);
+      observeOptions.add(configureRandBlack);
+      observeOptions.addSeparator();
+      observeOptions.add(randomTiles);
+      observeOptions.add(configureRandBoards);
     
     // .. /
     optionsmenu.add(chattimestamp);
@@ -2496,12 +2491,12 @@ myboardappearancemenu.add(consoleaspect);
       if(!channels.fics) {
           helpmenu.add(joinrenewhelp);
           helpmenu.add(helpdiscount);
-          helpmenu.add(passwordhelp);
+      }
+      helpmenu.add(passwordhelp);
+      if(!channels.fics) {
           helpmenu.add(iccstore2);
           helpmenu.add(chesscoaches);
           helpmenu.addSeparator();
-          
-        
       }
      if(!channels.fics) {
          helpmenu.add(lanternmanual);
@@ -2741,7 +2736,12 @@ myboardappearancemenu.add(consoleaspect);
       mycreator.createWebFrame("http://www.lanternchess.com/changelog.htm");
 
     }  else if (action.equals("Privacy Policy")) {
-     sharedVariables.openUrl("http://www.lanternchess.com/lanternchessios-privacypolicy.html");
+        if(channels.fics) {
+            sharedVariables.openUrl("http://www.pearlchess.com/pearlchess-privacypolicy.html");
+        } else {
+            sharedVariables.openUrl("http://www.lanternchess.com/lanternchessios-privacypolicy.html");
+        }
+     
 
     }
     else if (action.equals("ICC Information Help Files")) {
@@ -2758,7 +2758,12 @@ myboardappearancemenu.add(consoleaspect);
 
       }
     else if (action.equals("Lost Password")) {
-      sharedVariables.openUrl("https://login.chessclub.com/Account/ForgotPassword");
+        if(channels.fics) {
+            sharedVariables.openUrl("https://www.freechess.org/cgi-bin/Utilities/requestPassword.cgi");
+        } else {
+            sharedVariables.openUrl("https://login.chessclub.com/Account/ForgotPassword");
+        }
+      
 
       /*
     } else if (action.equals("Start AutoExam")) {

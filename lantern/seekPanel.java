@@ -466,6 +466,9 @@ JMenuItem item1= new JMenuItem("Finger " + Name);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "Finger " + Name + "\n";
+         if(channels.fics) {
+             action = "$Finger " + Name + "\n";
+         }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -478,6 +481,9 @@ JMenuItem item2= new JMenuItem("History " + Name);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "History " + Name + "\n";
+              if(channels.fics) {
+                  action = "$History " + Name + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -490,6 +496,9 @@ JMenuItem item3= new JMenuItem("Vars " + Name);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "Vars " + Name + "\n";
+              if(channels.fics) {
+                  action = "$Var " + Name + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -503,6 +512,9 @@ JMenuItem item4= new JMenuItem("Ping " + Name);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "Ping " + Name + "\n";
+              if(channels.fics) {
+                  action = "$Ping " + Name + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
@@ -515,6 +527,9 @@ JMenuItem item5= new JMenuItem("Assess " + Name);
           public void actionPerformed(ActionEvent e) {
 
          String action = "`c0`" + "Assess " + Name + "\n";
+              if(channels.fics) {
+                  action = "$Assess " + Name + "\n";
+              }
          myoutput output = new myoutput();
          output.data=action;
          output.consoleNumber=0;
