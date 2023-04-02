@@ -7707,7 +7707,7 @@ try {
         	}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_EXAMINING)
 		{   if(sharedVariables.fics) {
-                 data.data = "Unexamine\n";
+                 data.data = "Unexamine\n$iset seekinfo 1\n";
             } else {
                  data.data = "`c0`" + "Unexamine\n";
             }
@@ -7715,12 +7715,10 @@ try {
 			data.consoleNumber = 0;
 			data.game=1;
 			// now call game over this ensures any engines shut down
-			if(myboards[tabNumber]!=null && (!channels.fics || DataParsing.inFicsExamineMode == false))
+			if(myboards[tabNumber]!=null)
 				myboards[tabNumber].gameEnded("" + sharedVariables.mygame[tabNumber].myGameNumber);
 			queue.add(data);
-            if(channels.fics && DataParsing.inFicsExamineMode) {
-                return;
-            }
+            
 			myGameNumber = sharedVariables.mygame[tabNumber].myGameNumber;
 		}
 		else if(sharedVariables.mygame[tabNumber].state == sharedVariables.STATE_OBSERVING)
