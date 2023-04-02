@@ -275,6 +275,8 @@ public class DataParsing
                 return;
             }
         }
+        
+        addToNotifyOnLoginAsNeeded(data);
 
 
 
@@ -284,6 +286,7 @@ public class DataParsing
     && (lineCount == 0 || mySettings.whoAmI.equals(""))) {
         seperateLine(data, spaceSeperatedLine);
         ficsType = getType(data);
+        
 
     } else if(data.startsWith("<s") && !mySettings.whoAmI.equals("")) {
         seperateLine(data, spaceSeperatedLine);
@@ -602,11 +605,40 @@ public class DataParsing
 
         }
     }
-    
+    void addToNotifyOnLoginAsNeeded(String theTell)
+    {
+        try {
+        if(theTell.startsWith("Present company includes: ")) {
+            if(mainTelnet.notifyList.model.size() == 2) {
+                ArrayList<String> line = new ArrayList<String>();
+                seperateLine(theTell, line);
+                if(line.size() > 3) {
+                    for(int a = 3; a < line.size(); a++) {
+                        String temp = line.get(a);
+                        if(temp.endsWith(".")) {
+                            temp = temp.substring(0, temp.length() -1);
+                        }
+                        mainTelnet.notifyList.notifyStateChanged(temp.trim() , "" );
+                    }
+                }
+            }
+        }
+      }  catch(Exception dui) {
+          
+      }
+        
+        
+        
+    }
     void writeOutToNotify(String tell, String name)
     {
         channels sharedVariables = mySettings;
-        mainTelnet.notifyList.notifyStateChanged(name , "" ); // arg2 state "P" playing etc
+        if(tell.contains("has arrived.")) {
+            mainTelnet.notifyList.notifyStateChanged(name.trim() , "" ); // arg2 state "P" playing etc
+        } else {
+            mainTelnet.notifyList.removeFromList(name);
+        }
+        
         boolean supressLogins=sharedVariables.getNotifyControllerState(name);
 
 
