@@ -1429,6 +1429,10 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                  return true;
               }
         }
+        
+        if(newdata.startsWith("Illegal move")) {
+            return illegalMessage(newdata, mySettings);
+        }
         /*
 
         if(newdata.startsWith("<b1>"))
@@ -1691,14 +1695,14 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                     int [] cindex2 = new int[mySettings.maxConsoleTabs];
                     cindex2[0]=0; // default till we know more is its not going to main
                     
-                    if(!theTell.equals("")) {
+                    if(!theTell2.equals("")) {
                         processLink2(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
                     } else {
                         processLink2(doc, theTell + "\n", sharedVariables.kibcolor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
                     }
                 } else {
                     
-                    if(!theTell.equals("")) {
+                    if(!theTell2.equals("")) {
                         processLink(doc, theTell + "\n" + theTell2 + "\n", sharedVariables.kibcolor, number, maxLinks, consoleType, attrs, myStyles);
                     } else {
                         processLink(doc, theTell + "\n", sharedVariables.kibcolor, number, maxLinks, consoleType, attrs, myStyles);
@@ -2874,7 +2878,26 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
          */
     }
 
-
+    boolean illegalMessage(String message , channels sharedVariables) {
+            try {
+                for(int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null) {
+                        if(mySettings.mygame[a].state == mySettings.STATE_PLAYING || mySettings.mygame[a].state == mySettings.STATE_EXAMINING) {
+                            newBoardData temp = new newBoardData();
+                            temp.dg=77;
+                            temp.arg1= "" + mySettings.mygame[a].myGameNumber;
+                            temp.arg2= message;
+                            gamequeue.add(temp);
+                            return true;
+                        }
+                    }
+                }
+            } catch(Exception e) {
+                
+            }
+        return false;
+            
+    }
     void gameMessage(String message) {
         try {
             ArrayList<String> spaceArray = new ArrayList<>();
@@ -2976,7 +2999,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             for (int a = 0; a < mySettings.mygame.length; a++)
             {
                 if(mySettings.mygame[a] != null && mySettings.mygame[a].myGameNumber == myGameStruct.getGameNumber()) {
-                    if(mySettings.mygame[a].style12Boards.size() > 0 && mySettings.mygame[a].state == mySettings.STATE_PLAYING) {
+                    if(mySettings.mygame[a].style12Boards.size() > 0 && (mySettings.mygame[a].state == mySettings.STATE_PLAYING || mySettings.mygame[a].state == mySettings.STATE_EXAMINING)) {
                         String last = mySettings.mygame[a].style12Boards.get(mySettings.mygame[a].style12Boards.size() -1);
                         Style12Struct styleLine = getStyle12StructString(last);
                         if(styleLine.getBoardLexigraphic().equals(myGameStruct.getBoardLexigraphic())) {
