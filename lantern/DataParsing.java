@@ -632,6 +632,9 @@ public class DataParsing
     }
     void writeOutToNotify(String tell, String name)
     {
+        try {
+            
+        
         channels sharedVariables = mySettings;
         if(tell.contains("has arrived.")) {
             mainTelnet.notifyList.notifyStateChanged(name.trim() , "" ); // arg2 state "P" playing etc
@@ -700,6 +703,7 @@ public class DataParsing
         catch(Exception notifysound){}
 
         }// end of if suppress logins false
+            } catch(Exception dui2) { }
     }
     
     void writeOutToTell(String thetell, String name)
