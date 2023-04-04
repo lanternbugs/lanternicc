@@ -1430,7 +1430,15 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             boolean gameExists = checkIfGameExists(styleLine.getGameNumber());
             if(styleLine != null) {
                 if(!gameExists) {
-                    gameStarted(styleLine);
+                    String wild = "";
+                    if(!lastGameStartString.equals("")) {
+                        ArrayList<String> line = new ArrayList<String>();
+                        seperateLine(lastGameStartString, line);
+                        if(line.size() > 6) {
+                            wild = line.get(6);
+                        }
+                    }
+                    gameStarted(styleLine, wild);
                 }
                 
                 if(gameExists) {
@@ -2969,7 +2977,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         };
         
     }
-    void gameStarted(Style12Struct myGameStruct)
+    void gameStarted(Style12Struct myGameStruct, String wild)
     {
         newBoardData temp = new newBoardData();
         temp.type= myGameStruct.getGameType();
@@ -2977,7 +2985,14 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         temp.arg2 = myGameStruct.getWhiteName();
         temp.arg3 = myGameStruct.getBlackName();
         temp.arg4 = "0";
-        temp.arg5 = "blitz";
+        if(wild.equals("atomic")) {
+            temp.arg4 = "22";
+        } else if(wild.equals("losers")) {
+            temp.arg4 = "17";
+        } else if(wild.equals("suicide")) {
+            temp.arg4 = "26";
+        }
+        temp.arg5 = !temp.arg4.equals("0") ? wild : "blitz";
         temp.arg6 = "0";
         temp.arg7 = "" + (myGameStruct.getInitialTime() / 60);
         temp.arg8 = "" +
