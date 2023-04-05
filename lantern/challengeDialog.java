@@ -188,7 +188,12 @@ ratedLabel = new JLabel("rated");
 
                             // dialouge success
                                 //showErrorMessage("success! " + seekString);
-								sendToIcs("multi " + matchString + "\n");
+                    if(channels.fics) {
+                        sendToIcs("$" + matchString + "\n");
+                    } else {
+                        sendToIcs("multi " + matchString + "\n");
+                    }
+								
                                // save values;
                                sharedVariables.myseek.time= time;
                                sharedVariables.myseek.inc=inc;
@@ -263,7 +268,7 @@ ratedLabel = new JLabel("rated");
 void sendToIcs(String mess)
 {
 	myoutput data = new myoutput();
-	data.data= "`c0`" + mess;
+	data.data= channels.fics ? "$" + mess : "`c0`" + mess;
 	queue.add(data);
 
 }
@@ -314,15 +319,23 @@ add(row4);
 
 void saveToICC()
 {
-
-                              	sendToIcs("multi set-quietly time " + sharedVariables.myseek.time + "\n");
-                              	sendToIcs("multi set-quietly inc " + sharedVariables.myseek.inc + "\n");
-                              	sendToIcs("multi set-quietly wild " + sharedVariables.myseek.wild + "\n");
-                                sendToIcs("multi set-quietly color " + sharedVariables.myseek.color + "\n");
-                                if(sharedVariables.myseek.rated==true)
-                             	  sendToIcs("multi set-quietly rated 1" +  "\n");
-                                else
-         	                  sendToIcs("multi set-quietly rated 0" +  "\n");
+String serverSetCommand = "multi set-quietly";
+    if(channels.fics) {
+        serverSetCommand = "$set";
+    }
+                              	sendToIcs(serverSetCommand + " time " + sharedVariables.myseek.time + "\n");
+                              	sendToIcs(serverSetCommand + " inc " + sharedVariables.myseek.inc + "\n");
+    if(!channels.fics) {
+        sendToIcs(serverSetCommand + " wild " + sharedVariables.myseek.wild + "\n");
+      sendToIcs(serverSetCommand + " color " + sharedVariables.myseek.color + "\n");
+    }
+                              	if(!sharedVariables.guest) {
+                                    if(sharedVariables.myseek.rated==true)
+                                       sendToIcs(serverSetCommand + " rated 1" +  "\n");
+                                    else
+                                   sendToIcs(serverSetCommand + " rated 0" +  "\n");
+                                }
+                                
 
 
 }
