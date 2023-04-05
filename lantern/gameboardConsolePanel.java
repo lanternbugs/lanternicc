@@ -599,7 +599,7 @@ void dispatchCommand(String myurl)
 	mycommand=mycommand + "\n";
 
 	myoutput output = new myoutput();
-      if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
+      if(!channels.fics && sharedVariables.myname.length() > 0)
       {
 			if(sharedVariables.pointedToMain[gameData.LookingAt] == false)
 			    output.data="`g" + gameData.LookingAt + "`" + mycommand;
@@ -1338,13 +1338,15 @@ int moveKeyType=e.getModifiersEx();
 						      output.data=mes;
 						// code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
 						 // this will get any text back from server to go to right console
-						 if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
+						 if(!channels.fics && sharedVariables.myname.length() > 0)
 						 {
 							 if(sharedVariables.pointedToMain[gameData.LookingAt] == false)
 						 		output.data="`g" + gameData.LookingAt + "`" + mes;
 						 	 else
 						 		output.data="`c" + mainConsoleIndex + "`" + mes;
-					   	 }
+					   	 } else if(channels.fics) {
+                             output.data = mes;
+                         }
 						      output.consoleNumber=0;
 						      output.game=1;
 					          if(sharedVariables.pointedToMain[gameData.LookingAt] == true)
@@ -2122,7 +2124,12 @@ items[m].addActionListener(new ActionListener() {
        }
                     else if (sharedVariables.rightClickMenu.get(mfinal).equals("Lookup")) {
 
-                 doCommand("`f1`Finger" + " " + name + "\n");
+                 if(channels.fics) {
+                     doCommand("Finger" + " " + name + "\n");
+                     }
+                        else {
+                            doCommand("`f1`Finger" + " " + name + "\n");
+                        }
               }
        else if (sharedVariables.rightClickMenu.get(mfinal).equals("Challenge")) {
                JFrame framer =  new JFrame();
@@ -2167,7 +2174,12 @@ else if (sharedVariables.rightClickMenu.get(mfinal).equals("Quarantine")) {
       if(menuEntry.equals("Stored"))// now add edit list sub menu
       {
        JMenu LMenu = new JMenu("Edit List");
-       sharedVariables.setUpListMenu(LMenu, handle, queue, "`g" + gameData.LookingAt +  "`");
+          if(!channels.fics) {
+              sharedVariables.setUpListMenu(LMenu, handle, queue, "`g" + gameData.LookingAt +  "`");
+          } else {
+              sharedVariables.setUpListMenu(LMenu, handle, queue, "");
+          }
+       
        menu3.addSeparator();
        menu3.add(LMenu);
        menu3.addSeparator();
@@ -2413,7 +2425,7 @@ int getPhysicalTab(int look)
 void doCommand(String mycommand)
 {
 	myoutput output = new myoutput();
-   if(mycommand.startsWith("`"))
+   if(mycommand.startsWith("`") || channels.fics)
     output.data = mycommand;
     else
 	output.data="`g" + gameData.LookingAt +  "`" + mycommand;
