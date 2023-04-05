@@ -52,6 +52,7 @@ public class DataParsing
         int SAY_TYPE = 13;
         int CHANNEL_LIST_TYPE = 14;
         int KIB_TYPE = 15;
+        static boolean setChannelTabs  = false;
 
         ArrayList<String> spaceSeperatedLine;
         int ficsType = NO_TYPE;
@@ -1208,6 +1209,13 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             } catch(Exception dui) {
                 
             }
+        }
+        
+        if(mySettings.hasSettings == false && !setChannelTabs)
+        {
+          //mainTelnet.writeToConsole("Welcome to Pearl");   //sharedVariables.newUserMessage);
+          setUpNewUserTabs();
+            setChannelTabs = true;
         }
         
     }
@@ -3257,6 +3265,174 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         return null;
 
     }
+    
+    void setUpNewUserTabs()
+    {
+        try {
+        channels sharedVariables = mySettings;
+
+    if(sharedVariables.channelNamesList.size() < sharedVariables.maxConsoleTabs - 1) {
+      // condition that there are enough channels to be one per tab
+      for(int li=0; li<sharedVariables.channelNamesList.size(); li++)
+      {
+       sharedVariables.console[li + 1][Integer.parseInt(sharedVariables.channelNamesList.get(li).channel)]= 1;
+      mainTelnet.setConsoleSendPrefixes(sharedVariables.channelNamesList.get(li).channel, li + 1);
+      }
+    }// end if
+    else {
+
+
+    int tabNumber=0;
+    boolean go=false;
+    int li=0;
+    // *************** Stage 1
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("1")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][1]= 1;
+
+
+    }
+    if(sharedVariables.channelNamesList.get(li).channel.equals("2")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][2]= 1;
+
+    }
+
+    if(sharedVariables.channelNamesList.get(li).channel.equals("6")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][6]= 1;
+
+    }
+
+    }
+     if(sharedVariables.console[tabNumber][1] == 1 &&
+     sharedVariables.console[tabNumber][2] != 1 &&
+     sharedVariables.console[tabNumber][6] != 1)
+      mainTelnet.setConsoleSendPrefixes("1", tabNumber);
+    // *************** Stage 2
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("39")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][39]= 1;
+    }
+    
+
+    }// end for
+
+     if(sharedVariables.console[tabNumber][39] == 1)
+      mainTelnet.setConsoleSendPrefixes("39", tabNumber);
+    // *********************** Stage 3
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("50")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][50]= 1;
+    }
+    
+
+    }// end for
+     if(sharedVariables.console[tabNumber][50] == 1)
+      mainTelnet.setConsoleSendPrefixes("50", tabNumber);
+    // ********************** stage 4
+    // pass we need a tell tab
+
+    // ********************* Stage 5
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("34")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][34]= 1;
+    }
+
+
+    }// end for
+     if(sharedVariables.console[tabNumber][34] == 1 )
+      mainTelnet.setConsoleSendPrefixes("34", tabNumber);
+    // ******************* Stage 6
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("85")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][85]= 1;
+    }
+
+
+    }// end for
+     if(sharedVariables.console[tabNumber][85] == 1)
+      mainTelnet.setConsoleSendPrefixes("85", tabNumber);
+    // ************** Stage 7
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("40")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][40]= 1;
+    }
+
+
+    }// end for
+     if(sharedVariables.console[tabNumber][40] == 1 )
+      mainTelnet.setConsoleSendPrefixes("40", tabNumber);
+    // ******************** Stage 8
+    
+     if(sharedVariables.console[tabNumber][71] == 1 )
+      mainTelnet.setConsoleSendPrefixes("71", tabNumber);
+
+    //******************** Stage 9
+    // *********************** tomato
+    go=false;
+    for(li=0; li<sharedVariables.channelNamesList.size(); li++) {
+    if(sharedVariables.channelNamesList.get(li).channel.equals("49")) {
+    if(go == false) {
+    go = true;
+    tabNumber++;
+    }// go = false
+    sharedVariables.console[tabNumber][49]= 1;
+    }
+
+    
+    }// end for
+
+  
+
+
+    } // end else
+
+
+    setConsoleTabTitles asetter = new setConsoleTabTitles();
+
+    for(int z=1; z<sharedVariables.openConsoleCount - 1; z++)
+    if(sharedVariables.console[z][221]== 1)
+    asetter.createConsoleTabTitle(sharedVariables, z, mainTelnet.consoleSubframes, "Tomato");
+    else
+    asetter.createConsoleTabTitle(sharedVariables, z, mainTelnet.consoleSubframes, "");// last argument tab name
+    } catch(Exception dui) { }
+    }// end  method set up new user tabs
 
 
 
