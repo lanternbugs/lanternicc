@@ -266,6 +266,8 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                     sendToFics("$examine b crazyhouse\n");
                 } else if(wild == 26) {
                     sendToFics("$examine b suicide\n");
+                } else if(wild == 22) {
+                    sendToFics("$examine b wild fr\n");
                 }
                 else {
                     sendToFics("$examine\n");
@@ -406,6 +408,16 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
                   } else {
                       sendToFics("$wname " + sanitizeName(myLoader.games.get(row).whiteName) + "\n");
                       sendToFics("$bname " + sanitizeName(myLoader.games.get(row).blackName) + "\n");
+                      if(myLoader.games.get(row).iccFen != null) {
+                          String fen = myLoader.games.get(row).iccFen;
+                          int i = fen.indexOf(" ");
+                          if(i > 0) {
+                              fen = fen.substring(0, i);
+                              sendToFics("bsetup fen " + fen + "\nbsetup done\n");
+                          }
+                      }
+                          
+                          
                   }
                      
 
