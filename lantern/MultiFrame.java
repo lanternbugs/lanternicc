@@ -1412,7 +1412,10 @@ class Multiframe extends JFrame
     soundmenu.add(makeatnamesounds);
     soundmenu.add(makedrawsounds);
     soundmenu.add(notifysound);
-    soundmenu.add(correspondenceNotificationSounds);
+      if(!channels.fics) {
+          soundmenu.add(correspondenceNotificationSounds);
+      }
+    
     soundmenu.add(maketellsounds);
       if(!channels.fics) {
           optionsmenu.add(showMugshots);
