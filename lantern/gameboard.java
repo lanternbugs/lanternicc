@@ -1840,8 +1840,20 @@ void stopTheEngine()
       int newminute=0;
       int newsecond=0;
       int newtenth=0;
-      if (((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 1 &&  sharedVariables.mygame[gameData.BoardIndex].wild != 30)
-      || ((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 0 && sharedVariables.mygame[gameData.BoardIndex].wild == 30)) {
+      boolean whiteOnMove = false;
+        if (((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 1 &&  sharedVariables.mygame[gameData.BoardIndex].wild != 30)
+        || ((sharedVariables.mygame[gameData.BoardIndex].turn + 1)%2 == 0 && sharedVariables.mygame[gameData.BoardIndex].wild == 30))
+       {
+           whiteOnMove = true;
+           
+        }
+        if(channels.fics) {
+            if(sharedVariables.mygame[gameData.BoardIndex].currentPlayer.equals("W"))
+                whiteOnMove = true;
+            else
+                whiteOnMove = false;
+        }
+        if(whiteOnMove) {
         // white on the move
 
         try {

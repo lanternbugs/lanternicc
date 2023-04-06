@@ -633,7 +633,10 @@ void clearShapes()
 }
 boolean myturn()
 {
-	boolean value = false;
+	if(channels.fics) {
+        return myColor.equals(currentPlayer);
+    }
+    boolean value = false;
         int check =0;
 	if(myColor.equals("W"))
 	check=1;

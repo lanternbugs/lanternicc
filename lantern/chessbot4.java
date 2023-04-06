@@ -6537,10 +6537,7 @@ else
 								return;
 						    if(myboards[gamenum]!=null)
 							{
-								if(sharedVariables.myServer.equals("ICC") || sharedVariables.myServer.equals("FICS"))
 								myboards[gamenum].updateClock(temp.arg1, temp.arg2, temp.arg3); // pass game number
-								else
-								myboards[gamenum].updateFicsClock(temp.arg1, temp.arg2, temp.arg3); // pass game number
 								repaintBoards(gamenum);
 							}
 
