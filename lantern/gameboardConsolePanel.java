@@ -1368,7 +1368,11 @@ int moveKeyType=e.getModifiersEx();
 
                 if(person.length()>0)
                 {
-					Input.setText("/Tell " + person + " ");
+					if(channels.fics) {
+                        Input.setText("Tell " + person + " ");
+                    } else {
+                        Input.setText("/Tell " + person + " ");
+                    }
 					Input.setForeground(sharedVariables.inputCommandColor);
 				}
         }

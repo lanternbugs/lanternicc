@@ -3081,7 +3081,12 @@ class subframe extends JInternalFrame
                  sharedVariables.F9Manager.getNameReverse(resetcycle));
 
               if (person.length() > 0) {
-                Input.setText("/Tell " + person + "! ");
+                  if(channels.fics) {
+                      Input.setText("Tell " + person + "! ");
+                  } else {
+                      Input.setText("/Tell " + person + "! ");
+                  }
+                
                 Input.setForeground(sharedVariables.inputCommandColor);
               }
             }
