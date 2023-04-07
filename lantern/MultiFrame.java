@@ -2202,8 +2202,10 @@ myboardappearancemenu.add(consoleaspect);
           Communications.add(help_game_communication);
           Communications.addSeparator();
       }
+    if(!channels.fics) {
+        Communications.add(blockSays);
+    }
     
-    Communications.add(blockSays);
     Communications.add(gameend);
     Communications.add(autoChat);
     // .. /
@@ -2213,7 +2215,10 @@ myboardappearancemenu.add(consoleaspect);
       }
     
     // .. / Advanced /
-    AdvancedGameMenu.add(lowTimeColors);
+      if(!channels.fics) {
+          AdvancedGameMenu.add(lowTimeColors);
+      }
+    
     AdvancedGameMenu.add(checkLegality);
       if(!channels.fics) {
           AdvancedGameMenu.add(unobserveGoExamine);
@@ -3246,8 +3251,15 @@ else if (action.equals("Three Lines")) {
       String mes = "If Examining a game from a history (including your own)," +
         " library or search list, you can have Lantern issue the command " +
         "forward 1, at a set interval with delay set by the user between " +
-        "moves.\n\nFor example go to the Actions menu and choose Examine My " +
+        "moves.\n\nFor example go to the Game menu and choose Examine My " +
         "Last game, then to to Start Examine Game Replay.";
+        if(channels.fics) {
+            mes = "If Examining a game from a history (including your own)" +
+              " or journal, you can have Pearl issue the command " +
+              "forward 1, at a set interval with delay set by the user between " +
+              "moves.\n\nFor example go to the Game menu and choose Examine My " +
+              "Last game, then to to Start Examine Game Replay.";
+        }
       Popup mypopper = new Popup(this, false, mes, sharedVariables);
       mypopper.setSize(300,350);
       mypopper.setVisible(true);
