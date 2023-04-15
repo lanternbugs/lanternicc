@@ -55,7 +55,9 @@ res="=";
 if(status.equals("3"))
 res="a";
 
-
+if(channels.fics) {
+    res = status;
+}
 data.add(res); // result
 
 data.add(whiteRating);
@@ -77,6 +79,9 @@ if(status.equals("1"))
 res="=";
 if(status.equals("3"))
 res="a";
+    if(channels.fics) {
+        res = status;
+    }
 data.add(res); // result
 
 data.add(blackRating);
@@ -99,7 +104,12 @@ ratedType=getRatedType(ratedType, wild);
 
 data.add("" + whitetime + " " + whiteinc + " [" + ratedType + " " + rated + "]");
 data.add(eco);
-data.add(getGameEndCode(status, mode, color));
+    if(channels.fics) {
+        data.add(mode);
+    } else {
+        data.add(getGameEndCode(status, mode, color));
+    }
+
 data.add(date + " " + time);
 myTable.gamedata.addTableRow(data);
 }// end add history

@@ -281,7 +281,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Examine " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + examineString + "\n";
+                    if(channels.fics) {
+                        output.data= examineString + "\n";
+                    } else {
+                        output.data="`c0`" + examineString + "\n";
+                    }
+				 	
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -304,7 +309,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Sposition " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + examineString + "\n";
+                    if(channels.fics) {
+                        output.data= examineString + "\n";
+                    } else {
+                        output.data="`c0`" + examineString + "\n";
+                    }
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -324,7 +333,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	else if(type1.equals("search"))
 				 	examineString = "Libappend " + gameIndex;
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + examineString + "\n";
+                    if(channels.fics) {
+                        output.data= examineString + "\n";
+                    } else {
+                        output.data="`c0`" + examineString + "\n";
+                    }
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -345,7 +358,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	examineString = "Libdelete" + " %" + gameIndex;
 
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + examineString + "\n";
+                    if(channels.fics) {
+                        output.data= examineString + "\n";
+                    } else {
+                        output.data="`c0`" + examineString + "\n";
+                    }
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -379,7 +396,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
           		public void actionPerformed(ActionEvent e) {
 
 				 	myoutput output = new myoutput();
-				 	output.data="`f1`" + "Finger " + historyOpponent + "\n";
+				 	
+                    if(channels.fics) {
+                        output.data= "Finger " + historyOpponent + "\n";
+                    } else {
+                        output.data="`f1`" + "Finger " + historyOpponent + "\n";
+                    }
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);
@@ -397,7 +419,11 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
           		public void actionPerformed(ActionEvent e) {
 
 				 	myoutput output = new myoutput();
-				 	output.data="`c0`" + "History " + historyOpponent + "\n";
+                    if(channels.fics) {
+                        output.data= "History " + historyOpponent + "\n";
+                    } else {
+                        output.data="`c0`" + "History " + historyOpponent + "\n";
+                    }
 
 				 	output.consoleNumber=0;
       			 	queue.add(output);

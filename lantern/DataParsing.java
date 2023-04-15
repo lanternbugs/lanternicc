@@ -52,6 +52,8 @@ public class DataParsing
         int SAY_TYPE = 13;
         int CHANNEL_LIST_TYPE = 14;
         int KIB_TYPE = 15;
+        int HISTORY_TYPE = 16;
+        int JOURNAL_TYPE = 17;
         static boolean setChannelTabs  = false;
 
         ArrayList<String> spaceSeperatedLine;
@@ -316,6 +318,34 @@ public class DataParsing
         } else if((ficsType == NO_TYPE || ficsType == UNKNOWN_TYPE) && data.contains("chessclub.com") && !mySettings.fics) {
             data = "***";
         }
+        if(ficsType == HISTORY_TYPE && data.trim().startsWith("History")) {
+            try {
+            if(mainTelnet.myGameList != null)
+            if(mainTelnet.myGameList.isVisible()== true)
+                mainTelnet.myGameList.dispose();
+            
+            Thread.sleep(100);
+            mainTelnet.gameList=new tableClass();
+            //gameList.resetList();
+            //    gameList.addToList(dg.getArg(1) + " " + dg.getArg(2), dg.getArg(2));
+            mainTelnet.gameList.type1="history";
+            mainTelnet.gameList.type2=lastGameListName;
+                mainTelnet.gameList.createHistoryListColumns();
+            Thread.sleep(40);
+
+            try {
+            gameListCreator gameT = new gameListCreator();
+            Thread gamet = new Thread(gameT);
+            gamet.start();
+            
+            }
+            catch(Exception gam){}
+            }
+            catch(Exception disposal){}
+        } else if(ficsType == HISTORY_TYPE && !data.trim().startsWith("History") && !data.trim().startsWith("Opponent")) {
+            addHistoryItem(data);
+            
+        }
        /* if((ficsType == HISTORY_LIST) && lineCount == 1) {
             lastGameListName = getGameListName();
 
@@ -474,7 +504,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE && ficsType != SAY_TYPE)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE && ficsType != SAY_TYPE && ficsType != HISTORY_TYPE)
         {
             if(data.length() == 1)
             {
@@ -874,6 +904,14 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             return NOTIFY_TYPE;
         }
     }
+        if(spaceSeperatedLine.size() == 3) {
+        String tempo = spaceSeperatedLine.get(0);
+        String tempo2 = spaceSeperatedLine.get(1);
+        if(tempo.equals("History") && tempo2.equals("for")) {
+            setLastGameListName(spaceSeperatedLine.get(2));
+            return HISTORY_TYPE;
+        }
+    }
         if(isKibWhisperInfo(lineData)) {
             return KIB_TYPE;
         }
@@ -1010,6 +1048,73 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     void setLastTeller()
     {
 
+    }
+    class gameListCreator  implements Runnable
+    {
+    public void run()
+    {
+    mainTelnet.myGameList = new gameFrame(mainTelnet.sharedVariables, mainTelnet.queue, mainTelnet.gameList);
+        mainTelnet.sharedVariables.myGameList=mainTelnet.myGameList;
+        mainTelnet.myGameList.setSize(600,425);
+        mainTelnet.myGameList.setVisible(true);
+    //sharedVariables.desktop.add(myGameList);
+
+    try {
+        mainTelnet.myGameList.setSelected(true);
+        if(!(mainTelnet.gameList.type1.equals("") && mainTelnet.gameList.type2.equals("")))
+            mainTelnet.myGameList.setTitle(mainTelnet.gameList.type1 + " " + mainTelnet.gameList.type2);
+        }
+        catch(Exception couldnt){}
+
+    }// end run
+    }// end class gamelistcreator
+
+    void setLastGameListName(String data) {
+        if(data != null && data.length() > 2) {
+            lastGameListName = data.substring(0, data.length() - 1);
+        }  else {
+            lastGameListName = "";
+        }
+    }
+    
+    void addHistoryItem(String data) {
+        ArrayList<String> line = new ArrayList<String>();
+        seperateLine(data, line);
+        try {
+        if(line.size()  == 18) {
+            
+            gameItem myItem = new gameItem();
+            
+            /*
+             void addHistoryRow(String index, String whiteName, String blackName, String whiteRating, String blackRating, String date, String time, String whitetime, String whiteinc,
+                String rated, String ratedType, String wild, String eco, String status, String color, String mode, tableClass myTable)
+             */
+            // 29: + 1753 B 1713 ZwazO         [ sr 15   0] A25 Mat Wed Apr  5, 00:50 EDT 2023
+            String index = line.get(0).substring(0, line.get(0).length() -1);
+            String result = line.get(1);
+            String color = line.get(3);
+            String whiteName = color.equals("B") ? line.get(5) : lastGameListName;
+            String blackName = color.equals("W") ? line.get(5) : lastGameListName;
+            String whiteRating = color.equals("W") ? line.get(2) : line.get(4);
+            String blackRating = color.equals("B") ? line.get(2) : line.get(4);
+            String date = line.get(13) + " " + line.get(14) + " " + line.get(17);
+            String time = line.get(15) + " " + line.get(16);
+            String wTime = line.get(8);
+            String wInc = line.get(9);
+            try { wInc = wInc.substring(0, wInc.length() -1); } catch(Exception badInc) { }
+            String rated = line.get(7).contains("r") ? "1" : "0";
+            String ratingType = line.get(7);
+            String eco = line.get(10);
+            String end = line.get(11);
+            try { ratingType = ratingType.substring(0, 1); } catch(Exception badtype) { }
+            
+            myItem.addHistoryRow(index, whiteName, blackName, whiteRating, blackRating, date, time, wTime, wInc,
+                                 rated, ratingType, line.get(11), eco, result, line.get(14), end, mainTelnet.gameList);
+        
+            
+        
+        }
+            } catch(Exception duiiw) { }
     }
 
     void sendOutChat()
