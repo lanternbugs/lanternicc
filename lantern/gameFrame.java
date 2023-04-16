@@ -156,6 +156,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	examineString = "Spos " + gameIndex;
 				 	else if(type1.equals("stored"))
 				 	examineString = "Spos " + StoredOpponent + " " + type2;
+                     if(channels.fics) {
+                         examineString = examineString.replace("Spos", "Examine");
+                         if(DataParsing.inFicsExamineMode) {
+                             examineString = "$unexamine\n" + examineString;
+                         }
+                     }
 
 				 	myoutput output = new myoutput();
 				 	output.data=examineString + "\n";
@@ -283,6 +289,9 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 				 	myoutput output = new myoutput();
                     if(channels.fics) {
                         output.data= examineString + "\n";
+                        if(DataParsing.inFicsExamineMode) {
+                            output.data = "$unexamine\n" + output.data;
+                        }
                     } else {
                         output.data="`c0`" + examineString + "\n";
                     }
@@ -347,7 +356,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
        });
 
 
-				if(!type1.equals("liblist"))
+				if(!type1.equals("liblist") && !channels.fics)
 				menu2.add(item2);
 				JMenuItem item3 = new JMenuItem("libdelete");
 				 item3.addActionListener(new ActionListener() {
@@ -387,7 +396,9 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 
 
-				menu2.add(item4);
+				if(!channels.fics) {
+                    menu2.add(item4);
+                }
 
 
 
