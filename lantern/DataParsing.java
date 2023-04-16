@@ -3,6 +3,7 @@ import java.applet.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.*;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.ArrayList;
@@ -17,7 +18,10 @@ import javax.swing.text.*;
 import javax.swing.text.html.HTML.Attribute.*;
 import free.freechess.*;
 import free.util.*;
-
+import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 class GameStartData
 {
     String whiteElo = "";
@@ -58,6 +62,8 @@ public class DataParsing
 
         ArrayList<String> spaceSeperatedLine;
         int ficsType = NO_TYPE;
+        static ConcurrentLinkedQueue<URL> soundURLQueue = new ConcurrentLinkedQueue<URL>();
+        static boolean soundCurrentlyPlaying = false;
         int lineCount = 0;
         String ficsChatTell = "";
         String ficsChatTell2 = "";
@@ -99,6 +105,7 @@ public class DataParsing
         myDocWriter = myDocWriter1;
         mainTelnet = mainTelnet1;
         setFakeData();
+        startSound();
         
 
     }
@@ -3538,6 +3545,78 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     asetter.createConsoleTabTitle(sharedVariables, z, mainTelnet.consoleSubframes, "");// last argument tab name
     } catch(Exception dui) { }
     }// end  method set up new user tabs
+    
+    void startSound() {
+        try {
+            FicsSoundPlayer sound = new FicsSoundPlayer();
+        Thread soundThread = new Thread(sound);
+        soundThread.start();
+        
+        }
+        catch(Exception gam){}
+    }
+    
+    class FicsSoundPlayer  implements Runnable
+    {
+        
+        private AudioInputStream audio;
+    public void run()
+    {
+        
+        
+        while(true) {
+            try {
+                if(!soundCurrentlyPlaying) {
+                    URL url =soundURLQueue.poll();
+                    if(url != null) {
+                        InputStream audioSrc = null;
+                        InputStream bufferedIn = null;
+                        
+                          
+                            try {
+                            soundCurrentlyPlaying = true;
+                            audioSrc = url.openStream();
+                                    bufferedIn = new BufferedInputStream(audioSrc);
+                                    audio = AudioSystem.getAudioInputStream(bufferedIn);
+                                    final Clip clip = AudioSystem.getClip();
+                                clip.addLineListener(new LineListener() {
+                                    @Override
+                                    public void update(LineEvent event) {
+                                        if (event.getType() == LineEvent.Type.STOP)
+                                            clip.close();
+                                    }
+                                });
+                                    clip.open(audio);
+                                    clip.start();
+                            } catch(Exception nosoundnow) {
+                                soundURLQueue.add(url);
+                                Thread.sleep(100);
+                                soundCurrentlyPlaying = false;
+                            } finally {
+                                if (bufferedIn != null) {
+                                    bufferedIn.close();
+                                }
+                                if (audioSrc != null) {
+                                    audioSrc.close();
+                                }
+                                soundCurrentlyPlaying = false;
+                          } // end finlly
+                } // if url not null
+                
+                
+                    } // if sound not playing
+                Thread.sleep(100);
+                } // try
+                catch(Exception couldnt){}
+       
+        
+            }// end while
+    }// end run
+        
+        
+        
+        
+    }// end class FicsSoundPlayer
 
 
 

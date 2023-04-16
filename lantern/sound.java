@@ -79,10 +79,14 @@ else if(os.indexOf( "mac" ) >= 0)
 	operatingSystem = "mac";
 else
 	operatingSystem = "unix";
-
+if(channels.fics) {
+    DataParsing.soundURLQueue.add(songPath1);
+    return;
+}
     if(operatingSystem.equals("mac")  || (operatingSystem.equals("win") && channels.firstSound == false))
     {
      try {
+         
         free.util.audio.AudioClip unixClip = new  free.util.audio.AudioClip(songPath1);
        unixClip.play();
      }
