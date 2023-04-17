@@ -3549,6 +3549,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     void startSound() {
         try {
             FicsSoundPlayer sound = new FicsSoundPlayer();
+            sound.sharedVariables = mySettings;
         Thread soundThread = new Thread(sound);
         soundThread.start();
         
@@ -3558,6 +3559,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     
     class FicsSoundPlayer  implements Runnable
     {
+        
+        channels sharedVariables =  null;
         
         private AudioInputStream audio;
     public void run()
@@ -3590,7 +3593,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                                     clip.start();
                             } catch(Exception nosoundnow) {
                                 soundURLQueue.add(url);
-                                Thread.sleep(100);
+                                if(sharedVariables != null && sharedVariables.openBoardCount > 0) { Thread.sleep(10); } else { Thread.sleep(100); }
                                 soundCurrentlyPlaying = false;
                             } finally {
                                 if (bufferedIn != null) {
@@ -3605,7 +3608,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                 
                 
                     } // if sound not playing
-                Thread.sleep(100);
+                if(sharedVariables != null && sharedVariables.openBoardCount > 0) { Thread.sleep(10); } else { Thread.sleep(100); }
                 } // try
                 catch(Exception couldnt){}
        
