@@ -1603,7 +1603,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         */
         
 
-        if(newdata.startsWith("{Game ") || newdata.startsWith("Game ")) {
+        if(newdata.startsWith("{Game ") || newdata.startsWith("Game ") || newdata.startsWith("You're at the ")) {
             // Game 156:
             
             if(isExamineInfo(newdata, mySettings)) {
@@ -2635,6 +2635,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         if(data == null) {
             return false;
         }
+        if(data.startsWith("You're at the end of the game.") || data.startsWith("You're at the beginning of the game.")) {
+            return true;
+        }
         ArrayList<String> spaceArray = new ArrayList<>();
         seperateLine(data, spaceArray);
         if(spaceArray.size() == 5) {
@@ -2642,6 +2645,22 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         if(!item0.equals("Game")) {
             return false;
         }
+        String possNumber = spaceArray.get(1);
+        if(possNumber.length() > 1 && possNumber.endsWith(":")) {
+            String number = possNumber.substring(0, possNumber.length() -1);
+            try {
+                int num = Integer.parseInt(number);
+                for(int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null) {
+                        if(mySettings.mygame[a].state == mySettings.STATE_EXAMINING && mySettings.mygame[a].myGameNumber == num ) {
+                            return true;
+                        }
+                    }
+                }
+                
+            } catch(Exception duinotnumber) { }
+        }
+        
         String item2 = spaceArray.get(2);
         String item3 = spaceArray.get(3);
         String item4 = spaceArray.get(4);
@@ -3103,7 +3122,14 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                            break;
                     }
                 }
-                
+            }
+            if(message.startsWith("You're at the end of the game.") || message.startsWith("You're at the beginning of the game.")) {
+                for (int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null && mySettings.mygame[a].state == mySettings.STATE_EXAMINING) {
+                           temp.arg1 = "" + mySettings.mygame[a].myGameNumber;
+                           break;
+                    }
+                }
             }
             gamequeue.add(temp);
         } catch(Exception dui) {
