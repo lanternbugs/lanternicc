@@ -3587,7 +3587,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }// end  method set up new user tabs
     
     void startSound() {
-        try {
+        // off now using lantern sound in sound.java flow
+       /* try {
             FicsSoundPlayer sound = new FicsSoundPlayer();
             sound.sharedVariables = mySettings;
         Thread soundThread = new Thread(sound);
@@ -3595,6 +3596,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         
         }
         catch(Exception gam){}
+        */
     }
     
     class FicsSoundPlayer  implements Runnable
