@@ -2448,6 +2448,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                 String wTitle = "";
                 String bTitle = "";
                 setGameStartedParmsFics("" + openGame.myGameNumber, rType,  r,  wElo,  bElo,  wTitle,  bTitle);
+                gameMessage(lastGameStartString);
                 lastGameStartString = "";
 
 
@@ -2503,6 +2504,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                     String wTitle = "";
                     String bTitle = "";
                 setGameStartedParmsFics("" + openGame.myGameNumber, rType,  r,  wElo,  bElo,  wTitle,  bTitle);
+                    gameMessage(lastGameStartString);
                     lastGameStartString = "";
 
 
@@ -3091,6 +3093,18 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             }
             temp.arg1= spaceArray.get(1).replace(":", "");
             temp.arg2= message;
+            
+            //
+            if(spaceArray.get(0).startsWith("Creating"))  {
+                gamestate openGame = null;
+                for (int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null && mySettings.mygame[a].realname1.toLowerCase().equals(spaceArray.get(1).toLowerCase())) {
+                           temp.arg1 = "" + mySettings.mygame[a].myGameNumber;
+                           break;
+                    }
+                }
+                
+            }
             gamequeue.add(temp);
         } catch(Exception dui) {
             System.out.println(dui.getMessage());
