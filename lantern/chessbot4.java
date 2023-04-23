@@ -1994,6 +1994,15 @@ char c=(char) tempinput.read();
 						}
 						return 1; // we must have read something
 		}
+            try {
+            if(!gamequeue.isEmpty()) {
+              SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                client.Run();
+            }
+        });
+         }
+            } catch(Exception cantRunGameEvent) { }
 		Thread.sleep(3);
 
 		}
@@ -5206,13 +5215,7 @@ try {
 	catch(Exception e)
 	{ }
 	
-	if(!gamequeue.isEmpty()) {
-      SwingUtilities.invokeLater(new Runnable() {
-    public void run() {
-        client.Run();
-    }
-});
- }
+	
 
 
 	}
