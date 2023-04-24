@@ -438,10 +438,10 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0g2";
+        version = "v1.0i1";
     } else {
         myServer = "ICC";
-        version = "v6.27.2";
+        version = "v6.27.2a";
     }
 
     try {
@@ -632,7 +632,12 @@ seeksOpen = false;
 showMaterialCount=true;
 showRatings=true;
 showFlags=true;
-showPallette=true;
+if(channels.fics) {
+    showPallette=false;
+} else {
+    showPallette=true;
+}
+
 
 sideways=0;
 alwaysShowEdit=true;
