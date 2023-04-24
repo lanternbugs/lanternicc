@@ -96,6 +96,7 @@ public class FontChooser2 extends JDialog {
 
   /** The font the user has chosen */
   protected Font resultFont;
+  protected Font chosenFont = null;
 
   /** The resulting font name */
   protected String resultName;
@@ -233,6 +234,7 @@ SequentialGroup h1 = layout.createSequentialGroup();
     okButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         previewFont();
+          chosenFont = resultFont;
         dispose();
         setVisible(false);
       }
@@ -304,6 +306,6 @@ SequentialGroup h1 = layout.createSequentialGroup();
 
   /** Retrieve the selected font, or null */
   public Font getSelectedFont() {
-    return resultFont;
+    return chosenFont;
   }
 }// end class
