@@ -2496,8 +2496,8 @@ myboardappearancemenu.add(consoleaspect);
     // add to menu bar
     menu.add(helpmenu);
     // Help /
+      helpmenu.add(joinrenewhelp);
       if(!channels.fics) {
-          helpmenu.add(joinrenewhelp);
           helpmenu.add(helpdiscount);
       }
       helpmenu.add(passwordhelp);
@@ -2759,7 +2759,11 @@ myboardappearancemenu.add(consoleaspect);
       sharedVariables.openUrl("http://www.chessclub.com/help/commands");
 
     } else if (action.equals("Join")) {
-      sharedVariables.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
+        if(channels.fics) {
+            sharedVariables.openUrl("https://www.freechess.org/Register/index.html");
+        } else {
+            sharedVariables.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
+        }
 
     } else if (action.equals("Chess Coaches")) {
         sharedVariables.openUrl("https://store.chessclub.com/teachers");
@@ -6115,6 +6119,24 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
      toolBarPanelClass(JLabel toggleEngineLabel, JButton pure1, JButton pure3, JButton pure5, JButton pure15, JButton pure25, JButton pure960,
      JLabel seeksLabel, JLabel activitesLabel, JLabel userbuttonLabel, JLabel scripterLabel, JLabel topGamesFlipLabel, JLabel notifyBookLabel, JToolBar toolBar)
      {
+         
+         JLabel rematchLabel = new JLabel("  Rematch  ");
+         rematchLabel.addMouseListener(new MouseAdapter() {
+             public void mousePressed(MouseEvent e) {
+               if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+                 ;
+               else {
+                   myoutput output = new myoutput();
+                   output.data = "$Rematch\n";
+                   queue.add(output);
+               }// end else
+             }
+
+             public void mouseReleased(MouseEvent e) {}
+             public void mouseEntered(MouseEvent me) {}
+             public void mouseExited(MouseEvent me) {}
+             public void mouseClicked(MouseEvent me) {}
+           });
     GroupLayout layout = new GroupLayout(toolBar);
     SequentialGroup hgroup = layout.createSequentialGroup();
     for(int a=1; a<10; a++)
@@ -6152,6 +6174,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
             hgroup.addComponent(pure25);
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
             hgroup.addComponent(pure960);
+        } else {
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(rematchLabel);
         }
     
    
@@ -6179,7 +6204,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
             vgroup.addComponent(pure15);
             vgroup.addComponent(pure25);
             vgroup.addComponent(pure960);
-        }
+        } else {
+            vgroup.addComponent(rematchLabel);
+            }
     
     layout.setVerticalGroup(vgroup);
 
