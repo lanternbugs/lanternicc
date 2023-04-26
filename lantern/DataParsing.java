@@ -1043,11 +1043,20 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         try{
 
         StyledDocument doc=mySettings.mydocs[0];// 0 for main console
+            channels sharedVariables = mySettings;
         SimpleAttributeSet attrs = new SimpleAttributeSet();
+            if(sharedVariables.tabStuff[0].ForColor == null)
+                StyleConstants.setForeground(attrs, mySettings.ForColor);
+            else
+                StyleConstants.setForeground(attrs, sharedVariables.tabStuff[0].ForColor);
+            
         StyleConstants.setForeground(attrs, mySettings.ForColor);
             int [] cindex2 = new int[mySettings.maxConsoleTabs];
             cindex2[0]=0; // default till we know more is its not going to main
+            if(sharedVariables.tabStuff[0].ForColor == null)
             processLink2(doc, ficsChatTell, mySettings.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+            else
+                processLink2(doc, ficsChatTell, sharedVariables.tabStuff[0].ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
         }
         catch(Exception e)
         {}

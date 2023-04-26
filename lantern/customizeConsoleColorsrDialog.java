@@ -366,7 +366,8 @@ typedBold.setSelected(true);
 });
 
 //  non response Text color
-	nonResponseTextLabel = new JPaintedLabel("Non Response Text Color", sharedVariables);
+    String responeType = channels.fics ? "Server Text " : "Non Response Text ";
+	nonResponseTextLabel = new JPaintedLabel(responeType + "Color", sharedVariables);
 	nonResponseTextLabel.setForeground(sharedVariables.ForColor);
 	nonResponseTextLabel.fontType=0;
 	nonResponseTextLabel.setOpaque(true);
@@ -379,7 +380,7 @@ typedBold.setSelected(true);
 			 	{
 				 JDialog frame = new JDialog();
  				Color defaultCol=sharedVariables.ForColor;
- 				Color newColor = JColorChooser.showDialog(frame, "Choose Non Response Text Color", defaultCol);
+ 				Color newColor = JColorChooser.showDialog(frame, "Choose " + responeType + "Color", defaultCol);
 		    if(newColor != null)
 		    {
 				sharedVariables.ForColor =newColor;
@@ -579,8 +580,11 @@ cancelButton.setBackground(new Color(230, 220, 220));
 			{}
 		}
 });
-
-pane.setLayout(new GridLayout(11,2)); // rows collums
+int rows = 11;
+    if(channels.fics) {
+        rows = 10;
+    }
+pane.setLayout(new GridLayout(rows,2)); // rows collums
 JPanel shoutPanel = new JPanel();
 shoutPanel.add(shoutButton);
 shoutPanel.add(italicLabel1);
@@ -648,17 +652,19 @@ typedPanel.add(typedBold);
 pane.add(typedPanel);
 pane.add(typedLabel);
 
+if(!channels.fics) {
+    JPanel responsePanel = new JPanel();
+    responsePanel.add(responseTextButton);
+    responsePanel.add(italicLabel6);
+    responsePanel.add(responseItalic);
+    responsePanel.add(boldLabel6);
+    responsePanel.add(responseBold);
 
-JPanel responsePanel = new JPanel();
-responsePanel.add(responseTextButton);
-responsePanel.add(italicLabel6);
-responsePanel.add(responseItalic);
-responsePanel.add(boldLabel6);
-responsePanel.add(responseBold);
 
+    pane.add(responsePanel);
+    pane.add(responseTextLabel);
+}
 
-pane.add(responsePanel);
-pane.add(responseTextLabel);
 
 JPanel nonResponsePanel = new JPanel();
 nonResponsePanel.add(nonResponseTextButton);

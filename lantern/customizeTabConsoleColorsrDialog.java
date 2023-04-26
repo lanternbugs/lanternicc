@@ -201,7 +201,8 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 });
 
 //  non response Text color
-	nonResponseTextLabel = new JPaintedLabel("Non Response Text Color", sharedVariables);
+    String responseColorType = !channels.fics ? "Non Response Text Color" : "Server Text Color";
+	nonResponseTextLabel = new JPaintedLabel(responseColorType, sharedVariables);
 	nonResponseTextLabel.setForeground(ForColor);
 	nonResponseTextLabel.fontType=0;
 	nonResponseTextLabel.setOpaque(true);
@@ -214,7 +215,7 @@ setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			 	{
 				 JDialog frame = new JDialog();
  				Color defaultCol=ForColor;
- 				Color newColor = JColorChooser.showDialog(frame, "Choose Non Response Text Color", defaultCol);
+ 				Color newColor = JColorChooser.showDialog(frame, "Choose " + responseColorType, defaultCol);
 		    if(newColor != null)
 		    {
 				sharedVariables.tabStuff[consoleNumber].ForColor =newColor;
@@ -376,8 +377,11 @@ cancelButton.setBackground(new Color(230, 220, 220));
 			{}
 		}
 });
-
-pane.setLayout(new GridLayout(9,2)); // rows collums
+int numberOfRows = 9;
+    if(channels.fics) {
+        numberOfRows = 8;
+    }
+pane.setLayout(new GridLayout(numberOfRows,2)); // rows collums
 
 
 pane.add(tellButton);
@@ -387,9 +391,11 @@ pane.add(qtellButton);
 pane.add(qtellLabel);
 
 
+if(!channels.fics) {
+    pane.add(responseTextButton);
+    pane.add(responseTextLabel);
+}
 
-pane.add(responseTextButton);
-pane.add(responseTextLabel);
 
 pane.add(nonResponseTextButton);
 pane.add(nonResponseTextLabel);
