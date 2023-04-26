@@ -430,6 +430,7 @@ public class DataParsing
                 sentInChannel = false;
                 processChannels(data);
                 data = "";
+                sendConnectUserMessages();
             
             
         } else if(ficsType == CHANNEL_LIST_TYPE && sentInChannel) {
@@ -764,9 +765,9 @@ public class DataParsing
     {
         channels sharedVariables = mySettings;
         thetell += "\n";
-
-sharedVariables.lasttell=name; // obsolete but why not leave the data
-sharedVariables.F9Manager.addName(name);
+String screenName = name.contains("(") ? name.substring(0, name.indexOf("(")) : name;
+sharedVariables.lasttell=screenName; // obsolete but why not leave the data
+sharedVariables.F9Manager.addName(screenName);
 StyledDocument doc=sharedVariables.mydocs[sharedVariables.looking[sharedVariables.tellconsole]];
 int direction = sharedVariables.looking[sharedVariables.tellconsole];
 if(sharedVariables.tellsToTab == true)
@@ -1178,7 +1179,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
           } else if(ficsType == SHOUT_TELL) {
               
               if(!ficsChatTell2.equals("")) {
-                  writeOutToShouts(ficsChatTell + "\n" +  ficsChatTell2 + "\n");
+                  writeOutToShouts(ficsChatTell + "\n" );
+                  writeOutToShouts(ficsChatTell2 + "\n");
               } else {writeOutToShouts(ficsChatTell + "\n");
                   
               }
@@ -1309,7 +1311,12 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
     }
     }
-    
+    void sendConnectUserMessages() {
+        writeOutToMain("To resize the board and console click in bottom right corner and drag were it shows 2 lines \"//\" (by bottom right corner of typing input field)\n");
+        if(mySettings.guest) {
+            writeOutToMain("FICS offers a free lifetime account https://www.freechess.org/Register/index.html\n");
+        }
+    }
     void processChannels(String channels)
     {
         ArrayList<String> line = new ArrayList<String>();
