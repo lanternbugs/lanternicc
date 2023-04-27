@@ -410,7 +410,7 @@ if(stage == 2 && text.contains("readyok"))
         }
         cachedMultipleLines = sharedVariables.uciMultipleLines;
 
-if(sharedVariables.mygame[BoardIndex].engineFen.length()>2)
+if(sharedVariables.mygame[BoardIndex].engineFen.length()>2 && !channels.fics)
 {
     sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen = fixFenIfNeeded(sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen);
     sendToEngine("position fen " + sharedVariables.mygame[sharedVariables.gamelooking[BoardIndex]].engineFen + "\n");

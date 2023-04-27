@@ -1224,7 +1224,7 @@ void repaintPiece()
               String prefixcommand="";
              // code here to prefix our command with `g#`command if on icc and we have a name defined i.e. recieved whoami
             // this will get any text back from server to go to right console
-            if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
+            if(!channels.fics && sharedVariables.myname.length() > 0)
                prefixcommand="`g" + gameData.LookingAt + "`";
 
             String themove = primary  + prefixcommand;
@@ -1509,6 +1509,9 @@ void repaintPiece()
                                           chessMove = "";
                                          }
 					 String themove = primary  + "multi " + chessMove + getMove(-examinepiecemoving, piece);
+                     if(channels.fics) {
+                         themove = getMove(-examinepiecemoving, piece);
+                     }
 					 myoutput amove = new myoutput();
 					 amove.game=1;
 					 amove.consoleNumber=0;
