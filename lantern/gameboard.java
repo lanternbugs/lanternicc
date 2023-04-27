@@ -638,6 +638,9 @@ class gameboard extends JInternalFrame  implements InternalFrameListener, Compon
     myoutput data = new myoutput();
     data.startengine=1;
     queue.add(data);
+      if(channels.fics) {
+          sendUciMoves();
+      }
   }
 
   int getGameNumber(String icsGameNumber) {
