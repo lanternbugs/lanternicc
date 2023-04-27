@@ -1897,8 +1897,11 @@ class subframe extends JInternalFrame
               });
 
             JMenu submenu  = new JMenu("Advanced");
+            
 
-            submenu.add(item11);
+            if(!channels.fics) {
+                    submenu.add(item11);
+            }
             JMenuItem item2 = new JMenuItem("set tab channels and name");
             item2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -2168,11 +2171,18 @@ class subframe extends JInternalFrame
                 }
 
             
-
-           if(menu3 == null)
-             menu2.add(submenu);
-           else
-           menu3.add(submenu);
+          if(!channels.fics) {
+              if(menu3 == null)
+                menu2.add(submenu);
+              else
+              menu3.add(submenu);
+          } else {
+              if(menu3 == null)
+              menu2.add(item11);
+              else
+              menu3.add(item11);
+          }
+           
 
             if(mypopup == true)
             {
