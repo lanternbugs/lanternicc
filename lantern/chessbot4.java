@@ -1994,15 +1994,17 @@ char c=(char) tempinput.read();
 						}
 						return 1; // we must have read something
 		}
-            try {
-            if(!gamequeue.isEmpty()) {
-              SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                client.Run();
+            if(channels.fics) {
+                try {
+                if(!gamequeue.isEmpty()) {
+                  SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    client.Run();
+                }
+            });
+             }
+                } catch(Exception cantRunGameEvent) { }
             }
-        });
-         }
-            } catch(Exception cantRunGameEvent) { }
 		Thread.sleep(3);
 
 		}
@@ -5208,14 +5210,26 @@ try {
 
 		}
 
-
-
+  
 
 	}// end try
 	catch(Exception e)
 	{ }
+	 
+    try {
 	
-	
+    if(!channels.fics) {
+        
+        if(!gamequeue.isEmpty()) {
+          SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            client.Run();
+        }
+    });
+     }
+        
+    }
+        } catch(Exception cantDo) { }
 
 
 	}
@@ -5825,10 +5839,9 @@ void proccessGameInfo(newBoardData temp)
                                         }
 
                                         try {
-					if(sharedVariables.myServer.equals("ICC") || sharedVariables.myServer.equals("FICS"))
 					myboards[gamenum].gameStarted(temp.arg1, temp.arg2, temp.arg3, temp.arg4, temp.arg5, temp.arg6, temp.arg7, temp.arg8, temp.arg11, temp.arg13, temp.arg14, temp.arg16, temp.arg17, temp.type); // pass game number
-					else // fics
-					myboards[gamenum].gameStartedFics(temp.arg1);
+                    
+					
 					if(temp.arg18.equals("isolated"))
 					sharedVariables.lastSpositionBoard=gamenum;
 					if(temp.dg == 18) // for when we auto unoberve games
