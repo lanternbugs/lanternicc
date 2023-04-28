@@ -438,10 +438,10 @@ channels()
 {
     if(fics) {
         myServer = "FICS";
-        version = "v1.0i1";
+        version = "v1.0j";
     } else {
         myServer = "ICC";
-        version = "v6.27.2a";
+        version = "v6.27.2b";
     }
 
     try {
@@ -1135,7 +1135,12 @@ void setupMenu()
 	rightClickMenu.add("Vars");
 	rightClickMenu.add("Google");
 	rightClickMenu.add("History");
-	rightClickMenu.add("Liblist");
+    if(channels.fics) {
+        rightClickMenu.add("Journal");
+    } else {
+        rightClickMenu.add("Liblist");
+    }
+	
 	rightClickMenu.add("Stored");
 	rightClickMenu.add("Observe");
 	rightClickMenu.add("Follow");
@@ -1144,7 +1149,10 @@ void setupMenu()
 	rightClickMenu.add("Pstat");
         rightClickMenu.add("Assess");
 	rightClickMenu.add("Games");
-	rightClickMenu.add("Quarantine");
+    if(!channels.fics) {
+        rightClickMenu.add("Quarantine");
+    }
+	
 	rightClickMenu.add("Tell");
 
 
