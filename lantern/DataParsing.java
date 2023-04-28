@@ -1111,6 +1111,39 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     }
         return -1;
     }
+    
+    boolean isToldNameMessage(String tell) {
+        ArrayList<String> line = new ArrayList<String>();
+        seperateLine(tell, line);
+        if(line.size() != 2) {
+            return false;
+        }
+        String two = line.get(1);
+        if(two.length() < 3) {
+            return false;
+        }
+        String sub = two.substring(0, 1);
+        try {
+            Integer.parseInt(sub);
+        } catch(Exception due) {
+            return true;
+        }
+        return false;
+    }
+    
+    String getToldName(String tell) {
+        ArrayList<String> line = new ArrayList<String>();
+        seperateLine(tell, line);
+        if(line.size() != 2) {
+            return "";
+        }
+        String two = line.get(1);
+        if(two.length() > 1) {
+            return two.substring(0, two.length() -1);
+        }
+        return "";
+    }
+    
     void writeOutToMain(String ficsChatTell)
     {
         try{
@@ -1120,6 +1153,14 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             }
             if(consoleNumber > 0 && ficsChatTell.startsWith("Your communication has been queued for ")) {
                 return;
+            }
+            if(ficsChatTell.startsWith("(told ") && isToldNameMessage(ficsChatTell)) {
+                String screenName = getToldName(ficsChatTell);
+                mySettings.F9Manager.addName(screenName);
+                if(mySettings.tellsToTab == true)
+                 {
+                     consoleNumber = mySettings.tellTab;
+                 }
             }
 
         StyledDocument doc=mySettings.mydocs[consoleNumber];// 0 for main console
