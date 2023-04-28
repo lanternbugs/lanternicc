@@ -3009,6 +3009,9 @@ class subframe extends JInternalFrame
               if (index > 0 && !Input.getText().startsWith("/"))
                 // we don't use tell channel prefix if starts with /
                 mes = pre + mes;
+                else if (channels.fics && index > 0 && Input.getText().startsWith("/")) {
+                    mes = mes.substring(1, mes.length());
+                }
 
               //if (e.getModifiersEx() == 128) {
               if (gme == InputEvent.CTRL_DOWN_MASK) {
