@@ -1120,6 +1120,14 @@ void setChatBufferSize()
             }
           });
     }
+    String addHashWrapperToLookupUser(String mes) {
+        if(!fics || whoAmI == null  || whoAmI.equals("")) {
+            return mes;
+        }
+        String open = "$tell " + whoAmI + " " + HashTellData.userHashKey + " open f " + "1" + "\n";
+        String close = "$tell " + whoAmI + " " + HashTellData.userHashKey + " close\n";
+        return open + mes + close;
+    }
     String addHashTellWrapper(String mes, int number) {
         return addHashTellWrapper(mes, number, false);
     }

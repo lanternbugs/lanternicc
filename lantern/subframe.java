@@ -1761,7 +1761,9 @@ class subframe extends JInternalFrame
               else if (sharedVariables.rightClickMenu.get(mfinal).equals("Lookup")) {
 
                  if(channels.fics) {
-                     doCommand("$Finger" + " " + name + "\n");
+                     myoutput output = new myoutput();
+                     output.data = sharedVariables.addHashWrapperToLookupUser("$Finger" + " " + name + "\n");
+                     queue.add(output);
                  } else {
                      doCommand("`f1`Finger" + " " + name + "\n");
                  }

@@ -36,7 +36,12 @@ class GameStartData
 
 }
 class HashTellData {
-    static boolean console = true;
+    static String type  = "C";
+    /*
+     "C" = console
+     "B" == board
+     "L" == Lookup
+     */
     static int number = -1;
     static int userHashKey = -1;
 }
@@ -1061,7 +1066,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         String temp = spaceSeperatedLine.get(4);
         String temp2 = spaceSeperatedLine.get(5);
         String temp3 = spaceSeperatedLine.get(6);
-        if(temp.equals("open") && (temp2.equals("c") || temp2.equals("g"))) {
+        if(temp.equals("open") && (temp2.equals("c") || temp2.equals("g") || temp2.equals("f"))) {
             try {
                 int num = Integer.parseInt(temp3);
                 if(num > 0) {
@@ -1069,12 +1074,17 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                         if(num > 11) {
                             return false;
                         }
-                        HashTellData.console = true;
+                        HashTellData.type = "C";
                         HashTellData.number = num;
                         return true;
                         
+                    } else if(temp2.equals("f")) {
+                        HashTellData.type = "F";
+                        HashTellData.number = 1;
+                        return true;
                     }
-                } else {
+                }
+                else {
                     return false;
                 }
             } catch(Exception dui) {  return false; }
@@ -1144,12 +1154,26 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         return "";
     }
     
+    void launchLookupUser(String mess) {
+        if(mess == null || mess.equals("")) {
+            return;
+        }
+        
+        mainTelnet.launchFingerPopup(mess);
+    }
+    
     void writeOutToMain(String ficsChatTell)
     {
         try{
             int consoleNumber = 0;
-            if(HashTellData.console && HashTellData.number > 0) {
+            if(HashTellData.type.equals("C") && HashTellData.number > 0) {
                 consoleNumber = HashTellData.number;
+            }
+            if(HashTellData.type.equals("F") && !ficsChatTell.startsWith("Your communication has been queued for ")) {
+                launchLookupUser(ficsChatTell);
+                return;
+            } else if(HashTellData.type.equals("F")) {
+                consoleNumber = 1;
             }
             if(consoleNumber > 0 && ficsChatTell.startsWith("Your communication has been queued for ")) {
                 return;

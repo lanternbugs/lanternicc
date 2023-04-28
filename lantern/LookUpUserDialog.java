@@ -30,10 +30,11 @@ JButton okButton;
 JButton cancelButton;
 channels sharedVariables;
  ConcurrentLinkedQueue<myoutput> queue;
-LookupUserDialog(JFrame frame, boolean mybool, ConcurrentLinkedQueue<myoutput> queue1)
+LookupUserDialog(JFrame frame, boolean mybool, ConcurrentLinkedQueue<myoutput> queue1, channels settings)
 {
 super(frame, mybool);
 queue = queue1;
+    sharedVariables = settings;
 
 JPanel panel = new JPanel();
 panel.setLayout(new GridLayout(2,1));
@@ -114,7 +115,7 @@ setVisible(true);
            {
             String mess = "`f1`Finger " + field.getText() + "\n";
             if(channels.fics) {
-                mess = "Finger " + field.getText() + "\n";
+                mess = sharedVariables.addHashWrapperToLookupUser("Finger " + field.getText() + "\n");
             }
             myoutput data = new myoutput();
             data.data=mess;

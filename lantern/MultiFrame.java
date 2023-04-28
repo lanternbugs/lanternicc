@@ -3975,7 +3975,7 @@ dot.setVisible(true);
       openAddAFriend();
 
     } else if (action.equals("Lookup User")) {
-      LookupUserDialog frame = new LookupUserDialog(this, false, queue);
+      LookupUserDialog frame = new LookupUserDialog(this, false, queue, sharedVariables);
         frame.setLocation(getLocation().x + sharedVariables.cornerDistance, getLocation().y + sharedVariables.cornerDistance);
 
     } else if (action.equals("Open Videos Page")) {
