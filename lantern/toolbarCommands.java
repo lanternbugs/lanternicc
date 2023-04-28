@@ -131,7 +131,7 @@ class toolbarCommands
         
         String open = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
         String close = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " close\n";
-        return open + mes + close;
+        return open + mes; // not doing close now reseting on prompt
     }
 
 }

@@ -863,6 +863,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
     void resetParsing()
     {
+        if(ficsType != HASH_KEY_TYPE && HashTellData.number > -1) {
+            HashTellData.number = -1;
+        }
         ficsType = NO_TYPE;
         lineCount = 0;
         ficsChatTell = "";
