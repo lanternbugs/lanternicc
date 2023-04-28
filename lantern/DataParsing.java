@@ -1118,6 +1118,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             if(HashTellData.console && HashTellData.number > 0) {
                 consoleNumber = HashTellData.number;
             }
+            if(consoleNumber > 0 && ficsChatTell.startsWith("Your communication has been queued for ")) {
+                return;
+            }
 
         StyledDocument doc=mySettings.mydocs[consoleNumber];// 0 for main console
             channels sharedVariables = mySettings;
