@@ -1054,6 +1054,7 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                 String temp = spaceSeperatedLine.get(4);
                 if(temp.equals("close")) {
                     HashTellData.number = -1;
+                    HashTellData.type = "C";
                     return true;
                 } else {
                     return false;

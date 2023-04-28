@@ -1771,7 +1771,9 @@ class subframe extends JInternalFrame
               else if (sharedVariables.rightClickMenu.get(mfinal).equals("Vars")) {
 
                  if(channels.fics) {
-                     doCommand("$var" + " " + name + "\n");
+                     myoutput output = new myoutput();
+                     output.data = sharedVariables.addHashWrapperToLookupUser("$var" + " " + name + "\n");
+                     queue.add(output);
                  } else {
                      doCommand("`f1`Vars" + " " + name + "\n");
                  }
