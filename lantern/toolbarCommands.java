@@ -103,7 +103,7 @@ class toolbarCommands
 
      }
 
-      if(sharedVariables.myServer.equals("ICC") && sharedVariables.myname.length() > 0)
+      if(!channels.fics && sharedVariables.myname.length() > 0)
       {
       if(game == false)
       output.data="`c" + con + "`" + mes;
@@ -112,12 +112,26 @@ class toolbarCommands
 
 
       }
-      else
-      output.data= mes;
+      else if(channels.fics && con > 0) {
+          output.data= addHashTellWrapper(mes, con, sharedVariables);
+      } else {
+          output.data= mes;
+      }
+      
 
       output.consoleNumber=con;
       queue.add(output);
 
  }
+    
+    String addHashTellWrapper(String mes, int number, channels sharedVariables) {
+        if(!channels.fics) {
+            return mes;
+        }
+        
+        String open = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
+        String close = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " close\n";
+        return open + mes + close;
+    }
 
 }

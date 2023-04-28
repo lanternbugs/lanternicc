@@ -576,6 +576,16 @@ class subframe extends JInternalFrame
     }
     initComponents();
   }
+      
+      String addHashTellWrapper(String mes, int number) {
+          if(!channels.fics) {
+              return mes;
+          }
+          
+          String open = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
+          String close = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " close\n";
+          return open + mes + close;
+      }
   String getAMinuteTimestamp()
     {
      String theTime = chessbot4.getATimestamp();
@@ -1657,11 +1667,14 @@ class subframe extends JInternalFrame
     mycommand = mycommand + "\n";
 
     myoutput output = new myoutput();
-    if (sharedVariables.myServer.equals("ICC") &&
+    if (!channels.fics &&
         sharedVariables.myname.length() > 0)
       output.data = "`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
-    else
-      output.data = mycommand;
+    else if(channels.fics && sharedVariables.looking[consoleNumber] > 0) {
+        output.data = addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
+    } else {
+        output.data = mycommand;
+    }
     
     output.consoleNumber = consoleNumber;
     queue.add(output);
@@ -2204,7 +2217,11 @@ class subframe extends JInternalFrame
     output.data = "`c" + sharedVariables.looking[consoleNumber] +
       "`" + mycommand;
     
-    if (channels.fics)
+    if (channels.fics && sharedVariables.looking[consoleNumber] > 0) {
+        output.data = addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
+    } else if(channels.fics) {
+        output.data = mycommand;
+    }
       output.data = mycommand;
     
     output.consoleNumber = sharedVariables.looking[consoleNumber];
@@ -3034,15 +3051,19 @@ class subframe extends JInternalFrame
               }
             
               myoutput output = new myoutput();
-              if (sharedVariables.myServer.equals("ICC") &&
+              if (!channels.fics &&
                   sharedVariables.myname.length() > 0)
                 output.data = "`c" + sharedVariables.looking[consoleNumber] +
                   "`" + mes;
               // having a name means level 1 is on if on icc and this
               // `phrase`mess will be used to direct output back to this
               // console
-              else
-                output.data = mes;
+              else if(channels.fics && sharedVariables.looking[consoleNumber] > 0) {
+                  output.data = addHashTellWrapper(mes, sharedVariables.looking[consoleNumber]);
+              } else {
+                  output.data = mes;
+              }
+                
 
               output.consoleNumber = consoleNumber;
               queue.add(output);

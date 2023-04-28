@@ -605,6 +605,7 @@ notifyList.resetList();
 eventsList.resetList();
     tournamentList.resetList();
     DataParsing.inFicsExamineMode = false;
+    HashTellData.number = -1;
 }
 catch(Exception listException) { }
 

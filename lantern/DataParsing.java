@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.util.Random;
 class GameStartData
 {
     String whiteElo = "";
@@ -34,7 +35,11 @@ class GameStartData
     ArrayList<String> moves = new ArrayList<>();
 
 }
-
+class HashTellData {
+    static boolean console = true;
+    static int number = -1;
+    static int userHashKey = -1;
+}
 public class DataParsing
 {
         int UNKNOWN_TYPE = 0;
@@ -58,7 +63,9 @@ public class DataParsing
         int KIB_TYPE = 15;
         int HISTORY_TYPE = 16;
         int JOURNAL_TYPE = 17;
+        int HASH_KEY_TYPE = 18;
         static boolean setChannelTabs  = false;
+        
 
         ArrayList<String> spaceSeperatedLine;
         int ficsType = NO_TYPE;
@@ -105,7 +112,8 @@ public class DataParsing
         myDocWriter = myDocWriter1;
         mainTelnet = mainTelnet1;
         setFakeData();
-        startSound();
+        Random rand = new Random();
+        HashTellData.userHashKey = rand.nextInt(1000000000);
         
 
     }
@@ -264,7 +272,10 @@ public class DataParsing
              setGameStartParamsAsNeeded(lastGameStartString);
         }
         if(isPrompt(data))  {
-              sendOutChat();
+            if(ficsType != HASH_KEY_TYPE) {
+                sendOutChat();
+            }
+              
               resetParsing();
         return;
       } else if(ficsChatTell.contains("(Logout screen by Alefith)") && ficsChatTell.length() > 400) {
@@ -971,7 +982,12 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         String line1 = spaceSeperatedLine.get(1);
         String line2 = spaceSeperatedLine.get(2);
         if(line1.equals("tells") && line2.equals("you:")) {
-            return PERSONAL_TELL;
+            if(isHashKeyTell(lineData, spaceSeperatedLine)) {
+               return HASH_KEY_TYPE;
+            }
+            else {
+                return PERSONAL_TELL;
+            }
         }
     }
         if(spaceSeperatedLine.size() > 1) {
@@ -1009,7 +1025,64 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
 
         return UNKNOWN_TYPE;
     }
-
+               
+    boolean isHashKeyTell(String line, ArrayList<String> spaceSeperatedLine) {
+        /*
+         static boolean console = true;
+         static int number = -1;
+         static int userHashKey = -1;
+         */
+        String name = spaceSeperatedLine.get(0);
+        String screenName = name.contains("(") ? name.substring(0, name.indexOf("(")) : name;
+        screenName = screenName.toLowerCase();
+        // 4:20:54 MasterGameBot(TD) tells you: 9999 open c 1
+        if(!screenName.equals(mySettings.whoAmI.toLowerCase())) {
+            return false;
+        }
+        String key = spaceSeperatedLine.get(3);
+        if(!key.equals("" + HashTellData.userHashKey)) {
+            return false;
+        }
+        if(spaceSeperatedLine.size() != 7) {
+            // close flow
+            if(spaceSeperatedLine.size() == 5) {
+                String temp = spaceSeperatedLine.get(4);
+                if(temp.equals("close")) {
+                    HashTellData.number = -1;
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        
+        String temp = spaceSeperatedLine.get(4);
+        String temp2 = spaceSeperatedLine.get(5);
+        String temp3 = spaceSeperatedLine.get(6);
+        if(temp.equals("open") && (temp2.equals("c") || temp2.equals("g"))) {
+            try {
+                int num = Integer.parseInt(temp3);
+                if(num > 0) {
+                    if(temp2.equals("c")) {
+                        if(num > 11) {
+                            return false;
+                        }
+                        HashTellData.console = true;
+                        HashTellData.number = num;
+                        return true;
+                        
+                    }
+                } else {
+                    return false;
+                }
+            } catch(Exception dui) {  return false; }
+            
+        }
+        
+        return false;
+    }
     int getChannelNumber(String data)
     {
         String tempo = "";
@@ -1041,22 +1114,26 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     void writeOutToMain(String ficsChatTell)
     {
         try{
+            int consoleNumber = 0;
+            if(HashTellData.console && HashTellData.number > 0) {
+                consoleNumber = HashTellData.number;
+            }
 
-        StyledDocument doc=mySettings.mydocs[0];// 0 for main console
+        StyledDocument doc=mySettings.mydocs[consoleNumber];// 0 for main console
             channels sharedVariables = mySettings;
         SimpleAttributeSet attrs = new SimpleAttributeSet();
-            if(sharedVariables.tabStuff[0].ForColor == null)
+            if(sharedVariables.tabStuff[consoleNumber].ForColor == null)
                 StyleConstants.setForeground(attrs, mySettings.ForColor);
             else
-                StyleConstants.setForeground(attrs, sharedVariables.tabStuff[0].ForColor);
+                StyleConstants.setForeground(attrs, sharedVariables.tabStuff[consoleNumber].ForColor);
             
         StyleConstants.setForeground(attrs, mySettings.ForColor);
             int [] cindex2 = new int[mySettings.maxConsoleTabs];
-            cindex2[0]=0; // default till we know more is its not going to main
-            if(sharedVariables.tabStuff[0].ForColor == null)
-            processLink2(doc, ficsChatTell, mySettings.ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+            cindex2[0]=consoleNumber; // default till we know more is its not going to main
+            if(sharedVariables.tabStuff[consoleNumber].ForColor == null)
+            processLink2(doc, ficsChatTell, mySettings.ForColor, consoleNumber, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
             else
-                processLink2(doc, ficsChatTell, sharedVariables.tabStuff[0].ForColor, 0, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
+                processLink2(doc, ficsChatTell, sharedVariables.tabStuff[consoleNumber].ForColor, consoleNumber, maxLinks, SUBFRAME_CONSOLES, attrs, cindex2, null);
         }
         catch(Exception e)
         {}
