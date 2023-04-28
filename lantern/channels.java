@@ -1120,6 +1120,31 @@ void setChatBufferSize()
             }
           });
     }
+    String addHashTellWrapper(String mes, int number) {
+        return addHashTellWrapper(mes, number, false);
+    }
+    String addHashTellWrapper(String mes, int number, boolean wrapTells) {
+        
+        if(whoAmI == null  || whoAmI.equals("")) {
+            return mes;
+        }
+        if(!wrapTells) {
+            if(!fics || mes.toLowerCase().startsWith("tell ")  || mes.toLowerCase().startsWith("tel ")  || mes.toLowerCase().startsWith("te ")  || mes.toLowerCase().startsWith("t ")) {
+                return mes;
+            }
+        }
+        if(mes.toLowerCase().startsWith("shout ")  || mes.toLowerCase().startsWith("shou ") || mes.toLowerCase().startsWith("sho ")  || mes.toLowerCase().startsWith("sh ")  || mes.toLowerCase().startsWith("i ")) {
+            return mes;
+        }
+        
+        if(mes.toLowerCase().startsWith("history ")  || mes.toLowerCase().startsWith("histor ") || mes.toLowerCase().startsWith("histo ")  || mes.toLowerCase().startsWith("hist ")  || mes.toLowerCase().startsWith("his ")  || mes.toLowerCase().startsWith("hi ")) {
+            return mes;
+        }
+        
+        String open = "$tell " + whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
+        String close = "$tell " + whoAmI + " " + HashTellData.userHashKey + " close\n";
+        return open + mes + close;
+    }
     
 void setupMenu()
 {
