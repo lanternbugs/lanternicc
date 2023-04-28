@@ -578,7 +578,10 @@ class subframe extends JInternalFrame
   }
       
       String addHashTellWrapper(String mes, int number) {
-          if(!channels.fics) {
+          if(!channels.fics || mes.toLowerCase().startsWith("tell ")  || mes.toLowerCase().startsWith("tel ")  || mes.toLowerCase().startsWith("te ")  || mes.toLowerCase().startsWith("t ") || sharedVariables.whoAmI == null  || sharedVariables.whoAmI.equals("")) {
+              return mes;
+          }
+          if(mes.toLowerCase().startsWith("history ")  || mes.toLowerCase().startsWith("histor ") || mes.toLowerCase().startsWith("histo ")  || mes.toLowerCase().startsWith("hist ")  || mes.toLowerCase().startsWith("his ")  || mes.toLowerCase().startsWith("hi ")) {
               return mes;
           }
           
