@@ -1125,11 +1125,11 @@ void setChatBufferSize()
     }
     String addHashTellWrapper(String mes, int number, boolean wrapTells) {
         
-        if(whoAmI == null  || whoAmI.equals("")) {
+        if(!fics || whoAmI == null  || whoAmI.equals("")) {
             return mes;
         }
         if(!wrapTells) {
-            if(!fics || mes.toLowerCase().startsWith("tell ")  || mes.toLowerCase().startsWith("tel ")  || mes.toLowerCase().startsWith("te ")  || mes.toLowerCase().startsWith("t ")) {
+            if(mes.toLowerCase().startsWith("tell ")  || mes.toLowerCase().startsWith("tel ")  || mes.toLowerCase().startsWith("te ")  || mes.toLowerCase().startsWith("t ")) {
                 return mes;
             }
         }
@@ -1170,7 +1170,12 @@ void setupMenu()
 	rightClickMenu.add("Observe");
 	rightClickMenu.add("Follow");
 	rightClickMenu.add("Challenge");
-	rightClickMenu.add("Ping");
+    if(channels.fics) {
+        rightClickMenu.add("In");
+    } else {
+        rightClickMenu.add("Ping");
+    }
+	
 	rightClickMenu.add("Pstat");
         rightClickMenu.add("Assess");
 	rightClickMenu.add("Games");
