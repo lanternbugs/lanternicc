@@ -577,18 +577,7 @@ class subframe extends JInternalFrame
     initComponents();
   }
       
-      String addHashTellWrapper(String mes, int number) {
-          if(!channels.fics || mes.toLowerCase().startsWith("tell ")  || mes.toLowerCase().startsWith("tel ")  || mes.toLowerCase().startsWith("te ")  || mes.toLowerCase().startsWith("t ") || sharedVariables.whoAmI == null  || sharedVariables.whoAmI.equals("")) {
-              return mes;
-          }
-          if(mes.toLowerCase().startsWith("history ")  || mes.toLowerCase().startsWith("histor ") || mes.toLowerCase().startsWith("histo ")  || mes.toLowerCase().startsWith("hist ")  || mes.toLowerCase().startsWith("his ")  || mes.toLowerCase().startsWith("hi ")) {
-              return mes;
-          }
-          
-          String open = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
-          String close = "$tell " + sharedVariables.whoAmI + " " + HashTellData.userHashKey + " close\n";
-          return open + mes + close;
-      }
+      
   String getAMinuteTimestamp()
     {
      String theTime = chessbot4.getATimestamp();
@@ -1674,7 +1663,7 @@ class subframe extends JInternalFrame
         sharedVariables.myname.length() > 0)
       output.data = "`c" + sharedVariables.looking[consoleNumber] + "`" + mycommand;
     else if(channels.fics && sharedVariables.looking[consoleNumber] > 0) {
-        output.data = addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
+        output.data = sharedVariables.addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
     } else {
         output.data = mycommand;
     }
@@ -2221,11 +2210,11 @@ class subframe extends JInternalFrame
       "`" + mycommand;
     
     if (channels.fics && sharedVariables.looking[consoleNumber] > 0) {
-        output.data = addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
+        output.data = sharedVariables.addHashTellWrapper(mycommand, sharedVariables.looking[consoleNumber]);
     } else if(channels.fics) {
         output.data = mycommand;
     }
-      output.data = mycommand;
+      
     
     output.consoleNumber = sharedVariables.looking[consoleNumber];
     queue.add(output);
@@ -3062,7 +3051,7 @@ class subframe extends JInternalFrame
               // `phrase`mess will be used to direct output back to this
               // console
               else if(channels.fics && sharedVariables.looking[consoleNumber] > 0) {
-                  output.data = addHashTellWrapper(mes, sharedVariables.looking[consoleNumber]);
+                  output.data = sharedVariables.addHashTellWrapper(mes, sharedVariables.looking[consoleNumber]);
               } else {
                   output.data = mes;
               }
