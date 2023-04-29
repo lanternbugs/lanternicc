@@ -202,8 +202,26 @@ public void makehappen(int i)
 
                          sharedVariables.pointedToMain[gameData.BoardIndex]=false;// this tells us if the tab is on a game but console is on main
  			 try {
-                         sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
-			adjustMoveList();
+                 if(channels.fics) {
+                     SwingUtilities.invokeLater(new Runnable() {
+                                             @Override
+                                             public void run() {
+                                                 try {
+                                                     sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
+                                                adjustMoveList();
+
+                                                     
+
+
+                                                 } catch (Exception e1) {
+                                                 }
+                                             }
+                                         });
+                 } else {
+                     sharedVariables.gametable[gameData.BoardIndex].setModel(sharedVariables.mygametable[gameData.LookingAt].gamedata);
+                adjustMoveList();
+                 }
+                 
 			  } catch(Exception a111) { }
  								// after clicking a game tab the console is not pointed to main but when it is we dont change any other info like LookingAt just the console so we need to have a way of telling when chat is going to main like when you type somethi
 }
@@ -568,7 +586,7 @@ SwingUtilities.invokeLater(new Runnable() {
 
 
                             } catch (Exception e1) {
-                                //ignore
+                                
                             }
                         }
                     });
