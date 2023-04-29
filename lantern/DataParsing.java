@@ -3820,9 +3820,19 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             "tell endgamebot play kppkpp",
             "tell endgamebot play kqqkqr"
         };
-        
+        boolean addedPuzzleInfo = false;
+        boolean addedEndgameInfo = false;
         for(int a = 0; a < eventData.length; a++) {
-            mainTelnet.eventsList.addToEvents(eventData[a], "" + a, eventData[a], "", "");
+            if(!addedPuzzleInfo && eventData[a].contains("puzzle")) {
+                mainTelnet.eventsList.addToEvents(eventData[a], "" + a, eventData[a], mySettings.addHashWrapperToLookupUser( "$finger puzzlebot\n"), "");
+                addedPuzzleInfo = true;
+            } else if(!addedEndgameInfo && eventData[a].contains("endgame")) {
+                mainTelnet.eventsList.addToEvents(eventData[a], "" + a, eventData[a], mySettings.addHashWrapperToLookupUser( "$finger endgamebot\n"), "");
+                addedEndgameInfo = true;
+            } else {
+                mainTelnet.eventsList.addToEvents(eventData[a], "" + a, eventData[a], "", "");
+            }
+            
         }
         
     }
