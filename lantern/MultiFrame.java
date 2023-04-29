@@ -1154,6 +1154,9 @@ class Multiframe extends JFrame
     JMenuItem namelistFont = new JMenuItem("Names List Font");
     // .. /
     JMenuItem eventsFont = new JMenuItem("Event List/Tournaments Font");
+      if(channels.fics) {
+          eventsFont = new JMenuItem("Activities Font");
+      }
     JMenuItem colortimestamp = new JMenuItem("Chat Timestamp Color");
     JMenu tabsColorsMenu = new JMenu("Tabs Colors Menu");
     // .. / Tabs Colors Menu /
@@ -3999,7 +4002,7 @@ dot.setVisible(true);
       }
       sharedVariables.openUrl("http://statistics.chessclub.com/Embed/Ratings?user=" + thename + "#");
 
-    } else if(action.equals("Event List/Tournaments Font")) {
+    } else if(action.equals("Event List/Tournaments Font") || action.equals("Activities Font")) {
      setEventListFont();
 
     } else if (action.equals("Names List Font")) {
@@ -4940,6 +4943,9 @@ dot.setVisible(true);
       void setEventListFont()
       {
           JFrame f = new JFrame("Event List/Tournaments Font");
+          if(channels.fics) {
+              f = new JFrame("Activities Font");
+          }
           FontChooser2 fc = new FontChooser2(f, sharedVariables.eventsFont);
           fc.setVisible(true);
           Font fnt = fc.getSelectedFont();
@@ -6191,9 +6197,9 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
             hgroup.addComponent(pure960);
         } else {
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
-            hgroup.addComponent(ficsActivites);
-            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
             hgroup.addComponent(rematchLabel);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(ficsActivites);
         }
     
    

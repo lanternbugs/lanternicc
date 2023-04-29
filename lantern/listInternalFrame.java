@@ -82,6 +82,9 @@ myMenu.add(mymenu1);
     JMenu mymenu2 = new JMenu("Font");
 
     JMenuItem fontchange = new JMenuItem("Set Event List/Tournaments Font");
+    if(channels.fics) {
+        fontchange = new JMenuItem("Set Activities Font");
+    }
     fontchange.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
               master.setEventListFont();

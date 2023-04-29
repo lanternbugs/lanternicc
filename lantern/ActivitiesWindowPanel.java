@@ -176,6 +176,9 @@ add(displayList.theList);
       }
     } );
 eventsLabel = new JLabel("Events List", SwingConstants.CENTER);
+    if(channels.fics) {
+        eventsLabel = new JLabel("Training", SwingConstants.CENTER);
+    }
 tournamentLabel = new JLabel("Tournaments", SwingConstants.CENTER);
 seeksLabel = new JLabel("Human Seeks", SwingConstants.CENTER);
 computerSeeksLabel = new JLabel(" Computer Seeks", SwingConstants.CENTER);
@@ -484,6 +487,9 @@ return;
                 myoutput data = new myoutput();
                 data.consoleNumber = 0;
                 data.data= "`c0`" + watch + "\n";
+                 if(channels.fics) {
+                     data.data= "$" + watch + "\n";
+                 }
                 queue.add(data);
                 go=true;
 
@@ -493,6 +499,9 @@ return;
                 myoutput data = new myoutput();
                 data.consoleNumber = 0;
                 data.data= "`c0`" + join + "\n";
+                 if(channels.fics) {
+                     data.data= "$" + join + "\n";
+                 }
                 queue.add(data);
                 go=true;
 
@@ -1230,6 +1239,9 @@ void joinMethod(String join1, String join2)
 
 				 myoutput output = new myoutput();
 				 output.data= "`c0`" + join1 + "\n";
+                 if(channels.fics) {
+                     output.data= "$" + join1 + "\n";
+                 }
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1238,6 +1250,9 @@ void joinMethod(String join1, String join2)
       			 {
 				 output = new myoutput();
 				 output.data= "`c0`" + join2 + "\n";
+                if(channels.fics) {
+                    output.data= "$" + join2 + "\n";
+                }
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1255,6 +1270,9 @@ void infoMethod(String info)
                                 }
                                  myoutput output = new myoutput();
 				 output.data= "`c0`" + info + "\n";
+                if(channels.fics) {
+                    output.data= "$" + info + "\n";
+                }
 
 				 output.consoleNumber=0;
       			 queue.add(output);
@@ -1267,6 +1285,9 @@ void watchMethod(String watch)
 {
 				 myoutput output = new myoutput();
 				 output.data= "`c0`" + watch + "\n";
+                 if(channels.fics) {
+                     output.data= "$" + watch + "\n";
+                 }
 
 				 output.consoleNumber=0;
       			 queue.add(output);

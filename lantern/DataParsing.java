@@ -1492,6 +1492,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             setChannelTabs = true;
         }
         
+        populateEventData();
+        
     }
     
     void addChannel(String channel, String name)
@@ -3747,6 +3749,36 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     asetter.createConsoleTabTitle(sharedVariables, z, mainTelnet.consoleSubframes, "");// last argument tab name
     } catch(Exception dui) { }
     }// end  method set up new user tabs
+    
+    void populateEventData() {
+        String eventData[] = {
+            "tell puzzlebot getmate",
+            "tell puzzlebot getstudy2",
+            "tell puzzlebot getmate1",
+            
+            "tell endgamebot play kpk",
+            "tell endgamebot play kbnk",
+            "tell endgamebot play kbbk",
+            
+            "tell endgamebot play kqk",
+            "tell endgamebot play krpkr",
+            "tell endgamebot play krk",
+            
+            "tell endgamebot play kqkr",
+            "tell endgamebot play kppkp",
+            "tell endgamebot play kpkp",
+
+            "tell endgamebot play kqpkq",
+            "tell endgamebot play knnkp",
+            "tell endgamebot play kppkpp",
+            "tell endgamebot play kqqkqr"
+        };
+        
+        for(int a = 0; a < eventData.length; a++) {
+            mainTelnet.eventsList.addToEvents(eventData[a], "" + a, eventData[a], "", "");
+        }
+        
+    }
     
     void startSound() {
         // off now using lantern sound in sound.java flow
