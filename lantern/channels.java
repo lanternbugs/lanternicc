@@ -1133,7 +1133,7 @@ void setChatBufferSize()
     }
     String addHashTellWrapper(String mes, int number, boolean wrapTells) {
         
-        if(!fics || whoAmI == null  || whoAmI.equals("")) {
+        if(!fics || whoAmI == null  || whoAmI.equals("") || number < 1 || number > 11) {
             return mes;
         }
         if(!wrapTells) {
@@ -1148,7 +1148,6 @@ void setChatBufferSize()
         if(mes.toLowerCase().startsWith("history ")  || mes.toLowerCase().startsWith("histor ") || mes.toLowerCase().startsWith("histo ")  || mes.toLowerCase().startsWith("hist ")  || mes.toLowerCase().startsWith("his ")  || mes.toLowerCase().startsWith("hi ")) {
             return mes;
         }
-        
         String open = "$tell " + whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
         String close = "$tell " + whoAmI + " " + HashTellData.userHashKey + " close\n";
         return open + mes + close;
