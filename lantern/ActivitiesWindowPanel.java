@@ -167,9 +167,12 @@ add(displayList.theList);
 */
     videoButton = new JButton();
     videoButton.setText("Open Videos Page");
+    if(channels.fics) {
+        videoButton.setText("Open Ficsgames.org");
+    }
     videoButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        sharedVariables.openUrl("https://www.chessclub.com/videos");
+        sharedVariables.openUrl("https://www.ficsgames.org");
       }
     } );
 eventsLabel = new JLabel("Events List", SwingConstants.CENTER);
@@ -1016,8 +1019,10 @@ channelPanel.add(channelScroller3);
 	h2.addComponent(computerSeeksLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	h2.addComponent(eventsLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
 	h2.addComponent(notifyLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-    h2.addComponent(tournamentLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
-    h2.addComponent(corrLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+    if(!channels.fics) {
+        h2.addComponent(tournamentLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+        h2.addComponent(corrLabel,GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE);
+    }
 	//h2.addComponent(channelLabel);
 
 	h3.addComponent(myseeks1);
@@ -1062,8 +1067,11 @@ v9.addComponent(eventsLabel);
 v9.addComponent(notifyLabel);
 v9.addComponent(seeksLabel);
 v9.addComponent(computerSeeksLabel);
-    v9.addComponent(tournamentLabel);
-    v9.addComponent(corrLabel);
+    
+    if(!channels.fics) {
+        v9.addComponent(tournamentLabel);
+        v9.addComponent(corrLabel);
+    }
 //v9.addComponent(channelLabel);
 		v1.addGroup(v9);
     v1.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);

@@ -6137,6 +6137,21 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
              public void mouseExited(MouseEvent me) {}
              public void mouseClicked(MouseEvent me) {}
            });
+         JLabel ficsActivites  = new JLabel("  Activities  ");
+         ficsActivites.addMouseListener(new MouseAdapter() {
+             public void mousePressed(MouseEvent e) {
+               if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+                 ;
+               else {
+                   openActivities();
+               }// end else
+             }
+
+             public void mouseReleased(MouseEvent e) {}
+             public void mouseEntered(MouseEvent me) {}
+             public void mouseExited(MouseEvent me) {}
+             public void mouseClicked(MouseEvent me) {}
+           });
     GroupLayout layout = new GroupLayout(toolBar);
     SequentialGroup hgroup = layout.createSequentialGroup();
     for(int a=1; a<10; a++)
@@ -6176,6 +6191,8 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
             hgroup.addComponent(pure960);
         } else {
             hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+            hgroup.addComponent(ficsActivites);
+            hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
             hgroup.addComponent(rematchLabel);
         }
     
@@ -6205,6 +6222,7 @@ myNotifyFrame.setSize(notifyWidth,notifyHeight);
             vgroup.addComponent(pure25);
             vgroup.addComponent(pure960);
         } else {
+            vgroup.addComponent(ficsActivites);
             vgroup.addComponent(rematchLabel);
             }
     
