@@ -70,6 +70,7 @@ public class DataParsing
         int JOURNAL_TYPE = 17;
         int HASH_KEY_TYPE = 18;
         static boolean setChannelTabs  = false;
+        boolean processingLater = false;
         
 
         ArrayList<String> spaceSeperatedLine;
@@ -1732,6 +1733,20 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
                         if(checkIfIllegalPlayedMoveWasMade(styleLine)) {
                             sendIllegalMove(styleLine);
                         } else {
+                            if(getMyRelation(newdata) == 2 && checkGameStatus(styleLine.getGameNumber()) == mySettings.STATE_OBSERVING && !processingLater) {
+                                SwingUtilities.invokeLater(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            processingLater = true;
+                                                            try {
+                                                                processGameLine(newdata);
+                                                            } catch (Exception e1) {
+                                                            }
+                                                            processingLater = false;
+                                                        }
+                                                    });
+                                return returnValue;
+                            }
                             moveSent(styleLine);
                         }
                         
@@ -2382,41 +2397,46 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     {
         // R/d3-h3 or e2-e4
         String aMove = "e2e4";
-        if(verboseMove.equals("o-o") || verboseMove.equals("o-o-o")) {
+        try {
+            if(verboseMove.equals("o-o") || verboseMove.equals("o-o-o")) {
+                
+                if(verboseMove.equals("o-o") && color.equals("W")) // was blacks move
+                {
+                   return "e8g8c";
+                } else if(verboseMove.equals("o-o")) {
+                    return "e1g1c";
+                }
+                if(verboseMove.equals("o-o-o") && color.equals("W")) // was blacks move
+                {
+                    return "e8c8C";
+                } else if(verboseMove.equals("o-o-o")) {
+                    return "e1c1C";
+                }
+            }
             
-            if(verboseMove.equals("o-o") && color.equals("W")) // was blacks move
+            for(int a =0; a < verboseMove.length() -1; a++)
             {
-               return "e8g8c";
-            } else if(verboseMove.equals("o-o")) {
-                return "e1g1c";
+                if(verboseMove.charAt(a) == '/') {
+                verboseMove = verboseMove.substring(a+1, verboseMove.length());
+                break;
             }
-            if(verboseMove.equals("o-o-o") && color.equals("W")) // was blacks move
+            }
+            if(verboseMove.length() > 4) {
+            int index = -1;
+            for(int a = 0; a < verboseMove.length() -1; a++)
             {
-                return "e8c8C";
-            } else if(verboseMove.equals("o-o-o")) {
-                return "e1c1C";
+                if(verboseMove.charAt(a) == '-' && a > 0) {
+                String from = verboseMove.substring(0, a);
+                String to = verboseMove.substring(a+1, verboseMove.length());
+                String tempo = from + to;
+                return tempo;
             }
+            }
+        }
+        } catch(Exception dui) {
+            
         }
         
-        for(int a =0; a < verboseMove.length() -1; a++)
-        {
-            if(verboseMove.charAt(a) == '/') {
-            verboseMove = verboseMove.substring(a+1, verboseMove.length());
-            break;
-        }
-        }
-        if(verboseMove.length() > 4) {
-        int index = -1;
-        for(int a = 0; a < verboseMove.length() -1; a++)
-        {
-            if(verboseMove.charAt(a) == '-' && a > 0) {
-            String from = verboseMove.substring(0, a);
-            String to = verboseMove.substring(a+1, verboseMove.length());
-            String tempo = from + to;
-            return tempo;
-        }
-        }
-    }
 
 
         return aMove;
@@ -3310,6 +3330,23 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             System.out.println(dui.getMessage());
         };
         
+    }
+    int checkGameStatus(int num) {
+        for (int a = 0; a < mySettings.mygame.length; a++) {
+            if(mySettings.mygame[a] != null && mySettings.mygame[a].myGameNumber == num) {
+                   return mySettings.mygame[a].state;
+            }
+        }
+        return -1;
+    }
+    int getMyRelation(String line) {
+        try {
+            ArrayList<String> spaceArray = new ArrayList<String>();
+            seperateLine(line, spaceArray);
+            return Integer.parseInt(spaceArray.get(19));
+        } catch(Exception dui) { };
+        
+        return -1;
     }
     void gameStarted(Style12Struct myGameStruct, String wild)
     {
