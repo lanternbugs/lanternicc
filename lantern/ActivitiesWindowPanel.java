@@ -691,13 +691,16 @@ eventsLabel.addMouseListener(new MouseAdapter() {
 				 setLabelSelected(sharedVariables.activitiesTabNumber);
              theEventsList.setModel(eventsList.eventsTable);
              setEventTournamentTableProperties();
-             videoButton.setText("Open Videos Page");
-             removeActionListeners(videoButton);
-             videoButton.addActionListener(new ActionListener() {
-               public void actionPerformed(ActionEvent e) {
-                 sharedVariables.openUrl("https://www.chessclub.com/videos");
-               }
-             } );
+             if(!channels.fics) {
+                 videoButton.setText("Open Videos Page");
+                 removeActionListeners(videoButton);
+                 videoButton.addActionListener(new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+                     sharedVariables.openUrl("https://www.chessclub.com/videos");
+                   }
+                 } );
+             }
+             
 
 
 
