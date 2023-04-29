@@ -2859,16 +2859,26 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         String item2 = spaceArray.get(2);
         String item3 = spaceArray.get(3);
         String item4 = spaceArray.get(4);
-        if(item2.equals(mySettings.whoAmI)) {
             if(item3.equals("backs") && item4.equals("up")) {
-                parseForwardBackward(spaceArray);
-                return true;
+                for(int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null) {
+                        if(mySettings.mygame[a].state == mySettings.STATE_EXAMINING ) {
+                            parseForwardBackward(spaceArray);
+                            return true;
+                        }
+                    }
+                }
             }
             if(item3.equals("goes") && item4.equals("forward")) {
-                parseForwardBackward(spaceArray);
-                return true;
+                for(int a = 0; a < mySettings.mygame.length; a++) {
+                    if(mySettings.mygame[a] != null) {
+                        if(mySettings.mygame[a].state == mySettings.STATE_EXAMINING ) {
+                            parseForwardBackward(spaceArray);
+                            return true;
+                        }
+                    }
+                }
             }
-        }
     }
         if(spaceArray.size() == 6) // same thing but for icc
         {
