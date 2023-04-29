@@ -45,7 +45,10 @@ public class connectionDialog extends JDialog
 
   public connectionDialog(JFrame frame, channels sVars,
                           Queue<myoutput> queue, boolean mybool) {
-    super(frame, "Connect to ICC", mybool);
+      super(frame, "Connect to ICC", mybool);
+      if(channels.fics) {
+          setTitle("Connect to FICS");
+      }
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
