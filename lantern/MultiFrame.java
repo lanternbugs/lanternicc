@@ -1660,6 +1660,9 @@ class Multiframe extends JFrame
     // Windows /
     //JMenuItem nconsole = new JMenuItem("New Console");
     JMenuItem eventlist = new JMenuItem("Activities Window/Events");
+      if(channels.fics) {
+          eventlist = new JMenuItem("Activities Window");
+      }
     JMenuItem  seekingGraph = new JMenuItem("Seek Graph");
     JMenuItem mynotify = new JMenuItem("Notify Window");
     JMenuItem mytopgames = new JMenuItem("Top Games Window");
@@ -1738,9 +1741,7 @@ class Multiframe extends JFrame
     menu.add(sharedVariables.myWindows);
     // Windows /
     //sharedVariables.myWindows.add(nconsole);
-      if(!channels.fics) {
-          sharedVariables.myWindows.add(eventlist);
-      }
+      sharedVariables.myWindows.add(eventlist);
     
     sharedVariables.myWindows.add(seekingGraph);
     sharedVariables.myWindows.add(mynotify);
@@ -3032,7 +3033,7 @@ else if (action.equals("Three Lines")) {
     } else if (action.equals("Restart Engine")) {
       restartEngine();
 
-    } else if (action.equals("Activities Window/Events")) {
+    } else if (action.equals("Activities Window/Events") || action.equals("Activities Window")) {
       openActivities();
 
     }
