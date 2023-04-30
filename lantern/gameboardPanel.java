@@ -337,10 +337,16 @@ the slider is on. otherwise it draws the curernt in play board*/
 
               int fontX = boardx- coordinateX;
               int fontY = boardy * squarey * 8 + coordinateY;
+            int boost  = 0;
               String [] boardFiles = {"a", "b", "c", "d", "e", "f", "g", "h"};
               String [] boardRows = {"1", "2", "3", "4", "5", "6", "7", "8"};
  	      g2.setColor(sharedVariables.boardForegroundColor);
               int fsize =(int) ((double) coordinateX * .7);
+            int total = boardy + squarey * 8  + (int)(fsize * 1.5);
+            if(total > height) {
+                fsize -=4;
+                boost = 3;
+            }
 	      Font coordinateFont = new Font(sharedVariables.myGameFont.getFontName(), Font.BOLD, fsize); // "Times New Roman"
               g2.setFont(coordinateFont);
               int xoffset = (int) ((double) coordinateX/4);
@@ -351,7 +357,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                  for(int a=0; a< 8; a++)
                  {
                   g2.drawString(boardRows[7-a], boardx-(int)(coordinateX * .6), boardy + a * squarey + (int) ((double) squarey/2));
-                  g2.drawString(boardFiles[a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy + squarey*8 +(int) ((double)coordinateY * .6));
+                  g2.drawString(boardFiles[a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy - boost + squarey*8 +(int) ((double)coordinateY * .6));
 
                  }
 
@@ -363,7 +369,7 @@ the slider is on. otherwise it draws the curernt in play board*/
                  for(int a=0; a< 8; a++)
                  {
                   g2.drawString(boardRows[a], boardx-coordinateX, boardy + a * squarey + (int) ((double) squarey/2));
-                  g2.drawString(boardFiles[7-a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy + squarey*8 + (int) ((double)coordinateY * .85));
+                  g2.drawString(boardFiles[7-a], boardx + squarex * a + (int) ((double) squarex/2) - xoffset, boardy - boost + squarey*8 + (int) ((double)coordinateY * .85));
 
                  }
 
