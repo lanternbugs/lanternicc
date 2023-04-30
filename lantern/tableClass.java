@@ -65,10 +65,16 @@ collumns.add("white rating");
 collumns.add("black name");
 collumns.add("black rating");
 collumns.add("Result");
+    if(channels.fics) {
+        collumns.add("End");
+    }
 collumns.add("Time Controls");
 collumns.add("ECO");
-collumns.add("Date Game Started");
-collumns.add("Note");
+    if(!channels.fics) {
+        collumns.add("Date Game Started");
+        collumns.add("Note");
+    }
+
 gamedata = new myDefaultTableModel(data, collumns);
 
 }// end constructor

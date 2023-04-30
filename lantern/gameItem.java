@@ -171,7 +171,13 @@ if(status.equals("1"))
 res="=";
 if(status.equals("3"))
 res="a";
-data.add(res+ " "/* + getGameEndCode(status, mode, color)*/); // result
+    if(channels.fics) {
+        data.add(status);
+        data.add(mode);
+    } else {
+        data.add(res+ " "/* + getGameEndCode(status, mode, color)*/); // result
+    }
+
 
 //}// i'm black
 
@@ -184,14 +190,26 @@ rated="u";
 /*0=wild, 1=blitz, 2=standard,
 	3=bullet, 4=bughouse*/
 	ratedType=getRatedType(ratedType, wild);
+if(channels.fics) {
+    data.add(time);
+} else {
+    data.add("" + whitetime + " " + whiteinc + " [" + ratedType + " " + rated + "]");
+}
+if(channels.fics) {
+    data.add(color);
+} else {
+    data.add(eco);
+}
 
-data.add("" + whitetime + " " + whiteinc + " [" + ratedType + " " + rated + "]");
-data.add(eco);
-//data.add(mode);
-data.add(date + " " + time);
 
-if(myTable.type1.equals("liblist"))
-data.add(libnote);
+    if(!channels.fics) {
+        data.add(date + " " + time);
+        if(myTable.type1.equals("liblist"))
+        data.add(libnote);
+    }
+
+
+
 
 myTable.gamedata.addTableRow(data);
 }// end add history

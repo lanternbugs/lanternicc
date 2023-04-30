@@ -282,8 +282,13 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 				 	if(type1.equals("history"))
 				 	examineString = "Examine " + type2 + " " + gameIndex;
-				 	else if(type1.equals("liblist"))
-				 	examineString = "Examine " + type2 + " %" + gameIndex;
+				 	else if(type1.equals("liblist")) {
+                        examineString = "Examine " + type2 + " %" + gameIndex;
+                        if(channels.fics) {
+                            examineString = "Examine " + type2 + " " + gameIndex;
+                        }
+                    }
+				 	
 				 	else if(type1.equals("search"))
 				 	examineString = "Examine " + gameIndex;
 				 	myoutput output = new myoutput();
@@ -313,8 +318,12 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
 
 				 	if(type1.equals("history"))
 				 	examineString = "Sposition " + type2 + " " + gameIndex;
-				 	else if(type1.equals("liblist"))
-				 	examineString = "Sposition " + type2 + " %" + gameIndex;
+				 	else if(type1.equals("liblist")) {
+                        examineString = "Sposition " + type2 + " %" + gameIndex;
+                        if(channels.fics) {
+                            examineString = "Sposition " + type2 + " " + gameIndex;
+                        }
+                    }
 				 	else if(type1.equals("search"))
 				 	examineString = "Sposition " + gameIndex;
 				 	myoutput output = new myoutput();
@@ -381,7 +390,7 @@ MouseListener mouseListenerEvents = new MouseAdapter() {
        });
 
 
-				if(type1.equals("liblist"))
+				if(type1.equals("liblist") && !channels.fics)
 				menu2.add(item3);
 
 

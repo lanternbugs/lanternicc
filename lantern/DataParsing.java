@@ -370,6 +370,36 @@ public class DataParsing
             addHistoryItem(data);
             
         }
+        
+        
+        if(ficsType == JOURNAL_TYPE && data.trim().startsWith("Journal")) {
+            try {
+            if(mainTelnet.myGameList != null)
+            if(mainTelnet.myGameList.isVisible()== true)
+                mainTelnet.myGameList.dispose();
+            
+            Thread.sleep(100);
+            mainTelnet.gameList=new tableClass();
+            //gameList.resetList();
+            //    gameList.addToList(dg.getArg(1) + " " + dg.getArg(2), dg.getArg(2));
+            mainTelnet.gameList.type1="liblist";
+            mainTelnet.gameList.type2=lastGameListName;
+                mainTelnet.gameList.createLiblistColumns();
+            Thread.sleep(40);
+
+            try {
+            gameListCreator gameT = new gameListCreator();
+            Thread gamet = new Thread(gameT);
+            gamet.start();
+            
+            }
+            catch(Exception gam){}
+            }
+            catch(Exception disposal){}
+        } else if(ficsType == JOURNAL_TYPE && !data.trim().startsWith("Journal") && !data.trim().startsWith("White")) {
+            addJournalItem(data);
+            
+        }
        /* if((ficsType == HISTORY_LIST) && lineCount == 1) {
             lastGameListName = getGameListName();
 
@@ -529,7 +559,7 @@ public class DataParsing
         }
 
        // if(ficsType == UNKNOWN_TYPE || ((ficsType == HISTORY_LIST || ficsType == JOURNAL_LIST) && !skipShowingGameList))
-        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE && ficsType != SAY_TYPE && ficsType != HISTORY_TYPE)
+        if(ficsType != CHANNEL_TELL && ficsType != NOTIFY_TYPE && ficsType != PERSONAL_TELL && ficsType != SHOUT_TELL && ficsType != KIB_TYPE && ficsType != SAY_TYPE && ficsType != HISTORY_TYPE && ficsType != JOURNAL_TYPE)
         {
             if(data.length() == 1)
             {
@@ -937,6 +967,15 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             return HISTORY_TYPE;
         }
     }
+        
+        if(spaceSeperatedLine.size() == 3) {
+        String tempo = spaceSeperatedLine.get(0);
+        String tempo2 = spaceSeperatedLine.get(1);
+        if(tempo.equals("Journal") && tempo2.equals("for")) {
+            setLastGameListName(spaceSeperatedLine.get(2));
+            return JOURNAL_TYPE;
+        }
+    }
         if(isKibWhisperInfo(lineData)) {
             return KIB_TYPE;
         }
@@ -1226,7 +1265,12 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
     try {
         mainTelnet.myGameList.setSelected(true);
         if(!(mainTelnet.gameList.type1.equals("") && mainTelnet.gameList.type2.equals("")))
-            mainTelnet.myGameList.setTitle(mainTelnet.gameList.type1 + " " + mainTelnet.gameList.type2);
+            if(mainTelnet.gameList.type1.equals("liblist")) {
+                mainTelnet.myGameList.setTitle("journal" + " " + mainTelnet.gameList.type2);
+            } else {
+                mainTelnet.myGameList.setTitle(mainTelnet.gameList.type1 + " " + mainTelnet.gameList.type2);
+            }
+            
         }
         catch(Exception couldnt){}
 
@@ -1274,6 +1318,54 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             
             myItem.addHistoryRow(index, whiteName, blackName, whiteRating, blackRating, date, time, wTime, wInc,
                                  rated, ratingType, line.get(11), eco, result, line.get(14), end, mainTelnet.gameList);
+        
+            
+        
+        }
+            } catch(Exception duiiw) { }
+    }
+    
+    void addJournalItem(String data) {
+        ArrayList<String> line = new ArrayList<String>();
+        seperateLine(data, line);
+        try {
+            /*
+             this one has a lenght of 12
+             %20: johnas        1573    Liszt         1727    [ br  5   2] E60  NM 1/2-1/2
+             
+             this one has a lenght of 13
+             %21: *KeresPaulGM( 1203    *WinterWillia 1203    [ uu  0   0] B29 --- *
+             */
+        if(line.size()  == 13 || line.size()  == 12) {
+            
+            gameItem myItem = new gameItem();
+            
+            /*
+             void addSearchLiblistRow(String index, String whiteName, String blackName, String whiteRating, String blackRating, String date, String time, String whitetime, String whiteinc,
+                 String rated, String ratedType, String wild, String eco, String status, String color, String mode, String libnote,  tableClass myTable)
+             */
+            // 29: + 1753 B 1713 ZwazO         [ sr 15   0] A25 Mat Wed Apr  5, 00:50 EDT 2023
+            String index = line.get(0).substring(0, line.get(0).length() -1);
+            String result = line.get(11);
+            String color = line.get(3);
+            String whiteName = line.get(1);
+            String blackName = line.get(3);
+            String whiteRating = line.get(2);
+            String blackRating = line.get(4);
+            String date = "date";
+            String time = "time";
+            String wTime = line.get(8);
+            String wInc = line.get(9);
+            try { wInc = wInc.substring(0, wInc.length() -1); } catch(Exception badInc) { }
+            String rated = line.get(7).contains("r") ? "1" : "0";
+            String ratingType = line.get(7);
+            String eco = line.get(10);;
+            String end = line.get(11);
+            String timeControl = line.get(5) + " " + line.get(6) + " " + line.get(7) + " " + line.get(8);
+            try { ratingType = ratingType.substring(0, 1); } catch(Exception badtype) { }
+            
+            myItem.addSearchLiblistRow(index, whiteName, blackName, whiteRating, blackRating, date, timeControl, wTime, wInc,
+                                 rated, ratingType, line.get(11), end, result, line.get(9), eco, "", mainTelnet.gameList);
         
             
         
