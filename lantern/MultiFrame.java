@@ -789,7 +789,7 @@ class Multiframe extends JFrame
          int px = 10;
           int py = 10;
           int cw = (int) (sharedVariables.screenW * 2 / 5 - px );
-          int ch = (int) ((sharedVariables.screenH / 2) - py - (sharedVariables.screenH/ 2)/6);
+          int ch = (int) ((sharedVariables.screenH / 2) - py - (sharedVariables.screenH/ 2)/9);
 
           consoleSubframes[0].setLocation(px, py);
           consoleSubframes[0].setSize(cw, ch);
@@ -799,7 +799,7 @@ class Multiframe extends JFrame
           px = px + px + cw;
           py = 30;
           cw = (int) (sharedVariables.screenW * 3 / 5 -  30);
-          ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/6);
+          ch = (int) (sharedVariables.screenH - py - sharedVariables.screenH/9);
           if (ch > cw + 100)
             ch=cw+100;
 
@@ -5731,7 +5731,6 @@ dot.setVisible(true);
     } catch (Exception badtool) {
       return;
     }
-
     try {
       // Andrey says:
       // want to be able to change this to
@@ -5792,8 +5791,28 @@ dot.setVisible(true);
       }
 
               }
+        
+        
 
-         setSize(width,height);
+         if(!valid) {
+             if(sharedVariables.screenW > 1920 && sharedVariables.screenH > 1080) {
+                 setSize(1920,1080);
+                 sharedVariables.screenW = 1920;
+                 sharedVariables.screenH = 1080;
+             } else if(sharedVariables.screenW > 1400 && sharedVariables.screenH > 900)
+                 {
+                     setSize(1400,900);
+                     sharedVariables.screenW = 1400;
+                     sharedVariables.screenH = 900;
+                 } else {
+                     setSize(width,height);
+                 }
+             
+             
+         } else {
+             setSize(width,height);
+         }
+        
         int locX = 0;
         int locY = 0;
         if(valid) {
@@ -5821,13 +5840,14 @@ dot.setVisible(true);
           // put it in top corner to hopefully fix a bug on some linux
           // that mouse and menu got out of snych
         }
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
       }
       // end outer try
     } catch (Exception d) {
       setSize(width,height);
-      if (!valid)
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+      if (!valid) {
+          setExtendedState(JFrame.MAXIMIZED_BOTH);
+      }
+        
     }// end catch
   }// end method set size
 
