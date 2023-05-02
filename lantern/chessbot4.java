@@ -5995,6 +5995,18 @@ void proccessGameInfo(newBoardData temp)
 							myboards[gamenum].Backward(temp.arg1, temp.arg2);
 							repaintBoards(gamenum);
 					}
+                    
+                    if(temp.dg == 233)// crazy holdings
+                    {
+                            //writeToConsole("in dg 22 23");
+                            int gamenum=getGameBoard(temp.arg1);
+                            if(gamenum == sharedVariables.NOT_FOUND_NUMBER)
+                                return;
+                            if(myboards[gamenum]== null)
+                                return;
+                            myboards[gamenum].setFicsCrazyHoldings(temp.arg1, temp.arg2);
+                            repaintBoards(gamenum);
+                    }
 
 
 					if(temp.dg == 152)// send move

@@ -2597,7 +2597,17 @@ void stopTheEngine()
     outgoing.data+= "go infinite\n";
     sharedVariables.engineQueue.add(outgoing);
   }
-
+  void setFicsCrazyHoldings(String gameNumber, String data) {
+      try {
+          final int num=getGameNumber(gameNumber);
+          if (num == sharedVariables.mygame[gameData.BoardIndex].myGameNumber)    {
+              sharedVariables.mygame[gameData.BoardIndex].setFicsCrazyHoldings(data);
+          }
+      } catch(Exception dui) {
+          
+      }
+      
+  }
   void Backward(String icsGameNumber, String count) {
     int tempnumber=getGameNumber(icsGameNumber);
     final int num=getGameNumber(count);

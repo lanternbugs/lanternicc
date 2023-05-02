@@ -473,6 +473,54 @@ void readInitialPosition2(String initial, int board[])
 	}
 }// end method
 
+void setFicsCrazyHoldings(String data)
+{
+    // crazypieces[piece]
+    // <b1> game 17 white [PQ] black [PPQ]
+    try {
+        int i1 = data.indexOf("[");
+        if(i1 > 0) {
+            int i2 = data.indexOf("[", i1 + 1);
+            if(i2 > 0) {
+                String white = data.substring(i1 + 1,  data.indexOf("]") );
+                String black = data.substring(i2 + 1, data.indexOf("]", i2));
+                writeFicsCrazyPieces(white, true);
+                writeFicsCrazyPieces(black, false);
+            }
+        }
+    } catch(Exception dui) { }
+    // generate two substrings. loop througha nd add black and white pieces
+   
+}
+    
+    void writeFicsCrazyPieces(String pieces, boolean white) {
+        int offset = 0;
+        if(!white) {
+            offset = 6;
+        }
+        if(white) {
+            crazypieces[1] = crazypieces[2] = crazypieces[3] = crazypieces[4] = crazypieces[5] = 0;
+        } else
+            {
+                crazypieces[7] = crazypieces[8] = crazypieces[9] = crazypieces[10] = crazypieces[11] = 0;
+            }
+        
+        // 1-5 and 7-11 are active slots
+    for(int a = 0; a < pieces.length(); a++) {
+        if(pieces.charAt(a) == 'P') {
+            crazypieces[1 + offset] += 1;
+        } else if(pieces.charAt(a) == 'N') {
+            crazypieces[2 + offset] += 1;
+        } else if(pieces.charAt(a) == 'B') {
+            crazypieces[3 + offset] += 1;
+        } else if(pieces.charAt(a) == 'R') {
+            crazypieces[4 + offset] += 1;
+        } else if(pieces.charAt(a) == 'Q') {
+            crazypieces[5 + offset] += 1;
+        }
+    }
+    }
+    
 void doFlip()// gameboard can call this and access the standard board
 {
 	flipSent(board);

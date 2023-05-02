@@ -1886,23 +1886,22 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         if(newdata.startsWith("Illegal move")) {
             return illegalMessage(newdata, mySettings);
         }
-        /*
+        
 
         if(newdata.startsWith("<b1>"))
         {
             // <b1> game 818 white [] black [PP]
             ArrayList<String> spaceArray = new ArrayList<>();
             seperateLine(newdata, spaceArray);
-            String number = "9999999";
+            String gameNumber = "9999999";
             if(spaceArray.size() > 6) {
-                number = spaceArray.get(2);
+                gameNumber = spaceArray.get(2);
             }
-            GameState openGame = getAnOpenGameState(false, number, mySettings);
-            if(openGame != null && openGame.gameNumber.equals(number)) {
-                openGame.setCrazyBoard(newdata + "\n");
-                return returnValue;
-            }
+            setCrazyBoard(newdata, gameNumber);
+            return returnValue;
         }
+        
+        /*
 
 
 
@@ -2011,7 +2010,9 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
         return returnValue;
 
     }
+
     
+
     void writeOutSays(String theTell, String theTell2) {
         try {
             channels sharedVariables = mySettings;
@@ -3038,6 +3039,15 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             }
         } catch(Exception badparse) {}       
     }
+    
+    void setCrazyBoard(String data, String number) {
+      // if(sharedVariables.mygame[Looking].crazypieces[piece]
+        newBoardData temp = new newBoardData();
+        temp.dg=233;
+        temp.arg1= number;
+        temp.arg2= data;
+        gamequeue.add(temp);
+    }
 /*
     String getGameListName()
     {
@@ -3452,6 +3462,8 @@ String myaway=sharedVariables.lanternAways.get(randomIndex);
             temp.arg4 = "27";
         } else if(wild.equals("losers")) {
             temp.arg4 = "17";
+        } else if(wild.equals("crazyhouse")) {
+            temp.arg4 = "23";
         } else if(wild.equals("suicide")) {
             temp.arg4 = "26";
         } else if(wild.equals("wild/fr")) {
