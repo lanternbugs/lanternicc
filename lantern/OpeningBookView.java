@@ -13,149 +13,158 @@ package lantern;
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  General Public License for more details.
  */
-import java.util.*;
-import java.awt.*;
-import java.awt.Window.*;
-import java.awt.event.*;
+
 import javax.swing.*;
-import javax.swing.JDialog;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
+import javax.swing.GroupLayout.ParallelGroup;
+import javax.swing.GroupLayout.SequentialGroup;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.StyledDocument;
+import java.awt.event.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import javax.swing.table.*;
-import javax.swing.table.TableRowSorter;
-import javax.swing.GroupLayout.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.swing.text.*;
 
 
-class OpeningBookView  extends JDialog
-{
-  Connection connection = null;
-  static String openingEco = "";
-  ArrayList<DatabaseAMove> moveListData;
-  JTable moveTable;
-  tableClass mymovetabledata  = new tableClass();
-  TableRowSorter<TableModel> sorter;
-  JScrollPane listScroller;
-  ConcurrentLinkedQueue<myoutput> queue;
-  JTextPane textPane = new JTextPane();
-  JButton backward = new JButton("<");
-  JButton forward = new JButton(">");
-  boolean oldBook = false;
+class OpeningBookView extends JDialog {
+    Connection connection = null;
+    static String openingEco = "";
+    ArrayList<DatabaseAMove> moveListData;
+    JTable moveTable;
+    tableClass mymovetabledata = new tableClass();
+    TableRowSorter<TableModel> sorter;
+    JScrollPane listScroller;
+    ConcurrentLinkedQueue<myoutput> queue;
+    JTextPane textPane = new JTextPane();
+    JButton backward = new JButton("<");
+    JButton forward = new JButton(">");
+    boolean oldBook = false;
 
-  public static int choice = 0;
-   private void copyInputStreamToFile( InputStream in, File file ) {
-    try {
-        OutputStream out = new FileOutputStream(file);
-        byte[] buf = new byte[1024];
-        int len;
-        while((len=in.read(buf))>0){
-            out.write(buf,0,len);
+    public static int choice = 0;
+
+    private void copyInputStreamToFile(InputStream in, File file) {
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        out.close();
-        in.close();
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
     OpeningBookView(JFrame frame, ConcurrentLinkedQueue<myoutput> queue1, boolean old) {
-      super(frame, "Opening Book", false);
-      setSize(275,200);
-       setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-       queue = queue1;
-       oldBook = old;
-       addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent we) {
+        super(frame, "Opening Book", false);
+        setSize(275, 200);
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        queue = queue1;
+        oldBook = old;
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
 
-         setVisible(false);
-    }
-});
+                setVisible(false);
+            }
+        });
 
-      mymovetabledata.createOpeningBookColumns();
-      moveListData = new ArrayList<DatabaseAMove>();
-      moveTable = new JTable();
-      moveTable = new JTable(mymovetabledata.gamedata);
-      moveTable.setShowVerticalLines(true);
-      moveTable.setShowHorizontalLines(true);
-      listScroller = new JScrollPane(moveTable);
-      OverallForBook mypane = new OverallForBook();
-      mypane.setLayout();
-      add(mypane);
-      addSorter();
-      MouseListener mouseListenerEvents = new MouseAdapter() {
-     public void mouseClicked(MouseEvent e) {
-         if (e.getClickCount() == 2 && e.getButton() != MouseEvent.BUTTON3) {
+        mymovetabledata.createOpeningBookColumns();
+        moveListData = new ArrayList<DatabaseAMove>();
+        moveTable = new JTable();
+        moveTable = new JTable(mymovetabledata.gamedata);
+        moveTable.setShowVerticalLines(true);
+        moveTable.setShowHorizontalLines(true);
+        listScroller = new JScrollPane(moveTable);
+        OverallForBook mypane = new OverallForBook();
+        mypane.setLayout();
+        add(mypane);
+        addSorter();
+        MouseListener mouseListenerEvents = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && e.getButton() != MouseEvent.BUTTON3) {
 
-             JTable target = (JTable)e.getSource();
-             int row = target.getSelectedRow();
-             row = sorter.convertRowIndexToModel(row);
-             //String move = (String)moveTable.getModel().getValueAt(row,0);
-             String move = getSubMove(moveListData.get(row).movefrom) + getSubMove(moveListData.get(row).moveto);
-             myoutput output = new myoutput();
-             output.data="`c0`" + "multi chessmove " + move + "\n";
-             if(channels.fics) {
-                 output.data=move + "\n";
-             }
-             output.consoleNumber=0;
-             queue.add(output);
-         }
-     }
-     };
-     backward.addMouseListener(new MouseAdapter() {
-          public void mousePressed(MouseEvent e) {
-             myoutput output = new myoutput();
-             output.data="`c0`" + "multi backward" + "\n";
-              if(channels.fics) {
-                  output.data="backward 1" + "\n";
-              }
-             output.consoleNumber=0;
-             queue.add(output);
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    row = sorter.convertRowIndexToModel(row);
+                    //String move = (String)moveTable.getModel().getValueAt(row,0);
+                    String move = getSubMove(moveListData.get(row).movefrom) + getSubMove(moveListData.get(row).moveto);
+                    myoutput output = new myoutput();
+                    output.data = "`c0`" + "multi chessmove " + move + "\n";
+                    if (channels.fics) {
+                        output.data = move + "\n";
+                    }
+                    output.consoleNumber = 0;
+                    queue.add(output);
+                }
+            }
+        };
+        backward.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                myoutput output = new myoutput();
+                output.data = "`c0`" + "multi backward" + "\n";
+                if (channels.fics) {
+                    output.data = "backward 1" + "\n";
+                }
+                output.consoleNumber = 0;
+                queue.add(output);
 
-          }
-          public void mouseReleased(MouseEvent e) {}
-          public void mouseEntered (MouseEvent me) {}
-          public void mouseExited (MouseEvent me) {}
-          public void mouseClicked (MouseEvent me) {}  });
-          
-     forward.addMouseListener(new MouseAdapter() {
-          public void mousePressed(MouseEvent e) {
-             myoutput output = new myoutput();
-             output.data="`c0`" + "multi forward" + "\n";
-              if(channels.fics) {
-                  output.data="forwarward 1" + "\n";
-              }
-             output.consoleNumber=0;
-             queue.add(output);
+            }
 
-          }
-          public void mouseReleased(MouseEvent e) {}
-          public void mouseEntered (MouseEvent me) {}
-          public void mouseExited (MouseEvent me) {}
-          public void mouseClicked (MouseEvent me) {}  });
-     moveTable.addMouseListener(mouseListenerEvents);
-     textPane.setEditable(false);
-     try {
-      StyledDocument doc = textPane.getStyledDocument();
-      String text = "Opening moves show when examining and in book.  Try Game menu / Examine or Examine my Last Game";
-      doc.insertString(doc.getLength(), text, null);
-     }
-     catch(Exception pane) {
+            public void mouseReleased(MouseEvent e) {
+            }
 
-     }
-     setItemsVisiblity();
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            public void mouseExited(MouseEvent me) {
+            }
+
+            public void mouseClicked(MouseEvent me) {
+            }
+        });
+
+        forward.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                myoutput output = new myoutput();
+                output.data = "`c0`" + "multi forward" + "\n";
+                if (channels.fics) {
+                    output.data = "forwarward 1" + "\n";
+                }
+                output.consoleNumber = 0;
+                queue.add(output);
+
+            }
+
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            public void mouseExited(MouseEvent me) {
+            }
+
+            public void mouseClicked(MouseEvent me) {
+            }
+        });
+        moveTable.addMouseListener(mouseListenerEvents);
+        textPane.setEditable(false);
+        try {
+            StyledDocument doc = textPane.getStyledDocument();
+            String text = "Opening moves show when examining and in book.  Try Game menu / Examine or Examine my Last Game";
+            doc.insertString(doc.getLength(), text, null);
+        } catch (Exception pane) {
+
+        }
+        setItemsVisiblity();
         // load the sqlite-JDBC driver using the current class loader
 
         try {
@@ -167,73 +176,67 @@ class OpeningBookView  extends JDialog
                  */
 
 
-            try
-            {
+            try {
                 // create a database connection
-                if(oldBook) {
-                  connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.oldOpeningBookName);
+                if (oldBook) {
+                    connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.oldOpeningBookName);
                 } else {
-                  //  Connection conn = DriverManager.getConnection(myUrl, "root", "");
-                connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.openingBookName);
+                    //  Connection conn = DriverManager.getConnection(myUrl, "root", "");
+                    connection = DriverManager.getConnection("jdbc:sqlite:" + channels.privateDirectory + channels.openingBookName);
                 }
 
-            }
-            catch(SQLException e)
-            {
+            } catch (SQLException e) {
                 // if the error message is "out of memory",
                 // it probably means no database file is found
                 System.err.println(e.getMessage());
             }
 
 
-
-        } catch(Exception nameerror) {
+        } catch (Exception nameerror) {
 
         }
 
     }
-    void closeDatabase()
-    {
 
-                try
-                {
-                    if(connection != null)
-                        connection.close();
-                }
-                catch(SQLException e)
-                {
-                    // connection close failed.
-                    System.err.println(e);
-                }
+    void closeDatabase() {
+
+        try {
+            if (connection != null)
+                connection.close();
+        } catch (SQLException e) {
+            // connection close failed.
+            System.err.println(e);
+        }
     }
+
     void setItemsVisiblity() {
-          if(gamestate.currentHash.toString().equals("-1")) {
-      backward.setVisible(false);
-      forward.setVisible(false);
-      listScroller.setVisible(false);
-      textPane.setVisible(true);
-     } else {
-      textPane.setVisible(false);
-      listScroller.setVisible(true);
-      backward.setVisible(true);
-      forward.setVisible(true);
-     }
+        if (gamestate.currentHash.toString().equals("-1")) {
+            backward.setVisible(false);
+            forward.setVisible(false);
+            listScroller.setVisible(false);
+            textPane.setVisible(true);
+        } else {
+            textPane.setVisible(false);
+            listScroller.setVisible(true);
+            backward.setVisible(true);
+            forward.setVisible(true);
+        }
     }
 
 
-    void update()
-    {          for(int s = moveListData.size() -1; s >=0; s--) {
-                  mymovetabledata.gamedata.removeRow(s);
-               }
-               moveListData.clear();
-               setItemsVisiblity();
-                if(gamestate.currentHash.toString().equals("-1")) {
-                  setTitle("Opening Book");
-                 return;
-                }
-                try {
-                   Statement statement = connection.createStatement();
-                statement.setQueryTimeout(30);  // set timeout to 30 sec.
+    void update() {
+        for (int s = moveListData.size() - 1; s >= 0; s--) {
+            mymovetabledata.gamedata.removeRow(s);
+        }
+        moveListData.clear();
+        setItemsVisiblity();
+        if (gamestate.currentHash.toString().equals("-1")) {
+            setTitle("Opening Book");
+            return;
+        }
+        try {
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
                /* statement.executeUpdate("drop table if exists person");
                 statement.executeUpdate("create table person (id integer, name string)");
@@ -241,269 +244,248 @@ class OpeningBookView  extends JDialog
                 statement.executeUpdate("insert into person values(2, 'yui')");
                */
 
-               /*(3 keys) 1421291105980716732 1421291105980716732 2628344263795677394
-               */
-               String key;
-               if(choice %3 == 0) {
-                  key = "1421291105980716732";
-               } else if(choice %3 == 1) {
-                  key = "1421291105980716732";
-               } else {
-                  key = "2628344263795677394";
-               }
-               choice++;
-               // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
-                ResultSet rs;
-                if(oldBook) 
-                {
-                if(gamestate.hashMoveTop %2 == 0) {
-                   rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+            /*(3 keys) 1421291105980716732 1421291105980716732 2628344263795677394
+             */
+            String key;
+            if (choice % 3 == 0) {
+                key = "1421291105980716732";
+            } else if (choice % 3 == 1) {
+                key = "1421291105980716732";
+            } else {
+                key = "2628344263795677394";
+            }
+            choice++;
+            // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
+            ResultSet rs;
+            if (oldBook) {
+                if (gamestate.hashMoveTop % 2 == 0) {
+                    rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC");
                 } else {
-                  rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
+                    rs = statement.executeQuery("select * from MOVE" + gamestate.currentHash.toString() + " ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC");
                 }
 
-                } // if oldbook
-                else {
-                  if(gamestate.hashMoveTop %2 == 0) {
-                     rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" +  gamestate.currentHash.toString()+ "'  ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
-                     } else {
-                     rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" +  gamestate.currentHash.toString()+ "'  ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC" );
-                     }
+            } // if oldbook
+            else {
+                if (gamestate.hashMoveTop % 2 == 0) {
+                    rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" + gamestate.currentHash.toString() + "'  ORDER BY CAST(WIN AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC");
+                } else {
+                    rs = statement.executeQuery("select * from bookmoves where hash = 'MOVE" + gamestate.currentHash.toString() + "'  ORDER BY CAST(LOSS AS INTEGER) DESC, CAST(DRAW AS INTEGER) DESC");
                 }
-                if(gamestate.hashMoveTop > 6 && openingEco.length() > 0)
-                    ;
-                else setTitle("Opening Book");
+            }
+            if (gamestate.hashMoveTop > 6 && openingEco.length() > 0)
+                ;
+            else setTitle("Opening Book");
 
-                while(rs.next())
-                {
-                    // read the result set
-                    //System.out.println("name = " + rs.getString("name"));
-                   // System.out.println("move is " + rs.getString("move"));
-                   // title = title + " " +  rs.getString("move");
-                   // System.out.println("id = " + rs.getInt("id"));
-                   Vector<String> data = new Vector();
-                   DatabaseAMove move = new DatabaseAMove();
-                   move.move = rs.getString("move");
-                   data.add(move.move);
-                   move.movefrom = rs.getInt( "movefrom");
-                   move.moveto = rs.getInt("moveto");
-                   if(gamestate.hashMoveTop %2 == 0) {
-                       move.win = rs.getInt("win");
-                   data.add("" + move.win);
-                   move.draw = rs.getInt("draw");
-                   data.add("" + move.draw);
-                   move.loss = rs.getInt("loss");
-                   data.add("" + move.loss);
-                   } else {
-                       move.win = rs.getInt("loss");
-                   data.add("" + move.win);
-                   move.draw = rs.getInt("draw");
-                   data.add("" + move.draw);
-                   move.loss = rs.getInt("win");
-                   data.add("" + move.loss);
-                   }
-                   float percentWin = 0;
-                    try {
-                        float denominator =  Float.parseFloat("" + move.win) +  Float.parseFloat("" + move.draw)  + Float.parseFloat("" + move.loss);
-                        float numerator = Float.parseFloat("" + move.win) + (Float.parseFloat("" + move.draw) * (float) .5);
-                        percentWin = numerator / denominator;
-                        
-                    } catch(Exception floating) {
-                        
-                    }
-                    
-                    data.add(String.format("%.2f", percentWin));
-                   mymovetabledata.gamedata.addRow(data);
-                   moveListData.add(move);
+            while (rs.next()) {
+                // read the result set
+                //System.out.println("name = " + rs.getString("name"));
+                // System.out.println("move is " + rs.getString("move"));
+                // title = title + " " +  rs.getString("move");
+                // System.out.println("id = " + rs.getInt("id"));
+                Vector<String> data = new Vector();
+                DatabaseAMove move = new DatabaseAMove();
+                move.move = rs.getString("move");
+                data.add(move.move);
+                move.movefrom = rs.getInt("movefrom");
+                move.moveto = rs.getInt("moveto");
+                if (gamestate.hashMoveTop % 2 == 0) {
+                    move.win = rs.getInt("win");
+                    data.add("" + move.win);
+                    move.draw = rs.getInt("draw");
+                    data.add("" + move.draw);
+                    move.loss = rs.getInt("loss");
+                    data.add("" + move.loss);
+                } else {
+                    move.win = rs.getInt("loss");
+                    data.add("" + move.win);
+                    move.draw = rs.getInt("draw");
+                    data.add("" + move.draw);
+                    move.loss = rs.getInt("win");
+                    data.add("" + move.loss);
                 }
+                float percentWin = 0;
+                try {
+                    float denominator = Float.parseFloat("" + move.win) + Float.parseFloat("" + move.draw) + Float.parseFloat("" + move.loss);
+                    float numerator = Float.parseFloat("" + move.win) + (Float.parseFloat("" + move.draw) * (float) .5);
+                    percentWin = numerator / denominator;
+
+                } catch (Exception floating) {
 
                 }
-                catch(SQLException e) {
-                  // System.err.println(e);
-                }
-               myoutput output = new myoutput();
-               output.data="`e0`" + "multi eco" + "\n";
-               
-               output.consoleNumber=0;
-        if(!channels.fics) {
+
+                data.add(String.format("%.2f", percentWin));
+                mymovetabledata.gamedata.addRow(data);
+                moveListData.add(move);
+            }
+
+        } catch (SQLException e) {
+            // System.err.println(e);
+        }
+        myoutput output = new myoutput();
+        output.data = "`e0`" + "multi eco" + "\n";
+
+        output.consoleNumber = 0;
+        if (!channels.fics) {
             queue.add(output);
         }
-               
 
 
     }
-    
-    void addSorter()
-    {
 
-      sorter =  new TableRowSorter<TableModel>(mymovetabledata.gamedata);
+    void addSorter() {
 
-     Comparator intComparator = new Comparator<String>()
-  {
-     @Override
-    public int compare(String arg0, String arg1)
-    {
-      try {
-           Integer val = Integer.parseInt(arg0) - Integer.parseInt(arg1);
-           return val.intValue();
+        sorter = new TableRowSorter<TableModel>(mymovetabledata.gamedata);
 
-      } catch(Exception dui) {
-      }
-      return 0;
-    }
-  };
-  Comparator floatComparator = new Comparator<String>()
-        {
+        Comparator intComparator = new Comparator<String>() {
             @Override
-            public int compare(String arg0, String arg1)
-            {
+            public int compare(String arg0, String arg1) {
+                try {
+                    Integer val = Integer.parseInt(arg0) - Integer.parseInt(arg1);
+                    return val.intValue();
+
+                } catch (Exception dui) {
+                }
+                return 0;
+            }
+        };
+        Comparator floatComparator = new Comparator<String>() {
+            @Override
+            public int compare(String arg0, String arg1) {
                 try {
                     float val = Float.parseFloat(arg0) - Float.parseFloat(arg1);
-                    if(val == 0) {
-                        
+                    if (val == 0) {
+
                         return 0;
-                    } else if(val > 0)
-                    {
+                    } else if (val > 0) {
                         return 1;
-                    }
-                    else
+                    } else
                         return -1;
-                    
-                } catch(Exception dui) {
+
+                } catch (Exception dui) {
                 }
                 return 0;
             }
         };
 
 
-  sorter.setComparator(1, intComparator);
-  sorter.setComparator(2, intComparator);
-  sorter.setComparator(3, intComparator);
-  sorter.setComparator(4, floatComparator);
+        sorter.setComparator(1, intComparator);
+        sorter.setComparator(2, intComparator);
+        sorter.setComparator(3, intComparator);
+        sorter.setComparator(4, floatComparator);
 
-  moveTable.setRowSorter(sorter);
+        moveTable.setRowSorter(sorter);
     }
-   class DatabaseAMove {
-    // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
-     int movefrom;
-     int moveto;
-     String move;
-     int win;
-     int loss;
-     int draw;
 
-     DatabaseAMove()
-     {
-         movefrom = 0;
-         moveto = 0;
-         move = "";
-         win = 0;
-         loss = 0;
-         draw = 0;
-     }
-   }
+    class DatabaseAMove {
+        // (MOVEFROM int, MOVETO int, MOVE TEXT, WIN int, LOSS int, DRAW int)
+        int movefrom;
+        int moveto;
+        String move;
+        int win;
+        int loss;
+        int draw;
 
-String getSubMove(int square)
-	{
+        DatabaseAMove() {
+            movefrom = 0;
+            moveto = 0;
+            move = "";
+            win = 0;
+            loss = 0;
+            draw = 0;
+        }
+    }
 
-		int col=0;
-		int row=0;
-		String value="";
-		square = 63 - square;
-		square++; // 1-64
-		int square2=65-square;
+    String getSubMove(int square) {
 
-		row=square%8;
-		//if(flipIt)
-		row=square2%8;
+        int col = 0;
+        int row = 0;
+        String value = "";
+        square = 63 - square;
+        square++; // 1-64
+        int square2 = 65 - square;
 
-		if(row == 1)
-		value = value + "a";
-		else if(row == 2)
-		value = value + "b";
-		else if(row == 3)
-		value = value + "c";
-		else if(row == 4)
-		value = value + "d";
-		else if(row == 5)
-		value = value + "e";
-		else if(row == 6)
-		value = value + "f";
-		else if(row == 7)
-		value = value + "g";
-		else if(row == 0)
-		value = value + "h";
+        row = square % 8;
+        //if(flipIt)
+        row = square2 % 8;
 
-		col=(int) square/8;
-		if(square %8 != 0)
-		col++;
+        if (row == 1)
+            value = value + "a";
+        else if (row == 2)
+            value = value + "b";
+        else if (row == 3)
+            value = value + "c";
+        else if (row == 4)
+            value = value + "d";
+        else if (row == 5)
+            value = value + "e";
+        else if (row == 6)
+            value = value + "f";
+        else if (row == 7)
+            value = value + "g";
+        else if (row == 0)
+            value = value + "h";
 
-	//	if(flipIt)// white on bottom doesnt work. black on bottom does
-	//	col=9-col;
+        col = (int) square / 8;
+        if (square % 8 != 0)
+            col++;
 
-		value = value + col;
+        //	if(flipIt)// white on bottom doesnt work. black on bottom does
+        //	col=9-col;
 
+        value = value + col;
 
 
+        return value;
+    }
+
+    class OverallForBook extends JPanel {
+
+        void setLayout() {
+            //mypane.add(listScroller);
+            GroupLayout layout = new GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+
+            //Create a parallel group for the horizontal axis
+            ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+            ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
 
 
-		return value;
-	}
-   
-   class OverallForBook extends JPanel
-{
-
-	void setLayout() {
-		//mypane.add(listScroller);
- GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-
-	//Create a parallel group for the horizontal axis
-	ParallelGroup hGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-	ParallelGroup h1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+            SequentialGroup hb = layout.createSequentialGroup();
+            hb.addComponent(backward, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+            hb.addComponent(forward, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
 
 
-
-       	SequentialGroup hb = layout.createSequentialGroup();
-       	hb.addComponent(backward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
-       	hb.addComponent(forward,  0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
-
+            h1.addComponent(listScroller);
+            h1.addComponent(textPane);
+            h1.addGroup(hb);
 
 
-       h1.addComponent(listScroller);
-       h1.addComponent(textPane);
-       h1.addGroup(hb);
+            hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
+            //Create the horizontal group
+            layout.setHorizontalGroup(hGroup);
 
 
+            //Create a parallel group for the vertical axis
+            ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
 
 
-	hGroup.addGroup(GroupLayout.Alignment.TRAILING, h1);// was trailing
-	//Create the horizontal group
-	layout.setHorizontalGroup(hGroup);
+            SequentialGroup v1 = layout.createSequentialGroup();
 
 
-	//Create a parallel group for the vertical axis
-	ParallelGroup vGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);// was leading
+            v1.addComponent(listScroller);
+            ParallelGroup vb = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
+            vb.addComponent(backward);
+            vb.addComponent(forward);
+            v1.addGroup(vb);
 
 
-SequentialGroup v1 = layout.createSequentialGroup();
+            vGroup.addGroup(v1);
+            vGroup.addComponent(textPane);
 
+            layout.setVerticalGroup(vGroup);
 
-
-		v1.addComponent(listScroller);
-		ParallelGroup vb = layout.createParallelGroup(GroupLayout.Alignment.LEADING, true);
-		vb.addComponent(backward);
-		vb.addComponent(forward);
-		v1.addGroup(vb);
-
-
-	vGroup.addGroup(v1);
-	vGroup.addComponent(textPane);
-
-	layout.setVerticalGroup(vGroup);
-
-}// end set layout
-}
+        }// end set layout
+    }
 }
 
 

@@ -1,16 +1,10 @@
 package lantern;
 // http://www.anyexample.com/programming/java/java_play_wav_sound_file.xml
 // not used currently
+
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AePlayWave extends Thread {
 
@@ -22,7 +16,9 @@ public class AePlayWave extends Thread {
 
     enum Position {
         LEFT, RIGHT, NORMAL
-    };
+    }
+
+    ;
 
     public AePlayWave(String wavfile) {
         filename = wavfile;
@@ -38,7 +34,7 @@ public class AePlayWave extends Thread {
 
         File soundFile = new File(filename);
         if (!soundFile.exists()) {
-          //  System.err.println("Wave file not found: " + filename);
+            //  System.err.println("Wave file not found: " + filename);
             return;
         }
 
@@ -46,10 +42,10 @@ public class AePlayWave extends Thread {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(soundFile);
         } catch (UnsupportedAudioFileException e1) {
-          //  e1.printStackTrace();
+            //  e1.printStackTrace();
             return;
         } catch (IOException e1) {
-          //  e1.printStackTrace();
+            //  e1.printStackTrace();
             return;
         }
 
@@ -61,10 +57,10 @@ public class AePlayWave extends Thread {
             auline = (SourceDataLine) AudioSystem.getLine(info);
             auline.open(format);
         } catch (LineUnavailableException e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
             return;
         } catch (Exception e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
             return;
         }
 
@@ -88,7 +84,7 @@ public class AePlayWave extends Thread {
                     auline.write(abData, 0, nBytesRead);
             }
         } catch (IOException e) {
-          //  e.printStackTrace();
+            //  e.printStackTrace();
             return;
         } finally {
             auline.drain();

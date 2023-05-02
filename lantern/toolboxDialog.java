@@ -1,285 +1,256 @@
 package lantern;
 /*
-*  Copyright (C) 2013 Michael Ronald Adams, Andrey Gorlin.
-*  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-*  This code is distributed in the hope that it will
-*  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-*  General Public License for more details.
-*/
+ *  Copyright (C) 2013 Michael Ronald Adams, Andrey Gorlin.
+ *  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ *  This code is distributed in the hope that it will
+ *  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ */
 
 // import java.awt.*;
 // import java.awt.event.*;
 // import javax.swing.*;
-import javax.swing.JDialog;
-// import java.io.*;
-// import java.net.*;
-// import java.lang.Thread.*;
-// import java.applet.*;
-// import javax.swing.GroupLayout.*;
-// import javax.swing.colorchooser.*;
-// import javax.swing.event.*;
-// import java.lang.Integer;
-// import javax.swing.text.*;
-// import java.awt.geom.*;
-// import java.awt.image.BufferedImage;
-// import java.applet.*;
-// import java.awt.event.*;
-// import java.awt.image.*;
-import javax.imageio.ImageIO;
-//import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.Timer;
-import java.util.TimerTask;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.event.*;
-import java.awt.event.*;
 
 import layout.TableLayout;
-//import java.io.DataInputStream;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
-
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Queue;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JFrame;
-import javax.swing.ListSelectionModel;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
-import javax.swing.JFileChooser;
-import java.applet.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**/
 public class toolboxDialog extends JDialog
-  implements ActionListener {
+        implements ActionListener {
 
-  private JList toolboxList;
-  private JScrollPane toolboxListScroller;
-  private Timer timer;
-  private SpinnerNumberModel smodel;
-  private DefaultListModel lmodel;
+    private JList toolboxList;
+    private JScrollPane toolboxListScroller;
+    private Timer timer;
+    private SpinnerNumberModel smodel;
+    private DefaultListModel lmodel;
 
-  private int count = 0;
-  private int conNumber = 0;
-  private String myprefix;
-  private double delay = 0;
-  private BufferedReader br;
+    private int count = 0;
+    private int conNumber = 0;
+    private String myprefix;
+    private double delay = 0;
+    private BufferedReader br;
 
-  private JLabel headerLabel;
-  private JTextField myprefixField;
-  private JComboBox myoutputTab;
-  private JSpinner mydelay;
-  private JButton loaderButton;
-  private JButton runButton;
+    private JLabel headerLabel;
+    private JTextField myprefixField;
+    private JComboBox myoutputTab;
+    private JSpinner mydelay;
+    private JButton loaderButton;
+    private JButton runButton;
 
-  private Queue<myoutput> queue;
-  private channels svars;
-  final private JFrame frame;
+    private Queue<myoutput> queue;
+    private channels svars;
+    final private JFrame frame;
 
-  public toolboxDialog(final JFrame frame, boolean mybool,
-                       Queue<myoutput> queue, channels svars) {
-    super(frame, mybool);
-    setTitle("Run a Script");
-    this.frame = frame;
-    this.queue = queue;
-    this.svars = svars;
-    setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
- addWindowListener(new WindowAdapter() {
-    public void windowClosing(WindowEvent we) {
+    public toolboxDialog(final JFrame frame, boolean mybool,
+                         Queue<myoutput> queue, channels svars) {
+        super(frame, mybool);
+        setTitle("Run a Script");
+        this.frame = frame;
+        this.queue = queue;
+        this.svars = svars;
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
 
-         setVisible(false);
-    }
-});
-    smodel = new SpinnerNumberModel(0, 0, 10, .1);
+                setVisible(false);
+            }
+        });
+        smodel = new SpinnerNumberModel(0, 0, 10, .1);
 
-    headerLabel = new JLabel("Scripts");
+        headerLabel = new JLabel("Scripts");
 
-    lmodel = svars.toolboxListData.model;
-    cleanScripts(lmodel);
+        lmodel = svars.toolboxListData.model;
+        cleanScripts(lmodel);
 
-    toolboxList = new JList(lmodel);
-    toolboxList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-    toolboxListScroller = new JScrollPane(toolboxList);
+        toolboxList = new JList(lmodel);
+        toolboxList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        toolboxListScroller = new JScrollPane(toolboxList);
 
-    myprefixField = new JTextField(20);
-    mydelay = new JSpinner(smodel);
+        myprefixField = new JTextField(20);
+        mydelay = new JSpinner(smodel);
 
-    int mct = svars.maxConsoleTabs;
-    Integer[] outputTab = new Integer[mct];
-    for (int i=0; i<mct; i++) outputTab[i] = i;
-    myoutputTab = new JComboBox(outputTab);
+        int mct = svars.maxConsoleTabs;
+        Integer[] outputTab = new Integer[mct];
+        for (int i = 0; i < mct; i++) outputTab[i] = i;
+        myoutputTab = new JComboBox(outputTab);
 
-    loaderButton = new JButton("Load");
-    loaderButton.setActionCommand("load");
-    loaderButton.addActionListener(this);
+        loaderButton = new JButton("Load");
+        loaderButton.setActionCommand("load");
+        loaderButton.addActionListener(this);
 
-    runButton = new JButton("Run");
-    runButton.setActionCommand("run");
-    runButton.addActionListener(this);
+        runButton = new JButton("Run");
+        runButton.setActionCommand("run");
+        runButton.addActionListener(this);
 
-    JPanel buttons = new JPanel();
-    buttons.add(loaderButton);
-    buttons.add(runButton);
+        JPanel buttons = new JPanel();
+        buttons.add(loaderButton);
+        buttons.add(runButton);
 
-    int border = 10;
-    int space = 5;
-    int ht = 20;
+        int border = 10;
+        int space = 5;
+        int ht = 20;
 
-    double[][] size = {{border, TableLayout.FILL, 80, 40, 80, 40, border},
-                       {border, ht, TableLayout.FILL, space, ht, ht,
+        double[][] size = {{border, TableLayout.FILL, 80, 40, 80, 40, border},
+                {border, ht, TableLayout.FILL, space, ht, ht,
                         space, ht, space, 30, border}};
 
-    setLayout(new TableLayout(size));
+        setLayout(new TableLayout(size));
 
-    add(headerLabel, "1, 1, 5, 1");
-    add(toolboxListScroller, "1, 2, 5, 2");
-    JLabel myprefixLabel = new JLabel("Optional prefix (for *.b2a files)");
-    add(myprefixLabel, "1, 4, 5, 4");
-    add(myprefixField, "1, 5, 5, 5");
-    JLabel mydelayLabel = new JLabel("Delay");
-    add(mydelayLabel, "2, 7, r, f");
-    add(mydelay, "3, 7");
-    JLabel myoutputTabLabel = new JLabel("Output tab");
-    add(myoutputTabLabel, "4, 7, r, f");
-    add(myoutputTab, "5, 7");
-    add(buttons, "1, 9, 5, 9");
+        add(headerLabel, "1, 1, 5, 1");
+        add(toolboxListScroller, "1, 2, 5, 2");
+        JLabel myprefixLabel = new JLabel("Optional prefix (for *.b2a files)");
+        add(myprefixLabel, "1, 4, 5, 4");
+        add(myprefixField, "1, 5, 5, 5");
+        JLabel mydelayLabel = new JLabel("Delay");
+        add(mydelayLabel, "2, 7, r, f");
+        add(mydelay, "3, 7");
+        JLabel myoutputTabLabel = new JLabel("Output tab");
+        add(myoutputTabLabel, "4, 7, r, f");
+        add(myoutputTab, "5, 7");
+        add(buttons, "1, 9, 5, 9");
 
-    if (toolboxList.isSelectionEmpty())
-      runButton.setEnabled(false);
-    else  toolboxList.setSelectedIndex(0);
+        if (toolboxList.isSelectionEmpty())
+            runButton.setEnabled(false);
+        else toolboxList.setSelectedIndex(0);
 
-    setSize(350,250);
-    setLocation(200,250);
-  }
-
-  private void cleanScripts(DefaultListModel lm) {
-    if (lm.isEmpty()) return;
-    String scripts = (String)lm.firstElement();
-    if (scripts.equals("Scripts"))
-      lm.removeElementAt(0);
-  }
-
-  public void actionPerformed(ActionEvent e) {
-    String action = e.getActionCommand();
-    if (action.equals("load")) {
-      try {
-        JFileChooser fc = new JFileChooser();
-        if(channels.macClient) {
-            fc.setCurrentDirectory(new File(channels.publicDirectory));
-        } else {
-            fc.setCurrentDirectory(new File("."));
-        }
-        fc.setFileFilter(new FileFilter() {
-            public boolean accept(File f) {
-              String fname = f.getName().toLowerCase();
-              return (fname.endsWith(".b2s") || fname.endsWith(".b2a") ||
-                      f.isDirectory());
-            }
-
-            public String getDescription() {
-              return "Scripter Files (*.b2s, *.b2a)";
-            }
-          });
-
-        int returnVal = fc.showOpenDialog(frame);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-          File scriptFile = fc.getSelectedFile();
-          String fname = scriptFile.getName().toLowerCase();
-          if (!fname.endsWith(".b2s") && !fname.endsWith(".b2a"))
-            return;
-
-          String myFilename = scriptFile.getAbsolutePath();
-          lmodel.addElement(myFilename);
-
-          runButton.setEnabled(true);
-          toolboxList.setSelectedIndex(lmodel.getSize()-1);
-        }// end if
-      // end try
-      } catch (Exception d) {}
-
-    } else if (action.equals("run")) {
-      String filename = (String)toolboxList.getSelectedValue();
-      if (filename == null) return;
-
-      delay = (Double)mydelay.getValue();
-
-      conNumber = (Integer)myoutputTab.getSelectedItem();
-
-      if (filename.toLowerCase().endsWith(".b2a")) {
-        myprefix = myprefixField.getText() + " ";
-      } else {
-        myprefix = "";
-      }
-
-      try {
-        FileInputStream fstream = new FileInputStream(filename);
-        // Get the object of DataInputStream
-        br = new BufferedReader(new InputStreamReader(fstream));
-        String strLine;
-        //Read File Line By Line
-        if (delay == 0) {
-
-          while ((strLine = br.readLine()) != null) {
-            runCommand(strLine, myprefix);
-          }
-
-          br.close();
-
-        } else {
-          timer = new Timer();
-          timer.schedule(new ToDoTask(), (int)(delay * 1000));
-        }
-        //Close the input stream
-
-      } catch (Exception ex) {//Catch exception if any
-        // do nothing
-      }
+        setSize(350, 250);
+        setLocation(200, 250);
     }
-  }
 
-  private void runCommand(String command, String prefix) {
-    myoutput output = new myoutput();
-    output.data= "`c" + conNumber + "`" + prefix + command + "\n";
-      if(channels.fics) {
-          output.data=  prefix + command + "\n";
-      }
-    output.consoleNumber = conNumber;
-    queue.add(output);
-  }
+    private void cleanScripts(DefaultListModel lm) {
+        if (lm.isEmpty()) return;
+        String scripts = (String) lm.firstElement();
+        if (scripts.equals("Scripts"))
+            lm.removeElementAt(0);
+    }
 
-  private class ToDoTask extends TimerTask {
+    public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
+        if (action.equals("load")) {
+            try {
+                JFileChooser fc = new JFileChooser();
+                if (channels.macClient) {
+                    fc.setCurrentDirectory(new File(channels.publicDirectory));
+                } else {
+                    fc.setCurrentDirectory(new File("."));
+                }
+                fc.setFileFilter(new FileFilter() {
+                    public boolean accept(File f) {
+                        String fname = f.getName().toLowerCase();
+                        return (fname.endsWith(".b2s") || fname.endsWith(".b2a") ||
+                                f.isDirectory());
+                    }
 
-    public void run () {
-      String strLine;
-      try {
-        if ((strLine = br.readLine()) != null) {
-          runCommand(strLine, myprefix);
-          timer.schedule(new ToDoTask(), (int)(delay * 1000));
+                    public String getDescription() {
+                        return "Scripter Files (*.b2s, *.b2a)";
+                    }
+                });
 
-        } else {
-	  br.close();
+                int returnVal = fc.showOpenDialog(frame);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File scriptFile = fc.getSelectedFile();
+                    String fname = scriptFile.getName().toLowerCase();
+                    if (!fname.endsWith(".b2s") && !fname.endsWith(".b2a"))
+                        return;
+
+                    String myFilename = scriptFile.getAbsolutePath();
+                    lmodel.addElement(myFilename);
+
+                    runButton.setEnabled(true);
+                    toolboxList.setSelectedIndex(lmodel.getSize() - 1);
+                }// end if
+                // end try
+            } catch (Exception d) {
+            }
+
+        } else if (action.equals("run")) {
+            String filename = (String) toolboxList.getSelectedValue();
+            if (filename == null) return;
+
+            delay = (Double) mydelay.getValue();
+
+            conNumber = (Integer) myoutputTab.getSelectedItem();
+
+            if (filename.toLowerCase().endsWith(".b2a")) {
+                myprefix = myprefixField.getText() + " ";
+            } else {
+                myprefix = "";
+            }
+
+            try {
+                FileInputStream fstream = new FileInputStream(filename);
+                // Get the object of DataInputStream
+                br = new BufferedReader(new InputStreamReader(fstream));
+                String strLine;
+                //Read File Line By Line
+                if (delay == 0) {
+
+                    while ((strLine = br.readLine()) != null) {
+                        runCommand(strLine, myprefix);
+                    }
+
+                    br.close();
+
+                } else {
+                    timer = new Timer();
+                    timer.schedule(new ToDoTask(), (int) (delay * 1000));
+                }
+                //Close the input stream
+
+            } catch (Exception ex) {//Catch exception if any
+                // do nothing
+            }
         }
-      } catch (Exception d) {}
-    }// end run
+    }
 
-  }// end class
+    private void runCommand(String command, String prefix) {
+        myoutput output = new myoutput();
+        output.data = "`c" + conNumber + "`" + prefix + command + "\n";
+        if (channels.fics) {
+            output.data = prefix + command + "\n";
+        }
+        output.consoleNumber = conNumber;
+        queue.add(output);
+    }
+
+    private class ToDoTask extends TimerTask {
+
+        public void run() {
+            String strLine;
+            try {
+                if ((strLine = br.readLine()) != null) {
+                    runCommand(strLine, myprefix);
+                    timer.schedule(new ToDoTask(), (int) (delay * 1000));
+
+                } else {
+                    br.close();
+                }
+            } catch (Exception d) {
+            }
+        }// end run
+
+    }// end class
 
 
 }

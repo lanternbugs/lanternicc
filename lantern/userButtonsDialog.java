@@ -1,91 +1,87 @@
 package lantern;
 /*
-*  Copyright (C) 2010 Michael Ronald Adams.
-*  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-*  This code is distributed in the hope that it will
-*  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-*  General Public License for more details.
-*/
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+ *  Copyright (C) 2010 Michael Ronald Adams.
+ *  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ *  This code is distributed in the hope that it will
+ *  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ */
 
 import layout.TableLayout;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**/
 class userButtonsDialog extends JDialog implements ActionListener {
 
-  channels sVars;
-  JTextField[] mypanes;
+    channels sVars;
+    JTextField[] mypanes;
 
-  userButtonsDialog(JFrame myframe, channels sVars) {
-    super(myframe, "Customize User Buttons", false);
-    this.sVars = sVars;
+    userButtonsDialog(JFrame myframe, channels sVars) {
+        super(myframe, "Customize User Buttons", false);
+        this.sVars = sVars;
 
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    mypanes = new JTextField[10];
+        mypanes = new JTextField[10];
 
-    JButton ok = new JButton("OK");
-    ok.setActionCommand("Submit");
-    ok.addActionListener(this);
+        JButton ok = new JButton("OK");
+        ok.setActionCommand("Submit");
+        ok.addActionListener(this);
 
-    JButton cancel = new JButton("Cancel");
-    cancel.setActionCommand("Cancel");
-    cancel.addActionListener(this);
+        JButton cancel = new JButton("Cancel");
+        cancel.setActionCommand("Cancel");
+        cancel.addActionListener(this);
 
-    JPanel buttons = new JPanel();
-    buttons.add(ok);
-    buttons.add(cancel);
+        JPanel buttons = new JPanel();
+        buttons.add(ok);
+        buttons.add(cancel);
 
-    int ht = 20;
-    int border = 10;
-    int space = 5;
+        int ht = 20;
+        int border = 10;
+        int space = 5;
 
-    double[][] size = {{border, 10, TableLayout.FILL, border},
-                       {border, 30, space, ht, space, ht, space, ht, space,
+        double[][] size = {{border, 10, TableLayout.FILL, border},
+                {border, 30, space, ht, space, ht, space, ht, space,
                         ht, space, ht, space, ht, space, ht, space, ht, space,
                         ht, space, ht, TableLayout.FILL, border}};
 
-    setLayout(new TableLayout(size));
+        setLayout(new TableLayout(size));
 
-    JLabel mytext =
-      new JLabel("<html>Enter custom commands and use Ctrl-# to activate.</html>");
-    add(mytext, "1, 1, 2, 1");
+        JLabel mytext =
+                new JLabel("<html>Enter custom commands and use Ctrl-# to activate.</html>");
+        add(mytext, "1, 1, 2, 1");
 
-    for (int i=0; i<10; i++) {
-      int j = 2*(i==0 ? 10 : i) + 1;
-      mypanes[i] = new JTextField(20);
-      mypanes[i].setText(sVars.userButtonCommands[i]);
-      mypanes[i].setActionCommand("Submit");
-      mypanes[i].addActionListener(this);
-      add(new JLabel(""+i), "1, "+j);
-      add(mypanes[i], "2, "+j);
+        for (int i = 0; i < 10; i++) {
+            int j = 2 * (i == 0 ? 10 : i) + 1;
+            mypanes[i] = new JTextField(20);
+            mypanes[i].setText(sVars.userButtonCommands[i]);
+            mypanes[i].setActionCommand("Submit");
+            mypanes[i].addActionListener(this);
+            add(new JLabel("" + i), "1, " + j);
+            add(mypanes[i], "2, " + j);
+        }
+
+        add(buttons, "1, 22, 2, 22");
     }
 
-    add(buttons, "1, 22, 2, 22");
-  }
-
-  public void actionPerformed(ActionEvent e) {
-    String action = e.getActionCommand();
-    if (action.equals("Cancel")) dispose();
-    if (action.equals("Submit")) {
-      for (int i=0; i<10; i++) {
-        String bcommand = mypanes[i].getText();
-        sVars.userButtonCommands[i] = bcommand;
-        //String buttontitle = "" + i;
+    public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
+        if (action.equals("Cancel")) dispose();
+        if (action.equals("Submit")) {
+            for (int i = 0; i < 10; i++) {
+                String bcommand = mypanes[i].getText();
+                sVars.userButtonCommands[i] = bcommand;
+                //String buttontitle = "" + i;
         /*if (!bcommand.equals("") && sVars.showButtonTitle) {
           buttontitle += " - ";
           if (bcommand.length() > 11)
@@ -93,11 +89,11 @@ class userButtonsDialog extends JDialog implements ActionListener {
           else
             buttontitle += bcommand;
         }*/
-        //sVars.mybuttons[i].setText(buttontitle);
-      }
-      dispose();
+                //sVars.mybuttons[i].setText(buttontitle);
+            }
+            dispose();
+        }
     }
-  }
 }
 
 /*/
