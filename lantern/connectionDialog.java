@@ -1,184 +1,177 @@
 package lantern;
 /*
-*  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
-*  All rights reserved.
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-*  This code is distributed in the hope that it will
-*  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-*  General Public License for more details.
-*/
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.text.Document;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import java.util.Queue;
+ *  Copyright (C) 2012 Michael Ronald Adams, Andrey Gorlin.
+ *  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ *  This code is distributed in the hope that it will
+ *  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ */
 
 import layout.TableLayout;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Queue;
+
 public class connectionDialog extends JDialog
-  implements ActionListener, DocumentListener {
+        implements ActionListener, DocumentListener {
 
-  private JTextField nameField;
-  private JPasswordField pwdField;
-  private JCheckBox saveNP;
-  private JButton ok;
-  private channels sVars;
-  private credentials creds;
-  private Queue<myoutput> queue;
-  private channels sharedVariables;
+    private JTextField nameField;
+    private JPasswordField pwdField;
+    private JCheckBox saveNP;
+    private JButton ok;
+    private channels sVars;
+    private credentials creds;
+    private Queue<myoutput> queue;
+    private channels sharedVariables;
 
-  public connectionDialog(JFrame frame, channels sVars,
-                          Queue<myoutput> queue, boolean mybool) {
-      super(frame, "Connect to ICC", mybool);
-      if(channels.fics) {
-          setTitle("Connect to FICS");
-      }
+    public connectionDialog(JFrame frame, channels sVars,
+                            Queue<myoutput> queue, boolean mybool) {
+        super(frame, "Connect to ICC", mybool);
+        if (channels.fics) {
+            setTitle("Connect to FICS");
+        }
 
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    this.queue = queue;
-    this.sVars = sVars;
-    creds = new credentials();
+        this.queue = queue;
+        this.sVars = sVars;
+        creds = new credentials();
 
-    saveNP = new JCheckBox("Save password", sVars.saveNamePass);
+        saveNP = new JCheckBox("Save password", sVars.saveNamePass);
 
-    nameField = new JTextField(20);
-    if (!sVars.myname.equals("") && !sVars.myname.startsWith("guest"))
-      nameField.setText(sVars.myname);
-    nameField.setActionCommand("Submit");
-    nameField.addActionListener(this);
-    
-    pwdField = new JPasswordField(20);
-    pwdField.setActionCommand("Submit");
-    pwdField.addActionListener(this);
+        nameField = new JTextField(20);
+        if (!sVars.myname.equals("") && !sVars.myname.startsWith("guest"))
+            nameField.setText(sVars.myname);
+        nameField.setActionCommand("Submit");
+        nameField.addActionListener(this);
 
-    if (sVars.saveNamePass) {
-      nameField.setText(creds.getName());
-      pwdField.setText(creds.getPass());
-    }
-    
-    nameField.getDocument().addDocumentListener(this);
-    pwdField.getDocument().addDocumentListener(this);
-    
-    ok = new JButton("OK");
-    ok.setActionCommand("Submit");
-    ok.addActionListener(this);
-    // the button is disabled while the name or password is blank,
-    // unless the user is trying to log in as a guest ('g' or 'guest',
-    // lowercase only for now)
-      
-    JButton cancel = new JButton("Sign-Up");
-    cancel.setActionCommand("Sign-Up");
-    cancel.addActionListener(this);
-      
-    JButton guest = new JButton("Guest");
-    guest.setActionCommand("Guest");
-    guest.addActionListener(this);
+        pwdField = new JPasswordField(20);
+        pwdField.setActionCommand("Submit");
+        pwdField.addActionListener(this);
 
-    JPanel buttons = new JPanel();
-    buttons.add(ok);
-    buttons.add(guest);
-    buttons.add(cancel);
-     
+        if (sVars.saveNamePass) {
+            nameField.setText(creds.getName());
+            pwdField.setText(creds.getPass());
+        }
 
-    int ht = 20;
-    double border = 10;
-    int space = 5;
+        nameField.getDocument().addDocumentListener(this);
+        pwdField.getDocument().addDocumentListener(this);
 
-    double[][] size = {{border, 70, TableLayout.FILL, border},
-                       {border, ht, space, ht, space, ht,
+        ok = new JButton("OK");
+        ok.setActionCommand("Submit");
+        ok.addActionListener(this);
+        // the button is disabled while the name or password is blank,
+        // unless the user is trying to log in as a guest ('g' or 'guest',
+        // lowercase only for now)
+
+        JButton cancel = new JButton("Sign-Up");
+        cancel.setActionCommand("Sign-Up");
+        cancel.addActionListener(this);
+
+        JButton guest = new JButton("Guest");
+        guest.setActionCommand("Guest");
+        guest.addActionListener(this);
+
+        JPanel buttons = new JPanel();
+        buttons.add(ok);
+        buttons.add(guest);
+        buttons.add(cancel);
+
+
+        int ht = 20;
+        double border = 10;
+        int space = 5;
+
+        double[][] size = {{border, 70, TableLayout.FILL, border},
+                {border, ht, space, ht, space, ht,
                         space, TableLayout.FILL, 40}};
 
-    setLayout(new TableLayout(size));
+        setLayout(new TableLayout(size));
 
-    add(new JLabel("User Name"), "1, 1");
-    add(nameField, "2, 1");
-    add(new JLabel("Password"), "1, 3");
-    add(pwdField, "2, 3");
-    add(saveNP, "2, 5");
-    add(buttons, "1, 8, 3, 8");
+        add(new JLabel("User Name"), "1, 1");
+        add(nameField, "2, 1");
+        add(new JLabel("Password"), "1, 3");
+        add(pwdField, "2, 3");
+        add(saveNP, "2, 5");
+        add(buttons, "1, 8, 3, 8");
 
-    updateOK();
+        updateOK();
 
-    setSize(300, 200);
-  }
-
-  public void actionPerformed(ActionEvent e) {
-    String action = e.getActionCommand();
-    if (action.equals("Submit") && ok.isEnabled()) login(false);
-    if (action.equals("Sign-Up")) sVars.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
-      if (action.equals("Guest")) login(true);
-  }
-
-  public void changedUpdate(DocumentEvent e) {
-    updateOK();
-  }
-
-  public void insertUpdate(DocumentEvent e) {
-    updateOK();
-  }
-
-  public void removeUpdate(DocumentEvent e) {
-    updateOK();
-  }
-
-  private void updateOK() {
-    String name = nameField.getText();
-    String pwd = pwdField.getText();
-    if (name.equals("g") || name.equals("guest"))
-      ok.setEnabled(pwd.equals(""));
-    else ok.setEnabled(!name.equals("") && !pwd.equals(""));
-  }
-
-  public void login(boolean guest) {
-    String user = nameField.getText();
-    
-    if (user.startsWith("~")) {
-      user = user.substring(1);
-      sVars.myServer = "FICS";
-      sVars.doreconnect = true;
+        setSize(300, 200);
     }
 
-    String pwd = pwdField.getText();
-    if(guest) {
-          user = "guest";
-          pwd = "";
+    public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
+        if (action.equals("Submit") && ok.isEnabled()) login(false);
+        if (action.equals("Sign-Up"))
+            sVars.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
+        if (action.equals("Guest")) login(true);
     }
-    myoutput data1 = new myoutput();
-    data1.data = user + "\n";
-    
-    myoutput data2 = new myoutput();
-    data2.data = pwd + "\n";
-    sVars.mypassword= pwd;
-    queue.add(data1);
-    queue.add(data2);
-      sVars.saveNamePass = saveNP.isSelected();
-      if(!guest) {
-          if (sVars.saveNamePass)
-              creds.saveNamePass(user, pwd);
-          else creds.resetNamePass();
-      } else if (!sVars.saveNamePass)
-          creds.resetNamePass();
-    
-    
-    dispose();
-  }
+
+    public void changedUpdate(DocumentEvent e) {
+        updateOK();
+    }
+
+    public void insertUpdate(DocumentEvent e) {
+        updateOK();
+    }
+
+    public void removeUpdate(DocumentEvent e) {
+        updateOK();
+    }
+
+    private void updateOK() {
+        String name = nameField.getText();
+        String pwd = pwdField.getText();
+        if (name.equals("g") || name.equals("guest"))
+            ok.setEnabled(pwd.equals(""));
+        else ok.setEnabled(!name.equals("") && !pwd.equals(""));
+    }
+
+    public void login(boolean guest) {
+        String user = nameField.getText();
+
+        if (user.startsWith("~")) {
+            user = user.substring(1);
+            sVars.myServer = "FICS";
+            sVars.doreconnect = true;
+        }
+
+        String pwd = pwdField.getText();
+        if (guest) {
+            user = "guest";
+            pwd = "";
+        }
+        myoutput data1 = new myoutput();
+        data1.data = user + "\n";
+
+        myoutput data2 = new myoutput();
+        data2.data = pwd + "\n";
+        sVars.mypassword = pwd;
+        queue.add(data1);
+        queue.add(data2);
+        sVars.saveNamePass = saveNP.isSelected();
+        if (!guest) {
+            if (sVars.saveNamePass)
+                creds.saveNamePass(user, pwd);
+            else creds.resetNamePass();
+        } else if (!sVars.saveNamePass)
+            creds.resetNamePass();
+
+
+        dispose();
+    }
 }
 /*
 class connectionDialog extends JDialog {
