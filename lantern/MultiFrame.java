@@ -3913,6 +3913,9 @@ dot.setVisible(true);
                 actionmess = "$withdraw t match\n";
 
             }
+            if (action.equals("My Profile and Ratings") && channels.fics) {
+                actionmess = sharedVariables.addHashWrapperToLookupUser(actionmess);
+            }
             if (!channels.fics && !actionmess.startsWith("`"))
                 actionmess = "`c0`" + actionmess;
 
