@@ -1457,7 +1457,12 @@ public class DataParsing {
                 }
 
                 // [self sendToFICS:@"set prompt fics%" :soc];
-                sendToFICS("$set interface Pearl Chess on FICS " + mySettings.version);
+                String OS = "Linux";
+                if (mySettings.operatingSystem.equals("mac"))
+                    OS = "Mac";
+                else if (mySettings.operatingSystem.equals("win"))
+                    OS = "Windows";
+                sendToFICS("$set interface Pearl Chess on FICS " + mySettings.version + " for " + OS);
 
                 sendToFICS("$set prompt");
                 sendToFICS("$set style 12");
