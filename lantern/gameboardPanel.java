@@ -205,8 +205,11 @@ class gameboardPanel extends JPanel implements MouseMotionListener, MouseListene
         }
 
         if (sharedVariables.drawCoordinates == true) {
-            coordinateX = (int) ((double) squarex * .05);
-            coordinateY = (int) ((double) squarey * .05);
+            double factor = .05;
+            if(height < 500) { factor = .065; }
+            else if(height < 400) { factor = .08; }
+            coordinateX = (int) ((double) squarex * factor);
+            coordinateY = (int) ((double) squarey * factor);
             int offset = (int) (coordinateX * .7);
 
             coordinateX = coordinateX * 8;
