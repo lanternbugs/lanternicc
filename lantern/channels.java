@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class channels {
-    static boolean fics = true;
+    static boolean fics = false;
     /* Build Steps for a fics/Pearl versus icc/lantern build http://www.pearlchess.com http://www.lanternchess.com for jars
      
      1) Lantern.java is renamed Pearl.java for fics // reverse for icc
