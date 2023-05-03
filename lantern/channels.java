@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class channels {
-    static boolean fics = false;
+    static boolean fics = true;
     /* Build Steps for a fics/Pearl versus icc/lantern build http://www.pearlchess.com http://www.lanternchess.com for jars
      
      1) Lantern.java is renamed Pearl.java for fics // reverse for icc
@@ -1126,7 +1126,10 @@ dot.setVisible(true);
             return mes;
         }
 
-        if (mes.toLowerCase().startsWith("history ") || mes.toLowerCase().startsWith("histor ") || mes.toLowerCase().startsWith("histo ") || mes.toLowerCase().startsWith("hist ") || mes.toLowerCase().startsWith("his ") || mes.toLowerCase().startsWith("hi ")) {
+        if (mes.toLowerCase().startsWith("history") || mes.toLowerCase().startsWith("histor") || mes.toLowerCase().startsWith("histo") || mes.toLowerCase().startsWith("hist") || mes.toLowerCase().startsWith("his") || mes.toLowerCase().startsWith("hi")) {
+            return mes;
+        }
+        if (mes.toLowerCase().startsWith("journal") || mes.toLowerCase().startsWith("journa") || mes.toLowerCase().startsWith("journ") || mes.toLowerCase().startsWith("jour") || mes.toLowerCase().startsWith("jou") || mes.toLowerCase().startsWith("jo")) {
             return mes;
         }
         String open = "$tell " + whoAmI + " " + HashTellData.userHashKey + " open c " + number + "\n";
