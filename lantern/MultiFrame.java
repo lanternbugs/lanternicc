@@ -6112,6 +6112,35 @@ dot.setVisible(true);
                 public void mouseClicked(MouseEvent me) {
                 }
             });
+            
+            JLabel ficsWatch = new JLabel("  Watch Game  ");
+            ficsWatch.setForeground(Color.black);
+            ficsWatch.setBackground(new Color(220, 220, 220));
+            ficsWatch.setOpaque(true);
+            
+            ficsWatch.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON3/* || e.getClickCount() == 2*/)
+                        ;
+                    else {
+                        myoutput output = new myoutput();
+                        output.data = "$Observe *\n";
+                        queue.add(output);
+                    }// end else
+                }
+
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                public void mouseEntered(MouseEvent me) {
+                }
+
+                public void mouseExited(MouseEvent me) {
+                }
+
+                public void mouseClicked(MouseEvent me) {
+                }
+            });
             GroupLayout layout = new GroupLayout(toolBar);
             SequentialGroup hgroup = layout.createSequentialGroup();
             for (int a = 1; a < 10; a++)
@@ -6154,6 +6183,8 @@ dot.setVisible(true);
                 hgroup.addComponent(rematchLabel);
                 hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
                 hgroup.addComponent(ficsActivites);
+                hgroup.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED);
+                hgroup.addComponent(ficsWatch);
             }
 
 
@@ -6183,6 +6214,7 @@ dot.setVisible(true);
             } else {
                 vgroup.addComponent(ficsActivites);
                 vgroup.addComponent(rematchLabel);
+                vgroup.addComponent(ficsWatch);
             }
 
             layout.setVerticalGroup(vgroup);
