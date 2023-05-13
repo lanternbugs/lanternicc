@@ -1613,68 +1613,75 @@ menu2.add(item3);
     }
 
 
-    void writeTypedText(String mes) {
+    void writeTypedText(final String mes) {
 
-        try {
-            StyledDocument doc;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    StyledDocument doc;
 
-            if (sharedVariables.pointedToMain[gameData.BoardIndex] == false)
-                doc = sharedVariables.mygamedocs[gameData.LookingAt];
-            else
-                doc = sharedVariables.mydocs[mainConsoleIndex]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
+                    if (sharedVariables.pointedToMain[gameData.BoardIndex] == false)
+                        doc = sharedVariables.mygamedocs[gameData.LookingAt];
+                    else
+                        doc = sharedVariables.mydocs[mainConsoleIndex]; // LookingAt always stays on game even if they click main tab so we use this variable , pointedatmain to see if we really want main document
 
-            //doc.insertString(doc.getLength(), mes, null);
-
-
-
-					/*	if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
-						{
-							for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
-							if(sharedVariables.gamelooking[gameData.BoardIndex]==sharedVariables.gamelooking[a])
-					*/
-            if (sharedVariables.pointedToMain[gameData.LookingAt] == false) {
+                    //doc.insertString(doc.getLength(), mes, null);
 
 
-                SimpleAttributeSet attrs = new SimpleAttributeSet();
 
-                if (sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
-                    StyleConstants.setItalic(attrs, true);
-                if (sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
-                    StyleConstants.setBold(attrs, true);
-
-
-                StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-                int GAME_CONSOLES = 1;// game
-                int maxLinks = 75;
-                myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, GAME_CONSOLES, attrs, null);
+                            /*    if(sharedVariables.pointedToMain[gameData.BoardIndex] == false)
+                                {
+                                    for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
+                                    if(sharedVariables.gamelooking[gameData.BoardIndex]==sharedVariables.gamelooking[a])
+                            */
+                    if (sharedVariables.pointedToMain[gameData.LookingAt] == false) {
 
 
-                //gameconsoles[a].setStyledDocument(doc);
+                        SimpleAttributeSet attrs = new SimpleAttributeSet();
+
+                        if (sharedVariables.typedStyle == 1 || sharedVariables.typedStyle == 3)
+                            StyleConstants.setItalic(attrs, true);
+                        if (sharedVariables.typedStyle == 2 || sharedVariables.typedStyle == 3)
+                            StyleConstants.setBold(attrs, true);
 
 
-                //	}
-            } else {
-                //we need to update every subframe console nad game console pointed to main
+                        StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+                        int GAME_CONSOLES = 1;// game
+                        int maxLinks = 75;
+                        myDocWriter.processLink(doc, mes, sharedVariables.typedColor, gameData.LookingAt, maxLinks, GAME_CONSOLES, attrs, null);
 
 
-                //writeToConsole(doc, 0); // we need to move this function for general use out of chessbot 4 and out of this file to one place for general use
-                //for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
-							/*if(sharedVariables.pointedToMain[a] ==true)
-								//gameconsoles[a].setStyledDocument(doc);
-							{*/
-
-                SimpleAttributeSet attrs = new SimpleAttributeSet();
-                StyleConstants.setItalic(attrs, true);
-                StyleConstants.setForeground(attrs, sharedVariables.typedColor);
-                int SUBFRAME_CONSOLES = 0;// game
-                int maxLinks = 75;
-                myDocWriter.processLink(doc, mes, sharedVariables.typedColor, /*gameData.LookingAt*/ mainConsoleIndex, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+                        //gameconsoles[a].setStyledDocument(doc);
 
 
-                //}
+                        //    }
+                    } else {
+                        //we need to update every subframe console nad game console pointed to main
+
+
+                        //writeToConsole(doc, 0); // we need to move this function for general use out of chessbot 4 and out of this file to one place for general use
+                        //for(int a=0; a<sharedVariables.maxGameTabs && a < sharedVariables.openBoardCount; a++)
+                                    /*if(sharedVariables.pointedToMain[a] ==true)
+                                        //gameconsoles[a].setStyledDocument(doc);
+                                    {*/
+
+                        SimpleAttributeSet attrs = new SimpleAttributeSet();
+                        StyleConstants.setItalic(attrs, true);
+                        StyleConstants.setForeground(attrs, sharedVariables.typedColor);
+                        int SUBFRAME_CONSOLES = 0;// game
+                        int maxLinks = 75;
+                        myDocWriter.processLink(doc, mes, sharedVariables.typedColor, /*gameData.LookingAt*/ mainConsoleIndex, maxLinks, SUBFRAME_CONSOLES, attrs, null);
+
+
+                        //}
+                    }
+                } catch (Exception dui) {
+                }
             }
-        } catch (Exception dui) {
-        }
+        });
+        
+       
 
 
     }

@@ -2461,37 +2461,48 @@ class subframe extends JInternalFrame
         return -1;
     }
 
-    void writeToConsole(String mes, Color col, boolean italic, SimpleAttributeSet attrs) {
-        try {
-            StyledDocument doc =
-                    sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+    void writeToConsole(final String mes, final Color col, final boolean italic, SimpleAttributeSet inattrs) {
+        
+        if (inattrs == null) {
+            inattrs = new SimpleAttributeSet();
 
-            Style styleQ = doc.addStyle(null, null);
+            if (italic)
+                StyleConstants.setItalic(inattrs, true);
 
-            StyleConstants.setForeground(styleQ, col);
-            //StyleConstants.setUnderline(attrs, true);
-            if (attrs == null) {
-                attrs = new SimpleAttributeSet();
-
-                if (italic)
-                    StyleConstants.setItalic(attrs, true);
-
-                StyleConstants.setForeground(attrs, col);
-            }
-            int SUBFRAME_CONSOLES = 0;
-            int maxLinks = 75;
-            myoutput printOut = new myoutput();
-            printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
-                    maxLinks, SUBFRAME_CONSOLES, attrs, null);
-            queue.add(printOut);
-            //doc.insertString(doc.getLength(), mes, attrs);
-
-            //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
-            //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
-            //    consoles[aa].setStyledDocument(doc);
-
-        } catch (Exception E) {
+            StyleConstants.setForeground(inattrs, col);
         }
+        final SimpleAttributeSet attrs = inattrs;
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    StyledDocument doc =
+                            sharedVariables.mydocs[sharedVariables.looking[consoleNumber]];
+
+                    Style styleQ = doc.addStyle(null, null);
+
+                    StyleConstants.setForeground(styleQ, col);
+                    //StyleConstants.setUnderline(attrs, true);
+                    
+                    int SUBFRAME_CONSOLES = 0;
+                    int maxLinks = 75;
+                    myoutput printOut = new myoutput();
+                    printOut.processLink(doc, mes, col, sharedVariables.looking[consoleNumber],
+                            maxLinks, SUBFRAME_CONSOLES, attrs, null);
+                    queue.add(printOut);
+                    //doc.insertString(doc.getLength(), mes, attrs);
+
+                    //for (int aa=0; aa<sharedVariables.maxConsoleTabs; aa++)
+                    //  if (sharedVariables.looking[consoleNumber]==sharedVariables.looking[aa])
+                    //    consoles[aa].setStyledDocument(doc);
+
+                } catch (Exception E) {
+                }
+            }
+        });
+        
+        
     }// end write to console
 
     /****************************************************************************************/
