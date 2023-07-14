@@ -1013,11 +1013,21 @@ dot.setVisible(true);
                     privateDirectory = System.getProperty("user.home") + "/Library/" + appType + "/";
                 }
 
+            } else {  // Linux, Unix, or any unexpected operating system
+                privateDirectory = System.getProperty("user.home") + "/." + appType + "/";
+                File file = new File(privateDirectory);
+                if (!file.exists()) {
+                    if (!file.mkdir()) {
+                        System.err.println("Unable to create " + file);
+                        privateDirectory = System.getProperty("user.home");
+                        publicDirectory = System.getProperty("user.home");
+                    }
+                }
+                publicDirectory = privateDirectory;
             }
         } catch (Exception badfile) {
             System.out.println(badfile.getMessage());
         }
-
     }
 
     void setChatBufferSize() {
