@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.StringTokenizer;
+import java.util.prefs.Preferences;
 
 class settings {
 
@@ -1434,8 +1435,32 @@ class settings {
         }
 
 
-        FileWrite out = new FileWrite();
-        out.write(set_string);
+        //FileWrite out = new FileWrite();
+        //out.write(set_string);
+        Preferences prefs = Preferences.userNodeForPackage(lantern.settings.class);
+        if(prefs == null) {
+            System.out.println("prefs null for put");
+        } else {
+            System.out.println("prefs not null for put and max value " + Preferences.MAX_VALUE_LENGTH + " set string lenght " + set_string.length());
+        }
+        try {
+        // Preference key name
+        final String PREF_NAME_1 = "multi_settings_1";
+        final String PREF_NAME_2 = "multi_settings_2";
+        if(set_string.length() < 10) {
+            return;
+        }
+        final int settings_lenght = set_string.length();
+        final int first_half_length = (int) (settings_lenght / 2);
+        final String set_string_1 = set_string.substring(0, first_half_length);
+        final String set_string_2 = set_string.substring(first_half_length, settings_lenght);
+        // Set the value of the preference
+        prefs.put(PREF_NAME_1, set_string_1);
+        prefs.put(PREF_NAME_2, set_string_2);
+            } catch(Exception cantset) {
+                System.out.println("failed to set preferences to two pref strings with error: " + cantset.getMessage());
+            }
+        
 
     }//  end  method
 
@@ -1447,6 +1472,7 @@ class settings {
         int zz;
         String mystring = "";
         String entry = "";
+        StringTokenizer tokens = null;
 
 
         try {
@@ -1461,14 +1487,24 @@ class settings {
         }
 
         try {
-            FileRead in = new FileRead();
+            
+            Preferences prefs = Preferences.userNodeForPackage(lantern.settings.class);
+            // Preference key name
+            final String PREF_NAME_1 = "multi_settings_1";
+            final String PREF_NAME_2 = "multi_settings_2";
+            String defaultValue = "";
+            String stringFromSettingsFile = prefs.get(PREF_NAME_1, defaultValue) + prefs.get(PREF_NAME_2, defaultValue);
+            if(stringFromSettingsFile.equals("")) {
+                FileRead in = new FileRead();
 
-            StringTokenizer tokens = null;
-            String stringFromSettingsFile = in.read();
-            if (stringFromSettingsFile.length() == 0) {
-                return false;
+                
+                stringFromSettingsFile = in.read();
+                if (stringFromSettingsFile.length() == 0) {
+                    return false;
+                }
+
             }
-
+            
             tokens = new StringTokenizer(stringFromSettingsFile, " ");
             if (!tokens.hasMoreElements()) {
                 return false;
