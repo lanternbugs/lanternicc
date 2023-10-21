@@ -54,6 +54,7 @@ class Sound extends JApplet implements LineListener, Runnable {
     }
 
     Sound(URL songPath1) {
+        // current sound is called by URl constructor 7-23-23 Mike
 
         String os = System.getProperty("os.name").toLowerCase();
         if (os.indexOf("win") >= 0)
@@ -63,7 +64,7 @@ class Sound extends JApplet implements LineListener, Runnable {
         else
             operatingSystem = "unix";
 
-        if (operatingSystem.equals("mac") || (operatingSystem.equals("win") && channels.firstSound == false)) {
+        if (operatingSystem.equals("mac") || operatingSystem.equals("win")) {
             try {
 
                 free.util.audio.AudioClip unixClip = new free.util.audio.AudioClip(songPath1);
