@@ -1088,6 +1088,7 @@ public class DataParsing {
         ArrayList<String> line = new ArrayList<String>();
         seperateLine(tell, line);
         if (line.size() != 2) {
+            if(!(line.size() > 2 && line.get(1).endsWith(",")))
             return false;
         }
         String two = line.get(1);
@@ -1107,6 +1108,7 @@ public class DataParsing {
         ArrayList<String> line = new ArrayList<String>();
         seperateLine(tell, line);
         if (line.size() != 2) {
+            if(!(line.size() > 2 && line.get(1).endsWith(",")))
             return "";
         }
         String two = line.get(1);
