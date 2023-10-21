@@ -433,10 +433,10 @@ public class channels {
     channels() {
         if (fics) {
             myServer = "FICS";
-            version = "v1.0j";
+            version = "v1.1";
         } else {
             myServer = "ICC";
-            version = "v6.27.2b";
+            version = "v6.27.3a-1";
         }
 
         try {
