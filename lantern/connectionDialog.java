@@ -114,8 +114,14 @@ public class connectionDialog extends JDialog
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action.equals("Submit") && ok.isEnabled()) login(false);
-        if (action.equals("Sign-Up"))
-            sVars.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
+        if (action.equals("Sign-Up")) {
+            if(channels.fics) {
+                sVars.openUrl("https://www.freechess.org/Register/index.html");
+            } else {
+                sVars.openUrl("https://store.chessclub.com/rewardsref/index/refer/id/LanternApp/");
+            }
+        }
+            
         if (action.equals("Guest")) login(true);
     }
 
