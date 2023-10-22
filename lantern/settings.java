@@ -1445,8 +1445,12 @@ class settings {
         }
         try {
         // Preference key name
-        final String PREF_NAME_1 = "multi_settings_1";
-        final String PREF_NAME_2 = "multi_settings_2";
+        String PREF_NAME_1 = "multi_settings_1";
+        String PREF_NAME_2 = "multi_settings_2";
+            if(!channels.fics) {
+                PREF_NAME_1 += "_icc";
+                PREF_NAME_2 += "_icc";
+            }
         if(set_string.length() < 10) {
             return;
         }
@@ -1490,8 +1494,12 @@ class settings {
             
             Preferences prefs = Preferences.userNodeForPackage(lantern.settings.class);
             // Preference key name
-            final String PREF_NAME_1 = "multi_settings_1";
-            final String PREF_NAME_2 = "multi_settings_2";
+            String PREF_NAME_1 = "multi_settings_1";
+            String PREF_NAME_2 = "multi_settings_2";
+            if(!channels.fics) {
+                PREF_NAME_1 += "_icc";
+                PREF_NAME_2 += "_icc";
+            }
             String defaultValue = "";
             String stringFromSettingsFile = prefs.get(PREF_NAME_1, defaultValue) + prefs.get(PREF_NAME_2, defaultValue);
             if(stringFromSettingsFile.equals("")) {
