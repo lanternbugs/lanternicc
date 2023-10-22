@@ -433,10 +433,10 @@ public class channels {
     channels() {
         if (fics) {
             myServer = "FICS";
-            version = "v1.1";
+            version = "v1.1.1";
         } else {
             myServer = "ICC";
-            version = "v6.27.3a-1";
+            version = "v6.27.4";
         }
 
         try {
@@ -470,11 +470,11 @@ public class channels {
         mydocs = new StyledDocument[maxConsoleTabs];
 
         if (operatingSystem.equals("win")) {
-            stockfishName = "stockfish_15_x64_popcnt.exe";
+            stockfishName = "stockfish-16-windows-x86-64-modern.exe";
         } else if (operatingSystem.equals("unix")) {
             stockfishName = "stockfish_8_x64";
         } else if (operatingSystem.equals("mac")) {
-            stockfishName = "stockfish15mac";
+            stockfishName = "stockfishmac16";
         }
         setupMenu();
         toolboxListData = new listClass("Scripts");
