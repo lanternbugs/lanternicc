@@ -30,7 +30,7 @@ import java.io.OutputStream;
 class InstallBookDialog extends JDialog {
 
 
-    String stockfish = "Stockfish 15";
+    String stockfish = "Stockfish 16";
     JTextPane textPane = new JTextPane();
     JButton installContinue = new JButton("Continue");
     JButton installCancel = new JButton("Cancel");
@@ -48,10 +48,10 @@ class InstallBookDialog extends JDialog {
         myfont = thefont;
         setSize(350, 300);
         if (channels.stockfishName.contains("10")) {
-            stockfish = "Stockfish 15";
+            stockfish = "Stockfish 16";
         }
-        if (channels.stockfishName.contains("15")) {
-            stockfish = "Stockfish 15";
+        if (channels.stockfishName.contains("16")) {
+            stockfish = "Stockfish 16";
         }
         if (type == mediocreChess5) {
             installEngine = true;
@@ -211,7 +211,7 @@ class InstallBookDialog extends JDialog {
             text = "To use the Cuckoo Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.cuckooEngineName + "  in the lantern folder with a size of less than a meg.";
         }
         if (installType == stockfish8) {
-            text = "To use the " + stockfish + " Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.stockfishName + "  in the lantern folder with a size of about 48 megs.";
+            text = "To use the " + stockfish + " Chess Engine it must be extracted from the Lantern Jar. It will create a file called " + channels.stockfishName + "  in the lantern folder with a size of about 42 megs.";
         }
 
         setPaneText(text);

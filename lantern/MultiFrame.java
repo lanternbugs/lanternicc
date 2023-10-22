@@ -1274,9 +1274,9 @@ class Multiframe extends JFrame
         maketellsounds = new JCheckBoxMenuItem("Sounds for Tells");
         makeatnamesounds = new JCheckBoxMenuItem("Sounds for @yourname");
         // .. / (separator)
-        JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 15");
+        JMenuItem stockfishanalysis = new JMenuItem("Analyze with Stockfish 16");
         if (sharedVariables.operatingSystem.equals("mac")) {
-            stockfishanalysis = new JMenuItem("Analyze with Stockfish 15");
+            stockfishanalysis = new JMenuItem("Analyze with Stockfish 16");
         }
         JMenuItem cuckooanalysis = new JMenuItem("Analyze with CuckooChess 1.12");
         JMenuItem mediocreanalysis = new JMenuItem("Analyze with Mediocre Chess v0.5");
@@ -2808,7 +2808,7 @@ class Multiframe extends JFrame
                 startTheEngine(true);
 
             }
-        } else if (action.equals("Analyze with Stockfish 15")) {
+        } else if (action.equals("Analyze with Stockfish 16")) {
             startStockfish();
         } else if (action.equals("Load Winboard Engine") ||
                 action.equals("Load UCI Engine")) {
